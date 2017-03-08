@@ -1,9 +1,13 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import {
+  RouterTestingModule
+} from '@angular/router/testing';
 
 import { SubjectsComponent } from './subjects.component';
+import {CommonModule} from "@angular/common";
 
 describe('SubjectsComponent', () => {
   let component: SubjectsComponent;
@@ -11,7 +15,11 @@ describe('SubjectsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubjectsComponent ]
+      declarations: [ SubjectsComponent ],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([{path: 'list/collections/area/1', component: SubjectsComponent}]),
+      ]
     })
     .compileComponents();
   }));
