@@ -1,0 +1,14 @@
+{
+  "restartable": "rs",
+  "runOnChangeOnly": false,
+  "ext": "ts html css",
+  "ignore": ["node_modules", "src/client/*", "src/**/*.js", "src/**/*.map"],
+  "events": {
+
+    "exit": "npm run server:prod:build"
+  },
+  "watch": [
+
+    "src/server/"
+  ]
+}

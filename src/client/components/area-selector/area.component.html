@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let area of areaList">
+
+  <a [routerLink]="['/list/collections/area/', area.id]">{{area.title}}</a>
+
+</ul>
