@@ -19,7 +19,7 @@ export const AreaActionTypes = {
  */
 export class AreaAction implements Action {
   type = AreaActionTypes.AREA_LIST;
-
+  payload:void;
 }
 /**
  * Factory for the areas received action.
@@ -37,7 +37,7 @@ export class AreaActionSuccess implements Action {
  */
 export class AreaActionFailed implements Action {
   type = AreaActionTypes.REQUEST_FAILED;
-
+  payload: void;
   constructor(err) {
     console.log(err)
   }

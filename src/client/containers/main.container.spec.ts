@@ -5,6 +5,7 @@
 import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule, Store} from "@ngrx/store";
+import {MaterialModule} from "@angular/material";
 
 import { MainContainer } from './main.container';
 import {ListComponent} from "../components/collection-list/list.component";
@@ -26,6 +27,7 @@ describe('MainContainer', () => {
     TestBed.configureTestingModule({
       declarations: [ MainContainer, ListComponent, AreaComponent, SubjectsComponent ],
       imports: [
+        MaterialModule,
         StoreModule.provideStore({}),
         RouterTestingModule.withRoutes([{path: 'list/collections/area/1', component: MainContainer}]),
       ],

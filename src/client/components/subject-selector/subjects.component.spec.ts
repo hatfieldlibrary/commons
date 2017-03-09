@@ -1,6 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MaterialModule} from "@angular/material";
 
 import { SubjectsComponent } from './subjects.component';
 
@@ -12,6 +13,7 @@ describe('SubjectsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SubjectsComponent ],
       imports: [
+        MaterialModule,
         RouterTestingModule.withRoutes([{path: 'list/collections/area/1', component: SubjectsComponent}]),
       ]
     })

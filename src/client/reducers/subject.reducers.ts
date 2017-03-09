@@ -27,7 +27,7 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     case SubjectActionTypes.SUBJECT_LIST_SUCCESS: {
 
-      const result: SubjectType[] = action.payload;
+      const result: SubjectType[] = <SubjectType[]>action.payload;
       return Object.assign({}, state, {
         subjects: result,
         loading: false
