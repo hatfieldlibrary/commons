@@ -15,6 +15,7 @@
     "build:demon": "nodemon --exec ts-node index.js",
     "client:build:watch": "ng build --watch",
     "build:server:dev": "npm run client:build:watch & npm run server:prod:build & npm run build:demon",
+    "coveralls-server": "NODE_ENV=test istanbul cover .ng test --code-coverage | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "docker:build": "npm run docker build . -t mspalti/commons:latest "
   },
   "private": true,
@@ -63,6 +64,7 @@
     "babel-loader": "^6.4.0",
     "babel-preset-node6": "^11.0.0",
     "codelyzer": "~2.0.0-beta.1",
+    "coveralls": "^2.12.0",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
     "karma": "1.2.0",
