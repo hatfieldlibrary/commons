@@ -31,5 +31,5 @@ before_script:
   - npm run client:prod:build
 
 script:
-  - npm run test
+  - npm run ci-test
 
