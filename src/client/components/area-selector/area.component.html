@@ -1,6 +1,8 @@
-<ul>
-  <li *ngFor="let area of areaList">
+<md-card>
+  <md-list>
+    <md-list-item *ngFor="let area of areaList">
 
-  <a [routerLink]="['/list/collections/area/', area.id]">{{area.title}}</a>
-
-</ul>
+      <a [routerLink]="['/list/collections/area/', area.id]">{{area.title}}</a>
+    </md-list-item>
+  </md-list>
+</md-card>

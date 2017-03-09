@@ -1,14 +1,15 @@
 /**
  * Created by mspalti on 2/22/17.
  */
-/**
- * Created by mspalti on 2/21/17.
- */
 
 import { Action } from "@ngrx/store";
 import { type } from "../shared/ngrx/type";
 import {CollectionType} from "../shared/data-types/collection.type";
 
+export interface IdentifersPayload {
+  id: string,
+  areaId: string
+}
 
 export const CollectionActionTypes = {
   LIST_BY_AREA: type('[Collections] Search by AreaType'),
@@ -23,17 +24,14 @@ export class CollectionAction implements Action {
   type = CollectionActionTypes.LIST_BY_AREA;
 
   constructor(public payload: string) {
+    this.payload = payload;
   }
 
 }
 
 export class CollectionSubjectAction implements Action {
   type = CollectionActionTypes.LIST_AREA_SUBJECT;
-  payload: {
-    id: string;
-    areaId: string;
-  };
-
+  payload: IdentifersPayload;
 
   constructor(public id: string, public areaId: string) {
     this.payload = {
@@ -65,12 +63,12 @@ export class CollectionSubjectActionSuccess implements Action {
 
 export class CollectionActionFailed implements Action {
   type = CollectionActionTypes.REQUEST_FAILED;
+  payload: void;
 
   constructor(err) {
     console.log(err)
   }
 
 }
-
 
 export type CollectionActions = CollectionAction | CollectionSubjectAction | CollectionActionSuccess | CollectionSubjectActionSuccess | CollectionActionFailed;

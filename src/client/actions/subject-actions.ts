@@ -13,7 +13,7 @@ export const SubjectActionTypes = {
 };
 
 export class SubjectAction implements Action {
-  type = SubjectActionTypes.SUBJECT_LIST
+  type = SubjectActionTypes.SUBJECT_LIST;
 
   constructor(public payload: string) {
   }

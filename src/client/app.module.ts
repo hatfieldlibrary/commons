@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { AreaComponent } from './components/area-selector/area.component';
