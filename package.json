@@ -15,9 +15,9 @@
     "build:demon": "nodemon --exec ts-node index.js",
     "client:build:watch": "ng build --watch",
     "build:server:dev": "npm run client:build:watch & npm run server:prod:build & npm run build:demon",
-    "coveralls-server": "NODE_ENV=test istanbul cover .ng test --code-coverage | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "coveralls-client": "NODE_ENV=test istanbul cover .ng test --code-coverage | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "docker:build": "npm run docker build . -t mspalti/commons:latest",
-    "ci-test": "ng test --code-coverage --single-run"
+    "ci-test": "ng test --code-coverage --single-run && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "private": true,
   "dependencies": {
