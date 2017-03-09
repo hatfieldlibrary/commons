@@ -1,8 +1,25 @@
 {
   "name": "commons",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "angular-cli": {},
+  "author":{ "name" : "Michael Spalti",
+   "email" : "mspalti@gmail.com"
+  },
+  "keywords": [
+    "angular2",
+    "angular-cli",
+    "typescript"
+  ],
+  "repository" :
+    {
+      "type" : "git",
+      "url" : "https://github.com/hatfieldlibrary/commons"
+    },
+  "engines" : {
+    "node" : ">=7.7.0 <7.7.5",
+    "npm": ">=4.1.2"
+  },
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve",
