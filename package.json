@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve",
-    "test": "ng test",
+    "test": "ng test --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "client:prod:build": "ng build --prod --aot",

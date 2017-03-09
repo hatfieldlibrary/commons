@@ -1,7 +1,5 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AreaComponent } from './area.component';
 import {RouterTestingModule} from "@angular/router/testing";
@@ -14,7 +12,6 @@ describe('AreaComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AreaComponent ],
       imports: [
-
         RouterTestingModule.withRoutes([{path: 'list/collections/area/:id', component: AreaComponent}]),
       ]
     })

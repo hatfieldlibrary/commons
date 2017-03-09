@@ -21,7 +21,8 @@ import {SubjectType} from "../shared/data-types/subject.type";
 @Component({
   selector: 'main-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<area-selector [areaList]="areas$ | async"></area-selector>' +
+  template:
+  '<area-selector [areaList]="areas$ | async"></area-selector>' +
   '<subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"></subject-selector>' +
   '<collection-list [collectionList]="collections$ | async "></collection-list>'
 })
