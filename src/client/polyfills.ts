@@ -45,6 +45,9 @@ import 'core-js/es6/reflect';
 import 'core-js/es7/reflect';
 
 
+/** Hammerjs required by angular material. **/
+import 'hammerjs/hammer';
+
 /** ALL Firefox browsers require the following to support `@angular/animation`. **/
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
