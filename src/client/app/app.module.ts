@@ -26,13 +26,14 @@ import {SubjectService} from "./services/subject.service";
 import {SubjectEffects} from "./effects/subject.effects";
 import { ImageHeaderComponent } from './components/image-header/image-header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AreaInformationComponent } from './components/area-information/area-information.component';
 
 
 const appRoutes = [
 
   { path: 'list/collections/area/:areaId', component: MainContainer },
   { path: 'list/collections/subject/:subjectId/area/:areaId', component: MainContainer },
-  { path: '', redirectTo: 'list/collections/area/1', pathMatch: 'full' },
+  { path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 
 ];
@@ -45,7 +46,8 @@ const appRoutes = [
     MainContainer,
     SubjectsComponent,
     PageNotFoundComponent,
-    ImageHeaderComponent
+    ImageHeaderComponent,
+    AreaInformationComponent
   ],
   imports: [
     MaterialModule,

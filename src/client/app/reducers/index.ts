@@ -111,6 +111,8 @@ export const getAreasState = (state: State) => state.areas;
 
 export const getAreas = createSelector(getAreasState, fromArea.getAreaList);
 
+export const getAreaInfo = createSelector(getAreasState, fromArea.getAreaInfo);
+
 export const getSubjectsState = (state: State) => state.subjects;
 
 export const getSubject = createSelector(getSubjectsState, fromSubject.getSubjectList);
