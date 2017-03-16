@@ -17,6 +17,8 @@ import * as subjectAction from "../actions/subject-actions";
 import {AreaType} from "../shared/data-types/area.type";
 import {CollectionType} from "../shared/data-types/collection.type";
 import {SubjectType} from "../shared/data-types/subject.type";
+import {getAreaList} from "../reducers/area.reducers";
+import {getAreas} from "../reducers/index";
 
 @Component({
   selector: 'main-container',
@@ -30,6 +32,7 @@ export class MainContainer implements OnInit {
   areaInfo$: Observable<AreaType>;
   subjects$: Observable<SubjectType[]>;
   areaId: string;
+  areasAvailable: boolean = false;
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
 
@@ -37,23 +40,38 @@ export class MainContainer implements OnInit {
     this.areas$ = store.select(fromRoot.getAreas);
     this.subjects$ = store.select(fromRoot.getSubject);
     this.areaInfo$ = store.select(fromRoot.getAreaInfo);
-
+    this.areaId = 'default'
 
   }
 
   ngOnInit() {
 
+    // Subscribe to areas so we can check to see if areas are already availble in the store.
+    this.areas$
+      .subscribe((areas) => {
+        if (areas.length > 0) {
+          this.areasAvailable = true;
+        }
+      });
+
     //  Subscribe to route params observable to detect updates.
     this.route.params
       .subscribe((params) => {
 
-        // This member variable is input to the subject selector component.
-        this.areaId = params['areaId'];
+        // Update areaId if it has changed.
+        if (params['areaId'] !== this.areaId) {
 
-        // Dispatch store update for areas.
-        this.store.dispatch(new areaActions.AreaAction(params['areaId']));
+          // Member variable is input to the subject selector component!
+          this.areaId = params['areaId'];
 
+          // Fecth areas if not already available in the store.
+          if (this.areasAvailable === false) {
+            this.store.dispatch(new areaActions.AreaAction(params['areaId']));
+          }
+
+        }
         if (params['subjectId']) {
+
           // Updates the area information after selection.
           this.store.dispatch(new areaActions.AreaInformationUpdate(params['areaId']));
 
