@@ -3,21 +3,21 @@
   "version": "0.0.1",
   "license": "MIT",
   "angular-cli": {},
-  "author":{ "name" : "Michael Spalti",
-   "email" : "mspalti@gmail.com"
+  "author": {
+    "name": "Michael Spalti",
+    "email": "mspalti@gmail.com"
   },
   "keywords": [
     "angular2",
     "angular-cli",
     "typescript"
   ],
-  "repository" :
-    {
-      "type" : "git",
-      "url" : "https://github.com/hatfieldlibrary/commons"
-    },
-  "engines" : {
-    "node" : ">=7.7.0 <7.7.5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hatfieldlibrary/commons"
+  },
+  "engines": {
+    "node": ">=7.7.0 <7.7.5",
     "npm": ">=4.1.2"
   },
   "scripts": {
@@ -41,9 +41,10 @@
     "@angular/common": "^2.4.0",
     "@angular/compiler": "^2.4.0",
     "@angular/core": "^2.4.0",
+    "@angular/flex-layout": "^2.0.0-rc.1",
     "@angular/forms": "^2.4.0",
     "@angular/http": "^2.4.0",
-    "@angular/material": "^2.0.0-beta.2",
+    "@angular/material": "https://registry.npmjs.org/@angular/material/-/material-2.0.0-beta.2.tgz",
     "@angular/platform-browser": "^2.4.0",
     "@angular/platform-browser-dynamic": "^2.4.0",
     "@angular/router": "^3.4.0",

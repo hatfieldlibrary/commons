@@ -8,9 +8,9 @@ import {StoreModule, Store} from "@ngrx/store";
 import {MaterialModule} from "@angular/material";
 
 import { MainContainer } from './main.container';
-import {ListComponent} from "../components/collection-list/list.component";
-import {AreaComponent} from "../components/area-selector/area.component";
-import {SubjectsComponent} from "../components/subject-selector/subjects.component";
+import {ListComponent} from "../app/components/collection-list/list.component";
+import {AreaComponent} from "../app/components/area-selector/area.component";
+import {SubjectsComponent} from "../app/components/subject-selector/subjects.component";
 import * as fromRoot from '../reducers';
 
  class MockStore {

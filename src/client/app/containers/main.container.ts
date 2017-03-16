@@ -21,18 +21,7 @@ import {SubjectType} from "../shared/data-types/subject.type";
 @Component({
   selector: 'main-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template:
-  '<md-sidenav-container> ' +
-  '<md-sidenav mode="side" opened="true">Drawer content ' +
-  '<area-selector [areaList]="areas$ | async"></area-selector>' +
-  '</md-sidenav>' +
-  '<md-card style="width: 800px;min-height: 800px;">' +
-  '<md-card-content>' +
-  '<subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"></subject-selector>' +
-  '<collection-list [collectionList]="collections$ | async "></collection-list>' +
-  '</md-card-content>' +
-  '</md-card>' +
-  '</md-sidenav-container>'
+  templateUrl: 'main.container.html'
 })
 export class MainContainer implements OnInit {
 

@@ -24,6 +24,8 @@ import { SubjectsComponent } from './components/subject-selector/subjects.compon
 import {AreaEffects} from "./effects/area.effects";
 import {SubjectService} from "./services/subject.service";
 import {SubjectEffects} from "./effects/subject.effects";
+import { ImageHeaderComponent } from './components/image-header/image-header.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 const appRoutes = [
@@ -42,10 +44,12 @@ const appRoutes = [
     ListComponent,
     MainContainer,
     SubjectsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ImageHeaderComponent
   ],
   imports: [
     MaterialModule,
+    FlexLayoutModule,
     BrowserModule,
     FormsModule,
     HttpModule,
