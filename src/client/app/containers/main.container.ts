@@ -46,7 +46,7 @@ export class MainContainer implements OnInit {
 
   ngOnInit() {
 
-    // Subscribe to areas so we can check to see if areas are already availble in the store.
+    // Subscribe to areas$ so we can check to see if areas are already available in the store.
     this.areas$
       .subscribe((areas) => {
         if (areas.length > 0) {
@@ -64,7 +64,7 @@ export class MainContainer implements OnInit {
           // Member variable is input to the subject selector component!
           this.areaId = params['areaId'];
 
-          // Fecth areas if not already available in the store.
+          // Fetch areas if not already available in the store.
           if (this.areasAvailable === false) {
             this.store.dispatch(new areaActions.AreaAction(params['areaId']));
           }
