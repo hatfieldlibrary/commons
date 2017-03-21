@@ -16,10 +16,7 @@ interface AreasResponse {
 @Injectable()
 export class AreaService {
 
-
-
   constructor(private http: Http) {}
-
 
   getAreas(id): Observable<AreasResponse> {
     // temporary test data source

@@ -29,7 +29,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AreaInformationComponent } from './components/area-information/area-information.component';
 
 
-const appRoutes = [
+export const appRoutes = [
 
   { path: 'list/collections/area/:areaId', component: MainContainer },
   { path: 'list/collections/subject/:subjectId/area/:areaId', component: MainContainer },
