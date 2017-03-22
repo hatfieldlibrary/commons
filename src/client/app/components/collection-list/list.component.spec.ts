@@ -5,6 +5,14 @@ import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {MaterialModule} from "@angular/material";
 import {ListComponent} from './list.component';
 import {RouterTestingModule} from "@angular/router/testing";
+import {appRoutes} from '../../app.module';
+import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
+import {MainContainer} from "../../containers/main.container";
+import {AppComponent} from "../app.component";
+import {AreaComponent} from "../area-selector/area.component";
+import {SubjectsComponent} from "../subject-selector/subjects.component";
+import {ImageHeaderComponent} from "../image-header/image-header.component";
+import {AreaInformationComponent} from "../area-information/area-information.component";
 
 
 describe('ListComponent', () => {
@@ -13,10 +21,17 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ListComponent],
+      declarations: [AppComponent,
+        MainContainer,
+        ListComponent,
+        AreaComponent,
+        SubjectsComponent,
+        ImageHeaderComponent,
+        AreaInformationComponent,
+        PageNotFoundComponent],
       imports: [
         MaterialModule,
-        RouterTestingModule.withRoutes([{path: 'list/collections/area/1', component: ListComponent}]),
+        RouterTestingModule.withRoutes(appRoutes),
       ]
     })
       .compileComponents();

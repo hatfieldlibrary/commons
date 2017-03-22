@@ -2,21 +2,20 @@
  * The main container component for subject selector, area selector and collection
  * list components
  */
-
-import * as Reselect from "reselect";
-import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import * as Reselect from 'reselect';
 import Selector = Reselect.Selector;
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
 import * as fromRoot from '../reducers';
-import * as listActions from "../actions/collection.actions";
-import * as areaActions from "../actions/area.actions";
-import * as subjectAction from "../actions/subject-actions";
-import {AreaType} from "../shared/data-types/area.type";
-import {CollectionType} from "../shared/data-types/collection.type";
-import {SubjectType} from "../shared/data-types/subject.type";
+import * as listActions from '../actions/collection.actions';
+import * as areaActions from '../actions/area.actions';
+import * as subjectAction from '../actions/subject-actions';
+import {AreaType} from '../shared/data-types/area.type';
+import {CollectionType} from '../shared/data-types/collection.type';
+import {SubjectType} from '../shared/data-types/subject.type';
 
 @Component({
   selector: 'main-container',
@@ -54,8 +53,7 @@ export class MainContainer implements OnInit {
    * @param id
    */
   getAreas(id: string): void {
-    console.log('get areas')
-    if (this.areasAvailable === false) {
+    if (!this.areasAvailable) {
       this.store.dispatch(new areaActions.AreaAction(id));
     }
   }
@@ -66,17 +64,37 @@ export class MainContainer implements OnInit {
    * @param areaId
    */
   getCollectionsBySubject(subjectId: string, areaId: string): void {
-    console.log('get subs')
     this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId))
   }
 
   /**
-   * Dispatches action for colletions in an area.
+   * Dispatches action for collections in an area.
    * @param areaId
    */
   getCollectionsByArea(areaId: string): void {
-    console.log('collection by area')
     this.store.dispatch(new listActions.CollectionAction(areaId));
+  }
+
+  /**
+   * Dispatches action to fetch all collections.
+   */
+  getAllCollections(): void {
+    console.log('get all collections');
+    // currently not implemented in tagger.
+    this.store.dispatch(new listActions.CollectionAction('1'));
+  }
+
+  /**
+   * Wrapper for collection actions.
+   * @param areaId
+   */
+  getCollections(areaId): void {
+    if (areaId === '0') {
+      this.getAllCollections();
+    } else {
+      this.getCollectionsByArea(areaId);
+      this.getAreaInformation(areaId);
+    }
   }
 
   /**
@@ -84,11 +102,9 @@ export class MainContainer implements OnInit {
    * @param areaId
    */
   getAreaInformation(areaId: string): void {
-    console.log('area info')
-    if (areaId !== '0') {
-      this.store.dispatch(new areaActions.AreaInformationUpdate(areaId));
-      this.store.dispatch((new subjectAction.SubjectAction((areaId))));
-    }
+    this.store.dispatch(new areaActions.AreaInformationUpdate(areaId));
+    this.store.dispatch((new subjectAction.SubjectAction((areaId))));
+
   }
 
   ngOnInit() {
@@ -107,27 +123,21 @@ export class MainContainer implements OnInit {
 
           if (params['areaId'] !== this.areaId) {
             this.areaId = params['areaId'];
-            console.log('calling get areas')
             this.getAreas(params['areaId']);
 
           }
           if (params['subjectId']) {
-            console.log('subject')
-            // Why was this included here?
-            // this.store.dispatch(new areaActions.AreaInformationUpdate(params['areaId']));
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
+            // Dispatch store update for all subjects...contingent on eventual design decision. Hold for now.
+
           } else {
-            console.log('area')
-            this.getCollectionsByArea(params['areaId']);
-            this.getAreaInformation(params['areaId']);
+            this.getCollections(params['areaId']);
 
           }
 
         }
       });
-
-    // Dispatch store update for all subjects...contingent on eventual design decision. Hold for now.
 
   }
 

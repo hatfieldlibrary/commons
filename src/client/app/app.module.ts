@@ -1,40 +1,44 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
-import { RouterModule } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {MaterialModule} from '@angular/material';
+import {RouterModule} from '@angular/router';
+import {APP_BASE_HREF} from '@angular/common';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 
-import { AppComponent } from './app.component';
-import { AreaComponent } from './components/area-selector/area.component';
-import { ListComponent } from './components/collection-list/list.component';
-import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component'
-import {ListServiceService} from "./shared/list-service.service";
-import {CollectionService} from "./services/collection.service";
-import {AreaService} from "./services/area.service";
-import {EffectsModule} from "@ngrx/effects";
-import {CollectionEffects} from "./effects/collection.effects";
-import { reducer } from './reducers';
-import {StoreModule} from "@ngrx/store";
+import {AppComponent} from './components/app.component';
 import {MainContainer} from "./containers/main.container";
-import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import { SubjectsComponent } from './components/subject-selector/subjects.component';
-import {AreaEffects} from "./effects/area.effects";
-import {SubjectService} from "./services/subject.service";
-import {SubjectEffects} from "./effects/subject.effects";
-import { ImageHeaderComponent } from './components/image-header/image-header.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { AreaInformationComponent } from './components/area-information/area-information.component';
-
+import {AreaComponent} from './components/area-selector/area.component';
+import {ListComponent} from './components/collection-list/list.component';
+import {ImageHeaderComponent} from './components/image-header/image-header.component';
+import {AreaInformationComponent} from './components/area-information/area-information.component';
+import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
+import {SubjectsComponent} from './components/subject-selector/subjects.component';
+import {ListServiceService} from './shared/list-service.service';
+import {CollectionService} from './services/collection.service';
+import {AreaService} from './services/area.service';
+import {AreaEffects} from './effects/area.effects';
+import {SubjectService} from './services/subject.service';
+import {SubjectEffects} from './effects/subject.effects';
+import {CollectionEffects} from './effects/collection.effects';
+import {reducer} from './reducers';
 
 export const appRoutes = [
 
-  { path: 'list/collections/area/:areaId', component: MainContainer },
-  { path: 'list/collections/subject/:subjectId/area/:areaId', component: MainContainer },
-  { path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
+  {
+    path: 'list/collections', component: AppComponent,
+    children: [
+      {path: 'area/:areaId', component: MainContainer},
+      {path: 'subject/:subjectId/area/:areaId', component: MainContainer},
+    ]
+  },
+  {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
+  {path: '**', component: PageNotFoundComponent}
 
 ];
 
@@ -93,6 +97,8 @@ export const appRoutes = [
     AreaService,
     SubjectService
   ],
+  //exports: [RouterModule],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

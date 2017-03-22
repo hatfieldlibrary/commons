@@ -2,8 +2,15 @@
 import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MaterialModule} from "@angular/material";
-
+import {appRoutes} from '../../app.module';
 import { SubjectsComponent } from './subjects.component';
+import {MainContainer} from "../../containers/main.container";
+import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
+import {AppComponent} from "../app.component";
+import {ListComponent} from "../collection-list/list.component";
+import {AreaComponent} from "../area-selector/area.component";
+import {ImageHeaderComponent} from "../image-header/image-header.component";
+import {AreaInformationComponent} from "../area-information/area-information.component";
 
 describe('SubjectsComponent', () => {
   let component: SubjectsComponent;
@@ -11,10 +18,17 @@ describe('SubjectsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubjectsComponent ],
+      declarations: [ AppComponent,
+        MainContainer,
+        ListComponent,
+        AreaComponent,
+        SubjectsComponent,
+        ImageHeaderComponent,
+        AreaInformationComponent,
+        PageNotFoundComponent ],
       imports: [
         MaterialModule,
-        RouterTestingModule.withRoutes([{path: 'list/collections/area/1', component: SubjectsComponent}]),
+        RouterTestingModule.withRoutes(appRoutes),
       ]
     })
     .compileComponents();
