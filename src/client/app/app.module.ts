@@ -27,6 +27,7 @@ import {SubjectService} from './services/subject.service';
 import {SubjectEffects} from './effects/subject.effects';
 import {CollectionEffects} from './effects/collection.effects';
 import {reducer} from './reducers';
+import { ItemComponent } from './components/item/item.component';
 
 export const appRoutes = [
 
@@ -51,7 +52,8 @@ export const appRoutes = [
     SubjectsComponent,
     PageNotFoundComponent,
     ImageHeaderComponent,
-    AreaInformationComponent
+    AreaInformationComponent,
+    ItemComponent
   ],
   imports: [
     MaterialModule,

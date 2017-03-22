@@ -20,7 +20,7 @@ import * as areaActions from '../actions/area.actions';
 import {ImageHeaderComponent} from '../components/image-header/image-header.component';
 import {AreaInformationComponent} from '../components/area-information/area-information.component';
 import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {AppComponent} from '../components/app.component';
 import {PageNotFoundComponent} from '../shared/components/page-not-found/page-not-found.component';
 
@@ -54,6 +54,7 @@ describe('MainContainer', () => {
   let router;
   let location;
   let store;
+  let route;
 
   beforeEach(async(() => {
 
@@ -93,6 +94,8 @@ describe('MainContainer', () => {
     mainFixture = TestBed.createComponent(MainContainer);
     component = mainFixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
+    route = fixture.debugElement.injector.get(ActivatedRoute);
+    if (!route.params) { throw new Error();}
     fixture.detectChanges();
 
   });
@@ -121,6 +124,8 @@ describe('MainContainer', () => {
     spyOn(store, 'select').and.callFake(() => {
       return Observable.from([areaSubscriptionMock])
     });
+
+
     router.navigate(['list/collections/area/1']);
     tick(50);
     expect(location.path()).toBe('/list/collections/area/1');
