@@ -15,6 +15,7 @@ import {AppComponent} from './components/app.component';
 import {MainContainer} from "./containers/main.container";
 import {AreaComponent} from './components/area-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
+import { ItemComponent } from './components/item/item.component';
 import {ImageHeaderComponent} from './components/image-header/image-header.component';
 import {AreaInformationComponent} from './components/area-information/area-information.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
@@ -27,7 +28,6 @@ import {SubjectService} from './services/subject.service';
 import {SubjectEffects} from './effects/subject.effects';
 import {CollectionEffects} from './effects/collection.effects';
 import {reducer} from './reducers';
-import { ItemComponent } from './components/item/item.component';
 
 export const appRoutes = [
 
