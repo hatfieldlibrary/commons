@@ -42,6 +42,7 @@ import {combineReducers} from '@ngrx/store';
 import * as fromCollection from './collection.reducers';
 import * as fromArea from './area.reducers';
 import * as fromSubject from './subject.reducers';
+import * as fromItem from './item.reducers';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -51,6 +52,7 @@ export interface State {
   collections: fromCollection.State;
   areas: fromArea.State;
   subjects: fromSubject.State;
+  item: fromItem.State;
 }
 
 /**
@@ -63,7 +65,8 @@ export interface State {
 const reducers = {
   collections: fromCollection.reducer,
   areas: fromArea.reducer,
-  subjects: fromSubject.reducer
+  subjects: fromSubject.reducer,
+  item: fromItem.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -77,8 +80,6 @@ export function reducer(state: any, action: any) {
     return developmentReducer(state, action);
   }
 }
-
-
 /**
  * A selector function is a map function factory. We pass it parameters and it
  * returns a function that maps from the larger state tree into a smaller
@@ -116,3 +117,7 @@ export const getAreaInfo = createSelector(getAreasState, fromArea.getAreaInfo);
 export const getSubjectsState = (state: State) => state.subjects;
 
 export const getSubject = createSelector(getSubjectsState, fromSubject.getSubjectList);
+
+export const getItemState = (state: State) => state.item;
+
+export const getItem = createSelector(getItemState, fromItem.getItem);

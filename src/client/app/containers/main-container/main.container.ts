@@ -9,13 +9,13 @@ import Selector = Reselect.Selector;
 import {Store} from '@ngrx/store';
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 
-import * as fromRoot from '../reducers';
-import * as listActions from '../actions/collection.actions';
-import * as areaActions from '../actions/area.actions';
-import * as subjectAction from '../actions/subject-actions';
-import {AreaType} from '../shared/data-types/area.type';
-import {CollectionType} from '../shared/data-types/collection.type';
-import {SubjectType} from '../shared/data-types/subject.type';
+import * as fromRoot from '../../reducers';
+import * as listActions from '../../actions/collection.actions';
+import * as areaActions from '../../actions/area.actions';
+import * as subjectAction from '../../actions/subject-actions';
+import {AreaType} from '../../shared/data-types/area.type';
+import {CollectionType} from '../../shared/data-types/collection.type';
+import {SubjectType} from '../../shared/data-types/subject.type';
 
 @Component({
   selector: 'main-container',
@@ -119,7 +119,7 @@ export class MainContainer implements OnInit {
       .subscribe((params) => {
 
         if (params['areaId']) {
-          console.log(params['areaId'])
+
           if (params['areaId'] !== this.areaId) {
 
             this.areaId = params['areaId'];

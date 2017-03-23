@@ -4,7 +4,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {MaterialModule} from "@angular/material";
 import {appRoutes} from '../../app.module';
 import { SubjectsComponent } from './subjects.component';
-import {MainContainer} from "../../containers/main.container";
+import {MainContainer} from "../../containers/main-container/main.container";
 import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
 import {AppComponent} from "../app.component";
 import {ListComponent} from "../collection-list/list.component";

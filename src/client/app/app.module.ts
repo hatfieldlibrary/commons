@@ -12,7 +12,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 
 import {AppComponent} from './components/app.component';
-import {MainContainer} from "./containers/main.container";
+import {MainContainer} from "./containers/main-container/main.container";
 import {AreaComponent} from './components/area-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
 import { ItemComponent } from './components/item/item.component';
@@ -27,10 +27,15 @@ import {AreaEffects} from './effects/area.effects';
 import {SubjectService} from './services/subject.service';
 import {SubjectEffects} from './effects/subject.effects';
 import {CollectionEffects} from './effects/collection.effects';
+import { ItemContainerComponent } from './containers/item-container/item-container.component';
 import {reducer} from './reducers';
+import {ItemEffects} from "./effects/item.effects";
+import {ItemService} from "./services/item.service";
+
 
 export const appRoutes = [
 
+  {path: 'item/:id', component: ItemContainerComponent },
   {
     path: 'list/collections', component: AppComponent,
     children: [
@@ -39,6 +44,7 @@ export const appRoutes = [
     ]
   },
   {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
+
   {path: '**', component: PageNotFoundComponent}
 
 ];
@@ -53,7 +59,8 @@ export const appRoutes = [
     PageNotFoundComponent,
     ImageHeaderComponent,
     AreaInformationComponent,
-    ItemComponent
+    ItemComponent,
+    ItemContainerComponent
   ],
   imports: [
     MaterialModule,
@@ -89,7 +96,8 @@ export const appRoutes = [
      */
     EffectsModule.run(CollectionEffects),
     EffectsModule.run(AreaEffects),
-    EffectsModule.run(SubjectEffects)
+    EffectsModule.run(SubjectEffects),
+    EffectsModule.run(ItemEffects)
 
   ],
   providers: [
@@ -97,9 +105,9 @@ export const appRoutes = [
     ListServiceService,
     CollectionService,
     AreaService,
-    SubjectService
+    SubjectService,
+    ItemService
   ],
-  //exports: [RouterModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {

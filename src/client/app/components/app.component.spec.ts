@@ -6,7 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {} from 'jasmine';
 import {ImageHeaderComponent} from "./image-header/image-header.component";
 import {appRoutes} from '../app.module';
-import {MainContainer} from "../containers/main.container";
+import {MainContainer} from "../containers/main-container/main.container";
 import {ListComponent} from "./collection-list/list.component";
 import {AreaComponent} from "./area-selector/area.component";
 import {SubjectsComponent} from "./subject-selector/subjects.component";

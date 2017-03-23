@@ -7,7 +7,7 @@ import {ListComponent} from './list.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {appRoutes} from '../../app.module';
 import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
-import {MainContainer} from "../../containers/main.container";
+import {MainContainer} from "../../containers/main-container/main.container";
 import {AppComponent} from "../app.component";
 import {AreaComponent} from "../area-selector/area.component";
 import {SubjectsComponent} from "../subject-selector/subjects.component";

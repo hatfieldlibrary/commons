@@ -10,19 +10,19 @@ import {Location} from '@angular/common';
 import {Observable} from 'rxjs';
 import {Router, ActivatedRoute} from '@angular/router';
 
-import {appRoutes} from '../app.module';
+import {appRoutes} from '../../app.module';
 import {MainContainer} from './main.container';
-import {ListComponent} from '../components/collection-list/list.component';
-import {AreaComponent} from '../components/area-selector/area.component';
-import {SubjectsComponent} from '../components/subject-selector/subjects.component';
+import {ListComponent} from '../../components/collection-list/list.component';
+import {AreaComponent} from '../../components/area-selector/area.component';
+import {SubjectsComponent} from '../../components/subject-selector/subjects.component';
 
-import * as fromRoot from '../reducers';
-import * as listActions from '../actions/collection.actions';
-import * as areaActions from '../actions/area.actions';
-import {ImageHeaderComponent} from '../components/image-header/image-header.component';
-import {AreaInformationComponent} from '../components/area-information/area-information.component';
-import {AppComponent} from '../components/app.component';
-import {PageNotFoundComponent} from '../shared/components/page-not-found/page-not-found.component';
+import * as fromRoot from '../../reducers';
+import * as listActions from '../../actions/collection.actions';
+import * as areaActions from '../../actions/area.actions';
+import {ImageHeaderComponent} from '../../components/image-header/image-header.component';
+import {AreaInformationComponent} from '../../components/area-information/area-information.component';
+import {AppComponent} from '../../components/app.component';
+import {PageNotFoundComponent} from '../../shared/components/page-not-found/page-not-found.component';
 
 let areaSubscriptionMock =
   [{

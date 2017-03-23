@@ -53,7 +53,7 @@ export function reducer(state = initialState, action: CollectionActions) : State
     }
 
     case CollectionActionTypes.LIST_BY_AREA_SUCCESS: {
-      const result: CollectionType[] = <CollectionType[]>action.payload
+      const result: CollectionType[] = <CollectionType[]>action.payload;
       // The router initializes a new component.  The parent
       return Object.assign({}, state, {
         collections: result,
