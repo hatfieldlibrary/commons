@@ -7,6 +7,8 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule, Store} from '@ngrx/store';
 import {MaterialModule} from '@angular/material';
 import {Location} from '@angular/common';
+import {Observable} from 'rxjs';
+import {Router, ActivatedRoute} from '@angular/router';
 
 import {appRoutes} from '../app.module';
 import {MainContainer} from './main.container';
@@ -19,8 +21,6 @@ import * as listActions from '../actions/collection.actions';
 import * as areaActions from '../actions/area.actions';
 import {ImageHeaderComponent} from '../components/image-header/image-header.component';
 import {AreaInformationComponent} from '../components/area-information/area-information.component';
-import {Observable} from 'rxjs';
-import {Router, ActivatedRoute, Params} from '@angular/router';
 import {AppComponent} from '../components/app.component';
 import {PageNotFoundComponent} from '../shared/components/page-not-found/page-not-found.component';
 
@@ -34,18 +34,41 @@ let areaSubscriptionMock =
     searchUrl: '',
     description: '',
     position: 1,
-    Tag: {
+    Tag: { // This added so test works with subjects template.
       id: '1',
       name: 'test tag'
     }
 
   }];
 
+let areasMock = areaSubscriptionMock;
+
+class MockActivatedRoute extends ActivatedRoute {
+
+  params: Observable<any>;
+
+  setParamMock(mockRoute: any) {
+    if (mockRoute) {
+      this.params = Observable.of(mockRoute);
+    } else {
+      this.params = Observable.of({});
+    }
+  }
+}
+
 class MockStore {
+
   select = () => {
+    return Observable.of(areasMock);
   };
   dispatch = jasmine.createSpy('dispatch');
+
 }
+
+const setMockRoute = (route: MockActivatedRoute, mock: string) => {
+  route.setParamMock({areaId: mock});
+  spyOn(route.params, 'subscribe').and.callThrough();
+};
 
 describe('MainContainer', () => {
   let component: MainContainer;
@@ -78,12 +101,17 @@ describe('MainContainer', () => {
         {
           provide: Store,
           useClass: MockStore
+        },
+        {
+          provide: ActivatedRoute,
+          useClass: MockActivatedRoute
         }
       ]
     })
       .compileComponents();
 
   }));
+
 
   beforeEach(() => {
 
@@ -95,73 +123,108 @@ describe('MainContainer', () => {
     component = mainFixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    if (!route.params) { throw new Error();}
     fixture.detectChanges();
+    spyOn(store, 'select').and.callThrough();
+    spyOn(component, 'getAreas').and.callThrough();
+    spyOn(component, 'setAreasAvailable').and.callThrough();
+    spyOn(component, 'getAllCollections').and.callThrough();
 
   });
 
   it('should create', () => {
-
     expect(component).toBeTruthy();
 
   });
 
-  it('should recognize that areas are available in the store', fakeAsync(() => {
-    spyOn(component, 'setAreasAvailable').and.callThrough();
-    // Set observable for mock area list.
-    spyOn(store, 'select').and.callFake(() => {
-      return Observable.from([areaSubscriptionMock])
-    });
+  it('should do nothing if no area id is provided in route parameters.', fakeAsync(() => {
+
+    route.setParamMock(null);
+    spyOn(route.params, 'subscribe').and.callThrough();
+    areasMock = [];
+
     component.ngOnInit();
-    tick(50);
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
-    expect(component.setAreasAvailable).toHaveBeenCalled();
-    expect(component.areasAvailable).toBeTruthy();
+    tick();
+    expect(store.dispatch).not.toHaveBeenCalled();
 
   }));
 
-  it('should use existing area list from the store.', fakeAsync(() => {
-    spyOn(store, 'select').and.callFake(() => {
-      return Observable.from([areaSubscriptionMock])
-    });
+  it('should not update area id if unchanged,', fakeAsync(() => {
 
+    setMockRoute(route, 'default');
+    areasMock = areaSubscriptionMock;
+
+    expect(component.areasAvailable).toBeFalsy();
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
+    expect(component.setAreasAvailable).toHaveBeenCalled();
+    expect(route.params.subscribe).toHaveBeenCalled();
+    tick();
+    // If areas store has elements, areasAvailable should be true after ngOnInit.
+    expect(component.areasAvailable).toBeTruthy();
+    expect(component.getAreas).not.toHaveBeenCalled();
+    // If areasAvailable is truthy, dispatch should NOT be called.
+    expect(store.dispatch).not.toHaveBeenCalledWith(new areaActions.AreaAction('1'));
 
     router.navigate(['list/collections/area/1']);
-    tick(50);
+    tick();
     expect(location.path()).toBe('/list/collections/area/1');
-    // If areas exist, dispatch should NOT be called.
+
+  }));
+
+  it('should dispatch request for all collections if area id is zero.', fakeAsync(() => {
+
+    setMockRoute(route, '0');
+    areasMock = areaSubscriptionMock;
+
+    expect(component.areasAvailable).toBeFalsy();
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
+    expect(component.setAreasAvailable).toHaveBeenCalled();
+    expect(route.params.subscribe).toHaveBeenCalled();
+    tick();
+    expect(component.getAllCollections).toHaveBeenCalled();
+
+  }));
+
+  it('should use the existing area list from the store.', fakeAsync(() => {
+
+    setMockRoute(route, '1');
+    areasMock = areaSubscriptionMock;
+
+    expect(component.areasAvailable).toBeFalsy();
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
+    expect(component.setAreasAvailable).toHaveBeenCalled();
+    expect(route.params.subscribe).toHaveBeenCalled();
+    tick();
+    // If areas store has elements, areasAvailable should be true after ngOnInit.
+    expect(component.areasAvailable).toBeTruthy();
+    expect(component.getAreas).toHaveBeenCalled();
+    // If areasAvailable is truthy, dispatch should NOT be called.
     expect(store.dispatch).not.toHaveBeenCalledWith(new areaActions.AreaAction('1'));
 
   }));
 
-  it('should recognize that no areas are available in store.', fakeAsync(() => {
-    spyOn(component, 'setAreasAvailable');
-    spyOn(store, 'select').and.callFake(() => {
-      return Observable.of([])
-    });
-    component.ngOnInit();
-    tick(50);
-    expect(component.setAreasAvailable).toHaveBeenCalled();
+  it('should dispatch request to fetch the area list via service', fakeAsync(() => {
+
+    setMockRoute(route, '1');
+    // Set areas store mock to empty array.
+    areasMock = [];
+
     expect(component.areasAvailable).toBeFalsy();
-
-  }));
-
-  it('should dispatch request to fetch the area list', fakeAsync(() => {
-    spyOn(store, 'select').and.callFake(() => {
-      return Observable.of([])
-    });
-    router.navigate(['list/collections/area/1']);
-    tick(50);
-    expect(location.path()).toBe('/list/collections/area/1');
-    // No areas exist in store, dispatch should have been called.
+    component.ngOnInit();
+    expect(route.params.subscribe).toHaveBeenCalled();
+    expect(component.setAreasAvailable).toHaveBeenCalled();
+    // If areas store is empty, areasAvailable should still be false after ngOnInit.
+    expect(component.areasAvailable).toBeFalsy();
+    // areasAvailable is false, dispatch should have been called.
+    expect(component.getAreas).toHaveBeenCalled();
     expect(store.dispatch).toHaveBeenCalledWith(new areaActions.AreaAction('1'));
 
   }));
 
   it('should dispatch request for collections by area', async(() => {
-    spyOn(store, 'select').and.callFake(() => {
-      return Observable.from([areaSubscriptionMock])
-    });
+
     router.navigate(['list/collections/area/1']).then(() => {
       expect(location.path()).toBe('/list/collections/area/1');
       expect(store.select).toHaveBeenCalledWith(fromRoot.getCollections);
@@ -173,9 +236,7 @@ describe('MainContainer', () => {
   }));
 
   it('should dispatch request for collections by subject', async(() => {
-    spyOn(store, 'select').and.callFake(() => {
-      return Observable.from([areaSubscriptionMock])
-    });
+
     router.navigate(['list/collections/subject/2/area/1']).then(() => {
       expect(location.path()).toBe('/list/collections/subject/2/area/1');
       expect(store.select).toHaveBeenCalledWith(fromRoot.getSubject);
@@ -185,9 +246,7 @@ describe('MainContainer', () => {
   }));
 
   it('should return all collections.', async(() => {
-    spyOn(store, 'select').and.callFake(() => {
-      return Observable.from([areaSubscriptionMock])
-    });
+
     router.navigate(['list/collections/area/0']).then(() => {
       expect(store.select).toHaveBeenCalledWith(fromRoot.getCollections);
       expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionAction('1'));

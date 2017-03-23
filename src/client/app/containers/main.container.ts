@@ -39,7 +39,6 @@ export class MainContainer implements OnInit {
    * Subscribes to areas observable and sets member variable to true if the array is not empty.
    */
   setAreasAvailable(): void {
-
     this.areas$.subscribe((areas) => {
       if (areas.length > 0) {
         this.areasAvailable = true;
@@ -120,8 +119,9 @@ export class MainContainer implements OnInit {
       .subscribe((params) => {
 
         if (params['areaId']) {
-
+          console.log(params['areaId'])
           if (params['areaId'] !== this.areaId) {
+
             this.areaId = params['areaId'];
             this.getAreas(params['areaId']);
 
