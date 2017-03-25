@@ -13,8 +13,11 @@ import {SubjectsComponent} from "./subject-selector/subjects.component";
 import {AreaInformationComponent} from "./area-information/area-information.component";
 import {PageNotFoundComponent} from "../shared/components/page-not-found/page-not-found.component";
 import {MaterialModule} from "@angular/material";
+import {ItemContainerComponent} from "../containers/item-container/item-container.component";
+import {ItemComponent} from "./item/item.component";
 
 describe('AppComponent', () => {
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -25,6 +28,8 @@ describe('AppComponent', () => {
         SubjectsComponent,
         ImageHeaderComponent,
         AreaInformationComponent,
+        ItemContainerComponent,
+        ItemComponent,
         PageNotFoundComponent
       ],
       imports: [

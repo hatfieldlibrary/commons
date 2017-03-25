@@ -16,7 +16,7 @@ export class ItemContainerComponent implements OnInit {
 
   item$: Observable<ItemType>;
 
-  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) { }
+  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {  }
 
   ngOnInit() {
 

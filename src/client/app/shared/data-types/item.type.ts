@@ -2,7 +2,7 @@
  * Created by mspalti on 3/23/17.
  */
 
-export interface ItemType {
+export class ItemType {
   collection: {
     id: string;
     title: string;
@@ -17,7 +17,7 @@ export interface ItemType {
     published: boolean;
     createdAt: string;
     updatedAt: string;
-  },
+  };
   categories: {
     id: number;
     title: string;
@@ -28,7 +28,7 @@ export interface ItemType {
     areaId: string;
     createdAt: string;
     updatedAt: string;
-  },
+  };
   itemTypes: [
     {
     id: number;

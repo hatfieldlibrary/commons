@@ -2,7 +2,7 @@
  * Created by mspalti on 2/21/17.
  */
 
-export interface CollectionType {
+export class CollectionType {
 
   id: number;
   title: string;

@@ -15,7 +15,7 @@ import {AppComponent} from './components/app.component';
 import {MainContainer} from "./containers/main-container/main.container";
 import {AreaComponent} from './components/area-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
-import { ItemComponent } from './components/item/item.component';
+import {ItemComponent} from './components/item/item.component';
 import {ImageHeaderComponent} from './components/image-header/image-header.component';
 import {AreaInformationComponent} from './components/area-information/area-information.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
@@ -27,24 +27,39 @@ import {AreaEffects} from './effects/area.effects';
 import {SubjectService} from './services/subject.service';
 import {SubjectEffects} from './effects/subject.effects';
 import {CollectionEffects} from './effects/collection.effects';
-import { ItemContainerComponent } from './containers/item-container/item-container.component';
+import {ItemContainerComponent} from './containers/item-container/item-container.component';
 import {reducer} from './reducers';
 import {ItemEffects} from "./effects/item.effects";
 import {ItemService} from "./services/item.service";
 
 
+// export const appRoutes = [
+//
+//   {
+//     path: 'item', component: AppComponent,
+//     children: [
+//       {path: 'id/:id', component: ItemContainerComponent}
+//     ]
+//   },
+//   {
+//     path: 'list/collections', component: AppComponent,
+//     children: [
+//       {path: 'area/:areaId', component: MainContainer},
+//       {path: 'subject/:subjectId/area/:areaId', component: MainContainer},
+//     ]
+//   },
+//   {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
+//
+//   {path: '**', component: PageNotFoundComponent}
+//
+// ];
+
 export const appRoutes = [
 
-  {path: 'item/:id', component: ItemContainerComponent },
-  {
-    path: 'list/collections', component: AppComponent,
-    children: [
-      {path: 'area/:areaId', component: MainContainer},
-      {path: 'subject/:subjectId/area/:areaId', component: MainContainer},
-    ]
-  },
+  {path: 'item/id/:id', component: ItemContainerComponent},
+  {path: 'list/collections/area/:areaId', component: MainContainer},
+  {path: 'list/collections/subject/:subjectId/area/:areaId', component: MainContainer},
   {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
-
   {path: '**', component: PageNotFoundComponent}
 
 ];

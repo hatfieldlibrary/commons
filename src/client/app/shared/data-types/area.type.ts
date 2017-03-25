@@ -2,7 +2,7 @@
  * Created by mspalti on 2/24/17.
  */
 
-export interface AreaType {
+export class AreaType {
   id: number;
   title: string;
   linkLabel: string;

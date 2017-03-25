@@ -13,6 +13,8 @@ import {AreaComponent} from "../area-selector/area.component";
 import {SubjectsComponent} from "../subject-selector/subjects.component";
 import {ImageHeaderComponent} from "../image-header/image-header.component";
 import {AreaInformationComponent} from "../area-information/area-information.component";
+import {ItemContainerComponent} from "../../containers/item-container/item-container.component";
+import {ItemComponent} from "../item/item.component";
 
 
 describe('ListComponent', () => {
@@ -28,7 +30,10 @@ describe('ListComponent', () => {
         SubjectsComponent,
         ImageHeaderComponent,
         AreaInformationComponent,
-        PageNotFoundComponent],
+        PageNotFoundComponent,
+        ItemContainerComponent,
+        ItemComponent
+      ],
       imports: [
         MaterialModule,
         RouterTestingModule.withRoutes(appRoutes),

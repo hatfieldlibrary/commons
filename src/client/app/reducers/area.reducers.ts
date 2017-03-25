@@ -52,14 +52,12 @@ export function reducer(state = initialState, action: AreaActions): State {
     case AreaActionTypes.AREA_INFORMATION_UPDATE: {
       const payload = <string>action.payload;
 
-      if (state.areas != null) {
         return Object.assign({}, state,
           {
             areas: state.areas,
             areaInfo: state.areas.find(x => x.id == +payload),
             loading: false
           });
-      }
     }
 
     default:

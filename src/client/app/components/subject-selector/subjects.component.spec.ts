@@ -11,6 +11,8 @@ import {ListComponent} from "../collection-list/list.component";
 import {AreaComponent} from "../area-selector/area.component";
 import {ImageHeaderComponent} from "../image-header/image-header.component";
 import {AreaInformationComponent} from "../area-information/area-information.component";
+import {ItemContainerComponent} from "../../containers/item-container/item-container.component";
+import {ItemComponent} from "../item/item.component";
 
 describe('SubjectsComponent', () => {
   let component: SubjectsComponent;
@@ -25,6 +27,8 @@ describe('SubjectsComponent', () => {
         SubjectsComponent,
         ImageHeaderComponent,
         AreaInformationComponent,
+        ItemContainerComponent,
+        ItemComponent,
         PageNotFoundComponent ],
       imports: [
         MaterialModule,
