@@ -24,6 +24,4 @@ export class AreaService {
       .map(res => <AreasResponse>{area: id, response: res.json()});
   }
 
-
-
 }

@@ -2,6 +2,14 @@
  * Created by mspalti on 3/23/17.
  */
 
+export interface ItemTypesInterface {
+  id: number,
+  name: string,
+  icon: string,
+  createdAt: string,
+  updatedAt: string
+}
+
 export class ItemType {
   collection: {
     id: string;
@@ -29,12 +37,6 @@ export class ItemType {
     createdAt: string;
     updatedAt: string;
   };
-  itemTypes: [
-    {
-    id: number;
-    name: string;
-    icon: string;
-    createdAt: string;
-    updatedAt: string;
-  }]
+  itemTypes: ItemTypesInterface[]
+
 }

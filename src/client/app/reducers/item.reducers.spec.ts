@@ -1,6 +1,7 @@
 import {getItem, reducer} from "./item.reducers";
 import {ItemRequest, ItemSuccess} from "../actions/item.actions";
 import {Action} from "@ngrx/store";
+import {ItemTypesInterface} from "../shared/data-types/item.type";
 /**
  * Created by mspalti on 3/24/17.
  */
@@ -33,18 +34,17 @@ const initializeItem = {
     updatedAt: ''
   },
   itemTypes: [{
-    id: 0,
-    name: '',
-    icon: '',
-    createdAt: '',
-    updatedAt: ''
-
-  }]
+      id: 0,
+      name: '',
+      icon: '',
+      createdAt: '',
+      updatedAt: ''
+    }]
 };
 
 const itemMock = {
   collection: {
-    id: '1',
+    id: '',
     title: 'test collection',
     url: '',
     desc: '',
@@ -70,13 +70,14 @@ const itemMock = {
     updatedAt: ''
   },
   itemTypes: [{
-    id: 1,
-    name: 'test type',
+    id: 0,
+    name: 'test item type',
     icon: '',
     createdAt: '',
     updatedAt: ''
   }]
 };
+
 
 class MockAction implements Action {
   type: string = '';
