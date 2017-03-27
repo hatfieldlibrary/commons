@@ -4,6 +4,7 @@ import {getAreasState, getCollectionssState, getItemState, getSubjectsState} fro
 import {ItemSuccess} from "../actions/item.actions";
 import {AreaActionSuccess} from "../actions/area.actions";
 import {CollectionActionSuccess} from "../actions/collection.actions";
+import {AreaType} from "../shared/data-types/area.type";
 
 describe('Reducers ', () => {
 
@@ -128,7 +129,7 @@ describe('Reducers ', () => {
     let result = getAreasState(areaState);
     expect(result).toEqual({
       areas: expectedAreas,
-      areaInfo: {},
+      areaInfo: <AreaType>{},
       loading: false
     });
 

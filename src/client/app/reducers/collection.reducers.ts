@@ -10,8 +10,6 @@ export interface State {
 
 }
 
-
-
 const initialState: State = {
   collections:[],
   loading: false

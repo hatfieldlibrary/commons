@@ -3,6 +3,7 @@ import {getAreaInfo, getAreaList, reducer, State} from "./area.reducers";
 import {
   AreaAction, AreaActionSuccess, AreaInformation, AreaInformationUpdate} from "../actions/area.actions";
 import {Action} from "@ngrx/store";
+import {AreaType} from "../shared/data-types/area.type";
 /**
  * Created by mspalti on 3/24/17.
  */
@@ -41,7 +42,7 @@ describe('Area Reducer', () => {
     ).toEqual(
       {
         areas: [],
-        areaInfo: {},
+        areaInfo: <AreaType>{},
         loading: true
       })
   });
@@ -52,7 +53,7 @@ describe('Area Reducer', () => {
     ).toEqual(
       {
         areas: areaTypeMock,
-        areaInfo: {},
+        areaInfo: <AreaType>{},
         loading: false
       })
   });
