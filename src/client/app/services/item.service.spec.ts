@@ -1,7 +1,7 @@
 
 import {inject, TestBed} from "@angular/core/testing";
 import {HttpModule, ResponseOptions, XHRBackend } from "@angular/http";
-import {MockBackend, } from "@angular/http/testing";
+import {MockBackend } from "@angular/http/testing";
 import {ItemService} from "./item.service";
 
 describe('Item Service', () => {
@@ -57,13 +57,13 @@ describe('Item Service', () => {
   });
 
 
-  it('get item', inject([ItemService, MockBackend], (itemService, mockBackend) => {
+  it('get item', inject([ItemService, MockBackend], (itemService:ItemService, mockBackend:MockBackend) => {
     mockBackend.connections.subscribe(conn => {
       conn.mockRespond(new Response(new ResponseOptions({body: itemMock})));
     });
     const result = itemService.getItem('1');
     result.subscribe(res => {
-      expect(res.response).toEqual({
+      expect(res).toEqual({
         itemMock
       });
     });

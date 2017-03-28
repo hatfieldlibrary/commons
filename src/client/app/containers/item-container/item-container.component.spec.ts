@@ -47,8 +47,8 @@ class MockStore {
 describe('ItemContainerComponent', () => {
   let component: ItemContainerComponent;
   let fixture: ComponentFixture<ItemContainerComponent>;
-  let route;
-  let store;
+  let route:MockActivatedRoute;
+  let store:MockStore;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

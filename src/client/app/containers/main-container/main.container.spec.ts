@@ -79,8 +79,8 @@ const setSubjectRoute = (route: MockActivatedRoute, area: string, subject: strin
 describe('MainContainer', () => {
   let component: MainContainer;
   let fixture: ComponentFixture<MainContainer>;
-  let store;
-  let route;
+  let store:MockStore;
+  let route:MockActivatedRoute;
 
   beforeEach(async(() => {
 

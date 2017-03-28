@@ -1,6 +1,6 @@
 import {inject, TestBed} from "@angular/core/testing";
 import {HttpModule, ResponseOptions, XHRBackend } from "@angular/http";
-import {MockBackend, } from "@angular/http/testing";
+import {MockBackend } from "@angular/http/testing";
 import {CollectionService} from "./collection.service";
 
 describe('Collection Service', () => {

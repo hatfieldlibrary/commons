@@ -47,7 +47,7 @@ describe('Area Effect', () => {
     inject([
         EffectsRunner, AreaEffects, AreaService
       ],
-      (_runner, _areaEffects, _areaService ) => {
+      (_runner:EffectsRunner, _areaEffects:AreaEffects, _areaService:AreaService ) => {
         runner = _runner;
         areaEffects = _areaEffects;
         areaService = _areaService;

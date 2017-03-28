@@ -36,7 +36,7 @@ describe('Subject Effect', () => {
     inject([
         EffectsRunner, SubjectEffects, SubjectService
       ],
-      (_runner, _subjectEffects, _subjectService ) => {
+      (_runner:EffectsRunner, _subjectEffects:SubjectEffects, _subjectService:SubjectService ) => {
         runner = _runner;
         subjectEffects = _subjectEffects;
         subjectService = _subjectService;

@@ -1,10 +1,11 @@
+
 {
   "compilerOptions": {
     "baseUrl": "",
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "lib": [
       "es2016",
       "dom"

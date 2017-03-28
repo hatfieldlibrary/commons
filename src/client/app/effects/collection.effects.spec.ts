@@ -90,7 +90,7 @@ describe('Collections Effect', () => {
     inject([
         EffectsRunner, CollectionEffects, CollectionService
       ],
-      (_runner, _collectionEffects, _collectionService ) => {
+      (_runner:EffectsRunner, _collectionEffects:CollectionEffects, _collectionService:CollectionService ) => {
         runner = _runner;
         collectionEffects = _collectionEffects;
         collectionService = _collectionService;

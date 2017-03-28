@@ -1,7 +1,8 @@
-import {AreaService} from "./area.service";
+import {AreaService, AreasResponse} from "./area.service";
 import {inject, TestBed} from "@angular/core/testing";
-import {HttpModule, ResponseOptions, XHRBackend } from "@angular/http";
-import {MockBackend, } from "@angular/http/testing";
+import {HttpModule, ResponseOptions, XHRBackend} from "@angular/http";
+import {MockBackend} from "@angular/http/testing";
+
 
 describe('Area Service', () => {
 
@@ -41,15 +42,15 @@ describe('Area Service', () => {
 
 
   it('get areas', inject([AreaService, MockBackend], (areaService, mockBackend) => {
-    mockBackend.connections.subscribe(conn => {
+    mockBackend.connections.subscribe((conn) => {
       conn.mockRespond(new Response(new ResponseOptions({body: mockAreas})));
     });
     const result = areaService.getAreas('1');
-    result.subscribe(res => {
+    result.subscribe((res:AreasResponse) => {
       expect(res.response).toEqual({
         mockAreas
       });
-      expect(res.areas).toEqual('1');
+      expect(res.area).toEqual('1');
     });
 
   }));

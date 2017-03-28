@@ -8,7 +8,7 @@ import {AreaType} from "../shared/data-types/area.type";
 import { environment } from '../environments/environment';
 
 
-interface AreasResponse {
+export interface AreasResponse {
   area: string;
   response: AreaType[]
 }

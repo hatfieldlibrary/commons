@@ -64,7 +64,7 @@ describe('Item Effect', () => {
     inject([
         EffectsRunner, ItemEffects, ItemService
       ],
-      (_runner, _itemEffects, _itemService ) => {
+      (_runner:EffectsRunner, _itemEffects:ItemEffects, _itemService:ItemService ) => {
         runner = _runner;
         itemEffects = _itemEffects;
         itemService = _itemService;
