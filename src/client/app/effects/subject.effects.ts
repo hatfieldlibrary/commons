@@ -15,7 +15,7 @@ export class SubjectEffects {
   }
 
   @Effect()
-  areasEffect$: Observable<Action> = this.actions$
+  subjectEffect$: Observable<Action> = this.actions$
     .ofType(subjects.SubjectActionTypes.SUBJECT_LIST)
     .map((action: subjects.SubjectAction) => action.payload)
     .switchMap(id => this.svc.getSubjects(id))
