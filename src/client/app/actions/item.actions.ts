@@ -32,7 +32,7 @@ export class ItemRequestFailed implements Action {
   type = ItemActionTypes.REQUEST_FAILED;
   payload: void;
 
-  constructor(err) {
+  constructor(err:string) {
     console.log(err)
   }
 }

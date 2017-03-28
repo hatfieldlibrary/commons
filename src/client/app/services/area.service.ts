@@ -18,7 +18,7 @@ export class AreaService {
 
   constructor(private http: Http) {}
 
-  getAreas(id): Observable<AreasResponse> {
+  getAreas(id:string): Observable<AreasResponse> {
     // temporary test data source
     return this.http.get(environment.apiHost + environment.apiRoot + '/areas')
       .map(res => <AreasResponse>{area: id, response: res.json()});

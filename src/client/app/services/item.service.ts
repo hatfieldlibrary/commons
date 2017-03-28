@@ -14,7 +14,7 @@ export class ItemService {
   constructor(private http: Http) {}
 
 
-    getItem(itemId): Observable<ItemType> {
+    getItem(itemId: string): Observable<ItemType> {
       return this.http.get(environment.apiHost + environment.apiRoot + '/collection/info/byId/' + itemId)
         .map(res => res.json());
     }

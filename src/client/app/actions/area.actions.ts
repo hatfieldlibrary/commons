@@ -50,7 +50,7 @@ export class AreaActionSuccess implements Action {
 export class AreaActionFailed implements Action {
   type = AreaActionTypes.REQUEST_FAILED;
   payload: void;
-  constructor(err) {
+  constructor(err:string) {
     console.log(err)
   }
 

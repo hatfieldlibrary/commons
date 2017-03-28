@@ -1,6 +1,3 @@
-/**
- * Created by mspalti on 2/24/17.
- */
 import {Injectable} from "@angular/core";
 import {Actions, Effect} from "@ngrx/effects";
 import * as areas from '../actions/area.actions';
@@ -27,18 +24,3 @@ export class AreaEffects {
     .catch((err) => Observable.of(new areas.AreaActionFailed(err)));
 }
 
-//   /**
-//    * This handles the potential problem of the state being undefined.  This might
-//    * happen at component initialization. During initialization, the AREA_INFORMATION_UPDATE
-//    * action redundant. The component nevertheless dispatches the action, and that might
-//    * lead to problems if the the areas are not already available in the store.
-//    * @type {"../../Observable".Observable<R>}
-//    */
-//   @Effect()
-//   areaUpdate: Observable<Action> = this.actions$
-//     .ofType(areas.AreaActionTypes.AREA_INFORMATION_UPDATE)
-//     .withLatestFrom(this.store$)
-//     .filter(([payload, state]) => state.areas == null)
-//     .map(res => new areas.AreaActionFailed('null area list'))
-//
-// }

@@ -65,7 +65,7 @@ export class CollectionActionFailed implements Action {
   type = CollectionActionTypes.REQUEST_FAILED;
   payload: void;
 
-  constructor(err) {
+  constructor(err:string) {
     console.log(err)
   }
 

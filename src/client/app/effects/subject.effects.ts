@@ -1,6 +1,3 @@
-/**
- * Created by mspalti on 2/24/17.
- */
 import {Injectable} from "@angular/core";
 import {Actions, Effect} from "@ngrx/effects";
 import * as subjects from '../actions/subject-actions';
@@ -21,6 +18,5 @@ export class SubjectEffects {
     .switchMap(id => this.svc.getSubjects(id))
     .map(res => new subjects.SubjectActionSuccess(res))
     .catch((err) => Observable.of(new subjects.SubjectActionFailed(err)));
-
 
 }

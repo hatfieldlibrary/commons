@@ -5,9 +5,6 @@ import {Observable} from "rxjs";
 import * as item from '../actions/item.actions';
 import {Action} from "@ngrx/store";
 import {ItemActions} from "../actions/item.actions";
-/**
- * Created by mspalti on 3/23/17.
- */
 
 
 @Injectable()
@@ -20,7 +17,7 @@ export class ItemEffects {
   itemEffect$:Observable<Action> = this.actions$
     .ofType(item.ItemActionTypes.ITEM_REQUEST)
     .map((action: ItemActions) => action.payload)
-    .switchMap(id => this.svc.getItem(id))
+    .switchMap((id:string) => this.svc.getItem(id))
     .map(res => new item.ItemSuccess(res))
     .catch((err) => Observable.of(new item.ItemRequestFailed(err)));
 }

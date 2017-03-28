@@ -87,7 +87,7 @@ export class MainContainer implements OnInit {
    * Wrapper for collection actions.
    * @param areaId
    */
-  getCollections(areaId): void {
+  getCollections(areaId:string): void {
     if (areaId === '0') {
       this.getAllCollections();
     } else {

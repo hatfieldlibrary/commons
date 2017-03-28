@@ -32,7 +32,7 @@ export class SubjectActionSuccess implements Action {
 export class SubjectActionFailed implements Action {
   type = SubjectActionTypes.REQUEST_FAILED;
   payload: void;
-  constructor(err) {
+  constructor(err:string) {
     console.log(err)
   }
 
