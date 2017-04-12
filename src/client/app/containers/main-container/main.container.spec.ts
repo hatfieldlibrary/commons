@@ -126,7 +126,7 @@ describe('MainContainer', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     component = fixture.componentInstance;
     spyOn(store, 'select').and.callThrough();
-    spyOn(component, 'getAreaList').and.callThrough();
+    spyOn(component, 'getAreas').and.callThrough();
     spyOn(component, 'setAreasAvailable').and.callThrough();
     spyOn(component, 'getAllCollections').and.callThrough();
 
@@ -227,7 +227,7 @@ describe('MainContainer', () => {
     tick();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getCollections);
     expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionAction('1'));
-    expect(store.dispatch).toHaveBeenCalledWith(new areaActions.AreaInformationUpdate('1'));
+    expect(store.dispatch).toHaveBeenCalledWith(new areaActions.AreaInformation('1'));
 
   }));
 

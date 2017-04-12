@@ -24,19 +24,11 @@ describe('Reducers ', () => {
     {
       id: 1,
       title: 'test',
-      linkLabel: 'link',
-      url: 'url',
-      searchUrl: '',
-      description: 'description',
-      position: 1
-    },{
+      count: 2
+    }, {
       id: 2,
       title: 'test 2',
-      linkLabel: 'link',
-      url: 'url',
-      searchUrl: '',
-      description: 'description',
-      position: 1
+      count: 1
     }
   ];
 
@@ -72,7 +64,7 @@ describe('Reducers ', () => {
     subjects: [1]
   };
 
-  const expectedCollections =  [
+  const expectedCollections = [
     {
       id: 1,
       title: 'test title',

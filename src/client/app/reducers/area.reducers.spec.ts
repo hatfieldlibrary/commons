@@ -1,4 +1,4 @@
-import {getAreaInfo, getAreaList, reducer, State} from './area.reducers';
+import {getAreaInfo, reducer, State} from './area.reducers';
 import {
   AreaAction, AreaActionSuccess, AreaInformation, AreaInformationSuccess
 } from '../actions/area.actions';
@@ -74,7 +74,7 @@ describe('Area Reducer', () => {
   });
 
   it('should return the current state', () => {
-    let areaState: State = {areas: areaListTypeMock, area: areaMock, loading: false};
+    let areaState: State = {area: areaMock, loading: false};
 
     expect(
       reducer(areaState, new MockAction())
@@ -88,7 +88,7 @@ describe('Area Reducer', () => {
 
   it('should return state with updated area information', () => {
 
-    let areaState: State = {areas: areaListTypeMock, area: areaMock, loading: true};
+    let areaState: State = {area: areaMock, loading: true};
     expect(
       reducer(areaState, new AreaInformationSuccess(areaMock))
     ).toEqual(
@@ -101,9 +101,9 @@ describe('Area Reducer', () => {
 
   it('should return area list', () => {
 
-    let areaState: State = {areas: areaListTypeMock, area: areaMock, loading: true};
+    let areaState: State = {area: areaMock, loading: true};
     let state = reducer(areaState, new AreaActionSuccess(areaListTypeMock));
-    let result = getAreaList(state);
+    let result = getAreaInfo(state);
     expect(result).toEqual(areaListTypeMock);
   });
 

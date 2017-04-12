@@ -133,7 +133,7 @@ export class MainContainer implements OnInit {
           this.subjectLinkType = 'area';
 
           if (params['subjectId']) {
-            console.log('getting subjects for area')
+
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
 
@@ -143,12 +143,13 @@ export class MainContainer implements OnInit {
           }
 
         }
+        else if(params['subjectId']) {
+
+        }
         else {
 
-
-          // need to add subject search across all collections.
-
           this.subjectLinkType = 'all';
+
           this.getAllCollections();
         }
 
