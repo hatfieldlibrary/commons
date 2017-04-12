@@ -21,12 +21,18 @@ export class CollectionService {
     }
 
     // temporary test data source
-    return this.http.get(environment.apiHost + environment.apiRoot + '/collection/byArea/' + id)
+    return this.http.get(environment.apiHost + environment.apiRoot + '/collection/area/' + id)
       .map(res => res.json());
   }
 
   getCollectionsByAreaSubject(id: string, areaId:string): Observable<CollectionType[]> {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/collection/bySubject/' + id + '/area/' + areaId)
+    return this.http.get(environment.apiHost + environment.apiRoot + '/collection/subject/' + id + '/area/' + areaId)
+      .map(res => res.json());
+  }
+
+  getAllCollections() : Observable<CollectionType[]> {
+
+    return this.http.get(environment.apiHost + environment.apiRoot + '/collection')
       .map(res => res.json());
   }
 

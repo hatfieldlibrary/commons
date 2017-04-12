@@ -16,6 +16,7 @@ import * as subjectAction from '../../actions/subject-actions';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
+import {AreaListItemType} from "../../shared/data-types/area-list.type";
 
 @Component({
   selector: 'main-container',
@@ -25,22 +26,24 @@ import {SubjectType} from '../../shared/data-types/subject.type';
 export class MainContainer implements OnInit {
 
   collections$: Observable<CollectionType[]>;
-  areas$: Observable<AreaType[]>;
+  areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType>;
   subjects$: Observable<SubjectType[]>;
-  areaId: string = 'default';
   areasAvailable: boolean = false;
+  areaId: string;
+  subjectLinkType: string;
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
 
   }
 
   /**
-   * Subscribes to areas observable and sets member variable to true if the array is not empty.
+   * Subscribes to areaList observable and sets member variable to true if the array is not empty.
    */
   setAreasAvailable(): void {
     this.areas$.subscribe((areas) => {
-      if (areas.length > 0) {
+      // id is 0 in initial state.
+      if (areas[0].id > 0) {
         this.areasAvailable = true;
       }
     });
@@ -51,9 +54,9 @@ export class MainContainer implements OnInit {
    * Dispatches action for area list if not currently available in the store.
    * @param id
    */
-  getAreas(id: string): void {
+  getAreas(): void {
     if (!this.areasAvailable) {
-      this.store.dispatch(new areaActions.AreaAction(id));
+      this.store.dispatch(new areaActions.AreaAction());
     }
   }
 
@@ -78,22 +81,20 @@ export class MainContainer implements OnInit {
    * Dispatches action to fetch all collections.
    */
   getAllCollections(): void {
-    console.log('get all collections');
     // currently not implemented in tagger.
-    this.store.dispatch(new listActions.CollectionAction('1'));
+    this.store.dispatch(new listActions.AllCollectionsAction());
+    this.store.dispatch(new subjectAction.AllSubjectAction());
   }
 
   /**
    * Wrapper for collection actions.
    * @param areaId
    */
-  getCollections(areaId:string): void {
-    if (areaId === '0') {
-      this.getAllCollections();
-    } else {
-      this.getCollectionsByArea(areaId);
-      this.getAreaInformation(areaId);
-    }
+  getCollections(areaId: string): void {
+
+    this.getCollectionsByArea(areaId);
+    this.getAreaInformation(areaId);
+
   }
 
   /**
@@ -101,8 +102,15 @@ export class MainContainer implements OnInit {
    * @param areaId
    */
   getAreaInformation(areaId: string): void {
-    this.store.dispatch(new areaActions.AreaInformationUpdate(areaId));
+    this.store.dispatch(new areaActions.AreaInformation(areaId));
     this.store.dispatch((new subjectAction.SubjectAction((areaId))));
+
+  }
+
+  initializeAreas() {
+    if (!this.areasAvailable) {
+      this.store.dispatch(new areaActions.AreaAction());
+    }
 
   }
 
@@ -114,22 +122,20 @@ export class MainContainer implements OnInit {
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
 
     this.setAreasAvailable();
-
+    this.initializeAreas();
     this.route.params
+
       .subscribe((params) => {
 
         if (params['areaId']) {
 
-          if (params['areaId'] !== this.areaId) {
+          this.areaId = params['areaId'];
+          this.subjectLinkType = 'area';
 
-            this.areaId = params['areaId'];
-            this.getAreas(params['areaId']);
-
-          }
           if (params['subjectId']) {
+            console.log('getting subjects for area')
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
-            // Dispatch store update for all subjects...contingent on eventual design decision. Hold for now.
 
           } else {
             this.getCollections(params['areaId']);
@@ -137,6 +143,15 @@ export class MainContainer implements OnInit {
           }
 
         }
+        else {
+
+
+          // need to add subject search across all collections.
+
+          this.subjectLinkType = 'all';
+          this.getAllCollections();
+        }
+
       });
 
   }

@@ -7,7 +7,7 @@
     <!--<md-grid-tile [colspan]="1" [rowspan]="1">-->
 
       <!--<md-sidenav mode="side" opened="true">Drawer content-->
-        <!--<area-selector [areaList]="areas$ | async"></area-selector>-->
+        <!--<area-sareaListor [areaList]="areas$ | async"></area-selector>-->
       <!--</md-sidenav>-->
 
     <!--</md-grid-tile>-->
@@ -34,7 +34,7 @@
           <md-card>
             <md-card-content>
               <area-information [areaInfo]="areaInfo$ | async"></area-information>
-              <subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"></subject-selector>
+              <subject-selector [subjectList]="subjects$ | async" [areaId]="areaId" [type]="subjectLinkType"></subject-selector>
               <collection-list [collectionList]="collections$ | async "></collection-list>
             </md-card-content>
           </md-card>

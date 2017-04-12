@@ -126,7 +126,7 @@ describe('MainContainer', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     component = fixture.componentInstance;
     spyOn(store, 'select').and.callThrough();
-    spyOn(component, 'getAreas').and.callThrough();
+    spyOn(component, 'getAreaList').and.callThrough();
     spyOn(component, 'setAreasAvailable').and.callThrough();
     spyOn(component, 'getAllCollections').and.callThrough();
 
@@ -160,7 +160,7 @@ describe('MainContainer', () => {
     expect(component.setAreasAvailable).toHaveBeenCalled();
     expect(route.params.subscribe).toHaveBeenCalled();
     tick();
-    // If areas store has elements, areasAvailable should be true after ngOnInit.
+    // If areaList store has elements, areasAvailable should be true after ngOnInit.
     expect(component.areasAvailable).toBeTruthy();
     expect(component.getAreas).not.toHaveBeenCalled();
     // If areasAvailable is truthy, dispatch should NOT be called.
@@ -194,7 +194,7 @@ describe('MainContainer', () => {
     expect(component.setAreasAvailable).toHaveBeenCalled();
     expect(route.params.subscribe).toHaveBeenCalled();
     tick();
-    // If areas store has elements, areasAvailable should be true after ngOnInit.
+    // If areaList store has elements, areasAvailable should be true after ngOnInit.
     expect(component.areasAvailable).toBeTruthy();
     expect(component.getAreas).toHaveBeenCalled();
     // If areasAvailable is truthy, dispatch should NOT be called.
@@ -205,14 +205,14 @@ describe('MainContainer', () => {
   it('should dispatch request to fetch the area list via service', fakeAsync(() => {
 
     setAreaRoute(route, '1');
-    // Set areas store mock to empty array.
+    // Set areaList store mock to empty array.
     areasMock = [];
 
     expect(component.areasAvailable).toBeFalsy();
     component.ngOnInit();
     expect(route.params.subscribe).toHaveBeenCalled();
     expect(component.setAreasAvailable).toHaveBeenCalled();
-    // If areas store is empty, areasAvailable should still be false after ngOnInit.
+    // If areaList store is empty, areasAvailable should still be false after ngOnInit.
     expect(component.areasAvailable).toBeFalsy();
     // areasAvailable is false, dispatch should have been called.
     expect(component.getAreas).toHaveBeenCalled();

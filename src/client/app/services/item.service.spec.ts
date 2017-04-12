@@ -22,7 +22,7 @@ describe('Item Service', () => {
       createdAt: '',
       updatedAt: ''
     },
-    categories: {
+    category: {
       id: 1,
       title: 'test category',
       linkLabel: '',

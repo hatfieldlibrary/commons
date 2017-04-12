@@ -1,5 +1,5 @@
 <md-list>
   <md-list-item *ngFor="let collection of collectionList">
-    <a [routerLink]="['/item/id', collection.CollectionId]">{{collection.title}} {{collection.CollectionId}}</a>
+    <a [routerLink]="['/item/id', collection.id]">{{collection.title}} {{collection.id}}</a>
   </md-list-item>
 </md-list>

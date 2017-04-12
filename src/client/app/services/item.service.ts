@@ -15,7 +15,7 @@ export class ItemService {
 
 
     getItem(itemId: string): Observable<ItemType> {
-      return this.http.get(environment.apiHost + environment.apiRoot + '/collection/info/byId/' + itemId)
+      return this.http.get(environment.apiHost + environment.apiRoot + '/collection/id/' + itemId)
         .map(res => res.json());
     }
 

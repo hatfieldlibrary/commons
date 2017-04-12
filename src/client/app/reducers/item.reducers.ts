@@ -12,39 +12,36 @@ export interface State {
 const initialState: State = {
     item: {
       collection: {
-        id: '',
+        id: 0,
         title: '',
+        image: '',
         url: '',
         desc: '',
-        browseType: '',
-        image: '',
         dates: '',
-        ctype: '',
-        repoType: '',
+        items: '',
+        linkOptions: '',
+        searchOptions: '',
+        assetType: '',
         restricted: false,
-        published: false,
-        createdAt: '',
-        updatedAt: ''
+        published: false
       },
-      categories: {
+      category: {
         id: 0,
         title: '',
         linkLabel: '',
         url: '',
         secondaryUrl: '',
         description: '',
-        areaId: '',
-        createdAt: '',
-        updatedAt: ''
+        areaId: ''
       },
       itemTypes:[ {
         id: 0,
         name: '',
-        icon: '',
-        createdAt: '',
-        updatedAt: ''
+        icon: ''
 
-      }]
+      }],
+      subjects: []
+
     },
     loading: false
   }

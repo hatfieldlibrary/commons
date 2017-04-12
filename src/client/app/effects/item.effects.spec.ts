@@ -29,7 +29,7 @@ describe('Item Effect', () => {
       createdAt: '',
       updatedAt: ''
     },
-    categories: {
+    category: {
       id: 1,
       title: 'test category',
       linkLabel: '',
@@ -60,7 +60,7 @@ describe('Item Effect', () => {
 
     ]
   }));
-  it('call Area Success action after areas loaded.',
+  it('call Area Success action after areaList loaded.',
     inject([
         EffectsRunner, ItemEffects, ItemService
       ],

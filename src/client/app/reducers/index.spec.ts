@@ -42,38 +42,34 @@ describe('Reducers ', () => {
 
   const expectedItem = {
     collection: {
-      id: '',
-      title: 'test collection',
-      url: '',
+      id: 1,
+      title: 'test title',
+      image: 'image',
+      url: 'url',
       desc: '',
-      browseType: '',
-      image: '',
       dates: '',
-      ctype: '',
-      repoType: '',
+      items: '',
+      linkOptions: '',
+      searchOptions: '',
+      assetType: '',
       restricted: false,
-      published: false,
-      createdAt: '',
-      updatedAt: ''
+      published: false
     },
-    categories: {
+    category: {
       id: 1,
       title: 'test category',
       linkLabel: '',
       url: '',
       secondaryUrl: '',
       description: '',
-      areaId: '',
-      createdAt: '',
-      updatedAt: ''
+      areaId: ''
     },
     itemTypes: [{
       id: 0,
       name: 'test item type',
-      icon: '',
-      createdAt: '',
-      updatedAt: ''
-    }]
+      icon: ''
+    }],
+    subjects: [1]
   };
 
   const expectedCollections =  [
@@ -82,18 +78,14 @@ describe('Reducers ', () => {
       title: 'test title',
       image: 'image',
       url: 'url',
-      browseType: '',
-      description: '',
+      desc: '',
       dates: '',
       items: '',
-      ctype: '',
-      repoType: '',
-      restricted: true,
-      published: false,
-      createdAt: '',
-      updatedAt: '',
-      AreaId: 1,
-      CollectionId: 1
+      linkOptions: '',
+      searchOptions: '',
+      assetType: '',
+      restricted: false,
+      published: false
     }
   ];
 
@@ -125,7 +117,7 @@ describe('Reducers ', () => {
 
   });
 
-  it('should return areas state.', () => {
+  it('should return areaList state.', () => {
     let result = getAreasState(areaState);
     expect(result).toEqual({
       areas: expectedAreas,

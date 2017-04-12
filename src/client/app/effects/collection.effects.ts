@@ -30,4 +30,12 @@ export class CollectionEffects {
     .map((res) => new collection.CollectionSubjectActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
+  @Effect()
+  collectionsAll$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_ALL_ACTION)
+   // .map((action: collection.AllCollectionsAction) => action.payload)
+    .switchMap(() => this.svc.getAllCollections())
+    .map((res) => new collection.AllCollectionsActionSuccess(res))
+    .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
+
 }

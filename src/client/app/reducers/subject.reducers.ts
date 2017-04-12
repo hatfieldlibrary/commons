@@ -34,6 +34,22 @@ export function reducer(state = initialState, action: SubjectActions): State {
       });
 
     }
+    case SubjectActionTypes.ALL_SUBJECT_LIST: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+
+    }
+
+    case SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS: {
+
+      const result: SubjectType[] = <SubjectType[]>action.payload;
+      return Object.assign({}, state, {
+        subjects: result,
+        loading: false
+      });
+
+    }
 
     default:
       return state;

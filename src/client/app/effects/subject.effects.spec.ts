@@ -32,7 +32,7 @@ describe('Subject Effect', () => {
 
     ]
   }));
-  it('call Area Success action after areas loaded.',
+  it('call Area Success action after areaList loaded.',
     inject([
         EffectsRunner, SubjectEffects, SubjectService
       ],

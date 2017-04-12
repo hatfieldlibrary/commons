@@ -10,5 +10,6 @@ export class SubjectsComponent {
 
   @Input() subjectList: SubjectType[];
   @Input() areaId: number;
+  @Input() type: string;
 
 }

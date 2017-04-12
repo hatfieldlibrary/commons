@@ -8,74 +8,66 @@ import {ItemTypesInterface} from "../shared/data-types/item.type";
 
 const initializeItem = {
   collection: {
-    id: '',
+    id: 0,
     title: '',
+    image: '',
     url: '',
     desc: '',
-    browseType: '',
-    image: '',
     dates: '',
-    ctype: '',
-    repoType: '',
+    items: '',
+    linkOptions: '',
+    searchOptions: '',
+    assetType: '',
     restricted: false,
-    published: false,
-    createdAt: '',
-    updatedAt: ''
+    published: false
   },
-  categories: {
+  category: {
     id: 0,
     title: '',
     linkLabel: '',
     url: '',
     secondaryUrl: '',
     description: '',
-    areaId: '',
-    createdAt: '',
-    updatedAt: ''
+    areaId: ''
   },
   itemTypes: [{
       id: 0,
       name: '',
-      icon: '',
-      createdAt: '',
-      updatedAt: ''
-    }]
+      icon: ''
+    }],
+  subjects: [1]
 };
 
 const itemMock = {
   collection: {
-    id: '',
-    title: 'test collection',
+    id: 0,
+    title: '',
+    image: '',
     url: '',
     desc: '',
-    browseType: '',
-    image: '',
     dates: '',
-    ctype: '',
-    repoType: '',
+    items: '',
+    linkOptions: '',
+    searchOptions: '',
+    assetType: '',
     restricted: false,
-    published: false,
-    createdAt: '',
-    updatedAt: ''
+    published: false
   },
-  categories: {
+  category: {
     id: 1,
     title: 'test category',
     linkLabel: '',
     url: '',
     secondaryUrl: '',
     description: '',
-    areaId: '',
-    createdAt: '',
-    updatedAt: ''
+    areaId: ''
   },
   itemTypes: [{
     id: 0,
     name: 'test item type',
-    icon: '',
-    createdAt: '',
-    updatedAt: ''
-  }]
+    icon: ''
+  }],
+  subjects: [1]
 };
 
 

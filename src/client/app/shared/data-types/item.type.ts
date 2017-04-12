@@ -5,38 +5,34 @@
 export interface ItemTypesInterface {
   id: number,
   name: string,
-  icon: string,
-  createdAt: string,
-  updatedAt: string
+  icon: string
 }
 
 export class ItemType {
   collection: {
-    id: string;
+    id: number;
     title: string;
+    image: string;
     url: string;
     desc: string;
-    browseType: string;
-    image: string;
     dates: string;
-    ctype: string;
-    repoType: string;
+    items: string;
+    linkOptions: string;
+    searchOptions: string;
+    assetType: string;
     restricted: boolean;
     published: boolean;
-    createdAt: string;
-    updatedAt: string;
   };
-  categories: {
+  category: {
     id: number;
     title: string;
     linkLabel: string;
     url: string;
-    secondaryUrl: string;
+    secondaryUrl:string;
     description: string;
     areaId: string;
-    createdAt: string;
-    updatedAt: string;
   };
-  itemTypes: ItemTypesInterface[]
+  itemTypes: ItemTypesInterface[];
+  subjects: number[];
 
 }

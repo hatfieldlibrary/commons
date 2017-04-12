@@ -1,3 +1,45 @@
 
 <h2>{{item?.collection.title}}</h2>
-<p>{{item?.collection.description}}</p>
+<p>{{item?.collection.desc}}</p>
+<p>{{item?.collection.image}}</p>
+<p>{{item?.collection.url}}</p>
+<p>{{item?.collection.desc}}</p>
+<p>{{item?.collection.dates}}</p>
+<p>{{item?.collection.items}}</p>
+<p>{{item?.collection.linkOptions}}</p>
+
+<p>{{item?.collection.searchOptions}}</p>
+
+<p>{{item?.collection.assetType}}</p>
+
+<p>{{item?.collection.restricted}}</p>
+
+<p>{{item?.collection.published}}</p>
+
+<h3>Category Data</h3>
+<p>{{item?.category?.id}}</p>
+<p>{{item?.category?.linkLabel}}</p>
+<p>{{item?.category?.url}}</p>
+<p>{{item?.category?.secondaryUrl}}</p>
+<p>{{item?.category?.description}}</p>
+<p>{{item?.category?.areaId}}</p>
+
+<h3>Item Type Data</h3>
+
+<ul>
+  <li *ngFor="let type of item?.itemTypes">
+    <p>id: {{type.id}} name: {{type.name}} icon: {{type.icon}}</p>
+  </li>
+</ul>
+
+<h3>Subject IDs;</h3>
+<ul>
+  <li *ngFor="let subject of item?.subjects">
+    <p>id: {{subject}}</p>
+  </li>
+</ul>
+
+
+
+
+

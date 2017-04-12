@@ -13,8 +13,12 @@ export class SubjectService {
   constructor(private http: Http) {}
 
   getSubjects(areaId: string): Observable<SubjectType[]> {
-    // temporary test data source
-    return this.http.get(environment.apiHost + environment.apiRoot + '/subjects/byArea/' + areaId)
+    return this.http.get(environment.apiHost + environment.apiRoot + '/subject/area/' + areaId)
+      .map(res => res.json());
+  }
+
+  getAllSubjects(): Observable<SubjectType[]> {
+    return this.http.get(environment.apiHost + environment.apiRoot + '/subject')
       .map(res => res.json());
   }
 

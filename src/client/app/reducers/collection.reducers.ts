@@ -20,6 +20,7 @@ export function reducer(state = initialState, action: CollectionActions) : State
   switch (action.type) {
 
     case CollectionActionTypes.LIST_BY_AREA: {
+
       const id = action.payload;
       if (id === '') {
         return {
@@ -52,7 +53,7 @@ export function reducer(state = initialState, action: CollectionActions) : State
 
     case CollectionActionTypes.LIST_BY_AREA_SUCCESS: {
       const result: CollectionType[] = <CollectionType[]>action.payload;
-      // The router initializes a new component.  The parent
+
       return Object.assign({}, state, {
         collections: result,
         loading: false
@@ -62,7 +63,22 @@ export function reducer(state = initialState, action: CollectionActions) : State
     case CollectionActionTypes.LIST_BY_SUBJECT_SUCCESS: {
       const result: CollectionType[] = <CollectionType[]>action.payload;
 
-      // The router initializes a new component.  The parent
+      return Object.assign({}, state, {
+        collections: result,
+        loading: false
+      });
+    }
+
+    case CollectionActionTypes.LIST_ALL_ACTION: {
+
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case CollectionActionTypes.LIST_ALL_SUCCESS_ACTION: {
+      const result: CollectionType[] = <CollectionType[]>action.payload;
+
       return Object.assign({}, state, {
         collections: result,
         loading: false

@@ -41,11 +41,11 @@ describe('Area Service', () => {
   });
 
 
-  it('get areas', inject([AreaService, MockBackend], (areaService, mockBackend) => {
+  it('get areaList', inject([AreaService, MockBackend], (areaService, mockBackend) => {
     mockBackend.connections.subscribe((conn) => {
       conn.mockRespond(new Response(new ResponseOptions({body: mockAreas})));
     });
-    const result = areaService.getAreas('1');
+    const result = areaService.getAreaList('1');
     result.subscribe((res:AreasResponse) => {
       expect(res.response).toEqual({
         mockAreas

@@ -1,8 +1,7 @@
 <md-card>
   <md-list>
     <md-list-item *ngFor="let area of areaList">
-
-      <a [routerLink]="['/list/collections/area/', area.id]">{{area.title}}</a>
+      <a [routerLink]="['/collection/area/', area.id]">{{area.title}} ({{area.count}})</a>
     </md-list-item>
   </md-list>
 </md-card>

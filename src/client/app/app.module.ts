@@ -31,6 +31,9 @@ import {ItemContainerComponent} from './containers/item-container/item-container
 import {reducer} from './reducers';
 import {ItemEffects} from "./effects/item.effects";
 import {ItemService} from "./services/item.service";
+import {RelatedEffects} from "./effects/related.effects";
+import { RelatedItemsComponent } from './components/related-items/related-items.component';
+import {RelatedService} from "./services/related.service";
 
 
 // export const appRoutes = [
@@ -57,9 +60,11 @@ import {ItemService} from "./services/item.service";
 export const appRoutes = [
 
   {path: 'item/id/:id', component: ItemContainerComponent},
-  {path: 'list/collections/area/:areaId', component: MainContainer},
-  {path: 'list/collections/subject/:subjectId/area/:areaId', component: MainContainer},
-  {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
+  {path: 'collection/area/:areaId', component: MainContainer},
+  {path: 'collection', component: MainContainer},
+  {path: 'collection/subject/:subjectId/area/:areaId', component: MainContainer},
+  {path: 'collection/subject/:subjectId', component: MainContainer},
+  {path: '', redirectTo: 'collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 
 ];
@@ -75,7 +80,8 @@ export const appRoutes = [
     ImageHeaderComponent,
     AreaInformationComponent,
     ItemComponent,
-    ItemContainerComponent
+    ItemContainerComponent,
+    RelatedItemsComponent
   ],
   imports: [
     MaterialModule,
@@ -112,7 +118,8 @@ export const appRoutes = [
     EffectsModule.run(CollectionEffects),
     EffectsModule.run(AreaEffects),
     EffectsModule.run(SubjectEffects),
-    EffectsModule.run(ItemEffects)
+    EffectsModule.run(ItemEffects),
+    EffectsModule.run(RelatedEffects)
 
   ],
   providers: [
@@ -121,7 +128,8 @@ export const appRoutes = [
     CollectionService,
     AreaService,
     SubjectService,
-    ItemService
+    ItemService,
+    RelatedService
   ],
   bootstrap: [AppComponent]
 })

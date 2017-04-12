@@ -1,63 +1,46 @@
 /**
  * Created by mspalti on 2/24/17.
  */
-import {AreaActions, AreaActionTypes, IdentifersPayload} from "../actions/area.actions";
+import {AreaActions, AreaActionTypes} from "../actions/area.actions";
 import {AreaType} from "../shared/data-types/area.type";
 
 export interface State {
-  areas: AreaType[];
-  areaInfo: AreaType;
+  area: AreaType;
   loading: boolean;
 
 }
 
 const initialState: State = {
-  areas: [],
-  areaInfo: <AreaType>{},
+  area: <AreaType>{
+    id: 0,
+    title: '',
+    linkLabel: '',
+    url: '',
+    searchUrl: '',
+    description: '',
+    position: 0
+  },
   loading: false
 };
 
 export function reducer(state = initialState, action: AreaActions): State {
+
   switch (action.type) {
 
-    case AreaActionTypes.AREA_LIST: {
-      const payload = <string>action.payload;
+    case AreaActionTypes.AREA_INFORMATION: {
       return Object.assign({}, state, {
         loading: true
       });
-
     }
 
-    case AreaActionTypes.AREA_LIST_SUCCESS: {
+    case AreaActionTypes.AREA_INFORMATION_SUCCESS: {
+      const payload = <AreaType>action.payload;
 
-      const result: AreaType[] = <AreaType[]>action.payload;
-      return Object.assign({}, state, {
-        areas: result,
-        areaInfo: {},
-        loading: false
-      });
-
-    }
-
-    case AreaActionTypes.AREA_INFORMATION: {
-      const payload = <IdentifersPayload>action.payload;
-
-      return  Object.assign({}, state, {
-        areas: payload.areas,
-        areaInfo: payload.areas.find(x => x.id == +payload.areaId),
-        loading: false
-      });
-    }
-
-    case AreaActionTypes.AREA_INFORMATION_UPDATE: {
-      const payload = <string>action.payload;
-
-        return Object.assign({}, state,
-          {
-            areas: state.areas,
-            areaInfo: state.areas.find(x => x.id == +payload),
-            loading: false
-          });
+      return Object.assign({}, state,
+        {
+          area: payload,
+          loading: false
+        });
     }
 
     default:
@@ -67,6 +50,4 @@ export function reducer(state = initialState, action: AreaActions): State {
 
 }
 
-export const getAreaList = (state: State) => state.areas;
-
-export const getAreaInfo = (state: State) => state.areaInfo;
+export const getAreaInfo = (state: State) => state.area;

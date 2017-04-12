@@ -2,9 +2,10 @@
  * Created by mspalti on 2/22/17.
  */
 
-import { Action } from "@ngrx/store";
-import { type } from "../shared/ngrx/type";
+import {Action} from "@ngrx/store";
+import {type} from "../shared/ngrx/type";
 import {CollectionType} from "../shared/data-types/collection.type";
+import {RelatedType} from "../shared/data-types/related-collection";
 
 export interface IdentifersPayload {
   id: string,
@@ -12,6 +13,8 @@ export interface IdentifersPayload {
 }
 
 export const CollectionActionTypes = {
+  LIST_ALL_ACTION: type('[Collections] List all Collections'),
+  LIST_ALL_SUCCESS_ACTION: type('[Collections] List all Collections Success'),
   LIST_BY_AREA: type('[Collections] Search by AreaType'),
   LIST_AREA_SUBJECT: type('[Collections] Search by SubjectType'),
   LIST_BY_AREA_SUCCESS: type('[Collections] AreaType Collections'),
@@ -28,6 +31,21 @@ export class CollectionAction implements Action {
   }
 
 }
+
+export class AllCollectionsAction implements Action {
+  type = CollectionActionTypes.LIST_ALL_ACTION;
+
+  constructor() {}
+
+}
+export class AllCollectionsActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_ALL_SUCCESS_ACTION;
+
+  constructor(public payload: CollectionType[]) {
+  }
+
+}
+
 
 export class CollectionSubjectAction implements Action {
   type = CollectionActionTypes.LIST_AREA_SUBJECT;
@@ -65,10 +83,12 @@ export class CollectionActionFailed implements Action {
   type = CollectionActionTypes.REQUEST_FAILED;
   payload: void;
 
-  constructor(err:string) {
+  constructor(err: string) {
     console.log(err)
   }
 
 }
 
-export type CollectionActions = CollectionAction | CollectionSubjectAction | CollectionActionSuccess | CollectionSubjectActionSuccess | CollectionActionFailed;
+
+export type CollectionActions = CollectionAction | CollectionSubjectAction | CollectionActionSuccess |
+  CollectionSubjectActionSuccess | CollectionActionFailed;

@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiHost: 'http://libmedia.willamette.edu',
-  apiRoot: '/taggerRest'
+  apiHost: 'http://localhost:3000',
+  apiRoot: '/rest'
 };

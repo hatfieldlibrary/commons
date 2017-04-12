@@ -41,8 +41,10 @@ import {combineReducers} from '@ngrx/store';
  */
 import * as fromCollection from './collection.reducers';
 import * as fromArea from './area.reducers';
+import * as fromAreaList from './area-list.reducers';
 import * as fromSubject from './subject.reducers';
 import * as fromItem from './item.reducers';
+import * as fromRelated from './related.reducers';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -50,9 +52,11 @@ import * as fromItem from './item.reducers';
  */
 export interface State {
   collections: fromCollection.State;
-  areas: fromArea.State;
+  area: fromArea.State;
+  areaList: fromAreaList.State
   subjects: fromSubject.State;
   item: fromItem.State;
+  related: fromRelated.State;
 }
 
 /**
@@ -64,9 +68,11 @@ export interface State {
  */
 const reducers = {
   collections: fromCollection.reducer,
-  areas: fromArea.reducer,
+  area: fromArea.reducer,
+  areaList: fromAreaList.reducer,
   subjects: fromSubject.reducer,
-  item: fromItem.reducer
+  item: fromItem.reducer,
+  related: fromRelated.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -108,11 +114,13 @@ export const getCollectionssState = (state: State) => state.collections;
  */
 export const getCollections = createSelector(getCollectionssState, fromCollection.getCollectionList);
 
-export const getAreasState = (state: State) => state.areas;
-
-export const getAreas = createSelector(getAreasState, fromArea.getAreaList);
+export const getAreasState = (state: State) => state.area;
 
 export const getAreaInfo = createSelector(getAreasState, fromArea.getAreaInfo);
+
+export const getAreaListState = (state: State) => state.areaList;
+
+export const getAreas = createSelector(getAreaListState, fromAreaList.getAreaList);
 
 export const getSubjectsState = (state: State) => state.subjects;
 
@@ -121,3 +129,8 @@ export const getSubject = createSelector(getSubjectsState, fromSubject.getSubjec
 export const getItemState = (state: State) => state.item;
 
 export const getItem = createSelector(getItemState, fromItem.getItem);
+
+export const getRelatedState = (state: State) => state.related;
+
+export const getRelated = createSelector(getRelatedState, fromRelated.getRelatedList);
+

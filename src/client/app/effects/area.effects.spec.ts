@@ -43,7 +43,7 @@ describe('Area Effect', () => {
 
     ]
   }));
-  it('call Area Success action after areas loaded.',
+  it('call Area Success action after areaList loaded.',
     inject([
         EffectsRunner, AreaEffects, AreaService
       ],
@@ -51,13 +51,13 @@ describe('Area Effect', () => {
         runner = _runner;
         areaEffects = _areaEffects;
         areaService = _areaService;
-        spyOn(areaService, 'getAreas')
+        spyOn(areaService, 'getAreaList')
           .and.returnValue(Observable.of({area: '1', response: mockAreas}));
         runner.queue(new AreaAction('1'));
 
-        areaEffects.areasEffect$.subscribe(result => {
+        areaEffects.areaListEffect$.subscribe(result => {
           expect(result.type).toEqual(AreaActionTypes.AREA_INFORMATION);
-          expect(result.payload.areas.length).toBe(2);
+          expect(result.payload.areaList.length).toBe(2);
           expect(result.payload.areaId).toEqual('1');
         });
       })

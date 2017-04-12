@@ -23,7 +23,7 @@ app.get('*', function (req, res) {
 /**
  * Get port from environment and store in Express.
  */
-var port = process.env.PORT || '3000';
+var port = process.env.PORT || '3001';
 app.set('port', port);
 /**
  * Create HTTP server.

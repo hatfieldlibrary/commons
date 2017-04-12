@@ -14,18 +14,14 @@ const collectionListMock = [
     title: 'test title',
     image: 'image',
     url: 'url',
-    browseType: '',
-    description: '',
+    desc: '',
     dates: '',
     items: '',
-    ctype: '',
-    repoType: '',
-    restricted: true,
-    published: false,
-    createdAt: '',
-    updatedAt: '',
-    AreaId: 1,
-    CollectionId: 1
+    linkOptions: '',
+    searchOptions: '',
+    assetType: '',
+    restricted: false,
+    published: false
   }
 ];
 

@@ -1,5 +1,14 @@
 <md-chip-list>
-  <md-chip *ngFor="let subject of subjectList"><a [routerLink]="['/list/collections/subject/', subject.Tag.id, 'area', areaId]">{{subject.Tag.name}}</a></md-chip>
+
+  <div *ngIf="type === 'area'">
+    <md-chip *ngFor="let subject of subjectList"><a [routerLink]="['/collection/subject/', subject.id, 'area', areaId]">{{subject.name}}</a>
+    </md-chip>
+  </div>
+  <div *ngIf="type === 'all'">
+    <md-chip *ngFor="let subject of subjectList"><a [routerLink]="['/collection/subject/', subject.id]">{{subject.name}}</a>
+    </md-chip>
+  </div>
+
 </md-chip-list>
 
 
