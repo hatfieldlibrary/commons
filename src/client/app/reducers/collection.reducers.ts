@@ -34,7 +34,16 @@ export function reducer(state = initialState, action: CollectionActions) : State
       });
     }
 
-    case CollectionActionTypes.LIST_AREA_SUBJECT: {
+    case CollectionActionTypes.LIST_BY_AREA_SUCCESS: {
+      const result: CollectionType[] = <CollectionType[]>action.payload;
+
+      return Object.assign({}, state, {
+        collections: result,
+        loading: false
+      });
+    }
+
+    case CollectionActionTypes.LIST_BY_AREA_SUBJECT: {
       const payload = <IdentifersPayload>action.payload;
 
       const id = payload.id;
@@ -51,7 +60,7 @@ export function reducer(state = initialState, action: CollectionActions) : State
       });
     }
 
-    case CollectionActionTypes.LIST_BY_AREA_SUCCESS: {
+    case CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS: {
       const result: CollectionType[] = <CollectionType[]>action.payload;
 
       return Object.assign({}, state, {
@@ -60,7 +69,15 @@ export function reducer(state = initialState, action: CollectionActions) : State
       });
     }
 
-    case CollectionActionTypes.LIST_BY_SUBJECT_SUCCESS: {
+    case CollectionActionTypes.LIST_ALL_BY_SUBJECT: {
+
+      return Object.assign({}, state, {
+        loading: false
+      });
+    }
+
+
+    case CollectionActionTypes.LIST_ALL_BY_SUBJECT_SUCCESS: {
       const result: CollectionType[] = <CollectionType[]>action.payload;
 
       return Object.assign({}, state, {

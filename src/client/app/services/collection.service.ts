@@ -30,6 +30,11 @@ export class CollectionService {
       .map(res => res.json());
   }
 
+  getCollectionsBySubject(id: string): Observable<CollectionType[]> {
+    return this.http.get(environment.apiHost + environment.apiRoot + '/collection/subject/' + id)
+      .map(res => res.json());
+  }
+
   getAllCollections() : Observable<CollectionType[]> {
 
     return this.http.get(environment.apiHost + environment.apiRoot + '/collection')

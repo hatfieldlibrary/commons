@@ -29,7 +29,9 @@ export class MainContainer implements OnInit {
   areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType>;
   subjects$: Observable<SubjectType[]>;
+  globalSubjects$:  Observable<SubjectType[]>;
   areasAvailable: boolean = false;
+  subjectsAvailable: boolean = false;
   areaId: string;
   subjectLinkType: string;
 
@@ -38,7 +40,8 @@ export class MainContainer implements OnInit {
   }
 
   /**
-   * Subscribes to areaList observable and sets member variable to true if the array is not empty.
+   * Subscribes to areaList observable and sets member variable to true if the array
+   * is not empty.
    */
   setAreasAvailable(): void {
     this.areas$.subscribe((areas) => {
@@ -51,22 +54,13 @@ export class MainContainer implements OnInit {
   }
 
   /**
-   * Dispatches action for area list if not currently available in the store.
-   * @param id
-   */
-  getAreas(): void {
-    if (!this.areasAvailable) {
-      this.store.dispatch(new areaActions.AreaAction());
-    }
-  }
-
-  /**
    * Dispatches action for collections by subject and area.
    * @param subjectId
    * @param areaId
    */
   getCollectionsBySubject(subjectId: string, areaId: string): void {
-    this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId))
+    this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
+
   }
 
   /**
@@ -81,7 +75,6 @@ export class MainContainer implements OnInit {
    * Dispatches action to fetch all collections.
    */
   getAllCollections(): void {
-    // currently not implemented in tagger.
     this.store.dispatch(new listActions.AllCollectionsAction());
     this.store.dispatch(new subjectAction.AllSubjectAction());
   }
@@ -98,7 +91,8 @@ export class MainContainer implements OnInit {
   }
 
   /**
-   * Dispatches action for area description information.
+   * Dispatches action for area information and for list of
+   * subjects assigned to the area..
    * @param areaId
    */
   getAreaInformation(areaId: string): void {
@@ -107,12 +101,33 @@ export class MainContainer implements OnInit {
 
   }
 
+  /**
+   * Dispatches request for all collections that have the given subject.
+   *
+   * Also dispatches request for list of subjects. This assures that subjects
+   * are in the store when user links directly to this page. If global subjects
+   * are implemented in the final product, it may make sense to assign these
+   * to their own reducer, since the state of the global list will not change.
+   * That way we can initialize once.
+   *
+   * @param subjectId
+   */
+  getAllCollectionsForSubject(subjectId: string) {
+    this.store.dispatch((new listActions.AllCollectionSubjectAction(subjectId)));
+    this.store.dispatch(new subjectAction.AllSubjectAction());
+  }
+
+  /**
+   * Dispatches action for area list if not currently available in the store.
+   * @param id
+   */
   initializeAreas() {
     if (!this.areasAvailable) {
       this.store.dispatch(new areaActions.AreaAction());
     }
 
   }
+
 
   ngOnInit() {
 
@@ -123,6 +138,7 @@ export class MainContainer implements OnInit {
 
     this.setAreasAvailable();
     this.initializeAreas();
+
     this.route.params
 
       .subscribe((params) => {
@@ -136,7 +152,6 @@ export class MainContainer implements OnInit {
 
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
-
           } else {
             this.getCollections(params['areaId']);
 
@@ -145,11 +160,12 @@ export class MainContainer implements OnInit {
         }
         else if(params['subjectId']) {
 
+          this.subjectLinkType = 'all';
+          this.getAllCollectionsForSubject(params['subjectId']);
         }
         else {
 
           this.subjectLinkType = 'all';
-
           this.getAllCollections();
         }
 

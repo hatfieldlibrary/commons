@@ -24,16 +24,24 @@ export class CollectionEffects {
 
   @Effect()
   collectionsBySubjectArea$: Observable<Action> = this.actions$
-    .ofType(collection.CollectionActionTypes.LIST_AREA_SUBJECT)
+    .ofType(collection.CollectionActionTypes.LIST_BY_AREA_SUBJECT)
     .map((action: collection.CollectionSubjectAction) => action.payload)
     .switchMap((payload) => this.svc.getCollectionsByAreaSubject(payload.id, payload.areaId))
     .map((res) => new collection.CollectionSubjectActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
   @Effect()
+  collectionsBySubject$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_ALL_BY_SUBJECT)
+    .map((action: collection.AllCollectionSubjectAction) => action.payload)
+    .switchMap((payload) => this.svc.getCollectionsBySubject(payload))
+    .map((res) => new collection.AllCollectionSubjectActionSuccess(res))
+    .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
+
+  @Effect()
   collectionsAll$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_ALL_ACTION)
-   // .map((action: collection.AllCollectionsAction) => action.payload)
+   //.map((action: collection.AllCollectionsAction) => action.payload)
     .switchMap(() => this.svc.getAllCollections())
     .map((res) => new collection.AllCollectionsActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));

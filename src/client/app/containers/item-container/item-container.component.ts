@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {ItemType} from "../../shared/data-types/item.type";
 import * as fromItem from "../../actions/item.actions";
 import {RelatedType} from "../../shared/data-types/related-collection";
+import {getRelated} from "../../reducers/index";
 
 @Component({
   selector: 'item-container',
@@ -22,6 +23,28 @@ export class ItemContainerComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
   }
 
+  /**
+   * Dispatches request for related collections. This requires packaging identifiers
+   * from the subjects array for this item into a string.
+   * @param data the item object
+   */
+  getRelatedItems(data: ItemType) {
+
+    if (typeof data.subjects !== 'undefined' &&
+      typeof this.id !== 'undefined') {
+
+      let subjectString = '';
+      for (let subject of data.subjects) {
+        subjectString += subject + ',';
+
+      }
+      subjectString = subjectString.slice(0, -1);
+      if (subjectString.length > 0) {
+        this.store.dispatch(new fromItem.ItemActionRelated(this.id, subjectString));
+      }
+    }
+  }
+
   ngOnInit() {
 
     this.store.dispatch(new fromItem.ClearRelatedItems());
@@ -29,22 +52,9 @@ export class ItemContainerComponent implements OnInit {
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
 
-    // Once we have item information, request related items.
+    // Once we have item information, request the related items.
     this.item$.subscribe((data) => {
-
-      if (typeof data.subjects !== 'undefined' &&
-            typeof this.id !== 'undefined') {
-
-        let subjectString = '';
-        for (let subject of data.subjects) {
-          subjectString += subject + ',';
-
-        }
-        subjectString = subjectString.slice(0, -1);
-        if (subjectString.length > 0) {
-          this.store.dispatch(new fromItem.ItemActionRelated(this.id, subjectString));
-        }
-      }
+      this.getRelatedItems(data);
 
     });
 
@@ -52,7 +62,6 @@ export class ItemContainerComponent implements OnInit {
       .subscribe((params) => {
 
         if (params['id']) {
-
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));
 
