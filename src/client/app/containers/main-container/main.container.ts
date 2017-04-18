@@ -122,6 +122,7 @@ export class MainContainer implements OnInit {
    * @param id
    */
   initializeAreas() {
+    console.log('init area list ' + this.areasAvailable);
     if (!this.areasAvailable) {
       this.store.dispatch(new areaActions.AreaAction());
     }

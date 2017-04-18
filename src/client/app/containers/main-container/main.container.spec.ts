@@ -17,6 +17,7 @@ import {SubjectsComponent} from '../../components/subject-selector/subjects.comp
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import * as areaActions from '../../actions/area.actions';
+import * as subjectActions from '../../actions/subject-actions';
 import {ImageHeaderComponent} from '../../components/image-header/image-header.component';
 import {AreaInformationComponent} from '../../components/area-information/area-information.component';
 import {AppComponent} from '../../components/app.component';
@@ -27,7 +28,7 @@ import {appRoutes} from '../../app.module';
 import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
 
 let areaSubscriptionMock =
-  [{
+  {
     id: 1,
     title: 'test',
     name: 'test subject',
@@ -41,7 +42,7 @@ let areaSubscriptionMock =
       name: 'test tag'
     }
 
-  }];
+  };
 
 let areaListMock = [
     {
@@ -71,7 +72,7 @@ class MockActivatedRoute extends ActivatedRoute {
 class MockStore {
 
   select = () => {
-    return Observable.of(areasMock);
+    return Observable.of(areaList);
   };
   dispatch = jasmine.createSpy('dispatch');
 
@@ -87,8 +88,13 @@ const setAreaRoute = (route: MockActivatedRoute, mock: string) => {
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
-const setSubjectRoute = (route: MockActivatedRoute, area: string, subject: string) => {
+const setSubjectAreaRoute = (route: MockActivatedRoute, area: string, subject: string) => {
   route.setParamMock({areaId: area, subjectId: subject});
+  spyOn(route.params, 'subscribe').and.callThrough();
+};
+
+const setSubjectRoute = (route: MockActivatedRoute, subject: string) => {
+  route.setParamMock({subjectId: subject});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -136,7 +142,7 @@ describe('MainContainer', () => {
 
 
   beforeEach(() => {
-
+     areaList = areaListMock;
     TestBed.createComponent(AppComponent);
     fixture = TestBed.createComponent(MainContainer);
     store = fixture.debugElement.injector.get(Store);
@@ -148,8 +154,6 @@ describe('MainContainer', () => {
     spyOn(component, 'getAreaInformation').and.callThrough();
     spyOn(component, 'getCollectionsByArea').and.callThrough();
     spyOn(component, 'getCollectionsBySubject').and.callThrough();
-
-    spyOn(component, 'setAreasAvailable').and.callThrough();
     spyOn(component, 'getAllCollections').and.callThrough();
 
   });
@@ -159,22 +163,28 @@ describe('MainContainer', () => {
 
   });
 
-  it('should do nothing if no area id is provided in route parameters.', fakeAsync(() => {
+  it('should fetch all collections if no area id provided in route parameters.', fakeAsync(() => {
 
     route.setParamMock(null);
+
     spyOn(route.params, 'subscribe').and.callThrough();
-    areasMock = [];
 
     component.ngOnInit();
+
     tick();
-    expect(store.dispatch).not.toHaveBeenCalled();
+
+    expect(component.getAllCollections).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalledWith(new listActions.AllCollectionsAction);
+    expect(store.dispatch).toHaveBeenCalledWith(new subjectActions.AllSubjectAction());
+
 
   }));
 
   it('should not update area id if unchanged,', fakeAsync(() => {
 
     setAreaRoute(route, 'default');
-    areasMock = areaSubscriptionMock;
+
+    spyOn(component, 'setAreasAvailable').and.callThrough();
 
     expect(component.areasAvailable).toBeFalsy();
     component.ngOnInit();
@@ -184,32 +194,17 @@ describe('MainContainer', () => {
     tick();
     // If areaList store has elements, areasAvailable should be true after ngOnInit.
     expect(component.areasAvailable).toBeTruthy();
-    expect(component.initializeAreas).not.toHaveBeenCalled();
     // If areasAvailable is truthy, dispatch should NOT be called.
     expect(store.dispatch).not.toHaveBeenCalledWith(new areaActions.AreaAction('1'));
 
   }));
 
-  it('should dispatch request for all collections if area id is zero.', fakeAsync(() => {
-
-    setAreaRoute(route, '0');
-    areasMock = areaSubscriptionMock;
-
-    expect(component.areasAvailable).toBeFalsy();
-    component.ngOnInit();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
-    expect(component.setAreasAvailable).toHaveBeenCalled();
-    expect(route.params.subscribe).toHaveBeenCalled();
-    tick();
-    expect(component.getAllCollections).toHaveBeenCalled();
-
-  }));
 
   it('should use the existing area list from the store.', fakeAsync(() => {
 
     setAreaRoute(route, '1');
-    areasMock = areaSubscriptionMock;
-
+    areaListMock = areaList;
+    spyOn(component, 'setAreasAvailable').and.callThrough();
     expect(component.areasAvailable).toBeFalsy();
     component.ngOnInit();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
@@ -224,10 +219,10 @@ describe('MainContainer', () => {
 
   }));
 
-  it('should dispatch request to fetch the area list via service', fakeAsync(() => {
+  it('should dispatch request to fetch the area list', fakeAsync(() => {
 
-    setAreaRoute(route, '1');
-    // Set areaList store mock to empty array.
+    setAllRoute(route, '');
+  //  Set areaList store mock to empty array. This should trigger request for area list.
     areaList = [
       {
         id: 0,
@@ -235,16 +230,17 @@ describe('MainContainer', () => {
         count: 0
       }
     ];
+    spyOn(component, 'setAreasAvailable').and.callThrough();
 
     expect(component.areasAvailable).toBeFalsy();
     component.ngOnInit();
+
+    expect(component.areasAvailable).toBeFalsy();
     expect(route.params.subscribe).toHaveBeenCalled();
     expect(component.setAreasAvailable).toHaveBeenCalled();
-    // If areaList store is empty, areasAvailable should still be false after ngOnInit.
-    expect(component.areasAvailable).toBeFalsy();
     // areasAvailable is false, dispatch should have been called.
     expect(component.initializeAreas).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new areaActions.AreaAction('1'));
+    expect(store.dispatch).toHaveBeenCalledWith(new areaActions.AreaAction());
 
   }));
 
@@ -259,9 +255,9 @@ describe('MainContainer', () => {
 
   }));
 
-  it('should dispatch request for collections by subject', fakeAsync(() => {
-    setSubjectRoute(route, '1', '2');
-    areasMock = areaSubscriptionMock;
+  it('should dispatch request for collections by subject and area', fakeAsync(() => {
+    setSubjectAreaRoute(route, '1', '2');
+
     component.ngOnInit();
     tick();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getSubject);
@@ -269,14 +265,14 @@ describe('MainContainer', () => {
 
   }));
 
-  it('should return all collections.', fakeAsync(() => {
-    setAllRoute(route, '');
-  //  areasMock = areaSubscriptionMock;
+  it('should dispatch request for collections by subject only', fakeAsync(() => {
+    setSubjectRoute(route, '1');
+
     component.ngOnInit();
     tick();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getCollections);
-    expect(store.dispatch).toHaveBeenCalledWith(new listActions.AllCollectionsAction());
-    expect(store.dispatch).not.toHaveBeenCalledWith();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getSubject);
+    expect(store.dispatch).toHaveBeenCalledWith(new listActions.AllCollectionSubjectAction('1'));
+    expect(store.dispatch).toHaveBeenCalledWith(new subjectActions.AllSubjectAction());
 
   }));
 

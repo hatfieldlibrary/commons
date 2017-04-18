@@ -33,7 +33,7 @@ export class SubjectActionSuccess implements Action {
 
 export class AllSubjectAction implements Action {
   type = SubjectActionTypes.ALL_SUBJECT_LIST;
-
+  payload: void;
   constructor() {
   }
 
@@ -41,10 +41,9 @@ export class AllSubjectAction implements Action {
 
 export class AllSubjectActionSuccess implements Action {
   type = SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS;
-  payload: SubjectType[];
 
-  constructor(subjects: SubjectType[]) {
-    this.payload = subjects;
+  constructor(public payload: SubjectType[]) {
+
   }
 }
 
@@ -57,4 +56,4 @@ export class SubjectActionFailed implements Action {
 
 }
 
-export type SubjectActions = SubjectAction | SubjectActionSuccess | SubjectActionFailed;
+export type SubjectActions = SubjectAction | SubjectActionSuccess | AllSubjectAction | AllSubjectActionSuccess | SubjectActionFailed;

@@ -6,6 +6,7 @@ import {Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
+import * as fromRoot from '../../reducers';
 import {AppComponent} from "../../components/app.component";
 import {MainContainer} from "../main-container/main.container";
 import {ListComponent} from "../../components/collection-list/list.component";
@@ -36,11 +37,46 @@ const setMockRoute = (route: MockActivatedRoute, mock: string) => {
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
+let mockItem = {
+    collection: {
+      id: 1,
+      title: '',
+      image: '',
+      url: '',
+      desc: '',
+      dates: '',
+      items: '',
+      linkOptions: '',
+      searchOptions: '',
+      assetType: '',
+      restricted: false,
+      published: false
+    },
+    category: {
+      id: 0,
+      title: '',
+      linkLabel: '',
+      url: '',
+      secondaryUrl: '',
+      description: '',
+      areaId: ''
+    },
+    itemTypes: [{
+      id: 0,
+      name: '',
+      icon: ''
+
+    }],
+    subjects: ['1', '2']
+
+};
+
 class MockStore {
 
   select = () => {
-    return Observable.of([]);
+    return Observable.of(mockItem);
   };
+
   dispatch = jasmine.createSpy('dispatch');
 
 }
@@ -48,8 +84,8 @@ class MockStore {
 describe('ItemContainerComponent', () => {
   let component: ItemContainerComponent;
   let fixture: ComponentFixture<ItemContainerComponent>;
-  let route:MockActivatedRoute;
-  let store:MockStore;
+  let route: MockActivatedRoute;
+  let store: MockStore;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -92,6 +128,7 @@ describe('ItemContainerComponent', () => {
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
+    spyOn(store, 'select').and.callThrough();
 
   });
 
@@ -114,6 +151,21 @@ describe('ItemContainerComponent', () => {
     component.ngOnInit();
     tick();
     expect(component.id).toBeUndefined();
+
+  }));
+
+  it('should not dispatch request for related items.', fakeAsync(() => {
+
+    setMockRoute(route, '1');
+    component.id = '1';
+    spyOn(component, 'getRelatedItems').and.callThrough();
+    component.ngOnInit();
+    tick();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getItem);
+    expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ClearRelatedItems());
+    expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemRequest('1'));
+    expect(component.getRelatedItems).toHaveBeenCalledWith(mockItem);
+    expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemActionRelated('1', '1,2'));
 
   }));
 

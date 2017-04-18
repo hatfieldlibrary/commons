@@ -29,8 +29,12 @@ export class ItemContainerComponent implements OnInit {
    */
   getRelatedItems(data: ItemType) {
 
+    console.log(data.subjects)
+    console.log(this.id)
+
     if (typeof data.subjects !== 'undefined' &&
       typeof this.id !== 'undefined') {
+
 
       let subjectString = '';
       for (let subject of data.subjects) {
@@ -38,6 +42,7 @@ export class ItemContainerComponent implements OnInit {
 
       }
       subjectString = subjectString.slice(0, -1);
+
       if (subjectString.length > 0) {
         this.store.dispatch(new fromItem.ItemActionRelated(this.id, subjectString));
       }

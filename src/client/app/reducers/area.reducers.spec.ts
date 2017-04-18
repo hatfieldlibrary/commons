@@ -50,25 +50,6 @@ class MockAction implements Action {
 
 describe('Area Reducer', () => {
 
-  // it('should return the initial state and loading true.', () => {
-  //   expect(
-  //     reducer(undefined, new AreaAction('1'))
-  //   ).toEqual(
-  //     {
-  //       area: <AreaType>{},
-  //       loading: true
-  //     })
-  // });
-
-  // it('should return state with area list', () => {
-  //   expect(
-  //     reducer(undefined, new AreaActionSuccess(areaListTypeMock))
-  //   ).toEqual(
-  //     {
-  //       area: areaMock,
-  //       loading: false
-  //     })
-  // });
 
   it('should return state with area information', () => {
     expect(

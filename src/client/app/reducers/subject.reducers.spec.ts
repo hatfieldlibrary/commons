@@ -1,4 +1,7 @@
-import {SubjectAction, SubjectActions, SubjectActionSuccess} from "../actions/subject-actions";
+import {
+  AllSubjectActionSuccess, SubjectAction, SubjectActionFailed, SubjectActions,
+  SubjectActionSuccess
+} from "../actions/subject-actions";
 import {getSubjectList, reducer} from "./subject.reducers";
 import {Action} from "@ngrx/store";
 /**
@@ -37,7 +40,19 @@ describe('Subject Reducers', () => {
       reducer(undefined, new SubjectActionSuccess(expectedSubjects))
     ).toEqual({
         subjects: expectedSubjects,
-      loading: false
+        loading: false
+      }
+    )
+  });
+
+
+  it('should return subject list', () => {
+
+    expect(
+      reducer(undefined, new AllSubjectActionSuccess(expectedSubjects))
+    ).toEqual({
+        subjects: expectedSubjects,
+        loading: false
       }
     )
   });
@@ -57,6 +72,13 @@ describe('Subject Reducers', () => {
     let state = reducer(undefined, new SubjectActionSuccess(expectedSubjects));
     let result = getSubjectList(state);
     expect(result).toEqual(expectedSubjects);
+  });
+
+  it('should return error message', () => {
+
+    let state = reducer(undefined, new SubjectActionFailed('I am a failure.'));
+    let result = getSubjectList(state);
+    expect(result).toEqual([]);
   });
 
 });
