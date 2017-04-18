@@ -99,7 +99,7 @@ describe('Collections Effect', () => {
         runner.queue(new CollectionSubjectAction('1', '1'));
 
         collectionEffects.collectionsByArea$.subscribe(result => {
-          expect(result.type).toEqual(CollectionActionTypes.LIST_BY_SUBJECT_SUCCESS);
+          expect(result.type).toEqual(CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS);
           expect(result.payload.length).toBe(1);
           expect(result.payload[0].title).toEqual('test subject title');
         });

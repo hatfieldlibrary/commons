@@ -35,7 +35,7 @@ const initializeItem = {
       name: '',
       icon: ''
     }],
-  subjects: [1]
+  subjects: []
 };
 
 const itemMock = {

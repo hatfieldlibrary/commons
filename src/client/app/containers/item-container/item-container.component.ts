@@ -6,7 +6,6 @@ import {Observable} from "rxjs";
 import {ItemType} from "../../shared/data-types/item.type";
 import * as fromItem from "../../actions/item.actions";
 import {RelatedType} from "../../shared/data-types/related-collection";
-import {getRelated} from "../../reducers/index";
 
 @Component({
   selector: 'item-container',

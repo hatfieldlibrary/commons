@@ -15,6 +15,7 @@ import {ImageHeaderComponent} from "../image-header/image-header.component";
 import {AreaInformationComponent} from "../area-information/area-information.component";
 import {ItemContainerComponent} from "../../containers/item-container/item-container.component";
 import {ItemComponent} from "../item/item.component";
+import {RelatedItemsComponent} from "../related-items/related-items.component";
 
 
 describe('ListComponent', () => {
@@ -32,6 +33,7 @@ describe('ListComponent', () => {
         AreaInformationComponent,
         PageNotFoundComponent,
         ItemContainerComponent,
+        RelatedItemsComponent,
         ItemComponent
       ],
       imports: [

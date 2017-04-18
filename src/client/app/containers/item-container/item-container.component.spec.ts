@@ -13,6 +13,7 @@ import {AreaComponent} from "../../components/area-selector/area.component";
 import {SubjectsComponent} from "app/components/subject-selector/subjects.component";
 import {ImageHeaderComponent} from "../../components/image-header/image-header.component";
 import {AreaInformationComponent} from "../../components/area-information/area-information.component";
+import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
 import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
 import * as fromItem from '../../actions/item.actions';
 import {appRoutes} from '../../app.module';
@@ -63,6 +64,7 @@ describe('ItemContainerComponent', () => {
         PageNotFoundComponent,
         ItemContainerComponent,
         ItemComponent,
+        RelatedItemsComponent
       ],
       imports: [
         MaterialModule,
@@ -111,7 +113,7 @@ describe('ItemContainerComponent', () => {
     route.setParamMock(null);
     component.ngOnInit();
     tick();
-    expect(store.dispatch).not.toHaveBeenCalled();
+    expect(component.id).toBeUndefined();
 
   }));
 

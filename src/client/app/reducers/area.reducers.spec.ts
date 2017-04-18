@@ -32,6 +32,16 @@ const areaMock = {
 
 };
 
+const initialState = {
+    id: 0,
+    title: '',
+    linkLabel: '',
+    url: '',
+    searchUrl: '',
+    description: '',
+    position: 0
+};
+
 class MockAction implements Action {
   type: string = '';
   payload: any;
@@ -40,36 +50,33 @@ class MockAction implements Action {
 
 describe('Area Reducer', () => {
 
-  it('should return the initial state and loading true.', () => {
-    expect(
-      reducer(undefined, new AreaAction('1'))
-    ).toEqual(
-      {
-        areas: [],
-        areaInfo: <AreaType>{},
-        loading: true
-      })
-  });
+  // it('should return the initial state and loading true.', () => {
+  //   expect(
+  //     reducer(undefined, new AreaAction('1'))
+  //   ).toEqual(
+  //     {
+  //       area: <AreaType>{},
+  //       loading: true
+  //     })
+  // });
 
-  it('should return state with area list', () => {
-    expect(
-      reducer(undefined, new AreaActionSuccess(areaListTypeMock))
-    ).toEqual(
-      {
-        areas: areaListTypeMock,
-        areaInfo: <AreaType>{},
-        loading: false
-      })
-  });
+  // it('should return state with area list', () => {
+  //   expect(
+  //     reducer(undefined, new AreaActionSuccess(areaListTypeMock))
+  //   ).toEqual(
+  //     {
+  //       area: areaMock,
+  //       loading: false
+  //     })
+  // });
 
   it('should return state with area information', () => {
     expect(
       reducer(undefined, new AreaInformation('1'))
     ).toEqual(
       {
-        areas: [],
-        areaInfo:<AreaType>{},
-        loading: false
+        area: initialState,
+        loading: true
       })
   });
 
@@ -80,7 +87,6 @@ describe('Area Reducer', () => {
       reducer(areaState, new MockAction())
     ).toEqual(
       {
-        areas: areaListTypeMock,
         area: areaMock,
         loading: false
       })
@@ -93,18 +99,9 @@ describe('Area Reducer', () => {
       reducer(areaState, new AreaInformationSuccess(areaMock))
     ).toEqual(
       {
-        areas: areaListTypeMock,
-        areaInfo: areaMock,
+        area: areaMock,
         loading: false
       })
-  });
-
-  it('should return area list', () => {
-
-    let areaState: State = {area: areaMock, loading: true};
-    let state = reducer(areaState, new AreaActionSuccess(areaListTypeMock));
-    let result = getAreaInfo(state);
-    expect(result).toEqual(areaListTypeMock);
   });
 
 

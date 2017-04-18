@@ -30,6 +30,7 @@ export function reducer(state = initialState, action: AreaActions): State {
 
     case AreaActionTypes.AREA_LIST: {
       return Object.assign({}, state, {
+        areaList: [],
         loading: true
       });
 

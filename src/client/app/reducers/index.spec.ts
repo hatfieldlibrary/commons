@@ -1,17 +1,22 @@
 import {reducer} from "./";
 import {SubjectActionSuccess} from "../actions/subject-actions";
-import {getAreasState, getCollectionssState, getItemState, getSubjectsState} from "./index";
+import {getAreasState, getAreaListState, getCollectionssState, getItemState, getSubjectsState} from "./index";
 import {ItemSuccess} from "../actions/item.actions";
-import {AreaActionSuccess} from "../actions/area.actions";
+import {AreaActionSuccess, AreaInformation, AreaInformationSuccess} from "../actions/area.actions";
 import {CollectionActionSuccess} from "../actions/collection.actions";
 import {AreaType} from "../shared/data-types/area.type";
+import {AreaListItemType} from "../shared/data-types/area-list.type";
+import {getAreaList} from "./area-list.reducers";
 
 describe('Reducers ', () => {
 
   let subjectState;
   let itemState;
   let areaState;
+  let areaListState;
   let collectionState;
+  let areaInfoState;
+
   const expectedSubjects = [
     {
       id: 1,
@@ -81,11 +86,22 @@ describe('Reducers ', () => {
     }
   ];
 
+  const expectedArea = {
+    id: 1,
+    title: 'Area One',
+    linkLabel: '',
+    url: '',
+    searchUrl: '',
+    description: '',
+    position: 0
+  } ;
+
 
   beforeEach(() => {
     subjectState = reducer(undefined, new SubjectActionSuccess(expectedSubjects));
     itemState = reducer(undefined, new ItemSuccess(expectedItem));
-    areaState = reducer(undefined, new AreaActionSuccess(expectedAreas));
+    areaState = reducer(undefined, new AreaInformationSuccess(expectedArea));
+    areaListState = reducer(undefined, new AreaActionSuccess(expectedAreas)) ;
     collectionState = reducer(undefined, new CollectionActionSuccess(expectedCollections))
 
   });
@@ -110,10 +126,9 @@ describe('Reducers ', () => {
   });
 
   it('should return areaList state.', () => {
-    let result = getAreasState(areaState);
+    let result = getAreaListState(areaListState);
     expect(result).toEqual({
-      areas: expectedAreas,
-      areaInfo: <AreaType>{},
+      areaList: expectedAreas,
       loading: false
     });
 

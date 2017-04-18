@@ -29,7 +29,6 @@ export class CollectionAction implements Action {
   type = CollectionActionTypes.LIST_BY_AREA;
 
   constructor(public payload: string) {
-    this.payload = payload;
   }
 
 }

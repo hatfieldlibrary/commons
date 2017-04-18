@@ -52,13 +52,13 @@ describe('Area Effect', () => {
         areaEffects = _areaEffects;
         areaService = _areaService;
         spyOn(areaService, 'getAreaList')
-          .and.returnValue(Observable.of({area: '1', response: mockAreas}));
+          .and.returnValue(Observable.of(mockAreas));
         runner.queue(new AreaAction('1'));
 
         areaEffects.areaListEffect$.subscribe(result => {
-          expect(result.type).toEqual(AreaActionTypes.AREA_INFORMATION);
-          expect(result.payload.areaList.length).toBe(2);
-          expect(result.payload.areaId).toEqual('1');
+          expect(result.type).toEqual(AreaActionTypes.AREA_LIST_SUCCESS);
+          expect(result.payload.length).toBe(2);
+
         });
       })
   );

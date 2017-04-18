@@ -13,6 +13,7 @@ import {ImageHeaderComponent} from "../image-header/image-header.component";
 import {AreaInformationComponent} from "../area-information/area-information.component";
 import {ItemContainerComponent} from "../../containers/item-container/item-container.component";
 import {ItemComponent} from "../item/item.component";
+import {RelatedItemsComponent} from "../related-items/related-items.component";
 
 describe('SubjectsComponent', () => {
   let component: SubjectsComponent;
@@ -29,6 +30,7 @@ describe('SubjectsComponent', () => {
         AreaInformationComponent,
         ItemContainerComponent,
         ItemComponent,
+        RelatedItemsComponent,
         PageNotFoundComponent ],
       imports: [
         MaterialModule,

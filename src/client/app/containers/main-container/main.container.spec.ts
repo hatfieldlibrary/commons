@@ -24,6 +24,7 @@ import {PageNotFoundComponent} from '../../shared/components/page-not-found/page
 import {ItemContainerComponent} from "../item-container/item-container.component";
 import {ItemComponent} from "../../components/item/item.component";
 import {appRoutes} from '../../app.module';
+import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
 
 let areaSubscriptionMock =
   [{
@@ -41,6 +42,16 @@ let areaSubscriptionMock =
     }
 
   }];
+
+let areaListMock = [
+    {
+      id: 1,
+      title: 'area one',
+      count: 1
+    }
+];
+
+let areaList = areaListMock;
 
 let areasMock = areaSubscriptionMock;
 
@@ -65,6 +76,11 @@ class MockStore {
   dispatch = jasmine.createSpy('dispatch');
 
 }
+
+const setAllRoute = (route: MockActivatedRoute, mock: string) => {
+ route.setParamMock({});
+  spyOn(route.params, 'subscribe').and.callThrough();
+};
 
 const setAreaRoute = (route: MockActivatedRoute, mock: string) => {
   route.setParamMock({areaId: mock});
@@ -95,6 +111,7 @@ describe('MainContainer', () => {
         AreaInformationComponent,
         PageNotFoundComponent,
         ItemContainerComponent,
+        RelatedItemsComponent,
         ItemComponent
       ],
       imports: [
@@ -126,7 +143,12 @@ describe('MainContainer', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     component = fixture.componentInstance;
     spyOn(store, 'select').and.callThrough();
-    spyOn(component, 'getAreas').and.callThrough();
+    spyOn(component, 'getAllCollectionsForSubject').and.callThrough();
+    spyOn(component, 'initializeAreas').and.callThrough();
+    spyOn(component, 'getAreaInformation').and.callThrough();
+    spyOn(component, 'getCollectionsByArea').and.callThrough();
+    spyOn(component, 'getCollectionsBySubject').and.callThrough();
+
     spyOn(component, 'setAreasAvailable').and.callThrough();
     spyOn(component, 'getAllCollections').and.callThrough();
 
@@ -162,7 +184,7 @@ describe('MainContainer', () => {
     tick();
     // If areaList store has elements, areasAvailable should be true after ngOnInit.
     expect(component.areasAvailable).toBeTruthy();
-    expect(component.getAreas).not.toHaveBeenCalled();
+    expect(component.initializeAreas).not.toHaveBeenCalled();
     // If areasAvailable is truthy, dispatch should NOT be called.
     expect(store.dispatch).not.toHaveBeenCalledWith(new areaActions.AreaAction('1'));
 
@@ -196,7 +218,7 @@ describe('MainContainer', () => {
     tick();
     // If areaList store has elements, areasAvailable should be true after ngOnInit.
     expect(component.areasAvailable).toBeTruthy();
-    expect(component.getAreas).toHaveBeenCalled();
+    expect(component.initializeAreas).toHaveBeenCalled();
     // If areasAvailable is truthy, dispatch should NOT be called.
     expect(store.dispatch).not.toHaveBeenCalledWith(new areaActions.AreaAction('1'));
 
@@ -206,7 +228,13 @@ describe('MainContainer', () => {
 
     setAreaRoute(route, '1');
     // Set areaList store mock to empty array.
-    areasMock = [];
+    areaList = [
+      {
+        id: 0,
+        title: '',
+        count: 0
+      }
+    ];
 
     expect(component.areasAvailable).toBeFalsy();
     component.ngOnInit();
@@ -215,7 +243,7 @@ describe('MainContainer', () => {
     // If areaList store is empty, areasAvailable should still be false after ngOnInit.
     expect(component.areasAvailable).toBeFalsy();
     // areasAvailable is false, dispatch should have been called.
-    expect(component.getAreas).toHaveBeenCalled();
+    expect(component.initializeAreas).toHaveBeenCalled();
     expect(store.dispatch).toHaveBeenCalledWith(new areaActions.AreaAction('1'));
 
   }));
@@ -242,12 +270,12 @@ describe('MainContainer', () => {
   }));
 
   it('should return all collections.', fakeAsync(() => {
-    setAreaRoute(route, '0');
-    areasMock = areaSubscriptionMock;
+    setAllRoute(route, '');
+  //  areasMock = areaSubscriptionMock;
     component.ngOnInit();
     tick();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getCollections);
-    expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionAction('1'));
+    expect(store.dispatch).toHaveBeenCalledWith(new listActions.AllCollectionsAction());
     expect(store.dispatch).not.toHaveBeenCalledWith();
 
   }));

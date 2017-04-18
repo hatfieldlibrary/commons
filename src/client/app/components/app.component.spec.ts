@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {TestBed, async} from '@angular/core/testing';
+import {AppComponent} from './app.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {} from 'jasmine';
 import {ImageHeaderComponent} from "./image-header/image-header.component";
@@ -15,6 +15,7 @@ import {PageNotFoundComponent} from "../shared/components/page-not-found/page-no
 import {MaterialModule} from "@angular/material";
 import {ItemContainerComponent} from "../containers/item-container/item-container.component";
 import {ItemComponent} from "./item/item.component";
+import {RelatedItemsComponent} from "./related-items/related-items.component";
 
 describe('AppComponent', () => {
 
@@ -30,6 +31,7 @@ describe('AppComponent', () => {
         AreaInformationComponent,
         ItemContainerComponent,
         ItemComponent,
+        RelatedItemsComponent,
         PageNotFoundComponent
       ],
       imports: [
