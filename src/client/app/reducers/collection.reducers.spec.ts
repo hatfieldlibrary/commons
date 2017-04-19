@@ -1,6 +1,8 @@
 import {Action} from "@ngrx/store";
 import {getCollectionList, reducer, State} from "./collection.reducers";
 import {
+  AllCollectionsActionSuccess,
+  AllCollectionSubjectAction, AllCollectionSubjectActionSuccess,
   CollectionAction, CollectionActionFailed, CollectionActionSuccess, CollectionSubjectAction,
   CollectionSubjectActionSuccess
 } from "../actions/collection.actions";
@@ -94,7 +96,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return current state if no area id is provided', () => {
+  it('should return current empty state if no area id is provided to CollectionAction', () => {
     let collectionState: State = {collections: collectionListMock, loading: false};
     expect(
       reducer(collectionState, new CollectionAction(''))
@@ -105,7 +107,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return current state if either area or subject id is missing.', () => {
+  it('should return empty state if either area or subject id is missing in CollectionSubjectAction.', () => {
     let collectionState: State = {collections: collectionListMock, loading: false};
     expect(
       reducer(collectionState, new CollectionSubjectAction('', '1'))
@@ -116,11 +118,36 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return collection list information', () => {
+  it('should return collection for area list.', () => {
 
     let state = reducer(undefined, new CollectionActionSuccess(collectionListMock));
     let result = getCollectionList(state);
     expect(result).toEqual(collectionListMock);
+  });
+
+  it('should return list of all collections by subject (all areas).', () => {
+    let collectionState: State = {collections: [], loading: true};
+    expect(
+      reducer(collectionState, new AllCollectionSubjectActionSuccess(collectionListMock))
+    ).toEqual(
+      {
+        collections: collectionListMock,
+        loading: false
+      })
+
+  });
+
+
+  it('should return list of all collections .', () => {
+    let collectionState: State = {collections: [], loading: true};
+    expect(
+      reducer(collectionState, new AllCollectionsActionSuccess(collectionListMock))
+    ).toEqual(
+      {
+        collections: collectionListMock,
+        loading: false
+      })
+
   });
 
 });

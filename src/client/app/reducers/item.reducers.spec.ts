@@ -1,7 +1,7 @@
-import {getItem, reducer} from "./item.reducers";
-import {ItemRequest, ItemSuccess} from "../actions/item.actions";
+import {getItem, reducer, State} from "./item.reducers";
+import {ItemRequest, ItemRequestFailed, ItemSuccess} from "../actions/item.actions";
 import {Action} from "@ngrx/store";
-import {ItemTypesInterface} from "../shared/data-types/item.type";
+
 /**
  * Created by mspalti on 3/24/17.
  */
@@ -108,6 +108,18 @@ describe('Item Reducers', () => {
         item: initializeItem,
         loading: false
       })
+  });
+
+  it('should return current state and fail.', () => {
+      let itemState: State = {item: itemMock, loading: false};
+      expect(
+        reducer(itemState, new ItemRequestFailed('error'))
+      ).toEqual(
+        {
+          item: itemMock,
+          loading: false
+        });
+
   });
 
   it('should return item  information', () => {

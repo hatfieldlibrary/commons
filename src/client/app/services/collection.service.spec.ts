@@ -89,5 +89,32 @@ describe('Collection Service', () => {
 
   }));
 
+  it('get all collections', inject([CollectionService, MockBackend], (collectionService, mockBackend) => {
+    const testResponse = mockCollectionsForSubject.concat(mockCollections);
+    mockBackend.connections.subscribe(conn => {
+      conn.mockRespond(new Response(new ResponseOptions({body: testResponse})));
+    });
+    const result = collectionService.getAllCollections();
+    result.subscribe(res => {
+      expect(res).toEqual({
+         testResponse
+      });
+    });
+
+  }));
+
+  it('get collections by subject', inject([CollectionService, MockBackend], (collectionService, mockBackend) => {
+    mockBackend.connections.subscribe(conn => {
+      conn.mockRespond(new Response(new ResponseOptions({body: mockCollectionsForSubject})));
+    });
+    const result = collectionService.getCollectionsBySubject('1');
+    result.subscribe(res => {
+      expect(res).toEqual({
+        mockCollectionsForSubject
+      });
+    });
+
+  }));
+
 });
 

@@ -16,7 +16,7 @@ export class RelatedEffects {
   }
 
   @Effect()
-  subjectEffect$: Observable<Action> = this.actions$
+  relatedEffect$: Observable<Action> = this.actions$
     .ofType(related.ItemActionTypes.RELATED_COLLECTIONS)
     .map((action: related.ItemActionRelated) => action.payload)
     .switchMap((payload) => this.svc.getRelatedCollections(payload.id, payload.subjectIds))

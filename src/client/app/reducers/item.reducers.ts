@@ -60,11 +60,16 @@ export function reducer(state = initialState, action: ItemActions): State {
 
     case ItemActionTypes.ITEM_SUCCESS: {
 
-      const result: ItemType = <ItemType>action.payload;
-      return Object.assign({}, state, {
-        item: result,
-        loading: false
-      });
+    const result: ItemType = <ItemType>action.payload;
+    return Object.assign({}, state, {
+      item: result,
+      loading: false
+    });
+
+  }
+
+    case ItemActionTypes.REQUEST_FAILED: {
+      return state;
 
     }
 

@@ -2,29 +2,33 @@ import {AreaService, AreasResponse} from "./area.service";
 import {inject, TestBed} from "@angular/core/testing";
 import {HttpModule, ResponseOptions, XHRBackend} from "@angular/http";
 import {MockBackend} from "@angular/http/testing";
+import {AreaType} from "../shared/data-types/area.type";
+import {AreaListItemType} from "../shared/data-types/area-list.type";
 
 
 describe('Area Service', () => {
 
-  const mockAreas = [
+  const mockAreasList: AreaListItemType[] = [
     {
       id: 1,
-      title: 'test',
-      linkLabel: 'link',
-      url: 'url',
-      searchUrl: '',
-      description: 'description',
-      position: 1
+      title: 'test area one',
+      count: 2
     }, {
       id: 2,
-      title: 'test 2',
-      linkLabel: 'link',
-      url: 'url',
-      searchUrl: '',
-      description: 'description',
-      position: 1
+      title: 'test area two',
+      count: 1
     }
   ];
+
+  const mockAreaInfo: AreaType = {
+    id: 1,
+    title: 'test area',
+    linkLabel: '',
+    url: '',
+    searchUrl: '',
+    description: '',
+    position: 2
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -41,18 +45,31 @@ describe('Area Service', () => {
   });
 
 
-  it('get areaList', inject([AreaService, MockBackend], (areaService, mockBackend) => {
+  it('should get areaList', inject([AreaService, MockBackend], (areaService, mockBackend) => {
     mockBackend.connections.subscribe((conn) => {
-      conn.mockRespond(new Response(new ResponseOptions({body: mockAreas})));
+      conn.mockRespond(new Response(new ResponseOptions({body: mockAreasList})));
     });
     const result = areaService.getAreaList('1');
     result.subscribe((res:AreasResponse) => {
       expect(res.response).toEqual({
-        mockAreas
+        mockAreasList
       });
       expect(res.area).toEqual('1');
     });
 
   }));
 
+  it('should get area info', inject([AreaService, MockBackend], (areaService, mockBackend) => {
+    mockBackend.connections.subscribe((conn) => {
+      conn.mockRespond(new Response(new ResponseOptions({body: mockAreaInfo})));
+    });
+    const result = areaService.getAreaInfo('1');
+    result.subscribe((res:AreasResponse) => {
+      expect(res.response).toEqual({
+        mockAreaInfo
+      });
+
+    });
+
+  }));
 });

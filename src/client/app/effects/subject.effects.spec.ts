@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 import {HttpModule} from "@angular/http";
 import {SubjectService} from "../services/subject.service";
 import {SubjectEffects} from "./subject.effects";
-import {SubjectAction, SubjectActionTypes} from "../actions/subject-actions";
+import {AllSubjectAction, SubjectAction, SubjectActionTypes} from "../actions/subject-actions";
 
 describe('Subject Effect', () => {
   let runner: EffectsRunner;
@@ -32,7 +32,7 @@ describe('Subject Effect', () => {
 
     ]
   }));
-  it('call Area Success action after areaList loaded.',
+  it('should call Subject Success action after subjects for area list is loaded.',
     inject([
         EffectsRunner, SubjectEffects, SubjectService
       ],
@@ -45,6 +45,25 @@ describe('Subject Effect', () => {
         runner.queue(new SubjectAction('1'));
         subjectEffects.subjectEffect$.subscribe(result => {
           expect(result.type).toEqual(SubjectActionTypes.SUBJECT_LIST_SUCCESS);
+          expect(result.payload[0].name).toEqual('test subject');
+
+        });
+      })
+  );
+
+  it('should call Subject Success action after all subjects are loaded.',
+    inject([
+        EffectsRunner, SubjectEffects, SubjectService
+      ],
+      (_runner:EffectsRunner, _subjectEffects:SubjectEffects, _subjectService:SubjectService ) => {
+        runner = _runner;
+        subjectEffects = _subjectEffects;
+        subjectService = _subjectService;
+        spyOn(subjectService, 'getAllSubjects')
+          .and.returnValue(Observable.of(subjectsMock));
+        runner.queue(new AllSubjectAction());
+        subjectEffects.allSubjectEffect$.subscribe(result => {
+          expect(result.type).toEqual(SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS);
           expect(result.payload[0].name).toEqual('test subject');
 
         });

@@ -6,7 +6,10 @@ import {Observable} from "rxjs";
 import {HttpModule} from "@angular/http";
 import {CollectionService} from "../services/collection.service";
 import {CollectionEffects} from "./collection.effects";
-import {CollectionAction, CollectionActionTypes, CollectionSubjectAction} from "../actions/collection.actions";
+import {
+  AllCollectionsAction, AllCollectionSubjectAction, CollectionAction, CollectionActionTypes,
+  CollectionSubjectAction
+} from "../actions/collection.actions";
 
 describe('Collections Effect', () => {
   let runner: EffectsRunner;
@@ -98,8 +101,48 @@ describe('Collections Effect', () => {
           .and.returnValue(Observable.of(mockCollectionsForSubject));
         runner.queue(new CollectionSubjectAction('1', '1'));
 
-        collectionEffects.collectionsByArea$.subscribe(result => {
+        collectionEffects.collectionsBySubjectArea$.subscribe(result => {
           expect(result.type).toEqual(CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS);
+          expect(result.payload.length).toBe(1);
+          expect(result.payload[0].title).toEqual('test subject title');
+        });
+      })
+  );
+
+  it('call All Collection List Success action after all collections are retrieved.',
+    inject([
+        EffectsRunner, CollectionEffects, CollectionService
+      ],
+      (_runner:EffectsRunner, _collectionEffects:CollectionEffects, _collectionService:CollectionService ) => {
+        runner = _runner;
+        collectionEffects = _collectionEffects;
+        collectionService = _collectionService;
+        spyOn(collectionService, 'getAllCollections')
+          .and.returnValue(Observable.of(mockCollectionsForSubject.concat(mockCollections)));
+        runner.queue(new AllCollectionsAction());
+
+        collectionEffects.collectionsAll$.subscribe(result => {
+          expect(result.type).toEqual(CollectionActionTypes.LIST_ALL_SUCCESS_ACTION);
+          expect(result.payload.length).toBe(2);
+          expect(result.payload[0].title).toEqual('test subject title');
+        });
+      })
+  );
+
+  it('call All Collection List Success action after all collections by subject are retrieved.',
+    inject([
+        EffectsRunner, CollectionEffects, CollectionService
+      ],
+      (_runner:EffectsRunner, _collectionEffects:CollectionEffects, _collectionService:CollectionService ) => {
+        runner = _runner;
+        collectionEffects = _collectionEffects;
+        collectionService = _collectionService;
+        spyOn(collectionService, 'getCollectionsBySubject')
+          .and.returnValue(Observable.of(mockCollectionsForSubject));
+        runner.queue(new AllCollectionSubjectAction('1'));
+
+        collectionEffects.collectionsBySubject$.subscribe(result => {
+          expect(result.type).toEqual(CollectionActionTypes.LIST_ALL_BY_SUBJECT_SUCCESS);
           expect(result.payload.length).toBe(1);
           expect(result.payload[0].title).toEqual('test subject title');
         });

@@ -1,6 +1,6 @@
 import {getAreaInfo, reducer, State} from './area.reducers';
 import {
-  AreaAction, AreaActionSuccess, AreaInformation, AreaInformationSuccess
+  AreaAction, AreaActionFailed, AreaActionSuccess, AreaInformation, AreaInformationSuccess
 } from '../actions/area.actions';
 import {Action} from '@ngrx/store';
 import {AreaType} from '../shared/data-types/area.type';
@@ -83,6 +83,19 @@ describe('Area Reducer', () => {
         area: areaMock,
         loading: false
       })
+  });
+
+
+  it('should return current state and fail.', () => {
+    let areaState: State = {area: areaMock, loading: false};
+    expect(
+      reducer(areaState, new AreaActionFailed('error'))
+    ).toEqual(
+      {
+        area: areaMock,
+        loading: false
+      });
+
   });
 
 

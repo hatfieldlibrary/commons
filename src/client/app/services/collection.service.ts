@@ -14,12 +14,7 @@ export class CollectionService {
   constructor(private http: Http) {}
 
   getCollectionsByAreaId(id:string): Observable<CollectionType[]> {
-
-    // If id is zero, we want to return all collections. Until that is implemented, just set id to 1.
-    if (id == '0') {
-      id = '1';
-    }
-
+    
     // temporary test data source
     return this.http.get(environment.apiHost + environment.apiRoot + '/collection/area/' + id)
       .map(res => res.json());

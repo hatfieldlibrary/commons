@@ -41,6 +41,19 @@ describe('Subject Service', () => {
 
   }));
 
+  it('get all subjects', inject([SubjectService, MockBackend], (subjectService:SubjectService, mockBackend:MockBackend) => {
+    mockBackend.connections.subscribe(conn => {
+      conn.mockRespond(new Response(new ResponseOptions({body: subjectsMock})));
+    });
+    const result = subjectService.getAllSubjects();
+    result.subscribe(res => {
+      expect(res).toEqual({
+        subjectsMock
+      });
+    });
+
+  }));
+
 });
 
 

@@ -55,20 +55,22 @@ export class ItemActionRelated implements Action {
 
 }
 
-export class ClearRelatedItems implements Action {
-  type = ItemActionTypes.CLEAR_RELATED_COLLECTIONS;
-  constructor() {}
-}
-
 export class ItemActionRelatedSuccess implements Action {
   type = ItemActionTypes.RELATED_COLLECTIONS_SUCCESS;
-  payload: RelatedType[];
 
-  constructor(related: RelatedType[]) {
-    this.payload = related;
+  constructor(public payload: RelatedType[]) {
   }
 
 }
+
+export class ClearRelatedItems implements Action {
+  type = ItemActionTypes.CLEAR_RELATED_COLLECTIONS;
+  payload: void;
+
+  constructor() {}
+}
+
+
 
 
 export type ItemActions = ItemRequest | ItemSuccess | ItemActionRelated | ItemActionRelatedSuccess | ItemRequestFailed;
