@@ -89,7 +89,7 @@ class MockActivatedRoute extends ActivatedRoute {
 
 }
 
-class MockStore extends Store<any> {
+class MockStore<T> extends Store<any> {
 
   select = () => {
     return Observable.of(areaList);
@@ -98,7 +98,7 @@ class MockStore extends Store<any> {
 
 }
 
-const setAllRoute = (route: MockActivatedRoute, mock: string) => {
+const setAllRoute = (route: MockActivatedRoute) => {
  route.params = Observable.of({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
@@ -119,9 +119,10 @@ const setSubjectRoute = (route: MockActivatedRoute, subject: string) => {
 };
 
 describe('MainContainer', () => {
+
   let component: MainContainer;
   let fixture: ComponentFixture<MainContainer>;
-  let store:MockStore;
+  let store:MockStore<any>;
   let route:MockActivatedRoute;
 
   beforeEach(async(() => {
@@ -148,11 +149,14 @@ describe('MainContainer', () => {
       providers: [
         {
           provide: Store,
-          useClass: MockStore
+          useClass: class {
+            dispatch = jasmine.createSpy('dispatch'); select = () => {
+            return Observable.of(areaList);
+          };}
         },
         {
           provide: ActivatedRoute,
-          useClass: MockActivatedRoute
+          useClass: class {params: Observable<any>;}
         }
       ]
     })
@@ -169,7 +173,7 @@ describe('MainContainer', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     component = fixture.componentInstance;
     spyOn(store, 'select').and.callThrough();
-    spyOn(store, 'dispatch');
+   // spyOn(store, 'dispatch');
     spyOn(component, 'getAllCollectionsForSubject').and.callThrough();
     spyOn(component, 'initializeAreas').and.callThrough();
     spyOn(component, 'getAreaInformation').and.callThrough();
@@ -186,9 +190,9 @@ describe('MainContainer', () => {
 
   it('should fetch all collections if no area id provided in route parameters.', fakeAsync(() => {
 
-    //route.setParamMock(null);
+    setAllRoute(route);
 
-    spyOn(route.params, 'subscribe').and.callThrough();
+    //spyOn(route.params, 'subscribe').and.callThrough();
 
     component.ngOnInit();
 
@@ -242,7 +246,7 @@ describe('MainContainer', () => {
 
   it('should dispatch request to fetch the area list', fakeAsync(() => {
 
-    setAllRoute(route, '');
+    setAllRoute(route);
   //  Set areaList store mock to empty array. This should trigger request for area list.
     areaList = [
       {
@@ -287,6 +291,7 @@ describe('MainContainer', () => {
   }));
 
   it('should dispatch request for collections by subject only', fakeAsync(() => {
+
     setSubjectRoute(route, '1');
 
     component.ngOnInit();

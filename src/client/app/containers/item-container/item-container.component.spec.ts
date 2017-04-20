@@ -36,7 +36,9 @@ import {PageNotFoundComponent} from "../../shared/components/page-not-found/page
 import * as fromItem from '../../actions/item.actions';
 import {appRoutes} from '../../app.module';
 import {select} from "@ngrx/core";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 class MockActivatedRoute extends ActivatedRoute {
 
   params: Observable<any>;
@@ -87,6 +89,7 @@ let mockItem = {
 
 };
 
+@Injectable()
 class MockStore extends Store<any> {
 
   select = () => {
@@ -126,11 +129,15 @@ describe('ItemContainerComponent', () => {
       providers: [
         {
           provide: Store,
-          useClass: MockStore
+          useClass: class {
+            dispatch = jasmine.createSpy('dispatch');
+            select = () => {
+              return Observable.of(mockItem);
+            };}
         },
         {
           provide: ActivatedRoute,
-          useClass: MockActivatedRoute
+          useClass: class {params: Observable<any>;}
         }
       ]
     })
@@ -145,7 +152,7 @@ describe('ItemContainerComponent', () => {
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     spyOn(store, 'select').and.callThrough();
-    spyOn(store, 'dispatch');
+  //  spyOn(store, 'dispatch');
 
   });
 
@@ -155,7 +162,7 @@ describe('ItemContainerComponent', () => {
 
   it('should dispatch request for item data', fakeAsync(() => {
 
-    setMockRoute(route);
+    setMockAreaRoute(route, '1');
     component.ngOnInit();
     tick();
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemRequest('1'));
@@ -164,7 +171,7 @@ describe('ItemContainerComponent', () => {
 
   it('should not dispatch request if id parameter is not supplied.', fakeAsync(() => {
 
-    setMockAreaRoute(route, '1');
+    setMockRoute(route);
     component.ngOnInit();
     tick();
     expect(component.id).toBeUndefined();
