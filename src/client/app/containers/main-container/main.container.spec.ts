@@ -1,10 +1,27 @@
+/*
+ * Copyright (c) 2017.
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /**
  * Created by mspalti on 3/8/17.
  */
 /* tslint:disable:no-unused-variable */
 import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {StoreModule, Store} from '@ngrx/store';
+import {StoreModule, Store, Action} from '@ngrx/store';
 import {MaterialModule} from '@angular/material';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
@@ -56,45 +73,48 @@ let areaList = areaListMock;
 
 let areasMock = areaSubscriptionMock;
 
+//
+// const setParamMock = (mockRoute) => {
+//   if (mockRoute) {
+//     this.params = Observable.of(mockRoute);
+//   } else {
+//     this.params = Observable.of({});
+//   }
+// };
+
 class MockActivatedRoute extends ActivatedRoute {
 
   params: Observable<any>;
 
-  setParamMock(mockRoute: any) {
-    if (mockRoute) {
-      this.params = Observable.of(mockRoute);
-    } else {
-      this.params = Observable.of({});
-    }
-  }
+
 }
 
-class MockStore {
+class MockStore extends Store<any> {
 
   select = () => {
     return Observable.of(areaList);
   };
-  dispatch = jasmine.createSpy('dispatch');
+  dispatch (action: Action) {};
 
 }
 
 const setAllRoute = (route: MockActivatedRoute, mock: string) => {
- route.setParamMock({});
+ route.params = Observable.of({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setAreaRoute = (route: MockActivatedRoute, mock: string) => {
-  route.setParamMock({areaId: mock});
+  route.params = Observable.of({areaId: mock});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setSubjectAreaRoute = (route: MockActivatedRoute, area: string, subject: string) => {
-  route.setParamMock({areaId: area, subjectId: subject});
+  route.params = Observable.of({areaId: area, subjectId: subject});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setSubjectRoute = (route: MockActivatedRoute, subject: string) => {
-  route.setParamMock({subjectId: subject});
+  route.params = Observable.of({subjectId: subject});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -149,6 +169,7 @@ describe('MainContainer', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     component = fixture.componentInstance;
     spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'dispatch');
     spyOn(component, 'getAllCollectionsForSubject').and.callThrough();
     spyOn(component, 'initializeAreas').and.callThrough();
     spyOn(component, 'getAreaInformation').and.callThrough();
@@ -165,7 +186,7 @@ describe('MainContainer', () => {
 
   it('should fetch all collections if no area id provided in route parameters.', fakeAsync(() => {
 
-    route.setParamMock(null);
+    //route.setParamMock(null);
 
     spyOn(route.params, 'subscribe').and.callThrough();
 

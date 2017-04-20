@@ -1,8 +1,25 @@
+/*
+ * Copyright (c) 2017.
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ItemContainerComponent} from './item-container.component';
 import {ItemComponent} from "../../components/item/item.component";
 import {MaterialModule} from "@angular/material";
-import {Store, StoreModule} from "@ngrx/store";
+import {Action, Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
@@ -18,22 +35,21 @@ import {RelatedItemsComponent} from "../../components/related-items/related-item
 import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
 import * as fromItem from '../../actions/item.actions';
 import {appRoutes} from '../../app.module';
+import {select} from "@ngrx/core";
 
 class MockActivatedRoute extends ActivatedRoute {
 
   params: Observable<any>;
 
-  setParamMock(mockRoute: any) {
-    if (mockRoute) {
-      this.params = Observable.of(mockRoute);
-    } else {
-      this.params = Observable.of({});
-    }
-  }
 }
 
-const setMockRoute = (route: MockActivatedRoute, mock: string) => {
-  route.setParamMock({id: mock});
+const setMockAreaRoute = (route: MockActivatedRoute, mock: string) => {
+  route.params = Observable.of({id: mock});
+  spyOn(route.params, 'subscribe').and.callThrough();
+};
+
+const setMockRoute = (route: MockActivatedRoute) => {
+  route.params = Observable.of({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -71,13 +87,13 @@ let mockItem = {
 
 };
 
-class MockStore {
+class MockStore extends Store<any> {
 
   select = () => {
     return Observable.of(mockItem);
   };
 
-  dispatch = jasmine.createSpy('dispatch');
+  dispatch (action: Action)  {}
 
 }
 
@@ -129,6 +145,7 @@ describe('ItemContainerComponent', () => {
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'dispatch');
 
   });
 
@@ -138,7 +155,7 @@ describe('ItemContainerComponent', () => {
 
   it('should dispatch request for item data', fakeAsync(() => {
 
-    setMockRoute(route, '1');
+    setMockRoute(route);
     component.ngOnInit();
     tick();
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemRequest('1'));
@@ -147,7 +164,7 @@ describe('ItemContainerComponent', () => {
 
   it('should not dispatch request if id parameter is not supplied.', fakeAsync(() => {
 
-    route.setParamMock(null);
+    setMockAreaRoute(route, '1');
     component.ngOnInit();
     tick();
     expect(component.id).toBeUndefined();
@@ -156,7 +173,7 @@ describe('ItemContainerComponent', () => {
 
   it('should not dispatch request for related items.', fakeAsync(() => {
 
-    setMockRoute(route, '1');
+    setMockAreaRoute(route, '1');
     component.id = '1';
     spyOn(component, 'getRelatedItems').and.callThrough();
     component.ngOnInit();

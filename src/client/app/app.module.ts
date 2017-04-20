@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2017.
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    This program is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -20,7 +37,6 @@ import {ImageHeaderComponent} from './components/image-header/image-header.compo
 import {AreaInformationComponent} from './components/area-information/area-information.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
 import {SubjectsComponent} from './components/subject-selector/subjects.component';
-import {ListServiceService} from './shared/list-service.service';
 import {CollectionService} from './services/collection.service';
 import {AreaService} from './services/area.service';
 import {AreaEffects} from './effects/area.effects';
@@ -124,7 +140,6 @@ export const appRoutes = [
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
-    ListServiceService,
     CollectionService,
     AreaService,
     SubjectService,
