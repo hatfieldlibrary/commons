@@ -15,7 +15,30 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+.frame {
+  background: #d2d5dc;
+  margin:0;
+}
+
 /* You can add global styles to this file, and also import other style files */
 md-sidenav {
   width: 200px;
+}
+.overflow-x-scroll-no-scrollbar {overflow:auto;}
+.overflow-x-scroll-no-scrollbar  > md-list {
+  overflow-x:auto;
+  margin-bottom:-17px;
+  overflow-y:hidden;
+  width:100%;
+}
+/*.overflow-x-scroll-no-scrollbar > div * {*/
+  /*overflow-x:auto;*/
+  /*width:100%;*/
+  /*padding-bottom:17px;*/
+  /*white-space: nowrap;*/
+  /*cursor:pointer*/
+/*}*/
+
+subject-selector .mat-list .mat-list-item .mat-list-item-content {
+  padding: 0 4px;
 }

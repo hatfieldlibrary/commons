@@ -15,17 +15,23 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<md-chip-list>
 
-  <div *ngIf="type === 'area'">
-    <md-chip *ngFor="let subject of subjectList"><a [routerLink]="['/collection/subject/', subject.id, 'area', areaId]">{{subject.name}}</a>
-    </md-chip>
-  </div>
-  <div *ngIf="type === 'all'">
-    <md-chip *ngFor="let subject of subjectList"><a [routerLink]="['/collection/subject/', subject.id]">{{subject.name}}</a>
-    </md-chip>
-  </div>
+<div class="overflow-x-scroll-no-scrollbar">
 
-</md-chip-list>
+  <md-list fxLayout="row" style="height: 80px;" *ngIf="type === 'area'">
+    <md-list-item *ngFor="let subject of subjectList">
+      <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id, 'area', areaId]"
+              (click)="onSelectedSubject(subject.id, subject.name)">{{subject.name}}</button>
+    </md-list-item>
+  </md-list>
+  <md-list fxLayout="row" style="height: 80px;" *ngIf="type === 'all'">
+    <md-list-item *ngFor="let subject of subjectList">
+      <button md-raised-button color="primary"  [routerLink]="['/collection/subject/', subject.id]"
+              (click)="onSelectedSubject(subject.id, subject.name)">{{subject.name}}
+        </button>
+    </md-list-item>
+  </md-list>
+
+</div>
 
 

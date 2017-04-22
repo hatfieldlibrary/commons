@@ -15,17 +15,25 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
+import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
 @Component({
   selector: 'area-information',
   templateUrl: './area-information.component.html',
   styleUrls: ['./area-information.component.css']
 })
-export class AreaInformationComponent  {
+export class AreaInformationComponent implements OnInit{
 
+  @Input() selectedSubject: SelectedSubject;
   @Input() areaInfo: AreaType;
+
+  constructor() { }
+
+  ngOnInit() {
+    this.selectedSubject = null;
+  }
 
 
 }

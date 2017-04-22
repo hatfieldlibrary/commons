@@ -15,25 +15,11 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SubjectType} from "../../shared/data-types/subject.type";
-import {SelectedSubject} from "app/shared/data-types/selected-subject";
-
-
-@Component({
-  selector: 'subject-selector',
-  templateUrl: 'subjects.component.html',
-  styleUrls: ['subjects.component.css']
-})
-export class SubjectsComponent {
-
-  @Input() subjectList: SubjectType[];
-  @Input() areaId: number;
-  @Input() type: string;
-  @Output() selectedSubject =  new EventEmitter<SelectedSubject>();
-
-  onSelectedSubject(id, name) {
-    this.selectedSubject.emit({id: id, name: name});
-  }
+/**
+ * Created by mspalti on 4/21/17.
+ */
+export class SelectedSubject {
+  id: string;
+  name: string;
 
 }

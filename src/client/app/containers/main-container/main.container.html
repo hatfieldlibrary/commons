@@ -15,51 +15,66 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<image-header></image-header>
+<image-header [homeScreen]="homeScreen" [areaList]="areas$ | async"></image-header>
 <!--<md-sidenav-container>-->
 
-  <!--<md-grid-list cols="6" rowHeight="400px">-->
+<!--<md-grid-list cols="6" rowHeight="400px">-->
 
-    <!--<md-grid-tile [colspan]="1" [rowspan]="1"></md-grid-tile>-->
-    <!--<md-grid-tile [colspan]="1" [rowspan]="1">-->
+<!--<md-grid-tile [colspan]="1" [rowspan]="1"></md-grid-tile>-->
+<!--<md-grid-tile [colspan]="1" [rowspan]="1">-->
 
-      <!--<md-sidenav mode="side" opened="true">Drawer content-->
-        <!--<area-sareaListor [areaList]="areas$ | async"></area-selector>-->
-      <!--</md-sidenav>-->
+<!--<md-sidenav mode="side" opened="true">Drawer content-->
+<!--<area-sareaListor [areaList]="areas$ | async"></area-selector>-->
+<!--</md-sidenav>-->
 
-    <!--</md-grid-tile>-->
-    <!--<md-grid-tile [colspan]="3" [rowspan]="5">-->
+<!--</md-grid-tile>-->
+<!--<md-grid-tile [colspan]="3" [rowspan]="5">-->
 
-          <!--<md-card style="height:98%; width: 98%; margin: 12px;">-->
-            <!--<md-card-content>-->
-              <!--<subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"></subject-selector>-->
-              <!--<collection-list [collectionList]="collections$ | async "></collection-list>-->
-            <!--</md-card-content>-->
-          <!--</md-card>-->
+<!--<md-card style="height:98%; width: 98%; margin: 12px;">-->
+<!--<md-card-content>-->
+<!--<subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"></subject-selector>-->
+<!--<collection-list [collectionList]="collections$ | async "></collection-list>-->
+<!--</md-card-content>-->
+<!--</md-card>-->
 
-    <!--</md-grid-tile>-->
-    <!--<md-grid-tile [colspan]="1" [rowspan]="1"></md-grid-tile>-->
-  <!--</md-grid-list>-->
-  <div fxLayout="row" fxLayoutAlign="center start" >
-    <div fxFlex="10"></div>
-    <div fxFlex="80">
+<!--</md-grid-tile>-->
+<!--<md-grid-tile [colspan]="1" [rowspan]="1"></md-grid-tile>-->
+<!--</md-grid-list>-->
+
+<div fxLayout="row" fxLayoutAlign="center start">
+  <div fxFlex="0" fxFlex.gt-sm="10" fxFlex.gt-lg="20"></div>
+  <div fxFlex="100" fxFlex.gt-sm="80" fxFlex.gt-lg="60">
+    <md-sidenav-container>
+    <md-card>
+
       <div fxLayout="row" fxLayoutAlign="center start">
-        <div fxFlex="20">
+        <div fxFlex="0" fxFlex.gt-sm="20" fxHide fxShow.gt-sm>
           <area-selector [areaList]="areas$ | async"></area-selector>
         </div>
-        <div fxFlex="80">
-          <md-card>
+        <div fxFlex="100" fxFlex.gt-sm="80">
+
             <md-card-content>
-              <area-information [areaInfo]="areaInfo$ | async"></area-information>
-              <subject-selector [subjectList]="subjects$ | async" [areaId]="areaId" [type]="subjectLinkType"></subject-selector>
+
+              <subject-selector (selectedSubject)="onSelectedSubject($event)" [subjectList]="subjects$ | async" [areaId]="areaId"
+                                [type]="subjectLinkType" ></subject-selector>
+
+              <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject" [areaInfo]="areaInfo$ | async" ></area-information>
+
+              <home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject"></home-screen>
+
               <collection-list [collectionList]="collections$ | async "></collection-list>
+
             </md-card-content>
-          </md-card>
+
         </div>
       </div>
-    </div>
-    <div fxFlex="10"></div>
+
+    </md-card>
+    </md-sidenav-container>
+
   </div>
 
+  <div fxFlex="0" fxFlex.gt-sm="10" fxFlex.gt-lg="20"></div>
+</div>
 
-<!--</md-sidenav-container>-->
+

@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 
 
@@ -27,5 +27,11 @@ import {AreaType} from "../../shared/data-types/area.type";
 export class AreaComponent {
 
   @Input() areaList: AreaType[];
+
+  @Output() onSelected = new EventEmitter<boolean>();
+
+  areaSelected() {
+    this.onSelected.emit(true);
+  }
 
 }

@@ -34,6 +34,7 @@ import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
+import {SelectedSubject} from "../../shared/data-types/selected-subject";
 
 @Component({
   selector: 'main-container',
@@ -51,6 +52,8 @@ export class MainContainer implements OnInit {
   subjectsAvailable: boolean = false;
   areaId: string;
   subjectLinkType: string;
+  homeScreen:boolean = false;
+  selectedSubject: SelectedSubject;
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
 
@@ -78,6 +81,7 @@ export class MainContainer implements OnInit {
    */
   getCollectionsBySubject(subjectId: string, areaId: string): void {
     this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
+    this.getAreaInformation(areaId);
 
   }
 
@@ -140,11 +144,14 @@ export class MainContainer implements OnInit {
    * @param id
    */
   initializeAreas() {
-    console.log('init area list ' + this.areasAvailable);
     if (!this.areasAvailable) {
       this.store.dispatch(new areaActions.AreaAction());
     }
 
+  }
+
+  onSelectedSubject(subject: SelectedSubject) {
+    this.selectedSubject = subject;
   }
 
 
@@ -182,12 +189,14 @@ export class MainContainer implements OnInit {
         else if(params['subjectId']) {
 
           this.subjectLinkType = 'all';
+          this.homeScreen = true;
           this.getAllCollectionsForSubject(params['subjectId']);
         }
         else {
 
           this.subjectLinkType = 'all';
           this.getAllCollections();
+          this.homeScreen = true;
         }
 
       });

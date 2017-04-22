@@ -15,7 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AreaType} from "../../shared/data-types/area.type";
 
 @Component({
   selector: 'image-header',
@@ -24,7 +25,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImageHeaderComponent implements OnInit {
 
+  @Input() areaList: AreaType[];
+  @Input() homeScreen: boolean;
+  @ViewChild('sidenav') public sideNavigate;
+
   constructor() { }
+
+  openMenu() {
+    this.sideNavigate.open();
+  }
+
+  onSelected(selected: boolean) {
+    selected ? this.sideNavigate.close() : this.sideNavigate.open();
+  }
 
   ngOnInit() {
   }

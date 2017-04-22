@@ -15,10 +15,11 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<md-card>
+
   <md-list>
+    <h3 md-subheader>Areas and Counts</h3>
     <md-list-item *ngFor="let area of areaList">
-      <a [routerLink]="['/collection/area/', area.id]">{{area.title}} ({{area.count}})</a>
+      <button md-button (click)="areaSelected()" [routerLink]="['/collection/area/', area.id]">{{area.title}} ({{area.count}})</button>
     </md-list-item>
   </md-list>
-</md-card>
+

@@ -19,7 +19,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {MaterialModule} from '@angular/material';
+import {MdButtonModule, MdCardModule, MdListModule,MdToolbarModule,MdIconModule, MdSidenavModule,MdIconRegistry} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
 import {StoreModule} from '@ngrx/store';
@@ -50,6 +50,10 @@ import {ItemService} from "./services/item.service";
 import {RelatedEffects} from "./effects/related.effects";
 import { RelatedItemsComponent } from './components/related-items/related-items.component';
 import {RelatedService} from "./services/related.service";
+import { IconMenuSvg } from './components/menu-svg/menu-svg.component';
+import { SideNavComponent } from './components/side-nav/side-nav.component';
+import { CloseSvgComponent } from './components/close-svg/close-svg.component';
+import { HomeScreenComponent } from './components/home-screen/home-screen.component';
 
 
 // export const appRoutes = [
@@ -97,11 +101,20 @@ export const appRoutes = [
     AreaInformationComponent,
     ItemComponent,
     ItemContainerComponent,
-    RelatedItemsComponent
+    RelatedItemsComponent,
+    IconMenuSvg,
+    SideNavComponent,
+    CloseSvgComponent,
+    HomeScreenComponent
   ],
   imports: [
-    MaterialModule,
     FlexLayoutModule,
+    MdButtonModule,
+    MdCardModule,
+    MdListModule,
+    MdToolbarModule,
+    MdSidenavModule,
+    MdIconModule,
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -144,9 +157,11 @@ export const appRoutes = [
     AreaService,
     SubjectService,
     ItemService,
-    RelatedService
+    RelatedService,
+    MdIconRegistry
   ],
-  bootstrap: [AppComponent]
+
+  bootstrap: [AppComponent,IconMenuSvg, SideNavComponent]
 })
 export class AppModule {
 }

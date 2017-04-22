@@ -14,9 +14,12 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
+<md-card-content>
+  <div style="margin-top: 40px;"></div>
 <md-list>
+  <h3 md-subheader>Collections and Items</h3>
   <md-list-item *ngFor="let collection of collectionList">
-    <a [routerLink]="['/item/id', collection.id]">{{collection.title}} {{collection.id}}</a>
+    <a [routerLink]="['/item/id', collection.id]">{{collection.title}}</a>
   </md-list-item>
 </md-list>
+</md-card-content>
