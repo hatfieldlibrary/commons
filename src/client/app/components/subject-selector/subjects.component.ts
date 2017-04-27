@@ -15,9 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {SubjectType} from "../../shared/data-types/subject.type";
-import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
 
 @Component({
@@ -30,10 +29,5 @@ export class SubjectsComponent {
   @Input() subjectList: SubjectType[];
   @Input() areaId: number;
   @Input() type: string;
-  @Output() selectedSubject =  new EventEmitter<SelectedSubject>();
-
-  onSelectedSubject(id, name) {
-    this.selectedSubject.emit({id: id, name: name});
-  }
 
 }

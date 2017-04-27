@@ -14,12 +14,27 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<div fxLayout="row">
 
-<h3>Related Collections</h3>
-<ul>
-  <li *ngFor="let collection of related">
+  <div fxFlex="0" fxFlex.gt-sm="10"></div>
 
-    <p>title: {{collection.title}}  id: {{collection.id}}  image: {{collection.image}}  count: {{collection.count}}</p>
+  <div fxFlex="100" fxFlex.gt-sm="80">
+    <h3>Related</h3>
 
-  </li>
-</ul>
+    <div fxLayout.gt-sm="row" fxLayoutGap="10px">
+        <md-card *ngFor="let collection of related" style="width: 160px;">
+          <md-card-header>
+          <md-card-title>
+            {{collection.title}}
+          </md-card-title>
+          </md-card-header>
+          <img md-card-image src="http://libapps.willamette.edu:3003/resources/img/thumb/{{collection.image}}">
+          <md-card-actions align="end">
+            <button md-button>LINK</button>
+          </md-card-actions>
+      </md-card>
+    </div>
+
+  </div>
+  <div fxFlex="0" fxFlex.gt-sm="10"></div>
+</div>

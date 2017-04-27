@@ -26,7 +26,7 @@ import {PageNotFoundComponent} from "../../shared/components/page-not-found/page
 import {AppComponent} from "../app.component";
 import {ListComponent} from "../collection-list/list.component";
 import {AreaComponent} from "../area-selector/area.component";
-import {ImageHeaderComponent} from "../image-header/image-header.component";
+import {ListHeaderComponent} from "../image-header/image-header.component";
 import {AreaInformationComponent} from "../area-information/area-information.component";
 import {ItemContainerComponent} from "../../containers/item-container/item-container.component";
 import {ItemComponent} from "../item/item.component";
@@ -43,7 +43,7 @@ describe('SubjectsComponent', () => {
         ListComponent,
         AreaComponent,
         SubjectsComponent,
-        ImageHeaderComponent,
+        ListHeaderComponent,
         AreaInformationComponent,
         ItemContainerComponent,
         ItemComponent,

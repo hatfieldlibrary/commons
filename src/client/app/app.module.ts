@@ -18,8 +18,9 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-import {MdButtonModule, MdCardModule, MdListModule,MdToolbarModule,MdIconModule, MdSidenavModule,MdIconRegistry} from '@angular/material';
+import {HttpModule, RequestOptions} from '@angular/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MdButtonModule, MdSelectModule, MdCardModule, MdListModule,MdToolbarModule,MdIconModule,MdChipsModule, MdSidenavModule,MdIconRegistry,MdInputModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
 import {StoreModule} from '@ngrx/store';
@@ -33,7 +34,7 @@ import {MainContainer} from "./containers/main-container/main.container";
 import {AreaComponent} from './components/area-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
 import {ItemComponent} from './components/item/item.component';
-import {ImageHeaderComponent} from './components/image-header/image-header.component';
+import {ListHeaderComponent} from './components/image-header/image-header.component';
 import {AreaInformationComponent} from './components/area-information/area-information.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
 import {SubjectsComponent} from './components/subject-selector/subjects.component';
@@ -52,8 +53,16 @@ import { RelatedItemsComponent } from './components/related-items/related-items.
 import {RelatedService} from "./services/related.service";
 import { IconMenuSvg } from './components/menu-svg/menu-svg.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
-import { CloseSvgComponent } from './components/close-svg/close-svg.component';
+import { CloseSvgComponent } from './components/svg/close-svg/close-svg.component';
 import { HomeScreenComponent } from './components/home-screen/home-screen.component';
+import { ItemHeaderComponent } from './components/item-header/item-header.component';
+import { BackSvgComponent } from './components/svg/back-svg/back-svg.component';
+import {GlobalHttpOptions} from "./shared/global-request";
+import { LockSvgComponent } from './components/svg/lock-svg/lock-svg.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ItemLinksComponent } from './components/item-links/item-links.component';
+import { SearchSvgComponent } from './components/svg/search-svg/search-svg.component';
+import {SearchService} from "./services/search.service";
 
 
 // export const appRoutes = [
@@ -91,21 +100,28 @@ export const appRoutes = [
 
 @NgModule({
   declarations: [
+    BackSvgComponent,
+    LockSvgComponent,
+    IconMenuSvg,
+    CloseSvgComponent,
     AppComponent,
     AreaComponent,
     ListComponent,
     MainContainer,
     SubjectsComponent,
     PageNotFoundComponent,
-    ImageHeaderComponent,
+    ListHeaderComponent,
     AreaInformationComponent,
     ItemComponent,
     ItemContainerComponent,
     RelatedItemsComponent,
-    IconMenuSvg,
     SideNavComponent,
-    CloseSvgComponent,
-    HomeScreenComponent
+    HomeScreenComponent,
+    ItemHeaderComponent,
+    FooterComponent,
+    ItemLinksComponent,
+    SearchSvgComponent,
+
   ],
   imports: [
     FlexLayoutModule,
@@ -114,8 +130,12 @@ export const appRoutes = [
     MdListModule,
     MdToolbarModule,
     MdSidenavModule,
+    MdInputModule,
     MdIconModule,
+    MdSelectModule,
+    MdChipsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
@@ -157,11 +177,14 @@ export const appRoutes = [
     AreaService,
     SubjectService,
     ItemService,
+    SearchService,
     RelatedService,
-    MdIconRegistry
+    MdIconRegistry,
+    {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 
-  bootstrap: [AppComponent,IconMenuSvg, SideNavComponent]
+  bootstrap: [ AppComponent]
 })
+
 export class AppModule {
 }

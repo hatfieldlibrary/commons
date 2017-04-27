@@ -1,0 +1,43 @@
+<div fxLayout="column" style="height: 300px;">
+
+  <div fxFlex="10"></div>
+
+  <div fxFlex="20">
+    <div *ngIf="restricted === true">
+      <a href="/auth{{currentUrl}}">
+      <lock-svg></lock-svg>
+      Log in to see this collection.
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'" fxFlex="30">
+
+    <form #searchForm="ngForm" (ngSubmit)="simpleSearch()">
+      <md-input-container>
+        <input mdInput id="terms" [(ngModel)]="model.terms" name="search" placeholder="Enter Search Terms">
+      </md-input-container>
+      <button md-raised-button color="primary" style="line-height: 14px;padding:0 3px;min-width: 33px;"
+              type="submit" class="btn btn-success" [disabled]="!authentication">
+        <search-svg></search-svg>
+      </button>
+    </form>
+  </div>
+
+  <div fxFlex="30">
+    <span *ngIf="linkOptions === 'link' &&  assetType === 'dig'">
+        <a md-raised-button color="primary" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
+    </span>
+    <span *ngIf="linkOptions === 'link' &&  assetType === 'itm'">
+        <a md-raised-button color="primary" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
+    </span>
+    <span *ngIf="linkOptions === 'opts'">
+      <md-select placeholder="Find By">
+        <md-option *ngFor="let option of optionList.result" (click)="optionSearch(option.item.title)" target="_blank">{{option.item.title}}</md-option>
+      </md-select>
+    </span>
+  </div>
+
+  <div fxFlex></div>
+
+</div>

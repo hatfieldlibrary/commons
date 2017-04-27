@@ -23,7 +23,7 @@ import {AreaType} from "../../shared/data-types/area.type";
   templateUrl: 'image-header.component.html',
   styleUrls: ['image-header.component.css']
 })
-export class ImageHeaderComponent implements OnInit {
+export class ListHeaderComponent implements OnInit {
 
   @Input() areaList: AreaType[];
   @Input() homeScreen: boolean;

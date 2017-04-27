@@ -1,4 +1,3 @@
-
 <!--
   ~ Copyright (c) 2017.
   ~
@@ -15,48 +14,72 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<div fxLayout="row">
 
-<h2>{{item?.collection.title}}</h2>
-<p>{{item?.collection.desc}}</p>
-<p>{{item?.collection.image}}</p>
-<p>{{item?.collection.url}}</p>
-<p>{{item?.collection.desc}}</p>
-<p>{{item?.collection.dates}}</p>
-<p>{{item?.collection.items}}</p>
-<p>{{item?.collection.linkOptions}}</p>
+  <div fxFlex="0" fxFlex.gt-sm="10"></div>
 
-<p>{{item?.collection.searchOptions}}</p>
-
-<p>{{item?.collection.assetType}}</p>
-
-<p>{{item?.collection.restricted}}</p>
-
-<p>{{item?.collection.published}}</p>
-
-<h3>Category Data</h3>
-<p>{{item?.category?.id}}</p>
-<p>{{item?.category?.linkLabel}}</p>
-<p>{{item?.category?.url}}</p>
-<p>{{item?.category?.secondaryUrl}}</p>
-<p>{{item?.category?.description}}</p>
-<p>{{item?.category?.areaId}}</p>
-
-<h3>Item Type Data</h3>
-
-<ul>
-  <li *ngFor="let type of item?.itemTypes">
-    <p>id: {{type.id}} name: {{type.name}} icon: {{type.icon}}</p>
-  </li>
-</ul>
-
-<h3>Subject IDs;</h3>
-<ul>
-  <li *ngFor="let subject of item?.subjects">
-    <p>id: {{subject}}</p>
-  </li>
-</ul>
+  <div fxFlex="100" fxFlex.gt-sm="80">
 
 
+    <div fxLayout="column">
+
+      <div fxFlex="80">
+
+        <div fxLayout="row" fxLayoutGap="12px" fxLayoutGap.gt-md="24px">
+          <div fxFlex="65" fxFlex.gt-md="70" fxFlex.gt-md="60">
+
+            <h1>{{item?.collection.title}}</h1>
+            <p>{{item?.collection.desc}}</p>
 
 
+            <md-list>
+              <md-list-item *ngIf="item?.collection.items">
+                <div fxLayout="row" fxFlexAlign="center">
+                  <h4 *ngIf="item?.collection.dates">Dates: </h4>
+                  <h4 style="color: #666;margin-left: 12px;">
+                    {{item?.collection.dates}}
+                  </h4>
+                </div>
+              </md-list-item>
+              <md-list-item *ngIf="item?.collection.items">
+                <div fxLayout="row">
+                  <h4>Item Count: </h4>
+                  <h4 style="color: #666;margin-left: 12px;">
+                    {{item?.collection.items}}
+                  </h4>
+                </div>
+              </md-list-item>
+            </md-list>
 
+            <md-divider></md-divider>
+
+            <h4>This collection is part of</h4>
+            <h2>{{item?.category?.title}}</h2>
+
+            <p>{{item?.category?.url}}</p>
+            <p>{{item?.category?.secondaryUrl}}</p>
+            <p>{{item?.category?.description}}</p>
+
+            <button md-raised-button color="primary">{{item?.category?.linkLabel}}</button>
+
+
+          </div>
+
+          <div fxFlex="35" fxFlex.gt-md="30" fxFlex.gt-md="40" fxLayout="column">
+            <item-links [restricted]="item?.collection.restricted"
+                        [linkOptions]="item?.collection.linkOptions"
+                        [assetType]="item?.collection.assetType"
+                        [searchOptions]="item?.collection.searchOptions"
+                        [url]="item?.collection.url"></item-links>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <div fxFlex="0" fxFlex.gt-sm="10"></div>
+
+</div>

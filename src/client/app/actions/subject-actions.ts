@@ -28,6 +28,8 @@ export const SubjectActionTypes = {
   SUBJECT_LIST_SUCCESS: type('[SubjectType] List Subjects for Area Response'),
   ALL_SUBJECT_LIST: type('[SubjectType] List All Subjects Request'),
   ALL_SUBJECT_LIST_SUCCESS: type('[SubjectType] List All Subjects Response'),
+  CURRENT_SELECTED_SUBJECT: type('[SubjectType] Currently Selected Subject'),
+  REMOVE_CURRENT_SELECTED_SUBJECT: type('[SubjectType] Remove thee currently Selected Subject'),
   REQUEST_FAILED: type('[SubjectType] Search Failed')
 };
 
@@ -64,6 +66,21 @@ export class AllSubjectActionSuccess implements Action {
   }
 }
 
+export class CurrentSubject implements Action {
+  type = SubjectActionTypes.CURRENT_SELECTED_SUBJECT;
+
+  constructor(public payload: number) {
+  }
+}
+export class RemoveCurrentSubject implements Action {
+  type = SubjectActionTypes.CURRENT_SELECTED_SUBJECT;
+  payload: void;
+
+  constructor() {
+  }
+
+}
+
 export class SubjectActionFailed implements Action {
   type = SubjectActionTypes.REQUEST_FAILED;
   payload: void;
@@ -73,4 +90,4 @@ export class SubjectActionFailed implements Action {
 
 }
 
-export type SubjectActions = SubjectAction | SubjectActionSuccess | AllSubjectAction | AllSubjectActionSuccess | SubjectActionFailed;
+export type SubjectActions = SubjectAction | SubjectActionSuccess | AllSubjectAction | AllSubjectActionSuccess | CurrentSubject | SubjectActionFailed;

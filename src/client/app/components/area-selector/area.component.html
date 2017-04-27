@@ -18,6 +18,9 @@
 
   <md-list>
     <h3 md-subheader>Areas and Counts</h3>
+    <md-list-item>
+      <button md-button [routerLink]="['/collection']">View All</button>
+    </md-list-item>
     <md-list-item *ngFor="let area of areaList">
       <button md-button (click)="areaSelected()" [routerLink]="['/collection/area/', area.id]">{{area.title}} ({{area.count}})</button>
     </md-list-item>

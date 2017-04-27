@@ -27,6 +27,7 @@
   }
   // Home of the development/test credentials file.
   const devDirectory = getUserHome() + '/etc/commons/';
+
   // Home of the production credentials file.
   const prodDirectory =  '/etc/commons/';
 

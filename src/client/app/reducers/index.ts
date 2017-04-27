@@ -143,6 +143,8 @@ export const getSubjectsState = (state: State) => state.subjects;
 
 export const getSubject = createSelector(getSubjectsState, fromSubject.getSubjectList);
 
+export const getSelectedSubject = createSelector(getSubjectsState, fromSubject.getSelectedSubject);
+
 export const getItemState = (state: State) => state.item;
 
 export const getItem = createSelector(getItemState, fromItem.getItem);

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SelectedSubject} from "../../shared/data-types/selected-subject";
 
 @Component({
@@ -6,14 +6,13 @@ import {SelectedSubject} from "../../shared/data-types/selected-subject";
   templateUrl: './home-screen.component.html',
   styleUrls: ['./home-screen.component.css']
 })
-export class HomeScreenComponent implements OnInit {
+export class HomeScreenComponent  {
 
   @Input() selectedSubject: SelectedSubject;
+  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() { }
-
-  ngOnInit() {
-    this.selectedSubject = null;
+  deselect() {
+    this.removeSubject.next()
   }
 
 }

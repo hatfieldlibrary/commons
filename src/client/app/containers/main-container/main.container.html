@@ -55,12 +55,13 @@
 
             <md-card-content>
 
-              <subject-selector (selectedSubject)="onSelectedSubject($event)" [subjectList]="subjects$ | async" [areaId]="areaId"
+              <subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"
                                 [type]="subjectLinkType" ></subject-selector>
 
-              <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject" [areaInfo]="areaInfo$ | async" ></area-information>
+              <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async" [areaInfo]="areaInfo$ | async"
+                                (removeSubject)="removeSubject($event)"></area-information>
 
-              <home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject"></home-screen>
+              <home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject$ | async" (removeSubject)="removeSubject($event)"></home-screen>
 
               <collection-list [collectionList]="collections$ | async "></collection-list>
 
@@ -70,8 +71,9 @@
       </div>
 
     </md-card>
-    </md-sidenav-container>
 
+    <footer></footer>
+    </md-sidenav-container>
   </div>
 
   <div fxFlex="0" fxFlex.gt-sm="10" fxFlex.gt-lg="20"></div>

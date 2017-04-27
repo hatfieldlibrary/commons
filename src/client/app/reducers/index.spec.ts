@@ -128,6 +128,7 @@ describe('Reducers ', () => {
     let result = getSubjectsState(subjectState);
     expect(result).toEqual({
       subjects: expectedSubjects,
+      selectedSubject: {id: 0, name:'', url:''},
       loading: false
     });
 

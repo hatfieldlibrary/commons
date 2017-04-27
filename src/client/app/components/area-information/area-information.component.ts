@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
@@ -24,16 +24,14 @@ import {SelectedSubject} from "app/shared/data-types/selected-subject";
   templateUrl: './area-information.component.html',
   styleUrls: ['./area-information.component.css']
 })
-export class AreaInformationComponent implements OnInit{
+export class AreaInformationComponent{
 
   @Input() selectedSubject: SelectedSubject;
   @Input() areaInfo: AreaType;
+  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() { }
 
-  ngOnInit() {
-    this.selectedSubject = null;
+  deselect() {
+    this.removeSubject.next()
   }
-
-
 }

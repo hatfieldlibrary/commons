@@ -23,12 +23,14 @@ import {SubjectType} from "../shared/data-types/subject.type";
 
 export interface State {
   subjects: SubjectType[];
+  selectedSubject: SubjectType;
   loading: boolean;
 
 }
 
 const initialState: State = {
   subjects: [],
+  selectedSubject: {id: 0, name:'', url:''},
   loading: false
 };
 
@@ -68,6 +70,25 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
+    case SubjectActionTypes.CURRENT_SELECTED_SUBJECT: {
+
+      const selectedId: number = <number>action.payload;
+      const selected = state.subjects.find((subject) => {
+        return subject.id === selectedId;
+      });
+      return Object.assign({}, state, {
+        selectedSubject: selected
+      });
+
+  }
+
+    case SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT: {
+      return Object.assign({}, state, {
+        selectedSubject: {}
+      });
+    }
+
+
     default:
       return state;
 
@@ -76,3 +97,5 @@ export function reducer(state = initialState, action: SubjectActions): State {
 }
 
 export const getSubjectList = (state: State) => state.subjects;
+
+export const getSelectedSubject = (state: State) => state.selectedSubject;

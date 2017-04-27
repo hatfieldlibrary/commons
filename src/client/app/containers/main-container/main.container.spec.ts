@@ -35,7 +35,7 @@ import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import * as areaActions from '../../actions/area.actions';
 import * as subjectActions from '../../actions/subject-actions';
-import {ImageHeaderComponent} from '../../components/image-header/image-header.component';
+import {ListHeaderComponent} from '../../components/image-header/image-header.component';
 import {AreaInformationComponent} from '../../components/area-information/area-information.component';
 import {AppComponent} from '../../components/app.component';
 import {PageNotFoundComponent} from '../../shared/components/page-not-found/page-not-found.component';
@@ -134,7 +134,7 @@ describe('MainContainer', () => {
         ListComponent,
         AreaComponent,
         SubjectsComponent,
-        ImageHeaderComponent,
+        ListHeaderComponent,
         AreaInformationComponent,
         PageNotFoundComponent,
         ItemContainerComponent,

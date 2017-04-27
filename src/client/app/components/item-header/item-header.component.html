@@ -1,0 +1,39 @@
+<div fxLayout="row" fxLayoutAlign="center start">
+
+  <div fxFlex="0" fxFlex.gt-sm="10" fxFlex.gt-lg="20"></div>
+
+  <div fxFlex="100" fxFlex.gt-sm="80" fxFlex.gt-lg="60">
+
+    <div fxLayout="column" fxLayoutAlign="center start">
+
+      <md-toolbar fxFlex="10" style="background: #000;color:#fff; ">
+
+        <span><icon-back (click)="backClicked()"></icon-back>&nbsp;Academic Commons</span>
+
+        <!-- This fills the remaining space of the current row -->
+        <span class="fill-remaining-space"></span>
+
+        <icon-menu fxHide.gt-sm (click)="sidenav.open()"></icon-menu>
+
+      </md-toolbar>
+
+      <md-sidenav #sidenav align="end" mode="over" opened="false" fxLayout="column">
+        <md-toolbar fxFlex="5" style="background: #ccc; ">
+          <icon-close (click)="sidenav.close()"></icon-close>
+        </md-toolbar>
+        <area-selector [areaList]="areaList" (onSelected)="onSelected($event)"></area-selector>
+      </md-sidenav>
+
+      <div
+
+        [style.background-image]="backgroundImage"
+           class='header-image'>
+      </div>
+    </div>
+
+  </div>
+
+  <div fxFlex="0" fxFlex.gt-sm="10" fxFlex.gt-lg="20"></div>
+
+</div>
+

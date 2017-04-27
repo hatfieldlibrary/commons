@@ -23,6 +23,7 @@ import {Observable} from "rxjs";
 import {ItemType} from "../../shared/data-types/item.type";
 import * as fromItem from "../../actions/item.actions";
 import {RelatedType} from "../../shared/data-types/related-collection";
+import {AreaListItemType} from "../../shared/data-types/area-list.type";
 
 @Component({
   selector: 'item-container',
@@ -34,7 +35,9 @@ export class ItemContainerComponent implements OnInit {
 
   item$: Observable<ItemType>;
   related$: Observable<RelatedType[]>;
+  areas$: Observable<AreaListItemType[]>;
   id: string;
+  collectionImage: string;
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
   }
@@ -45,9 +48,6 @@ export class ItemContainerComponent implements OnInit {
    * @param data the item object
    */
   getRelatedItems(data: ItemType) {
-
-    console.log(data.subjects)
-    console.log(this.id)
 
     if (typeof data.subjects !== 'undefined' &&
       typeof this.id !== 'undefined') {
@@ -72,10 +72,12 @@ export class ItemContainerComponent implements OnInit {
 
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
+    this.areas$ = this.store.select(fromRoot.getAreas);
 
     // Once we have item information, request the related items.
     this.item$.subscribe((data) => {
       this.getRelatedItems(data);
+      this.collectionImage = data.collection.image;
 
     });
 

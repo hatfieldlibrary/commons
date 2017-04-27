@@ -53,7 +53,6 @@ export class AreaActionSuccess implements Action {
   type = AreaActionTypes.AREA_LIST_SUCCESS;
 
   constructor(public payload: AreaListItemType[]) {
-    console.log(payload)
   }
 }
 /**

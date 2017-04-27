@@ -35,6 +35,7 @@ import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
 import {SelectedSubject} from "../../shared/data-types/selected-subject";
+import {CurrentSubject} from "../../actions/subject-actions";
 
 @Component({
   selector: 'main-container',
@@ -53,7 +54,7 @@ export class MainContainer implements OnInit {
   areaId: string;
   subjectLinkType: string;
   homeScreen:boolean = false;
-  selectedSubject: SelectedSubject;
+  selectedSubject$: Observable<SubjectType>;
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
 
@@ -65,7 +66,6 @@ export class MainContainer implements OnInit {
    */
   setAreasAvailable(): void {
     this.areas$.subscribe((areas) => {
-      console.log(areas)
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areasAvailable = true;
@@ -81,6 +81,7 @@ export class MainContainer implements OnInit {
    */
   getCollectionsBySubject(subjectId: string, areaId: string): void {
     this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
+    this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
     this.getAreaInformation(areaId);
 
   }
@@ -91,6 +92,7 @@ export class MainContainer implements OnInit {
    */
   getCollectionsByArea(areaId: string): void {
     this.store.dispatch(new listActions.CollectionAction(areaId));
+    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
   }
 
   /**
@@ -99,6 +101,7 @@ export class MainContainer implements OnInit {
   getAllCollections(): void {
     this.store.dispatch(new listActions.AllCollectionsAction());
     this.store.dispatch(new subjectAction.AllSubjectAction());
+    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
   }
 
   /**
@@ -137,6 +140,7 @@ export class MainContainer implements OnInit {
   getAllCollectionsForSubject(subjectId: string) {
     this.store.dispatch((new listActions.AllCollectionSubjectAction(subjectId)));
     this.store.dispatch(new subjectAction.AllSubjectAction());
+    this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
   }
 
   /**
@@ -150,9 +154,19 @@ export class MainContainer implements OnInit {
 
   }
 
-  onSelectedSubject(subject: SelectedSubject) {
-    this.selectedSubject = subject;
+  removeSubject(event) {
+    if(this.subjectLinkType === 'all') {
+      this.store.dispatch(new listActions.AllCollectionsAction());
+    } else {
+      this.store.dispatch(new listActions.CollectionAction(this.areaId));
+    }
+    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
+
   }
+
+  // onSelectedSubject(subject: SelectedSubject) {
+  //   this.store.dispatch(new subjectAction.CurrentSubject(+subject.id));
+  // }
 
 
   ngOnInit() {
@@ -161,6 +175,7 @@ export class MainContainer implements OnInit {
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.subjects$ = this.store.select(fromRoot.getSubject);
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
+    this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
 
     this.setAreasAvailable();
 

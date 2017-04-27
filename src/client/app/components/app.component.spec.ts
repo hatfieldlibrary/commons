@@ -21,7 +21,7 @@ import {TestBed, async} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {} from 'jasmine';
-import {ImageHeaderComponent} from "./image-header/image-header.component";
+import {ListHeaderComponent} from "./image-header/image-header.component";
 import {appRoutes} from '../app.module';
 import {MainContainer} from "../containers/main-container/main.container";
 import {ListComponent} from "./collection-list/list.component";
@@ -44,7 +44,7 @@ describe('AppComponent', () => {
         ListComponent,
         AreaComponent,
         SubjectsComponent,
-        ImageHeaderComponent,
+        ListHeaderComponent,
         AreaInformationComponent,
         ItemContainerComponent,
         ItemComponent,

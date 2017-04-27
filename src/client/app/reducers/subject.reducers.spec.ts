@@ -46,6 +46,7 @@ describe('Subject Reducers', () => {
       reducer(undefined, new SubjectAction('1'))
     ).toEqual({
         subjects: [],
+        selectedSubject: {id: 0, name: '', url: ''},
         loading: true
       }
     )
@@ -57,6 +58,7 @@ describe('Subject Reducers', () => {
       reducer(undefined, new SubjectActionSuccess(expectedSubjects))
     ).toEqual({
         subjects: expectedSubjects,
+        selectedSubject: {id: 0, name: '', url: ''},
         loading: false
       }
     )
@@ -69,6 +71,7 @@ describe('Subject Reducers', () => {
       reducer(undefined, new AllSubjectActionSuccess(expectedSubjects))
     ).toEqual({
         subjects: expectedSubjects,
+        selectedSubject: {id: 0, name: '', url: ''},
         loading: false
       }
     )
@@ -80,6 +83,7 @@ describe('Subject Reducers', () => {
     ).toEqual(
       {
         subjects: [],
+        selectedSubject: {id: 0, name: '', url: ''},
         loading: false
       })
   });

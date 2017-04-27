@@ -29,7 +29,7 @@ import {MainContainer} from "../main-container/main.container";
 import {ListComponent} from "../../components/collection-list/list.component";
 import {AreaComponent} from "../../components/area-selector/area.component";
 import {SubjectsComponent} from "app/components/subject-selector/subjects.component";
-import {ImageHeaderComponent} from "../../components/image-header/image-header.component";
+import {ListHeaderComponent} from "../../components/image-header/image-header.component";
 import {AreaInformationComponent} from "../../components/area-information/area-information.component";
 import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
 import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
@@ -114,7 +114,7 @@ describe('ItemContainerComponent', () => {
         ListComponent,
         AreaComponent,
         SubjectsComponent,
-        ImageHeaderComponent,
+        ListHeaderComponent,
         AreaInformationComponent,
         PageNotFoundComponent,
         ItemContainerComponent,

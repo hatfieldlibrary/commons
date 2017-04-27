@@ -16,7 +16,7 @@
  */
 
 .frame {
-  background: #d2d5dc;
+  background: #262626;
   margin:0;
 }
 
@@ -41,4 +41,16 @@ md-sidenav {
 
 subject-selector .mat-list .mat-list-item .mat-list-item-content {
   padding: 0 4px;
+}
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+.header-image {
+  width: 100%;
+  height: 300px;
+  background-size:contain;
+}
+
+item-container .mat-list .mat-list-item  div.mat-list-item-content.mat-ripple {
+  padding: 0 0;
 }

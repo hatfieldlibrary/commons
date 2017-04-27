@@ -17,21 +17,21 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImageHeaderComponent } from './image-header.component';
+import { ListHeaderComponent } from './image-header.component';
 
-describe('ImageHeaderComponent', () => {
-  let component: ImageHeaderComponent;
-  let fixture: ComponentFixture<ImageHeaderComponent>;
+describe('ListHeaderComponent', () => {
+  let component: ListHeaderComponent;
+  let fixture: ComponentFixture<ListHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImageHeaderComponent ]
+      declarations: [ ListHeaderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImageHeaderComponent);
+    fixture = TestBed.createComponent(ListHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
