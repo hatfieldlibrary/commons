@@ -15,8 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit, ChangeDetectionStrategy, Renderer2} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromRoot from "../../reducers"
 import {Observable} from "rxjs";
@@ -39,7 +39,16 @@ export class ItemContainerComponent implements OnInit {
   id: string;
   collectionImage: string;
 
-  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
+  constructor(private store: Store<fromRoot.State>,
+              private renderer: Renderer2,
+              private route: ActivatedRoute,
+              private router: Router) {
+
+    // Assures that the page scrolls to top on load.
+    this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
+      this.renderer.setProperty(document.body, 'scrollTop', 0);
+    });
+
   }
 
   /**

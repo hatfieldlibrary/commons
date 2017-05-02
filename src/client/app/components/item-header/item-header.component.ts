@@ -19,6 +19,7 @@ import {Component, Input, OnChanges, OnInit, SecurityContext, SimpleChanges, Vie
 import {Location} from '@angular/common';
 import {AreaType} from "../../shared/data-types/area.type";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'item-header',
@@ -34,11 +35,12 @@ export class ItemHeaderComponent implements OnChanges {
   @ViewChild('sidenav') public sideNavigate;
   backgroundImage: SafeResourceUrl = '';
 
-  constructor(private sanitizer: DomSanitizer, private location: Location) { }
+  constructor(private sanitizer: DomSanitizer, private router: Router, private location: Location) { }
 
 
 
   backClicked() {
+
     this.location.back();
   }
 

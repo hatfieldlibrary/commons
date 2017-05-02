@@ -157,7 +157,12 @@ var Authentication = (function () {
          * Use this middleware on any resource that needs to be protected.  If
          * the request is authenticated (typically via a persistent login session),
          * the request will proceed.  Otherwise, the user will be redirected to the
-         * login page. */
+         * login page.
+         *
+         * Request paths must begin with the 'auth/' root. The remainder of the path
+         * must be the resource being requested.  For example, 'auth/file/one' will be
+         * redirected to 'file/one' in the CAS passport authenticate callback method.
+         * */
         app.ensureAuthenticated = function (req, res, next) {
             var find = 'auth/';
             var path = req._parsedOriginalUrl.pathname;

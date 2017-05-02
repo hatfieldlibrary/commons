@@ -29,6 +29,7 @@ export class RelatedItemsComponent implements OnInit {
 
   constructor() { }
 
+
   ngOnInit() {
   }
 
