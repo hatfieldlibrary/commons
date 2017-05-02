@@ -5,6 +5,9 @@ import {Observable} from "rxjs/Observable";
 
 import {ActivatedRoute} from "@angular/router";
 import {AuthCheckService} from "../../services/auth-check.service";
+import {AuthType} from "../../shared/data-types/auth.type";
+import * as fromRoot from "../../reducers";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'item-links',
@@ -14,6 +17,7 @@ import {AuthCheckService} from "../../services/auth-check.service";
 export class ItemLinksComponent implements OnChanges, OnInit {
 
 
+  auth$: Observable<AuthType>;
 
   @Input() restricted: boolean;
   @Input() linkOptions: string;
@@ -26,7 +30,11 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   currentUrl: string = '';
   isAuthenticated = false;
 
-  constructor(private svc: SearchService, private route: ActivatedRoute, private auth: AuthCheckService) {
+  constructor(private svc: SearchService,
+              private route: ActivatedRoute,
+              private auth: AuthCheckService,
+              private store: Store<fromRoot.State>) {
+
     const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
     url.subscribe((url) => this.currentUrl = '/' + url);
 
@@ -45,6 +53,8 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
 
+    this.auth$ = this.store.select(fromRoot.getAuthStatus);
+    this.auth$.subscribe((auth) => this.isAuthenticated = auth.status )
 
   }
 
@@ -57,11 +67,7 @@ export class ItemLinksComponent implements OnChanges, OnInit {
         })
       }
 
-      const auth$ = this.auth.getAuthStatus();
-      auth$.subscribe((status) => {
-        this.isAuthenticated = status;
-      });
-
+      this.auth.getAuthStatus();
 
     }
   }

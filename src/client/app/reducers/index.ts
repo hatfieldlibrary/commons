@@ -62,6 +62,7 @@ import * as fromAreaList from './area-list.reducers';
 import * as fromSubject from './subject.reducers';
 import * as fromItem from './item.reducers';
 import * as fromRelated from './related.reducers';
+import * as fromAuth from './auth.reducers';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -74,6 +75,8 @@ export interface State {
   subjects: fromSubject.State;
   item: fromItem.State;
   related: fromRelated.State;
+  auth: fromAuth.State;
+
 }
 
 /**
@@ -89,7 +92,8 @@ const reducers = {
   areaList: fromAreaList.reducer,
   subjects: fromSubject.reducer,
   item: fromItem.reducer,
-  related: fromRelated.reducer
+  related: fromRelated.reducer,
+  auth: fromAuth.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -152,4 +156,8 @@ export const getItem = createSelector(getItemState, fromItem.getItem);
 export const getRelatedState = (state: State) => state.related;
 
 export const getRelated = createSelector(getRelatedState, fromRelated.getRelatedList);
+
+export const getAuthStatusState = (state: State) => state.auth;
+
+export const getAuthStatus = createSelector(getAuthStatusState, fromAuth.getAuthStatus);
 

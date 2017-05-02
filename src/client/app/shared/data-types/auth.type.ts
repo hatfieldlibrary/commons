@@ -16,34 +16,11 @@
  */
 
 /**
- * Created by mspalti on 4/26/17.
+ * Created by mspalti on 5/2/17.
  */
 
-import * as path from 'path';
+export class AuthType {
 
-const authentication = require('../controllers/authentication');
-
-export class AppRoutes {
-
-  public constructor() {}
-
-  public init(app, express) {
-
-    // Point static path to dist
-    app.use(express.static(path.join(__dirname, '../../../dist')));
-
-    // Requires authentication and authentication controller.
-    app.use('/auth', app.ensureAuthenticated);
-
-    app.use('/authCheck', app.checkAuthentication);
-
-   // Catch all other routes and return the index file
-    app.get('*', function (req, res) {
-      res.sendFile(path.join(__dirname, '../../../dist/index.html'));
-
-    });
-
-
-  }
+    status: boolean;
 
 }

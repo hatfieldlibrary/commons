@@ -47,18 +47,19 @@ var Authentication = (function () {
     function Authentication() {
     }
     Authentication.prototype.init = function (app, config, passport) {
-        // let credentials = environment.getConfig(app.get('env'));
-        //  console.log('init')
-        //  console.log(credentials)
-        // For development purposes, use express-session in lieu of Redisstore.
+        /**
+         * For development purposes, we use express-session in lieu of Redisstore.
+         */
         if (app.get('env') === 'development' || app.get('env') === 'runlocal') {
             app.use(session({
                 secret: 'keyboard cat',
                 saveUninitialized: true,
                 resave: true
             }));
-            // Use redis as the production session store.
-            // http://redis.io/
+            /**
+             * Use redis as the production session store.
+             *  http://redis.io/
+             */
         }
         else if (app.get('env') === 'production') {
             var redport = config.redisPort || 6379;
@@ -71,30 +72,37 @@ var Authentication = (function () {
                 resave: false // don't save session if unmodified
             }));
         }
-        // Set up authentication and session.
+        /**
+         * Set up authentication and session.
+         */
         app.use(passport.initialize());
         app.use(passport.session());
-        // define serializer and deserializer
+        /**
+         * Define serializer and deserializer. Used to
+         * store uid in the session.
+         */
         passport.serializeUser(function (user, done) {
-            done(null, user);
+            done(null, user.uid);
         });
         passport.deserializeUser(function (user, done) {
             done(null, user);
         });
         /**
-         * Validates CAS user.  Not much to do at this point. Just
-         * make sure we have a user and return.
+         * Class for validating the user.
          */
         var User = {
             findOne: function (login, callback) {
                 if (typeof login === 'undefined') {
                     return callback(new Error('User is undefined'), '');
                 }
-                return callback(null, login.username);
+                return callback(null, login.login);
             }
         };
         /**
-         * CAS authentication strategy
+         * The CAS authentication strategy.  The callback method just checks to be sure that
+         * a user was returned.  The user object contains email and uid.
+         *
+         * CAS configuration is defined in the credentials file.
          */
         var casStrategy = require('passport-cas');
         passport.use(new (casStrategy.Strategy)({
@@ -103,7 +111,7 @@ var Authentication = (function () {
             serverBaseURL: config.serverBaseURL,
             validateURL: config.validateURL
         }, function (profile, done) {
-            User.findOne({ login: profile.user }, function (err, user) {
+            User.findOne({ login: profile.attributes }, function (err, user) {
                 if (err) {
                     return done(err);
                 }
@@ -116,19 +124,28 @@ var Authentication = (function () {
         /**
          * Checks whether the request is authenticated and returns boolean.
          * Angular 2 routes do not natively play well with session cookies.
-         * And third-party middleware is not yet suited to our needs.  This API
-         * endpoint allows the client to quickly determine authentication status
-         * and update the UI accordingly. Used only by ItemLinksComponent.
+         * Third-party middleware is not yet suited to our needs.  And Passport CAS
+         * authentication, as implemented, probably requires us to check with
+         * the server in any case to determine whether the session has been assigned a user.
+         * This API endpoint allows the client to quickly determine authentication status
+         * and update the UI accordingly.
          *
-         * Yes, it's lame.
+         * Here's the sequence in our current Academic Commons implementation.  This same strategy
+         * can be used elsewhere if the client needs to know its authentication status.
+         *
+         * 1. Passport is configured to use sessions and store uid in the current session.
+         * 2. The CAS auth strategy completes successful authentication and redirects to the requested page.
+         * 3. An angular2 service uses this endpoint to check whether the user has been authenticated.
+         * 4. If the function returns true for an existing user, the angular2 component will not call this endpoint again.
+         * 5. If the function returns false, the angular2 component will check again at onInit.
+         *
+         * This is how we know whether to enable links and search forms in the Academic Commons ItemLinksComponent.
          *
          * @param req
          * @param res
          */
         app.checkAuthentication = function (req, res) {
-            res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            if (req.headers.cookie.indexOf('connect.sid') !== -1) {
+            if (req.user) {
                 res.end(JSON.stringify({ auth: true }));
             }
             else {
