@@ -10,7 +10,7 @@
       </a>
     </div>
   </div>
-
+{{isAuthenticated}}
   <div *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'" fxFlex="30">
 
     <form #searchForm="ngForm" (ngSubmit)="simpleSearch()">
@@ -18,7 +18,7 @@
         <input mdInput id="terms" [(ngModel)]="model.terms" name="search" placeholder="Enter Search Terms">
       </md-input-container>
       <button md-raised-button color="primary" style="line-height: 14px;padding:0 3px;min-width: 33px;"
-              type="submit" class="btn btn-success" [disabled]="!authentication">
+              type="submit" class="btn btn-success" [disabled]="isAuthenticated">
         <search-svg></search-svg>
       </button>
     </form>

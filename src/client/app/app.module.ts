@@ -27,6 +27,7 @@ import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {CookieModule, CookieService} from 'ngx-cookie';
 import 'hammerjs';
 
 import {AppComponent} from './components/app.component';
@@ -63,6 +64,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ItemLinksComponent } from './components/item-links/item-links.component';
 import { SearchSvgComponent } from './components/svg/search-svg/search-svg.component';
 import {SearchService} from "./services/search.service";
+import {AuthCheckService} from "./services/auth-check.service";
 
 
 // export const appRoutes = [
@@ -139,6 +141,7 @@ export const appRoutes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
+
     /**
      * StoreModule.provideStore is imported once in the root module, accepting a reducer
      * function or object map of reducer functions. If passed an object of
@@ -179,6 +182,7 @@ export const appRoutes = [
     ItemService,
     SearchService,
     RelatedService,
+    AuthCheckService,
     MdIconRegistry,
     {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],

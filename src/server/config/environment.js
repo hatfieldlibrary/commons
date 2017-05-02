@@ -39,7 +39,9 @@ var Configuration = (function () {
                 useAuth: true,
                 domain: credentials.domain,
                 apiHost: credentials.apiHost,
-                authUrl: credentials.authUrl,
+                serverBaseURL: credentials.serverBaseURL,
+                ssoBaseURL: credentials.ssoBaseURL,
+                validateURL: credentials.validateURL,
                 nodeEnv: env
             },
             test: {
@@ -47,7 +49,9 @@ var Configuration = (function () {
                 useAuth: true,
                 domain: credentials.domain,
                 apiHost: credentials.apiHost,
-                authUrl: credentials.authUrl,
+                serverBaseURL: credentials.serverBaseURL,
+                ssoBaseURL: credentials.ssoBaseURL,
+                validateURL: credentials.validateURL,
                 nodeEnv: env
             },
             production: {
@@ -55,7 +59,9 @@ var Configuration = (function () {
                 useAuth: true,
                 domain: credentials.domain,
                 apiHost: credentials.apiHost,
-                authUrl: credentials.authUrl,
+                serverBaseURL: credentials.serverBaseURL,
+                ssoBaseURL: credentials.ssoBaseURL,
+                validateURL: credentials.validateURL,
                 nodeEnv: env
             }
         };

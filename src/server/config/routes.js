@@ -29,6 +29,7 @@ var AppRoutes = (function () {
         app.use(express.static(path.join(__dirname, '../../../dist')));
         // Requires authentication and authentication controller.
         app.use('/auth', app.ensureAuthenticated);
+        app.use('/authCheck', app.checkAuthentication);
         // Catch all other routes and return the index file
         app.get('*', function (req, res) {
             res.sendFile(path.join(__dirname, '../../../dist/index.html'));

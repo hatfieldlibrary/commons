@@ -33,7 +33,7 @@ const
   /**
    * CAS authentication strategy
    */
-  cas = require('passport-cas2'),
+  //cas = require('passport-cas'),
   /**
    * Redis client
    * @type {exports|module.exports}
@@ -103,31 +103,63 @@ export class Authentication {
      */
     let User = {
 
-      validate: function (user, callback) {
-
-        if (typeof user === 'undefined') {
+      findOne: function(login, callback) {
+        if (typeof login === 'undefined') {
           return callback(new Error('User is undefined'), '');
         }
 
-        return callback(null, user.username);
-
+        return callback(null, login.username);
       }
     };
 
     /**
      * CAS authentication strategy
      */
-    let CasStrategy = require('passport-cas2').Strategy;
+    let casStrategy = require('passport-cas');
 
-    passport.use(new CasStrategy({
-        casURL: config.authUrl
-      },
-      // This is the `verify` callback
-      function (username, profile, done) {
-        User.validate({username: username}, function (err, user) {
-          done(err, user);
-        });
-      }));
+    passport.use(new (casStrategy.Strategy)({
+      version: 'CAS3.0',
+      ssoBaseURL: config.ssoBaseURL,
+      serverBaseURL: config.serverBaseURL,
+      validateURL:  config.validateURL
+    }, function(profile, done) {
+
+
+
+      User.findOne({login: profile.user}, function (err, user) {
+        if (err) {
+          return done(err);
+        }
+        if (!user) {
+          return done(null, false, {message: 'Unknown user'});
+        }
+        return done(null, user);
+      });
+    }));
+
+
+    /**
+     * Checks whether the request is authenticated and returns boolean.
+     * Angular 2 routes do not natively play well with session cookies.
+     * And third-party middleware is not yet suited to our needs.  This API
+     * endpoint allows the client to quickly determine authentication status
+     * and update the UI accordingly. Used only by ItemLinksComponent.
+     *
+     * Yes, it's lame.
+     *
+     * @param req
+     * @param res
+     */
+    app.checkAuthentication = function(req, res) {
+
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      if (req.headers.cookie.indexOf('connect.sid')  !== -1 ) {
+        res.end(JSON.stringify({auth: true}))
+      } else {
+        res.end(JSON.stringify({auth: false}))
+      }
+    };
 
 
     /**
@@ -139,12 +171,9 @@ export class Authentication {
     app.ensureAuthenticated = function (req, res, next) {
 
       let find = 'auth/';
+
       let path = req._parsedOriginalUrl.pathname;
       let redirect = path.replace(find, '');
-
-      if (req.isAuthenticated()) {
-        return res.redirect(redirect);
-      }
 
       passport.authenticate('cas', function (err, user, info) {
 
@@ -170,4 +199,6 @@ export class Authentication {
     };
 
   };
+
+
 }

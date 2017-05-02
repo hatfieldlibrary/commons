@@ -51,7 +51,9 @@ export class Configuration implements AppConfig {
       useAuth: true,
       domain: credentials.domain,
       apiHost: credentials.apiHost,
-      authUrl: credentials.authUrl,
+      serverBaseURL: credentials.serverBaseURL,
+      ssoBaseURL: credentials.ssoBaseURL,
+      validateURL: credentials.validateURL,
       nodeEnv: env
     },
 
@@ -60,7 +62,9 @@ export class Configuration implements AppConfig {
       useAuth: true,
       domain: credentials.domain,
       apiHost: credentials.apiHost,
-      authUrl: credentials.authUrl,
+      serverBaseURL: credentials.serverBaseURL,
+      ssoBaseURL: credentials.ssoBaseURL,
+      validateURL: credentials.validateURL,
       nodeEnv: env
     },
 
@@ -69,7 +73,9 @@ export class Configuration implements AppConfig {
       useAuth: true,
       domain: credentials.domain,
       apiHost: credentials.apiHost,
-      authUrl: credentials.authUrl,
+      serverBaseURL: credentials.serverBaseURL,
+      ssoBaseURL: credentials.ssoBaseURL,
+      validateURL: credentials.validateURL,
       nodeEnv: env
     }
   };

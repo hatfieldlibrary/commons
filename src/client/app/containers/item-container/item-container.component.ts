@@ -76,6 +76,7 @@ export class ItemContainerComponent implements OnInit {
 
     // Once we have item information, request the related items.
     this.item$.subscribe((data) => {
+
       this.getRelatedItems(data);
       this.collectionImage = data.collection.image;
 

@@ -26,6 +26,7 @@ export interface ItemTypesInterface {
 }
 
 export class ItemType {
+
   collection: {
     id: number;
     title: string;
@@ -45,7 +46,7 @@ export class ItemType {
     title: string;
     linkLabel: string;
     url: string;
-    secondaryUrl:string;
+    secondaryUrl: string;
     description: string;
     areaId: string;
   };

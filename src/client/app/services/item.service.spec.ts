@@ -25,35 +25,37 @@ import {ItemType} from "../shared/data-types/item.type";
 describe('Item Service', () => {
 
   const itemMock: ItemType = {
-    collection: {
-      id: 1,
-      title: 'test collection',
-      url: '',
-      desc: '',
-      linkOptions: '',
-      image: '',
-      dates: '',
-      items:'',
-      searchOptions: '',
-      assetType: '',
-      restricted: false,
-      published: false
-    },
-    category: {
-      id: 1,
-      title: 'test category',
-      linkLabel: '',
-      url: '',
-      secondaryUrl: '',
-      description: '',
-      areaId: ''
-    },
-    itemTypes: [{
-      id: 0,
-      name: 'test item type',
-      icon: ''
-    }],
-    subjects: []
+
+      collection: {
+        id: 1,
+        title: 'test collection',
+        url: '',
+        desc: '',
+        linkOptions: '',
+        image: '',
+        dates: '',
+        items: '',
+        searchOptions: '',
+        assetType: '',
+        restricted: false,
+        published: false
+      },
+      category: {
+        id: 1,
+        title: 'test category',
+        linkLabel: '',
+        url: '',
+        secondaryUrl: '',
+        description: '',
+        areaId: ''
+      },
+      itemTypes: [{
+        id: 0,
+        name: 'test item type',
+        icon: ''
+      }],
+      subjects: []
+
   };
 
   beforeEach(() => {
