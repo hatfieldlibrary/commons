@@ -15,15 +15,15 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
+
 <item-header [areaList]="areas$ | async" [image]="collectionImage"></item-header>
 
-<div fxLayout="row" fxLayoutAlign="center start">
+<div fxLayout="row" fxLayoutAlign="center center" style="margin-top: -80px">
 
-  <div fxFlex="0" fxFlex.gt-sm="10" fxFlex.gt-lg="30"></div>
 
-  <div fxFlex="100" fxFlex.gt-sm="80" fxFlex.gt-lg="40">
-
+  <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.gt-lg="50">
     <md-sidenav-container>
+
       <md-card>
 
         <div fxLayout="row" fxLayoutAlign="center start">
@@ -46,10 +46,11 @@
 
 
       </md-card>
+
       <footer></footer>
+
     </md-sidenav-container>
   </div>
-  <div fxFlex="0" fxFlex.gt-sm="10" fxFlex.gt-lg="30"></div>
 
 
 </div>

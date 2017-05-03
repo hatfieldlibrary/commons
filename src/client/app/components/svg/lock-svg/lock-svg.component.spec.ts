@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LockSvgComponent } from './lock-svg.component';
+import {DomSanitizer} from "@angular/platform-browser";
+import {MaterialModule, MdIconRegistry} from "@angular/material";
 
 describe('LockSvgComponent', () => {
   let component: LockSvgComponent;
@@ -8,7 +10,14 @@ describe('LockSvgComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LockSvgComponent ]
+      declarations: [ LockSvgComponent ],
+      imports: [
+        MaterialModule
+      ],
+      providers: [
+        MdIconRegistry,
+        DomSanitizer
+      ]
     })
     .compileComponents();
   }));

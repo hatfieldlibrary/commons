@@ -12,7 +12,7 @@ import * as authActions from '../actions/auth.action';
  * determine if the session has been authenticated via CAS.  Sessions are set to expire
  * when the browser is closed, so there is not need to check the session status again after
  * we know that it is true.  If we add a logout feature, then we will need to call this
- * service every time the component is initalized.
+ * service every time the component is initialized.
  */
 @Injectable()
 export class AuthCheckService {

@@ -34,8 +34,6 @@ import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
-import {SelectedSubject} from "../../shared/data-types/selected-subject";
-import {CurrentSubject} from "../../actions/subject-actions";
 
 @Component({
   selector: 'main-container',
@@ -48,9 +46,7 @@ export class MainContainer implements OnInit {
   areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType>;
   subjects$: Observable<SubjectType[]>;
-  globalSubjects$:  Observable<SubjectType[]>;
   areasAvailable: boolean = false;
-  subjectsAvailable: boolean = false;
   areaId: string;
   subjectLinkType: string;
   homeScreen:boolean = false;

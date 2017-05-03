@@ -18,10 +18,15 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ItemContainerComponent} from './item-container.component';
 import {ItemComponent} from "../../components/item/item.component";
-import {MaterialModule} from "@angular/material";
+import {
+  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdIconModule, MdInputModule, MdListModule,
+  MdSelectModule,
+  MdSidenavModule,
+  MdToolbarModule
+} from "@angular/material";
 import {Action, Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterModule} from "@angular/router";
 import {Observable} from "rxjs";
 import * as fromRoot from '../../reducers';
 import {AppComponent} from "../../components/app.component";
@@ -36,24 +41,32 @@ import {PageNotFoundComponent} from "../../shared/components/page-not-found/page
 import * as fromItem from '../../actions/item.actions';
 import {appRoutes} from '../../app.module';
 import {select} from "@ngrx/core";
-import {Injectable} from "@angular/core";
+import {Injectable, Renderer2} from "@angular/core";
+import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
+import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
+import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
+import {SideNavComponent} from "../../components/side-nav/side-nav.component";
+import {HomeScreenComponent} from "../../components/home-screen/home-screen.component";
+import {ItemHeaderComponent} from "../../components/item-header/item-header.component";
+import {FooterComponent} from "../../components/footer/footer.component";
+import {ItemLinksComponent} from "../../components/item-links/item-links.component";
+import {SearchSvgComponent} from "../../components/svg/search-svg/search-svg.component";
+import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HttpModule} from "@angular/http";
+import {FormsModule} from "@angular/forms";
+import {AuthCheckService} from "../../services/auth-check.service";
+import {SearchService} from "../../services/search.service";
 
-@Injectable()
-class MockActivatedRoute extends ActivatedRoute {
+// @Injectable()
+// class MockActivatedRoute  {
+//
+//   params: Observable<any>;
+//
+// }
 
-  params: Observable<any>;
-
-}
-
-const setMockAreaRoute = (route: MockActivatedRoute, mock: string) => {
-  route.params = Observable.of({id: mock});
-  spyOn(route.params, 'subscribe').and.callThrough();
-};
-
-const setMockRoute = (route: MockActivatedRoute) => {
-  route.params = Observable.of({});
-  spyOn(route.params, 'subscribe').and.callThrough();
-};
 
 let mockItem = {
     collection: {
@@ -88,43 +101,71 @@ let mockItem = {
     subjects: ['1', '2']
 
 };
+//
+// @Injectable()
+// class MockStore extends Store<any> {
+//
+//   select = () => {
+//     return Observable.of(mockItem);
+//   };
+//
+//   dispatch (action: Action)  {}
+//
+// }
 
-@Injectable()
-class MockStore extends Store<any> {
 
-  select = () => {
-    return Observable.of(mockItem);
-  };
+const setMockAreaRoute = (route:any, mock: string) => {
+  route.params = Observable.of({id: mock});
+  spyOn(route.params, 'subscribe').and.callThrough();
+};
 
-  dispatch (action: Action)  {}
-
-}
+const setMockRoute = (route:any) => {
+  route.params = Observable.of({});
+  spyOn(route.params, 'subscribe').and.callThrough();
+};
 
 describe('ItemContainerComponent', () => {
+
   let component: ItemContainerComponent;
   let fixture: ComponentFixture<ItemContainerComponent>;
-  let route: MockActivatedRoute;
-  let store: MockStore;
+  let route;
+  let store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        MainContainer,
-        ListComponent,
-        AreaComponent,
-        SubjectsComponent,
-        ListHeaderComponent,
-        AreaInformationComponent,
-        PageNotFoundComponent,
         ItemContainerComponent,
+        ItemHeaderComponent,
+        RelatedItemsComponent,
+        AreaComponent,
         ItemComponent,
-        RelatedItemsComponent
+        ItemLinksComponent,
+        LockSvgComponent,
+        SearchSvgComponent,
+        MenuSvgComponent,
+        CloseSvgComponent,
+        BackSvgComponent,
+        FooterComponent
       ],
       imports: [
-        MaterialModule,
+        FlexLayoutModule,
+        MdButtonModule,
+        MdCardModule,
+        MdListModule,
+        MdToolbarModule,
+        MdSidenavModule,
+        MdInputModule,
+        MdIconModule,
+        MdSelectModule,
+        MdChipsModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MdInputModule,
+        FormsModule,
+        HttpModule,
         StoreModule.provideStore({}),
-        RouterTestingModule.withRoutes(appRoutes),
+        RouterTestingModule
       ],
       providers: [
         {
@@ -136,21 +177,44 @@ describe('ItemContainerComponent', () => {
             };}
         },
         {
-          provide: ActivatedRoute,
-          useClass: class {params: Observable<any>;}
-        }
+            provide: ActivatedRoute,
+            useValue: {
+              params: new Observable<any>(),
+              url: {
+                map: () =>  Observable.of('')
+              }
+            }
+
+        },
+        {
+          provide: Renderer2,
+          useValue: {
+            setProperty: () => {}
+          }
+        },
+        RouterModule,
+        SearchService,
+        AuthCheckService
+
+
       ]
     })
       .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(async(() => {
 
     TestBed.createComponent(AppComponent);
     fixture = TestBed.createComponent(ItemContainerComponent);
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
+
+  }));
+
+  beforeEach(() => {
+
+    spyOn(route.params, 'subscribe').and.callThrough();
     spyOn(store, 'select').and.callThrough();
   //  spyOn(store, 'dispatch');
 
@@ -163,6 +227,7 @@ describe('ItemContainerComponent', () => {
   it('should dispatch request for item data', fakeAsync(() => {
 
     setMockAreaRoute(route, '1');
+
     component.ngOnInit();
     tick();
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemRequest('1'));

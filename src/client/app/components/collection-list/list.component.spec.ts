@@ -17,9 +17,7 @@
 
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {MaterialModule} from "@angular/material";
+import {MaterialModule, MdCardModule, MdListModule} from "@angular/material";
 import {ListComponent} from './list.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {appRoutes} from '../../app.module';
@@ -33,6 +31,7 @@ import {AreaInformationComponent} from "../area-information/area-information.com
 import {ItemContainerComponent} from "../../containers/item-container/item-container.component";
 import {ItemComponent} from "../item/item.component";
 import {RelatedItemsComponent} from "../related-items/related-items.component";
+import {EventEmitter} from "@angular/core";
 
 
 describe('ListComponent', () => {
@@ -41,21 +40,13 @@ describe('ListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent,
-        MainContainer,
-        ListComponent,
-        AreaComponent,
-        SubjectsComponent,
-        ListHeaderComponent,
-        AreaInformationComponent,
-        PageNotFoundComponent,
-        ItemContainerComponent,
-        RelatedItemsComponent,
-        ItemComponent
+      declarations: [
+        ListComponent
       ],
       imports: [
-        MaterialModule,
-        RouterTestingModule.withRoutes(appRoutes),
+        MdCardModule,
+        MdListModule,
+        RouterTestingModule
       ]
     })
       .compileComponents();

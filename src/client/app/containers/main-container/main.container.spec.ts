@@ -22,9 +22,14 @@
 import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule, Store, Action} from '@ngrx/store';
-import {MaterialModule} from '@angular/material';
+import {
+  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdIconModule, MdInputModule, MdListModule,
+  MdSelectModule,
+  MdSidenavModule,
+  MdToolbarModule
+} from '@angular/material';
 import {Observable} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 
 import {MainContainer} from './main.container';
 import {ListComponent} from '../../components/collection-list/list.component';
@@ -43,6 +48,21 @@ import {ItemContainerComponent} from "../item-container/item-container.component
 import {ItemComponent} from "../../components/item/item.component";
 import {appRoutes} from '../../app.module';
 import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
+import {SideNavComponent} from "../../components/side-nav/side-nav.component";
+import {HomeScreenComponent} from "../../components/home-screen/home-screen.component";
+import {ItemHeaderComponent} from "../../components/item-header/item-header.component";
+import {ItemLinksComponent} from "../../components/item-links/item-links.component";
+import {FooterComponent} from "../../components/footer/footer.component";
+import {SearchSvgComponent} from "../../components/svg/search-svg/search-svg.component";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FormsModule} from "@angular/forms";
+import {HttpModule} from "@angular/http";
+import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component";
+import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
+import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
+import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
 
 let areaSubscriptionMock =
   {
@@ -98,22 +118,22 @@ class MockStore<T> extends Store<any> {
 
 }
 
-const setAllRoute = (route: MockActivatedRoute) => {
+const setAllRoute = (route: any) => {
  route.params = Observable.of({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
-const setAreaRoute = (route: MockActivatedRoute, mock: string) => {
+const setAreaRoute = (route: any, mock: string) => {
   route.params = Observable.of({areaId: mock});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
-const setSubjectAreaRoute = (route: MockActivatedRoute, area: string, subject: string) => {
+const setSubjectAreaRoute = (route: any, area: string, subject: string) => {
   route.params = Observable.of({areaId: area, subjectId: subject});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
-const setSubjectRoute = (route: MockActivatedRoute, subject: string) => {
+const setSubjectRoute = (route: any, subject: string) => {
   route.params = Observable.of({subjectId: subject});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
@@ -122,41 +142,58 @@ describe('MainContainer', () => {
 
   let component: MainContainer;
   let fixture: ComponentFixture<MainContainer>;
-  let store:MockStore<any>;
-  let route:MockActivatedRoute;
+  let store;
+  let route;
 
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
       declarations: [
+        BackSvgComponent,
+        LockSvgComponent,
+        MenuSvgComponent,
+        CloseSvgComponent,
         AppComponent,
-        MainContainer,
-        ListComponent,
         AreaComponent,
+        ListComponent,
+        MainContainer,
         SubjectsComponent,
         ListHeaderComponent,
         AreaInformationComponent,
-        PageNotFoundComponent,
-        ItemContainerComponent,
-        RelatedItemsComponent,
-        ItemComponent
+        SideNavComponent,
+        HomeScreenComponent,
+        FooterComponent,
+        SearchSvgComponent,
       ],
       imports: [
-        MaterialModule,
-        StoreModule.provideStore({}),
-        RouterTestingModule.withRoutes(appRoutes),
+        FlexLayoutModule,
+        MdButtonModule,
+        MdCardModule,
+        MdListModule,
+        MdToolbarModule,
+        MdSidenavModule,
+        MdInputModule,
+        MdIconModule,
+        MdSelectModule,
+        MdChipsModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpModule,
+        FormsModule,
+        RouterTestingModule,
       ],
       providers: [
         {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch'); select = () => {
-            return Observable.of(areaList);
-          };}
+              return Observable.of(areaList);
+            };
+          }
         },
         {
           provide: ActivatedRoute,
-          useClass: class {params: Observable<any>;}
+          useValue: {params: new Observable<any>()}
         }
       ]
     })
@@ -182,6 +219,7 @@ describe('MainContainer', () => {
     spyOn(component, 'getAllCollections').and.callThrough();
 
   });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -33,7 +33,7 @@
     </span>
     <span *ngIf="linkOptions === 'opts'">
       <md-select placeholder="Find By">
-        <md-option *ngFor="let option of optionList.result"  [disabled]="!isAuthenticated" (click)="optionSearch(option.item.title)" target="_blank">{{option.item.title}}</md-option>
+        <md-option *ngFor="let option of optionList"  [disabled]="!isAuthenticated" (click)="optionSearch(option.item.title)" target="_blank">{{option.item.title}}</md-option>
       </md-select>
     </span>
   </div>

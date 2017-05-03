@@ -39,21 +39,10 @@ describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,
-        MainContainer,
-        ListComponent,
-        AreaComponent,
-        SubjectsComponent,
-        ListHeaderComponent,
-        AreaInformationComponent,
-        ItemContainerComponent,
-        ItemComponent,
-        RelatedItemsComponent,
-        PageNotFoundComponent
+        AppComponent
       ],
       imports: [
-        MaterialModule,
-        RouterTestingModule.withRoutes(appRoutes),
+        RouterTestingModule
       ]
     });
     TestBed.compileComponents();

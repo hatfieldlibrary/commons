@@ -18,6 +18,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RelatedItemsComponent } from './related-items.component';
+import {MdButtonModule, MdCardModule} from "@angular/material";
+import {RouterModule} from "@angular/router";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('RelatedItemsComponent', () => {
   let component: RelatedItemsComponent;
@@ -25,7 +28,13 @@ describe('RelatedItemsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RelatedItemsComponent ]
+      declarations: [
+        RelatedItemsComponent ],
+      imports: [
+        MdCardModule,
+        MdButtonModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

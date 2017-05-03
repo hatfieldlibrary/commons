@@ -18,6 +18,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AreaInformationComponent } from './area-information.component';
+import {MdButtonModule, MdCardModule, MdChipsModule} from "@angular/material";
+import {EventEmitter} from "@angular/core";
 
 describe('AreaInformationComponent', () => {
   let component: AreaInformationComponent;
@@ -25,7 +27,12 @@ describe('AreaInformationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AreaInformationComponent ]
+      declarations: [ AreaInformationComponent ],
+      imports: [
+        MdCardModule,
+        MdChipsModule,
+        MdButtonModule,
+      ]
     })
     .compileComponents();
   }));

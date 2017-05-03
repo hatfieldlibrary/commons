@@ -1,6 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemHeaderComponent } from './item-header.component';
+import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
+import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
+import {AreaComponent} from "../area-selector/area.component";
+import {MdSidenavModule, MdToolbarModule} from "@angular/material";
+import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
+import {RouterModule} from "@angular/router";
+import {RouterTestingModule} from "@angular/router/testing";
+import {DomSanitizer} from "@angular/platform-browser";
 
 describe('ItemHeaderComponent', () => {
   let component: ItemHeaderComponent;
@@ -8,7 +16,23 @@ describe('ItemHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemHeaderComponent ]
+      declarations: [
+        ItemHeaderComponent,
+        MenuSvgComponent,
+        CloseSvgComponent,
+        BackSvgComponent,
+        AreaComponent
+      ],
+      imports: [
+        MdSidenavModule,
+        MdToolbarModule,
+        RouterTestingModule
+      ],
+      providers: [
+        DomSanitizer,
+        Location,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

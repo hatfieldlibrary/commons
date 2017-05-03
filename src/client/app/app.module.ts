@@ -52,7 +52,7 @@ import {ItemService} from "./services/item.service";
 import {RelatedEffects} from "./effects/related.effects";
 import { RelatedItemsComponent } from './components/related-items/related-items.component';
 import {RelatedService} from "./services/related.service";
-import { IconMenuSvg } from './components/menu-svg/menu-svg.component';
+import { MenuSvgComponent } from './components/svg/menu-svg/menu-svg.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { CloseSvgComponent } from './components/svg/close-svg/close-svg.component';
 import { HomeScreenComponent } from './components/home-screen/home-screen.component';
@@ -104,7 +104,7 @@ export const appRoutes = [
   declarations: [
     BackSvgComponent,
     LockSvgComponent,
-    IconMenuSvg,
+    MenuSvgComponent,
     CloseSvgComponent,
     AppComponent,
     AreaComponent,
@@ -140,6 +140,7 @@ export const appRoutes = [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes),
 
     /**

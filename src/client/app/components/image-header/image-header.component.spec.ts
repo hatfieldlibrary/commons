@@ -18,6 +18,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListHeaderComponent } from './image-header.component';
+import {MdButtonModule, MdListModule, MdSidenavModule, MdToolbarModule} from "@angular/material";
+import {Router, RouterModule} from "@angular/router";
+import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
+import {AreaComponent} from "../area-selector/area.component";
+import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('ListHeaderComponent', () => {
   let component: ListHeaderComponent;
@@ -25,7 +31,19 @@ describe('ListHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListHeaderComponent ]
+      declarations: [
+        ListHeaderComponent,
+        AreaComponent,
+        MenuSvgComponent,
+        CloseSvgComponent
+      ],
+      imports: [
+        MdToolbarModule,
+        MdSidenavModule,
+        MdListModule,
+        MdButtonModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

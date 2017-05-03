@@ -18,6 +18,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemComponent } from './item.component';
+import {MdButtonModule, MdInputModule, MdListModule, MdSelectModule} from "@angular/material";
+import {LockSvgComponent} from "../svg/lock-svg/lock-svg.component";
+import {SearchSvgComponent} from "../svg/search-svg/search-svg.component";
+import {FormsModule} from "@angular/forms";
+import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
+import {ItemLinksComponent} from "../item-links/item-links.component";
+import {ActivatedRoute, RouterModule} from "@angular/router";
+import {RouterTestingModule} from "@angular/router/testing";
+import {SearchService} from "../../services/search.service";
+import {AuthCheckService} from "../../services/auth-check.service";
+import {Observable} from "rxjs/Observable";
+import {Store} from "@ngrx/store";
 
 describe('ItemComponent', () => {
   let component: ItemComponent;
@@ -25,7 +37,45 @@ describe('ItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemComponent ]
+      declarations: [
+        ItemComponent,
+        ItemLinksComponent,
+        LockSvgComponent,
+        SearchSvgComponent,
+        MenuSvgComponent
+      ],
+      imports: [
+        MdListModule,
+        MdButtonModule,
+        MdInputModule,
+        MdSelectModule,
+        FormsModule,
+        RouterTestingModule
+      ],
+      providers: [
+
+        SearchService,
+        AuthCheckService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: new Observable<any>(),
+            url: {
+              map: () =>  Observable.of('')
+            }
+          }
+        },
+        {
+          provide: Store,
+          useClass: class {
+            dispatch = jasmine.createSpy('dispatch');
+            select = () => {
+              return Observable.of({});
+            };
+          }
+        },
+
+      ]
     })
     .compileComponents();
   }));
