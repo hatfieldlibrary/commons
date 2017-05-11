@@ -58,6 +58,7 @@ import {HttpModule} from "@angular/http";
 import {FormsModule} from "@angular/forms";
 import {AuthCheckService} from "../../services/auth-check.service";
 import {SearchService} from "../../services/search.service";
+import {AppMenusComponent} from "../../components/apps-menu/app-menus.component";
 
 // @Injectable()
 // class MockActivatedRoute  {
@@ -145,7 +146,8 @@ describe('ItemContainerComponent', () => {
         MenuSvgComponent,
         CloseSvgComponent,
         BackSvgComponent,
-        FooterComponent
+        FooterComponent,
+        AppMenusComponent
       ],
       imports: [
         FlexLayoutModule,

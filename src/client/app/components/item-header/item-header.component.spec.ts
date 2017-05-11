@@ -9,6 +9,7 @@ import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {DomSanitizer} from "@angular/platform-browser";
+import {AppMenusComponent} from "../apps-menu/app-menus.component";
 
 describe('ItemHeaderComponent', () => {
   let component: ItemHeaderComponent;
@@ -21,7 +22,10 @@ describe('ItemHeaderComponent', () => {
         MenuSvgComponent,
         CloseSvgComponent,
         BackSvgComponent,
-        AreaComponent
+        AreaComponent,
+        AppMenusComponent,
+        BackSvgComponent,
+        MenuSvgComponent
       ],
       imports: [
         MdSidenavModule,

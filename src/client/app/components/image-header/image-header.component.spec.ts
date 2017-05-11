@@ -24,6 +24,8 @@ import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {AreaComponent} from "../area-selector/area.component";
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {RouterTestingModule} from "@angular/router/testing";
+import {AppMenusComponent} from "../apps-menu/app-menus.component";
+import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 
 describe('ListHeaderComponent', () => {
   let component: ListHeaderComponent;
@@ -35,7 +37,10 @@ describe('ListHeaderComponent', () => {
         ListHeaderComponent,
         AreaComponent,
         MenuSvgComponent,
-        CloseSvgComponent
+        CloseSvgComponent,
+        AppMenusComponent,
+        BackSvgComponent,
+        MenuSvgComponent
       ],
       imports: [
         MdToolbarModule,

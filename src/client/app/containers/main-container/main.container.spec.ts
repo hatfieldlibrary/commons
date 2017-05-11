@@ -62,6 +62,7 @@ import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component
 import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
 import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
 import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
+import {AppMenusComponent} from "../../components/apps-menu/app-menus.component";
 
 let areaSubscriptionMock =
   {
@@ -162,6 +163,7 @@ describe('MainContainer', () => {
         HomeScreenComponent,
         FooterComponent,
         SearchSvgComponent,
+        AppMenusComponent
       ],
       imports: [
         FlexLayoutModule,

@@ -22,6 +22,8 @@ import { AreaComponent } from './area.component';
 
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
+import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
+import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 
 describe('AreaComponent', () => {
   let component: AreaComponent;
@@ -30,7 +32,9 @@ describe('AreaComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AreaComponent
+        AreaComponent,
+        BackSvgComponent,
+        MenuSvgComponent
        ],
       imports: [
         MdListModule,
