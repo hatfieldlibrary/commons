@@ -15,11 +15,13 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input, OnChanges, OnInit, SecurityContext, SimpleChanges, ViewChild} from '@angular/core';
-import {Location} from '@angular/common';
+import {
+  Component, Input, OnChanges, SecurityContext, SimpleChanges
+} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {Router} from "@angular/router";
+import {ItemType} from "../../shared/data-types/item.type";
+
 
 @Component({
   selector: 'item-header',
@@ -31,36 +33,23 @@ export class ItemHeaderComponent implements OnChanges {
 
   @Input() image: string;
   @Input() areaList: AreaType[];
-
-  @ViewChild('sidenav') public sideNavigate;
+  @Input() item: ItemType;
   backgroundImage: SafeResourceUrl = '';
+  smallBackgroundImage: SafeResourceUrl = '';
 
-  constructor(private sanitizer: DomSanitizer, private router: Router, private location: Location) { }
-
-
-
-  backClicked() {
-
-    this.location.back();
-  }
-
-  openMenu() {
-    this.sideNavigate.open();
-  }
-
-  onSelected(selected: boolean) {
-    selected ? this.sideNavigate.close() : this.sideNavigate.open();
+  constructor(private sanitizer: DomSanitizer) {
   }
 
 
   ngOnChanges(changes: SimpleChanges) {
 
     let url = 'http://libapps.willamette.edu:3003/resources/img/full/' + changes['image'].currentValue;
-    let image= this.sanitizer.sanitize(SecurityContext.URL, url).toString();
+    let image = this.sanitizer.sanitize(SecurityContext.URL, url).toString();
+    this.backgroundImage = this.sanitizer.bypassSecurityTrustUrl(image);
 
-    this.backgroundImage = this.sanitizer.bypassSecurityTrustStyle('url('+image+')');
-
-
+    let smallUrl = 'http://libapps.willamette.edu:3003/resources/img/thumb/' + changes['image'].currentValue;
+    let smallImage = this.sanitizer.sanitize(SecurityContext.URL, smallUrl).toString();
+    this.smallBackgroundImage = this.sanitizer.bypassSecurityTrustUrl(smallImage);
   }
 
 }

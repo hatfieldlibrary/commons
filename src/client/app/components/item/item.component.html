@@ -14,59 +14,63 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<div fxLayout="row" fxLayoutAlign="center start">
+<div fxLayoutAlign="center start">
 
-  <div fxFlex="100" fxFlex.gt-sm="90">
+    <div fxLayout="column" fxLayout.gt-sm="row" fxFlex="100" fxFlex.gt-sm="70"  fxFlex.gt-lg="55">
 
-    <div fxFlex="75" fxFlex.gt-md="60">
+      <div fxFlex="100" fxFlex.gt-sm="60" fxFlex.gt-md="60">
 
-      <h1>{{item?.collection.title}}</h1>
-      <p>{{item?.collection.desc}}</p>
+        <h1>{{item?.collection.title}}</h1>
+        <p>{{item?.collection.desc}}</p>
 
-      <md-list>
-        <md-list-item *ngIf="item?.collection.dates">
-          <div fxLayout="row" fxFlexAlign="center">
-            <h4>Dates: </h4>
-            <h4 style="color: #666;margin-left: 12px;">
-              {{item?.collection.dates}}
-            </h4>
-          </div>
-        </md-list-item>
-        <md-list-item *ngIf="item?.collection.items">
-          <div fxLayout="row">
-            <h4>Item Count: </h4>
-            <h4 style="color: #666;margin-left: 12px;">
-              {{item?.collection.items}}
-            </h4>
-          </div>
-        </md-list-item>
-      </md-list>
+        <md-list>
+          <md-list-item *ngIf="item?.collection.dates">
+            <div fxLayout="row" fxFlexAlign="center">
+              <h4>Dates: </h4>
+              <h4 style="color: #666;margin-left: 12px;">
+                {{item?.collection.dates}}
+              </h4>
+            </div>
+          </md-list-item>
+          <md-list-item *ngIf="item?.collection.items">
+            <div fxLayout="row">
+              <h4>Item Count: </h4>
+              <h4 style="color: #666;margin-left: 12px;">
+                {{item?.collection.items}}
+              </h4>
+            </div>
+          </md-list-item>
+        </md-list>
 
-      <md-divider></md-divider>
+        <md-divider></md-divider>
 
-      <h4>This collection is part of</h4>
-      <h2>{{item?.category?.title}}</h2>
+        <h4>This collection is part of</h4>
+        <h2>{{item?.category?.title}}</h2>
 
-      <p>{{item?.category?.secondaryUrl}}</p>
-      <p>{{item?.category?.description}}</p>
+        <p>{{item?.category?.secondaryUrl}}</p>
+        <p>{{item?.category?.description}}</p>
 
-      <a md-raised-button color="primary" href="{{item?.category?.url}}"
-         target="_blank">{{item?.category?.linkLabel}}</a>
+        <a md-raised-button color="primary" href="{{item?.category?.url}}"
+           target="_blank">{{item?.category?.linkLabel}}</a>
 
-    </div>
+      </div>
 
+      <div class="fill-remaining-space"></div>
 
-    <div fxLayoutAlign="end start" fxFlex="25" fxFlex.gt-md="40" >
+      <div fxFlex="100" fxFlex.gt-sm="30">
 
-        <item-links fxFlexAlign.gt-sm="right"
-                    [restricted]="item?.collection.restricted"
-                    [linkOptions]="item?.collection.linkOptions"
-                    [assetType]="item?.collection.assetType"
-                    [searchOptions]="item?.collection.searchOptions"
-                    [url]="item?.collection.url">
+        <item-links
+          [restricted]="item?.collection.restricted"
+          [linkOptions]="item?.collection.linkOptions"
+          [assetType]="item?.collection.assetType"
+          [searchOptions]="item?.collection.searchOptions"
+          [url]="item?.collection.url">
         </item-links>
 
+      </div>
+
     </div>
-  </div>
+
 </div>
+
 

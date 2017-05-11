@@ -14,34 +14,32 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<item-header [areaList]="areas$ | async" [image]="collectionImage"></item-header>
 
-<div fxLayout="row" fxLayoutAlign="center center" style="margin-top: -80px">
+<item-header [areaList]="areas$ | async" [image]="collectionImage" [item]="item$ | async"></item-header>
 
-  <div fxFlex="100" fxFlex.gt-sm="65" fxFlex.gt-lg="50">
+<div fxLayout="row" fxLayoutAlign="center center">
 
-    <md-sidenav-container>
+  <div fxFlex="100" >
 
       <md-card>
 
-        <div fxLayout="row">
+        <md-card-content>
+          <div fxLayout="row">
 
-            <md-card-content>
+            <div fxFlex fxLayout="column" fxLayoutGap="40px">
 
-              <div fxLayout="column" fxLayoutGap="40px">
-                <item [item]="item$ | async"></item>
-                <related-items [related]="related$ | async"></related-items>
-              </div>
+              <item [item]="item$ | async"></item>
 
-            </md-card-content>
+              <related-items [related]="related$ | async"></related-items>
 
+            </div>
           </div>
+        </md-card-content>
 
       </md-card>
 
       <footer></footer>
 
-    </md-sidenav-container>
 
   </div>
 

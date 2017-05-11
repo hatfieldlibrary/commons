@@ -45,7 +45,6 @@ import {Injectable, Renderer2} from "@angular/core";
 import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
 import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
 import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
-import {SideNavComponent} from "../../components/side-nav/side-nav.component";
 import {HomeScreenComponent} from "../../components/home-screen/home-screen.component";
 import {ItemHeaderComponent} from "../../components/item-header/item-header.component";
 import {FooterComponent} from "../../components/footer/footer.component";

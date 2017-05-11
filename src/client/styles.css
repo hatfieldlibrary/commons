@@ -16,14 +16,14 @@
  */
 
 .frame {
-  background: #262626;
+  background: #999;
   margin:0;
 }
 
 /* You can add global styles to this file, and also import other style files */
-md-sidenav {
-  width: 200px;
-}
+/*md-sidenav {*/
+  /*width: 200px;*/
+/*}*/
 .overflow-x-scroll-no-scrollbar {overflow:auto;}
 .overflow-x-scroll-no-scrollbar  > md-list {
   overflow-x:auto;
@@ -45,12 +45,84 @@ subject-selector .mat-list .mat-list-item .mat-list-item-content {
 .fill-remaining-space {
   flex: 1 1 auto;
 }
+
 .header-image {
+
   width: 100%;
-  height: 650px;
-  background-size:cover;
+  position: relative;
+  /*height: 100%;*/
+  /*background-size:auto;*/
 }
 
 item-container .mat-list .mat-list-item  div.mat-list-item-content.mat-ripple {
   padding: 0 0;
+}
+
+md-card {
+  background: #fff;
+}
+
+.header-image-container {
+  position: relative;
+  background: #423e3e;
+}
+.header-image-container .header-item-title {
+  margin-left: 42px;
+  margin-top: 64px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: #fff;
+  position: absolute;
+  z-index: 1200;
+}
+.header-image-container .header-item-title h1 {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.header-image {
+  background: #423e3e;
+}
+.header-overlay {
+   background: #000;
+   opacity: 0.5;
+   height: 150px;
+   width: 100%;
+   position: absolute;
+   z-index: 500;
+ }
+.header-background-overlay {
+  background: #000;
+  opacity: 0.5;
+  height: 150px;
+  width: 100%;
+  position: absolute;
+  z-index: 0;
+}
+.footer {
+  background: #333;
+  height: 200px
+}
+.mat-sidenav-content {
+  overflow: hidden !important;
+}
+.mat-sidenav {
+  background: #eee !important;
+}
+/*.container-fix {*/
+  /*position: absolute !important;*/
+  /*right: 0;*/
+  /*width: 200px;*/
+  /*z-index: 1000;*/
+  /*min-height: 300px !important;*/
+
+/*}*/
+md-toolbar {
+  z-index: 700;
+}
+md-toolbar button {
+  background: #000;
+  border-width: 0;
+}
+lock-svg .mat-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 56px;
 }

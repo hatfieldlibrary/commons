@@ -1,35 +1,32 @@
-<div fxLayout="row" fxLayoutAlign="center center">
+<div class="header-image-container" style="overflow:hidden">
 
-  <div fxFlex="100" fxFlex.gt-sm="70" fxFlex.gt-lg="60">
+  <div class="header-background-overlay"></div>
 
-    <div fxLayout="column" fxLayoutAlign="center start">
+  <div fxLayout="row" fxFlex="100" fxLayoutAlign="center top">
 
-      <md-toolbar fxFlex="10" style="background: #000;color:#fff; ">
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-md="80" fxFlex.gt-lg="60">
 
-        <span><icon-back (click)="backClicked()"></icon-back>&nbsp;Academic Commons</span>
+      <md-sidenav-container>
+        <div fxLayout="column">
+          <app-menus-component [areaList]="areaList" style="z-index:4000"></app-menus-component>
 
-        <!-- This fills the remaining space of the current row -->
-        <span class="fill-remaining-space"></span>
+          <div class="header-overlay"></div>
+          <div class="header-item-title">
+            <h1>{{item?.collection.title}}</h1>
+          </div>
+          <div fxFlex="100"
+               class='header-image'>
+            <img fxHide="true" fxShow.gt-sm="" [src]="backgroundImage" style="height: 100%; width: 100%">
+            <img fxHide="false" fxHide.gt-sm [src]="smallBackgroundImage" style="height: 100%; width: 100%">
+          </div>
+        </div>
+      </md-sidenav-container>
 
-        <icon-menu fxHide.gt-sm (click)="sidenav.open()"></icon-menu>
-
-      </md-toolbar>
-
-      <md-sidenav #sidenav align="end" mode="over" opened="false" fxLayout="column">
-        <md-toolbar fxFlex="5" style="background: #ccc; ">
-          <icon-close (click)="sidenav.close()"></icon-close>
-        </md-toolbar>
-        <area-selector [areaList]="areaList" (onSelected)="onSelected($event)"></area-selector>
-      </md-sidenav>
-
-      <div [style.background-image]="backgroundImage"
-           class='header-image'>
-      </div>
     </div>
 
   </div>
 
-
-
 </div>
+
+
 

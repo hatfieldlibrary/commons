@@ -48,7 +48,6 @@ import {ItemContainerComponent} from "../item-container/item-container.component
 import {ItemComponent} from "../../components/item/item.component";
 import {appRoutes} from '../../app.module';
 import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
-import {SideNavComponent} from "../../components/side-nav/side-nav.component";
 import {HomeScreenComponent} from "../../components/home-screen/home-screen.component";
 import {ItemHeaderComponent} from "../../components/item-header/item-header.component";
 import {ItemLinksComponent} from "../../components/item-links/item-links.component";
@@ -160,7 +159,6 @@ describe('MainContainer', () => {
         SubjectsComponent,
         ListHeaderComponent,
         AreaInformationComponent,
-        SideNavComponent,
         HomeScreenComponent,
         FooterComponent,
         SearchSvgComponent,

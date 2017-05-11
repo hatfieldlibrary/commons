@@ -22,6 +22,7 @@ import * as fromRoot from "../../reducers"
 import {Observable} from "rxjs";
 import {ItemType} from "../../shared/data-types/item.type";
 import * as fromItem from "../../actions/item.actions";
+import * as areaActions from '../../actions/area.actions';
 import {RelatedType} from "../../shared/data-types/related-collection";
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
 
@@ -38,6 +39,7 @@ export class ItemContainerComponent implements OnInit {
   areas$: Observable<AreaListItemType[]>;
   id: string;
   collectionImage: string;
+  areasAvailable: boolean = false;
 
   constructor(private store: Store<fromRoot.State>,
               private renderer: Renderer2,
@@ -47,6 +49,20 @@ export class ItemContainerComponent implements OnInit {
     // Assures that the page scrolls to top on load.
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
       this.renderer.setProperty(document.body, 'scrollTop', 0);
+    });
+
+  }
+
+  /**
+   * Subscribes to areaList observable and sets member variable to true if the array
+   * is not empty.
+   */
+  setAreasAvailable(): void {
+    this.areas$.subscribe((areas) => {
+      // id is 0 in initial state.
+      if (areas[0].id > 0) {
+        this.areasAvailable = true;
+      }
     });
 
   }
@@ -74,6 +90,17 @@ export class ItemContainerComponent implements OnInit {
       }
     }
   }
+  /**
+   * Dispatches action for area list if not currently available in the store.
+   * @param id
+   */
+  initializeAreas() {
+    if (!this.areasAvailable) {
+      this.store.dispatch(new areaActions.AreaAction());
+    }
+
+  }
+
 
   ngOnInit() {
 
@@ -82,6 +109,8 @@ export class ItemContainerComponent implements OnInit {
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
     this.areas$ = this.store.select(fromRoot.getAreas);
+
+    this.initializeAreas();
 
     // Once we have item information, request the related items.
     this.item$.subscribe((data) => {

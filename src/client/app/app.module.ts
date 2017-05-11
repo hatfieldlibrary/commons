@@ -53,7 +53,6 @@ import {RelatedEffects} from "./effects/related.effects";
 import { RelatedItemsComponent } from './components/related-items/related-items.component';
 import {RelatedService} from "./services/related.service";
 import { MenuSvgComponent } from './components/svg/menu-svg/menu-svg.component';
-import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { CloseSvgComponent } from './components/svg/close-svg/close-svg.component';
 import { HomeScreenComponent } from './components/home-screen/home-screen.component';
 import { ItemHeaderComponent } from './components/item-header/item-header.component';
@@ -65,6 +64,7 @@ import { ItemLinksComponent } from './components/item-links/item-links.component
 import { SearchSvgComponent } from './components/svg/search-svg/search-svg.component';
 import {SearchService} from "./services/search.service";
 import {AuthCheckService} from "./services/auth-check.service";
+import { AppMenusComponent } from './components/apps-menu/app-menus.component';
 
 
 // export const appRoutes = [
@@ -117,12 +117,12 @@ export const appRoutes = [
     ItemComponent,
     ItemContainerComponent,
     RelatedItemsComponent,
-    SideNavComponent,
     HomeScreenComponent,
     ItemHeaderComponent,
     FooterComponent,
     ItemLinksComponent,
     SearchSvgComponent,
+    AppMenusComponent,
 
   ],
   imports: [

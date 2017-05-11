@@ -1,0 +1,42 @@
+<!--
+  ~ Copyright (c) 2017.
+  ~
+  ~   This program is free software: you can redistribute it and/or modify
+  ~    it under the terms of the GNU General Public License as published by
+  ~    the Free Software Foundation, either version 3 of the License, or
+  ~    (at your option) any later version.
+  ~
+  ~    This program is distributed in the hope that it will be useful,
+  ~    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~    GNU General Public License for more details.
+  ~
+  ~   You should have received a copy of the GNU General Public License
+  ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+
+<div fxLayout="row" fxLayoutAlign="start start">
+
+
+  <md-toolbar fxFlex="100" style="background: #000;color:#fff; ">
+
+    <span><icon-back (click)="backClicked()"></icon-back>&nbsp;Academic Commons</span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="fill-remaining-space"></span>
+
+    <span>
+      <button (click)="openMenu()" ><icon-menu></icon-menu></button>
+    </span>
+
+  </md-toolbar>
+
+    <div class="fill-remaining-space"></div>
+      <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001" >
+        <md-toolbar fxFlex="5" style="background: #ccc; ">
+          <icon-close (click)="sidenav.close()"></icon-close>
+        </md-toolbar>
+        <area-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></area-selector>
+      </md-sidenav>
+
+</div>

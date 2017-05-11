@@ -16,12 +16,12 @@
   -->
 <div fxLayout="row" fxLayoutAlign="center start">
 
-  <div fxFlex="100" fxFlex.gt-sm="90">
+  <div fxLayout.gt-sm="column" fxFlex="100" fxFlex.gt-sm="80" fxFlex.gt-md="70" fxFlex.gt-lg="55">
 
     <h3>Related</h3>
 
-    <div fxLayout.gt-sm="row" fxLayoutGap="10px">
-        <md-card *ngFor="let collection of related" style="width: 160px;">
+    <div  fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+        <md-card *ngFor="let collection of related">
           <md-card-header>
           <md-card-title>
             {{collection.title}}

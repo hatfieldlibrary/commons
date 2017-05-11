@@ -19,26 +19,9 @@
 
 
   <div fxFlex="100" fxFlex.gt-sm="80" fxFlex.gt-lg="60">
-    <div fxLayout="column" fxLayoutAlign="start start" fxFill>
 
-      <md-toolbar fxFlex="30" style="background: #000; width:100%; color:#fff; height: 70px">
-        <span>Academic Commons</span>
-        <icon-menu fxHide.gt-sm (click)="openMenu()"></icon-menu>
-      </md-toolbar>
+    <app-menus-component [areaList]="areaList"></app-menus-component>
 
-      <md-sidenav #sidenav mode="over" opened="false" fxLayout="column">
-
-        <md-toolbar fxFlex="5" style="background: #ccc; ">
-          <icon-close (click)="sidenav.close()"></icon-close>
-        </md-toolbar>
-
-        <area-selector [areaList]="areaList" (onSelected)="onSelected($event)"></area-selector>
-
-      </md-sidenav>
-
-      <div *ngIf="homeScreen" fxFlex="70" style="background: #aaa;width: 100%; height: 200px"></div>
-
-    </div>
   </div>
 
 </div>
