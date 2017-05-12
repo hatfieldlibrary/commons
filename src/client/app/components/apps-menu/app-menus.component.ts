@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
 import {Location} from '@angular/common';
@@ -23,11 +23,11 @@ export class AppMenusComponent implements OnInit {
   }
 
   backClicked() {
-
     this.location.back();
   }
 
   ngOnInit() {
+    this.sideNavigate.close();
   }
 
 }

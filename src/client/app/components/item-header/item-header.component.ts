@@ -42,14 +42,15 @@ export class ItemHeaderComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes['image']) {
+      let url = 'http://libapps.willamette.edu:3003/resources/img/full/' + changes['image'].currentValue;
+      let image = this.sanitizer.sanitize(SecurityContext.URL, url).toString();
+      this.backgroundImage = this.sanitizer.bypassSecurityTrustUrl(image);
 
-    let url = 'http://libapps.willamette.edu:3003/resources/img/full/' + changes['image'].currentValue;
-    let image = this.sanitizer.sanitize(SecurityContext.URL, url).toString();
-    this.backgroundImage = this.sanitizer.bypassSecurityTrustUrl(image);
-
-    let smallUrl = 'http://libapps.willamette.edu:3003/resources/img/thumb/' + changes['image'].currentValue;
-    let smallImage = this.sanitizer.sanitize(SecurityContext.URL, smallUrl).toString();
-    this.smallBackgroundImage = this.sanitizer.bypassSecurityTrustUrl(smallImage);
+      let smallUrl = 'http://libapps.willamette.edu:3003/resources/img/thumb/' + changes['image'].currentValue;
+      let smallImage = this.sanitizer.sanitize(SecurityContext.URL, smallUrl).toString();
+      this.smallBackgroundImage = this.sanitizer.bypassSecurityTrustUrl(smallImage);
+    }
   }
 
 }

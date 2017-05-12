@@ -26,17 +26,18 @@
     <span class="fill-remaining-space"></span>
 
     <span>
-      <button (click)="openMenu()" ><icon-menu></icon-menu></button>
+      <button (click)="openMenu()"><icon-menu></icon-menu></button>
     </span>
 
   </md-toolbar>
 
-    <div class="fill-remaining-space"></div>
-      <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001" >
-        <md-toolbar fxFlex="5" style="background: #ccc; ">
-          <icon-close (click)="sidenav.close()"></icon-close>
-        </md-toolbar>
-        <area-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></area-selector>
-      </md-sidenav>
+  <div class="fill-remaining-space"></div>
+
+  <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
+    <md-toolbar fxFlex="5" style="background: #ccc; ">
+      <icon-close (click)="sidenav.close()"></icon-close>
+    </md-toolbar>
+    <area-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></area-selector>
+  </md-sidenav>
 
 </div>

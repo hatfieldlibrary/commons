@@ -1,14 +1,19 @@
-<div class="header-image-container" style="overflow:hidden">
+<div fxFlex="100" class="header-image-container" style="overflow:hidden">
 
   <div class="header-background-overlay"></div>
 
-  <div fxLayout="row" fxFlex="100" fxLayoutAlign="center top">
+  <div fxLayout="row"  fxLayoutAlign="center top">
 
-    <div fxLayout="column" fxFlex="100" fxFlex.gt-md="80" fxFlex.gt-lg="60">
+    <div fxLayout="column"
+         fxFlex="100"
 
-      <md-sidenav-container>
+         fxFlex.md="100"
+        fxFlex.lg="90"
+         fxFlex.gt-lg="60">
+
+
         <div fxLayout="column">
-          <app-menus-component [areaList]="areaList" style="z-index:4000"></app-menus-component>
+          <app-menus-component [areaList]="areaList"></app-menus-component>
 
           <div class="header-overlay"></div>
           <div class="header-item-title">
@@ -16,11 +21,11 @@
           </div>
           <div fxFlex="100"
                class='header-image'>
-            <img fxHide="true" fxShow.gt-sm="" [src]="backgroundImage" style="height: 100%; width: 100%">
-            <img fxHide="false" fxHide.gt-sm [src]="smallBackgroundImage" style="height: 100%; width: 100%">
+            <img fxHide="true" fxShow.gt-xs="true" [src]="backgroundImage" style="height: 100%; width: 100%">
+            <img fxHide="false" fxHide.gt-xs="true" [src]="smallBackgroundImage" style="height: 100%; width: 100%">
           </div>
         </div>
-      </md-sidenav-container>
+
 
     </div>
 

@@ -24,11 +24,11 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   @Input() assetType: string;
   @Input() searchOptions: string;
   @Input() url: string;
-  COLLECTION_BUTTON_LABEL: string = 'View Collection';
-  ITEM_BUTTON_LABEL: string = 'View Item';
+  COLLECTION_BUTTON_LABEL: string = 'Go to Collection';
+  ITEM_BUTTON_LABEL: string = 'View this Item';
   optionList = [];
   currentUrl: string = '';
-  isAuthenticated = false;
+  isAuthenticated: boolean = false;
 
   constructor(private svc: SearchService,
               private route: ActivatedRoute,
@@ -68,6 +68,7 @@ export class ItemLinksComponent implements OnChanges, OnInit {
       }
 
       this.auth.getAuthStatus();
+
 
     }
   }

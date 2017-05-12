@@ -63,7 +63,6 @@ md-card {
 }
 
 .header-image-container {
-  position: relative;
   background: #423e3e;
 }
 .header-image-container .header-item-title {
@@ -96,6 +95,9 @@ md-card {
   position: absolute;
   z-index: 0;
 }
+.main-content-area {
+  padding-bottom: 80px !important;
+}
 .footer {
   background: #333;
   height: 200px
@@ -104,7 +106,7 @@ md-card {
   overflow: hidden !important;
 }
 .mat-sidenav {
-  background: #eee !important;
+  background: #e0e0e0 !important;
 }
 /*.container-fix {*/
   /*position: absolute !important;*/
@@ -125,4 +127,11 @@ lock-svg .mat-icon {
   width: 40px;
   height: 40px;
   font-size: 56px;
+}
+
+form.app-links button {
+  min-width: 40px !important;
+  max-width: 50px;
+  max-height: 35px;
+  padding: 0;
 }

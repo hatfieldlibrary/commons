@@ -14,63 +14,82 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<div fxLayoutAlign="center start">
 
-    <div fxLayout="column" fxLayout.gt-sm="row" fxFlex="100" fxFlex.gt-sm="70"  fxFlex.gt-lg="55">
 
-      <div fxFlex="100" fxFlex.gt-sm="60" fxFlex.gt-md="60">
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="0">
 
-        <h1>{{item?.collection.title}}</h1>
-        <p>{{item?.collection.desc}}</p>
 
-        <md-list>
-          <md-list-item *ngIf="item?.collection.dates">
-            <div fxLayout="row" fxFlexAlign="center">
-              <h4>Dates: </h4>
-              <h4 style="color: #666;margin-left: 12px;">
-                {{item?.collection.dates}}
-              </h4>
-            </div>
-          </md-list-item>
-          <md-list-item *ngIf="item?.collection.items">
-            <div fxLayout="row">
-              <h4>Item Count: </h4>
-              <h4 style="color: #666;margin-left: 12px;">
-                {{item?.collection.items}}
-              </h4>
-            </div>
-          </md-list-item>
-        </md-list>
+  <div fxFlex="80"
+       fxShow="true"
+       fxHide.gt-sm="true">
+    <item-links
+      [restricted]="item?.collection.restricted"
+      [linkOptions]="item?.collection.linkOptions"
+      [assetType]="item?.collection.assetType"
+      [searchOptions]="item?.collection.searchOptions"
+      [url]="item?.collection.url">
+    </item-links>
+  </div>
 
-        <md-divider></md-divider>
+  <div fxFlex="100" fxFlex.md="65" fxFlex.lg="55" fxFlex.gt-lg="55">
 
-        <h4>This collection is part of</h4>
-        <h2>{{item?.category?.title}}</h2>
+    <md-card-title style="margin-top: 20px;">
+      {{item?.collection.title}}
+    </md-card-title>
 
-        <p>{{item?.category?.secondaryUrl}}</p>
-        <p>{{item?.category?.description}}</p>
 
-        <a md-raised-button color="primary" href="{{item?.category?.url}}"
-           target="_blank">{{item?.category?.linkLabel}}</a>
+    <p>{{item?.collection.desc}}</p>
 
-      </div>
+    <md-list>
+      <md-list-item *ngIf="item?.collection.dates">
+        <div fxLayout="row" fxFlexAlign="center">
+          <h4>Dates: </h4>
+          <h4 style="color: #666;margin-left: 12px;">
+            {{item?.collection.dates}}
+          </h4>
+        </div>
+      </md-list-item>
+      <md-list-item *ngIf="item?.collection.items">
+        <div fxLayout="row">
+          <h4>Item Count: </h4>
+          <h4 style="color: #666;margin-left: 12px;">
+            {{item?.collection.items}}
+          </h4>
+        </div>
+      </md-list-item>
+    </md-list>
 
-      <div class="fill-remaining-space"></div>
+    <md-divider style="margin: 8px"></md-divider>
 
-      <div fxFlex="100" fxFlex.gt-sm="30">
+    <md-card-subtitle>This collection is part of</md-card-subtitle>
+    <md-card-title>{{item?.category?.title}}</md-card-title>
 
-        <item-links
-          [restricted]="item?.collection.restricted"
-          [linkOptions]="item?.collection.linkOptions"
-          [assetType]="item?.collection.assetType"
-          [searchOptions]="item?.collection.searchOptions"
-          [url]="item?.collection.url">
-        </item-links>
+    <p>{{item?.category?.description}}</p>
 
-      </div>
+    <a md-raised-button color="primary" href="{{item?.category?.url}}"
+       target="_blank">{{item?.category?.linkLabel}}</a>
 
-    </div>
+  </div>
 
+  <div class="fill-remaining-space"></div>
+
+  <div fxFlex
+       fxFlex.gt-sm="35"
+       fxFlexAlign.gt-md="25"
+       fxShow="false"
+       fxShow.gt-sm="true">
+
+    <item-links
+      [restricted]="item?.collection.restricted"
+      [linkOptions]="item?.collection.linkOptions"
+      [assetType]="item?.collection.assetType"
+      [searchOptions]="item?.collection.searchOptions"
+      [url]="item?.collection.url">
+    </item-links>
+
+  </div>
 </div>
+
+
 
 

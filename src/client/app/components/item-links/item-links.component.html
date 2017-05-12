@@ -1,43 +1,71 @@
-<div fxLayout="column" style="height: 300px;">
+<md-card style="margin-top: 25px;">
+  <md-card-content>
 
-  <div fxFlex="10"></div>
+    <div fxLayout="row"
+         fxLayout.gt-sm="column"
+         fxFlex="100">
 
-  <div fxFlex="20">
-    <div *ngIf="restricted === true">
-      <a href="/auth{{currentUrl}}">
-      <lock-svg style="height: 30px;"></lock-svg>
-      Log in to see this collection.
-      </a>
+
+      <div fxLayout="column"
+           fxFlex="100"
+           fxLayoutAlign="center center"
+           *ngIf="restricted === true"
+           fxHide="isAuthenticated">
+        <a md-raised-button color="primary" href="/auth{{currentUrl}}">WU Login</a>
+
+        <div md-subheader><br>Login required for access.</div>
+
+      </div>
+
+      <div fxShow="false" fxShow.gt-sm="isAuthenticated">
+        <md-card-title>Access Options</md-card-title>
+      </div>
+
+        <div
+          fxFlex="100"
+          fxLayout="column"
+          fxLayoutGap="20px"
+          fxLayoutAlign="start center"
+          fxLayoutAlign.gt-xs="start start"
+          fxShow="isAuthenticated">
+
+          <div fxFlex="100"
+               style="width:100%;"
+               *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'">
+
+            <form fxLayout="row"
+                  class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch()">
+              <md-input-container
+                fxFlex="100"
+                fxFlex.gt-xs="70">
+                <input mdInput id="terms" [(ngModel)]="model.terms" name="search"
+                       placeholder="Search in this collection">
+              </md-input-container>
+
+              <button md-raised-button color="primary"
+                      type="submit" [disabled]="!isAuthenticated">
+                <search-svg></search-svg>
+              </button>
+
+            </form>
+
+          </div>
+
+
+
+        <span *ngIf="linkOptions === 'link' &&  assetType === 'dig'">
+        <a md-raised-button color="primary" [disabled]="!isAuthenticated" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a></span>
+
+        <span *ngIf="linkOptions === 'link' &&  assetType === 'itm'">
+        <a md-raised-button color="primary" [disabled]="!isAuthenticated" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a></span>
+
+        <span *ngIf="linkOptions === 'opts'"><md-select placeholder="Find By">
+        <md-option *ngFor="let option of optionList" [disabled]="!isAuthenticated"
+                   (click)="optionSearch(option.item.title)"
+                   target="_blank">{{option.item.title}}</md-option></md-select></span>
+      </div>
     </div>
-  </div>
 
-  <div *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'" fxFlex="30">
+  </md-card-content>
+</md-card>
 
-    <form #searchForm="ngForm" (ngSubmit)="simpleSearch()">
-      <md-input-container>
-        <input mdInput id="terms" [(ngModel)]="model.terms" name="search" placeholder="Enter Search Terms">
-      </md-input-container>
-      <button md-raised-button color="primary" style="line-height: 14px;padding:0 3px;min-width: 33px;"
-              type="submit" class="btn btn-success" [disabled]="!isAuthenticated">
-        <search-svg></search-svg>
-      </button>
-    </form>
-  </div>
-
-  <div fxFlex="30">
-    <span *ngIf="linkOptions === 'link' &&  assetType === 'dig'">
-        <a md-raised-button color="primary" [disabled]="!isAuthenticated" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
-    </span>
-    <span *ngIf="linkOptions === 'link' &&  assetType === 'itm'">
-        <a md-raised-button color="primary" [disabled]="!isAuthenticated" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
-    </span>
-    <span *ngIf="linkOptions === 'opts'">
-      <md-select placeholder="Find By">
-        <md-option *ngFor="let option of optionList"  [disabled]="!isAuthenticated" (click)="optionSearch(option.item.title)" target="_blank">{{option.item.title}}</md-option>
-      </md-select>
-    </span>
-  </div>
-
-  <div fxFlex></div>
-
-</div>
