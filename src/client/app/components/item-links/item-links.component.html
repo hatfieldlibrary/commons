@@ -9,48 +9,45 @@
       <div fxLayout="column"
            fxFlex="100"
            fxLayoutAlign="center center"
-           *ngIf="restricted === true"
-           fxHide="isAuthenticated">
+           *ngIf="restricted === true && !isAuthenticated">
         <a md-raised-button color="primary" href="/auth{{currentUrl}}">WU Login</a>
-
         <div md-subheader><br>Login required for access.</div>
-
       </div>
 
-      <div fxShow="false" fxShow.gt-sm="isAuthenticated">
+
+      <div fxShow="false" fxShow.gt-sm="isAuthenticated" *ngIf="isAuthenticated">
         <md-card-title>Access Options</md-card-title>
       </div>
 
-        <div
-          fxFlex="100"
-          fxLayout="column"
-          fxLayoutGap="20px"
-          fxLayoutAlign="start center"
-          fxLayoutAlign.gt-xs="start start"
-          fxShow="isAuthenticated">
+      <div
+        fxFlex="100"
+        fxLayout="column"
+        fxLayoutGap="20px"
+        fxLayoutAlign="start center"
+        fxLayoutAlign.gt-xs="start start"
+        *ngIf="isAuthenticated">
 
-          <div fxFlex="100"
-               style="width:100%;"
-               *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'">
+        <div fxFlex="100"
+             style="width:100%;"
+             *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'">
 
-            <form fxLayout="row"
-                  class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch()">
-              <md-input-container
-                fxFlex="100"
-                fxFlex.gt-xs="70">
-                <input mdInput id="terms" [(ngModel)]="model.terms" name="search"
-                       placeholder="Search in this collection">
-              </md-input-container>
+          <form fxLayout="row"
+                class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch()">
+            <md-input-container
+              fxFlex="100"
+              fxFlex.gt-xs="70">
+              <input mdInput id="terms" [(ngModel)]="model.terms" name="search"
+                     placeholder="Search in this collection">
+            </md-input-container>
 
-              <button md-raised-button color="primary"
-                      type="submit" [disabled]="!isAuthenticated">
-                <search-svg></search-svg>
-              </button>
+            <button md-raised-button color="primary"
+                    type="submit" [disabled]="!isAuthenticated">
+              <search-svg></search-svg>
+            </button>
 
-            </form>
+          </form>
 
-          </div>
-
+        </div>
 
 
         <span *ngIf="linkOptions === 'link' &&  assetType === 'dig'">
@@ -59,10 +56,14 @@
         <span *ngIf="linkOptions === 'link' &&  assetType === 'itm'">
         <a md-raised-button color="primary" [disabled]="!isAuthenticated" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a></span>
 
-        <span *ngIf="linkOptions === 'opts'"><md-select placeholder="Find By">
-        <md-option *ngFor="let option of optionList" [disabled]="!isAuthenticated"
+        <span *ngIf="linkOptions === 'opts'">
+          <md-select #selectOption  placeholder="{{SEARCH_OPTIONS_LABEL}}">
+            <md-option *ngFor="let option of optionList" [disabled]="!isAuthenticated"
                    (click)="optionSearch(option.item.title)"
-                   target="_blank">{{option.item.title}}</md-option></md-select></span>
+                   target="_blank">
+              {{option.item.title}}
+             </md-option>
+          </md-select></span>
       </div>
     </div>
 
