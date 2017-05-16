@@ -25,15 +25,15 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   @Input() assetType: string;
   @Input() searchOptions: string;
   @Input() url: string;
-  COLLECTION_BUTTON_LABEL: string = 'Go to Collection';
+  @Input() searchUrl: string;
+  model:SearchTerms;
+  COLLECTION_BUTTON_LABEL: string = 'Browse the Collection';
   ITEM_BUTTON_LABEL: string = 'View this Item';
   SEARCH_OPTIONS_LABEL: string = 'Select to Browse';
   optionList = [];
   currentUrl: string = '';
   isAuthenticated: boolean;
 
-  @ViewChild(MdSelectModule)
-  selectOption;
 
   constructor(private svc: SearchService,
               private route: ActivatedRoute,
@@ -45,10 +45,8 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
   }
 
-  model:SearchTerms = new SearchTerms();
-
   simpleSearch() {
-    this.svc.executeSimpleSearchQuery(this.url, this.model.terms)
+    this.svc.executeSimpleSearchQuery(this.searchUrl, this.model.terms)
   }
 
   optionSearch(term) {
@@ -58,12 +56,10 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
 
+    this.model = new SearchTerms();
     this.isAuthenticated = false;
-
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
     this.auth$.subscribe((auth) => this.isAuthenticated = auth.status )
-
-
 
   }
 

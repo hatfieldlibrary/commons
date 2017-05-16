@@ -19,19 +19,25 @@
 
   <h3>Related</h3>
 
-  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
-    <md-card *ngFor="let collection of related">
-      <md-card-header>
-        <md-card-title>
-          {{collection.title}}
-        </md-card-title>
-      </md-card-header>
-      <img md-card-image src="http://libapps.willamette.edu:3003/resources/img/thumb/{{collection.image}}">
-      <md-card-actions align="end">
-        <button md-button [routerLink]="['/item/id/', collection.id]">LINK</button>
-      </md-card-actions>
-    </md-card>
-  </div>
+  <!--<div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">-->
+  <md-grid-list cols="{{columns}}" rowHeight="320" gutterSize="6">
+    <md-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1">
+
+      <md-card>
+        <md-card-header>
+          <md-card-title style="margin-left: -20px;">
+            {{collection.title}}
+          </md-card-title>
+        </md-card-header>
+        <img md-card-image src="http://libapps.willamette.edu:3003/resources/img/thumb/{{collection.image}}">
+        <md-card-actions align="end">
+          <button md-button [routerLink]="['/item/id/', collection.id]">VIEW</button>
+        </md-card-actions>
+      </md-card>
+
+    </md-grid-tile>
+  </md-grid-list>
+  <!--</div>-->
 </div>
 
 

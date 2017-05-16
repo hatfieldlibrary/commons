@@ -32,7 +32,7 @@
              *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'">
 
           <form fxLayout="row"
-                class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch()">
+                class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch();searchForm.reset();">
             <md-input-container
               fxFlex="100"
               fxFlex.gt-xs="70">
@@ -50,10 +50,10 @@
         </div>
 
 
-        <span *ngIf="linkOptions === 'link' &&  assetType === 'dig'">
+        <span *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig'">
         <a md-raised-button color="primary" [disabled]="!isAuthenticated" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a></span>
 
-        <span *ngIf="linkOptions === 'link' &&  assetType === 'itm'">
+        <span *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'itm'">
         <a md-raised-button color="primary" [disabled]="!isAuthenticated" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a></span>
 
         <span *ngIf="linkOptions === 'opts'">

@@ -2,6 +2,7 @@ import {Component, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
 import {Location} from '@angular/common';
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-menus-component',
@@ -15,15 +16,29 @@ export class AppMenusComponent implements OnInit {
   @Input() title: string;
   @ViewChild('sidenav')
   public sideNavigate: MdSidenav;
+  public previousUrl: string = '';
+  private myE:NavigationEnd;
 
-  constructor(private location: Location) { }
+  constructor(private location: Location, private router: Router) {
+    router.events
+      .filter(event => event instanceof NavigationEnd)
+      .subscribe((event:NavigationEnd) => {
+        console.log('prev:', this.previousUrl);
+        console.log(event.url)
+        this.previousUrl = event.url;
+
+
+      });
+  }
 
   openMenu() {
     this.sideNavigate.open();
   }
 
   backClicked() {
-    this.location.back();
+    this.router.navigateByUrl(this.previousUrl);
+   // this.router.prev
+    //this.location.back();
   }
 
   ngOnInit() {

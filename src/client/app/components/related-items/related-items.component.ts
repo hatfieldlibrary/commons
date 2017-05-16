@@ -15,22 +15,47 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input,  OnDestroy, OnInit} from '@angular/core';
 import {RelatedType} from "../../shared/data-types/related-collection";
+import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'related-items',
   templateUrl: './related-items.component.html',
   styleUrls: ['./related-items.component.css']
 })
-export class RelatedItemsComponent implements OnInit {
+export class RelatedItemsComponent implements OnInit, OnDestroy {
+
 
   @Input() related: RelatedType[];
+  watcher: Subscription;
+  activeMediaQuery = "";
+  columns: number = 1;
 
-  constructor() { }
+  constructor(media: ObservableMedia) {
+
+    this.watcher = media.subscribe((change: MediaChange) => {
+      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : "";
+      if ( change.mqAlias === 'xs') {
+        this.columns = 1;
+      } else if (change.mqAlias === 'sm') {
+        this.columns = 2;
+      } else if (change.mqAlias === 'lg') {
+        this.columns = 3;
+      }  else {
+        this.columns = 4;
+      }
+    });
+
+  }
 
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
   }
 
 }

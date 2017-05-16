@@ -20,7 +20,10 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule, RequestOptions} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdButtonModule, MdSelectModule, MdCardModule, MdListModule,MdToolbarModule,MdIconModule,MdChipsModule, MdSidenavModule,MdIconRegistry,MdInputModule} from '@angular/material';
+import {
+  MdButtonModule, MdSelectModule, MdCardModule, MdListModule, MdToolbarModule, MdIconModule, MdChipsModule,
+  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule
+} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
 import {StoreModule} from '@ngrx/store';
@@ -65,6 +68,8 @@ import { SearchSvgComponent } from './components/svg/search-svg/search-svg.compo
 import {SearchService} from "./services/search.service";
 import {AuthCheckService} from "./services/auth-check.service";
 import { AppMenusComponent } from './components/apps-menu/app-menus.component';
+import { HomeSvgComponent } from './components/svg/home-svg/home-svg.component';
+import { CollectionsSvgComponent } from './components/svg/collections-svg/collections-svg.component';
 
 
 // export const appRoutes = [
@@ -123,6 +128,8 @@ export const appRoutes = [
     ItemLinksComponent,
     SearchSvgComponent,
     AppMenusComponent,
+    HomeSvgComponent,
+    CollectionsSvgComponent,
 
   ],
   imports: [
@@ -136,6 +143,7 @@ export const appRoutes = [
     MdIconModule,
     MdSelectModule,
     MdChipsModule,
+    MdGridListModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,

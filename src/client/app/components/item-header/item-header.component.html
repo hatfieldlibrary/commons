@@ -2,29 +2,28 @@
 
   <div class="header-background-overlay"></div>
 
-  <div fxLayout="row"  fxLayoutAlign="center top">
+  <div fxLayout="row" fxLayoutAlign="center top">
 
     <div fxLayout="column"
          fxFlex="100"
-
          fxFlex.md="100"
-        fxFlex.lg="90"
+         fxFlex.lg="90"
          fxFlex.gt-lg="60">
 
 
-        <div fxLayout="column">
-          <app-menus-component [areaList]="areaList"></app-menus-component>
+      <div fxLayout="column">
+        <app-menus-component [areaList]="areaList"></app-menus-component>
 
-          <div class="header-overlay"></div>
-          <div class="header-item-title">
-            <h1>{{item?.collection.title}}</h1>
-          </div>
-          <div fxFlex="100"
-               class='header-image'>
-            <img fxHide="true" fxShow.gt-xs="true" [src]="backgroundImage" style="height: 100%; width: 100%">
-            <img fxHide="false" fxHide.gt-xs="true" [src]="smallBackgroundImage" style="height: 100%; width: 100%">
-          </div>
+        <div class="header-overlay"></div>
+        <div class="header-item-title">
+          <h1>{{item?.collection.title}}</h1>
         </div>
+        <div fxFlex="100"
+             class='header-image'>
+          <img fxHide="true" fxShow.gt-xs="true" [src]="backgroundImage" style="height: 100%; width: 100%">
+          <img fxHide="false" fxHide.gt-xs="true" [src]="smallBackgroundImage" style="height: 100%; width: 100%">
+        </div>
+      </div>
 
 
     </div>

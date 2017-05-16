@@ -31,7 +31,10 @@
     </item-links>
   </div>
 
-  <div fxFlex="100" fxFlex.md="65" fxFlex.lg="55" fxFlex.gt-lg="55">
+  <div fxFlex="100"
+       fxFlex.md="60"
+       fxFlex.lg="55"
+       fxFlex.gt-lg="50">
 
     <md-card-title style="margin-top: 20px;">
       {{item?.collection.title}}
@@ -59,7 +62,7 @@
       </md-list-item>
     </md-list>
 
-    <md-divider style="margin: 8px"></md-divider>
+    <md-divider style="margin: 16px 0"></md-divider>
 
     <md-card-subtitle>This collection is part of</md-card-subtitle>
     <md-card-title>{{item?.category?.title}}</md-card-title>
@@ -74,8 +77,9 @@
   <div class="fill-remaining-space"></div>
 
   <div fxFlex
-       fxFlex.gt-sm="35"
-       fxFlexAlign.gt-md="25"
+       fxFlex.sm="35"
+       fxFlex.md="35"
+       fxFlex.gt-md="30"
        fxShow="false"
        fxShow.gt-sm="true">
 
@@ -84,7 +88,9 @@
       [linkOptions]="item?.collection.linkOptions"
       [assetType]="item?.collection.assetType"
       [searchOptions]="item?.collection.searchOptions"
-      [url]="item?.collection.url">
+      [url]="item?.collection.url"
+      [searchUrl]="item?.collection.searchUrl">
+
     </item-links>
 
   </div>

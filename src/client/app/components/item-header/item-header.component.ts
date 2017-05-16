@@ -42,6 +42,7 @@ export class ItemHeaderComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges) {
+
     if (changes['image']) {
       let url = 'http://libapps.willamette.edu:3003/resources/img/full/' + changes['image'].currentValue;
       let image = this.sanitizer.sanitize(SecurityContext.URL, url).toString();

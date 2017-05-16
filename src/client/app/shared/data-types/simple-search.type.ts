@@ -23,4 +23,5 @@ export class SearchTerms {
   constructor(public terms: string = '') {
   }
 
+
 }

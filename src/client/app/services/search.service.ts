@@ -31,7 +31,13 @@ export class SearchService {
    */
   executeSimpleSearchQuery(baseURL: string, terms: string) {
     const query =  encodeURIComponent(terms);
-    const href = baseURL + `all^${query}^all^and!`;
+
+    let splitString = baseURL.split('{$query}');
+console.log(splitString)
+    const href = splitString[0] + query + splitString[1];
+    //const href = baseURL + `all^${query}^all^and!`;
+   // const href = baseURL.template();
+    console.log(href)
     window.open(href, '_blank');
   }
 
