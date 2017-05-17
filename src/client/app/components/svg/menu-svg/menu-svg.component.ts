@@ -5,9 +5,9 @@ import {MdIconRegistry} from '@angular/material';
 
 
 @Component({
-  selector: 'icon-menu',
+  selector: 'menu-svg',
   templateUrl: './menu-svg.component.html',
-  viewProviders: [MdIconRegistry]
+  styleUrls: ['./menu-svg.component.css']
 })
 export class MenuSvgComponent {
   constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {

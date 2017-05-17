@@ -34,7 +34,7 @@ import {ActivatedRoute, RouterModule} from '@angular/router';
 
 import {MainContainer} from './main.container';
 import {ListComponent} from '../../components/collection-list/list.component';
-import {AreaComponent} from '../../components/area-selector/area.component';
+import {NavigationComponent} from '../../components/nav-selector/area.component';
 import {SubjectsComponent} from '../../components/subject-selector/subjects.component';
 
 import * as fromRoot from '../../reducers';
@@ -157,7 +157,7 @@ describe('MainContainer', () => {
         MenuSvgComponent,
         CloseSvgComponent,
         AppComponent,
-        AreaComponent,
+        NavigationComponent,
         ListComponent,
         MainContainer,
         SubjectsComponent,

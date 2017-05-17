@@ -15,17 +15,7 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-
-  <md-list>
-    <h3 md-subheader>Collections</h3>
-    <md-divider></md-divider>
-    <md-list-item>
-      <button md-button [routerLink]="['/collection']">View All</button>
-    </md-list-item>
-    <h3 md-subheader>Areas</h3>
-    <md-divider></md-divider>
-    <md-list-item *ngFor="let area of areaList">
-      <button md-button (click)="areaSelected()" [routerLink]="['/collection/area/', area.id]">{{area.title}} ({{area.count}})</button>
-    </md-list-item>
-  </md-list>
-
+<svg fill="#cccccc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 17H4v2h10v-2zm6-8H4v2h16V9zM4 15h16v-2H4v2zM4 5v2h16V5H4z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>

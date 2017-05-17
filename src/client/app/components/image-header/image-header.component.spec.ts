@@ -21,7 +21,7 @@ import { ListHeaderComponent } from './image-header.component';
 import {MdButtonModule, MdIconRegistry, MdListModule, MdSidenavModule, MdToolbarModule} from "@angular/material";
 import {Router, RouterModule} from "@angular/router";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
-import {AreaComponent} from "../area-selector/area.component";
+import {NavigationComponent} from "../nav-selector/area.component";
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AppMenusComponent} from "../apps-menu/app-menus.component";
@@ -38,7 +38,7 @@ describe('ListHeaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ListHeaderComponent,
-        AreaComponent,
+        NavigationComponent,
         MenuSvgComponent,
         CloseSvgComponent,
         AppMenusComponent,

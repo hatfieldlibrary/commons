@@ -18,27 +18,39 @@
 
 <div fxLayout="row" fxLayoutAlign="start start">
 
+  <md-toolbar [attr.role]="menubar" fxFlex="100" style="background: #000;color:#fff; ">
 
-  <md-toolbar fxFlex="100" style="background: #000;color:#fff; ">
-
-
-    <span ><icon-back (click)="backClicked()" fxHide.gt-sm></icon-back>&nbsp;Academic Commons</span>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <icon-back (click)="backClicked()" fxHide.gt-sm></icon-back>&nbsp;Academic Commons
+    </div>
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining-space"></span>
 
     <md-divider style="border-color: #fff;"></md-divider>
-    <div fxLayout="row" fxLayoutAlign="center center"  fxShow="false"  fxShow.gt-sm="true" fxFlex.gt-md="10">
-    <home-svg></home-svg><div style="color:#ccc;font-size: 0.6em;font-weight: 500;">&nbsp;&nbsp;Home</div>
+
+    <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
+      <a md-button [attr.role]="link" style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+        <home-svg></home-svg>
+        <span>&nbsp;&nbsp;Home</span></a>
+    </div>
+
+    <md-divider></md-divider>
+
+    <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
+      <a md-button [routerLink]="['/collection']" [attr.role]="link"
+         style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+        <collections-svg></collections-svg>
+        <span>&nbsp;&nbsp;Collections</span>
+      </a>
     </div>
     <md-divider></md-divider>
-    <div fxLayout="row" fxLayoutAlign="center center"  fxShow="false"  fxShow.gt-sm="true" fxFlex.gt-md="10">
-    <collections-svg></collections-svg><div  style="color:#ccc;font-size: 0.6em;cursor:pointer;font-weight: 500;" [routerLink]="['/collection']">&nbsp;&nbsp;Collections</div>
-    </div>
-    <md-divider></md-divider>
-    <div  fxFlex.gt-md="5"></div>
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <button (click)="openMenu()"> <icon-menu></icon-menu></button><div style="color:#ccc;font-size: 0.6em;font-weight: 500;">&nbsp;Menu </div>
-    </div>
+
+    <div fxFlex.gt-sm="10"></div>
+
+    <button md-button [attr.role]="button" (click)="openMenu()" style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+      <menu-svg></menu-svg>
+      <span fxShow.gt-sm="true">&nbsp;Menu</span>
+    </button>
 
   </md-toolbar>
 
@@ -48,7 +60,7 @@
     <md-toolbar style="background: #ccc; ">
       <icon-close (click)="sidenav.close()"></icon-close>
     </md-toolbar>
-    <area-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></area-selector>
+    <navigation-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></navigation-selector>
   </md-sidenav>
 
 </div>

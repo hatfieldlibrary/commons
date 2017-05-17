@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, OnInit, ChangeDetectionStrategy, Renderer2} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, Renderer2, HostBinding} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromRoot from "../../reducers"
@@ -25,14 +25,24 @@ import * as fromItem from "../../actions/item.actions";
 import * as areaActions from '../../actions/area.actions';
 import {RelatedType} from "../../shared/data-types/related-collection";
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
+import {animate, style, transition, trigger} from "@angular/animations";
+import {slideInDownAnimation, slideUpDownAnimation} from "../../animation/animations";
+import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'item-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './item-container.component.html',
-  styleUrls: ['./item-container.component.css']
+  styleUrls: ['./item-container.component.css'],
+  animations: [slideInDownAnimation]
 })
 export class ItemContainerComponent implements OnInit {
+
+  @HostBinding('@leftToRightAnimation') routeAnimation = true;
+  @HostBinding('style.display')   display = 'block';
+  @HostBinding('style.position')  position = 'absolute';
+  @HostBinding('style.position')  width = '100%';
 
   item$: Observable<ItemType>;
   related$: Observable<RelatedType[]>;
@@ -40,15 +50,32 @@ export class ItemContainerComponent implements OnInit {
   id: string;
   collectionImage: string;
   areasAvailable: boolean = false;
+  watcher: Subscription;
+  activeMediaQuery = 'xs';
+  columns:number = 1;
 
   constructor(private store: Store<fromRoot.State>,
               private renderer: Renderer2,
+              private media: ObservableMedia,
               private route: ActivatedRoute,
               private router: Router) {
 
     // Assures that the page scrolls to top on load.
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
       this.renderer.setProperty(document.body, 'scrollTop', 0);
+    });
+
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : 'xs';
+      if ( change.mqAlias === 'xs') {
+        this.columns = 1;
+      } else if (change.mqAlias === 'sm') {
+        this.columns = 2;
+      } else if (change.mqAlias === 'lg') {
+        this.columns = 3;
+      }  else {
+        this.columns = 4;
+      }
     });
 
   }

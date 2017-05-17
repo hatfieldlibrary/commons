@@ -35,9 +35,9 @@ export class AppMenusComponent implements OnInit {
   }
 
   backClicked() {
-    this.router.navigateByUrl(this.previousUrl);
+    //this.router.navigateByUrl(this.previousUrl);
    // this.router.prev
-    //this.location.back();
+    this.location.back();
   }
 
   ngOnInit() {

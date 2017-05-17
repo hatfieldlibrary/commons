@@ -18,21 +18,21 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdListModule} from '@angular/material';
-import { AreaComponent } from './area.component';
+import { NavigationComponent } from './area.component';
 
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 
-describe('AreaComponent', () => {
-  let component: AreaComponent;
-  let fixture: ComponentFixture<AreaComponent>;
+describe('NavigationComponent', () => {
+  let component: NavigationComponent;
+  let fixture: ComponentFixture<NavigationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AreaComponent,
+        NavigationComponent,
         BackSvgComponent,
         MenuSvgComponent
        ],
@@ -46,7 +46,7 @@ describe('AreaComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AreaComponent);
+    fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

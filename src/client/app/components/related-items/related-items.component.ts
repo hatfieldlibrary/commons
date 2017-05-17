@@ -25,28 +25,13 @@ import {Subscription} from "rxjs/Subscription";
   templateUrl: './related-items.component.html',
   styleUrls: ['./related-items.component.css']
 })
-export class RelatedItemsComponent implements OnInit, OnDestroy {
+export class RelatedItemsComponent implements OnInit {
 
 
   @Input() related: RelatedType[];
-  watcher: Subscription;
-  activeMediaQuery = "";
-  columns: number = 1;
+  @Input() columns: number;
 
-  constructor(media: ObservableMedia) {
-
-    this.watcher = media.subscribe((change: MediaChange) => {
-      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : "";
-      if ( change.mqAlias === 'xs') {
-        this.columns = 1;
-      } else if (change.mqAlias === 'sm') {
-        this.columns = 2;
-      } else if (change.mqAlias === 'lg') {
-        this.columns = 3;
-      }  else {
-        this.columns = 4;
-      }
-    });
+  constructor() {
 
   }
 
@@ -54,8 +39,5 @@ export class RelatedItemsComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy(): void {
-    this.watcher.unsubscribe();
-  }
 
 }

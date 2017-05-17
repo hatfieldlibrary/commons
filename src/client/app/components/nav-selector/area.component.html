@@ -1,0 +1,44 @@
+<!--
+  ~ Copyright (c) 2017.
+  ~
+  ~   This program is free software: you can redistribute it and/or modify
+  ~    it under the terms of the GNU General Public License as published by
+  ~    the Free Software Foundation, either version 3 of the License, or
+  ~    (at your option) any later version.
+  ~
+  ~    This program is distributed in the hope that it will be useful,
+  ~    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~    GNU General Public License for more details.
+  ~
+  ~   You should have received a copy of the GNU General Public License
+  ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+
+<md-list>
+  <div fxHide.gt-sm="true">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <home-svg></home-svg>
+      <button md-button [attr.role]="button" [routerLink]="['/collection']">Home</button>
+    </div>
+    <md-divider></md-divider>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <collections-svg></collections-svg>
+      <button md-button [attr.role]="button" [routerLink]="['/collection']">Collections</button>
+    </div>
+    <md-divider></md-divider>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <areas-svg></areas-svg>
+    <h3 md-subheader>Areas</h3>
+  </div>
+  <md-divider></md-divider>
+  <md-list-item *ngFor="let area of areaList">
+    <button md-button [attr.role]="button" (click)="areaSelected()" [routerLink]="['/collection/area/', area.id]">{{area.title}}
+      ({{area.count}})
+    </button>
+  </md-list-item>
+</md-list>
+

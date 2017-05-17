@@ -20,11 +20,11 @@ import {AreaType} from "../../shared/data-types/area.type";
 
 
 @Component({
-  selector: 'area-selector',
+  selector: 'navigation-selector',
   templateUrl: 'area.component.html',
   styleUrls: ['area.component.css']
 })
-export class AreaComponent {
+export class NavigationComponent {
 
   @Input() areaList: AreaType[];
 
