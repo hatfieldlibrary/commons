@@ -19,7 +19,8 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import {ItemContainerComponent} from './item-container.component';
 import {ItemComponent} from "../../components/item/item.component";
 import {
-  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdIconModule, MdInputModule, MdListModule,
+  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
+  MdListModule,
   MdSelectModule,
   MdSidenavModule,
   MdToolbarModule
@@ -59,6 +60,8 @@ import {FormsModule} from "@angular/forms";
 import {AuthCheckService} from "../../services/auth-check.service";
 import {SearchService} from "../../services/search.service";
 import {AppMenusComponent} from "../../components/apps-menu/app-menus.component";
+import {HomeSvgComponent} from "../../components/svg/home-svg/home-svg.component";
+import {CollectionsSvgComponent} from "../../components/svg/collections-svg/collections-svg.component";
 
 // @Injectable()
 // class MockActivatedRoute  {
@@ -147,7 +150,9 @@ describe('ItemContainerComponent', () => {
         CloseSvgComponent,
         BackSvgComponent,
         FooterComponent,
-        AppMenusComponent
+        AppMenusComponent,
+        HomeSvgComponent,
+        CollectionsSvgComponent
       ],
       imports: [
         FlexLayoutModule,
@@ -159,6 +164,7 @@ describe('ItemContainerComponent', () => {
         MdInputModule,
         MdIconModule,
         MdSelectModule,
+        MdGridListModule,
         MdChipsModule,
         BrowserModule,
         BrowserAnimationsModule,

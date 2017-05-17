@@ -4,12 +4,13 @@ import { ItemHeaderComponent } from './item-header.component';
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {AreaComponent} from "../area-selector/area.component";
-import {MdSidenavModule, MdToolbarModule} from "@angular/material";
+import {MdIconRegistry, MdSidenavModule, MdToolbarModule} from "@angular/material";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
-import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {DomSanitizer} from "@angular/platform-browser";
 import {AppMenusComponent} from "../apps-menu/app-menus.component";
+import {HomeSvgComponent} from "../svg/home-svg/home-svg.component";
+import {CollectionsSvgComponent} from "../svg/collections-svg/collections-svg.component";
 
 describe('ItemHeaderComponent', () => {
   let component: ItemHeaderComponent;
@@ -20,6 +21,8 @@ describe('ItemHeaderComponent', () => {
       declarations: [
         ItemHeaderComponent,
         MenuSvgComponent,
+        HomeSvgComponent,
+        CollectionsSvgComponent,
         CloseSvgComponent,
         BackSvgComponent,
         AreaComponent,
@@ -35,7 +38,9 @@ describe('ItemHeaderComponent', () => {
       providers: [
         DomSanitizer,
         Location,
-        RouterTestingModule
+        RouterTestingModule,
+        MdIconRegistry,
+        DomSanitizer
       ]
     })
     .compileComponents();

@@ -15,12 +15,14 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RelatedItemsComponent } from './related-items.component';
-import {MdButtonModule, MdCardModule} from "@angular/material";
+import {RelatedItemsComponent} from './related-items.component';
+import {MdButtonModule, MdCardModule, MdGridListModule} from "@angular/material";
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
+import {ObservableMedia} from "@angular/flex-layout";
+import {Observable} from "rxjs/Observable";
 
 describe('RelatedItemsComponent', () => {
   let component: RelatedItemsComponent;
@@ -29,15 +31,27 @@ describe('RelatedItemsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RelatedItemsComponent ],
+        RelatedItemsComponent],
+      providers: [
+        {
+          provide: ObservableMedia,
+          useClass: class {
+            subscribe = () => {
+              return Observable.of({});
+            };}
+        },
+      ],
       imports: [
         MdCardModule,
         MdButtonModule,
+        MdGridListModule,
         RouterTestingModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
+
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RelatedItemsComponent);

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
 import {Location} from '@angular/common';
@@ -14,8 +14,7 @@ export class AppMenusComponent implements OnInit {
   @Input() areaList: AreaType[];
   @Input() state: boolean;
   @Input() title: string;
-  @ViewChild('sidenav')
-  public sideNavigate: MdSidenav;
+  @ViewChild('sidenav') sideNavigate: MdSidenav;
   public previousUrl: string = '';
   private myE:NavigationEnd;
 
@@ -42,7 +41,9 @@ export class AppMenusComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sideNavigate.close();
+    if (this.sideNavigate.close) {
+      this.sideNavigate.close();
+    }
   }
 
 }

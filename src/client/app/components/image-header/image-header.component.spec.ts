@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListHeaderComponent } from './image-header.component';
-import {MdButtonModule, MdListModule, MdSidenavModule, MdToolbarModule} from "@angular/material";
+import {MdButtonModule, MdIconRegistry, MdListModule, MdSidenavModule, MdToolbarModule} from "@angular/material";
 import {Router, RouterModule} from "@angular/router";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {AreaComponent} from "../area-selector/area.component";
@@ -26,6 +26,9 @@ import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AppMenusComponent} from "../apps-menu/app-menus.component";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
+import {HomeSvgComponent} from "../svg/home-svg/home-svg.component";
+import {CollectionsSvgComponent} from "../svg/collections-svg/collections-svg.component";
+import {DomSanitizer} from "@angular/platform-browser";
 
 describe('ListHeaderComponent', () => {
   let component: ListHeaderComponent;
@@ -40,7 +43,9 @@ describe('ListHeaderComponent', () => {
         CloseSvgComponent,
         AppMenusComponent,
         BackSvgComponent,
-        MenuSvgComponent
+        MenuSvgComponent,
+        HomeSvgComponent,
+        CollectionsSvgComponent
       ],
       imports: [
         MdToolbarModule,
@@ -48,7 +53,12 @@ describe('ListHeaderComponent', () => {
         MdListModule,
         MdButtonModule,
         RouterTestingModule
+      ],
+      providers: [
+        MdIconRegistry,
+        DomSanitizer
       ]
+
     })
     .compileComponents();
   }));

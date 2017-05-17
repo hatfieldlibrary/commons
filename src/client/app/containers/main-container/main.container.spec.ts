@@ -23,7 +23,8 @@ import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/t
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule, Store, Action} from '@ngrx/store';
 import {
-  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdIconModule, MdInputModule, MdListModule,
+  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
+  MdListModule,
   MdSelectModule,
   MdSidenavModule,
   MdToolbarModule
@@ -63,6 +64,8 @@ import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.compon
 import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
 import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
 import {AppMenusComponent} from "../../components/apps-menu/app-menus.component";
+import {HomeSvgComponent} from "../../components/svg/home-svg/home-svg.component";
+import {CollectionsSvgComponent} from "../../components/svg/collections-svg/collections-svg.component";
 
 let areaSubscriptionMock =
   {
@@ -163,7 +166,9 @@ describe('MainContainer', () => {
         HomeScreenComponent,
         FooterComponent,
         SearchSvgComponent,
-        AppMenusComponent
+        AppMenusComponent,
+        HomeSvgComponent,
+        CollectionsSvgComponent
       ],
       imports: [
         FlexLayoutModule,
