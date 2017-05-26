@@ -15,13 +15,13 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<div style="margin-top: 30px;"></div>
+<div style="margin-top: 25px;"></div>
 <md-card-content style="max-width: 700px">
-<h2 >{{areaInfo?.title}}</h2>
+
   <md-chip-list >
  <md-chip *ngIf="selectedSubject" selected="true"
   color="default" (click)="deselect($event)"> {{selectedSubject?.name}}</md-chip>
   </md-chip-list>
-<p>{{areaInfo?.description}}</p>
-<button md-raised-button  color="accent">{{areaInfo?.linkLabel}}</button>
+<p style="font-size: 1.2em; padding-bottom: 30px;">{{areaInfo?.description}}</p>
+<a md-raised-button class="accent-button" href="{{areaInfo?.url}}" target="_top" color="accent">{{areaInfo?.linkLabel}}</a>
 </md-card-content>

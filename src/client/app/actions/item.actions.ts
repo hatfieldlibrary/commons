@@ -27,7 +27,9 @@ export const ItemActionTypes = {
   RELATED_COLLECTIONS: type('[Item] Find Related Collections'),
   RELATED_COLLECTIONS_SUCCESS: type('[Item] Related Collections'),
   CLEAR_RELATED_COLLECTIONS: type('[Item] Clear Related Collections'),
-  REQUEST_FAILED: type('[Item] Request Failed')
+  REQUEST_FAILED: type('[Item] Request Failed'),
+  SET_CURRENT_IMAGE: type('[Item] Set Current Image'),
+  GET_PREVIOUS_IMAGE: type('[Item] Get Previous Image')
 
 };
 
@@ -53,7 +55,7 @@ export class ItemRequestFailed implements Action {
   type = ItemActionTypes.REQUEST_FAILED;
   payload: void;
 
-  constructor(err:string) {
+  constructor(err: string) {
     console.log(err)
   }
 }
@@ -84,10 +86,14 @@ export class ClearRelatedItems implements Action {
   type = ItemActionTypes.CLEAR_RELATED_COLLECTIONS;
   payload: void;
 
-  constructor() {}
+  constructor() {
+  }
 }
 
 
-
-
-export type ItemActions = ItemRequest | ItemSuccess | ItemActionRelated | ItemActionRelatedSuccess | ItemRequestFailed;
+export type ItemActions =
+  ItemRequest |
+  ItemSuccess |
+  ItemActionRelated |
+  ItemActionRelatedSuccess |
+  ItemRequestFailed ;

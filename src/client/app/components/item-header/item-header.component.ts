@@ -16,11 +16,11 @@
  */
 
 import {
-  Component, Input, OnChanges, SecurityContext, SimpleChanges
+  Component, Input, OnInit
 } from '@angular/core';
-import {AreaType} from "../../shared/data-types/area.type";
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+
 import {ItemType} from "../../shared/data-types/item.type";
+
 
 
 @Component({
@@ -28,30 +28,16 @@ import {ItemType} from "../../shared/data-types/item.type";
   templateUrl: 'item-header.component.html',
   styleUrls: ['item-header.component.css']
 })
-export class ItemHeaderComponent implements OnChanges {
-
+export class ItemHeaderComponent implements OnInit {
 
   @Input() image: string;
-  @Input() areaList: AreaType[];
   @Input() item: ItemType;
-  backgroundImage: SafeResourceUrl = '';
-  smallBackgroundImage: SafeResourceUrl = '';
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor() {
   }
 
+  ngOnInit(): void {
 
-  ngOnChanges(changes: SimpleChanges) {
-
-    if (changes['image']) {
-      let url = 'http://libapps.willamette.edu:3003/resources/img/full/' + changes['image'].currentValue;
-      let image = this.sanitizer.sanitize(SecurityContext.URL, url).toString();
-      this.backgroundImage = this.sanitizer.bypassSecurityTrustUrl(image);
-
-      let smallUrl = 'http://libapps.willamette.edu:3003/resources/img/thumb/' + changes['image'].currentValue;
-      let smallImage = this.sanitizer.sanitize(SecurityContext.URL, smallUrl).toString();
-      this.smallBackgroundImage = this.sanitizer.bypassSecurityTrustUrl(smallImage);
-    }
   }
 
 }

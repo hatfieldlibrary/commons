@@ -32,9 +32,8 @@
 
   <div fxLayout="row" fxLayoutAlign="start center">
     <areas-svg></areas-svg>
-    <h3 md-subheader>Areas</h3>
+    <h3 md-subheader>Collection Areas</h3>
   </div>
-  <md-divider></md-divider>
   <md-list-item *ngFor="let area of areaList">
     <button md-button [attr.role]="button" (click)="areaSelected()" [routerLink]="['/collection/area/', area.id]">{{area.title}}
       ({{area.count}})

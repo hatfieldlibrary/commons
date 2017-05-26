@@ -72,7 +72,9 @@ export class ItemLinksComponent implements OnChanges, OnInit {
         })
       }
 
-      this.auth.getAuthStatus();
+      if (this.restricted) {
+        this.auth.getAuthStatus();
+      }
 
 
     }

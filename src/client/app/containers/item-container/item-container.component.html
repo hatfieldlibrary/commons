@@ -16,7 +16,9 @@
   -->
 <md-sidenav-container>
 
-  <item-header [areaList]="areas$ | async" [image]="collectionImage" [item]="item$ | async"></item-header>
+  <app-menus-component [areaList]="areas$ | async"></app-menus-component>
+
+  <item-header [image]="collectionImage" [item]="item$ | async"></item-header>
 
   <md-card class="main-content-area">
     <md-card-content>
@@ -25,12 +27,14 @@
         <div fxLayout="column"
              fxFlex="100"
              fxFlex.sm="90"
-             fxFlex.md="80"
+             fxFlex.md="90"
              fxFlex.lg="70"
              fxFlex.gt-lg="50"
              fxLayoutGap="20px">
 
-          <item [item]="item$ | async"></item>
+          <item [item]="item$ | async" style="padding-bottom: 40px;"></item>
+
+          <md-divider></md-divider>
 
           <related-items [columns]="columns" [related]="related$ | async"></related-items>
 
@@ -39,6 +43,7 @@
       </div>
     </md-card-content>
   </md-card>
-<footer></footer>
+  <footer></footer>
+
 </md-sidenav-container>
 

@@ -35,12 +35,38 @@ export const slideInDownAnimation: AnimationEntryMetadata =
         transform: 'translateX(-100%)',
         width: '100%'
       }),
-      animate('0.4s ease-in')
+      animate('0.3s ease-in')
     ]),
     transition(':leave', [
       animate('0.5s ease-out', style({
         opacity: 0,
-        transform: 'translateY(100%)',
+        transform: 'translateY(0)',
+        width: '100%'
+      }))
+    ])
+  ]);
+
+export const slideInLeftAnimation: AnimationEntryMetadata =
+  trigger('rightToLeftAnimation', [
+    state('*',
+      style({
+        opacity: 1,
+        transform: 'translateX(0)',
+        width: '100%'
+      })
+    ),
+    transition(':enter', [
+      style({
+        opacity: 0,
+        transform: 'translateX(100%)',
+        width: '100%'
+      }),
+      animate('0.3s ease-in')
+    ]),
+    transition(':leave', [
+      animate('0.5s ease-out', style({
+        opacity: 0,
+        transform: 'translateY(0)',
         width: '100%'
       }))
     ])
@@ -71,19 +97,32 @@ export const slideUpDownAnimation: AnimationEntryMetadata =
       }))
     ])
   ]);
-//
-// animations: [trigger(
-//   'openClose',
-//   [
-//     transition(":enter", [
-//       style({ opacity: 0 }),
-//       animate('2000ms', style({ opacity: 1 }))
-//     ]),
-//     transition(":leave", [
-//       animate('2000ms', style({ opacity: 0 }))
-//     ])
-//   ])],
-//   host: {
-//   '[@openClose]': 'true',
-//     'style': 'display: block;'
-// }
+
+export const fadeIn: AnimationEntryMetadata =
+  trigger(
+    'openClose',
+    [
+      transition(":enter", [
+        style({opacity: 0}),
+        animate('300ms', style({opacity: 1}))
+      ]),
+      transition(":leave", [
+        animate('300ms', style({opacity: 0}))
+      ])
+    ]);
+
+
+
+export const imageFadeIn: AnimationEntryMetadata =
+  trigger(
+    'imageShow',
+    [
+      transition(":enter", [
+        style({opacity: 0}),
+        animate('1000ms', style({opacity: 1}))
+      ]),
+      transition(":leave", [
+        style({opacity: 0})
+      ])
+    ]);
+

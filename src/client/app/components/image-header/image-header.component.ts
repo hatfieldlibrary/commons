@@ -28,6 +28,8 @@ export class ListHeaderComponent implements OnInit {
   @Input() areaList: AreaType[];
   @Input() homeScreen: boolean;
   @ViewChild('sidenav') public sideNavigate;
+  backgroundImage: string = '/assets/img/campus-visit-header.jpg';
+  smallBackgroundImage: string = '/assets/img/campus-visit-header.jpg';
 
   constructor() { }
 

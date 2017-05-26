@@ -31,7 +31,7 @@ import {ActivatedRoute, RouterModule} from "@angular/router";
 import {Observable} from "rxjs";
 import * as fromRoot from '../../reducers';
 import {AppComponent} from "../../components/app.component";
-import {MainContainer} from "../main-container/main.container";
+// import {MainContainer} from "../lists-container/main.container";
 import {ListComponent} from "../../components/collection-list/list.component";
 import {NavigationComponent} from "../../components/nav-selector/area.component";
 import {SubjectsComponent} from "app/components/subject-selector/subjects.component";

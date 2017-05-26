@@ -1,0 +1,30 @@
+<div fxFlex="100" class="header-image-container" style="overflow:hidden">
+
+  <div class="header-background-overlay"></div>
+  <div class="header-list-overlay"></div>
+  <div fxLayout="row" fxLayoutAlign="center top">
+
+    <div fxLayout="column"
+         fxFlex="100"
+         fxFlex.md="100"
+         fxFlex.lg="90"
+         fxFlex.gt-lg="60">
+
+      <div fxLayout="column">
+
+        <div class="subject-selector-container">
+          <div style="position: relative; overflow: auto">
+            <subject-selector [subjectList]="subjectList" [areaId]="areaId"
+                              [type]="type"></subject-selector>
+
+          </div>
+        </div>
+
+        <div class="header-title list-title">
+          <h1>{{title}}</h1>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

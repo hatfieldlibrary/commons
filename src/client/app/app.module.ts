@@ -33,7 +33,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 
 import {AppComponent} from './components/app.component';
-import {MainContainer} from "./containers/main-container/main.container";
+import {ListsContainer} from "./containers/lists-container/lists-container.component";
 import {NavigationComponent} from './components/nav-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
 import {ItemComponent} from './components/item/item.component';
@@ -70,6 +70,8 @@ import { AppMenusComponent } from './components/apps-menu/app-menus.component';
 import { HomeSvgComponent } from './components/svg/home-svg/home-svg.component';
 import { CollectionsSvgComponent } from './components/svg/collections-svg/collections-svg.component';
 import { AreasSvgComponent } from './components/svg/areas-svg/areas-svg.component';
+import { TitleHeaderComponent } from './components/title-header/title-header.component';
+import { ItemHeaderImageComponent } from './components/item-header-image/item-header-image.component';
 
 
 // export const appRoutes = [
@@ -83,8 +85,8 @@ import { AreasSvgComponent } from './components/svg/areas-svg/areas-svg.componen
 //   {
 //     path: 'list/collections', component: AppComponent,
 //     children: [
-//       {path: 'area/:areaId', component: MainContainer},
-//       {path: 'subject/:subjectId/area/:areaId', component: MainContainer},
+//       {path: 'area/:areaId', component: ListsContainer},
+//       {path: 'subject/:subjectId/area/:areaId', component: ListsContainer},
 //     ]
 //   },
 //   {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
@@ -96,10 +98,10 @@ import { AreasSvgComponent } from './components/svg/areas-svg/areas-svg.componen
 export const appRoutes = [
 
   {path: 'item/id/:id', component: ItemContainerComponent},
-  {path: 'collection/area/:areaId', component: MainContainer},
-  {path: 'collection', component: MainContainer},
-  {path: 'collection/subject/:subjectId/area/:areaId', component: MainContainer},
-  {path: 'collection/subject/:subjectId', component: MainContainer},
+  {path: 'collection/area/:areaId', component: ListsContainer},
+  {path: 'collection', component: ListsContainer},
+  {path: 'collection/subject/:subjectId/area/:areaId', component: ListsContainer},
+  {path: 'collection/subject/:subjectId', component: ListsContainer},
   {path: '', redirectTo: 'collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 
@@ -114,7 +116,7 @@ export const appRoutes = [
     AppComponent,
     NavigationComponent,
     ListComponent,
-    MainContainer,
+    ListsContainer,
     SubjectsComponent,
     PageNotFoundComponent,
     ListHeaderComponent,
@@ -131,6 +133,8 @@ export const appRoutes = [
     HomeSvgComponent,
     CollectionsSvgComponent,
     AreasSvgComponent,
+    TitleHeaderComponent,
+    ItemHeaderImageComponent,
 
   ],
   imports: [

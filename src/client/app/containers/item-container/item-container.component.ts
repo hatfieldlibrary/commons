@@ -15,7 +15,10 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, OnInit, ChangeDetectionStrategy, Renderer2, HostBinding} from '@angular/core';
+import {
+  Component, OnInit, ChangeDetectionStrategy, Renderer2, HostBinding, OnDestroy, OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import * as fromRoot from "../../reducers"
@@ -26,7 +29,7 @@ import * as areaActions from '../../actions/area.actions';
 import {RelatedType} from "../../shared/data-types/related-collection";
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
 import {animate, style, transition, trigger} from "@angular/animations";
-import {slideInDownAnimation, slideUpDownAnimation} from "../../animation/animations";
+import {fadeIn, slideInDownAnimation, slideUpDownAnimation} from "../../animation/animations";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
 
@@ -35,14 +38,14 @@ import {Subscription} from "rxjs/Subscription";
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './item-container.component.html',
   styleUrls: ['./item-container.component.css'],
-  animations: [slideInDownAnimation]
+  animations: [fadeIn]
 })
-export class ItemContainerComponent implements OnInit {
+export class ItemContainerComponent implements OnInit, OnDestroy, OnChanges {
 
-  @HostBinding('@leftToRightAnimation') routeAnimation = true;
-  @HostBinding('style.display')   display = 'block';
-  @HostBinding('style.position')  position = 'absolute';
-  @HostBinding('style.position')  width = '100%';
+  @HostBinding('@openClose') routeAnimation = true;
+  @HostBinding('style.display') display = 'block';
+  @HostBinding('style.position') position = 'absolute';
+  @HostBinding('style.position') width = '100%';
 
   item$: Observable<ItemType>;
   related$: Observable<RelatedType[]>;
@@ -52,7 +55,7 @@ export class ItemContainerComponent implements OnInit {
   areasAvailable: boolean = false;
   watcher: Subscription;
   activeMediaQuery = 'xs';
-  columns:number = 1;
+  columns: number = 1;
 
   constructor(private store: Store<fromRoot.State>,
               private renderer: Renderer2,
@@ -65,18 +68,24 @@ export class ItemContainerComponent implements OnInit {
       this.renderer.setProperty(document.body, 'scrollTop', 0);
     });
 
+    // Set the media observable subscription for assigning the related items column count.
     this.watcher = this.media.subscribe((change: MediaChange) => {
-      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : 'xs';
-      if ( change.mqAlias === 'xs') {
+      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
+      console.log(change.mqAlias)
+      console.log(this.activeMediaQuery)
+      console.log(change.mediaQuery)
+      if (change.mqAlias === 'xs') {
         this.columns = 1;
-      } else if (change.mqAlias === 'sm') {
+      } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
         this.columns = 2;
       } else if (change.mqAlias === 'lg') {
         this.columns = 3;
-      }  else {
+      } else {
         this.columns = 4;
+        console.log(this.columns)
       }
     });
+
 
   }
 
@@ -117,6 +126,7 @@ export class ItemContainerComponent implements OnInit {
       }
     }
   }
+
   /**
    * Dispatches action for area list if not currently available in the store.
    * @param id
@@ -128,6 +138,22 @@ export class ItemContainerComponent implements OnInit {
 
   }
 
+  /**
+   * Set column count for related items.
+   */
+  initializeColumnCount() {
+
+    if (this.media.isActive('xs')) {
+      this.columns = 1;
+    } else if (this.media.isActive('sm') || this.media.isActive('md')) {
+      this.columns = 2;
+    } else if (this.media.isActive('lg')) {
+      this.columns = 3;
+    } else {
+      this.columns = 4;
+    }
+  }
+
 
   ngOnInit() {
 
@@ -137,19 +163,16 @@ export class ItemContainerComponent implements OnInit {
     this.related$ = this.store.select(fromRoot.getRelated);
     this.areas$ = this.store.select(fromRoot.getAreas);
 
-    this.initializeAreas();
-
-    // Once we have item information, request the related items.
+    // Once we have item information, request related items.
     this.item$.subscribe((data) => {
-
       this.getRelatedItems(data);
       this.collectionImage = data.collection.image;
 
     });
 
+    // Request item based on route parameter.
     this.route.params
       .subscribe((params) => {
-
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));
@@ -157,6 +180,19 @@ export class ItemContainerComponent implements OnInit {
         }
 
       });
+
+    this.initializeAreas();
+    this.initializeColumnCount();
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+
+  }
+
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
   }
 
 }

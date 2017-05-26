@@ -10,27 +10,16 @@
          fxFlex.lg="90"
          fxFlex.gt-lg="60">
 
-
       <div fxLayout="column">
-        <app-menus-component [areaList]="areaList"></app-menus-component>
-
         <div class="header-overlay"></div>
-        <div class="header-item-title">
+        <div class="header-title item-title">
           <h1>{{item?.collection.title}}</h1>
         </div>
-        <div fxFlex="100"
-             class='header-image'>
-          <img fxHide="true" fxShow.gt-xs="true" [src]="backgroundImage" style="height: 100%; width: 100%">
-          <img fxHide="false" fxHide.gt-xs="true" [src]="smallBackgroundImage" style="height: 100%; width: 100%">
-        </div>
+        <item-header-image></item-header-image>
       </div>
-
 
     </div>
 
   </div>
 
 </div>
-
-
-

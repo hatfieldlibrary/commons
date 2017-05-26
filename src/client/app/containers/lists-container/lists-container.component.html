@@ -1,0 +1,88 @@
+<!--
+  ~ Copyright (c) 2017.
+  ~
+  ~   This program is free software: you can redistribute it and/or modify
+  ~    it under the terms of the GNU General Public License as published by
+  ~    the Free Software Foundation, either version 3 of the License, or
+  ~    (at your option) any later version.
+  ~
+  ~    This program is distributed in the hope that it will be useful,
+  ~    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~    GNU General Public License for more details.
+  ~
+  ~   You should have received a copy of the GNU General Public License
+  ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<md-sidenav-container>
+
+  <app-menus-component [areaList]="areas$ | async"></app-menus-component>
+
+  <!--<image-header [homeScreen]="homeScreen" ></image-header>-->
+  <title-header [title]="title"
+                [subjectList]="subjects$ | async"
+                [areaId]="areaId"
+                [type]="subjectLinkType">
+
+  </title-header>
+
+  <md-card class="main-content-area">
+
+    <md-card-content>
+
+      <div fxLayout="row" fxLayoutAlign="center start" style="margin-top: 90px;">
+
+        <div fxLayout="column"
+             fxFlex="100"
+             fxFlex.sm="100"
+             fxFlex.md="100"
+             fxFlex.lg="70"
+             fxFlex.gt-lg="50">
+
+          <!--<div style="overflow:auto">-->
+
+            <!--<subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"-->
+                              <!--[type]="subjectLinkType"></subject-selector>-->
+
+          <!--</div>-->
+
+          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="start start"
+               fxLayoutGap.gt-sm="20px">
+
+            <div fxFlex="100" fxFlex.gt-sm="75">
+
+              <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
+                                [areaInfo]="areaInfo$ | async"
+                                (removeSubject)="removeSubject($event)"></area-information>
+
+              <home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject$ | async"
+                           (removeSubject)="removeSubject($event)"></home-screen>
+
+              <collection-list [collectionList]="collections$ | async "></collection-list>
+
+            </div>
+
+            <div fxFlex fxFlex.gt-sm="25" fxHide fxShow.gt-sm style="padding-top: 30px;">
+
+              <navigation-selector [areaList]="areas$ | async"></navigation-selector>
+
+              <md-list>
+                <md-list-item>
+                  <a md-button [routerLink]="['/collection']">All Collections</a>
+                </md-list-item>
+              </md-list>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </md-card-content>
+  </md-card>
+
+  <footer></footer>
+
+</md-sidenav-container>

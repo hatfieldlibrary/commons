@@ -14,53 +14,66 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<div fxFlex="100" class="header-image-container" style="overflow:hidden">
+<div class="header-background-overlay"></div>
 
+<div fxLayout="row" fxLayoutAlign="center top">
 
-<div fxLayout="row" fxLayoutAlign="start start">
+  <div fxLayout="column"
+       fxFlex="100"
+       fxFlex.md="100"
+       fxFlex.lg="90"
+       fxFlex.gt-lg="60">
 
-  <md-toolbar [attr.role]="menubar" fxFlex="100" style="background: #000;color:#fff; ">
+    <div fxLayout="row" fxLayoutAlign="start start">
 
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <icon-back (click)="backClicked()" fxHide.gt-sm></icon-back>&nbsp;Academic Commons
+      <md-toolbar [attr.role]="menubar" fxFlex="100" style="background: #000;color:#fff; ">
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <icon-back (click)="backClicked()" fxHide.gt-sm></icon-back>&nbsp;Academic Commons
+        </div>
+        <!-- This fills the remaining space of the current row -->
+        <span class="fill-remaining-space"></span>
+
+        <md-divider style="border-color: #fff;"></md-divider>
+
+        <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
+          <a md-button [attr.role]="link" style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+            <home-svg></home-svg>
+            <span>&nbsp;&nbsp;Home</span></a>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
+          <a md-button [routerLink]="['/collection']" [attr.role]="link"
+             style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+            <collections-svg></collections-svg>
+            <span>&nbsp;&nbsp;All Collections</span>
+          </a>
+        </div>
+        <md-divider></md-divider>
+
+        <div fxFlex.gt-sm="10"></div>
+
+        <button md-button [attr.role]="button" (click)="openMenu()"
+                style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+          <menu-svg></menu-svg>
+          <span fxShow.gt-sm="true">&nbsp;Menu</span>
+        </button>
+
+      </md-toolbar>
+
+      <div class="fill-remaining-space"></div>
+
+      <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
+        <md-toolbar style="background: #ccc; ">
+          <icon-close (click)="sidenav.close()"></icon-close>
+        </md-toolbar>
+        <navigation-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></navigation-selector>
+      </md-sidenav>
+
     </div>
-    <!-- This fills the remaining space of the current row -->
-    <span class="fill-remaining-space"></span>
-
-    <md-divider style="border-color: #fff;"></md-divider>
-
-    <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
-      <a md-button [attr.role]="link" style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-        <home-svg></home-svg>
-        <span>&nbsp;&nbsp;Home</span></a>
-    </div>
-
-    <md-divider></md-divider>
-
-    <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
-      <a md-button [routerLink]="['/collection']" [attr.role]="link"
-         style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-        <collections-svg></collections-svg>
-        <span>&nbsp;&nbsp;Collections</span>
-      </a>
-    </div>
-    <md-divider></md-divider>
-
-    <div fxFlex.gt-sm="10"></div>
-
-    <button md-button [attr.role]="button" (click)="openMenu()" style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-      <menu-svg></menu-svg>
-      <span fxShow.gt-sm="true">&nbsp;Menu</span>
-    </button>
-
-  </md-toolbar>
-
-  <div class="fill-remaining-space"></div>
-
-  <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
-    <md-toolbar style="background: #ccc; ">
-      <icon-close (click)="sidenav.close()"></icon-close>
-    </md-toolbar>
-    <navigation-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></navigation-selector>
-  </md-sidenav>
-
+  </div>
+</div>
 </div>

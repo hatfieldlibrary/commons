@@ -22,7 +22,7 @@ import {ListComponent} from './list.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {appRoutes} from '../../app.module';
 import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
-import {MainContainer} from "../../containers/main-container/main.container";
+import {ListsContainer} from "../../containers/lists-container/lists-container.component";
 import {AppComponent} from "../app.component";
 import {NavigationComponent} from "../nav-selector/area.component";
 import {SubjectsComponent} from "../subject-selector/subjects.component";

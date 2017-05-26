@@ -22,6 +22,7 @@
   <div fxFlex="80"
        fxShow="true"
        fxHide.gt-sm="true">
+
     <item-links
       [restricted]="item?.collection.restricted"
       [linkOptions]="item?.collection.linkOptions"
@@ -33,7 +34,7 @@
 
   <div fxFlex="100"
        fxFlex.md="60"
-       fxFlex.lg="55"
+       fxFlex.lg="60"
        fxFlex.gt-lg="50">
 
     <md-card-title style="margin-top: 20px;">
@@ -41,7 +42,7 @@
     </md-card-title>
 
 
-    <p>{{item?.collection.desc}}</p>
+    <p style="font-size: 1.2em">{{item?.collection.desc}}</p>
 
     <md-list>
       <md-list-item *ngIf="item?.collection.dates">
@@ -62,18 +63,8 @@
       </md-list-item>
     </md-list>
 
-    <md-divider style="margin: 16px 0"></md-divider>
-
-    <md-card-subtitle>This collection is part of</md-card-subtitle>
-    <md-card-title>{{item?.category?.title}}</md-card-title>
-
-    <p>{{item?.category?.description}}</p>
-
-    <a md-raised-button color="primary" href="{{item?.category?.url}}"
-       target="_blank">{{item?.category?.linkLabel}}</a>
 
   </div>
-
   <div class="fill-remaining-space"></div>
 
   <div fxFlex
@@ -94,6 +85,29 @@
     </item-links>
 
   </div>
+</div>
+
+<md-divider style="margin: 40px 0"></md-divider>
+
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="0" style="margin-top: 50px;">
+
+  <div fxFlex="100"
+       fxFlex.md="60"
+       fxFlex.lg="60"
+       fxFlex.gt-lg="50">
+
+
+    <md-card-subtitle>This collection is part of</md-card-subtitle>
+    <md-card-title>{{item?.category?.title}}</md-card-title>
+
+    <p style="font-size: 1.2em">{{item?.category?.description}}</p>
+
+    <a md-raised-button color="accent" class="accent-button" href="{{item?.category?.url}}"
+       target="_blank">{{item?.category?.linkLabel}}</a>
+
+  </div>
+
+
 </div>
 
 

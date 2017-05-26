@@ -24,7 +24,7 @@ import {Observable} from 'rxjs';
 import * as Reselect from 'reselect';
 import Selector = Reselect.Selector;
 import {Store} from '@ngrx/store';
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, HostBinding} from '@angular/core';
 
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
@@ -34,13 +34,15 @@ import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
+import {fadeIn, slideInLeftAnimation} from "../../animation/animations";
 
 @Component({
-  selector: 'main-container',
+  selector: 'lists-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'main.container.html'
+  templateUrl: 'lists-container.component.html',
+  animations: [fadeIn]
 })
-export class MainContainer implements OnInit {
+export class ListsContainer implements OnInit {
 
   collections$: Observable<CollectionType[]>;
   areas$: Observable<AreaListItemType[]>;
@@ -51,6 +53,12 @@ export class MainContainer implements OnInit {
   subjectLinkType: string;
   homeScreen:boolean = false;
   selectedSubject$: Observable<SubjectType>;
+  title: string = '';
+
+  @HostBinding('@openClose') routeAnimation = true;
+  @HostBinding('style.display')   display = 'block';
+  @HostBinding('style.position')  position = 'absolute';
+  @HostBinding('style.position')  width = '100%';
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
 
@@ -68,6 +76,17 @@ export class MainContainer implements OnInit {
       }
     });
 
+  }
+
+  getAreaTitle(): void {
+    this.areaInfo$.subscribe((info) => {
+      if (info.title) {
+        this.title = info.title;
+      } else {
+        this.title = "All Collections";
+      }
+
+    });
   }
 
   /**
@@ -89,15 +108,18 @@ export class MainContainer implements OnInit {
   getCollectionsByArea(areaId: string): void {
     this.store.dispatch(new listActions.CollectionAction(areaId));
     this.store.dispatch(new subjectAction.RemoveCurrentSubject());
+
   }
 
   /**
    * Dispatches action to fetch all collections.
    */
   getAllCollections(): void {
+    this.title = 'All Collections';
     this.store.dispatch(new listActions.AllCollectionsAction());
     this.store.dispatch(new subjectAction.AllSubjectAction());
     this.store.dispatch(new subjectAction.RemoveCurrentSubject());
+
   }
 
   /**
@@ -105,7 +127,6 @@ export class MainContainer implements OnInit {
    * @param areaId
    */
   getCollections(areaId: string): void {
-
     this.getCollectionsByArea(areaId);
     this.getAreaInformation(areaId);
 
@@ -137,6 +158,7 @@ export class MainContainer implements OnInit {
     this.store.dispatch((new listActions.AllCollectionSubjectAction(subjectId)));
     this.store.dispatch(new subjectAction.AllSubjectAction());
     this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+
   }
 
   /**
@@ -174,6 +196,7 @@ export class MainContainer implements OnInit {
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
 
     this.setAreasAvailable();
+    this.getAreaTitle();
 
 
     this.route.params
@@ -197,7 +220,7 @@ export class MainContainer implements OnInit {
           }
 
         }
-        else if(params['subjectId']) {
+        else if (params['subjectId']) {
 
           this.subjectLinkType = 'all';
           this.homeScreen = true;

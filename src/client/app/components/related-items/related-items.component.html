@@ -17,7 +17,7 @@
 
 <div fxLayout="column">
 
-  <h3>Related</h3>
+  <h2 *ngIf="related.length > 0">Similar Items</h2>
 
   <!--<div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">-->
   <md-grid-list cols="{{columns}}" rowHeight="320" gutterSize="6">

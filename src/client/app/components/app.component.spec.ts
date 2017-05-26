@@ -23,7 +23,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {} from 'jasmine';
 import {ListHeaderComponent} from "./image-header/image-header.component";
 import {appRoutes} from '../app.module';
-import {MainContainer} from "../containers/main-container/main.container";
+// import {MainContainer} from "../containers/lists-container/main.container";
 import {ListComponent} from "./collection-list/list.component";
 import {NavigationComponent} from "./nav-selector/area.component";
 import {SubjectsComponent} from "./subject-selector/subjects.component";
