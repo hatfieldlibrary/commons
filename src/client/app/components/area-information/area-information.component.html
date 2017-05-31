@@ -17,11 +17,14 @@
 
 <div style="margin-top: 25px;"></div>
 <md-card-content style="max-width: 700px">
-
-  <md-chip-list >
- <md-chip *ngIf="selectedSubject" selected="true"
-  color="default" (click)="deselect($event)"> {{selectedSubject?.name}}</md-chip>
+  <md-chip-list>
+    <md-chip *ngIf="selectedSubject"
+             selected="true"
+             color="default"
+             (click)="deselect($event)">
+     {{selectedSubject?.name}}<icon-close-white></icon-close-white>
+    </md-chip>
   </md-chip-list>
-<p style="font-size: 1.2em; padding-bottom: 30px;">{{areaInfo?.description}}</p>
-<a md-raised-button class="accent-button" href="{{areaInfo?.url}}" target="_top" color="accent">{{areaInfo?.linkLabel}}</a>
+  <p style="font-size: 1.2em;">{{areaInfo?.description}}</p>
+  <a md-raised-button class="accent-button" href="{{areaInfo?.url}}" target="_top" color="accent">{{areaInfo?.linkLabel}}</a>
 </md-card-content>

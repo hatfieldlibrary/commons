@@ -72,6 +72,7 @@ import { CollectionsSvgComponent } from './components/svg/collections-svg/collec
 import { AreasSvgComponent } from './components/svg/areas-svg/areas-svg.component';
 import { TitleHeaderComponent } from './components/title-header/title-header.component';
 import { ItemHeaderImageComponent } from './components/item-header-image/item-header-image.component';
+import { CloseWhiteSvgComponent } from './components/svg/close-white-svg/close-white-svg.component';
 
 
 // export const appRoutes = [
@@ -135,6 +136,7 @@ export const appRoutes = [
     AreasSvgComponent,
     TitleHeaderComponent,
     ItemHeaderImageComponent,
+    CloseWhiteSvgComponent,
 
   ],
   imports: [

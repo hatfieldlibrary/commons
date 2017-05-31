@@ -16,30 +16,30 @@
   -->
 
 
-<div class="overflow-x-scroll-no-scrollbar">
-<!--
-  <div class="subjects-arrow-left"> < </div>
+<div #container class="overflow-x-scroll-no-scrollbar" fxLayoutAlign="center center">
+  <!--
+    <div class="subjects-arrow-left"> < </div>
 
-  -->
+    -->
 
-  <md-list fxLayout="row" style="height: 80px;" *ngIf="type === 'area'">
-
-    <md-list-item *ngFor="let subject of subjectList">
-      <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id, 'area', areaId]">
-        {{subject.name}}</button>
-    </md-list-item>
-  </md-list>
-  <md-list fxLayout="row" style="height: 80px;" *ngIf="type === 'all'">
-
-    <md-list-item *ngFor="let subject of subjectList">
-      <button md-raised-button color="primary"  [routerLink]="['/collection/subject/', subject.id]">{{subject.name}}
+    <md-list #list fxLayout="row" style="height: 80px;" (scroll)="onScroll($event)" *ngIf="type === 'area'">
+      <md-list-item  #subjects *ngFor="let subject of subjectList">
+        <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id, 'area', areaId]">
+          {{subject.name}}
         </button>
-    </md-list-item>
+      </md-list-item>
+    </md-list>
 
-  </md-list>
-<!--
-  <div class="subjects-arrow-right"> > </div>
-  -->
+    <md-list #list fxLayout="row" style="height: 80px;" (scroll)="onScroll($event)" *ngIf="type === 'all'">
+      <md-list-item  #subjects *ngFor="let subject of subjectList">
+        <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id]">{{subject.name}}
+        </button>
+      </md-list-item>
+    </md-list>
+
+  <!--
+ects-arrow-right"> > </div>
+    -->
 
 </div>
 

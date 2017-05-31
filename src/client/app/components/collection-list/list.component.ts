@@ -21,6 +21,7 @@ import 'rxjs/add/operator/switchMap';
 import {CollectionType} from "../../shared/data-types/collection.type";
 import * as Reselect from "reselect";
 import Selector = Reselect.Selector;
+import {SelectedSubject} from "../../shared/data-types/selected-subject";
 
 @Component({
   selector: 'collection-list',
@@ -31,6 +32,7 @@ import Selector = Reselect.Selector;
 export class ListComponent {
 
   @Input() collectionList: CollectionType[];
+  @Input() selectedSubject: SelectedSubject;
 
 
 }

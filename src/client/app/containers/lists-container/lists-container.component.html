@@ -47,10 +47,9 @@
 
           <!--</div>-->
 
-          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="start start"
-               fxLayoutGap.gt-sm="20px">
+          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start" fxLayoutGap.gt-sm="30px">
 
-            <div fxFlex="100" fxFlex.gt-sm="75">
+            <div fxFlex="100" fxFlex.gt-sm="70">
 
               <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
                                 [areaInfo]="areaInfo$ | async"
@@ -59,7 +58,7 @@
               <home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject$ | async"
                            (removeSubject)="removeSubject($event)"></home-screen>
 
-              <collection-list [collectionList]="collections$ | async "></collection-list>
+              <collection-list [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async"></collection-list>
 
             </div>
 

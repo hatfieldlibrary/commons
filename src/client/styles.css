@@ -16,7 +16,7 @@
  */
 
 .frame {
-  background: #423e3e;
+  background: #eee;
   width: 100%;
   margin: 0;
 }
@@ -39,7 +39,7 @@ md-sidenav-container {
   overflow-x: auto;
   margin-bottom: -17px;
   overflow-y: hidden;
-  width: 100%;
+
 }
 
 .overflow-x-scroll-no-scrollbar > div * {
@@ -53,6 +53,10 @@ md-sidenav-container {
 
 subject-selector .mat-list .mat-list-item .mat-list-item-content {
   padding: 0 4px;
+}
+
+subject-selector md-list {
+  display: inline-flex !important;
 }
 
 .fill-remaining-space {
@@ -139,7 +143,7 @@ md-card {
   z-index: 1200;
   width: 100%;
   top: 70px;
-  margin-left: 20px;
+
 }
 
 .header-image-container .header-title h1 {
@@ -161,7 +165,7 @@ md-card {
 }
 
 .header-list-overlay {
-  background: #000;
+  background: #3c2b0a;
   opacity: 0.5;
   height: 220px;
   width: 100%;
@@ -190,8 +194,10 @@ md-card {
 }
 
 .footer {
-  background: #333;
-  height: 200px
+  background: #eee;
+  height: 200px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  color: #999;
 }
 .mat-input-underline {
   border-top-width: 2px !important;
@@ -233,4 +239,14 @@ form.app-links button {
   max-width: 50px;
   max-height: 35px;
   padding: 0;
+}
+
+.mat-chip.mat-chip-selected:not(.mat-basic-chip) {
+  background-color: #3faab2 !important;
+}
+md-chip {
+  cursor: pointer;
+}
+md-chip .mat-icon {
+  height: 15px;
 }

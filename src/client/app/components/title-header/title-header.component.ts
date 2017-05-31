@@ -12,6 +12,8 @@ export class TitleHeaderComponent implements OnInit {
   @Input() areaId;
   @Input() type;
 
+
+
   constructor() { }
 
   ngOnInit() {

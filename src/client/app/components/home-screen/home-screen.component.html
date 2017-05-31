@@ -3,11 +3,10 @@
 
   <md-chip-list >
     <md-chip *ngIf="selectedSubject" selected="true"
-             color="default" (click)="deselect($event)"> {{selectedSubject?.name}}</md-chip>
+             color="default" (click)="deselect($event)"> {{selectedSubject?.name}}<icon-close-white></icon-close-white> </md-chip>
   </md-chip-list>
   <p style="font-size: 1.2em">
-  This will be introductory text for the Academic Commons.  Fairly brief.  Just providing essentials for getting started
-    and using the collections.
-  The overall introduction to the Commons will be provided on the real, static home page.
+  The Academic Commons is a clearinghouse for digital collections and projects at Willamette University.  It brings together
+    student research, faculty research, archival collections, artworks, exhibits and more.
   </p>
 </md-card-content>
