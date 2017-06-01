@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {SearchService} from "../../services/search.service";
 import {SearchTerms} from "../../shared/data-types/simple-search.type";
 import {Observable} from "rxjs/Observable";
@@ -8,7 +8,7 @@ import {AuthCheckService} from "../../services/auth-check.service";
 import {AuthType} from "../../shared/data-types/auth.type";
 import * as fromRoot from "../../reducers";
 import {Store} from "@ngrx/store";
-import {MdSelectModule} from "@angular/material";
+
 
 @Component({
   selector: 'item-links',
@@ -32,12 +32,13 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   SEARCH_OPTIONS_LABEL: string = 'Select to Browse';
   optionList = [];
   currentUrl: string = '';
-  isAuthenticated: boolean;
+  isAuthenticated: boolean = false;
 
 
   constructor(private svc: SearchService,
               private route: ActivatedRoute,
               private auth: AuthCheckService,
+              private changeDetector: ChangeDetectorRef,
               private store: Store<fromRoot.State>) {
 
     const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
@@ -57,9 +58,12 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   ngOnInit(): void {
 
     this.model = new SearchTerms();
-    this.isAuthenticated = false;
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
-    this.auth$.subscribe((auth) => this.isAuthenticated = auth.status )
+
+    this.auth$.subscribe((auth) => {
+      this.isAuthenticated = auth.status;
+      this.changeDetector.detectChanges();
+    })
 
   }
 
@@ -75,7 +79,6 @@ export class ItemLinksComponent implements OnChanges, OnInit {
       if (this.restricted) {
         this.auth.getAuthStatus();
       }
-
 
     }
   }

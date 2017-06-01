@@ -89,7 +89,7 @@
 
 <md-divider style="margin: 40px 0"></md-divider>
 
-<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="0" style="margin-top: 50px;">
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-sm="40" style="margin-top: 50px;">
 
   <div fxFlex="100"
        fxFlex.md="60"
@@ -105,8 +105,37 @@
     <a md-raised-button color="accent" class="accent-button" href="{{item?.category?.url}}"
        target="_blank">{{item?.category?.linkLabel}}</a>
 
-  </div>
 
+  </div>
+  <div class="fill-remaining-space"></div>
+
+  <div fxFlex
+       fxFlex.sm="35"
+       fxFlex.md="35"
+       fxFlex.gt-md="30"
+       fxShow="false"
+       fxShow.gt-sm="true"
+       *ngIf="item?.category?.id === 1 || item?.category?.id === 7">
+
+    <md-list>
+      <md-list-item>
+        <a md-button  style="width:100%" href="http://libmedia.willamette.edu/commons/info/thesis" target="_blank">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <info-svg></info-svg>
+            Submission Instructions
+          </div>
+        </a>
+      </md-list-item>
+      <md-list-item>
+        <a md-button  style="width:100%" href="http://library.willamette.edu/guide_on_the_side/tutorial/academic-commons-submission" target="_blank">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <run-svg></run-svg>
+            Tutorial
+          </div>
+        </a>
+      </md-list-item>
+    </md-list>
+  </div>
 
 </div>
 

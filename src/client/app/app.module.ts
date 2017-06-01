@@ -75,6 +75,8 @@ import { ItemHeaderImageComponent } from './components/item-header-image/item-he
 import { CloseWhiteSvgComponent } from './components/svg/close-white-svg/close-white-svg.component';
 import { KeyboardArrowBackSvgComponent } from './components/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component';
 import { KeyboardArrowForwardSvgComponent } from './components/svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component';
+import { RunSvgComponent } from './components/svg/run-svg/run-svg.component';
+import { InfoSvgComponent } from './components/svg/info-svg/info-svg.component';
 
 
 // export const appRoutes = [
@@ -141,6 +143,8 @@ export const appRoutes = [
     CloseWhiteSvgComponent,
     KeyboardArrowBackSvgComponent,
     KeyboardArrowForwardSvgComponent,
+    RunSvgComponent,
+    InfoSvgComponent,
 
   ],
   imports: [
