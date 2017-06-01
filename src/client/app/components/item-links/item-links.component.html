@@ -1,4 +1,4 @@
-<md-card>
+<md-card style="background: #efeadf; min-height: 100px;">
   <md-card-content>
 
     <div fxLayout="row"
@@ -24,7 +24,7 @@
         fxLayout="column"
         fxLayoutGap="20px"
         fxLayoutAlign="start center"
-        fxLayoutAlign.gt-xs="start start"
+        fxLayoutAlign.gt-xs="center start"
         *ngIf="isAuthenticated || !restricted">
 
         <span *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig'">

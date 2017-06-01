@@ -40,7 +40,7 @@ import {Subscription} from "rxjs/Subscription";
   styleUrls: ['./item-container.component.css'],
   animations: [fadeIn]
 })
-export class ItemContainerComponent implements OnInit, OnDestroy, OnChanges {
+export class ItemContainerComponent implements OnInit, OnDestroy {
 
   @HostBinding('@openClose') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
@@ -71,9 +71,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy, OnChanges {
     // Set the media observable subscription for assigning the related items column count.
     this.watcher = this.media.subscribe((change: MediaChange) => {
       this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
-      console.log(change.mqAlias)
-      console.log(this.activeMediaQuery)
-      console.log(change.mediaQuery)
       if (change.mqAlias === 'xs') {
         this.columns = 1;
       } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
@@ -183,11 +180,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy, OnChanges {
 
     this.initializeAreas();
     this.initializeColumnCount();
-
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
 
   }
 

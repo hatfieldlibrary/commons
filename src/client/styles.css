@@ -118,13 +118,13 @@ md-card {
 }
 
 .header-image-container .header-title {
-   margin-left: 42px;
-   margin-top: 64px;
-   font-family: Roboto, "Helvetica Neue", sans-serif;
-   color: #fff;
-   position: absolute;
-   z-index: 1200;
- }
+  margin-left: 42px;
+  margin-top: 64px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: #fff;
+  position: absolute;
+  z-index: 1200;
+}
 
 .header-image-container .header-title.list-title {
   top: 65px;
@@ -135,7 +135,6 @@ md-card {
   top: 0;
 
 }
-
 
 .header-image-container .subject-selector-container {
   position: absolute;
@@ -183,7 +182,41 @@ md-card {
   z-index: 0;
   top: 0;
 }
+.subject-navigation {
+  height: 44px;
+  margin-top: 9px;
+  padding-top: 4px;
+  border-radius: 3px;
 
+  background: rgba(195, 194, 183, 0.4);
+  position: absolute;
+  top: 0;
+  z-index: 2000;
+
+}
+.subject-navigation.left {
+  left: 2px;
+}
+.subject-navigation.right {
+  right: 2px;
+}
+.subject-list {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.margin-for-mobile {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.hide-for-mobile {
+  display: none;
+}
+.visible-nav {
+  opacity: 1;
+}
+.hidden-nav {
+  opacity: 0;
+}
 .accent-button {
   text-transform: uppercase;
 }
@@ -196,13 +229,15 @@ md-card {
 .footer {
   background: #eee;
   height: 200px;
-  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   color: #999;
 }
+
 .mat-input-underline {
   border-top-width: 2px !important;
   border-color: #791716 !important;
 }
+
 .mat-sidenav-content {
   overflow: hidden !important;
 }
@@ -244,9 +279,11 @@ form.app-links button {
 .mat-chip.mat-chip-selected:not(.mat-basic-chip) {
   background-color: #3faab2 !important;
 }
+
 md-chip {
   cursor: pointer;
 }
+
 md-chip .mat-icon {
   height: 15px;
 }

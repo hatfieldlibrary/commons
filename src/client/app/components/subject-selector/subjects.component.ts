@@ -16,10 +16,12 @@
  */
 
 import {
-  AfterViewInit, Component, ElementRef, HostListener, Input, QueryList,
+  AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {SubjectType} from "../../shared/data-types/subject.type";
+import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {Subscription} from "rxjs/Subscription";
 
 
 @Component({
@@ -27,42 +29,104 @@ import {SubjectType} from "../../shared/data-types/subject.type";
   templateUrl: 'subjects.component.html',
   styleUrls: ['subjects.component.css']
 })
-export class SubjectsComponent implements AfterViewInit {
-
+export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() subjectList: SubjectType[];
   @Input() areaId: number;
   @Input() type: string;
   @ViewChild('container') container: ElementRef;
+  @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
   @ViewChildren('subjects', {read: ElementRef}) contentEls: QueryList<ElementRef>;
+
+  watcher: Subscription;
   offsetWidth: number;
   selectorWidth: number;
   lastButtonWidth: number;
   defaultLeftOffset: number = 60;
   lastSubjectButton: ElementRef;
   leftScroll: number = 0;
+  isMobile: boolean = true;
+  leftIsVisible: boolean = false;
+  rightIsVisible: boolean = false;
 
+  /**
+   * Listen for window resize and adjust navigation arrows.
+   * @param event
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.offsetWidth = event.target.innerWidth;
     this.showSubjectNavigationArrow();
   }
 
-  onScroll(event) {
+  /**
+   * Injecting ChangeDetectorRef to instruct angular to re-render
+   * the view after changes made in the ngAfterViewInit hook method.
+   * @param changeDetector
+   */
+  constructor(private changeDetector: ChangeDetectorRef, private media: ObservableMedia) {
+  }
+
+  /**
+   * Set up media watcher.
+   */
+  ngOnInit(): void {
+
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+  }
+
+  /**
+   * Unsubscribe media watcher.
+   */
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
+  }
+
+  /**
+   * Response to scroll event in component by updating the
+   * left scroll position and calling function to update navigation
+   * arrow visibility.
+   * @param event
+   */
+  onScroll(event): void {
     this.leftScroll = event.srcElement.scrollLeft;
     this.showSubjectNavigationArrow();
   }
 
+  onScrollRequest(direction: string): void {
+    if (direction === 'right') {
+      this.subjects.nativeElement.scrollLeft += 290
+
+    }
+    if (direction === 'left') {
+      if (this.subjects.nativeElement.scrollLeft > 0) {
+        this.subjects.nativeElement.scrollLeft -= 290
+      }
+    }
+  }
+
+  /**
+   * Hook method.
+   * See https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html
+   */
   ngAfterViewInit(): void {
 
-    this.offsetWidth =  this.container.nativeElement.offsetWidth;
+    this.offsetWidth = this.container.nativeElement.offsetWidth;
     this.contentEls.changes.subscribe((el) => {
       this.lastSubjectButton = el._results[this.subjectList.length - 1];
       let leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
       this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;
       this.selectorWidth = leftOffset + this.lastButtonWidth;
       this.showSubjectNavigationArrow();
-    })
+      this.changeDetector.detectChanges();
+    });
+
 
   }
 
@@ -73,15 +137,19 @@ export class SubjectsComponent implements AfterViewInit {
   showSubjectNavigationArrow(): void {
 
     if (this.selectorWidth > this.offsetWidth) {
-      console.log('show right arrow')
+      this.rightIsVisible = true;
     } else {
-      console.log('hide right arrow and left arrow')
+      this.leftIsVisible = false;
+      this.rightIsVisible = false;
+      return;
     }
     if ((this.leftScroll - this.defaultLeftOffset) > 0) {
-      console.log('show left arrow')
+      this.leftIsVisible = true;
+    } else {
+      this.leftIsVisible = false;
     }
     if ((this.leftScroll + this.offsetWidth + this.lastButtonWidth) >= this.selectorWidth + this.defaultLeftOffset) {
-      console.log('hide right arrow')
+      this.rightIsVisible = false;
     }
 
   }

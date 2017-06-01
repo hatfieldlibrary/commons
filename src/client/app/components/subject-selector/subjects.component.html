@@ -17,29 +17,29 @@
 
 
 <div #container class="overflow-x-scroll-no-scrollbar" fxLayoutAlign="center center">
-  <!--
-    <div class="subjects-arrow-left"> < </div>
 
-    -->
+  <div fxShow="false" fxShow.gt-xs="true" class="subject-navigation left" [ngClass]="{'visible-nav': leftIsVisible, 'hidden-nav': !leftIsVisible, 'hide-for-mobile': isMobile}" (click)="onScrollRequest('left')">
+    <keyboard-arrow-back-svg></keyboard-arrow-back-svg>
+  </div>
 
-    <md-list #list fxLayout="row" style="height: 80px;" (scroll)="onScroll($event)" *ngIf="type === 'area'">
-      <md-list-item  #subjects *ngFor="let subject of subjectList">
-        <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id, 'area', areaId]">
-          {{subject.name}}
-        </button>
-      </md-list-item>
-    </md-list>
+  <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'area'">
+    <md-list-item #subjects *ngFor="let subject of subjectList">
+      <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id, 'area', areaId]">
+        {{subject.name}}
+      </button>
+    </md-list-item>
+  </md-list>
 
-    <md-list #list fxLayout="row" style="height: 80px;" (scroll)="onScroll($event)" *ngIf="type === 'all'">
-      <md-list-item  #subjects *ngFor="let subject of subjectList">
-        <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id]">{{subject.name}}
-        </button>
-      </md-list-item>
-    </md-list>
+  <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'all'">
+    <md-list-item #subjects *ngFor="let subject of subjectList">
+      <button md-raised-button color="primary" [routerLink]="['/collection/subject/', subject.id]">{{subject.name}}
+      </button>
+    </md-list-item>
+  </md-list>
 
-  <!--
-ects-arrow-right"> > </div>
-    -->
+  <div fxShow="false" fxShow.gt-xs="true" class="subject-navigation right" [ngClass]="{'visible-nav': rightIsVisible, 'hidden-nav': !rightIsVisible, 'hide-for-mobile': isMobile}" (click)="onScrollRequest('right')">
+    <keyboard-arrow-forward-svg></keyboard-arrow-forward-svg>
+  </div>
 
 </div>
 

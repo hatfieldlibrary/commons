@@ -182,10 +182,6 @@ export class ListsContainer implements OnInit {
 
   }
 
-  // onSelectedSubject(subject: SelectedSubject) {
-  //   this.store.dispatch(new subjectAction.CurrentSubject(+subject.id));
-  // }
-
 
   ngOnInit() {
 

@@ -73,6 +73,8 @@ import { AreasSvgComponent } from './components/svg/areas-svg/areas-svg.componen
 import { TitleHeaderComponent } from './components/title-header/title-header.component';
 import { ItemHeaderImageComponent } from './components/item-header-image/item-header-image.component';
 import { CloseWhiteSvgComponent } from './components/svg/close-white-svg/close-white-svg.component';
+import { KeyboardArrowBackSvgComponent } from './components/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component';
+import { KeyboardArrowForwardSvgComponent } from './components/svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component';
 
 
 // export const appRoutes = [
@@ -137,6 +139,8 @@ export const appRoutes = [
     TitleHeaderComponent,
     ItemHeaderImageComponent,
     CloseWhiteSvgComponent,
+    KeyboardArrowBackSvgComponent,
+    KeyboardArrowForwardSvgComponent,
 
   ],
   imports: [

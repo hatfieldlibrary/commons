@@ -15,19 +15,7 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<md-divider style="margin: 40px 0"></md-divider>
-
-<h4 *ngIf="selectedSubject"><span style="color: #999;font-weight:500">Items related to:</span> {{selectedSubject?.name}}</h4>
-
-<md-card-content style="border: 1px solid #eee;
-    border-radius: 7px;">
-
-
-<md-list>
-  <h3 md-subheader style=" background: #696969; color: #fff;">Collections and Items</h3>
-  <md-list-item style="cursor: default" [routerLink]="['/item/id', collection.id]" class="collection-list-item" *ngFor="let collection of collectionList">
-    {{collection.title}}
-  </md-list-item>
-
-</md-list>
-</md-card-content>
+<svg fill="#3a7579" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+    <path d="M0-.5h24v24H0z" fill="none"/>
+</svg>
