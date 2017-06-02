@@ -33,6 +33,7 @@ const initialState: State = {
         title: '',
         image: '',
         url: '',
+        searchUrl: '',
         desc: '',
         dates: '',
         items: '',

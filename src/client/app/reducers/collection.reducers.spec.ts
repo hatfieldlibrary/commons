@@ -33,6 +33,7 @@ const collectionListMock = [
     title: 'test title',
     image: 'image',
     url: 'url',
+    searchUrl: '',
     desc: '',
     dates: '',
     items: '',

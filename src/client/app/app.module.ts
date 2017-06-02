@@ -102,12 +102,12 @@ import { InfoSvgComponent } from './components/svg/info-svg/info-svg.component';
 
 export const appRoutes = [
 
-  {path: 'item/id/:id', component: ItemContainerComponent},
-  {path: 'collection/area/:areaId', component: ListsContainer},
-  {path: 'collection', component: ListsContainer},
-  {path: 'collection/subject/:subjectId/area/:areaId', component: ListsContainer},
-  {path: 'collection/subject/:subjectId', component: ListsContainer},
-  {path: '', redirectTo: 'collection', pathMatch: 'full'},
+  {path: 'commons-preview/item/id/:id', component: ItemContainerComponent},
+  {path: 'commons-preview/collection/area/:areaId', component: ListsContainer},
+  {path: 'commons-preview/collection', component: ListsContainer},
+  {path: 'commons-preview/collection/subject/:subjectId/area/:areaId', component: ListsContainer},
+  {path: 'commons-preview/collection/subject/:subjectId', component: ListsContainer},
+  {path: '', redirectTo: 'commons-preview/collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 
 ];

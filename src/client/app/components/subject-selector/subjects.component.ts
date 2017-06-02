@@ -16,7 +16,7 @@
  */
 
 import {
-  AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList,
+  AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList, Renderer2,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {SubjectType} from "../../shared/data-types/subject.type";
@@ -42,7 +42,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   offsetWidth: number;
   selectorWidth: number;
   lastButtonWidth: number;
-  defaultLeftOffset: number = 60;
+  defaultOffset: number = 100;
   lastSubjectButton: ElementRef;
   leftScroll: number = 0;
   isMobile: boolean = true;
@@ -64,7 +64,9 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * the view after changes made in the ngAfterViewInit hook method.
    * @param changeDetector
    */
-  constructor(private changeDetector: ChangeDetectorRef, private media: ObservableMedia) {
+  constructor(private changeDetector: ChangeDetectorRef,
+              private media: ObservableMedia,
+              private renderer: Renderer2 ) {
   }
 
   /**
@@ -99,16 +101,30 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showSubjectNavigationArrow();
   }
 
-  onScrollRequest(direction: string): void {
-    if (direction === 'right') {
-      this.subjects.nativeElement.scrollLeft += 290
 
-    }
-    if (direction === 'left') {
-      if (this.subjects.nativeElement.scrollLeft > 0) {
-        this.subjects.nativeElement.scrollLeft -= 290
+  /**
+   * Using setInterval to animate horizontal scroll.
+   * @param direction the direction to scroll
+   */
+  onScrollRequest(direction: string): void {
+    let limit = 0;
+
+    let animation = setInterval(() => {
+      if (direction === 'right') {
+        this.subjects.nativeElement.scrollLeft += limit++
+
       }
-    }
+      if (direction === 'left') {
+        if (this.subjects.nativeElement.scrollLeft >= 0) {
+          this.subjects.nativeElement.scrollLeft -= limit++
+        }
+      }
+      if (limit === 290 || limit === 0) {
+        clearInterval(animation);
+      }
+    }, 5);
+
+
   }
 
   /**
@@ -143,12 +159,12 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rightIsVisible = false;
       return;
     }
-    if ((this.leftScroll - this.defaultLeftOffset) > 0) {
+    if ((this.leftScroll - this.defaultOffset) > 0) {
       this.leftIsVisible = true;
     } else {
       this.leftIsVisible = false;
     }
-    if ((this.leftScroll + this.offsetWidth + this.lastButtonWidth) >= this.selectorWidth + this.defaultLeftOffset) {
+    if ((this.leftScroll + this.offsetWidth + this.lastButtonWidth) >= this.selectorWidth + this.defaultOffset) {
       this.rightIsVisible = false;
     }
 

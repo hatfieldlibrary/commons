@@ -28,7 +28,7 @@
 
       <div fxLayout="row" fxLayoutAlign="start start">
 
-        <md-toolbar [attr.role]="menubar" fxFlex="100" style="background: #000;color:#fff; ">
+        <md-toolbar  fxFlex="100" style="background: #000;color:#fff; ">
 
           <div fxLayout="row" fxLayoutAlign="center center">
 
@@ -41,7 +41,7 @@
           <md-divider style="border-color: #fff;"></md-divider>
 
           <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
-            <a md-button [attr.role]="link" style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+            <a md-button  style="color:#ccc;font-size: 0.6em;font-weight: 500;">
               <home-svg></home-svg>
               <span>&nbsp;&nbsp;Home</span></a>
           </div>
@@ -49,7 +49,7 @@
           <md-divider></md-divider>
 
           <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
-            <a md-button [routerLink]="['/collection']" [attr.role]="link"
+            <a md-button [routerLink]="['/commons-preview/collection']"
                style="color:#ccc;font-size: 0.6em;font-weight: 500;">
               <collections-svg></collections-svg>
               <span>&nbsp;&nbsp;All Collections</span>
@@ -59,7 +59,7 @@
 
           <div fxFlex.gt-sm="10"></div>
 
-          <button md-button [attr.role]="button" (click)="openMenu()"
+          <button md-button  (click)="openMenu()"
                   style="color:#ccc;font-size: 0.6em;font-weight: 500;">
             <menu-svg></menu-svg>
             <span fxShow.gt-sm="true">&nbsp;Menu</span>

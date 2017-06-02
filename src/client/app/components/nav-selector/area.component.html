@@ -20,12 +20,12 @@
   <div fxHide.gt-sm="true">
     <div fxLayout="row" fxLayoutAlign="start center">
       <home-svg></home-svg>
-      <button md-button [attr.role]="button" [routerLink]="['/collection']">Home</button>
+      <button md-button  [routerLink]="['/commons-preview/collection']">Home</button>
     </div>
     <md-divider></md-divider>
     <div fxLayout="row" fxLayoutAlign="start center">
       <collections-svg></collections-svg>
-      <button md-button [attr.role]="button" [routerLink]="['/collection']">Collections</button>
+      <button md-button  [routerLink]="['/commons-preview/collection']">Collections</button>
     </div>
     <md-divider></md-divider>
   </div>
@@ -35,7 +35,7 @@
     <h3 md-subheader>Collection Areas</h3>
   </div>
   <md-list-item *ngFor="let area of areaList">
-    <button md-button [attr.role]="button" (click)="areaSelected()" [routerLink]="['/collection/area/', area.id]">{{area.title}}
+    <button md-button [attr.role]="button" (click)="areaSelected()" [routerLink]="['/commons-preview/collection/area/', area.id]">{{area.title}}
       ({{area.count}})
     </button>
   </md-list-item>

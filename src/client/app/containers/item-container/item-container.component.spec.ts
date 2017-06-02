@@ -77,6 +77,7 @@ let mockItem = {
       title: '',
       image: '',
       url: '',
+      searchUrl: '',
       desc: '',
       dates: '',
       items: '',

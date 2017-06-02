@@ -30,6 +30,7 @@ describe('Item Service', () => {
         id: 1,
         title: 'test collection',
         url: '',
+        searchUrl: '',
         desc: '',
         linkOptions: '',
         image: '',

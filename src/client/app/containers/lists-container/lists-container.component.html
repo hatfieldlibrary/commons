@@ -61,14 +61,14 @@
               <collection-list [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async"></collection-list>
 
             </div>
-
+            <div class="fill-remaining-space"></div>
             <div fxFlex fxFlex.gt-sm="25" fxHide fxShow.gt-sm style="padding-top: 30px;">
 
               <navigation-selector [areaList]="areas$ | async"></navigation-selector>
 
               <md-list>
                 <md-list-item>
-                  <a md-button [routerLink]="['/collection']">All Collections</a>
+                  <a md-button [routerLink]="['/commons-preview/collection']">All Collections</a>
                 </md-list-item>
               </md-list>
             </div>

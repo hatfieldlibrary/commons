@@ -25,6 +25,7 @@ export class CollectionType {
   title: string;
   image: string;
   url: string;
+  searchUrl: string;
   desc: string;
   dates: string;
   items: string;

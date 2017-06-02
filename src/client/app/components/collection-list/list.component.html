@@ -24,8 +24,8 @@
 
 
 <md-list>
-  <h3 md-subheader style=" background: #696969; color: #fff;">Collections and Items</h3>
-  <md-list-item style="cursor: default" [routerLink]="['/item/id', collection.id]" class="collection-list-item" *ngFor="let collection of collectionList">
+  <h3 md-subheader style=" background: #ada28e; color: #fff;">Collections and Items</h3>
+  <md-list-item style="cursor: default" [routerLink]="['/commons-preview/item/id', collection.id]" class="collection-list-item" *ngFor="let collection of collectionList">
     {{collection.title}}
   </md-list-item>
 
