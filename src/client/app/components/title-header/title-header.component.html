@@ -6,6 +6,17 @@
 
   <div fxLayout="row" fxFlex="100" fxLayoutAlign="center center">
 
+    <div fxLayout="column"
+         fxFlex="100"
+         fxFlex.md="100"
+         fxFlex.lg="70"
+         fxFlex.gt-lg="50">
+
+      <div class="header-title list-title">
+        <h1>{{title}}</h1>
+      </div>
+    </div>
+
     <div class="subject-selector-container">
       <div style="position: relative; overflow: auto">
         <subject-selector [subjectList]="subjectList" [areaId]="areaId"
@@ -13,17 +24,7 @@
       </div>
     </div>
 
-    <div fxLayout="column"
-         fxFlex="100"
-         fxFlex.md="100"
-         fxFlex.lg="70"
-         fxFlex.gt-lg="50">
-
-        <div class="header-title list-title">
-          <h1>{{title}}</h1>
-        </div>
 
 
-    </div>
   </div>
 </div>

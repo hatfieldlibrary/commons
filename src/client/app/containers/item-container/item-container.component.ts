@@ -65,7 +65,8 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
     // Assures that the page scrolls to top on load.
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
-      this.renderer.setProperty(document.body, 'scrollTop', 0);
+      console.log('item container scroll')
+      this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
     });
 
     // Set the media observable subscription for assigning the related items column count.
@@ -79,7 +80,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
         this.columns = 3;
       } else {
         this.columns = 4;
-        console.log(this.columns)
       }
     });
 
