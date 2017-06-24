@@ -14,10 +14,13 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
+<div fxLayout="row" fxHide fxShow.gt-sm="true" fxLayoutAlign="left center" style="position:absolute;top:30px;">
+  <a md-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
+    <md-icon><back-black-svg></back-black-svg></md-icon>&nbsp;Back to List
+  </a>
+</div>
 
 <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="0">
-
 
   <div fxFlex="80"
        fxShow="true"
@@ -37,10 +40,9 @@
        fxFlex.lg="60"
        fxFlex.gt-lg="50">
 
-    <md-card-title style="margin-top: 20px;">
+    <md-card-title fxHide="true" fxShow.gt-sm="true" style="margin-top: 20px;">
       {{item?.collection.title}}
     </md-card-title>
-
 
     <p style="font-size: 1.2em">{{item?.collection.desc}}</p>
 
@@ -63,7 +65,6 @@
       </md-list-item>
     </md-list>
 
-
   </div>
 
   <div class="fill-remaining-space"></div>
@@ -84,7 +85,6 @@
       [searchUrl]="item?.collection.searchUrl">
 
     </item-links>
-
   </div>
 </div>
 
@@ -97,7 +97,6 @@
        fxFlex.lg="60"
        fxFlex.gt-lg="50">
 
-
     <md-card-subtitle>This collection is part of</md-card-subtitle>
     <md-card-title>{{item?.category?.title}}</md-card-title>
 
@@ -105,7 +104,6 @@
 
     <a md-raised-button color="accent" class="accent-button" href="{{item?.category?.url}}"
        target="_blank">{{item?.category?.linkLabel}}</a>
-
 
   </div>
   <div class="fill-remaining-space"></div>
@@ -120,7 +118,7 @@
 
     <md-list>
       <md-list-item>
-        <a md-button  style="width:100%" href="http://libmedia.willamette.edu/commons/info/thesis" target="_blank">
+        <a md-button style="width:100%" href="http://libmedia.willamette.edu/commons/info/thesis" target="_blank">
           <div fxLayout="row" fxLayoutAlign="start center">
             <info-svg></info-svg>
             Submission Instructions
@@ -128,7 +126,8 @@
         </a>
       </md-list-item>
       <md-list-item>
-        <a md-button  style="width:100%" href="http://library.willamette.edu/guide_on_the_side/tutorial/academic-commons-submission" target="_blank">
+        <a md-button style="width:100%"
+           href="http://library.willamette.edu/guide_on_the_side/tutorial/academic-commons-submission" target="_blank">
           <div fxLayout="row" fxLayoutAlign="start center">
             <run-svg></run-svg>
             Tutorial

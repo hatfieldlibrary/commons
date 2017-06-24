@@ -1,4 +1,7 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {SearchService} from "../../services/search.service";
 import {SearchTerms} from "../../shared/data-types/simple-search.type";
 import {Observable} from "rxjs/Observable";
@@ -13,7 +16,8 @@ import {Store} from "@ngrx/store";
 @Component({
   selector: 'item-links',
   templateUrl: './item-links.component.html',
-  styleUrls: ['./item-links.component.css']
+  styleUrls: ['./item-links.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemLinksComponent implements OnChanges, OnInit {
 
@@ -57,12 +61,13 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
 
+    //this.changeDetector.detach();
     this.model = new SearchTerms();
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
 
     this.auth$.subscribe((auth) => {
       this.isAuthenticated = auth.status;
-      this.changeDetector.detectChanges();
+      this.changeDetector.markForCheck();
     })
 
   }

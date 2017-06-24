@@ -19,7 +19,6 @@
 
   <app-menus-component [areaList]="areas$ | async"></app-menus-component>
 
-  <!--<image-header [homeScreen]="homeScreen" ></image-header>-->
   <title-header [title]="title"
                 [subjectList]="subjects$ | async"
                 [areaId]="areaId"
@@ -30,6 +29,7 @@
   <md-card class="main-content-area">
 
     <md-card-content>
+      {{selectedSubject$?.name}}
 
       <div fxLayout="row" fxLayoutAlign="center start" style="margin-top: 90px;">
 
@@ -40,43 +40,25 @@
              fxFlex.lg="70"
              fxFlex.gt-lg="50">
 
-          <!--<div style="overflow:auto">-->
-
-            <!--<subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"-->
-                              <!--[type]="subjectLinkType"></subject-selector>-->
-
-          <!--</div>-->
-          <!--<div class="subject-selector-container">-->
-            <!--<div style="position: relative; overflow: auto">-->
-              <!--<subject-selector [subjectList]="subjects$ | async" [areaId]="areaId"-->
-                                <!--[type]="subjectLinkType"></subject-selector>-->
-            <!--</div>-->
-          <!--</div>-->
-
           <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start" fxLayoutGap.gt-sm="30px">
 
             <div fxFlex="100" fxFlex.gt-sm="70">
 
               <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
                                 [areaInfo]="areaInfo$ | async"
-                                (removeSubject)="removeSubject($event)"></area-information>
+                                ></area-information>
 
               <home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject$ | async"
                            (removeSubject)="removeSubject($event)"></home-screen>
 
-              <collection-list [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async"></collection-list>
+              <collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async" [selectedArea]="areaId"></collection-list>
 
             </div>
             <div class="fill-remaining-space"></div>
             <div fxFlex fxFlex.gt-sm="25" fxHide fxShow.gt-sm style="padding-top: 30px;">
 
-              <navigation-selector [areaList]="areas$ | async"></navigation-selector>
+              <navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></navigation-selector>
 
-              <md-list>
-                <md-list-item>
-                  <a md-button [routerLink]="['/commons-preview/collection']">All Collections</a>
-                </md-list-item>
-              </md-list>
             </div>
 
           </div>
@@ -86,6 +68,7 @@
       </div>
 
     </md-card-content>
+
   </md-card>
 
   <footer></footer>

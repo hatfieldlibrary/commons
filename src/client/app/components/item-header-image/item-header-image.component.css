@@ -1,0 +1,11 @@
+.header-image {
+  background: #423e3e;
+  margin-top: -50px;
+}
+.hide-image {
+  display: none;
+}
+.loader-image  md-icon{
+  width: 100%;
+  height: 500px;
+}

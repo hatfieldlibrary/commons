@@ -34,4 +34,5 @@ export class AreaInformationComponent{
   deselect() {
     this.removeSubject.next()
   }
+
 }

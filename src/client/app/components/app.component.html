@@ -16,6 +16,6 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<router-outlet></router-outlet>
+<router-outlet (deactivate)="onDeactivate($event)"></router-outlet>
 
 

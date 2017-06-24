@@ -9,10 +9,6 @@ import {SelectedSubject} from "../../shared/data-types/selected-subject";
 export class HomeScreenComponent  {
 
   @Input() selectedSubject: SelectedSubject;
-  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
 
-  deselect() {
-    this.removeSubject.next()
-  }
 
 }

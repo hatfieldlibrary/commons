@@ -15,3 +15,48 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+
+/*
+NOTE: Spacing of buttons in the subject-selector component is defined in style.css.
+Attempts to define here failed.
+*/
+
+.overflow-x-scroll-no-scrollbar {
+  overflow: auto;
+  position: relative;
+  background: #b9b19f;
+}
+.overflow-x-scroll-no-scrollbar > md-list {
+  overflow-x: auto;
+  margin-bottom: -17px;
+  overflow-y: hidden;
+}
+.overflow-x-scroll-no-scrollbar > div * {
+  overflow-x: auto;
+  width: 100%;
+  padding-bottom: 17px;
+  white-space: nowrap;
+  cursor: pointer
+}
+.subject-navigation {
+  height: 44px;
+  margin-top: 9px;
+  padding-top: 4px;
+  border-radius: 3px;
+  background: rgba(218, 217, 201, 0.76) !important;
+  position: absolute;
+  top: 0;
+  z-index: 2000;
+}
+
+.subject-navigation.left {
+  left: 2px;
+}
+.subject-navigation.right {
+  right: 2px;
+}
+.subject-list {
+  margin-left: 30px;
+  margin-right: 30px;
+}

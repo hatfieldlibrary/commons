@@ -16,14 +16,13 @@
   -->
 <md-sidenav-container>
 
-  <app-menus-component [areaList]="areas$ | async"></app-menus-component>
+  <app-menus-component [selectedArea]="selectedArea" [areaList]="areas$ | async"></app-menus-component>
 
   <item-header [image]="collectionImage" [item]="item$ | async"></item-header>
 
   <md-card class="main-content-area">
     <md-card-content>
       <div fxLayout="row" fxLayoutAlign="center start">
-
         <div fxLayout="column"
              fxFlex="100"
              fxFlex.sm="90"
@@ -32,17 +31,17 @@
              fxFlex.gt-lg="50"
              fxLayoutGap="20px">
 
-          <item [item]="item$ | async" style="padding-bottom: 40px;"></item>
+          <item [item]="item$ | async" [selectedArea]="selectedArea" style="padding-bottom: 40px;"></item>
 
           <md-divider></md-divider>
 
-          <related-items [columns]="columns" [related]="related$ | async"></related-items>
+          <related-items [columns]="columns" [related]="related$ | async" [selectedArea]="selectedArea"></related-items>
 
         </div>
-
       </div>
     </md-card-content>
   </md-card>
+
   <footer></footer>
 
 </md-sidenav-container>

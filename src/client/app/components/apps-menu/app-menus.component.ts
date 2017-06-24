@@ -12,6 +12,7 @@ import {NavigationEnd, Router} from "@angular/router";
 export class AppMenusComponent implements OnInit {
 
   @Input() areaList: AreaType[];
+  @Input() selectedArea: string;
   @Input() state: boolean;
   @Input() title: string;
   @ViewChild('sidenav') sideNavigate: MdSidenav;
@@ -34,10 +35,11 @@ export class AppMenusComponent implements OnInit {
     this.sideNavigate.open();
   }
 
-  backClicked() {
-    //this.router.navigateByUrl(this.previousUrl);
-   // this.router.prev
-    this.location.back();
+  backLink(): string{
+    if (this.selectedArea === '0') {
+      return '/commons-preview/collection';
+    }
+    return '/commons-preview/collection/area/' + this.selectedArea;
   }
 
   ngOnInit() {

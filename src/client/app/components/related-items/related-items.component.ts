@@ -15,29 +15,18 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input,  OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {RelatedType} from "../../shared/data-types/related-collection";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'related-items',
   templateUrl: './related-items.component.html',
   styleUrls: ['./related-items.component.css']
 })
-export class RelatedItemsComponent implements OnInit {
-
+export class RelatedItemsComponent {
 
   @Input() related: RelatedType[];
+  @Input() selectedArea: string;
   @Input() columns: number;
-
-  constructor() {
-
-  }
-
-
-  ngOnInit() {
-  }
-
 
 }

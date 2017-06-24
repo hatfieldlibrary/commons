@@ -16,8 +16,7 @@
  */
 
 import {
-  Component, OnInit, ChangeDetectionStrategy, Renderer2, HostBinding, OnDestroy, OnChanges,
-  SimpleChanges
+  Component, OnInit, ChangeDetectionStrategy, Renderer2, HostBinding, OnDestroy, Inject
 } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
@@ -28,10 +27,11 @@ import * as fromItem from "../../actions/item.actions";
 import * as areaActions from '../../actions/area.actions';
 import {RelatedType} from "../../shared/data-types/related-collection";
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
-import {animate, style, transition, trigger} from "@angular/animations";
-import {fadeIn, slideInDownAnimation, slideUpDownAnimation} from "../../animation/animations";
+
+import {fadeIn} from "../../animation/animations";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
+import {DOCUMENT} from "@angular/platform-browser";
 
 @Component({
   selector: 'item-container',
@@ -56,17 +56,22 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   watcher: Subscription;
   activeMediaQuery = 'xs';
   columns: number = 1;
+  selectedArea: string;
+  private itemWatcher: Subscription;
 
   constructor(private store: Store<fromRoot.State>,
               private renderer: Renderer2,
               private media: ObservableMedia,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              @Inject(DOCUMENT) private document ) {
 
-    // Assures that the page scrolls to top on load.
+    /** Assures that the page scrolls to top if user chooses related item. */
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
-      console.log('item container scroll')
-      this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
+      // Chrome canary supports the new standard usage with documentElement, but
+      // Chrome and presumably other browsers still expect body.
+      this.renderer.setProperty(this.document.body, 'scrollTop', 0);
+      this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
     });
 
     // Set the media observable subscription for assigning the related items column count.
@@ -160,8 +165,10 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.related$ = this.store.select(fromRoot.getRelated);
     this.areas$ = this.store.select(fromRoot.getAreas);
 
+
+
     // Once we have item information, request related items.
-    this.item$.subscribe((data) => {
+    this.itemWatcher = this.item$.subscribe((data) => {
       this.getRelatedItems(data);
       this.collectionImage = data.collection.image;
 
@@ -170,6 +177,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     // Request item based on route parameter.
     this.route.params
       .subscribe((params) => {
+        this.selectedArea = params['areaId'];
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));
@@ -185,6 +193,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
+    this.itemWatcher.unsubscribe();
   }
 
 }

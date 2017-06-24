@@ -27,9 +27,16 @@ import {Observable} from "rxjs/Observable";
 export class ItemComponent implements OnInit {
 
   @Input() item: ItemType;
+  @Input() selectedArea: string;
 
   constructor() {
 
+  }
+  getBackLink(): string {
+    if (this.selectedArea !== '0') {
+      return '/commons-preview/collection/area/' + this.selectedArea;
+    }
+    return '/commons-preview/collection';
   }
 
   ngOnInit() {

@@ -19,10 +19,8 @@
 
   <h2 *ngIf="related.length > 0">Similar Items</h2>
 
-  <!--<div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">-->
   <md-grid-list cols="{{columns}}" rowHeight="320" gutterSize="6">
     <md-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1">
-
       <md-card>
         <md-card-header>
           <md-card-title style="margin-left: -20px;">
@@ -31,13 +29,12 @@
         </md-card-header>
         <img md-card-image src="http://libapps.willamette.edu:3003/resources/img/thumb/{{collection.image}}">
         <md-card-actions align="end">
-          <button md-button [routerLink]="['/commons-preview/item/id/', collection.id]">VIEW</button>
+          <button md-button [routerLink]="['/commons-preview/item/id/', collection.id, selectedArea]">VIEW</button>
         </md-card-actions>
       </md-card>
-
     </md-grid-tile>
   </md-grid-list>
-  <!--</div>-->
+
 </div>
 
 

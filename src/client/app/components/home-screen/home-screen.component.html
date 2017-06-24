@@ -1,12 +1,11 @@
 <div style="margin-top: 30px;"></div>
-<md-card-content style="max-width: 700px">
+<md-card-subtitle style="
+    font-size: 16px;
+    background: #eae4d8;
+    border: 1px solid #ccc2ac;
+    padding: 16px;">
 
-  <md-chip-list >
-    <md-chip *ngIf="selectedSubject" selected="true"
-             color="default" (click)="deselect($event)"> {{selectedSubject?.name}}<icon-close-white></icon-close-white> </md-chip>
-  </md-chip-list>
-  <p style="font-size: 1.2em">
+
   The Academic Commons is a clearinghouse for digital collections and projects at Willamette University.  It brings together
     student research, faculty research, archival collections, artworks, exhibits and more.
-  </p>
-</md-card-content>
+</md-card-subtitle>

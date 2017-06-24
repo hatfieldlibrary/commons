@@ -19,12 +19,12 @@
  * The main container component for subject selector, area selector and collection
  * list components
  */
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import * as Reselect from 'reselect';
 import Selector = Reselect.Selector;
 import {Store} from '@ngrx/store';
-import {Component, OnInit, ChangeDetectionStrategy, HostBinding} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, HostBinding, OnDestroy} from '@angular/core';
 
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
@@ -35,6 +35,7 @@ import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
 import {fadeIn, slideInLeftAnimation} from "../../animation/animations";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'lists-container',
@@ -42,7 +43,8 @@ import {fadeIn, slideInLeftAnimation} from "../../animation/animations";
   templateUrl: 'lists-container.component.html',
   animations: [fadeIn]
 })
-export class ListsContainer implements OnInit {
+export class ListsContainer implements OnInit, OnDestroy {
+
 
   collections$: Observable<CollectionType[]>;
   areas$: Observable<AreaListItemType[]>;
@@ -50,17 +52,20 @@ export class ListsContainer implements OnInit {
   subjects$: Observable<SubjectType[]>;
   areasAvailable: boolean = false;
   areaId: string;
+
   subjectLinkType: string;
   homeScreen:boolean = false;
   selectedSubject$: Observable<SubjectType>;
   title: string = '';
+  subjectId: number;
 
   @HostBinding('@openClose') routeAnimation = true;
   @HostBinding('style.display')   display = 'block';
   @HostBinding('style.position')  position = 'absolute';
   @HostBinding('style.position')  width = '100%';
+  private subjectsObserver: Subscription;
 
-  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute) {
+  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute, private router: Router) {
 
   }
 
@@ -97,6 +102,7 @@ export class ListsContainer implements OnInit {
   getCollectionsBySubject(subjectId: string, areaId: string): void {
     this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
     this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+    console.log('getting collections by subject')
     this.getAreaInformation(areaId);
 
   }
@@ -157,7 +163,10 @@ export class ListsContainer implements OnInit {
   getAllCollectionsForSubject(subjectId: string) {
     this.store.dispatch((new listActions.AllCollectionSubjectAction(subjectId)));
     this.store.dispatch(new subjectAction.AllSubjectAction());
-    this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+    this.subjectsObserver = this.subjects$.subscribe(() => {
+      this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+    });
+
 
   }
 
@@ -173,13 +182,18 @@ export class ListsContainer implements OnInit {
   }
 
   removeSubject(event) {
-    if(this.subjectLinkType === 'all') {
-      this.store.dispatch(new listActions.AllCollectionsAction());
+    // if(this.subjectLinkType === 'all') {
+    //   this.store.dispatch(new listActions.AllCollectionsAction());
+    // } else {
+    //   this.store.dispatch(new listActions.CollectionAction(this.areaId));
+    // }
+    // this.store.dispatch(new subjectAction.RemoveCurrentSubject());
+    // Using the router is probably a better solution.
+    if (this.areaId && this.areaId !== '0') {
+      this.router.navigateByUrl('commons-preview/collection/area/' + this.areaId);
     } else {
-      this.store.dispatch(new listActions.CollectionAction(this.areaId));
+      this.router.navigateByUrl('commons-preview/collection');
     }
-    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
-
   }
 
 
@@ -194,7 +208,6 @@ export class ListsContainer implements OnInit {
     this.setAreasAvailable();
     this.getAreaTitle();
 
-
     this.route.params
 
       .subscribe((params) => {
@@ -207,6 +220,7 @@ export class ListsContainer implements OnInit {
           this.subjectLinkType = 'area';
 
           if (params['subjectId']) {
+            this.subjectId = params['subjectId'];
 
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
@@ -217,20 +231,30 @@ export class ListsContainer implements OnInit {
 
         }
         else if (params['subjectId']) {
+          this.subjectId = params['subjectId'];
 
           this.subjectLinkType = 'all';
           this.homeScreen = true;
           this.getAllCollectionsForSubject(params['subjectId']);
+          this.areaId = '0';
+
         }
         else {
 
           this.subjectLinkType = 'all';
           this.getAllCollections();
           this.homeScreen = true;
+          this.areaId = '0';
         }
 
       });
 
+  }
+
+  ngOnDestroy(): void {
+    if (this.subjectsObserver) {
+      this.subjectsObserver.unsubscribe();
+    }
   }
 
 }

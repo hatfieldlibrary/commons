@@ -17,12 +17,12 @@
 
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, RequestOptions} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MdButtonModule, MdSelectModule, MdCardModule, MdListModule, MdToolbarModule, MdIconModule, MdChipsModule,
-  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule
+  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule, MdRadioModule, MdCheckboxModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
@@ -77,6 +77,9 @@ import { KeyboardArrowBackSvgComponent } from './components/svg/keyboard-arrow-b
 import { KeyboardArrowForwardSvgComponent } from './components/svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component';
 import { RunSvgComponent } from './components/svg/run-svg/run-svg.component';
 import { InfoSvgComponent } from './components/svg/info-svg/info-svg.component';
+import { LoadingSvgComponent } from './components/svg/loading-svg/loading-svg.component';
+import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-black-svg.component';
+import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
 
 
 // export const appRoutes = [
@@ -102,7 +105,7 @@ import { InfoSvgComponent } from './components/svg/info-svg/info-svg.component';
 
 export const appRoutes = [
 
-  {path: 'commons-preview/item/id/:id', component: ItemContainerComponent},
+  {path: 'commons-preview/item/id/:id/:areaId', component: ItemContainerComponent},
   {path: 'commons-preview/collection/area/:areaId', component: ListsContainer},
   {path: 'commons-preview/collection', component: ListsContainer},
   {path: 'commons-preview/collection/subject/:subjectId/area/:areaId', component: ListsContainer},
@@ -145,6 +148,9 @@ export const appRoutes = [
     KeyboardArrowForwardSvgComponent,
     RunSvgComponent,
     InfoSvgComponent,
+    LoadingSvgComponent,
+    BackBlackSvgComponent,
+    CollectionsFilterPipe
 
   ],
   imports: [
@@ -159,12 +165,14 @@ export const appRoutes = [
     MdSelectModule,
     MdChipsModule,
     MdGridListModule,
+    MdCheckboxModule,
     BrowserAnimationsModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
 
     /**

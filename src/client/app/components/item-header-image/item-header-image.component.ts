@@ -14,6 +14,7 @@ export class ItemHeaderImageComponent implements OnInit {
 
   backgroundImage: SafeResourceUrl;
   smallBackgroundImage: SafeResourceUrl;
+  isImageHidden: boolean;
 
   @HostBinding('@imageShow') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
@@ -26,6 +27,7 @@ export class ItemHeaderImageComponent implements OnInit {
 
     this.backgroundImage = '';
     this.smallBackgroundImage = '';
+    this.isImageHidden = false;
 
     this.store.select(fromRoot.getItem).subscribe((item) => {
       this.setImage(item.collection.image);
@@ -34,6 +36,8 @@ export class ItemHeaderImageComponent implements OnInit {
   }
 
   setImage(image: string) {
+
+    this.isImageHidden = true;
 
     let url = 'http://libapps.willamette.edu:3003/resources/img/full/' + image;
     let backgroundImage = this.sanitizer.sanitize(SecurityContext.URL, url).toString();

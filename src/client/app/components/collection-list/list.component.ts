@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 import 'rxjs/add/operator/switchMap';
 import {CollectionType} from "../../shared/data-types/collection.type";
@@ -26,13 +26,21 @@ import {SelectedSubject} from "../../shared/data-types/selected-subject";
 @Component({
   selector: 'collection-list',
   templateUrl: 'list.component.html',
-  styleUrls: ['list.component.css'],
-
+  styleUrls: ['list.component.css']
 })
 export class ListComponent {
 
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SelectedSubject;
+  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
+  @Input() selectedArea: string;
+  filterTerm: string;
 
+  constructor() {
+    this.filterTerm = '';
+  }
+  deselect() {
+    this.removeSubject.next()
+  }
 
 }

@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.frame {
+.body {
   background: #eee;
   width: 100%;
   margin: 0;
@@ -23,32 +23,6 @@
 
 md-sidenav-container {
   background: #423e3e;
-}
-
-/* You can add global styles to this file, and also import other style files */
-/*md-sidenav {*/
-/*width: 200px;*/
-/*}*/
-.overflow-x-scroll-no-scrollbar {
-  overflow: auto;
-  position: relative;
-}
-
-.overflow-x-scroll-no-scrollbar > md-list {
-
-  overflow-x: auto;
-  margin-bottom: -17px;
-  overflow-y: hidden;
-
-}
-
-.overflow-x-scroll-no-scrollbar > div * {
-
-  overflow-x: auto;
-  width: 100%;
-  padding-bottom: 17px;
-  white-space: nowrap;
-  cursor: pointer
 }
 
 subject-selector .mat-list .mat-list-item .mat-list-item-content {
@@ -75,23 +49,6 @@ subject-selector md-list {
   text-decoration: none;
 }
 
-.subjects-arrow-left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(200, 200, 200, 0.4);
-  width: 30px;
-  height: 100%;
-}
-
-.subjects-arrow-right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: rgba(200, 200, 200, 0.5);
-  width: 30px;
-  height: 100%;
-}
 
 .header-image {
 
@@ -149,10 +106,6 @@ md-card {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.header-image {
-  background: #423e3e;
-}
-
 .header-overlay {
   background: #000;
   opacity: 0.5;
@@ -166,7 +119,7 @@ md-card {
 .header-list-overlay {
   background: #3c2b0a;
   opacity: 0.5;
-  height: 220px;
+  height: 214px;
   width: 100%;
   position: absolute;
   z-index: 500;
@@ -182,28 +135,7 @@ md-card {
   z-index: 0;
   top: 0;
 }
-.subject-navigation {
-  height: 44px;
-  margin-top: 9px;
-  padding-top: 4px;
-  border-radius: 3px;
 
-  background: rgba(195, 194, 183, 0.4);
-  position: absolute;
-  top: 0;
-  z-index: 2000;
-
-}
-.subject-navigation.left {
-  left: 2px;
-}
-.subject-navigation.right {
-  right: 2px;
-}
-.subject-list {
-  margin-left: 30px;
-  margin-right: 30px;
-}
 .margin-for-mobile {
   margin-left: 4px;
   margin-right: 4px;
@@ -237,7 +169,13 @@ md-card {
   border-top-width: 2px !important;
   border-color: #791716 !important;
 }
-
+collection-list .mat-input-underline {
+  border-top-width: 2px !important;
+  border-color: #ccbf90 !important;
+}
+collection-list .mat-input-wrapper {
+  margin-bottom: 20px;
+}
 .mat-sidenav-content {
   overflow: hidden !important;
 }
