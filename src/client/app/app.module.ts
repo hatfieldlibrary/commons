@@ -80,6 +80,7 @@ import { InfoSvgComponent } from './components/svg/info-svg/info-svg.component';
 import { LoadingSvgComponent } from './components/svg/loading-svg/loading-svg.component';
 import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-black-svg.component';
 import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
+import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
 
 
 // export const appRoutes = [
@@ -150,7 +151,8 @@ export const appRoutes = [
     InfoSvgComponent,
     LoadingSvgComponent,
     BackBlackSvgComponent,
-    CollectionsFilterPipe
+    CollectionsFilterPipe,
+    FilterSvgComponent
 
   ],
   imports: [

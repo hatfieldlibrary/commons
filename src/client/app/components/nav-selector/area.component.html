@@ -27,13 +27,13 @@
   </div>
 
   <div fxLayout="row" fxLayoutAlign="start center">
-    <areas-svg></areas-svg>
-    <h3 md-subheader>Collection Areas</h3>
+    <filter-svg></filter-svg>
+    <h3 md-subheader>Filter by:</h3>
   </div>
   <form [formGroup]="checkboxGroup">
   <md-list>
     <md-list-item>
-      <md-checkbox class='local-navigation' [checked]="isSelected()" (change)="onChange('0', $event)">All Collections</md-checkbox>
+      <md-checkbox class='local-navigation' [checked]="isSelected(0)" (change)="onChange('0', $event)">All Collections</md-checkbox>
     </md-list-item>
     <md-list-item *ngFor="let area of areaList">
     <md-checkbox type="checkbox" [checked]="isSelected(area.id)" class='local-navigation' (change)="onChange(area.id, $event)">{{area.title}}

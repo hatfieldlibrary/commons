@@ -22,13 +22,13 @@ import {AreaActions, AreaActionTypes} from "../actions/area.actions";
 import {AreaType} from "../shared/data-types/area.type";
 
 export interface State {
-  area: AreaType;
+  area: AreaType[];
   loading: boolean;
 
 }
 
 const initialState: State = {
-  area: <AreaType>{
+  area: [<AreaType>{
     id: 0,
     title: '',
     linkLabel: '',
@@ -36,7 +36,7 @@ const initialState: State = {
     searchUrl: '',
     description: '',
     position: 0
-  },
+  }],
   loading: false
 };
 

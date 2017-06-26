@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
@@ -24,15 +24,33 @@ import {SelectedSubject} from "app/shared/data-types/selected-subject";
   templateUrl: './area-information.component.html',
   styleUrls: ['./area-information.component.css']
 })
-export class AreaInformationComponent{
+export class AreaInformationComponent implements OnChanges{
+
 
   @Input() selectedSubject: SelectedSubject;
   @Input() areaInfo: AreaType;
   @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
+  description: string;
+  url: string;
+  linkLabel: string;
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
 
-  deselect() {
-    this.removeSubject.next()
+    if (changes.areaInfo.currentValue.length > 1) {
+      let areaList = changes.areaInfo.currentValue;
+      let areaTitles = '';
+      areaList.forEach((area) => areaTitles += area.title + ', ' );
+       areaTitles = areaTitles.slice(0, -2);
+      this.description = 'Filtering for collection areas: ' + areaTitles;
+      this.url = '';
+      this.linkLabel = '';
+    } else {
+      this.description = changes.areaInfo.currentValue[0].description;
+      this.url = changes.areaInfo.currentValue[0].url;
+      this.linkLabel = changes.areaInfo.currentValue[0].linkLabel;
+    }
   }
+
 
 }

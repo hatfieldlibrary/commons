@@ -47,9 +47,9 @@ export class NavigationComponent implements  OnInit{
   isSelected(id):boolean {
 
     if (this.selectedAreas) {
-      if (!id) {
-        return this.selectedAreas.indexOf('0') >= 0;
-      }
+      // if (!id) {
+      //   return this.selectedAreas.indexOf('0') >= 0;
+      // }
       return this.selectedAreas.indexOf(id) >= 0;
     }
     return false;
@@ -97,7 +97,6 @@ export class NavigationComponent implements  OnInit{
   }
 
   onChange(area:string, event: any) {
-    console.log(area)
     const areaFormArray = <FormArray>this.checkboxGroup.controls.areas;
     if (area === '0') {
       areaFormArray.reset(['0']);

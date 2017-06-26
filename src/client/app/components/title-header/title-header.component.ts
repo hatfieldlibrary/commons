@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class TitleHeaderComponent implements OnInit {
 
   @Input() title;
+  @Input() subtitle;
   @Input() subjectList;
   @Input() areaId;
   @Input() type;

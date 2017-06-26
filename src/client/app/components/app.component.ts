@@ -28,7 +28,7 @@ export class AppComponent {
 
   constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document){}
 
-  onDeactivate() {
+  onDeactivate(event) {
     // Chrome canary supports the new standard usage with documentElement, but
     // Chrome and presumably other browsers still expect body.
     this.renderer.setProperty(this.document.body, 'scrollTop', 0);

@@ -31,9 +31,9 @@
     <!--</md-chip>-->
   <!--</md-chip-list>-->
 
-  {{areaInfo?.description}}
+  {{description}}
 
-  <p *ngIf="areaInfo?.url">
-    <a md-raised-button class="accent-button" href="{{areaInfo?.url}}" target="_top" color="accent">{{areaInfo?.linkLabel}}</a>
+  <p *ngIf="url">
+    <a md-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>
   </p>
 </md-card-subtitle>

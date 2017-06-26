@@ -7,7 +7,7 @@ import {MdIconRegistry} from "@angular/material";
   templateUrl: './collections-svg.component.html',
   styleUrls: ['./collections-svg.component.css']
 })
-export class CollectionsSvgComponent implements OnInit {
+export class CollectionsSvgComponent {
 
   constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
@@ -15,7 +15,5 @@ export class CollectionsSvgComponent implements OnInit {
       sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_collections_white_24px.svg'));
   }
 
-  ngOnInit() {
-  }
 
 }

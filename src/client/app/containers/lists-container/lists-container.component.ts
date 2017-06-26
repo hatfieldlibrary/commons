@@ -48,7 +48,7 @@ export class ListsContainer implements OnInit, OnDestroy {
 
   collections$: Observable<CollectionType[]>;
   areas$: Observable<AreaListItemType[]>;
-  areaInfo$: Observable<AreaType>;
+  areaInfo$: Observable<AreaType[]>;
   subjects$: Observable<SubjectType[]>;
   areasAvailable: boolean = false;
   areaId: string;
@@ -57,6 +57,7 @@ export class ListsContainer implements OnInit, OnDestroy {
   homeScreen:boolean = false;
   selectedSubject$: Observable<SubjectType>;
   title: string = '';
+  subtitle: string = '';
   subjectId: number;
 
   @HostBinding('@openClose') routeAnimation = true;
@@ -85,12 +86,17 @@ export class ListsContainer implements OnInit, OnDestroy {
 
   getAreaTitle(): void {
     this.areaInfo$.subscribe((info) => {
-      if (info.title) {
-        this.title = info.title;
+      if (info.length > 1) {
+        this.title = ''
+        info.forEach((area) => this.subtitle +=  area.title + ' / ');
+        this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
       } else {
-        this.title = "All Collections";
+        if (info[0].title) {
+          this.title = info[0].title;
+        } else {
+          this.title = "All Collections";
+        }
       }
-
     });
   }
 
@@ -102,7 +108,6 @@ export class ListsContainer implements OnInit, OnDestroy {
   getCollectionsBySubject(subjectId: string, areaId: string): void {
     this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
     this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
-    console.log('getting collections by subject')
     this.getAreaInformation(areaId);
 
   }
@@ -208,9 +213,13 @@ export class ListsContainer implements OnInit, OnDestroy {
     this.setAreasAvailable();
     this.getAreaTitle();
 
+
+
     this.route.params
 
       .subscribe((params) => {
+
+        this.subtitle = '';
 
         this.initializeAreas();
 
