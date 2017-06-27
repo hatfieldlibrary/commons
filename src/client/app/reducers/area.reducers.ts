@@ -51,7 +51,7 @@ export function reducer(state = initialState, action: AreaActions): State {
     }
 
     case AreaActionTypes.AREA_INFORMATION_SUCCESS: {
-      const payload = <AreaType>action.payload;
+      const payload = <AreaType[]>action.payload;
 
       return Object.assign({}, state,
         {

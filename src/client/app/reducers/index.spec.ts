@@ -105,7 +105,7 @@ describe('Reducers ', () => {
     }
   ];
 
-  const expectedArea = {
+  const expectedArea = [{
     id: 1,
     title: 'Area One',
     linkLabel: '',
@@ -113,7 +113,7 @@ describe('Reducers ', () => {
     searchUrl: '',
     description: '',
     position: 0
-  } ;
+  }];
 
 
   beforeEach(() => {
@@ -121,23 +121,23 @@ describe('Reducers ', () => {
     itemState = reducer(undefined, new ItemSuccess(expectedItem));
     areaState = reducer(undefined, new AreaInformationSuccess(expectedArea));
     areaListState = reducer(undefined, new AreaActionSuccess(expectedAreas)) ;
-    collectionState = reducer(undefined, new CollectionActionSuccess(expectedCollections))
+    collectionState = reducer(undefined, new CollectionActionSuccess(expectedCollections));
 
   });
 
   it('should return subject state', () => {
 
-    let result = getSubjectsState(subjectState);
+    const result = getSubjectsState(subjectState);
     expect(result).toEqual({
       subjects: expectedSubjects,
-      selectedSubject: {id: 0, name:'', url:''},
+      selectedSubject: {id: 0, name: '', url: ''},
       loading: false
     });
 
   });
 
   it('should return item state.', () => {
-    let result = getItemState(itemState);
+    const result = getItemState(itemState);
     expect(result).toEqual({
       item: expectedItem,
       loading: false
@@ -146,7 +146,7 @@ describe('Reducers ', () => {
   });
 
   it('should return areaList state.', () => {
-    let result = getAreaListState(areaListState);
+    const result = getAreaListState(areaListState);
     expect(result).toEqual({
       areaList: expectedAreas,
       loading: false
@@ -155,7 +155,7 @@ describe('Reducers ', () => {
   });
 
   it('should return collections state.', () => {
-    let result = getCollectionssState(collectionState);
+    const result = getCollectionssState(collectionState);
     expect(result).toEqual({
       collections: expectedCollections,
       loading: false

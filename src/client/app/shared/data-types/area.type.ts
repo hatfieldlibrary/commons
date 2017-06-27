@@ -27,5 +27,4 @@ export class AreaType {
   searchUrl: string;
   description: string;
   position: number;
-
 }

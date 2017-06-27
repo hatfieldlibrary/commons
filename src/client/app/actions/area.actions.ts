@@ -84,7 +84,7 @@ export class AreaInformation implements Action {
 export class AreaInformationSuccess implements Action {
   type = AreaActionTypes.AREA_INFORMATION_SUCCESS;
 
-  constructor(public payload: AreaType) {}
+  constructor(public payload: AreaType[]) {}
 }
 
 /**

@@ -32,7 +32,7 @@ import {
 import {Observable} from 'rxjs';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 
-import {ListsContainer} from './lists-container.component';
+import {ListsContainerComponent} from './lists-container.component';
 import {ListComponent} from '../../components/collection-list/list.component';
 import {NavigationComponent} from '../../components/nav-selector/area.component';
 import {SubjectsComponent} from '../../components/subject-selector/subjects.component';
@@ -141,10 +141,10 @@ const setSubjectRoute = (route: any, subject: string) => {
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
-describe('ListsContainer', () => {
+describe('ListsContainerComponent', () => {
 
-  let component: ListsContainer;
-  let fixture: ComponentFixture<ListsContainer>;
+  let component: ListsContainerComponent;
+  let fixture: ComponentFixture<ListsContainerComponent>;
   let store;
   let route;
 
@@ -159,7 +159,7 @@ describe('ListsContainer', () => {
         AppComponent,
         NavigationComponent,
         ListComponent,
-        ListsContainer,
+        ListsContainerComponent,
         SubjectsComponent,
         ListHeaderComponent,
         AreaInformationComponent,
@@ -210,7 +210,7 @@ describe('ListsContainer', () => {
   beforeEach(() => {
      areaList = areaListMock;
     TestBed.createComponent(AppComponent);
-    fixture = TestBed.createComponent(ListsContainer);
+    fixture = TestBed.createComponent(ListsContainerComponent);
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     component = fixture.componentInstance;

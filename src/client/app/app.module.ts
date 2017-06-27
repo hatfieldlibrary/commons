@@ -33,7 +33,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 
 import {AppComponent} from './components/app.component';
-import {ListsContainer} from "./containers/lists-container/lists-container.component";
+import {ListsContainerComponent} from "./containers/lists-container/lists-container.component";
 import {NavigationComponent} from './components/nav-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
 import {ItemComponent} from './components/item/item.component';
@@ -94,8 +94,8 @@ import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.compo
 //   {
 //     path: 'list/collections', component: AppComponent,
 //     children: [
-//       {path: 'area/:areaId', component: ListsContainer},
-//       {path: 'subject/:subjectId/area/:areaId', component: ListsContainer},
+//       {path: 'area/:areaId', component: ListsContainerComponent},
+//       {path: 'subject/:subjectId/area/:areaId', component: ListsContainerComponent},
 //     ]
 //   },
 //   {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
@@ -107,10 +107,10 @@ import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.compo
 export const appRoutes = [
 
   {path: 'commons-preview/item/id/:id/:areaId', component: ItemContainerComponent},
-  {path: 'commons-preview/collection/area/:areaId', component: ListsContainer},
-  {path: 'commons-preview/collection', component: ListsContainer},
-  {path: 'commons-preview/collection/subject/:subjectId/area/:areaId', component: ListsContainer},
-  {path: 'commons-preview/collection/subject/:subjectId', component: ListsContainer},
+  {path: 'commons-preview/collection/area/:areaId', component: ListsContainerComponent},
+  {path: 'commons-preview/collection', component: ListsContainerComponent},
+  {path: 'commons-preview/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
+  {path: 'commons-preview/collection/subject/:subjectId', component: ListsContainerComponent},
   {path: '', redirectTo: 'commons-preview/collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 
@@ -125,7 +125,7 @@ export const appRoutes = [
     AppComponent,
     NavigationComponent,
     ListComponent,
-    ListsContainer,
+    ListsContainerComponent,
     SubjectsComponent,
     PageNotFoundComponent,
     ListHeaderComponent,

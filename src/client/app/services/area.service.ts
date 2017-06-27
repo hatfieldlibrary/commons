@@ -43,10 +43,10 @@ export class AreaService {
       .map(res => <AreaListItemType[]> res.json());
   }
 
-  getAreaInfo(id:string): Observable<AreaType> {
+  getAreaInfo(id:string): Observable<AreaType[]> {
     // temporary test data source
     return this.http.get(environment.apiHost + environment.apiRoot + '/area/id/' + id)
-      .map(res => <AreaType> res.json());
+      .map(res => <AreaType[]> res.json());
   }
 
 }

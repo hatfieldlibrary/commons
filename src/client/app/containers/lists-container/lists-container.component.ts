@@ -36,6 +36,7 @@ import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
 import {fadeIn, slideInLeftAnimation} from "../../animation/animations";
 import {Subscription} from "rxjs/Subscription";
+import {SelectedSubject} from '../../shared/data-types/selected-subject';
 
 @Component({
   selector: 'lists-container',
@@ -43,21 +44,20 @@ import {Subscription} from "rxjs/Subscription";
   templateUrl: 'lists-container.component.html',
   animations: [fadeIn]
 })
-export class ListsContainer implements OnInit, OnDestroy {
+export class ListsContainerComponent implements OnInit, OnDestroy {
 
 
   collections$: Observable<CollectionType[]>;
   areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType[]>;
   subjects$: Observable<SubjectType[]>;
-  areasAvailable: boolean = false;
+  areasAvailable: boolean;
   areaId: string;
-
   subjectLinkType: string;
-  homeScreen:boolean = false;
+  homeScreen: boolean;
   selectedSubject$: Observable<SubjectType>;
-  title: string = '';
-  subtitle: string = '';
+  title: string;
+  subtitle: string;
   subjectId: number;
 
   @HostBinding('@openClose') routeAnimation = true;
@@ -94,7 +94,7 @@ export class ListsContainer implements OnInit, OnDestroy {
         if (info[0].title) {
           this.title = info[0].title;
         } else {
-          this.title = "All Collections";
+          this.title = 'All Collections';
         }
       }
     });

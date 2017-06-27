@@ -38,7 +38,7 @@ const areaListTypeMock = [
   }
 ];
 
-const areaMock = {
+const areaMock = [{
   id: 1,
   title:  'Archival Collections',
   linkLabel:  'Area Button Label',
@@ -47,9 +47,9 @@ const areaMock = {
   description:  'Description Two.',
   position: 2
 
-};
+}];
 
-const initialState = {
+const initialState = [{
     id: 0,
     title: '',
     linkLabel: '',
@@ -57,10 +57,10 @@ const initialState = {
     searchUrl: '',
     description: '',
     position: 0
-};
+}];
 
 class MockAction implements Action {
-  type: string = '';
+  type: string;
   payload: any;
 
 }
@@ -75,11 +75,11 @@ describe('Area Reducer', () => {
       {
         area: initialState,
         loading: true
-      })
+      });
   });
 
   it('should return the current state', () => {
-    let areaState: State = {area: areaMock, loading: false};
+    const areaState: State = {area: areaMock, loading: false};
 
     expect(
       reducer(areaState, new MockAction())
@@ -87,24 +87,24 @@ describe('Area Reducer', () => {
       {
         area: areaMock,
         loading: false
-      })
+      });
   });
 
   it('should return state with updated area information', () => {
 
-    let areaState: State = {area: areaMock, loading: true};
+    const areaState: State = {area: areaMock, loading: true};
     expect(
       reducer(areaState, new AreaInformationSuccess(areaMock))
     ).toEqual(
       {
         area: areaMock,
         loading: false
-      })
+      });
   });
 
 
   it('should return current state and fail.', () => {
-    let areaState: State = {area: areaMock, loading: false};
+    const areaState: State = {area: areaMock, loading: false};
     expect(
       reducer(areaState, new AreaActionFailed('error'))
     ).toEqual(
