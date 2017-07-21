@@ -17,7 +17,7 @@
 
 <md-sidenav-container>
 
-  <app-menus-component [areaList]="areas$ | async"></app-menus-component>
+  <app-menus-component [areaList]="areas$ | async" [showBack]="false"></app-menus-component>
 
   <title-header [title]="title"
                 [subtitle]="subtitle"
@@ -36,26 +36,26 @@
         <div fxLayout="column"
              fxFlex="100"
              fxFlex.sm="100"
-             fxFlex.md="100"
+             fxFlex.md="85"
              fxFlex.lg="70"
              fxFlex.gt-lg="50">
 
           <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start" fxLayoutGap.gt-sm="30px">
 
-            <div fxFlex="100" fxFlex.gt-sm="70">
+            <div fxFlex="100" fxFlex.gt-sm="70" style="width:100%;">
 
               <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
                                 [areaInfo]="areaInfo$ | async"
                                 ></area-information>
 
-              <home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject$ | async"
-                           (removeSubject)="removeSubject($event)"></home-screen>
+              <!--<home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject$ | async"-->
+                           <!--(removeSubject)="removeSubject($event)"></home-screen>-->
 
               <collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async" [selectedArea]="areaId"></collection-list>
 
             </div>
             <div class="fill-remaining-space"></div>
-            <div fxFlex fxFlex.gt-sm="25" fxHide fxShow.gt-sm style="padding-top: 30px;">
+            <div fxFlex fxFlex.gt-sm="25" fxHide fxShow.gt-sm >
 
               <navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></navigation-selector>
 

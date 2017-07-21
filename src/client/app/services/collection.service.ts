@@ -31,7 +31,6 @@ export class CollectionService {
   constructor(private http: Http) {}
 
   getCollectionsByAreaId(id:string): Observable<CollectionType[]> {
-
     // temporary test data source
     return this.http.get(environment.apiHost + environment.apiRoot + '/collection/area/' + id)
       .map(res => res.json());

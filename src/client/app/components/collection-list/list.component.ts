@@ -36,6 +36,8 @@ export class ListComponent {
   @Input() selectedArea: string;
   filterTerm: string;
 
+
+
   constructor() {
     this.filterTerm = '';
   }

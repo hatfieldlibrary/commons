@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AfterContentInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -25,7 +25,7 @@ import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
   templateUrl: 'area.component.html',
   styleUrls: ['area.component.css']
 })
-export class NavigationComponent implements  OnInit{
+export class NavigationComponent implements OnInit, AfterViewInit {
 
   @Input() areaList: AreaType[];
   @Input() selectedAreas: string;
@@ -33,56 +33,20 @@ export class NavigationComponent implements  OnInit{
   selectedAreaArray: string[];
   checkboxGroup: FormGroup;
   formArrayRef: FormArray;
+  private areaFormArray: FormArray;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
-
-  areaSelected(area: AreaType) {
-
-   // [routerLink]="['/commons-preview/collection/area/', area.id]"
-    //this.onSelected.emit(true);
-    //this.router.navigateByUrl('/commons-preview/collection/area/')
+  constructor(private router: Router, private formBuilder: FormBuilder) {
   }
 
-
-  isSelected(id):boolean {
+  isSelected(id): boolean {
 
     if (this.selectedAreas) {
-      // if (!id) {
-      //   return this.selectedAreas.indexOf('0') >= 0;
-      // }
       return this.selectedAreas.indexOf(id) >= 0;
     }
     return false;
   }
 
-  ngOnInit(){
-
-    this.checkboxGroup = this.formBuilder.group({
-      areas: this.formBuilder.array([])
-    });
-    console.log(this.selectedAreas)
-    this.formArrayRef = <FormArray>this.checkboxGroup.controls.areas;
-    if (this.selectedAreas) {
-      this.selectedAreaArray = this.selectedAreas.split(',');
-      this.selectedAreaArray.forEach((id) => {
-        console.log(id)
-        this.formArrayRef.push(new FormControl(id));
-      })
-    }
-
-    // this.selectedAreas.forEach((selectedArea) => {
-    //   this.areaList.forEach((area) => {
-    //     if (area.id === +selectedArea) {
-    //       this.currentAreas.push({active: true, area: area});
-    //     } else {
-    //       this.currentAreas.push({active: false, area: area});
-    //     }
-    //   })
-    // });
-
-  }
-
-  _createIdParam(areaList: FormArray): string {
+  _createIdQueryParam(areaList: FormArray): string {
     if (areaList.getRawValue().length = 0) {
       return '0';
     }
@@ -96,38 +60,70 @@ export class NavigationComponent implements  OnInit{
     return areaId;
   }
 
-  onChange(area:string, event: any) {
-    const areaFormArray = <FormArray>this.checkboxGroup.controls.areas;
-    if (area === '0') {
-      areaFormArray.reset(['0']);
+  _navigateRoute(areaId: string) {
+    // the area id can be a string object of length zero.
+    if (areaId !== '0' && areaId.length > 0) {
+      this.router.navigate(['/commons-preview/collection/area/', areaId]);
+    } else {
       this.router.navigate(['/commons-preview/collection']);
     }
-    else if(event.checked) {
-      let index = areaFormArray.controls.findIndex(x => x.value == '0');
-      if (index >= 0) {
-        areaFormArray.removeAt(index);
-      }
-       areaFormArray.push(new FormControl(area));
-      // console.log(areaFormArray)
-       let areaId = this._createIdParam(areaFormArray);
-       console.log(areaId)
-      if (areaId !== '0') {
-        this.router.navigate(['/commons-preview/collection/area/', areaId]);
-      } else {
-        this.router.navigate(['/commons-preview/collection']);
-      }
-    } else {
-       let index = areaFormArray.controls.findIndex(x => x.value == area)
-       areaFormArray.removeAt(index);
-      // console.log(areaFormArray)
-      let areaId = this._createIdParam(areaFormArray);
-      console.log(areaId)
-      if (areaId !== '0') {
-        this.router.navigate(['/commons-preview/collection/area/', areaId]);
-      } else {
-        this.router.navigate(['/commons-preview/collection']);
-      }
+  }
+
+  _removeFromArray(index: number) {
+    if (index >= 0) {
+      this.areaFormArray.removeAt(index);
     }
+  }
+
+  _updateAreaFormArray(area: string, checked: boolean) {
+
+    if (checked) {
+      // Remove the All Collections option from list if other collection area is selected.
+      let index = this.areaFormArray.controls.findIndex(x => x.value == '0');
+      this._removeFromArray(index);
+      // Add the selected collection area to FormArray.
+      this.areaFormArray.push(new FormControl(area));
+    } else {
+      // Remove the collection area from FormArray.
+      let index = this.areaFormArray.controls.findIndex(x => x.value == area);
+      this._removeFromArray(index);
+    }
+
+  }
+
+  onChange(area: string, event: any) {
+
+    // If the All Collection option is selected, reset the FormArray and navigate.
+    if (area === '0') {
+      this.areaFormArray.reset(['0']);
+      this._navigateRoute(area);
+    }
+    else {
+      // Otherwise, update the FormArray and navigate.
+      this._updateAreaFormArray(area,  event.checked);
+      let areaId = this._createIdQueryParam(this.areaFormArray);
+      this._navigateRoute(areaId);
+    }
+
+  }
+
+  ngOnInit() {
+    this.checkboxGroup = this.formBuilder.group({
+      areas: this.formBuilder.array([])
+    });
+    this.formArrayRef = <FormArray>this.checkboxGroup.controls.areas;
+    if (this.selectedAreas) {
+      this.selectedAreaArray = this.selectedAreas.split(',');
+      this.selectedAreaArray.forEach((id) => {
+        this.formArrayRef.push(new FormControl(id));
+      })
+    }
+
+  }
+
+  ngAfterViewInit() {
+    this.areaFormArray = <FormArray>this.checkboxGroup.controls.areas;
+
   }
 
 }

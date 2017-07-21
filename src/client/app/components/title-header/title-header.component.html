@@ -4,26 +4,22 @@
 
   <div class="header-list-overlay"></div>
 
-  <div fxLayout="row" fxFlex="100" fxLayoutAlign="center center">
+  <div fxLayout="row" fxFlex="100" fxLayoutAlign="center center" style="position:absolute;z-index:1200;width:100%">
 
     <div fxLayout="column"
          fxFlex="100"
-         fxFlex.md="100"
+         fxFlex.sm="100"
+         fxFlex.md="85"
          fxFlex.lg="70"
-         fxFlex.gt-lg="50">
+         fxFlex.gt-lg="70">
 
-      <div class="header-title list-title">
+      <div class="list-title" style="min-height: 82px;">
         <h1>{{title}}<span style="font-size:16px">{{subtitle}}</span></h1>
       </div>
-    </div>
 
-    <div class="subject-selector-container">
-      <div style="position: relative; overflow: auto">
-        <subject-selector [subjectList]="subjectList" [areaId]="areaId"
-                          [type]="type"></subject-selector>
-      </div>
+      <subject-selector [subjectList]="subjectList" [areaId]="areaId"
+                        [type]="type"></subject-selector>
     </div>
-
 
 
   </div>

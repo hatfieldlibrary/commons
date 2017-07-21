@@ -15,6 +15,7 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <div fxLayout="row" fxHide fxShow.gt-sm="true" fxLayoutAlign="left center" style="position:absolute;top:30px;">
+
   <a md-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
     <md-icon><back-black-svg></back-black-svg></md-icon>&nbsp;Back to List
   </a>
@@ -44,7 +45,7 @@
       {{item?.collection.title}}
     </md-card-title>
 
-    <p style="font-size: 1.2em">{{item?.collection.desc}}</p>
+    <p [innerHTML]="item?.collection.desc" style="font-size: 1.2em"></p>
 
     <md-list>
       <md-list-item *ngIf="item?.collection.dates">
@@ -100,7 +101,7 @@
     <md-card-subtitle>This collection is part of</md-card-subtitle>
     <md-card-title>{{item?.category?.title}}</md-card-title>
 
-    <p style="font-size: 1.2em">{{item?.category?.description}}</p>
+    <p [innerHTML]="item?.category?.description" style="font-size: 1.2em"></p>
 
     <a md-raised-button color="accent" class="accent-button" href="{{item?.category?.url}}"
        target="_blank">{{item?.category?.linkLabel}}</a>

@@ -53,7 +53,6 @@ export function reducer(state = initialState, action: CollectionActions) : State
 
     case CollectionActionTypes.LIST_BY_AREA_SUCCESS: {
       const result: CollectionType[] = <CollectionType[]>action.payload;
-
       return Object.assign({}, state, {
         collections: result,
         loading: false
@@ -112,7 +111,6 @@ export function reducer(state = initialState, action: CollectionActions) : State
 
     case CollectionActionTypes.LIST_ALL_SUCCESS_ACTION: {
       const result: CollectionType[] = <CollectionType[]>action.payload;
-
       return Object.assign({}, state, {
         collections: result,
         loading: false

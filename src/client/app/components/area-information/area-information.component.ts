@@ -35,14 +35,13 @@ export class AreaInformationComponent implements OnChanges{
   linkLabel: string;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
 
     if (changes.areaInfo.currentValue.length > 1) {
       let areaList = changes.areaInfo.currentValue;
       let areaTitles = '';
       areaList.forEach((area) => areaTitles += area.title + ', ' );
        areaTitles = areaTitles.slice(0, -2);
-      this.description = 'Filtering for collection areas: ' + areaTitles;
+      this.description = 'Collection areas: <span class="area-color">' + areaTitles + '</span>';
       this.url = '';
       this.linkLabel = '';
     } else {

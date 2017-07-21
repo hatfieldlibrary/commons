@@ -28,11 +28,17 @@
 
       <div fxLayout="row" fxLayoutAlign="start start">
 
-        <md-toolbar  fxFlex="100" style="background: #000;color:#fff; ">
+        <md-toolbar fxFlex="100" style="background: #000;color:#fff; ">
 
           <div fxLayout="row" fxLayoutAlign="center center">
-
-            <icon-back [routerLink]="backLink()" fxHide.gt-sm style="margin-top: 8px;"></icon-back>&nbsp;Academic Commons
+            <div style="height: 24px;" fxHide.gt-xs="true">
+            <button md-icon-button *ngIf="showBack">
+              <icon-back [routerLink]="getBackLink()" ></icon-back>
+            </button>
+            </div>
+            <div style="height: 24px;">
+            <span>&nbsp;Academic Commons</span>
+            </div>
 
           </div>
           <!-- This fills the remaining space of the current row -->
@@ -41,25 +47,14 @@
           <md-divider style="border-color: #fff;"></md-divider>
 
           <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
-            <a md-button  style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+            <a md-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
               <home-svg></home-svg>
               <span>&nbsp;&nbsp;Home</span></a>
           </div>
 
           <md-divider></md-divider>
 
-          <!--<div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">-->
-            <!--<a md-button [routerLink]="['/commons-preview/collection']"-->
-               <!--style="color:#ccc;font-size: 0.6em;font-weight: 500;">-->
-              <!--<collections-svg></collections-svg>-->
-              <!--<span>&nbsp;&nbsp;All Collections</span>-->
-            <!--</a>-->
-          <!--</div>-->
-          <!--<md-divider></md-divider>-->
-
-          <!--<div fxFlex.gt-sm="10"></div>-->
-
-          <button md-button  (click)="openMenu()"
+          <button md-button (click)="openMenu()"
                   style="color:#ccc;font-size: 0.6em;font-weight: 500;">
             <menu-svg></menu-svg>
             <span fxShow.gt-sm="true">&nbsp;Menu</span>

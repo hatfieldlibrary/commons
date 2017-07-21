@@ -16,6 +16,8 @@
   -->
 
 <div #container class="overflow-x-scroll-no-scrollbar" fxLayoutAlign="center center">
+
+
   <div fxShow="false" fxShow.gt-xs="true" class="subject-navigation left" [ngClass]="{'visible-nav': leftIsVisible, 'hidden-nav': !leftIsVisible, 'hide-for-mobile': isMobile}" (click)="onScrollRequest('left')">
     <keyboard-arrow-back-svg></keyboard-arrow-back-svg>
   </div>
@@ -30,7 +32,8 @@
 
   <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'all'">
     <md-list-item #subjects *ngFor="let subject of subjectList">
-      <button md-raised-button color="primary" [routerLink]="['/commons-preview/collection/subject/', subject.id]">{{subject.name}}
+      <button md-raised-button color="primary" [routerLink]="['/commons-preview/collection/subject/', subject.id]">
+        {{subject.name}}
       </button>
     </md-list-item>
   </md-list>
@@ -38,6 +41,7 @@
   <div fxShow="false" fxShow.gt-xs="true" class="subject-navigation right" [ngClass]="{'visible-nav': rightIsVisible, 'hidden-nav': !rightIsVisible, 'hide-for-mobile': isMobile}" (click)="onScrollRequest('right')">
     <keyboard-arrow-forward-svg></keyboard-arrow-forward-svg>
   </div>
+
 </div>
 
 

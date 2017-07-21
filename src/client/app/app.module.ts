@@ -81,6 +81,7 @@ import { LoadingSvgComponent } from './components/svg/loading-svg/loading-svg.co
 import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-black-svg.component';
 import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
+import {UtilitiesService} from "./services/utilities.service";
 
 
 // export const appRoutes = [
@@ -219,6 +220,7 @@ export const appRoutes = [
     RelatedService,
     AuthCheckService,
     MdIconRegistry,
+    UtilitiesService,
     {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 

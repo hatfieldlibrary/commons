@@ -74,11 +74,13 @@ md-card {
   background: #423e3e;
 }
 
+.header-image-container {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: #fff;
+}
 .header-image-container .header-title {
   margin-left: 42px;
   margin-top: 70px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: #fff;
   position: absolute;
   z-index: 1200;
 }
@@ -87,6 +89,9 @@ md-card {
   top: 2px;
 
 }
+.header-image-container .list-title {
+  margin-left: 32px;
+}
 
 .header-image-container .header-title.item-title {
   top: 0;
@@ -94,11 +99,11 @@ md-card {
 }
 
 .header-image-container .subject-selector-container {
-  position: absolute;
-  overflow: auto;
-  z-index: 1200;
-  width: 100%;
-  top: 150px;
+  /*position: absolute;*/
+  overflow:auto;
+  /*z-index: 1200;*/
+  /*width: 100%;*/
+  /*top: 150px;*/
 
 }
 
@@ -117,9 +122,9 @@ md-card {
 }
 
 .header-list-overlay {
-  background: #3c2b0a;
-  opacity: 0.5;
-  height: 214px;
+  background: rgb(39, 38, 33);
+  opacity: 0.7;
+  height: 209px;
   width: 100%;
   position: absolute;
   z-index: 500;
@@ -135,7 +140,9 @@ md-card {
   z-index: 0;
   top: 0;
 }
-
+.area-color {
+  color: #999;
+}
 .margin-for-mobile {
   margin-left: 4px;
   margin-right: 4px;
@@ -171,7 +178,7 @@ md-card {
 }
 collection-list .mat-input-underline {
   border-top-width: 2px !important;
-  border-color: #ccbf90 !important;
+  border-color: #aba79a !important;
 }
 collection-list .mat-input-wrapper {
   margin-bottom: 20px;

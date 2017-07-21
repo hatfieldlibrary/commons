@@ -32,6 +32,7 @@ import {fadeIn} from "../../animation/animations";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
 import {DOCUMENT} from "@angular/platform-browser";
+import {SubjectType} from "../../shared/data-types/subject.type";
 
 @Component({
   selector: 'item-container',
@@ -50,6 +51,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   item$: Observable<ItemType>;
   related$: Observable<RelatedType[]>;
   areas$: Observable<AreaListItemType[]>;
+  selectedSubject$: Observable<SubjectType>;
   id: string;
   collectionImage: string;
   areasAvailable: boolean = false;
@@ -164,6 +166,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
     this.areas$ = this.store.select(fromRoot.getAreas);
+    this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
 
 
 
@@ -178,6 +181,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.route.params
       .subscribe((params) => {
         this.selectedArea = params['areaId'];
+
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));

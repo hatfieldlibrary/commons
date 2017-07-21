@@ -3,6 +3,8 @@ import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
 import {Location} from '@angular/common';
 import {NavigationEnd, Router} from "@angular/router";
+import {UtilitiesService} from "../../services/utilities.service";
+import {SubjectType} from "../../shared/data-types/subject.type";
 
 @Component({
   selector: 'app-menus-component',
@@ -13,21 +15,19 @@ export class AppMenusComponent implements OnInit {
 
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
+  @Input() selectedSubject: SubjectType;
+  @Input() showBack: boolean;
   @Input() state: boolean;
   @Input() title: string;
   @ViewChild('sidenav') sideNavigate: MdSidenav;
   public previousUrl: string = '';
-  private myE:NavigationEnd;
 
-  constructor(private location: Location, private router: Router) {
+  constructor(private utils: UtilitiesService,
+              private router: Router) {
     router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event:NavigationEnd) => {
-        console.log('prev:', this.previousUrl);
-        console.log(event.url)
         this.previousUrl = event.url;
-
-
       });
   }
 
@@ -35,11 +35,9 @@ export class AppMenusComponent implements OnInit {
     this.sideNavigate.open();
   }
 
-  backLink(): string{
-    if (this.selectedArea === '0') {
-      return '/commons-preview/collection';
-    }
-    return '/commons-preview/collection/area/' + this.selectedArea;
+  getBackLink(): string{
+    let path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
+    return path;
   }
 
   ngOnInit() {

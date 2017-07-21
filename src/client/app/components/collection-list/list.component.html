@@ -17,9 +17,9 @@
 
 <!--<md-divider style="margin:10px 0"></md-divider>-->
 
-<md-input-container style="width:100%;">
+<md-input-container style="width:100%;margin-top: 20px;">
   <input mdInput id="terms" [(ngModel)]="filterTerm" name="search"
-         placeholder="Look for titles in the list below">
+         placeholder="Click here to look for titles in the list below">
 </md-input-container>
 <md-chip-list>
 
@@ -38,7 +38,7 @@
     border-radius: 7px;">
 
 <md-list>
-  <h3 md-subheader style=" background: #ada28e; color: #fff;">Collections and Items</h3>
+  <!--<h3 md-subheader style=" background: #ada28e; color: #fff;">Collections and Items</h3>-->
   <md-list-item style="cursor: default" [routerLink]="['/commons-preview/item/id', collection.id, selectedArea]" class="collection-list-item" *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
     {{collection.title}}
   </md-list-item>

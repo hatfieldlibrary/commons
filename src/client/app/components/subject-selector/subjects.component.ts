@@ -55,7 +55,8 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.offsetWidth = event.target.innerWidth;
+    // on window resize, recheck the container element width.
+    this.offsetWidth = this.container.nativeElement.offsetWidth;
     this.showSubjectNavigationArrow();
   }
 

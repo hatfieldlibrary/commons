@@ -19,7 +19,6 @@
  */
 exports.authenticate = function (req, res) {
     var requestOrigination = req.query.url;
-    console.log(requestOrigination);
     res.redirect(requestOrigination);
 };
 //# sourceMappingURL=authentication.js.map

@@ -23,8 +23,6 @@ exports.authenticate = function(req, res) {
 
   const requestOrigination = req.query.url;
 
-  console.log(requestOrigination);
-
   res.redirect(requestOrigination);
 
 

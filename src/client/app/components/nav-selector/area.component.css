@@ -16,9 +16,19 @@
  */
 
 md-list {
-  padding: 6px;
+  padding: 0;
+  /*padding: 6px;*/
 }
+
+
 
 .local-navigation  {
   font-size: 14px;
 }
+
+.side-container {
+  margin-top: 33px;
+  border: 5px solid #dedede;
+  border-radius: 10px;
+}
+

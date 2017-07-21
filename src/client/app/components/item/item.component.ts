@@ -17,29 +17,26 @@
 
 import {Component, OnInit, Input} from '@angular/core';
 import {ItemType} from "../../shared/data-types/item.type";
-import {Observable} from "rxjs/Observable";
+import {SubjectType} from "../../shared/data-types/subject.type";
+import {UtilitiesService} from "../../services/utilities.service";
 
 @Component({
   selector: 'item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent {
 
   @Input() item: ItemType;
   @Input() selectedArea: string;
+  @Input() selectedSubject: SubjectType;
 
-  constructor() {
-
+  constructor(private utils: UtilitiesService) {
   }
+
   getBackLink(): string {
-    if (this.selectedArea !== '0') {
-      return '/commons-preview/collection/area/' + this.selectedArea;
-    }
-    return '/commons-preview/collection';
-  }
-
-  ngOnInit() {
+    let path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
+    return path;
 
   }
 

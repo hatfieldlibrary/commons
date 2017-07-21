@@ -37,7 +37,6 @@ export class AreaService {
   constructor(private http: Http) {}
 
   getAreaList(): Observable<AreaListItemType[]> {
-    console.log(environment.apiHost + environment.apiRoot + '/area/collection')
     // temporary test data source
     return this.http.get(environment.apiHost + environment.apiRoot + '/area/collection')
       .map(res => <AreaListItemType[]> res.json());

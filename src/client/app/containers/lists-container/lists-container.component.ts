@@ -94,10 +94,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         if (info[0].title) {
           this.title = info[0].title;
         } else {
-          this.title = 'All Collections';
+          this._setAllCollectionTitle();
         }
       }
     });
+  }
+
+  _setAllCollectionTitle() {
+    this.title = 'All Collections';
   }
 
   /**
@@ -213,8 +217,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.setAreasAvailable();
     this.getAreaTitle();
 
-
-
     this.route.params
 
       .subscribe((params) => {
@@ -227,10 +229,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
           this.areaId = params['areaId'];
           this.subjectLinkType = 'area';
-
           if (params['subjectId']) {
             this.subjectId = params['subjectId'];
-
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
           } else {
@@ -241,10 +241,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         }
         else if (params['subjectId']) {
           this.subjectId = params['subjectId'];
-
           this.subjectLinkType = 'all';
           this.homeScreen = true;
           this.getAllCollectionsForSubject(params['subjectId']);
+          this._setAllCollectionTitle();
           this.areaId = '0';
 
         }

@@ -15,8 +15,9 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-
+<div class="side-container">
 <md-list>
+
   <div fxHide.gt-sm="true">
     <div fxLayout="row" fxLayoutAlign="start center">
       <home-svg></home-svg>
@@ -26,10 +27,11 @@
 
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <filter-svg></filter-svg>
-    <h3 md-subheader>Filter by:</h3>
-  </div>
+  <!--<div fxLayout="row" fxLayoutAlign="start center">-->
+    <!--<filter-svg></filter-svg>-->
+    <!--<h3 md-subheader>Filter by:</h3>-->
+  <!--</div>-->
+
   <form [formGroup]="checkboxGroup">
   <md-list>
     <md-list-item>
@@ -43,4 +45,5 @@
     </md-list-item>
   </md-list>
   </form>
-
+</md-list>
+</div>
