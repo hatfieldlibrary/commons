@@ -168,8 +168,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
 
-
-
     // Once we have item information, request related items.
     this.itemWatcher = this.item$.subscribe((data) => {
       this.getRelatedItems(data);
