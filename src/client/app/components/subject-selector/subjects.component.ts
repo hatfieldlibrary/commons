@@ -66,8 +66,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param changeDetector
    */
   constructor(private changeDetector: ChangeDetectorRef,
-              private media: ObservableMedia,
-              private renderer: Renderer2 ) {
+              private media: ObservableMedia) {
   }
 
   /**
@@ -102,27 +101,72 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showSubjectNavigationArrow();
   }
 
+  _setAnimiationLimit(direction: string): number {
+    let check: number;
+    if (direction === 'right') {
+      if (this.subjects.nativeElement.scrollLeft + this.offsetWidth >= this.subjects.nativeElement.offsetWidth) {
+        check = this.subjects.nativeElement.offsetWidth - 1;
+      } else {
+        check = this.subjects.nativeElement.scrollLeft + this.offsetWidth;
+      }
+
+    }
+
+    if (direction === 'left') {
+
+      if (this.subjects.nativeElement.scrollLeft - this.offsetWidth >= this.offsetWidth) {
+        check = this.subjects.nativeElement.scrollLeft - this.offsetWidth;
+      } else {
+        check = 0;
+      }
+    }
+    return check;
+  }
+
 
   /**
    * Using setInterval to animate horizontal scroll.
    * @param direction the direction to scroll
    */
   onScrollRequest(direction: string): void {
-    let limit = 0;
 
+    // Set animation counter.
+    let animationCouter;
+    if (direction === 'right') {
+      animationCouter = 0;
+    }
+    if (direction === 'left') {
+     animationCouter = this.subjects.nativeElement.scrollLeft
+    }
+    // Set the animation limit.
+    let limit = this._setAnimiationLimit(direction);
+
+    let interval = 20;
+
+    // Start the animation.
     let animation = setInterval(() => {
       if (direction === 'right') {
-        this.subjects.nativeElement.scrollLeft += limit++
-
+        animationCouter = animationCouter + interval;
+        this.subjects.nativeElement.scrollLeft = this.subjects.nativeElement.scrollLeft + interval;
       }
       if (direction === 'left') {
         if (this.subjects.nativeElement.scrollLeft >= 0) {
-          this.subjects.nativeElement.scrollLeft -= limit++
+          animationCouter = animationCouter - interval;
+          this.subjects.nativeElement.scrollLeft = this.subjects.nativeElement.scrollLeft - interval;
         }
       }
-      if (limit === 290 || limit === 0) {
-        clearInterval(animation);
+      // Stop the animation.
+      if (direction === 'right') {
+        if (animationCouter >= limit - 25) {
+          clearInterval(animation);
+        }
       }
+      if (direction === 'left') {
+        if (animationCouter <= limit || animationCouter === 0) {
+          clearInterval(animation);
+        }
+      }
+
     }, 5);
 
 
@@ -170,6 +214,5 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
   }
-
 
 }
