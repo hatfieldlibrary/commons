@@ -19,7 +19,7 @@
       fxLayoutAlign="center start"
       *ngIf="isAuthenticated || !restricted">
 
-        <span *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig'">
+        <span *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig' && linkOptions !== 'opts'">
         <a md-raised-button color="primary" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a></span>
 
       <span *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'itm'">

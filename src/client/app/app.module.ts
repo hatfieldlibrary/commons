@@ -83,28 +83,6 @@ import { CollectionsFilterPipe } from './services/filters/collections-filter.pip
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
 import {UtilitiesService} from "./services/utilities.service";
 
-
-// export const appRoutes = [
-//
-//   {
-//     path: 'item', component: AppComponent,
-//     children: [
-//       {path: 'id/:id', component: ItemContainerComponent}
-//     ]
-//   },
-//   {
-//     path: 'list/collections', component: AppComponent,
-//     children: [
-//       {path: 'area/:areaId', component: ListsContainerComponent},
-//       {path: 'subject/:subjectId/area/:areaId', component: ListsContainerComponent},
-//     ]
-//   },
-//   {path: '', redirectTo: 'list/collections/area/0', pathMatch: 'full'},
-//
-//   {path: '**', component: PageNotFoundComponent}
-//
-// ];
-
 export const appRoutes = [
 
   {path: 'commons-preview/item/id/:id/:areaId', component: ItemContainerComponent},
