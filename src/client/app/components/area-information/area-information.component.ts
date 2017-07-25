@@ -35,19 +35,20 @@ export class AreaInformationComponent implements OnChanges{
   linkLabel: string;
 
   ngOnChanges(changes: SimpleChanges): void {
-
-    if (changes.areaInfo.currentValue.length > 1) {
-      let areaList = changes.areaInfo.currentValue;
-      let areaTitles = '';
-      areaList.forEach((area) => areaTitles += area.title + ', ' );
-       areaTitles = areaTitles.slice(0, -2);
-      this.description = 'Collection areas: <span class="area-color">' + areaTitles + '</span>';
-      this.url = '';
-      this.linkLabel = '';
-    } else {
-      this.description = changes.areaInfo.currentValue[0].description;
-      this.url = changes.areaInfo.currentValue[0].url;
-      this.linkLabel = changes.areaInfo.currentValue[0].linkLabel;
+    if (changes.areaInfo) {
+      if (changes.areaInfo.currentValue.length > 1) {
+        let areaList = changes.areaInfo.currentValue;
+        let areaTitles = '';
+        areaList.forEach((area) => areaTitles += area.title + ', ');
+        areaTitles = areaTitles.slice(0, -2);
+        this.description = 'Collection areas: <span class="area-color">' + areaTitles + '</span>';
+        this.url = '';
+        this.linkLabel = '';
+      } else {
+        this.description = changes.areaInfo.currentValue[0].description;
+        this.url = changes.areaInfo.currentValue[0].url;
+        this.linkLabel = changes.areaInfo.currentValue[0].linkLabel;
+      }
     }
   }
 
