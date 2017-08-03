@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 import {ItemType} from "../../shared/data-types/item.type";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {UtilitiesService} from "../../services/utilities.service";
@@ -23,7 +23,8 @@ import {UtilitiesService} from "../../services/utilities.service";
 @Component({
   selector: 'item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  styleUrls: ['./item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemComponent {
 

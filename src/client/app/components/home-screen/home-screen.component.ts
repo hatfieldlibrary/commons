@@ -7,8 +7,4 @@ import {SelectedSubject} from "../../shared/data-types/selected-subject";
   styleUrls: ['./home-screen.component.css']
 })
 export class HomeScreenComponent  {
-
-  @Input() selectedSubject: SelectedSubject;
-
-
 }

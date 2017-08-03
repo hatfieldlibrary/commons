@@ -14,7 +14,29 @@
  *   You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-.chips {
-  margin-left: 12px;
 
-}
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { HomeBlackSvgComponent } from './home-black-svg.component';
+
+describe('HomeBlackSvgComponent', () => {
+  let component: HomeBlackSvgComponent;
+  let fixture: ComponentFixture<HomeBlackSvgComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ HomeBlackSvgComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HomeBlackSvgComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+  });
+});

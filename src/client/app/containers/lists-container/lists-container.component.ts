@@ -113,7 +113,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
     this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
     this.getAreaInformation(areaId);
-
+    this._setSelectedSubject(subjectId);
   }
 
   /**
@@ -155,7 +155,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   getAreaInformation(areaId: string): void {
     this.store.dispatch(new areaActions.AreaInformation(areaId));
     this.store.dispatch((new subjectAction.SubjectAction((areaId))));
-
+    this._setSelectedSubject('-1');
   }
 
   /**
@@ -170,13 +170,22 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param subjectId
    */
   getAllCollectionsForSubject(subjectId: string) {
+    console.log('all colls for subject')
     this.store.dispatch((new listActions.AllCollectionSubjectAction(subjectId)));
     this.store.dispatch(new subjectAction.AllSubjectAction());
+    this._setSelectedSubject(subjectId);
+
+  }
+
+  /**
+   * Dispatches update for selected subject.
+   * @param {string} subjectId
+   * @private
+   */
+  _setSelectedSubject(subjectId: string) {
     this.subjectsObserver = this.subjects$.subscribe(() => {
       this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
     });
-
-
   }
 
   /**
@@ -235,6 +244,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
           } else {
             this.getCollections(params['areaId']);
+
 
           }
 

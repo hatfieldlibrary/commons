@@ -14,34 +14,32 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
-<!--<md-divider style="margin:10px 0"></md-divider>-->
-
-<md-input-container style="width:100%;margin-top: 20px;">
-  <input mdInput id="terms" [(ngModel)]="filterTerm" name="search"
-         placeholder="Click here to look for titles in the list below">
-</md-input-container>
-<md-chip-list>
-
-  <md-chip *ngIf="selectedSubject"
-           selected="true"
-           color="default"
-           (click)="deselect($event)"
-  style="margin-bottom: 12px;">
-    {{selectedSubject?.name}}<icon-close-white></icon-close-white>
-  </md-chip>
-</md-chip-list>
-
-<!--<h4 *ngIf="selectedSubject"><span style="color: #999;font-weight:500">Items related to:</span> {{selectedSubject?.name}}</h4>-->
-
+<div class="collection-filter-input">
+  <md-input-container *ngIf="collectionList.length > 8" style="width:100%;">
+    <input mdInput id="terms" [(ngModel)]="filterTerm" name="search"
+           placeholder="Click here to look for titles in the list below">
+  </md-input-container>
+</div>
+<div class="chips">
+  <md-chip-list>
+    <md-chip *ngIf="selectedSubject"
+             selected="true"
+             color="default"
+             (click)="deselect($event)" style="margin-bottom: 12px;">
+      {{selectedSubject?.name}}
+      <icon-close-white></icon-close-white>
+    </md-chip>
+  </md-chip-list>
+</div>
 <md-card-content style="border: 1px solid #eee;
     border-radius: 7px;">
 
-<md-list>
-  <!--<h3 md-subheader style=" background: #ada28e; color: #fff;">Collections and Items</h3>-->
-  <md-list-item style="cursor: default" [routerLink]="['/commons-preview/item/id', collection.id, selectedArea]" class="collection-list-item" *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
-    {{collection.title}}
-  </md-list-item>
+  <md-list>
+    <!--<h3 md-subheader style=" background: #ada28e; color: #fff;">Collections and Items</h3>-->
+    <md-list-item style="cursor: default" [routerLink]="['/commons-preview/item/id', collection.id, selectedArea]"
+                  class="collection-list-item" *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
+      {{collection.title}}
+    </md-list-item>
 
-</md-list>
+  </md-list>
 </md-card-content>

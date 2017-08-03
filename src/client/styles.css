@@ -17,9 +17,25 @@
 
 .body {
   background: #eee;
-  width: 100%;
   margin: 0;
 }
+.hide-image {
+  visbility: none;
+}
+a {
+  color: rgb(15, 149, 159);
+  transition-property: color;
+  transition-duration: 0.5s;
+  text-decoration: none;
+}
+a:visited {
+  /*color: rgb(15, 76, 159);*/
+  color: rgb(15, 149, 159);
+}
+a.mat-button, a.mat-button:visited {
+  color: #2f2f2f;
+}
+
 
 md-sidenav-container {
   background: #423e3e;
@@ -72,6 +88,7 @@ md-card {
 
 .header-image-container {
   background: #423e3e;
+
 }
 
 .header-image-container {
@@ -122,8 +139,7 @@ md-card {
 }
 
 .header-list-overlay {
-  background: rgb(39, 38, 33);
-  opacity: 0.7;
+  background: rgb(0, 0, 0);
   height: 209px;
   width: 100%;
   position: absolute;
@@ -133,7 +149,7 @@ md-card {
 
 .header-background-overlay {
   background: #000;
-  opacity: 0.5;
+  opacity: 0.7;
   height: 150px;
   width: 100%;
   position: absolute;
@@ -141,7 +157,7 @@ md-card {
   top: 0;
 }
 .area-color {
-  color: #999;
+  color: #776a6a;
 }
 .margin-for-mobile {
   margin-left: 4px;
@@ -188,9 +204,13 @@ collection-list .mat-input-wrapper {
 }
 
 .mat-sidenav {
-  background: #e0e0e0 !important;
+  background: #ffffff !important;
 }
-
+.collection-filter-input {
+  width:90%;
+  margin-top: 20px;
+  padding: 6px 12px;
+}
 /*.container-fix {*/
 /*position: absolute !important;*/
 /*right: 0;*/
@@ -232,3 +252,7 @@ md-chip {
 md-chip .mat-icon {
   height: 15px;
 }
+body {
+  background-color: #eee;
+}
+

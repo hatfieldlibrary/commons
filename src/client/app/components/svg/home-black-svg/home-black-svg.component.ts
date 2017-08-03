@@ -14,7 +14,23 @@
  *   You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-.chips {
-  margin-left: 12px;
 
+import { Component} from '@angular/core';
+
+import {DomSanitizer} from '@angular/platform-browser';
+import {MdIconRegistry} from '@angular/material';
+
+
+@Component({
+  selector: 'home-black-svg',
+  templateUrl: './home-black-svg.component.html',
+  styleUrls: ['./home-black-svg.component.css'],
+  viewProviders: [MdIconRegistry]
+})
+export class HomeBlackSvgComponent {
+  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'home-black',
+      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_black_24px.svg'));
+  }
 }

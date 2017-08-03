@@ -15,14 +15,15 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
 @Component({
   selector: 'area-information',
   templateUrl: './area-information.component.html',
-  styleUrls: ['./area-information.component.css']
+  styleUrls: ['./area-information.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AreaInformationComponent implements OnChanges{
 
@@ -33,6 +34,7 @@ export class AreaInformationComponent implements OnChanges{
   description: string;
   url: string;
   linkLabel: string;
+  title: string;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.areaInfo) {
@@ -41,10 +43,12 @@ export class AreaInformationComponent implements OnChanges{
         let areaTitles = '';
         areaList.forEach((area) => areaTitles += area.title + ', ');
         areaTitles = areaTitles.slice(0, -2);
-        this.description = 'Collection areas: <span class="area-color">' + areaTitles + '</span>';
+        this.description = 'Viewing collection areas: <span class="area-color">' + areaTitles + '</span>';
         this.url = '';
         this.linkLabel = '';
+        this.title = '';
       } else {
+        this.title = changes.areaInfo.currentValue[0].title;
         this.description = changes.areaInfo.currentValue[0].description;
         this.url = changes.areaInfo.currentValue[0].url;
         this.linkLabel = changes.areaInfo.currentValue[0].linkLabel;

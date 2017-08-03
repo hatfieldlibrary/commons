@@ -17,7 +17,7 @@
 
 <md-sidenav-container>
 
-  <app-menus-component [areaList]="areas$ | async" [showBack]="false"></app-menus-component>
+  <app-menus-component [selectedArea]="areaId" [areaList]="areas$ | async" [showBack]="false"></app-menus-component>
 
   <title-header [title]="title"
                 [subtitle]="subtitle"
@@ -27,11 +27,13 @@
 
   </title-header>
 
-  <md-card class="main-content-area">
+  <md-card class="main-content-area" style="padding:0;">
 
-    <md-card-content>
+    <md-card-content style="background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
+    background-repeat: no-repeat,repeat-x;
+    background-position: top center,top center;">
 
-      <div fxLayout="row" fxLayoutAlign="center start" style="margin-top: 90px;">
+      <div fxLayout="row" fxLayoutAlign="center start" style="margin-top: 75px;padding-top: 35px;">
 
         <div fxLayout="column"
              fxFlex="100"
@@ -48,8 +50,8 @@
                                 [areaInfo]="areaInfo$ | async"
                                 ></area-information>
 
-              <!--<home-screen *ngIf="homeScreen" [selectedSubject]="selectedSubject$ | async"-->
-                           <!--(removeSubject)="removeSubject($event)"></home-screen>-->
+              <home-screen *ngIf="homeScreen"
+                           (removeSubject)="removeSubject($event)"></home-screen>
 
               <collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async" [selectedArea]="areaId"></collection-list>
 

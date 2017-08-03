@@ -36,7 +36,7 @@
               <icon-back [routerLink]="getBackLink()" ></icon-back>
             </button>
             </div>
-            <div style="height: 24px;">
+            <div>
             <span>&nbsp;Academic Commons</span>
             </div>
 
@@ -46,10 +46,10 @@
 
           <md-divider style="border-color: #fff;"></md-divider>
 
-          <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="10">
-            <a md-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+          <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="15">
+            <a [href]="homeUrl" target="_top" md-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
               <home-svg></home-svg>
-              <span>&nbsp;&nbsp;Home</span></a>
+              <span>&nbsp;Commons Home</span></a>
           </div>
 
           <md-divider></md-divider>
@@ -65,10 +65,32 @@
         <div class="fill-remaining-space"></div>
 
         <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
-          <md-toolbar style="background: #ccc; ">
+          <md-toolbar >
             <icon-close (click)="sidenav.close()"></icon-close>
           </md-toolbar>
-          <navigation-selector [areaList]="areaList" (onSelected)="sidenav.toggle()"></navigation-selector>
+          <div>
+            <div fxLayout="row" fxLayoutAlign="start start">
+              <md-list fxFlex>
+                <md-list-item (click)="goToHome()" target="_top" style="cursor: default">
+                  <home-black-svg></home-black-svg>
+                  <h5>&nbsp;Commons Home</h5>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item (click)="goToSecondary()" target="_top" style="cursor: default">
+                  <h5>&nbsp;Hatfield Library</h5>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item (click)="goToTertiary()" target="_top" style="cursor: default">
+                  <h5>&nbsp;Willamette University</h5>
+                </md-list-item>
+                <md-divider></md-divider>
+              </md-list>
+            </div>
+
+
+
+          </div>
+          <navigation-selector  fxHide.gt-sm="true" [areaList]="areaList" [selectedAreas]="selectedArea" (onSelected)="sidenav.toggle()"></navigation-selector>
         </md-sidenav>
 
       </div>

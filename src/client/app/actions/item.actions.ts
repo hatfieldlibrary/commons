@@ -24,6 +24,7 @@ export const ItemActionTypes = {
 
   ITEM_REQUEST: type('[Item] Request Item.'),
   ITEM_SUCCESS: type('[Item] Item Request Response'),
+  ITEM_RESET: type('[Item] Item Reset'),
   RELATED_COLLECTIONS: type('[Item] Find Related Collections'),
   RELATED_COLLECTIONS_SUCCESS: type('[Item] Related Collections'),
   CLEAR_RELATED_COLLECTIONS: type('[Item] Clear Related Collections'),
@@ -60,6 +61,11 @@ export class ItemRequestFailed implements Action {
   }
 }
 
+export class ItemReset implements Action {
+  type = ItemActionTypes.ITEM_RESET;
+  payload: void;
+  constructor() {}
+}
 
 export class ItemActionRelated implements Action {
   type = ItemActionTypes.RELATED_COLLECTIONS;
@@ -94,6 +100,7 @@ export class ClearRelatedItems implements Action {
 export type ItemActions =
   ItemRequest |
   ItemSuccess |
+  ItemReset |
   ItemActionRelated |
   ItemActionRelatedSuccess |
   ItemRequestFailed ;

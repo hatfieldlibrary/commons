@@ -22,7 +22,8 @@ import {HttpModule, RequestOptions} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MdButtonModule, MdSelectModule, MdCardModule, MdListModule, MdToolbarModule, MdIconModule, MdChipsModule,
-  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule, MdRadioModule, MdCheckboxModule
+  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule, MdRadioModule, MdCheckboxModule,
+  MdProgressSpinnerModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
@@ -82,6 +83,7 @@ import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-blac
 import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
 import {UtilitiesService} from "./services/utilities.service";
+import {HomeBlackSvgComponent} from "./components/svg/home-black-svg/home-black-svg.component";
 
 export const appRoutes = [
 
@@ -119,8 +121,10 @@ export const appRoutes = [
     SearchSvgComponent,
     AppMenusComponent,
     HomeSvgComponent,
+    HomeBlackSvgComponent,
     CollectionsSvgComponent,
     AreasSvgComponent,
+    BackBlackSvgComponent,
     TitleHeaderComponent,
     ItemHeaderImageComponent,
     CloseWhiteSvgComponent,
@@ -129,7 +133,7 @@ export const appRoutes = [
     RunSvgComponent,
     InfoSvgComponent,
     LoadingSvgComponent,
-    BackBlackSvgComponent,
+    HomeBlackSvgComponent,
     CollectionsFilterPipe,
     FilterSvgComponent
 
@@ -147,6 +151,7 @@ export const appRoutes = [
     MdChipsModule,
     MdGridListModule,
     MdCheckboxModule,
+    MdProgressSpinnerModule,
     BrowserAnimationsModule,
     BrowserModule,
     BrowserAnimationsModule,

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
 import {Location} from '@angular/common';
@@ -9,7 +9,8 @@ import {SubjectType} from "../../shared/data-types/subject.type";
 @Component({
   selector: 'app-menus-component',
   templateUrl: './app-menus.component.html',
-  styleUrls: ['./app-menus.component.css']
+  styleUrls: ['./app-menus.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppMenusComponent implements OnInit {
 
@@ -21,21 +22,36 @@ export class AppMenusComponent implements OnInit {
   @Input() title: string;
   @ViewChild('sidenav') sideNavigate: MdSidenav;
   public previousUrl: string = '';
+  homeUrl: string = 'http://libmedia.willamette.edu/academiccommons';
+  secondaryUrl: string = 'http://library.willamette.edu';
+  tertiaryUrl: string = 'http://www.willamette.edu';
 
   constructor(private utils: UtilitiesService,
               private router: Router) {
     router.events
       .filter(event => event instanceof NavigationEnd)
-      .subscribe((event:NavigationEnd) => {
+      .subscribe((event: NavigationEnd) => {
         this.previousUrl = event.url;
       });
+  }
+
+  goToHome(): void {
+    window.location.href = this.homeUrl;
+  }
+
+  goToSecondary(): void {
+    window.location.href = this.secondaryUrl;
+  }
+
+  goToTertiary(): void {
+    window.location.href= this.tertiaryUrl;
   }
 
   openMenu() {
     this.sideNavigate.open();
   }
 
-  getBackLink(): string{
+  getBackLink(): string {
     let path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
     return path;
   }

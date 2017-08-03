@@ -99,6 +99,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    */
   setAreasAvailable(): void {
     this.areas$.subscribe((areas) => {
+      console.log(areas)
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areasAvailable = true;
@@ -161,23 +162,28 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.store.dispatch(new fromItem.ClearRelatedItems());
+    // this.store.dispatch(new fromItem.ItemReset());
+    // this.store.dispatch(new fromItem.ClearRelatedItems());
 
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
+    this.collectionImage = '';
 
     // Once we have item information, request related items.
     this.itemWatcher = this.item$.subscribe((data) => {
       this.getRelatedItems(data);
-      this.collectionImage = data.collection.image;
-
+      //this.collectionImage = data.collection.image;
     });
 
     // Request item based on route parameter.
     this.route.params
       .subscribe((params) => {
+
+        this.store.dispatch(new fromItem.ItemReset());
+        this.store.dispatch(new fromItem.ClearRelatedItems());
+
         this.selectedArea = params['areaId'];
 
         if (params['id']) {

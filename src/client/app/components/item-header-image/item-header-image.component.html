@@ -1,6 +1,11 @@
-<div fxFlex="100"
-     class='header-image' >
-  <loading-svg [class.hide-image]="isImageHidden"></loading-svg>
-  <img fxHide="true" fxShow.gt-xs="true" [src]="backgroundImage" style="height: 100%; width: 100%">
-  <img fxHide="false" fxHide.gt-xs="true" [src]="smallBackgroundImage" style="height: 100%; width: 100%">
+<div class='header-image'>
+
+  <img [ngClass]="{'hide-image': !imageLoaded}" (load)="setImageLoaded()" [src]="backgroundImage"
+       style="height: 100%; width: 100%">
+  <div *ngIf="!imageLoaded" fxFlex="100" fxLayout="row" fxLayoutAlign="start center" style="width:100%;">
+    <h4 style="color:#fff;">Loading...</h4>
+  </div>
+
 </div>
+
+

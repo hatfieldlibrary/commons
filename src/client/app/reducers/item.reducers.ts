@@ -26,43 +26,52 @@ export interface State {
   loading: boolean;
 }
 
+const initialCollection = {
+
+  id: 0,
+  title: '',
+  image: '',
+  url: '',
+  searchUrl: '',
+  desc: '',
+  dates: '',
+  items: '',
+  linkOptions: '',
+  searchOptions: '',
+  assetType: '',
+  restricted: false,
+  published: false
+};
+
+const initialCategory = {
+  id: 0,
+  title: '',
+  linkLabel: '',
+  url: '',
+  secondaryUrl: '',
+  description: '',
+  areaId: ''
+};
+
+const initialItemTypes = [{
+  id: 0,
+  name: '',
+  icon: ''
+
+}];
+
 const initialState: State = {
     item: {
-      collection: {
-        id: 0,
-        title: '',
-        image: '',
-        url: '',
-        searchUrl: '',
-        desc: '',
-        dates: '',
-        items: '',
-        linkOptions: '',
-        searchOptions: '',
-        assetType: '',
-        restricted: false,
-        published: false
-      },
-      category: {
-        id: 0,
-        title: '',
-        linkLabel: '',
-        url: '',
-        secondaryUrl: '',
-        description: '',
-        areaId: ''
-      },
-      itemTypes: [{
-        id: 0,
-        name: '',
-        icon: ''
-
-      }],
+      collection: initialCollection,
+      category: initialCategory,
+      itemTypes: initialItemTypes,
       subjects: []
     },
     loading: false
   }
 ;
+
+
 
 export function reducer(state = initialState, action: ItemActions): State {
 
@@ -83,6 +92,18 @@ export function reducer(state = initialState, action: ItemActions): State {
         loading: false
       });
 
+    }
+
+    case ItemActionTypes.ITEM_RESET: {
+      return Object.assign({},  {
+        item: {
+          collection: initialCollection,
+          category: initialCategory,
+          itemTypes: initialItemTypes,
+          subjects: []
+        },
+        loading: true
+      });
     }
 
     case ItemActionTypes.REQUEST_FAILED: {

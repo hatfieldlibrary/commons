@@ -15,7 +15,9 @@
         <div class="header-title item-title">
           <h1>{{item?.collection.title}}</h1>
         </div>
-        <item-header-image></item-header-image>
+        <div fxFlex="100">
+        <item-header-image fxFlex="100" [image]="item?.collection.image"></item-header-image>
+        </div>
       </div>
 
     </div>

@@ -16,6 +16,7 @@
  */
 
 import {
+  ChangeDetectionStrategy,
   Component, Input, OnInit
 } from '@angular/core';
 
@@ -26,18 +27,17 @@ import {ItemType} from "../../shared/data-types/item.type";
 @Component({
   selector: 'item-header',
   templateUrl: 'item-header.component.html',
-  styleUrls: ['item-header.component.css']
+  styleUrls: ['item-header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemHeaderComponent implements OnInit {
 
-  @Input() image: string;
   @Input() item: ItemType;
 
   constructor() {
   }
 
   ngOnInit(): void {
-
   }
 
 }
