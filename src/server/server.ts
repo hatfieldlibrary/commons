@@ -42,7 +42,7 @@ const auth = new Authentication();
 auth.init(app, config, passport);
 
 const routes = new AppRoutes();
-routes.init(app, express);
+routes.init(app, express, config);
 
 /**
  * Get port from environment and store in Express.

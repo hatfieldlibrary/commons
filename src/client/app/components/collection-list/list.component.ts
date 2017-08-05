@@ -19,8 +19,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 
 import 'rxjs/add/operator/switchMap';
 import {CollectionType} from "../../shared/data-types/collection.type";
-import * as Reselect from "reselect";
-import Selector = Reselect.Selector;
+import {environment} from '../../environments/environment';
 import {SelectedSubject} from "../../shared/data-types/selected-subject";
 
 @Component({
@@ -31,6 +30,7 @@ import {SelectedSubject} from "../../shared/data-types/selected-subject";
 })
 export class ListComponent {
 
+  rootPath: string = environment.appRoot;
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SelectedSubject;
   @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();

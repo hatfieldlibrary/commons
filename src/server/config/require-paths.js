@@ -26,7 +26,7 @@
     // Home of the development/test credentials file.
     var devDirectory = getUserHome() + '/etc/commons/';
     // Home of the production credentials file.
-    var prodDirectory = '/etc/commons/';
+    var prodDirectory = '/etc/commons-2.0/';
     var path = {
         development: devDirectory,
         test: devDirectory,

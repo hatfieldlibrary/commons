@@ -21,10 +21,9 @@
  */
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
-import * as Reselect from 'reselect';
-import Selector = Reselect.Selector;
 import {Store} from '@ngrx/store';
 import {Component, OnInit, ChangeDetectionStrategy, HostBinding, OnDestroy} from '@angular/core';
+import {environment} from '../../environments/environment';
 
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
@@ -34,9 +33,8 @@ import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
-import {fadeIn, slideInLeftAnimation} from "../../animation/animations";
+import {fadeIn} from "../../animation/animations";
 import {Subscription} from "rxjs/Subscription";
-import {SelectedSubject} from '../../shared/data-types/selected-subject';
 
 @Component({
   selector: 'lists-container',
@@ -208,9 +206,9 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // this.store.dispatch(new subjectAction.RemoveCurrentSubject());
     // Using the router is probably a better solution.
     if (this.areaId && this.areaId !== '0') {
-      this.router.navigateByUrl('commons-preview/collection/area/' + this.areaId);
+      this.router.navigateByUrl('/'+environment.appRoot+'/collection/area/' + this.areaId);
     } else {
-      this.router.navigateByUrl('commons-preview/collection');
+      this.router.navigateByUrl('/'+environment.appRoot+'/collection');
     }
   }
 

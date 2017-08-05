@@ -68,16 +68,16 @@ export class Authentication {
        */
     } else if (app.get('env') === 'production') {
 
-      const redport = config.redisPort || 6379;
+      const redisPort = config.redisPort || 6379;
       let client = redis.createClient(
-        redport, '127.0.0.1',
+        redisPort, '127.0.0.1',
         {}
       );
       app.use(cookieParser());
       app.use(session(
         {
-          secret: 'insideoutorup',
-          store: new RedisStore({host: '127.0.0.1', port: config.redisPort, client: client}),
+          secret: 'insideoutorupagain',
+          store: new RedisStore({host: '127.0.0.1', port: redisPort, client: client}),
           saveUninitialized: false, // don't create session until something stored,
           resave: false // don't save session if unmodified
         }
@@ -107,11 +107,11 @@ export class Authentication {
      */
     let User = {
 
-      findOne: function (login, callback) {
-        if (typeof login === 'undefined') {
+      findOne: function (profile, callback) {
+        if (typeof profile === 'undefined') {
           return callback(new Error('User is undefined'), '');
         }
-        return callback(null, login.login);
+        return callback(null, profile.login);
       }
     };
 
@@ -131,12 +131,14 @@ export class Authentication {
     }, function (profile, done) {
 
       User.findOne({login: profile.attributes}, function (err, user) {
+
         if (err) {
           return done(err);
         }
         if (!user) {
           return done(null, false, {message: 'Unknown user'});
         }
+
         return done(null, user);
       });
 
@@ -188,9 +190,11 @@ export class Authentication {
      * */
     app.ensureAuthenticated = function (req, res, next) {
 
-      let find = 'auth/';
+      // Get the auth path prefix from configuration.
+      let find = config.authPath;
 
       let path = req._parsedOriginalUrl.pathname;
+      // Removes the auth path prefix from the current path.
       let redirect = path.replace(find, '');
 
       passport.authenticate('cas', (err, user, info) => {
@@ -212,7 +216,7 @@ export class Authentication {
           }
 
           req.session.messages = '';
-
+          // Redirect to the requested item.
           return res.redirect(redirect);
 
         });

@@ -1,11 +1,10 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges,
-  ViewChild
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges
 } from '@angular/core';
 import {SearchService} from "../../services/search.service";
 import {SearchTerms} from "../../shared/data-types/simple-search.type";
 import {Observable} from "rxjs/Observable";
-
+import {environment} from '../../environments/environment';
 import {ActivatedRoute} from "@angular/router";
 import {AuthCheckService} from "../../services/auth-check.service";
 import {AuthType} from "../../shared/data-types/auth.type";
@@ -23,7 +22,7 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
 
   auth$: Observable<AuthType>;
-
+  authenticationPath: string;
   @Input() restricted: boolean;
   @Input() linkOptions: string;
   @Input() assetType: string;
@@ -35,7 +34,6 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   ITEM_BUTTON_LABEL: string = 'View this Item';
   SEARCH_OPTIONS_LABEL: string = 'Select to Browse';
   optionList = [];
-  currentUrl: string = '';
   isAuthenticated: boolean = false;
 
 
@@ -46,7 +44,9 @@ export class ItemLinksComponent implements OnChanges, OnInit {
               private store: Store<fromRoot.State>) {
 
     const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
-    url.subscribe((url) => this.currentUrl = '/' + url);
+    url.subscribe((url) => {
+      this.authenticationPath = environment.authPath + '/' + url
+    });
 
   }
 
@@ -61,7 +61,6 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
 
-    //this.changeDetector.detach();
     this.model = new SearchTerms();
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
 

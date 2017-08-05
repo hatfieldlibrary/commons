@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {SubjectType} from "../shared/data-types/subject.type";
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class UtilitiesService {
@@ -8,16 +9,16 @@ export class UtilitiesService {
 
   _handleAreaBackLink(selectedArea: string, selectedSubject: SubjectType): string {
     if (selectedSubject && selectedSubject.id !== 0) {
-      return '/commons-preview/collection/subject/'+ selectedSubject.id +'/area/' + selectedArea
+      return '/'+ environment.appRoot + '/collection/subject/'+ selectedSubject.id +'/area/' + selectedArea
     }
-    return '/commons-preview/collection/area/' + selectedArea;
+    return '/'+ environment.appRoot + '/collection/area/' + selectedArea;
   }
 
   _handleGlobalListBackLink(selectedSubject: SubjectType): string {
     if (selectedSubject && selectedSubject.id !== 0) {
-      return '/commons-preview/collection/subject/'+  selectedSubject.id;
+      return '/'+ environment.appRoot + '/collection/subject/'+  selectedSubject.id;
     }
-    return '/commons-preview/collection';
+    return '/'+ environment.appRoot + '/collection';
   }
 
   getBackLink(selectedArea: string, selectedSubject: SubjectType): string {

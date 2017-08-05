@@ -24,7 +24,7 @@
 
   <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'area'">
     <md-list-item #subjects *ngFor="let subject of subjectList">
-      <button md-raised-button color="primary" [routerLink]="['/commons-preview/collection/subject/', subject.id, 'area', areaId]">
+      <button md-raised-button color="primary" [routerLink]="['/',appRoot,'collection','subject', subject.id, 'area', areaId]">
         {{subject.name}}
       </button>
     </md-list-item>
@@ -32,7 +32,7 @@
 
   <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'all'">
     <md-list-item #subjects *ngFor="let subject of subjectList">
-      <button md-raised-button color="primary" [routerLink]="['/commons-preview/collection/subject/', subject.id]">
+      <button md-raised-button color="primary" [routerLink]="['/', appRoot, 'collection','subject', subject.id]">
         {{subject.name}}
       </button>
     </md-list-item>

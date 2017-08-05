@@ -36,7 +36,7 @@ var config = configs.getConfig(env);
 var auth = new auth_config_1.Authentication();
 auth.init(app, config, passport);
 var routes = new routes_1.AppRoutes();
-routes.init(app, express);
+routes.init(app, express, config);
 /**
  * Get port from environment and store in Express.
  */

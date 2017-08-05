@@ -21,21 +21,19 @@
 
 import * as path from 'path';
 
-const authentication = require('../controllers/authentication');
-
 export class AppRoutes {
 
   public constructor() {}
 
-  public init(app, express) {
+  public init(app, express, config) {
 
     // Point static path to dist
     app.use(express.static(path.join(__dirname, '../../../dist')));
 
-    // Requires authentication and authentication controller.
-    app.use('/auth', app.ensureAuthenticated);
-
-    app.use('/authCheck', app.checkAuthentication);
+    // Passport authentication
+    app.use(config.authPath, app.ensureAuthenticated);
+    // Check for authenticated user.
+    app.use(config.authCheck, app.checkAuthentication);
 
    // Catch all other routes and return the index file
     app.get('*', function (req, res) {

@@ -17,6 +17,7 @@
 
 import {Component, Input} from '@angular/core';
 import {RelatedType} from "../../shared/data-types/related-collection";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'related-items',
@@ -28,5 +29,7 @@ export class RelatedItemsComponent {
   @Input() related: RelatedType[];
   @Input() selectedArea: string;
   @Input() columns: number;
+  appRoot = environment.appRoot;
+  imagePath = environment.apiHost +  environment.imagePath;
 
 }

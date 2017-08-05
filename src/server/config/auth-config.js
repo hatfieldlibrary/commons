@@ -62,12 +62,12 @@ var Authentication = (function () {
              */
         }
         else if (app.get('env') === 'production') {
-            var redport = config.redisPort || 6379;
-            var client = redis.createClient(redport, '127.0.0.1', {});
+            var redisPort = config.redisPort || 6379;
+            var client = redis.createClient(redisPort, '127.0.0.1', {});
             app.use(cookieParser());
             app.use(session({
-                secret: 'insideoutorup',
-                store: new RedisStore({ host: '127.0.0.1', port: config.redisPort, client: client }),
+                secret: 'insideoutorupagain',
+                store: new RedisStore({ host: '127.0.0.1', port: redisPort, client: client }),
                 saveUninitialized: false,
                 resave: false // don't save session if unmodified
             }));
@@ -91,11 +91,11 @@ var Authentication = (function () {
          * Class for validating the user.
          */
         var User = {
-            findOne: function (login, callback) {
-                if (typeof login === 'undefined') {
+            findOne: function (profile, callback) {
+                if (typeof profile === 'undefined') {
                     return callback(new Error('User is undefined'), '');
                 }
-                return callback(null, login.login);
+                return callback(null, profile.login);
             }
         };
         /**
@@ -164,8 +164,10 @@ var Authentication = (function () {
          * redirected to 'file/one' in the CAS passport authenticate callback method.
          * */
         app.ensureAuthenticated = function (req, res, next) {
-            var find = 'auth/';
+            // Get the auth path prefix from configuration.
+            var find = config.authPath;
             var path = req._parsedOriginalUrl.pathname;
+            // Removes the auth path prefix from the current path.
             var redirect = path.replace(find, '');
             passport.authenticate('cas', function (err, user, info) {
                 if (err) {
@@ -180,6 +182,7 @@ var Authentication = (function () {
                         return next(err);
                     }
                     req.session.messages = '';
+                    // Redirect to the requested item.
                     return res.redirect(redirect);
                 });
             })(req, res, next);

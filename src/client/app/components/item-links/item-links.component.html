@@ -6,7 +6,7 @@
          fxFlex="100"
          fxLayoutAlign="center center"
          *ngIf="restricted === true && !isAuthenticated">
-      <a md-raised-button color="primary" href="/auth{{currentUrl}}">WU Login</a>
+      <a md-raised-button color="primary" href="{{authenticationPath}}">WU Login</a>
       <div md-subheader><br>Login required for access.</div>
     </div>
 

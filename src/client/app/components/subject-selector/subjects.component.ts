@@ -16,12 +16,13 @@
  */
 
 import {
-  AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList, Renderer2,
+  AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
+import {environment} from '../../environments/environment';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   isMobile: boolean = true;
   leftIsVisible: boolean = false;
   rightIsVisible: boolean = false;
+  appRoot = environment.appRoot;
 
   /**
    * Listen for window resize and adjust navigation arrows.

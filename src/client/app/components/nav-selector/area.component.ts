@@ -15,10 +15,11 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'navigation-selector',
@@ -63,9 +64,9 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   _navigateRoute(areaId: string) {
     // the area id can be a string object of length zero.
     if (areaId !== '0' && areaId.length > 0) {
-      this.router.navigate(['/commons-preview/collection/area/', areaId]);
+      this.router.navigate(['/',environment.appRoot,'collection','area', areaId]);
     } else {
-      this.router.navigate(['/commons-preview/collection']);
+      this.router.navigate(['/',environment.appRoot,'collection']);
     }
   }
 

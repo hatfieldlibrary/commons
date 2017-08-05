@@ -18,5 +18,11 @@
 export const environment = {
   production: true,
   apiHost: 'http://libmedia.willamette.edu',
-  apiRoot: '/commonsRest'
+
+  appRoot: 'commons',
+  apiRoot: '/commons-rest',
+  imagePath: '/commons-images',
+
+  authPath: '/commons-auth',
+  authCheck: '/commons-check'
 };

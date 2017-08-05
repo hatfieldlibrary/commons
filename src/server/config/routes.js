@@ -20,16 +20,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Created by mspalti on 4/26/17.
  */
 var path = require("path");
-var authentication = require('../controllers/authentication');
 var AppRoutes = (function () {
     function AppRoutes() {
     }
-    AppRoutes.prototype.init = function (app, express) {
+    AppRoutes.prototype.init = function (app, express, config) {
         // Point static path to dist
         app.use(express.static(path.join(__dirname, '../../../dist')));
-        // Requires authentication and authentication controller.
-        app.use('/auth', app.ensureAuthenticated);
-        app.use('/authCheck', app.checkAuthentication);
+        // Passport authentication
+        app.use(config.authPath, app.ensureAuthenticated);
+        // Check for authenticated user.
+        app.use(config.authCheck, app.checkAuthentication);
         // Catch all other routes and return the index file
         app.get('*', function (req, res) {
             res.sendFile(path.join(__dirname, '../../../dist/index.html'));

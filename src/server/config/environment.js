@@ -42,6 +42,8 @@ var Configuration = (function () {
                 serverBaseURL: credentials.serverBaseURL,
                 ssoBaseURL: credentials.ssoBaseURL,
                 validateURL: credentials.validateURL,
+                authPath: '/auth',
+                authCheck: '/check',
                 nodeEnv: env
             },
             test: {
@@ -52,6 +54,8 @@ var Configuration = (function () {
                 serverBaseURL: credentials.serverBaseURL,
                 ssoBaseURL: credentials.ssoBaseURL,
                 validateURL: credentials.validateURL,
+                authPath: '/auth',
+                authCheck: '/check',
                 nodeEnv: env
             },
             production: {
@@ -62,6 +66,9 @@ var Configuration = (function () {
                 serverBaseURL: credentials.serverBaseURL,
                 ssoBaseURL: credentials.ssoBaseURL,
                 validateURL: credentials.validateURL,
+                redisPort: credentials.redisPort,
+                authPath: '/commons-auth',
+                authCheck: '/commons-check',
                 nodeEnv: env
             }
         };

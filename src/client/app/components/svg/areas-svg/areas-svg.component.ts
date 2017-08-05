@@ -7,15 +7,12 @@ import {DomSanitizer} from "@angular/platform-browser";
   templateUrl: './areas-svg.component.html',
   styleUrls: ['./areas-svg.component.css']
 })
-export class AreasSvgComponent implements OnInit {
+export class AreasSvgComponent  {
 
   constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'areas',
       sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_subject_white_24px.svg'));
-  }
-
-  ngOnInit() {
   }
 
 }

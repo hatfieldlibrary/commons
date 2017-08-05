@@ -28,6 +28,7 @@ let credentials;
 let credentialsPath = require('./require-paths');
 
 try {
+
   // The path to credentials.
   credentials = require(credentialsPath.path(env) + 'credentials');
 
@@ -54,6 +55,8 @@ export class Configuration implements AppConfig {
       serverBaseURL: credentials.serverBaseURL,
       ssoBaseURL: credentials.ssoBaseURL,
       validateURL: credentials.validateURL,
+      authPath: '/auth',
+      authCheck: '/check',
       nodeEnv: env
     },
 
@@ -65,6 +68,8 @@ export class Configuration implements AppConfig {
       serverBaseURL: credentials.serverBaseURL,
       ssoBaseURL: credentials.ssoBaseURL,
       validateURL: credentials.validateURL,
+      authPath: '/auth',
+      authCheck: '/check',
       nodeEnv: env
     },
 
@@ -76,6 +81,9 @@ export class Configuration implements AppConfig {
       serverBaseURL: credentials.serverBaseURL,
       ssoBaseURL: credentials.ssoBaseURL,
       validateURL: credentials.validateURL,
+      redisPort: credentials.redisPort,
+      authPath: '/commons-auth',
+      authCheck: '/commons-check',
       nodeEnv: env
     }
   };

@@ -36,7 +36,7 @@
 
   <md-list>
     <!--<h3 md-subheader style=" background: #ada28e; color: #fff;">Collections and Items</h3>-->
-    <md-list-item style="cursor: default" [routerLink]="['/commons-preview/item/id', collection.id, selectedArea]"
+    <md-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
                   class="collection-list-item" *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
       {{collection.title}}
     </md-list-item>

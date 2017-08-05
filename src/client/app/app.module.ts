@@ -84,15 +84,16 @@ import { CollectionsFilterPipe } from './services/filters/collections-filter.pip
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
 import {UtilitiesService} from "./services/utilities.service";
 import {HomeBlackSvgComponent} from "./components/svg/home-black-svg/home-black-svg.component";
+import {environment} from 'app/environments/environment';
 
 export const appRoutes = [
 
-  {path: 'commons-preview/item/id/:id/:areaId', component: ItemContainerComponent},
-  {path: 'commons-preview/collection/area/:areaId', component: ListsContainerComponent},
-  {path: 'commons-preview/collection', component: ListsContainerComponent},
-  {path: 'commons-preview/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
-  {path: 'commons-preview/collection/subject/:subjectId', component: ListsContainerComponent},
-  {path: '', redirectTo: 'commons-preview/collection', pathMatch: 'full'},
+  {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
+  {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
+  {path: '', redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 
 ];
