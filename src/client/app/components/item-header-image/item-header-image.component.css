@@ -1,28 +1,45 @@
 
-.header-image {
-  background: #423e3e;
-  margin-top: -50px;
-  /* width within the parent.
-     can be any percentage. */
-  width: 100%;
-}
-.header-image:before {
-  content: "";
-  float: left;
+/*.header-image {*/
+  /*background: #423e3e;*/
+  /*margin-top: -50px;*/
+  /*!* width within the parent.*/
+     /*can be any percentage. *!*/
+  /*width: 100%;*/
+/*}*/
+/*.header-image:before {*/
+  /*content: "";*/
+  /*float: left;*/
 
-  /* essentially the aspect ratio. 100% means the
-     div will remain 100% as tall as it is wide, or
-     square in other words.  */
-  padding-bottom: 52%;
-}
+  /*!* essentially the aspect ratio. 100% means the*/
+     /*div will remain 100% as tall as it is wide, or*/
+     /*square in other words.  *!*/
+  /*padding-bottom: 52%;*/
+/*}*/
 /* this is a clearfix. you can use whatever
    clearfix you usually use, add
    overflow:hidden to the parent element,
    or simply float the parent container. */
-.header-image:after {
-  content: "";
-  display: table;
-  clear: both;
+/*.header-image:after {*/
+  /*content: "";*/
+  /*display: table;*/
+  /*clear: both;*/
+/*}*/
+
+
+.header-image {
+  position: relative;
 }
-
-
+.header-image:before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-top: 52.25%;
+}
+.header-image > .content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:3000;
+}

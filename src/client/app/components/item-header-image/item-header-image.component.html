@@ -1,11 +1,11 @@
 <div class='header-image'>
-
+<div class="content">
   <img [ngClass]="{'hide-image': !imageLoaded}" (load)="setImageLoaded()" [src]="backgroundImage"
        style="height: 100%; width: 100%">
   <div *ngIf="!imageLoaded" fxFlex="100" fxLayout="row" fxLayoutAlign="start center" style="width:100%;">
     <h4 style="color:#fff;">Loading...</h4>
   </div>
-
+</div>
 </div>
 
 
