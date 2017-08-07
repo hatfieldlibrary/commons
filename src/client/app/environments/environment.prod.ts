@@ -17,12 +17,15 @@
 
 export const environment = {
   production: true,
+  // REST API host.
   apiHost: 'http://libmedia.willamette.edu',
-
+  // Base path, do not include beginning forward slash.
   appRoot: 'commons',
+  // Path to the REST API.
   apiRoot: '/commons-rest',
+  // Path to images.
   imagePath: '/commons-images',
-
+  // Authentication paths.
   authPath: '/commons-auth',
   authCheck: '/commons-check'
 };
