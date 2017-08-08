@@ -31,6 +31,7 @@
 }
 .header-image:before {
   display: block;
+  border:none;
   content: "";
   width: 100%;
   padding-top: 52.25%;
@@ -41,5 +42,5 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index:3000;
+  z-index:100;
 }

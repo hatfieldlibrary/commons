@@ -20,7 +20,7 @@
   margin: 0;
 }
 .hide-image {
-  visbility: none;
+  display: none;
 }
 a {
   color: rgb(15, 149, 159);
@@ -67,7 +67,6 @@ subject-selector md-list {
 
 
 .header-image {
-
   width: 100%;
   position: relative;
   /*height: 100%;*/
@@ -88,12 +87,9 @@ md-card {
 
 .header-image-container {
   background: #423e3e;
-
-}
-
-.header-image-container {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   color: #fff;
+  border: none;
 }
 .header-image-container .header-title {
   margin-left: 42px;

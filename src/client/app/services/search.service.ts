@@ -30,8 +30,8 @@ export class SearchService {
    * @param terms user provided search terms
    */
   executeSimpleSearchQuery(baseURL: string, terms: string) {
-    const query =  encodeURIComponent(terms);
 
+    const query =  encodeURIComponent(terms);
     let splitString = baseURL.split('{$query}');
     const href = splitString[0] + query + splitString[1];
     //const href = baseURL + `all^${query}^all^and!`;

@@ -15,7 +15,6 @@
       fxFlex="100"
       fxLayout="column"
       fxLayoutGap="20px"
-
       fxLayoutAlign="center start"
       *ngIf="isAuthenticated || !restricted">
 
@@ -39,7 +38,7 @@
            *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'">
 
         <form fxLayout="row"
-              class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch();searchForm.reset();">
+              class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch();searchForm.reset();" novalidate>
           <md-input-container
             fxFlex="100"
             fxFlex.gt-xs="70">
@@ -47,8 +46,7 @@
                    placeholder="Search in this collection">
           </md-input-container>
 
-          <button md-button class="btn" color="default"
-                  type="submit" [disabled]="!isAuthenticated && restricted">
+          <button md-button (click)="simpleSearch();" class="btn" color="default" [disabled]="!isAuthenticated && restricted">
             <search-svg></search-svg>
           </button>
 
