@@ -12,7 +12,7 @@
 
       <div fxLayout="column">
         <div class="header-overlay"></div>
-        <div class="header-title item-title">
+        <div class="header-title item-title" [ngClass]="{'mobile-margins': isMobile}">
           <h1>{{item?.collection.title}}</h1>
         </div>
         <div>

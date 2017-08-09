@@ -1,1 +1,7 @@
-
+.mobile-margins {
+  margin-left: 16px;
+  margin-top: 46px;
+}
+.mobile-margins h1 {
+  font-size: 1.5em;
+}

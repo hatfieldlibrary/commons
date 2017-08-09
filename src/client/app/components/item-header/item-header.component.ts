@@ -17,12 +17,12 @@
 
 import {
   ChangeDetectionStrategy,
-  Component, Input, OnInit
+  Component, Input, OnDestroy, OnInit
 } from '@angular/core';
 
 import {ItemType} from "../../shared/data-types/item.type";
-
-
+import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'item-header',
@@ -30,14 +30,29 @@ import {ItemType} from "../../shared/data-types/item.type";
   styleUrls: ['item-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemHeaderComponent implements OnInit {
+export class ItemHeaderComponent implements OnInit, OnDestroy {
+
 
   @Input() item: ItemType;
+  watcher: Subscription;
+  isMobile: boolean = true;
 
-  constructor() {
+  constructor(private media: ObservableMedia) {
   }
 
   ngOnInit(): void {
+
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
   }
 
 }

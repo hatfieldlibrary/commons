@@ -13,14 +13,13 @@
          fxFlex.lg="70"
          fxFlex.gt-lg="60">
 
-      <div class="list-title" style="min-height: 82px;">
+      <div class="list-title" [ngClass]="{'mobile-margins': isMobile}" style="min-height: 82px;">
         <h1>{{title}}<span style="font-size:16px">{{subtitle}}</span></h1>
       </div>
 
       <subject-selector [subjectList]="subjectList" [areaId]="areaId"
                         [type]="type"></subject-selector>
     </div>
-
 
   </div>
 </div>
