@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges
 } from '@angular/core';
 import {SearchService} from "../../services/search.service";
@@ -21,10 +22,12 @@ import {Store} from "@ngrx/store";
 export class ItemLinksComponent implements OnChanges, OnInit {
 
 
+
   auth$: Observable<AuthType>;
   authenticationPath: string;
   @Input() restricted: boolean;
   @Input() linkOptions: string;
+  @Input() optionList;
   @Input() assetType: string;
   @Input() searchOptions: string;
   @Input() url: string;
@@ -33,9 +36,7 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   COLLECTION_BUTTON_LABEL: string = 'Browse the Collection';
   ITEM_BUTTON_LABEL: string = 'View this Item';
   SEARCH_OPTIONS_LABEL: string = 'Select to Browse';
-  optionList = [];
   isAuthenticated: boolean = false;
-
 
   constructor(private svc: SearchService,
               private route: ActivatedRoute,
@@ -54,11 +55,6 @@ export class ItemLinksComponent implements OnChanges, OnInit {
     this.svc.executeSimpleSearchQuery(this.searchUrl, this.model.terms)
   }
 
-  optionSearch(term) {
-    this.svc.executeOptionsQuery(this.url, term);
-
-  }
-
   ngOnInit(): void {
 
     this.model = new SearchTerms();
@@ -74,11 +70,11 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges): void {
 
     if(changes['linkOptions']) {
-      if (changes['linkOptions'].currentValue === 'opts') {
-        this.svc.getOptionsList(changes['url'].currentValue).subscribe((list) => {
-          this.optionList = list.result;
-        })
-      }
+      // if (changes['linkOptions'].currentValue === 'opts') {
+      //   this.svc.getOptionsList(changes['url'].currentValue).subscribe((list) => {
+      //     this.optionList = list.result;
+      //   })
+      // }
 
       if (this.restricted) {
         this.auth.getAuthStatus();

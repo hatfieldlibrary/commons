@@ -184,10 +184,6 @@ md-card {
   color: #999;
 }
 
-.mat-input-underline {
-  border-top-width: 2px !important;
-  border-color: #791716 !important;
-}
 collection-list .mat-input-underline {
   border-top-width: 2px !important;
   border-color: #aba79a !important;

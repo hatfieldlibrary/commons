@@ -22,7 +22,7 @@ import {HttpModule, RequestOptions} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MdButtonModule, MdSelectModule, MdCardModule, MdListModule, MdToolbarModule, MdIconModule, MdChipsModule,
-  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule, MdRadioModule, MdCheckboxModule,
+  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule, MdCheckboxModule,
   MdProgressSpinnerModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
@@ -85,6 +85,9 @@ import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.compo
 import {UtilitiesService} from "./services/utilities.service";
 import {HomeBlackSvgComponent} from "./components/svg/home-black-svg/home-black-svg.component";
 import {environment} from 'app/environments/environment';
+import { ItemSelectComponent } from './components/item-select-options/item-select.component';
+import { DatePickerSvgComponent } from './components/svg/date-picker-svg/date-picker-svg.component';
+
 
 export const appRoutes = [
 
@@ -136,7 +139,9 @@ export const appRoutes = [
     LoadingSvgComponent,
     HomeBlackSvgComponent,
     CollectionsFilterPipe,
-    FilterSvgComponent
+    FilterSvgComponent,
+    ItemSelectComponent,
+    DatePickerSvgComponent
 
   ],
   imports: [

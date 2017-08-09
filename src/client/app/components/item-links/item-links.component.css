@@ -1,0 +1,13 @@
+md-card {
+  min-height: 90px;
+  background: #efeadf;
+
+}
+md-input-container div.mat-input-underline {
+  height: 2px !important;
+  background-color: rgba(0, 0, 0, 0.57) !important;
+}
+.mat-input-underline {
+  border-top-width: 2px !important;
+  border-color: #791716 !important;
+}
