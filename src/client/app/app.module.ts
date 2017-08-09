@@ -96,6 +96,7 @@ export const appRoutes = [
   {path: environment.appRoot + '/collection', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
+  {path: environment.appRoot, redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '', redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 
