@@ -24,7 +24,7 @@ import {appRoutes} from '../../app.module';
 import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
 import {ListsContainerComponent} from "../../containers/lists-container/lists-container.component";
 import {AppComponent} from "../app.component";
-import {NavigationComponent} from "../nav-selector/area.component";
+import {NavigationComponent} from "../area-selector/area.component";
 import {SubjectsComponent} from "../subject-selector/subjects.component";
 import {ListHeaderComponent} from "../image-header/image-header.component";
 import {AreaInformationComponent} from "../area-information/area-information.component";

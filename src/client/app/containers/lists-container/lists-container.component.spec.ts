@@ -34,7 +34,7 @@ import {ActivatedRoute, RouterModule} from '@angular/router';
 
 import {ListsContainerComponent} from './lists-container.component';
 import {ListComponent} from '../../components/collection-list/list.component';
-import {NavigationComponent} from '../../components/nav-selector/area.component';
+import {NavigationComponent} from '../../components/area-selector/area.component';
 import {SubjectsComponent} from '../../components/subject-selector/subjects.component';
 
 import * as fromRoot from '../../reducers';

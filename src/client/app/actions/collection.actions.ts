@@ -38,6 +38,7 @@ export const CollectionActionTypes = {
   LIST_BY_AREA_SUBJECT_SUCCESS: type('[Collections] SubjectType Collections'),
   LIST_ALL_BY_SUBJECT: type('[Collections] All Collections by Subject'),
   LIST_ALL_BY_SUBJECT_SUCCESS: type('[Collections] All Collections by Subject Success'),
+  LIST_RESET: type('[Collections] Reset the Collection List to Empty'),
   REQUEST_FAILED: type('[Collections] Search Failed')
 
 };
@@ -48,6 +49,12 @@ export class CollectionAction implements Action {
   constructor(public payload: string) {
   }
 
+}
+
+export class CollectionReset implements Action {
+  type = CollectionActionTypes.LIST_RESET;
+  payload: void;
+  constructor() {}
 }
 
 export class AllCollectionsAction implements Action {
@@ -126,5 +133,5 @@ export class CollectionActionFailed implements Action {
 }
 
 
-export type CollectionActions = CollectionAction | CollectionSubjectAction | CollectionActionSuccess |
+export type CollectionActions = CollectionAction | CollectionReset | CollectionSubjectAction | CollectionActionSuccess |
   CollectionSubjectActionSuccess | CollectionActionFailed;

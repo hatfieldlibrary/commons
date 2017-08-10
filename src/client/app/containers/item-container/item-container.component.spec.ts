@@ -33,7 +33,7 @@ import * as fromRoot from '../../reducers';
 import {AppComponent} from "../../components/app.component";
 // import {MainContainer} from "../lists-container/main.container";
 import {ListComponent} from "../../components/collection-list/list.component";
-import {NavigationComponent} from "../../components/nav-selector/area.component";
+import {NavigationComponent} from "../../components/area-selector/area.component";
 import {SubjectsComponent} from "app/components/subject-selector/subjects.component";
 import {ListHeaderComponent} from "../../components/image-header/image-header.component";
 import {AreaInformationComponent} from "../../components/area-information/area-information.component";

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ItemHeaderComponent } from './item-header.component';
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
-import {NavigationComponent} from "../nav-selector/area.component";
+import {NavigationComponent} from "../area-selector/area.component";
 import {MdIconRegistry, MdSidenavModule, MdToolbarModule} from "@angular/material";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 import {RouterTestingModule} from "@angular/router/testing";

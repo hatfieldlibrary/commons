@@ -21,6 +21,9 @@ import 'rxjs/add/operator/switchMap';
 import {CollectionType} from "../../shared/data-types/collection.type";
 import {environment} from '../../environments/environment';
 import {SelectedSubject} from "../../shared/data-types/selected-subject";
+import {Store} from "@ngrx/store";
+import * as fromRoot from '../../reducers';
+import * as listActions from '../../actions/collection.actions';
 
 @Component({
   selector: 'collection-list',
@@ -37,10 +40,12 @@ export class ListComponent {
   @Input() selectedArea: string;
   filterTerm: string;
 
-  constructor() {
+  constructor(private store: Store<fromRoot.State>) {
     this.filterTerm = '';
   }
+
   deselect() {
+    this.store.dispatch(new listActions.CollectionReset());
     this.removeSubject.next()
   }
 

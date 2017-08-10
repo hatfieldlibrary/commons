@@ -20,6 +20,9 @@ import {AreaType} from "../../shared/data-types/area.type";
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {environment} from '../../environments/environment';
+import {Store} from "@ngrx/store";
+import * as fromRoot from '../../reducers';
+import * as listActions from '../../actions/collection.actions';
 
 @Component({
   selector: 'navigation-selector',
@@ -36,7 +39,9 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   formArrayRef: FormArray;
   private areaFormArray: FormArray;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {
+  constructor(private router: Router,
+              private formBuilder: FormBuilder,
+              private store: Store<fromRoot.State>) {
   }
 
   isSelected(id): boolean {
@@ -93,6 +98,8 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   }
 
   onChange(area: string, event: any) {
+
+    this.store.dispatch(new listActions.CollectionReset());
 
     // If the All Collection option is selected, reset the FormArray and navigate.
     if (area === '0') {

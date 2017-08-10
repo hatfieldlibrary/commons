@@ -35,7 +35,7 @@ import 'hammerjs';
 
 import {AppComponent} from './components/app.component';
 import {ListsContainerComponent} from "./containers/lists-container/lists-container.component";
-import {NavigationComponent} from './components/nav-selector/area.component';
+import {NavigationComponent} from './components/area-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
 import {ItemComponent} from './components/item/item.component';
 import {ListHeaderComponent} from './components/image-header/image-header.component';

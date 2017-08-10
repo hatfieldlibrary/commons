@@ -23,6 +23,9 @@ import {SubjectType} from "../../shared/data-types/subject.type";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
 import {environment} from '../../environments/environment';
+import {Store} from "@ngrx/store";
+import * as fromRoot from '../../reducers';
+import * as listActions from '../../actions/collection.actions';
 
 
 @Component({
@@ -68,7 +71,12 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param changeDetector
    */
   constructor(private changeDetector: ChangeDetectorRef,
-              private media: ObservableMedia) {
+              private media: ObservableMedia,
+              private store: Store<fromRoot.State>) {
+  }
+
+  resetList(): void {
+    this.store.dispatch(new listActions.CollectionReset());
   }
 
   /**
