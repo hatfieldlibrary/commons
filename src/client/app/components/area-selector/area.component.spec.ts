@@ -17,17 +17,27 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdListModule} from '@angular/material';
+import {MdButtonModule, MdCheckboxModule, MdListModule} from '@angular/material';
 import { NavigationComponent } from './area.component';
 
-import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {Observable} from "rxjs/Observable";
+import {Store} from "@ngrx/store";
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
   let fixture: ComponentFixture<NavigationComponent>;
+
+  let areaList = [
+    {
+      id: 1,
+      title: 'area one',
+      count: 1
+    }
+  ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,9 +47,22 @@ describe('NavigationComponent', () => {
         MenuSvgComponent
        ],
       imports: [
+        FormsModule,
+        ReactiveFormsModule,
         MdListModule,
         MdButtonModule,
+        MdCheckboxModule,
         RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: Store,
+          useClass: class {
+            dispatch = jasmine.createSpy('dispatch'); select = () => {
+              return Observable.of(areaList);
+            };
+          }
+        }
       ]
     })
     .compileComponents();
@@ -48,7 +71,9 @@ describe('NavigationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
+    component.ngOnInit();
   });
 
   it('should create', () => {

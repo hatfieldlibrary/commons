@@ -15,9 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 
-import 'rxjs/add/operator/switchMap';
 import {CollectionType} from "../../shared/data-types/collection.type";
 import {environment} from '../../environments/environment';
 import {SelectedSubject} from "../../shared/data-types/selected-subject";
@@ -31,22 +30,28 @@ import * as listActions from '../../actions/collection.actions';
   styleUrls: ['list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListComponent {
+export class ListComponent implements OnDestroy {
+
 
   rootPath: string = environment.appRoot;
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SelectedSubject;
-  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
+  @Output() removeSubject: EventEmitter<void> ;
   @Input() selectedArea: string;
   filterTerm: string;
 
   constructor(private store: Store<fromRoot.State>) {
     this.filterTerm = '';
+    this.removeSubject = new EventEmitter<void>();
   }
 
   deselect() {
     this.store.dispatch(new listActions.CollectionReset());
     this.removeSubject.next()
+  }
+
+  ngOnDestroy(): void {
+
   }
 
 }

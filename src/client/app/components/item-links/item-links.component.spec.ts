@@ -10,6 +10,8 @@ import {ActivatedRoute} from "@angular/router";
 import {AuthCheckService} from "../../services/auth-check.service";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
+import {ItemSelectComponent} from "../item-select-options/item-select.component";
+import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
 
 describe('ItemLinksComponent', () => {
   let component: ItemLinksComponent;
@@ -20,7 +22,9 @@ describe('ItemLinksComponent', () => {
       declarations: [
         ItemLinksComponent,
         LockSvgComponent,
-        SearchSvgComponent
+        SearchSvgComponent,
+        DatePickerSvgComponent,
+        ItemSelectComponent
       ],
       imports: [
         MdListModule,

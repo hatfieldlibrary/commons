@@ -21,16 +21,16 @@
 /* tslint:disable:no-unused-variable */
 import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {StoreModule, Store, Action} from '@ngrx/store';
+import { Store, Action} from '@ngrx/store';
 import {
-  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
+  MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
   MdListModule,
   MdSelectModule,
   MdSidenavModule,
   MdToolbarModule
 } from '@angular/material';
 import {Observable} from 'rxjs';
-import {ActivatedRoute, RouterModule} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 import {ListsContainerComponent} from './lists-container.component';
 import {ListComponent} from '../../components/collection-list/list.component';
@@ -41,23 +41,16 @@ import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import * as areaActions from '../../actions/area.actions';
 import * as subjectActions from '../../actions/subject-actions';
-import {ListHeaderComponent} from '../../components/image-header/image-header.component';
+import {ListHeaderComponent} from '../../components/list-header/list-header.component';
 import {AreaInformationComponent} from '../../components/area-information/area-information.component';
 import {AppComponent} from '../../components/app.component';
-import {PageNotFoundComponent} from '../../shared/components/page-not-found/page-not-found.component';
-import {ItemContainerComponent} from "../item-container/item-container.component";
-import {ItemComponent} from "../../components/item/item.component";
-import {appRoutes} from '../../app.module';
-import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
 import {HomeScreenComponent} from "../../components/home-screen/home-screen.component";
-import {ItemHeaderComponent} from "../../components/item-header/item-header.component";
-import {ItemLinksComponent} from "../../components/item-links/item-links.component";
 import {FooterComponent} from "../../components/footer/footer.component";
 import {SearchSvgComponent} from "../../components/svg/search-svg/search-svg.component";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component";
 import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
@@ -66,6 +59,13 @@ import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component
 import {AppMenusComponent} from "../../components/apps-menu/app-menus.component";
 import {HomeSvgComponent} from "../../components/svg/home-svg/home-svg.component";
 import {CollectionsSvgComponent} from "../../components/svg/collections-svg/collections-svg.component";
+import {CloseWhiteSvgComponent} from "../../components/svg/close-white-svg/close-white-svg.component";
+import {CollectionsFilterPipe} from "../../services/filters/collections-filter.pipe";
+import {TitleHeaderComponent} from "../../components/title-header/title-header.component";
+import {KeyboardArrowForwardSvgComponent} from "../../components/svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component";
+import {KeyboardArrowBackSvgComponent} from "../../components/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component";
+import {HomeBlackSvgComponent} from "../../components/svg/home-black-svg/home-black-svg.component";
+import {UtilitiesService} from "../../services/utilities.service";
 
 let areaSubscriptionMock =
   {
@@ -156,6 +156,7 @@ describe('ListsContainerComponent', () => {
         LockSvgComponent,
         MenuSvgComponent,
         CloseSvgComponent,
+        CloseWhiteSvgComponent,
         AppComponent,
         NavigationComponent,
         ListComponent,
@@ -166,9 +167,14 @@ describe('ListsContainerComponent', () => {
         HomeScreenComponent,
         FooterComponent,
         SearchSvgComponent,
+        TitleHeaderComponent,
         AppMenusComponent,
         HomeSvgComponent,
-        CollectionsSvgComponent
+        HomeBlackSvgComponent,
+        CollectionsSvgComponent,
+        KeyboardArrowForwardSvgComponent,
+        KeyboardArrowBackSvgComponent,
+        CollectionsFilterPipe
       ],
       imports: [
         FlexLayoutModule,
@@ -184,10 +190,13 @@ describe('ListsContainerComponent', () => {
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
+        ReactiveFormsModule,
+        MdCheckboxModule,
         FormsModule,
         RouterTestingModule,
       ],
       providers: [
+        UtilitiesService,
         {
           provide: Store,
           useClass: class {

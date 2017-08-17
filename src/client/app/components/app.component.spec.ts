@@ -21,18 +21,6 @@ import {TestBed, async} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {} from 'jasmine';
-import {ListHeaderComponent} from "./image-header/image-header.component";
-import {appRoutes} from '../app.module';
-// import {MainContainer} from "../containers/lists-container/main.container";
-import {ListComponent} from "./collection-list/list.component";
-import {NavigationComponent} from "./area-selector/area.component";
-import {SubjectsComponent} from "./subject-selector/subjects.component";
-import {AreaInformationComponent} from "./area-information/area-information.component";
-import {PageNotFoundComponent} from "../shared/components/page-not-found/page-not-found.component";
-import {MaterialModule} from "@angular/material";
-import {ItemContainerComponent} from "../containers/item-container/item-container.component";
-import {ItemComponent} from "./item/item.component";
-import {RelatedItemsComponent} from "./related-items/related-items.component";
 
 describe('AppComponent', () => {
 

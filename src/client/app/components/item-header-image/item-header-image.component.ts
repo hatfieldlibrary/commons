@@ -19,9 +19,9 @@ import {Subscription} from "rxjs/Subscription";
 export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
 
   backgroundImage: SafeResourceUrl;
-  currentImage: string;
-  imageLoaded: boolean;
-  isMobile: boolean;
+  currentImage: string = '';
+  imageLoaded: boolean = false;
+  isMobile: boolean = false;
   watcher: Subscription;
 
   @Input() image: string;
@@ -33,6 +33,7 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
   constructor(private sanitizer: DomSanitizer,
               public media: ObservableMedia) {
     this.image = '';
+
   }
 
   ngOnInit() {

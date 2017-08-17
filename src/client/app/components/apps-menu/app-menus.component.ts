@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
-import {Location} from '@angular/common';
 import {NavigationEnd, Router} from "@angular/router";
 import {UtilitiesService} from "../../services/utilities.service";
 import {SubjectType} from "../../shared/data-types/subject.type";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-menus-component',
@@ -12,7 +12,7 @@ import {SubjectType} from "../../shared/data-types/subject.type";
   styleUrls: ['./app-menus.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppMenusComponent implements OnInit {
+export class AppMenusComponent implements OnInit, OnDestroy {
 
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
@@ -25,14 +25,17 @@ export class AppMenusComponent implements OnInit {
   homeUrl: string = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl: string = 'http://library.willamette.edu';
   tertiaryUrl: string = 'http://www.willamette.edu';
+  listener: Subscription;
 
   constructor(private utils: UtilitiesService,
               private router: Router) {
-    router.events
+
+    this.listener = router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
         this.previousUrl = event.url;
       });
+
   }
 
   goToHome(): void {
@@ -60,6 +63,9 @@ export class AppMenusComponent implements OnInit {
     if (this.sideNavigate.close) {
       this.sideNavigate.close();
     }
+  }
+  ngOnDestroy(): void {
+    this.listener.unsubscribe();
   }
 
 }

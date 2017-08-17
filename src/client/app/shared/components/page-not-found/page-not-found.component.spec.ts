@@ -21,6 +21,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { PageNotFoundComponent } from './page-not-found.component';
+import {MdCardModule} from "@angular/material";
 
 describe('PageNotFoundComponent', () => {
   let component: PageNotFoundComponent;
@@ -28,7 +29,10 @@ describe('PageNotFoundComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageNotFoundComponent ]
+      declarations: [ PageNotFoundComponent ],
+      imports: [
+        MdCardModule
+      ],
     })
     .compileComponents();
   }));

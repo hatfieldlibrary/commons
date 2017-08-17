@@ -11,6 +11,7 @@ import {AuthCheckService} from "../../services/auth-check.service";
 import {AuthType} from "../../shared/data-types/auth.type";
 import * as fromRoot from "../../reducers";
 import {Store} from "@ngrx/store";
+import {Subscription} from "rxjs/Subscription";
 
 
 @Component({
@@ -37,6 +38,7 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   ITEM_BUTTON_LABEL: string = 'View this Item';
   SEARCH_OPTIONS_LABEL: string = 'Select to Browse';
   isAuthenticated: boolean = false;
+  listener: Subscription;
 
   constructor(private svc: SearchService,
               private route: ActivatedRoute,
@@ -60,7 +62,7 @@ export class ItemLinksComponent implements OnChanges, OnInit {
     this.model = new SearchTerms();
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
 
-    this.auth$.subscribe((auth) => {
+    this.listener = this.auth$.subscribe((auth) => {
       this.isAuthenticated = auth.status;
       this.changeDetector.markForCheck();
     })
@@ -81,6 +83,10 @@ export class ItemLinksComponent implements OnChanges, OnInit {
       }
 
     }
+  }
+
+  ngOnDestroy(): void {
+    this.listener.unsubscribe();
   }
 
 }

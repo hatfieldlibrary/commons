@@ -26,13 +26,16 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular/cli/plugins/karma')
+      require('@angular/cli/plugins/karma'),
+      require('karma-scss-preprocessor')
     ],
     files: [
-      { pattern: './src/client/test.ts', watched: false }
+      { pattern: './src/client/test.ts', watched: false },
+      { pattern: './src/client/themes/commons-app-theme.scss', included: true, watched: true},
     ],
     preprocessors: {
-      './src/client/test.ts': ['@angular/cli']
+      './src/client/test.ts': ['@angular/cli'],
+      './src/client/themes/commons-app-theme.scss': ['scss']
     },
     mime: {
       'text/x-typescript': ['ts','tsx']

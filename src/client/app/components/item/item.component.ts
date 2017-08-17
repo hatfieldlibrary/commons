@@ -15,11 +15,12 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
 import {ItemType} from "../../shared/data-types/item.type";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {UtilitiesService} from "../../services/utilities.service";
 import {SearchService} from "../../services/search.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'item',
@@ -27,12 +28,13 @@ import {SearchService} from "../../services/search.service";
   styleUrls: ['./item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemComponent implements OnChanges {
+export class ItemComponent implements OnChanges, OnDestroy {
 
   @Input() item: ItemType;
   @Input() selectedArea: string;
   @Input() selectedSubject: SubjectType;
   optionList;
+  listener:Subscription;
 
   constructor(private svc: SearchService,
               private utils: UtilitiesService) {
@@ -47,11 +49,17 @@ export class ItemComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['item']) {
       if (changes['item'].currentValue.collection.linkOptions === 'opts') {
-        this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
+        this.listener = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
           this.optionList = list.result;
         })
       }
 
+    }
+  }
+
+  ngOnDestroy(): void {
+    if(this.listener) {
+      this.listener.unsubscribe();
     }
   }
 

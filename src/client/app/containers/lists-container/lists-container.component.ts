@@ -63,6 +63,9 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   @HostBinding('style.position')  position = 'absolute';
   @HostBinding('style.position')  width = '100%';
   private subjectsObserver: Subscription;
+  private areaWatcher: Subscription;
+  private areaInfoWatcher: Subscription;
+  private routeWatcher: Subscription;
 
   constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute, private router: Router) {
 
@@ -73,7 +76,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    this.areas$.subscribe((areas) => {
+    this.areaWatcher = this.areas$.subscribe((areas) => {
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areasAvailable = true;
@@ -83,7 +86,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   getAreaTitle(): void {
-    this.areaInfo$.subscribe((info) => {
+    this.areaInfoWatcher = this.areaInfo$.subscribe((info) => {
       if (info.length > 1) {
         this.title = ''
         info.forEach((area) => this.subtitle +=  area.title + ' / ');
@@ -224,7 +227,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.setAreasAvailable();
     this.getAreaTitle();
 
-    this.route.params
+    this.routeWatcher = this.route.params
 
       .subscribe((params) => {
 
@@ -272,6 +275,9 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     if (this.subjectsObserver) {
       this.subjectsObserver.unsubscribe();
     }
+    this.routeWatcher.unsubscribe();
+    this.areaInfoWatcher.unsubscribe();
+    this.areaWatcher.unsubscribe();
   }
 
 }

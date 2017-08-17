@@ -29,7 +29,6 @@ export class ItemSelectComponent {
   @Input() url: string;
   @Input() restricted: boolean;
   @Input() isAuthenticated: boolean = false;
-  selectedOption: string;
   SEARCH_OPTIONS_LABEL: string = 'Browse by Date';
 
   constructor(private svc: SearchService) { }
@@ -39,9 +38,5 @@ export class ItemSelectComponent {
 
   }
 
-  onChange(term) {
-console.log('search for '+ term)
-    this.svc.executeOptionsQuery(this.url, term);
-  }
 
 }

@@ -19,9 +19,9 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 
 @Component({
-  selector: 'image-header',
-  templateUrl: 'image-header.component.html',
-  styleUrls: ['image-header.component.css']
+  selector: 'list-header',
+  templateUrl: 'list-header.component.html',
+  styleUrls: ['list-header.component.css']
 })
 export class ListHeaderComponent implements OnInit {
 

@@ -15,9 +15,13 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ItemSelectComponent } from './item-select.component';
+import {ItemSelectComponent} from './item-select.component';
+import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
+import {MdIconRegistry, MdSelectModule} from "@angular/material";
+import {SearchService} from "../../services/search.service";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 describe('ItemSelectComponent', () => {
@@ -26,9 +30,21 @@ describe('ItemSelectComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ItemSelectComponent ]
+      declarations: [
+        ItemSelectComponent,
+        DatePickerSvgComponent
+      ],
+      imports: [
+        MdSelectModule,
+        BrowserAnimationsModule
+      ],
+      providers: [
+
+        SearchService,
+        MdIconRegistry
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

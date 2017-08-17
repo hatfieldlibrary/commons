@@ -19,34 +19,25 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import {ItemContainerComponent} from './item-container.component';
 import {ItemComponent} from "../../components/item/item.component";
 import {
-  MaterialModule, MdButtonModule, MdCardModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
+  MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
   MdListModule,
   MdSelectModule,
   MdSidenavModule,
   MdToolbarModule
 } from "@angular/material";
-import {Action, Store, StoreModule} from "@ngrx/store";
+import {Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
 import {ActivatedRoute, RouterModule} from "@angular/router";
 import {Observable} from "rxjs";
 import * as fromRoot from '../../reducers';
 import {AppComponent} from "../../components/app.component";
-// import {MainContainer} from "../lists-container/main.container";
-import {ListComponent} from "../../components/collection-list/list.component";
 import {NavigationComponent} from "../../components/area-selector/area.component";
-import {SubjectsComponent} from "app/components/subject-selector/subjects.component";
-import {ListHeaderComponent} from "../../components/image-header/image-header.component";
-import {AreaInformationComponent} from "../../components/area-information/area-information.component";
 import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
-import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
 import * as fromItem from '../../actions/item.actions';
-import {appRoutes} from '../../app.module';
-import {select} from "@ngrx/core";
-import {Injectable, Renderer2} from "@angular/core";
+import {Renderer2} from "@angular/core";
 import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
 import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
 import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
-import {HomeScreenComponent} from "../../components/home-screen/home-screen.component";
 import {ItemHeaderComponent} from "../../components/item-header/item-header.component";
 import {FooterComponent} from "../../components/footer/footer.component";
 import {ItemLinksComponent} from "../../components/item-links/item-links.component";
@@ -56,19 +47,20 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpModule} from "@angular/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthCheckService} from "../../services/auth-check.service";
 import {SearchService} from "../../services/search.service";
 import {AppMenusComponent} from "../../components/apps-menu/app-menus.component";
 import {HomeSvgComponent} from "../../components/svg/home-svg/home-svg.component";
 import {CollectionsSvgComponent} from "../../components/svg/collections-svg/collections-svg.component";
-
-// @Injectable()
-// class MockActivatedRoute  {
-//
-//   params: Observable<any>;
-//
-// }
+import {ItemHeaderImageComponent} from "../../components/item-header-image/item-header-image.component";
+import {BackBlackSvgComponent} from "../../components/svg/back-black-svg/back-black-svg.component";
+import {InfoSvgComponent} from "../../components/svg/info-svg/info-svg.component";
+import {RunSvgComponent} from "../../components/svg/run-svg/run-svg.component";
+import {ItemSelectComponent} from "../../components/item-select-options/item-select.component";
+import {HomeBlackSvgComponent} from "../../components/svg/home-black-svg/home-black-svg.component";
+import {DatePickerSvgComponent} from "../../components/svg/date-picker-svg/date-picker-svg.component";
+import {UtilitiesService} from "../../services/utilities.service";
 
 
 let mockItem = {
@@ -141,6 +133,7 @@ describe('ItemContainerComponent', () => {
         AppComponent,
         ItemContainerComponent,
         ItemHeaderComponent,
+        ItemHeaderImageComponent,
         RelatedItemsComponent,
         NavigationComponent,
         ItemComponent,
@@ -153,6 +146,12 @@ describe('ItemContainerComponent', () => {
         FooterComponent,
         AppMenusComponent,
         HomeSvgComponent,
+        HomeBlackSvgComponent,
+        BackBlackSvgComponent,
+        DatePickerSvgComponent,
+        ItemSelectComponent,
+        InfoSvgComponent,
+        RunSvgComponent,
         CollectionsSvgComponent
       ],
       imports: [
@@ -166,16 +165,19 @@ describe('ItemContainerComponent', () => {
         MdIconModule,
         MdSelectModule,
         MdGridListModule,
+        MdCheckboxModule,
         MdChipsModule,
         BrowserModule,
         BrowserAnimationsModule,
         MdInputModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpModule,
         StoreModule.provideStore({}),
         RouterTestingModule
       ],
       providers: [
+        UtilitiesService,
         {
           provide: Store,
           useClass: class {

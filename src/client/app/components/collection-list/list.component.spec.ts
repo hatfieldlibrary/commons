@@ -17,20 +17,14 @@
 
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MaterialModule, MdCardModule, MdListModule} from "@angular/material";
+import {MdCardModule, MdChipsModule, MdInputContainer, MdInputModule, MdListModule} from "@angular/material";
 import {ListComponent} from './list.component';
 import {RouterTestingModule} from "@angular/router/testing";
-import {appRoutes} from '../../app.module';
-import {PageNotFoundComponent} from "../../shared/components/page-not-found/page-not-found.component";
-import {ListsContainerComponent} from "../../containers/lists-container/lists-container.component";
-import {AppComponent} from "../app.component";
-import {NavigationComponent} from "../area-selector/area.component";
-import {SubjectsComponent} from "../subject-selector/subjects.component";
-import {ListHeaderComponent} from "../image-header/image-header.component";
-import {AreaInformationComponent} from "../area-information/area-information.component";
-import {ItemContainerComponent} from "../../containers/item-container/item-container.component";
-import {ItemComponent} from "../item/item.component";
-import {RelatedItemsComponent} from "../related-items/related-items.component";
+import {CloseWhiteSvgComponent} from "../svg/close-white-svg/close-white-svg.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CollectionsFilterPipe} from "../../services/filters/collections-filter.pipe";
+import {Store} from "@ngrx/store";
+import {Observable} from "rxjs/Observable";
 import {EventEmitter} from "@angular/core";
 
 
@@ -38,15 +32,32 @@ describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
 
+  let collections = [];
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ListComponent
+        ListComponent,
+        CloseWhiteSvgComponent,
+        CollectionsFilterPipe
       ],
       imports: [
+        FormsModule,
+        ReactiveFormsModule,
         MdCardModule,
         MdListModule,
+        MdChipsModule,
+        MdInputModule,
         RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: Store,
+          useClass: class {
+            dispatch = jasmine.createSpy('dispatch');
+          }
+        },
+
       ]
     })
       .compileComponents();

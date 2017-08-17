@@ -30,6 +30,12 @@ import {SearchService} from "../../services/search.service";
 import {AuthCheckService} from "../../services/auth-check.service";
 import {Observable} from "rxjs/Observable";
 import {Store} from "@ngrx/store";
+import {BackBlackSvgComponent} from "../svg/back-black-svg/back-black-svg.component";
+import {InfoSvgComponent} from "../svg/info-svg/info-svg.component";
+import {RunSvgComponent} from "../svg/run-svg/run-svg.component";
+import {ItemSelectComponent} from "../item-select-options/item-select.component";
+import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
+import {UtilitiesService} from "../../services/utilities.service";
 
 describe('ItemComponent', () => {
   let component: ItemComponent;
@@ -40,8 +46,13 @@ describe('ItemComponent', () => {
       declarations: [
         ItemComponent,
         ItemLinksComponent,
+        ItemSelectComponent,
         LockSvgComponent,
         SearchSvgComponent,
+        BackBlackSvgComponent,
+        DatePickerSvgComponent,
+        RunSvgComponent,
+        InfoSvgComponent,
         MenuSvgComponent
       ],
       imports: [
@@ -57,6 +68,7 @@ describe('ItemComponent', () => {
 
         SearchService,
         AuthCheckService,
+        UtilitiesService,
         {
           provide: ActivatedRoute,
           useValue: {

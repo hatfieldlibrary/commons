@@ -17,9 +17,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListHeaderComponent } from './image-header.component';
+import { ListHeaderComponent } from './list-header.component';
 import {MdButtonModule, MdIconRegistry, MdListModule, MdSidenavModule, MdToolbarModule} from "@angular/material";
-import {Router, RouterModule} from "@angular/router";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {NavigationComponent} from "../area-selector/area.component";
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";

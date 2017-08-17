@@ -53,20 +53,22 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   areas$: Observable<AreaListItemType[]>;
   selectedSubject$: Observable<SubjectType>;
   id: string;
-  collectionImage: string;
+  // collectionImage: string;
   areasAvailable: boolean = false;
   watcher: Subscription;
   activeMediaQuery = 'xs';
   columns: number = 1;
   selectedArea: string;
-  private itemWatcher: Subscription;
+  itemWatcher: Subscription;
+  areaWatcher: Subscription;
+  routeWatcher: Subscription;
 
   constructor(private store: Store<fromRoot.State>,
               private renderer: Renderer2,
               private media: ObservableMedia,
               private route: ActivatedRoute,
               private router: Router,
-              @Inject(DOCUMENT) private document ) {
+              @Inject(DOCUMENT) private document) {
 
     /** Assures that the page scrolls to top if user chooses related item. */
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
@@ -98,8 +100,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    this.areas$.subscribe((areas) => {
-      console.log(areas)
+    this.areaWatcher = this.areas$.subscribe((areas) => {
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areasAvailable = true;
@@ -169,16 +170,15 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.related$ = this.store.select(fromRoot.getRelated);
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
-    this.collectionImage = '';
+    // this.collectionImage = '';
 
     // Once we have item information, request related items.
     this.itemWatcher = this.item$.subscribe((data) => {
       this.getRelatedItems(data);
-      //this.collectionImage = data.collection.image;
     });
 
     // Request item based on route parameter.
-    this.route.params
+    this.routeWatcher = this.route.params
       .subscribe((params) => {
 
         this.store.dispatch(new fromItem.ItemReset());
@@ -202,6 +202,10 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
     this.itemWatcher.unsubscribe();
+    if (this.areaWatcher) {
+      this.areaWatcher.unsubscribe();
+    }
+    this.routeWatcher.unsubscribe();
   }
 
 }
