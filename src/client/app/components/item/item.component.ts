@@ -52,16 +52,16 @@ export class ItemComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    // if(changes['item']) {
-    //   if (changes['item'].currentValue.collection.linkOptions === 'opts') {
-    //     let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
-    //       this.optionList = list.result;
-    //     });
-    //     this.watchers.add(optionsWatcher);
-    //   }
-    //
-    //
-    // }
+    if(changes['item']) {
+      if (changes['item'].currentValue.collection.linkOptions === 'opts') {
+        let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
+          this.optionList = list.result;
+        });
+        this.watchers.add(optionsWatcher);
+      }
+
+
+    }
   }
 
   ngOnInit(): void {
@@ -73,12 +73,6 @@ export class ItemComponent implements OnChanges, OnDestroy {
       });
     this.watchers.add(mediaWatcher);
 
-    if (this.item.collection.linkOptions === 'opts') {
-      let optionsWatcher = this.svc.getOptionsList(this.item.collection.url).subscribe((list) => {
-        this.optionList = list.result;
-      });
-      this.watchers.add(optionsWatcher);
-    }
   }
 
   ngOnDestroy(): void {

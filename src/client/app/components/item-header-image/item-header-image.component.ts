@@ -25,6 +25,7 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
   watcher: Subscription;
 
   @Input() image: string;
+  // Use host binding for animation.
   @HostBinding('@imageShow') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
   @HostBinding('style.position') position = 'absolute';

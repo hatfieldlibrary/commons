@@ -55,17 +55,18 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   leftIsVisible: boolean = false;
   rightIsVisible: boolean = false;
   appRoot = environment.appRoot;
+  private animation: number;
 
   /**
    * Listen for window resize and adjust navigation arrows.
    * @param event
    */
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    // on window resize, recheck the container element width.
-    this.offsetWidth = this.container.nativeElement.offsetWidth;
-    this.showSubjectNavigationArrow();
-  }
+ onResize(event) {
+   // on window resize, recheck the container element width.
+   this.offsetWidth = this.container.nativeElement.offsetWidth;
+   this.showSubjectNavigationArrow();
+ }
 
   /**
    * Injecting ChangeDetectorRef to instruct angular to re-render
@@ -106,6 +107,8 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
     this.changeDetector.detach();
+    this.changeDetector = null;
+    this.animation = null;
   }
 
   /**
@@ -163,7 +166,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     let interval = 20;
 
     // Start the animation.
-    let animation = setInterval(() => {
+    this.animation = setInterval(() => {
       if (direction === 'right') {
         animationCouter = animationCouter + interval;
         this.subjects.nativeElement.scrollLeft = this.subjects.nativeElement.scrollLeft + interval;
@@ -177,12 +180,12 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       // Stop the animation.
       if (direction === 'right') {
         if (animationCouter >= limit - 25) {
-          clearInterval(animation);
+          clearInterval(this.animation);
         }
       }
       if (direction === 'left') {
         if (animationCouter <= limit || animationCouter === 0) {
-          clearInterval(animation);
+          clearInterval(this.animation);
         }
       }
 

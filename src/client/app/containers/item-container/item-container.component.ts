@@ -204,7 +204,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.renderer.destroy();
     this.watchers.unsubscribe();
-    this.document = null;
+    //this.document = null;
 
   }
 

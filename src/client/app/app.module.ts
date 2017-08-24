@@ -38,7 +38,7 @@ import {ListsContainerComponent} from "./containers/lists-container/lists-contai
 import {NavigationComponent} from './components/area-selector/area.component';
 import {ListComponent} from './components/collection-list/list.component';
 import {ItemComponent} from './components/item/item.component';
-import {ListHeaderComponent} from './components/list-header/list-header.component';
+// import {ListHeaderComponent} from './components/list-header/list-header.component';
 import {AreaInformationComponent} from './components/area-information/area-information.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
 import {SubjectsComponent} from './components/subject-selector/subjects.component';
@@ -113,7 +113,7 @@ export const appRoutes = [
     ListsContainerComponent,
     SubjectsComponent,
     PageNotFoundComponent,
-    ListHeaderComponent,
+   // ListHeaderComponent,
     AreaInformationComponent,
     ItemComponent,
     ItemContainerComponent,
@@ -174,7 +174,6 @@ export const appRoutes = [
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    //StoreModule.provideStore(reducer),
     StoreModule.forRoot(reducers),
     /**
      * Store devtools instrument the store retaining past versions of state

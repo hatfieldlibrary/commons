@@ -75,6 +75,10 @@ export class NavigationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  _updateAreaInfo(title: string, id: number) {
+
+  }
+
   _removeFromArray(index: number) {
     if (index >= 0) {
       this.areaFormArray.removeAt(index);

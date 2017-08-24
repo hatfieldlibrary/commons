@@ -73,18 +73,18 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if (changes['linkOptions']) {
-      // if (changes['linkOptions'].currentValue === 'opts') {
-      //   this.svc.getOptionsList(changes['url'].currentValue).subscribe((list) => {
-      //     this.optionList = list.result;
-      //   })
-      // }
-
-      if (this.restricted) {
-        this.auth.getAuthStatus();
-      }
-
+    // if (changes['linkOptions']) {
+    //   // if (changes['linkOptions'].currentValue === 'opts') {
+    //   //   this.svc.getOptionsList(changes['url'].currentValue).subscribe((list) => {
+    //   //     this.optionList = list.result;
+    //   //   })
+    //   // }
+    //
+    if (this.restricted) {
+      this.auth.getAuthStatus();
     }
+    //
+    // }
   }
 
   ngOnDestroy(): void {

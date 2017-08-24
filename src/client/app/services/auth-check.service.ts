@@ -18,19 +18,9 @@ import {environment} from '../environments/environment';
 @Injectable()
 export class AuthCheckService {
 
-  auth$: Observable<AuthType>;
-  authStatus: boolean;
+  authStatus: boolean = false;
 
-  constructor(private http: Http, private store: Store<fromRoot.State>) {
-
-    this.auth$ = this.store.select(fromRoot.getAuthStatus);
-    /**
-     * Subscribe to the authentication status in store and update
-     * the local member variable on change.
-     */
-    this.auth$.subscribe((auth) => this.authStatus = auth.status);
-
-  }
+  constructor(private http: Http, private store: Store<fromRoot.State>) {}
 
   /**
    * Update authentication status in the store.
@@ -38,7 +28,6 @@ export class AuthCheckService {
    */
   setAuthStatus(status: boolean): void {
     this.store.dispatch(new authActions.SetAuthStatus({status: status}));
-
   }
 
   /**
@@ -48,18 +37,16 @@ export class AuthCheckService {
   getAuthStatus(): void {
 
       if (this.authStatus === false) {
-
         this.http.get(environment.authCheck)
           .map(res => res.json().auth)
           .subscribe((status) => {
               if (status === true) {
+                this.authStatus = true;
                 this.setAuthStatus(status);
               }
 
             });
 
       }
-
   }
-
 }

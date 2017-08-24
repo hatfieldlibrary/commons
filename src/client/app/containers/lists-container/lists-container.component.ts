@@ -39,7 +39,7 @@ import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 
 @Component({
   selector: 'lists-container',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'lists-container.component.html',
   animations: [fadeIn]
 })
@@ -70,7 +70,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
               private router: Router,
-              public media:ObservableMedia) {
+              public media: ObservableMedia) {
     // All component subscriptions will be added to this object.
     this.watchers = new Subscription();
   }
@@ -90,25 +90,35 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   }
 
+  _setAllCollectionTitle() {
+    this.title = 'All Collections';
+  }
+
   getAreaTitle(): void {
+
     let areaInfoWatcher = this.areaInfo$.subscribe((info) => {
-      if (info.length > 1) {
-        this.title = '';
+      this.title = '';
+      this.subtitle = '';
+      // If the local areaId field is set to '0' then just use
+      // the default title.
+       if (this.areaId === '0') {
+        this._setAllCollectionTitle();
+      }
+      // Multiple areas selected, use subtitle format for multiple area info.
+      else if (info.length > 1) {
         info.forEach((area) => this.subtitle += area.title + ' / ');
         this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
-      } else {
-        if (info[0].title) {
-          this.title = info[0].title;
-        } else {
-          this._setAllCollectionTitle();
-        }
+      }
+      // Otherwise update the title using the new single area information.
+      else if (info[0].title.length > 0) {
+        this.title = info[0].title;
+      }
+      // Default.
+      else {
+        this._setAllCollectionTitle();
       }
     });
     this.watchers.add(areaInfoWatcher);
-  }
-
-  _setAllCollectionTitle() {
-    this.title = 'All Collections';
   }
 
   /**
@@ -224,7 +234,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
 
     let mediaWatcher = this.media.asObservable()
-      .subscribe((change:MediaChange) => {
+      .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
       });
 
@@ -263,13 +273,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.homeScreen = true;
           this.areaId = '0';
         }
+        this.getAreaTitle();
 
       });
 
     this.watchers.add(routeWatcher);
 
     this.setAreasAvailable();
-    this.getAreaTitle();
+
 
   }
 
