@@ -30,7 +30,7 @@ export class AreaInformationComponent implements OnChanges{
 
   @Input() selectedSubject: SelectedSubject;
   @Input() areaInfo: AreaType;
-  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
+ // @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
   description: string;
   url: string;
   linkLabel: string;

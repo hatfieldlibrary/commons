@@ -18,7 +18,7 @@
 import {Injectable} from "@angular/core";
 import {Actions, Effect} from "@ngrx/effects";
 import {Observable} from "rxjs";
-import {Action} from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 import * as related from '../actions/item.actions';
 import {RelatedService} from "../services/related.service";
 /**

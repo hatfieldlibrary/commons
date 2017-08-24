@@ -30,16 +30,14 @@
 
       <div fxLayout="column">
 
-        <!--<app-menus-component [areaList]="areaList"></app-menus-component>-->
-
         <div class="header-overlay"></div>
         <div class="header-title list-title">
           <h1>All Collections</h1>
         </div>
         <div fxFlex="100"
              class='home-header-image'>
-          <img fxHide="true" fxShow.gt-xs="true" [src]="backgroundImage" style="height: 100%; width: 100%">
-          <img fxHide="false" fxHide.gt-xs="true" [src]="smallBackgroundImage" style="height: 100%; width: 100%">
+          <img *ngIf="media.isActive('gt-sm')" [src]="backgroundImage" style="height: 100%; width: 100%">
+          <img *ngIf="!media.isActive('gt-sm')" [src]="smallBackgroundImage" style="height: 100%; width: 100%">
         </div>
       </div>
 

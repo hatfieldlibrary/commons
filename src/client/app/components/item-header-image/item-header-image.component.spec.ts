@@ -14,7 +14,8 @@ describe('ItemHeaderImageComponent', () => {
       declarations: [ ItemHeaderImageComponent ],
       imports: [FlexLayoutModule,BrowserAnimationsModule],
       providers: [
-DomSanitizer
+DomSanitizer,
+        ObservableMedia
       ]
     })
     .compileComponents();

@@ -19,7 +19,7 @@
  * Created by mspalti on 2/24/17.
  */
 
-import { Action } from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 import { type } from "../shared/ngrx/type";
 import {SubjectType} from "../shared/data-types/subject.type";
 

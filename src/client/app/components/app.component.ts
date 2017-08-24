@@ -15,24 +15,25 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Inject, Renderer2} from '@angular/core';
-import {DOCUMENT} from "@angular/platform-browser";
+import {ChangeDetectionStrategy, Component, Inject, Renderer2} from '@angular/core';
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css']
+  styleUrls: ['app.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   title = 'Academic Commons Prototype';
 
-  constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document){}
+  constructor( @Inject(DOCUMENT) private document){}
 
   onDeactivate(event) {
     // Chrome canary supports the new standard usage with documentElement, but
     // Chrome and presumably other browsers still expect body.
-    this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-    this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
+   // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
+   // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
   }
 
 }

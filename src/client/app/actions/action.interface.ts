@@ -15,29 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {SearchService} from "../../services/search.service";
-
-@Component({
-  selector: 'item-select-component',
-  templateUrl: './item-select.component.html',
-  styleUrls: ['./item-select.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class ItemSelectComponent {
-
-  @Input() optionList;
-  @Input() url: string;
-  @Input() restricted: boolean;
-  @Input() isAuthenticated: boolean = false;
-  SEARCH_OPTIONS_LABEL: string = 'Browse by Date';
-
-  constructor(private svc: SearchService) { }
-
-  optionSearch(term) {
-    this.svc.executeOptionsQuery(this.url, term);
-
-  }
-
-
+import {Action as NgRXAction} from '@ngrx/store';
+export interface Action extends NgRXAction {
+  payload?: any;
 }

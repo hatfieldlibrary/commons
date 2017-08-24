@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -27,13 +27,13 @@ import * as listActions from '../../actions/collection.actions';
 @Component({
   selector: 'navigation-selector',
   templateUrl: 'area.component.html',
-  styleUrls: ['area.component.css']
+  styleUrls: ['area.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavigationComponent implements OnInit, AfterViewInit {
 
   @Input() areaList: AreaType[];
   @Input() selectedAreas: string;
-  @Output() onSelected = new EventEmitter<boolean>();
   selectedAreaArray: string[];
   checkboxGroup: FormGroup;
   formArrayRef: FormArray;

@@ -173,7 +173,7 @@ describe('ItemContainerComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        StoreModule.provideStore({}),
+        StoreModule.forRoot({}),
         RouterTestingModule
       ],
       providers: [

@@ -20,7 +20,7 @@ import {ItemService} from "../services/item.service";
 import {Actions, Effect} from "@ngrx/effects";
 import {Observable} from "rxjs";
 import * as item from '../actions/item.actions';
-import {Action} from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 import {ItemActions} from "../actions/item.actions";
 
 

@@ -16,7 +16,7 @@
  */
 
 import {type} from "../shared/ngrx/type";
-import {Action} from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 import {ItemType} from "../shared/data-types/item.type";
 import {RelatedType} from "../shared/data-types/related-collection";
 

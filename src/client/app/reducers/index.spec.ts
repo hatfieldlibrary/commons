@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {reducer} from "./";
+import {reducers} from "./";
 import {SubjectActionSuccess} from "../actions/subject-actions";
 import {getAreasState, getAreaListState, getCollectionssState, getItemState, getSubjectsState} from "./index";
 import {ItemSuccess} from "../actions/item.actions";
@@ -117,11 +117,11 @@ describe('Reducers ', () => {
 
 
   beforeEach(() => {
-    subjectState = reducer(undefined, new SubjectActionSuccess(expectedSubjects));
-    itemState = reducer(undefined, new ItemSuccess(expectedItem));
-    areaState = reducer(undefined, new AreaInformationSuccess(expectedArea));
-    areaListState = reducer(undefined, new AreaActionSuccess(expectedAreas)) ;
-    collectionState = reducer(undefined, new CollectionActionSuccess(expectedCollections));
+    // subjectState = reducer(undefined, new SubjectActionSuccess(expectedSubjects));
+    // itemState = reducer(undefined, new ItemSuccess(expectedItem));
+    // areaState = reducer(undefined, new AreaInformationSuccess(expectedArea));
+    // areaListState = reducer(undefined, new AreaActionSuccess(expectedAreas)) ;
+    // collectionState = reducer(undefined, new CollectionActionSuccess(expectedCollections));
 
   });
 

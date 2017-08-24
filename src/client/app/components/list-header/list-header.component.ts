@@ -15,33 +15,38 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
+import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'list-header',
   templateUrl: 'list-header.component.html',
-  styleUrls: ['list-header.component.css']
+  styleUrls: ['list-header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListHeaderComponent implements OnInit {
+export class ListHeaderComponent implements OnInit, OnDestroy {
 
   @Input() areaList: AreaType[];
   @Input() homeScreen: boolean;
   @ViewChild('sidenav') public sideNavigate;
+  state = '';
+  mediaWatcher: Subscription;
   backgroundImage: string = '/assets/img/campus-visit-header.jpg';
   smallBackgroundImage: string = '/assets/img/campus-visit-header.jpg';
 
-  constructor() { }
-
-  openMenu() {
-    this.sideNavigate.open();
-  }
-
-  onSelected(selected: boolean) {
-    selected ? this.sideNavigate.close() : this.sideNavigate.open();
+  constructor(public media:ObservableMedia) {
   }
 
   ngOnInit() {
+    this.mediaWatcher = this.media.asObservable()
+      .subscribe((change:MediaChange) => {
+        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
+      });
   }
 
+  ngOnDestroy(): void {
+    this.mediaWatcher.unsubscribe();
+  }
 }

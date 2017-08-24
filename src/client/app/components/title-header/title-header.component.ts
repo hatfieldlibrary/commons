@@ -17,10 +17,7 @@ export class TitleHeaderComponent implements OnInit, OnDestroy {
   isMobile:boolean = true;
   private watcher: Subscription;
 
-  constructor(private media: ObservableMedia) { }
-
-  ngOnInit(): void {
-
+  constructor(private media: ObservableMedia) {
     this.watcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
@@ -28,6 +25,11 @@ export class TitleHeaderComponent implements OnInit, OnDestroy {
         this.isMobile = false;
       }
     });
+  }
+
+  ngOnInit(): void {
+
+
   }
 
   ngOnDestroy(): void {

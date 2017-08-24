@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SelectedSubject} from "../../shared/data-types/selected-subject";
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'home-screen',
   templateUrl: './home-screen.component.html',
-  styleUrls: ['./home-screen.component.css']
+  styleUrls: ['./home-screen.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeScreenComponent  {
 }

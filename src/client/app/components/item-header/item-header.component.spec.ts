@@ -44,7 +44,6 @@ describe('ItemHeaderComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        DomSanitizer,
         Location,
         RouterTestingModule,
         MdIconRegistry,

@@ -23,7 +23,6 @@ import {Subscription} from "rxjs/Subscription";
 export class ItemLinksComponent implements OnChanges, OnInit {
 
 
-
   auth$: Observable<AuthType>;
   authenticationPath: string;
   @Input() restricted: boolean;
@@ -33,12 +32,12 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   @Input() searchOptions: string;
   @Input() url: string;
   @Input() searchUrl: string;
-  model:SearchTerms;
+  model: SearchTerms;
   COLLECTION_BUTTON_LABEL: string = 'Browse the Collection';
   ITEM_BUTTON_LABEL: string = 'View this Item';
   SEARCH_OPTIONS_LABEL: string = 'Select to Browse';
   isAuthenticated: boolean = false;
-  listener: Subscription;
+  watchers: Subscription;
 
   constructor(private svc: SearchService,
               private route: ActivatedRoute,
@@ -46,11 +45,12 @@ export class ItemLinksComponent implements OnChanges, OnInit {
               private changeDetector: ChangeDetectorRef,
               private store: Store<fromRoot.State>) {
 
+    this.watchers = new Subscription();
     const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
-    url.subscribe((url) => {
+    let urlWatcher = url.subscribe((url) => {
       this.authenticationPath = environment.authPath + '/' + url
     });
-
+    this.watchers.add(urlWatcher);
   }
 
   simpleSearch() {
@@ -62,16 +62,18 @@ export class ItemLinksComponent implements OnChanges, OnInit {
     this.model = new SearchTerms();
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
 
-    this.listener = this.auth$.subscribe((auth) => {
+    let authWatcher = this.auth$.subscribe((auth) => {
       this.isAuthenticated = auth.status;
       this.changeDetector.markForCheck();
-    })
+    });
+
+    this.watchers.add(authWatcher);
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if(changes['linkOptions']) {
+    if (changes['linkOptions']) {
       // if (changes['linkOptions'].currentValue === 'opts') {
       //   this.svc.getOptionsList(changes['url'].currentValue).subscribe((list) => {
       //     this.optionList = list.result;
@@ -86,7 +88,8 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.listener.unsubscribe();
+    this.watchers.unsubscribe();
+    this.changeDetector.detach();
   }
 
 }

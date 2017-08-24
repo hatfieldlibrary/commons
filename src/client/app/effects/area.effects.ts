@@ -15,12 +15,12 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Injectable} from "@angular/core";
-import {Actions, Effect} from "@ngrx/effects";
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
 import * as areas from '../actions/area.actions';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 import {AreaService} from '../services/area.service';
-import {Action} from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 
 @Injectable()
 export class AreaEffects {

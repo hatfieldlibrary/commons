@@ -19,7 +19,7 @@
  * Created by mspalti on 2/22/17.
  */
 import { createSelector } from 'reselect';
-import { ActionReducer } from '@ngrx/store';
+import {ActionReducer, ActionReducerMap} from '@ngrx/store';
 
 import { environment } from '../environments/environment';
 
@@ -31,14 +31,14 @@ import { environment } from '../environments/environment';
  *
  * More: https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html
  */
-import { compose } from '@ngrx/core/compose';
+import { compose } from '@ngrx/store';
 
 /**
  * storeFreeze prevents state from being mutated. When mutation occurs, an
  * exception will be thrown. This is useful during development mode to
  * ensure that none of the reducers accidentally mutates the state.
  */
-import { storeFreeze } from 'ngrx-store-freeze';
+//import { storeFreeze } from 'ngrx-store-freeze';
 
 /**
  * combineReducers is another useful metareducer that takes a map of reducer
@@ -79,6 +79,7 @@ export interface State {
 
 }
 
+
 /**
  * Because metareducers take a reducer function and return a new reducer,
  * we can use our compose helper to chain them together. Here we are
@@ -86,7 +87,29 @@ export interface State {
  * wrapping that in storeLogger. Remember that compose applies
  * the result from right to left.
  */
-const reducers = {
+// const reducers = {
+//   collections: fromCollection.reducer,
+//   area: fromArea.reducer,
+//   areaList: fromAreaList.reducer,
+//   subjects: fromSubject.reducer,
+//   item: fromItem.reducer,
+//   related: fromRelated.reducer,
+//   auth: fromAuth.reducer
+// };
+
+//const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
+//const productionReducer: ActionReducer<State> = combineReducers(reducers);
+
+//export function reducer(state: any, action: any) {
+ // if (environment.production) {
+  //  return productionReducer(state, action);
+ // }
+ // else {
+  //  return developmentReducer(state, action);
+ // }
+//}
+
+export const reducers: ActionReducerMap<State> = {
   collections: fromCollection.reducer,
   area: fromArea.reducer,
   areaList: fromAreaList.reducer,
@@ -96,17 +119,6 @@ const reducers = {
   auth: fromAuth.reducer
 };
 
-const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
-const productionReducer: ActionReducer<State> = combineReducers(reducers);
-
-export function reducer(state: any, action: any) {
-  if (environment.production) {
-    return productionReducer(state, action);
-  }
-  else {
-    return developmentReducer(state, action);
-  }
-}
 /**
  * A selector function is a map function factory. We pass it parameters and it
  * returns a function that maps from the larger state tree into a smaller

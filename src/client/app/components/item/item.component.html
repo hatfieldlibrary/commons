@@ -14,7 +14,7 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<div fxLayout="row" fxHide fxShow.gt-sm="true" fxLayoutAlign="left center" style="position:absolute;top:30px;">
+<div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" style="position:absolute;top:30px;">
 
   <a md-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
     <md-icon><back-black-svg></back-black-svg></md-icon>&nbsp;Back to List
@@ -24,8 +24,7 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="0">
 
   <div fxFlex="80"
-       fxShow="true"
-       fxHide.gt-sm="true">
+      *ngIf="!media.isActive('gt-sm')">
 
     <item-links
       [restricted]="item?.collection.restricted"
@@ -77,8 +76,7 @@
        fxFlex.sm="35"
        fxFlex.md="35"
        fxFlex.gt-md="30"
-       fxShow="false"
-       fxShow.gt-sm="true">
+       *ngIf="media.isActive('gt-sm')">
 
     <item-links
       [restricted]="item?.collection.restricted"

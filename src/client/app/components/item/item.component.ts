@@ -21,6 +21,7 @@ import {SubjectType} from "../../shared/data-types/subject.type";
 import {UtilitiesService} from "../../services/utilities.service";
 import {SearchService} from "../../services/search.service";
 import {Subscription} from "rxjs/Subscription";
+import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 
 @Component({
   selector: 'item',
@@ -34,10 +35,13 @@ export class ItemComponent implements OnChanges, OnDestroy {
   @Input() selectedArea: string;
   @Input() selectedSubject: SubjectType;
   optionList;
-  listener:Subscription;
+  state = '';
+  watchers: Subscription;
 
   constructor(private svc: SearchService,
-              private utils: UtilitiesService) {
+              private utils: UtilitiesService,
+              public media: ObservableMedia) {
+
   }
 
   getBackLink(): string {
@@ -47,20 +51,38 @@ export class ItemComponent implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['item']) {
-      if (changes['item'].currentValue.collection.linkOptions === 'opts') {
-        this.listener = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
-          this.optionList = list.result;
-        })
-      }
 
+    // if(changes['item']) {
+    //   if (changes['item'].currentValue.collection.linkOptions === 'opts') {
+    //     let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
+    //       this.optionList = list.result;
+    //     });
+    //     this.watchers.add(optionsWatcher);
+    //   }
+    //
+    //
+    // }
+  }
+
+  ngOnInit(): void {
+    this.watchers = new Subscription();
+
+    let mediaWatcher = this.media.asObservable()
+      .subscribe((change: MediaChange) => {
+        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
+      });
+    this.watchers.add(mediaWatcher);
+
+    if (this.item.collection.linkOptions === 'opts') {
+      let optionsWatcher = this.svc.getOptionsList(this.item.collection.url).subscribe((list) => {
+        this.optionList = list.result;
+      });
+      this.watchers.add(optionsWatcher);
     }
   }
 
   ngOnDestroy(): void {
-    if(this.listener) {
-      this.listener.unsubscribe();
-    }
+    this.watchers.unsubscribe();
   }
 
 }

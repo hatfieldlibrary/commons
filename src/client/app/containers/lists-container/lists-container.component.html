@@ -57,7 +57,7 @@
 
             </div>
             <div class="fill-remaining-space"></div>
-            <div fxFlex fxFlex.gt-sm="25" fxHide fxShow.gt-sm >
+            <div fxFlex fxFlex.gt-sm="25" *ngIf="media.isActive('gt-sm')" >
 
               <navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></navigation-selector>
 

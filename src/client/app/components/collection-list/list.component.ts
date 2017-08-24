@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnDestroy, Output} from '@angular/core';
 
 import {CollectionType} from "../../shared/data-types/collection.type";
 import {environment} from '../../environments/environment';
@@ -36,13 +36,14 @@ export class ListComponent implements OnDestroy {
   rootPath: string = environment.appRoot;
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SelectedSubject;
-  @Output() removeSubject: EventEmitter<void> ;
+  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
   @Input() selectedArea: string;
   filterTerm: string;
 
+
+
   constructor(private store: Store<fromRoot.State>) {
     this.filterTerm = '';
-    this.removeSubject = new EventEmitter<void>();
   }
 
   deselect() {
@@ -51,6 +52,7 @@ export class ListComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.removeSubject.unsubscribe();
 
   }
 

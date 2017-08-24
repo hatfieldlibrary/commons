@@ -15,12 +15,12 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AnimationEntryMetadata} from "@angular/core";
+
 import {animate, state, style, transition, trigger} from "@angular/animations";
 /**
  * Created by mspalti on 5/17/17.
  */
-export const slideInDownAnimation: AnimationEntryMetadata =
+export const slideInDownAnimation =
   trigger('leftToRightAnimation', [
     state('*',
       style({
@@ -46,7 +46,7 @@ export const slideInDownAnimation: AnimationEntryMetadata =
     ])
   ]);
 
-export const slideInLeftAnimation: AnimationEntryMetadata =
+export const slideInLeftAnimation =
   trigger('rightToLeftAnimation', [
     state('*',
       style({
@@ -72,7 +72,7 @@ export const slideInLeftAnimation: AnimationEntryMetadata =
     ])
   ]);
 
-export const slideUpDownAnimation: AnimationEntryMetadata =
+export const slideUpDownAnimation =
   trigger('bottomToTopAnimation', [
     state('*',
       style({
@@ -98,7 +98,7 @@ export const slideUpDownAnimation: AnimationEntryMetadata =
     ])
   ]);
 
-export const fadeIn: AnimationEntryMetadata =
+export const fadeIn =
   trigger(
     'openClose',
     [
@@ -113,7 +113,7 @@ export const fadeIn: AnimationEntryMetadata =
 
 
 
-export const imageFadeIn: AnimationEntryMetadata =
+export const imageFadeIn =
   trigger(
     'imageShow',
     [

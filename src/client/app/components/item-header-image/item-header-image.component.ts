@@ -33,13 +33,6 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
   constructor(private sanitizer: DomSanitizer,
               public media: ObservableMedia) {
     this.image = '';
-
-  }
-
-  ngOnInit() {
-    this.backgroundImage = this.sanitizer.bypassSecurityTrustUrl('');
-    this.imageLoaded = false;
-    this.currentImage = '';
     this.watcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
@@ -48,6 +41,14 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
       }
 
     });
+
+  }
+
+  ngOnInit() {
+
+    this.backgroundImage = this.sanitizer.bypassSecurityTrustUrl('');
+    this.imageLoaded = false;
+    this.currentImage = '';
     this.setImage();
   }
 
@@ -80,7 +81,9 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
    * Unsubscribe media watcher.
    */
   ngOnDestroy(): void {
-    this.watcher.unsubscribe();
+    if (this.watcher) {
+      this.watcher.unsubscribe();
+    }
   }
 
 

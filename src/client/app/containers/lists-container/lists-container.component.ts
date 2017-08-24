@@ -35,10 +35,11 @@ import {SubjectType} from '../../shared/data-types/subject.type';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
 import {fadeIn} from "../../animation/animations";
 import {Subscription} from "rxjs/Subscription";
+import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 
 @Component({
   selector: 'lists-container',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: 'lists-container.component.html',
   animations: [fadeIn]
 })
@@ -57,18 +58,21 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   title: string;
   subtitle: string;
   subjectId: number;
+  state = '';
 
   @HostBinding('@openClose') routeAnimation = true;
-  @HostBinding('style.display')   display = 'block';
-  @HostBinding('style.position')  position = 'absolute';
-  @HostBinding('style.position')  width = '100%';
-  private subjectsObserver: Subscription;
-  private areaWatcher: Subscription;
-  private areaInfoWatcher: Subscription;
-  private routeWatcher: Subscription;
+  @HostBinding('style.display') display = 'block';
+  @HostBinding('style.position') position = 'absolute';
+  @HostBinding('style.position') width = '100%';
 
-  constructor(private store: Store<fromRoot.State>, private route: ActivatedRoute, private router: Router) {
+  watchers: Subscription;
 
+  constructor(private store: Store<fromRoot.State>,
+              private route: ActivatedRoute,
+              private router: Router,
+              public media:ObservableMedia) {
+    // All component subscriptions will be added to this object.
+    this.watchers = new Subscription();
   }
 
   /**
@@ -76,20 +80,21 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    this.areaWatcher = this.areas$.subscribe((areas) => {
+    let areaWatcher = this.areas$.subscribe((areas) => {
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areasAvailable = true;
       }
     });
+    this.watchers.add(areaWatcher);
 
   }
 
   getAreaTitle(): void {
-    this.areaInfoWatcher = this.areaInfo$.subscribe((info) => {
+    let areaInfoWatcher = this.areaInfo$.subscribe((info) => {
       if (info.length > 1) {
-        this.title = ''
-        info.forEach((area) => this.subtitle +=  area.title + ' / ');
+        this.title = '';
+        info.forEach((area) => this.subtitle += area.title + ' / ');
         this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
       } else {
         if (info[0].title) {
@@ -99,6 +104,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         }
       }
     });
+    this.watchers.add(areaInfoWatcher);
   }
 
   _setAllCollectionTitle() {
@@ -171,7 +177,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param subjectId
    */
   getAllCollectionsForSubject(subjectId: string) {
-    console.log('all colls for subject')
+
     this.store.dispatch((new listActions.AllCollectionSubjectAction(subjectId)));
     this.store.dispatch(new subjectAction.AllSubjectAction());
     this._setSelectedSubject(subjectId);
@@ -184,9 +190,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @private
    */
   _setSelectedSubject(subjectId: string) {
-    this.subjectsObserver = this.subjects$.subscribe(() => {
+    let subjectsObserver = this.subjects$.subscribe(() => {
       this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
     });
+    this.watchers.add(subjectsObserver);
   }
 
   /**
@@ -201,20 +208,12 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   removeSubject(event) {
-    // if(this.subjectLinkType === 'all') {
-    //   this.store.dispatch(new listActions.AllCollectionsAction());
-    // } else {
-    //   this.store.dispatch(new listActions.CollectionAction(this.areaId));
-    // }
-    // this.store.dispatch(new subjectAction.RemoveCurrentSubject());
-    // Using the router is probably a better solution.
     if (this.areaId && this.areaId !== '0') {
-      this.router.navigateByUrl('/'+environment.appRoot+'/collection/area/' + this.areaId);
+      this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId);
     } else {
-      this.router.navigateByUrl('/'+environment.appRoot+'/collection');
+      this.router.navigateByUrl('/' + environment.appRoot + '/collection');
     }
   }
-
 
   ngOnInit() {
 
@@ -224,10 +223,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
 
-    this.setAreasAvailable();
-    this.getAreaTitle();
+    let mediaWatcher = this.media.asObservable()
+      .subscribe((change:MediaChange) => {
+        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
+      });
 
-    this.routeWatcher = this.route.params
+    this.watchers.add(mediaWatcher);
+
+    let routeWatcher = this.route.params
 
       .subscribe((params) => {
 
@@ -236,7 +239,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.initializeAreas();
 
         if (params['areaId']) {
-
           this.areaId = params['areaId'];
           this.subjectLinkType = 'area';
           if (params['subjectId']) {
@@ -245,10 +247,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
           } else {
             this.getCollections(params['areaId']);
-
-
           }
-
         }
         else if (params['subjectId']) {
           this.subjectId = params['subjectId'];
@@ -257,10 +256,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.getAllCollectionsForSubject(params['subjectId']);
           this._setAllCollectionTitle();
           this.areaId = '0';
-
         }
         else {
-
           this.subjectLinkType = 'all';
           this.getAllCollections();
           this.homeScreen = true;
@@ -269,15 +266,20 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
       });
 
+    this.watchers.add(routeWatcher);
+
+    this.setAreasAvailable();
+    this.getAreaTitle();
+
   }
 
   ngOnDestroy(): void {
-    if (this.subjectsObserver) {
-      this.subjectsObserver.unsubscribe();
-    }
-    this.routeWatcher.unsubscribe();
-    this.areaInfoWatcher.unsubscribe();
-    this.areaWatcher.unsubscribe();
+    this.watchers.unsubscribe();
+    this.collections$ = null;
+    this.areas$ = null;
+    this.subjects$ = null;
+    this.areaInfo$ = null;
+    this.selectedSubject$ = null;
   }
 
 }

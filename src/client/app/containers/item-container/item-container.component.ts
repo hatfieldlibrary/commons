@@ -31,12 +31,12 @@ import {AreaListItemType} from "../../shared/data-types/area-list.type";
 import {fadeIn} from "../../animation/animations";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
-import {DOCUMENT} from "@angular/platform-browser";
+import {DOCUMENT} from "@angular/common";
 import {SubjectType} from "../../shared/data-types/subject.type";
 
 @Component({
   selector: 'item-container',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './item-container.component.html',
   styleUrls: ['./item-container.component.css'],
   animations: [fadeIn]
@@ -53,15 +53,11 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   areas$: Observable<AreaListItemType[]>;
   selectedSubject$: Observable<SubjectType>;
   id: string;
-  // collectionImage: string;
   areasAvailable: boolean = false;
-  watcher: Subscription;
   activeMediaQuery = 'xs';
   columns: number = 1;
   selectedArea: string;
-  itemWatcher: Subscription;
-  areaWatcher: Subscription;
-  routeWatcher: Subscription;
+  private watchers: Subscription;
 
   constructor(private store: Store<fromRoot.State>,
               private renderer: Renderer2,
@@ -70,16 +66,21 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
               private router: Router,
               @Inject(DOCUMENT) private document) {
 
+    this.watchers = new Subscription();
+
     /** Assures that the page scrolls to top if user chooses related item. */
-    this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
+    let routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
       // Chrome canary supports the new standard usage with documentElement, but
       // Chrome and presumably other browsers still expect body.
       this.renderer.setProperty(this.document.body, 'scrollTop', 0);
       this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
+
     });
 
+    this.watchers.add(routeEventWatcher);
+
     // Set the media observable subscription for assigning the related items column count.
-    this.watcher = this.media.subscribe((change: MediaChange) => {
+    let mediaWatcher = this.media.subscribe((change: MediaChange) => {
       this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
       if (change.mqAlias === 'xs') {
         this.columns = 1;
@@ -92,6 +93,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.watchers.add(mediaWatcher);
 
   }
 
@@ -100,12 +102,13 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    this.areaWatcher = this.areas$.subscribe((areas) => {
+    let areaWatcher = this.areas$.subscribe((areas) => {
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areasAvailable = true;
       }
     });
+    this.watchers.add(areaWatcher);
 
   }
 
@@ -163,22 +166,19 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    // this.store.dispatch(new fromItem.ItemReset());
-    // this.store.dispatch(new fromItem.ClearRelatedItems());
-
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
-    // this.collectionImage = '';
 
     // Once we have item information, request related items.
-    this.itemWatcher = this.item$.subscribe((data) => {
+    let itemWatcher = this.item$.subscribe((data) => {
       this.getRelatedItems(data);
     });
+    this.watchers.add(itemWatcher);
 
     // Request item based on route parameter.
-    this.routeWatcher = this.route.params
+    let routeWatcher = this.route.params
       .subscribe((params) => {
 
         this.store.dispatch(new fromItem.ItemReset());
@@ -194,18 +194,18 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
       });
 
+    this.watchers.add(routeWatcher);
+
     this.initializeAreas();
     this.initializeColumnCount();
 
   }
 
   ngOnDestroy(): void {
-    this.watcher.unsubscribe();
-    this.itemWatcher.unsubscribe();
-    if (this.areaWatcher) {
-      this.areaWatcher.unsubscribe();
-    }
-    this.routeWatcher.unsubscribe();
+    this.renderer.destroy();
+    this.watchers.unsubscribe();
+    this.document = null;
+
   }
 
 }

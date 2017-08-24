@@ -88,7 +88,9 @@
             </div>
 
           </div>
-          <navigation-selector  fxHide.gt-sm="true" [areaList]="areaList" [selectedAreas]="selectedArea" (onSelected)="sidenav.toggle()"></navigation-selector>
+
+          <navigation-selector  *ngIf="!media.isActive('gt-sm')" [areaList]="areaList" [selectedAreas]="selectedArea" (onSelected)="sidenav.toggle()"></navigation-selector>
+
         </md-sidenav>
 
       </div>

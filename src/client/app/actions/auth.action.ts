@@ -36,10 +36,8 @@
  */
 
 
-import { Action } from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 import { type } from "../shared/ngrx/type";
-import {AreaType} from "../shared/data-types/area.type";
-import {AreaListItemType} from "../shared/data-types/area-list.type";
 import {AuthType} from "../shared/data-types/auth.type";
 
 export const AuthActionTypes = {

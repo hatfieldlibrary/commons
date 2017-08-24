@@ -16,7 +16,7 @@
  */
 
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, RequestOptions} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -49,7 +49,7 @@ import {SubjectService} from './services/subject.service';
 import {SubjectEffects} from './effects/subject.effects';
 import {CollectionEffects} from './effects/collection.effects';
 import {ItemContainerComponent} from './containers/item-container/item-container.component';
-import {reducer} from './reducers';
+import {reducers} from './reducers';
 import {ItemEffects} from "./effects/item.effects";
 import {ItemService} from "./services/item.service";
 import {RelatedEffects} from "./effects/related.effects";
@@ -87,7 +87,6 @@ import {HomeBlackSvgComponent} from "./components/svg/home-black-svg/home-black-
 import {environment} from 'app/environments/environment';
 import { ItemSelectComponent } from './components/item-select-options/item-select.component';
 import { DatePickerSvgComponent } from './components/svg/date-picker-svg/date-picker-svg.component';
-
 
 export const appRoutes = [
 
@@ -175,7 +174,8 @@ export const appRoutes = [
      * meta-reducer. This returns all providers for an @ngrx/store
      * based application.
      */
-    StoreModule.provideStore(reducer),
+    //StoreModule.provideStore(reducer),
+    StoreModule.forRoot(reducers),
     /**
      * Store devtools instrument the store retaining past versions of state
      * and recalculating new states. This enables powerful time-travel
@@ -186,18 +186,21 @@ export const appRoutes = [
      *
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
-    StoreDevtoolsModule.instrumentOnlyWithExtension(),
+    StoreDevtoolsModule.instrument(),
     /**
      * EffectsModule.run() sets up the effects class to be initialized
      * immediately when the application starts.
      *
      * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
      */
-    EffectsModule.run(CollectionEffects),
-    EffectsModule.run(AreaEffects),
-    EffectsModule.run(SubjectEffects),
-    EffectsModule.run(ItemEffects),
-    EffectsModule.run(RelatedEffects)
+
+    EffectsModule.forRoot([
+      CollectionEffects,
+      AreaEffects,
+      SubjectEffects,
+      ItemEffects,
+      RelatedEffects
+    ])
 
   ],
   providers: [

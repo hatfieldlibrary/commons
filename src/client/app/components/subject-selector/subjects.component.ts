@@ -16,7 +16,8 @@
  */
 
 import {
-  AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList,
+  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy,
+  OnInit, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {SubjectType} from "../../shared/data-types/subject.type";
@@ -31,7 +32,8 @@ import * as listActions from '../../actions/collection.actions';
 @Component({
   selector: 'subject-selector',
   templateUrl: 'subjects.component.html',
-  styleUrls: ['subjects.component.css']
+  styleUrls: ['subjects.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -73,6 +75,18 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private changeDetector: ChangeDetectorRef,
               private media: ObservableMedia,
               private store: Store<fromRoot.State>) {
+
+    this.watcher = new Subscription();
+
+    let mediaWatcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+    this.watcher.add(mediaWatcher);
+
   }
 
   resetList(): void {
@@ -84,13 +98,6 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   ngOnInit(): void {
 
-    this.watcher = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs') {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
-    });
   }
 
   /**
@@ -98,6 +105,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
+    this.changeDetector.detach();
   }
 
   /**
@@ -134,6 +142,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
+
   /**
    * Using setInterval to animate horizontal scroll.
    * @param direction the direction to scroll
@@ -146,7 +155,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       animationCouter = 0;
     }
     if (direction === 'left') {
-     animationCouter = this.subjects.nativeElement.scrollLeft
+      animationCouter = this.subjects.nativeElement.scrollLeft
     }
     // Set the animation limit.
     let limit = this._setAnimiationLimit(direction);
@@ -189,7 +198,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
 
     this.offsetWidth = this.container.nativeElement.offsetWidth;
-    this.contentEls.changes.subscribe((el) => {
+    let changeWatcher = this.contentEls.changes.subscribe((el) => {
       this.lastSubjectButton = el._results[this.subjectList.length - 1];
       let leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
       this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;
@@ -198,7 +207,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.changeDetector.detectChanges();
     });
 
-
+    this.watcher.add(changeWatcher);
   }
 
   /**

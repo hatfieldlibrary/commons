@@ -112,14 +112,14 @@ class MockActivatedRoute extends ActivatedRoute {
 
 }
 
-class MockStore<T> extends Store<any> {
-
-  select = () => {
-    return Observable.of(areaList);
-  };
-  dispatch (action: Action) {};
-
-}
+// class MockStore<T> extends Store<any> {
+//
+//   select = () => {
+//     return Observable.of(areaList);
+//   };
+//   dispatch (action: Action) {};
+//
+// }
 
 const setAllRoute = (route: any) => {
  route.params = Observable.of({});
@@ -224,7 +224,7 @@ describe('ListsContainerComponent', () => {
     route = fixture.debugElement.injector.get(ActivatedRoute);
     component = fixture.componentInstance;
     spyOn(store, 'select').and.callThrough();
-   // spyOn(store, 'dispatch');
+    //spyOn(store, 'dispatch');
     spyOn(component, 'getAllCollectionsForSubject').and.callThrough();
     spyOn(component, 'initializeAreas').and.callThrough();
     spyOn(component, 'getAreaInformation').and.callThrough();

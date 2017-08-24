@@ -19,7 +19,7 @@ import {Injectable} from "@angular/core";
 import {Actions, Effect} from "@ngrx/effects";
 import * as subjects from '../actions/subject-actions';
 import {Observable} from "rxjs";
-import {Action} from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 import {SubjectService} from "../services/subject.service";
 
 @Injectable()

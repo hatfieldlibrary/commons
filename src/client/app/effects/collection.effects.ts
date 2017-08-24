@@ -23,7 +23,7 @@ import {Actions, Effect} from "@ngrx/effects";
 import {Observable} from "rxjs";
 import {CollectionService} from "../services/collection.service";
 import * as collection from '../actions/collection.actions';
-import {Action} from "@ngrx/store";
+import {Action} from '../actions/action.interface';
 
 @Injectable()
 export class CollectionEffects {

@@ -27,7 +27,9 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular/cli/plugins/karma'),
-      require('karma-scss-preprocessor')
+      require('karma-scss-preprocessor'),
+      require('karma-phantomjs-launcher'),
+      require('karma-teamcity-reporter')
     ],
     files: [
       { pattern: './src/client/test.ts', watched: false },
