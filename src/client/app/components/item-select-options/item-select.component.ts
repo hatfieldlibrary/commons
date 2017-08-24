@@ -15,8 +15,9 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
 import {SearchService} from "../../services/search.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'item-select-component',
@@ -32,11 +33,12 @@ export class ItemSelectComponent {
   @Input() isAuthenticated: boolean = false;
   SEARCH_OPTIONS_LABEL: string = 'Browse by Date';
 
-  constructor(private svc: SearchService) { }
+  constructor(private svc: SearchService,
+              @Inject(DOCUMENT) private document) { }
 
   optionSearch(term) {
-    this.svc.executeOptionsQuery(this.url, term);
-
+    let href = this.svc.getOptionsQuery(this.url, term);
+    this.document.location.href = href;
   }
 
 

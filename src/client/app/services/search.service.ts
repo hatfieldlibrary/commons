@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../environments/environment";
 import {Http} from "@angular/http";
 
 @Injectable()
 export class SearchService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+  }
 
   /*
     TODO This service is hard-coded to current cview queries. Needs to be somehow generalized!
@@ -18,10 +19,10 @@ export class SearchService {
    * @param collection the collection name
    * @param terms user provided search terms
    */
-  executeOptionsQuery (collection: string, terms: string) {
-    const query =  encodeURIComponent(terms);
+  getOptionsQuery(collection: string, terms: string): string {
+    const query = encodeURIComponent(terms);
     const href = `http://libmedia.willamette.edu/cview/${collection}.html#!browse:search:${collection}/date^${query}^all^and!`;
-    window.open(href, '_blank');
+    return href;
   }
 
   /**
@@ -29,21 +30,20 @@ export class SearchService {
    * @param baseURL base url for the query
    * @param terms user provided search terms
    */
-  executeSimpleSearchQuery(baseURL: string, terms: string) {
+  executeSimpleSearchQuery(baseURL: string, terms: string): string {
 
-    const query =  encodeURIComponent(terms);
+    const query = encodeURIComponent(terms);
     let splitString = baseURL.split('{$query}');
     const href = splitString[0] + query + splitString[1];
     //const href = baseURL + `all^${query}^all^and!`;
-   // const href = baseURL.template();
-    window.open(href, '_blank');
+    // const href = baseURL.template();
+    return href;
   }
 
   getOptionsList(collection: string) {
     return this.http.get(environment.apiHost + environment.apiRoot + '/options/external/' + collection)
       .map(res => res.json());
   }
-
 
 
 }

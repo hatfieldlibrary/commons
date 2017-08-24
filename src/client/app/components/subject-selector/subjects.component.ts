@@ -62,11 +62,11 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param event
    */
   @HostListener('window:resize', ['$event'])
- onResize(event) {
-   // on window resize, recheck the container element width.
-   this.offsetWidth = this.container.nativeElement.offsetWidth;
-   this.showSubjectNavigationArrow();
- }
+  onResize(event) {
+    // on window resize, recheck the container element width.
+    this.offsetWidth = this.container.nativeElement.offsetWidth;
+    this.showSubjectNavigationArrow();
+  }
 
   /**
    * Injecting ChangeDetectorRef to instruct angular to re-render
@@ -143,7 +143,6 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return check;
   }
-
 
 
   /**

@@ -41,7 +41,7 @@ import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import * as areaActions from '../../actions/area.actions';
 import * as subjectActions from '../../actions/subject-actions';
-import {ListHeaderComponent} from '../../components/list-header/list-header.component';
+
 import {AreaInformationComponent} from '../../components/area-information/area-information.component';
 import {AppComponent} from '../../components/app.component';
 import {HomeScreenComponent} from "../../components/home-screen/home-screen.component";
@@ -162,7 +162,6 @@ describe('ListsContainerComponent', () => {
         ListComponent,
         ListsContainerComponent,
         SubjectsComponent,
-        ListHeaderComponent,
         AreaInformationComponent,
         HomeScreenComponent,
         FooterComponent,

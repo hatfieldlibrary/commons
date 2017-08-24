@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
 import {NavigationEnd, Router} from "@angular/router";
@@ -6,6 +6,7 @@ import {UtilitiesService} from "../../services/utilities.service";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {Subscription} from "rxjs/Subscription";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-menus-component',
@@ -30,7 +31,8 @@ export class AppMenusComponent implements OnInit, OnDestroy {
 
   constructor(private utils: UtilitiesService,
               private router: Router,
-              public media:ObservableMedia) {
+              public media:ObservableMedia,
+              @Inject(DOCUMENT) private document) {
 
     this.listener = router.events
       .filter(event => event instanceof NavigationEnd)
@@ -46,15 +48,15 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   }
 
   goToHome(): void {
-    window.location.href = this.homeUrl;
+    document.location.href = this.homeUrl;
   }
 
   goToSecondary(): void {
-    window.location.href = this.secondaryUrl;
+    document.location.href = this.secondaryUrl;
   }
 
   goToTertiary(): void {
-    window.location.href= this.tertiaryUrl;
+    document.location.href= this.tertiaryUrl;
   }
 
   openMenu() {
@@ -73,6 +75,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.listener.unsubscribe();
+   this.document = null;
   }
 
 }

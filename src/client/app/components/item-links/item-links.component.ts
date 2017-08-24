@@ -1,6 +1,5 @@
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnInit, SimpleChanges
 } from '@angular/core';
 import {SearchService} from "../../services/search.service";
 import {SearchTerms} from "../../shared/data-types/simple-search.type";
@@ -12,6 +11,7 @@ import {AuthType} from "../../shared/data-types/auth.type";
 import * as fromRoot from "../../reducers";
 import {Store} from "@ngrx/store";
 import {Subscription} from "rxjs/Subscription";
+import {DOCUMENT} from "@angular/common";
 
 
 @Component({
@@ -43,7 +43,8 @@ export class ItemLinksComponent implements OnChanges, OnInit {
               private route: ActivatedRoute,
               private auth: AuthCheckService,
               private changeDetector: ChangeDetectorRef,
-              private store: Store<fromRoot.State>) {
+              private store: Store<fromRoot.State>,
+              @Inject(DOCUMENT) private document) {
 
     this.watchers = new Subscription();
     const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
@@ -54,7 +55,8 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   }
 
   simpleSearch() {
-    this.svc.executeSimpleSearchQuery(this.searchUrl, this.model.terms)
+    let href = this.svc.executeSimpleSearchQuery(this.searchUrl, this.model.terms)
+    this.document.location.href = href;
   }
 
   ngOnInit(): void {
