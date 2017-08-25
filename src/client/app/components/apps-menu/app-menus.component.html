@@ -14,86 +14,84 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<div fxFlex="100" class="header-image-container" style="overflow:hidden">
+<!--<div fxFlex="100" class="header-image-container" style="overflow:hidden">-->
 
-  <div class="header-background-overlay"></div>
+<!--<div class="header-background-overlay"></div>-->
 
-  <div fxLayout="row" fxLayoutAlign="center top">
+<div fxLayout="row" fxLayoutAlign="center top">
 
-    <div fxLayout="column"
-         fxFlex="100"
-         fxFlex.md="100"
-         fxFlex.lg="90"
-         fxFlex.gt-lg="60">
+  <div fxLayout="column"
+       fxFlex="100">
 
-      <div fxLayout="row" fxLayoutAlign="start start">
+    <div fxLayout="row" fxLayoutAlign="start start">
 
-        <md-toolbar fxFlex="100" style="background: #000;color:#fff; ">
+      <md-toolbar fxFlex="100">
 
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <div style="height: 24px;">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <div style="height: 24px;">
             <button md-icon-button *ngIf="showBack" [routerLink]="getBackLink()">
-              <icon-back  ></icon-back>
+              <icon-back></icon-back>
             </button>
-            </div>
-            <div>
-            <span>&nbsp;Academic Commons</span>
-            </div>
-
           </div>
-          <!-- This fills the remaining space of the current row -->
-          <span class="fill-remaining-space"></span>
-
-          <md-divider style="border-color: #fff;"></md-divider>
-
-          <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="15">
-            <a [href]="homeUrl" target="_top" md-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-              <home-svg></home-svg>
-              <span>&nbsp;Commons Home</span></a>
-          </div>
-
-          <md-divider></md-divider>
-
-          <button md-button (click)="openMenu()"
-                  style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-            <menu-svg></menu-svg>
-            <span fxShow.gt-sm="true">&nbsp;Menu</span>
-          </button>
-
-        </md-toolbar>
-
-        <div class="fill-remaining-space"></div>
-
-        <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
-          <md-toolbar >
-            <icon-close (click)="sidenav.close()"></icon-close>
-          </md-toolbar>
           <div>
-            <div fxLayout="row" fxLayoutAlign="start start">
-              <md-list fxFlex>
-                <md-list-item (click)="goToHome()" target="_top" style="cursor: default">
-                  <home-black-svg></home-black-svg>
-                  <h5>&nbsp;Commons Home</h5>
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item (click)="goToSecondary()" target="_top" style="cursor: default">
-                  <h5>&nbsp;Hatfield Library</h5>
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item (click)="goToTertiary()" target="_top" style="cursor: default">
-                  <h5>&nbsp;Willamette University</h5>
-                </md-list-item>
-                <md-divider></md-divider>
-              </md-list>
-            </div>
-
+            <span>&nbsp;Academic Commons</span>
           </div>
 
-          <navigation-selector  *ngIf="!media.isActive('gt-sm')" [areaList]="areaList" [selectedAreas]="selectedArea" (onSelected)="sidenav.toggle()"></navigation-selector>
+        </div>
+        <!-- This fills the remaining space of the current row -->
+        <span class="fill-remaining-space"></span>
 
-        </md-sidenav>
+        <md-divider style="border-color: #fff;"></md-divider>
 
-      </div>
+        <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="15">
+          <a [href]="homeUrl" target="_top" md-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+            <home-svg></home-svg>
+            <span>&nbsp;Commons Home</span></a>
+        </div>
+
+        <md-divider></md-divider>
+
+        <button md-button (click)="openMenu()"
+                style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+          <menu-svg></menu-svg>
+          <span fxShow.gt-sm="true">&nbsp;Menu</span>
+        </button>
+
+      </md-toolbar>
+
+      <div class="fill-remaining-space"></div>
+
+      <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
+        <md-toolbar>
+          <icon-close (click)="sidenav.close()"></icon-close>
+        </md-toolbar>
+        <div>
+          <div fxLayout="row" fxLayoutAlign="start start">
+            <md-list fxFlex>
+              <md-list-item (click)="goToHome()" target="_top" style="cursor: default">
+                <home-black-svg></home-black-svg>
+                <h5>&nbsp;Commons Home</h5>
+              </md-list-item>
+              <md-divider></md-divider>
+              <md-list-item (click)="goToSecondary()" target="_top" style="cursor: default">
+                <h5>&nbsp;Hatfield Library</h5>
+              </md-list-item>
+              <md-divider></md-divider>
+              <md-list-item (click)="goToTertiary()" target="_top" style="cursor: default">
+                <h5>&nbsp;Willamette University</h5>
+              </md-list-item>
+              <md-divider></md-divider>
+            </md-list>
+          </div>
+
+        </div>
+
+        <navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areaList" [selectedAreas]="selectedArea"
+                             (onSelected)="sidenav.toggle()"></navigation-selector>
+
+      </md-sidenav>
+
     </div>
   </div>
 </div>
+<!--</div>-->

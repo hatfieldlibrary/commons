@@ -27,7 +27,7 @@
 
   </title-header>
 
-  <md-card class="main-content-area" style="padding:0;">
+  <md-card class="main-content-area" style="padding:0;margin-top: 145px;">
 
     <md-card-content style="background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
     background-repeat: no-repeat,repeat-x;
@@ -46,12 +46,14 @@
 
             <div fxFlex="100" fxFlex.gt-sm="70" style="width:100%;">
 
-              <area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
-                                [areaInfo]="areaInfo$ | async"
-                                ></area-information>
+              <div style="margin-top: 25px;"></div>
 
+              <md-card-subtitle class="area-info">
+              <area-information  *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
+                                [areaInfo]="areaInfo$ | async"></area-information>
               <home-screen *ngIf="homeScreen"
                            (removeSubject)="removeSubject($event)"></home-screen>
+              </md-card-subtitle>
 
               <collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async" [selectedArea]="areaId"></collection-list>
 

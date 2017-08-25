@@ -16,5 +16,21 @@
  */
 .chips {
   margin-left: 12px;
+  margin-top: 24px;
+}
 
+collection-list .mat-input-underline {
+  border-top-width: 2px !important;
+  border-color: #aba79a !important;
+}
+collection-list .mat-input-wrapper {
+  margin-bottom: 0;
+}
+.mat-list {
+  padding-top:0;
+}
+.collection-filter-input {
+  width:90%;
+  margin-top: 10px;
+  padding: 6px 12px;
 }

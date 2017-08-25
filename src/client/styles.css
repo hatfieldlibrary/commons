@@ -65,14 +65,6 @@ subject-selector md-list {
   text-decoration: none;
 }
 
-
-.header-image {
-  width: 100%;
-  position: relative;
-  /*height: 100%;*/
-  /*background-size:auto;*/
-}
-
 item-container .mat-list .mat-list-item div.mat-list-item-content.mat-ripple {
   padding: 0 0;
 }
@@ -85,73 +77,7 @@ md-card {
   background: #fff;
 }
 
-.header-image-container {
-  background: #423e3e;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: #fff;
-  border: none;
-}
-.header-image-container .header-title {
-  margin-left: 42px;
-  margin-top: 70px;
-  position: absolute;
-  z-index: 1200;
-}
 
-.header-image-container .header-title.list-title {
-  top: 2px;
-
-}
-.header-image-container .list-title {
-  margin-left: 32px;
-}
-
-.header-image-container .header-title.item-title {
-  top: 0;
-
-}
-
-.header-image-container .subject-selector-container {
-  /*position: absolute;*/
-  overflow:auto;
-  /*z-index: 1200;*/
-  /*width: 100%;*/
-  /*top: 150px;*/
-
-}
-
-.header-image-container .header-title h1 {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.header-overlay {
-  background: #000;
-  opacity: 0.5;
-  height: 150px;
-  width: 100%;
-  position: absolute;
-  z-index: 500;
-  top: 0;
-}
-
-.header-list-overlay {
-  background: rgb(0, 0, 0);
-  height: 209px;
-  width: 100%;
-  position: absolute;
-  z-index: 500;
-  top: 0;
-}
-
-.header-background-overlay {
-  background: #000;
-  opacity: 0.7;
-  height: 150px;
-  width: 100%;
-  position: absolute;
-  z-index: 0;
-  top: 0;
-}
 .area-color {
   color: #776a6a;
 }
@@ -173,7 +99,7 @@ md-card {
 }
 
 .main-content-area {
-  padding-top: 70px !important;
+
   padding-bottom: 80px !important;
 }
 
@@ -184,13 +110,6 @@ md-card {
   color: #999;
 }
 
-collection-list .mat-input-underline {
-  border-top-width: 2px !important;
-  border-color: #aba79a !important;
-}
-collection-list .mat-input-wrapper {
-  margin-bottom: 20px;
-}
 .mat-sidenav-content {
   overflow: hidden !important;
 }
@@ -198,11 +117,7 @@ collection-list .mat-input-wrapper {
 .mat-sidenav {
   background: #ffffff !important;
 }
-.collection-filter-input {
-  width:90%;
-  margin-top: 20px;
-  padding: 6px 12px;
-}
+
 /*.container-fix {*/
 /*position: absolute !important;*/
 /*right: 0;*/

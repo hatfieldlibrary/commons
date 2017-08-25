@@ -41,6 +41,7 @@ import {MediaChange, ObservableMedia} from "@angular/flex-layout";
   selector: 'lists-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'lists-container.component.html',
+  styleUrls: ['lists-container.component.css'],
   animations: [fadeIn]
 })
 export class ListsContainerComponent implements OnInit, OnDestroy {

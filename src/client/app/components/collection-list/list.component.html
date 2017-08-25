@@ -14,6 +14,21 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<div class="chips">
+  <div fxLayout="row" fxLayoutAlign="start center">
+  <md-card-subtitle *ngIf="selectedSubject">Viewing subject:&nbsp;&nbsp;</md-card-subtitle>
+  <md-chip-list>
+    <md-chip *ngIf="selectedSubject"
+             selected="true"
+             color="default"
+             (click)="deselect($event)" style="margin-bottom: 12px;">
+      {{selectedSubject?.name}}
+      <icon-close-white></icon-close-white>
+    </md-chip>
+  </md-chip-list>
+</div>
+</div>
+
 <div *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
   <md-spinner style="width:inherit"></md-spinner>
 </div>
@@ -25,25 +40,11 @@
   </md-input-container>
 </div>
 
-<div class="chips">
-  <md-chip-list>
-    <md-chip *ngIf="selectedSubject"
-             selected="true"
-             color="default"
-             (click)="deselect($event)" style="margin-bottom: 12px;">
-      {{selectedSubject?.name}}
-      <icon-close-white></icon-close-white>
-    </md-chip>
-  </md-chip-list>
-</div>
-
 <md-card-content>
-
   <md-list>
     <md-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
                   class="collection-list-item" *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
       {{collection.title}}
     </md-list-item>
   </md-list>
-
 </md-card-content>

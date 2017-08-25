@@ -5,3 +5,63 @@
 .mobile-margins h1 {
   font-size: 1.5em;
 }
+
+.header-image-container {
+  margin-top: -65px;
+  background: #423e3e;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: #fff;
+  border: none;
+}
+
+.header-image-container .header-title {
+  margin-left: 42px;
+  margin-top: 70px;
+  position: absolute;
+  z-index: 1200;
+}
+
+.header-image-container .header-title.list-title {
+  top: 2px;
+
+}
+
+.header-image-container .list-title {
+  margin-left: 32px;
+}
+
+.header-image-container .header-title.item-title {
+  top: 0;
+
+}
+
+.header-image-container .subject-selector-container {
+  /*position: absolute;*/
+  overflow: auto;
+  /*z-index: 1200;*/
+  /*width: 100%;*/
+  /*top: 150px;*/
+
+}
+
+.header-image-container .header-title h1 {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.header-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 150px;
+  width: 100%;
+  position: absolute;
+  z-index: 500;
+  top: 0;
+}
+
+.header-background-overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 0.7;
+  height: 150px;
+  width: 100%;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+}

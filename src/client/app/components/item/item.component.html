@@ -14,12 +14,7 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" style="position:absolute;top:30px;">
 
-  <a md-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
-    <md-icon><back-black-svg></back-black-svg></md-icon>&nbsp;Back to List
-  </a>
-</div>
 
 <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="0">
 
@@ -42,7 +37,11 @@
        fxFlex.md="60"
        fxFlex.lg="60"
        fxFlex.gt-lg="50">
-
+    <div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" >
+      <a md-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
+        <md-icon><back-black-svg></back-black-svg></md-icon>&nbsp;Back to List
+      </a>
+    </div>
     <md-card-title fxHide="true" fxShow.gt-sm="true" style="margin-top: 20px;">
       {{item?.collection.title}}
     </md-card-title>
@@ -72,7 +71,9 @@
 
   <div class="fill-remaining-space"></div>
 
-  <div fxFlex
+
+  <div
+       fxFlex
        fxFlex.sm="35"
        fxFlex.md="35"
        fxFlex.gt-md="30"
