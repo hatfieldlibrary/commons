@@ -75,7 +75,11 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.listener.unsubscribe();
-   this.document = null;
+    this.router.dispose();
+  //   this.router = null;
+  // //  this.media = null;
+  //   this.utils = null;
+  //  this.document = null;
   }
 
 }

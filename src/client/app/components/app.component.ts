@@ -25,5 +25,13 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  constructor( ){}
+  constructor(){}
+
+  onDeactivate(event) {
+    // Chrome canary supports the new standard usage with documentElement, but
+    // Chrome and presumably other browsers still expect body.
+    // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
+    // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
+  }
+
 }

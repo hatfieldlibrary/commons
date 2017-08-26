@@ -40,8 +40,6 @@ export class ListComponent implements OnDestroy {
   @Input() selectedArea: string;
   filterTerm: string;
 
-
-
   constructor(private store: Store<fromRoot.State>) {
     this.filterTerm = '';
   }
@@ -53,6 +51,11 @@ export class ListComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.removeSubject.unsubscribe();
+    // this.removeSubject = null;
+    // this.selectedArea = null;
+    // this.collectionList = null;
+    // this.selectedSubject = null;
+    // this.store = null;
 
   }
 

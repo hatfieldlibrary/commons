@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MdIconRegistry} from '@angular/material';
@@ -10,8 +10,14 @@ import {MdIconRegistry} from '@angular/material';
   styleUrls: ['./back-black-svg.component.css'],
   viewProviders: [MdIconRegistry]
 })
-export class BackBlackSvgComponent {
-  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+export class BackBlackSvgComponent implements OnDestroy{
+
+  ngOnDestroy(): void {
+    this.iconRegistry = null;
+    this.sanitizer = null;
+  }
+
+  constructor(private iconRegistry: MdIconRegistry, private sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'back-black',
       sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_black_24px.svg'));

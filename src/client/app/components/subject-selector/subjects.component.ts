@@ -107,8 +107,13 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
     this.changeDetector.detach();
-    this.changeDetector = null;
-    this.animation = null;
+   // this.changeDetector = null;
+    //this.media = null;
+  //   this.animation = null;
+  //   this.container = null;
+  //   this.contentEls = null;
+  //   this.subjects = null;
+  //   this.store = null;
   }
 
   /**

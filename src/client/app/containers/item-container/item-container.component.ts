@@ -16,7 +16,7 @@
  */
 
 import {
-  Component, OnInit, ChangeDetectionStrategy, Renderer2, HostBinding, OnDestroy, Inject
+  Component, OnInit, ChangeDetectionStrategy, Renderer2, OnDestroy, Inject
 } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
@@ -43,15 +43,10 @@ import {SubjectType} from "../../shared/data-types/subject.type";
 })
 export class ItemContainerComponent implements OnInit, OnDestroy {
 
-  @HostBinding('@openClose') routeAnimation = true;
-  @HostBinding('style.display') display = 'block';
-  @HostBinding('style.position') position = 'absolute';
-  @HostBinding('style.position') width = '100%';
-
-  item$: Observable<ItemType>;
   related$: Observable<RelatedType[]>;
-  areas$: Observable<AreaListItemType[]>;
   selectedSubject$: Observable<SubjectType>;
+  item: ItemType;
+  areas: AreaListItemType[];
   id: string;
   areasAvailable: boolean = false;
   activeMediaQuery = 'xs';
@@ -102,7 +97,8 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    let areaWatcher = this.areas$.subscribe((areas) => {
+    let areaWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
+      this.areas = areas;
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areasAvailable = true;
@@ -166,13 +162,13 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
-    this.areas$ = this.store.select(fromRoot.getAreas);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
+    this.setAreasAvailable();
 
     // Once we have item information, request related items.
-    let itemWatcher = this.item$.subscribe((data) => {
+    let itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
+      this.item = data;
       this.getRelatedItems(data);
     });
     this.watchers.add(itemWatcher);
@@ -180,12 +176,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     // Request item based on route parameter.
     let routeWatcher = this.route.params
       .subscribe((params) => {
-
         this.store.dispatch(new fromItem.ItemReset());
         this.store.dispatch(new fromItem.ClearRelatedItems());
-
         this.selectedArea = params['areaId'];
-
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));
@@ -193,7 +186,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
         }
 
       });
-
     this.watchers.add(routeWatcher);
 
     this.initializeAreas();
@@ -202,9 +194,11 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.renderer.destroy();
     this.watchers.unsubscribe();
-
+    this.renderer.destroy();
+    this.router.dispose();
+    this.renderer = null;
+    this.document = null;
   }
 
 }

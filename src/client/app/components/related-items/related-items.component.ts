@@ -32,4 +32,6 @@ export class RelatedItemsComponent {
   appRoot = environment.appRoot;
   imagePath = environment.apiHost +  environment.imagePath;
 
+  constructor() {}
+
 }

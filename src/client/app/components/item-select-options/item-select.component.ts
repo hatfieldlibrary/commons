@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Input, OnDestroy} from '@angular/core';
 import {SearchService} from "../../services/search.service";
 import {DOCUMENT} from "@angular/common";
 
@@ -25,7 +25,7 @@ import {DOCUMENT} from "@angular/common";
   styleUrls: ['./item-select.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemSelectComponent {
+export class ItemSelectComponent implements OnDestroy {
 
   @Input() optionList;
   @Input() url: string;
@@ -39,6 +39,11 @@ export class ItemSelectComponent {
   optionSearch(term) {
     let href = this.svc.getOptionsQuery(this.url, term);
     this.document.location.href = href;
+  }
+
+  ngOnDestroy(): void {
+    this.svc = null;
+    this.document = null;
   }
 
 

@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -23,6 +23,7 @@ import {environment} from '../../environments/environment';
 import {Store} from "@ngrx/store";
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
+import {AreaListItemType} from "../../shared/data-types/area-list.type";
 
 @Component({
   selector: 'navigation-selector',
@@ -30,14 +31,15 @@ import * as listActions from '../../actions/collection.actions';
   styleUrls: ['area.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavigationComponent implements OnInit, AfterViewInit {
+export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @Input() areaList: AreaType[];
+
+  @Input() areaList: AreaListItemType[];
   @Input() selectedAreas: string;
-  selectedAreaArray: string[];
+  private selectedAreaArray: string[];
   checkboxGroup: FormGroup;
   formArrayRef: FormArray;
-  private areaFormArray: FormArray;
+  areaFormArray: FormArray;
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
@@ -73,10 +75,6 @@ export class NavigationComponent implements OnInit, AfterViewInit {
     } else {
       this.router.navigate(['/',environment.appRoot,'collection']);
     }
-  }
-
-  _updateAreaInfo(title: string, id: number) {
-
   }
 
   _removeFromArray(index: number) {
@@ -130,7 +128,16 @@ export class NavigationComponent implements OnInit, AfterViewInit {
         this.formArrayRef.push(new FormControl(id));
       })
     }
+  }
 
+  ngOnDestroy(): void {
+    this.router.dispose();
+    // this.router = null;
+    // this.formBuilder = null;
+    // this.store  = null;
+    this.areaFormArray = null;
+    this.checkboxGroup = null;
+    this.formArrayRef = null;
   }
 
   ngAfterViewInit() {

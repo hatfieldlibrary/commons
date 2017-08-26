@@ -17,7 +17,7 @@
 
 <md-sidenav-container>
 
-  <app-menus-component [selectedArea]="areaId" [areaList]="areas$ | async" [showBack]="false"></app-menus-component>
+  <app-menus-component [selectedArea]="areaId" [areaList]="areas" [showBack]="false"></app-menus-component>
 
   <title-header [title]="title"
                 [subtitle]="subtitle"
@@ -50,7 +50,8 @@
 
               <md-card-subtitle class="area-info">
               <area-information  *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
-                                [areaInfo]="areaInfo$ | async"></area-information>
+                                [areaInfo]="areaInfo"
+                               ></area-information>
               <home-screen *ngIf="homeScreen"
                            (removeSubject)="removeSubject($event)"></home-screen>
               </md-card-subtitle>
@@ -61,7 +62,7 @@
             <div class="fill-remaining-space"></div>
             <div fxFlex fxFlex.gt-sm="25" *ngIf="media.isActive('gt-sm')" >
 
-              <navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></navigation-selector>
+              <navigation-selector [selectedAreas]="areaId" [areaList]="areas"></navigation-selector>
 
             </div>
 

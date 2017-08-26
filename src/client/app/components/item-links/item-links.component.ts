@@ -91,7 +91,13 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
   ngOnDestroy(): void {
     this.watchers.unsubscribe();
+  //  this.route = null;
     this.changeDetector.detach();
+    // this.changeDetector = null;
+    // this.document = null;
+    this.auth = null;
+   // this.store = null;
+    this.svc = null;
   }
 
 }

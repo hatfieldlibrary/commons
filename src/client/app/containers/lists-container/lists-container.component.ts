@@ -22,7 +22,7 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
-import {Component, OnInit, ChangeDetectionStrategy, HostBinding, OnDestroy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 import {environment} from '../../environments/environment';
 
 import * as fromRoot from '../../reducers';
@@ -46,32 +46,26 @@ import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 })
 export class ListsContainerComponent implements OnInit, OnDestroy {
 
-
   collections$: Observable<CollectionType[]>;
-  areas$: Observable<AreaListItemType[]>;
-  areaInfo$: Observable<AreaType[]>;
   subjects$: Observable<SubjectType[]>;
+  selectedSubject$: Observable<SubjectType>;
   areasAvailable: boolean;
   areaId: string;
   subjectLinkType: string;
   homeScreen: boolean;
-  selectedSubject$: Observable<SubjectType>;
   title: string;
   subtitle: string;
   subjectId: number;
   state = '';
-
-  @HostBinding('@openClose') routeAnimation = true;
-  @HostBinding('style.display') display = 'block';
-  @HostBinding('style.position') position = 'absolute';
-  @HostBinding('style.position') width = '100%';
-
   watchers: Subscription;
+  areas: AreaListItemType[];
+  areaInfo: AreaType[];
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
               private router: Router,
               public media: ObservableMedia) {
+
     // All component subscriptions will be added to this object.
     this.watchers = new Subscription();
   }
@@ -81,23 +75,24 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    let areaWatcher = this.areas$.subscribe((areas) => {
+    let areasWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
       // id is 0 in initial state.
       if (areas[0].id > 0) {
+        this.areas = areas;
         this.areasAvailable = true;
       }
     });
-    this.watchers.add(areaWatcher);
-
+    this.watchers.add(areasWatcher);
   }
 
   _setAllCollectionTitle() {
     this.title = 'All Collections';
   }
 
-  getAreaTitle(): void {
+  getAreaInfo(): void {
 
-    let areaInfoWatcher = this.areaInfo$.subscribe((info) => {
+    let areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
+      this.areaInfo = info;
       this.title = '';
       this.subtitle = '';
       // If the local areaId field is set to '0' then just use
@@ -201,10 +196,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @private
    */
   _setSelectedSubject(subjectId: string) {
-    let subjectsObserver = this.subjects$.subscribe(() => {
-      this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
-    });
-    this.watchers.add(subjectsObserver);
+       this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
   }
 
   /**
@@ -229,24 +221,20 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.collections$ = this.store.select(fromRoot.getCollections);
-    this.areas$ = this.store.select(fromRoot.getAreas);
     this.subjects$ = this.store.select(fromRoot.getSubject);
-    this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
+    this.setAreasAvailable();
 
     let mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
       });
-
     this.watchers.add(mediaWatcher);
 
     let routeWatcher = this.route.params
-
       .subscribe((params) => {
 
         this.subtitle = '';
-
         this.initializeAreas();
 
         if (params['areaId']) {
@@ -274,24 +262,18 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.homeScreen = true;
           this.areaId = '0';
         }
-        this.getAreaTitle();
+        this.getAreaInfo();
 
       });
 
     this.watchers.add(routeWatcher);
-
-    this.setAreasAvailable();
 
 
   }
 
   ngOnDestroy(): void {
     this.watchers.unsubscribe();
-    this.collections$ = null;
-    this.areas$ = null;
-    this.subjects$ = null;
-    this.areaInfo$ = null;
-    this.selectedSubject$ = null;
+    this.router.dispose();
   }
 
 }

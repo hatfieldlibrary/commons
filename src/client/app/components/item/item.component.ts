@@ -52,31 +52,34 @@ export class ItemComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if(changes['item']) {
-      if (changes['item'].currentValue.collection.linkOptions === 'opts') {
-        let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
-          this.optionList = list.result;
-        });
-        this.watchers.add(optionsWatcher);
-      }
-
-
-    }
+    // if(changes['item']) {
+    //   if (changes['item'].currentValue.collection.linkOptions === 'opts') {
+    //     let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
+    //       this.optionList = list.result;
+    //     });\
+    //     this.watchers.add(optionsWatcher);
+    //   }
+    //
+    //
+    // }
   }
 
   ngOnInit(): void {
-    this.watchers = new Subscription();
-
-    let mediaWatcher = this.media.asObservable()
-      .subscribe((change: MediaChange) => {
-        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
-      });
-    this.watchers.add(mediaWatcher);
+     this.watchers = new Subscription();
+    //
+    // let mediaWatcher = this.media.asObservable()
+    //   .subscribe((change: MediaChange) => {
+    //     this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
+    //   });
+    // this.watchers.add(mediaWatcher);
 
   }
 
   ngOnDestroy(): void {
     this.watchers.unsubscribe();
+    this.svc = null;
+    this.utils = null;
+   // this.media = null;
   }
 
 }

@@ -15,7 +15,10 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output,
+  SimpleChanges
+} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
@@ -25,7 +28,8 @@ import {SelectedSubject} from "app/shared/data-types/selected-subject";
   styleUrls: ['./area-information.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AreaInformationComponent implements OnChanges{
+export class AreaInformationComponent implements OnChanges, OnDestroy{
+
 
 
   @Input() selectedSubject: SelectedSubject;
@@ -35,6 +39,8 @@ export class AreaInformationComponent implements OnChanges{
   url: string;
   linkLabel: string;
   title: string;
+
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.areaInfo) {
@@ -56,5 +62,7 @@ export class AreaInformationComponent implements OnChanges{
     }
   }
 
+  ngOnDestroy(): void {
+  }
 
 }
