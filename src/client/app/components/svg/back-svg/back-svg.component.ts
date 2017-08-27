@@ -5,7 +5,7 @@ import {MdIconRegistry} from '@angular/material';
 
 
 @Component({
-  selector: 'icon-back',
+  selector: 'app-icon-back',
   templateUrl: './back-svg.component.html',
   viewProviders: [MdIconRegistry]
 })

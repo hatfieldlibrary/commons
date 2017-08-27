@@ -23,7 +23,7 @@ import {AreaType} from "../../shared/data-types/area.type";
 import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
 @Component({
-  selector: 'area-information',
+  selector: 'app-area-information',
   templateUrl: './area-information.component.html',
   styleUrls: ['./area-information.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

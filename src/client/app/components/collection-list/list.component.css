@@ -19,11 +19,11 @@
   margin-top: 24px;
 }
 
-collection-list .mat-input-underline {
+app-collection-list .mat-input-underline {
   border-top-width: 2px !important;
   border-color: #aba79a !important;
 }
-collection-list .mat-input-wrapper {
+app-collection-list .mat-input-wrapper {
   margin-bottom: 0;
 }
 .mat-list {

@@ -18,24 +18,24 @@
 import {
   Component, OnInit, ChangeDetectionStrategy, Renderer2, OnDestroy, Inject
 } from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {Store} from "@ngrx/store";
-import * as fromRoot from "../../reducers"
-import {Observable} from "rxjs";
-import {ItemType} from "../../shared/data-types/item.type";
-import * as fromItem from "../../actions/item.actions";
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../../reducers';
+import {Observable} from 'rxjs/Observable';
+import {ItemType} from '../../shared/data-types/item.type';
+import * as fromItem from '../../actions/item.actions';
 import * as areaActions from '../../actions/area.actions';
-import {RelatedType} from "../../shared/data-types/related-collection";
-import {AreaListItemType} from "../../shared/data-types/area-list.type";
+import {RelatedType} from '../../shared/data-types/related-collection';
+import {AreaListItemType} from '../../shared/data-types/area-list.type';
 
-import {fadeIn} from "../../animation/animations";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
-import {DOCUMENT} from "@angular/common";
-import {SubjectType} from "../../shared/data-types/subject.type";
+import {fadeIn} from '../../animation/animations';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
+import {DOCUMENT} from '@angular/common';
+import {SubjectType} from '../../shared/data-types/subject.type';
 
 @Component({
-  selector: 'item-container',
+  selector: 'app-item-container',
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './item-container.component.html',
   styleUrls: ['./item-container.component.css'],
@@ -48,9 +48,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   item: ItemType;
   areas: AreaListItemType[];
   id: string;
-  areasAvailable: boolean = false;
+  areasAvailable = false;
   activeMediaQuery = 'xs';
-  columns: number = 1;
+  columns = 1;
   selectedArea: string;
   private watchers: Subscription;
 
@@ -64,7 +64,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.watchers = new Subscription();
 
     /** Assures that the page scrolls to top if user chooses related item. */
-    let routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
+    const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
       // Chrome canary supports the new standard usage with documentElement, but
       // Chrome and presumably other browsers still expect body.
       this.renderer.setProperty(this.document.body, 'scrollTop', 0);
@@ -75,7 +75,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.watchers.add(routeEventWatcher);
 
     // Set the media observable subscription for assigning the related items column count.
-    let mediaWatcher = this.media.subscribe((change: MediaChange) => {
+    const mediaWatcher = this.media.subscribe((change: MediaChange) => {
       this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
       if (change.mqAlias === 'xs') {
         this.columns = 1;
@@ -97,7 +97,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    let areaWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
+    const areaWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
       this.areas = areas;
       // id is 0 in initial state.
       if (areas[0].id > 0) {
@@ -120,12 +120,12 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
 
       let subjectString = '';
-      for (let subject of data.subjects) {
+      for (const subject of data.subjects) {
         subjectString += subject + ',';
 
       }
       subjectString = subjectString.slice(0, -1);
-
+      // dispatch if we have subjects
       if (subjectString.length > 0) {
         this.store.dispatch(new fromItem.ItemActionRelated(this.id, subjectString));
       }
@@ -167,14 +167,14 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.setAreasAvailable();
 
     // Once we have item information, request related items.
-    let itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
+    const itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
       this.item = data;
       this.getRelatedItems(data);
     });
     this.watchers.add(itemWatcher);
 
     // Request item based on route parameter.
-    let routeWatcher = this.route.params
+    const routeWatcher = this.route.params
       .subscribe((params) => {
         this.store.dispatch(new fromItem.ItemReset());
         this.store.dispatch(new fromItem.ClearRelatedItems());

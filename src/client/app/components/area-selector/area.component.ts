@@ -26,7 +26,7 @@ import * as listActions from '../../actions/collection.actions';
 import {AreaListItemType} from "../../shared/data-types/area-list.type";
 
 @Component({
-  selector: 'navigation-selector',
+  selector: 'app-navigation-selector',
   templateUrl: 'area.component.html',
   styleUrls: ['area.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

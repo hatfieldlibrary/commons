@@ -25,7 +25,7 @@
         <div fxLayout="row" fxLayoutAlign="center center">
           <div style="height: 24px;">
             <button md-icon-button *ngIf="showBack" [routerLink]="getBackLink()">
-              <icon-back></icon-back>
+              <app-icon-back></app-icon-back>
             </button>
           </div>
           <div>
@@ -40,7 +40,7 @@
 
         <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="15">
           <a [href]="homeUrl" target="_top" md-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-            <home-svg></home-svg>
+            <app-home-svg></app-home-svg>
             <span>&nbsp;Commons Home</span></a>
         </div>
 
@@ -48,7 +48,7 @@
 
         <button md-button (click)="openMenu()"
                 style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-          <menu-svg></menu-svg>
+          <app-menu-svg></app-menu-svg>
           <span fxShow.gt-sm="true">&nbsp;Menu</span>
         </button>
 
@@ -58,13 +58,13 @@
 
       <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
         <md-toolbar>
-          <icon-close (click)="sidenav.close()"></icon-close>
+          <app-icon-close (click)="sidenav.close()"></app-icon-close>
         </md-toolbar>
         <div>
           <div fxLayout="row" fxLayoutAlign="start start">
             <md-list fxFlex>
               <md-list-item (click)="goToHome()" target="_top" style="cursor: default">
-                <home-black-svg></home-black-svg>
+                <app-home-black-svg></app-home-black-svg>
                 <h5>&nbsp;Commons Home</h5>
               </md-list-item>
               <md-divider></md-divider>
@@ -81,8 +81,8 @@
 
         </div>
 
-        <navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areaList" [selectedAreas]="selectedArea"
-                             (onSelected)="sidenav.toggle()"></navigation-selector>
+        <app-navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areaList" [selectedAreas]="selectedArea"
+                                 (onSelected)="sidenav.toggle()"></app-navigation-selector>
 
       </md-sidenav>
 

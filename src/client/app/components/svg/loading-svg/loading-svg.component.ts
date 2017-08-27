@@ -1,10 +1,10 @@
 
 import { Component } from '@angular/core';
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-  selector: 'loading-svg',
+  selector: 'app-loading-svg',
   templateUrl: './loading-svg.component.html',
   styleUrls: ['./loading-svg.component.css'],
   viewProviders: [MdIconRegistry]

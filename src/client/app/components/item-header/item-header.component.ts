@@ -25,7 +25,7 @@ import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
 
 @Component({
-  selector: 'item-header',
+  selector: 'app-item-header',
   templateUrl: 'item-header.component.html',
   styleUrls: ['item-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush

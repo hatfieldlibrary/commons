@@ -1,8 +1,9 @@
-import {Component} from "@angular/core";
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {Component} from '@angular/core';
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
+
 @Component({
-  selector: 'keyboard-arrow-back-svg',
+  selector: 'app-keyboard-arrow-back-svg',
   templateUrl: './keyboard-arrow-back-svg.component.html',
   styleUrls: ['./keyboard-arrow-back-svg.component.css']
 })

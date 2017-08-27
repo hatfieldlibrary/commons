@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {Component, OnDestroy} from '@angular/core';
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-  selector: 'home-svg',
+  selector: 'app-home-svg',
   templateUrl: './home-svg.component.html',
   styleUrls: ['./home-svg.component.css']
 })

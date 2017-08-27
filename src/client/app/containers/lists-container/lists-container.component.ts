@@ -20,11 +20,10 @@
  * list components
  */
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 import {environment} from '../../environments/environment';
-
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import * as areaActions from '../../actions/area.actions';
@@ -32,13 +31,13 @@ import * as subjectAction from '../../actions/subject-actions';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
-import {AreaListItemType} from "../../shared/data-types/area-list.type";
-import {fadeIn} from "../../animation/animations";
-import {Subscription} from "rxjs/Subscription";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {AreaListItemType} from '../../shared/data-types/area-list.type';
+import {fadeIn} from '../../animation/animations';
+import {Subscription} from 'rxjs/Subscription';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 
 @Component({
-  selector: 'lists-container',
+  selector: 'app-lists-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'lists-container.component.html',
   styleUrls: ['lists-container.component.css'],
@@ -227,7 +226,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
     let mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
-        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
+        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ''
       });
     this.watchers.add(mediaWatcher);
 

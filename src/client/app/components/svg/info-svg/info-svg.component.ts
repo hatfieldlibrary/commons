@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-  selector: 'info-svg',
+  selector: 'app-info-svg',
   templateUrl: './info-svg.component.html',
   styleUrls: ['./info-svg.component.css']
 })

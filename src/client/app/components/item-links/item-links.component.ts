@@ -1,26 +1,26 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnInit, SimpleChanges
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges
 } from '@angular/core';
-import {SearchService} from "../../services/search.service";
-import {SearchTerms} from "../../shared/data-types/simple-search.type";
-import {Observable} from "rxjs/Observable";
+import {SearchService} from '../../services/search.service';
+import {SearchTerms} from '../../shared/data-types/simple-search.type';
+import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
-import {ActivatedRoute} from "@angular/router";
-import {AuthCheckService} from "../../services/auth-check.service";
-import {AuthType} from "../../shared/data-types/auth.type";
-import * as fromRoot from "../../reducers";
-import {Store} from "@ngrx/store";
-import {Subscription} from "rxjs/Subscription";
-import {DOCUMENT} from "@angular/common";
+import {ActivatedRoute} from '@angular/router';
+import {AuthCheckService} from '../../services/auth-check.service';
+import {AuthType} from '../../shared/data-types/auth.type';
+import * as fromRoot from '../../reducers';
+import {Store} from '@ngrx/store';
+import {Subscription} from 'rxjs/Subscription';
+import {DOCUMENT} from '@angular/common';
 
 
 @Component({
-  selector: 'item-links',
+  selector: 'app-item-links',
   templateUrl: './item-links.component.html',
   styleUrls: ['./item-links.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemLinksComponent implements OnChanges, OnInit {
+export class ItemLinksComponent implements OnChanges, OnInit, OnDestroy {
 
 
   auth$: Observable<AuthType>;
@@ -33,10 +33,10 @@ export class ItemLinksComponent implements OnChanges, OnInit {
   @Input() url: string;
   @Input() searchUrl: string;
   model: SearchTerms;
-  COLLECTION_BUTTON_LABEL: string = 'Browse the Collection';
-  ITEM_BUTTON_LABEL: string = 'View this Item';
-  SEARCH_OPTIONS_LABEL: string = 'Select to Browse';
-  isAuthenticated: boolean = false;
+  COLLECTION_BUTTON_LABEL = 'Browse the Collection';
+  ITEM_BUTTON_LABEL = 'View this Item';
+  SEARCH_OPTIONS_LABEL = 'Select to Browse';
+  isAuthenticated = false;
   watchers: Subscription;
 
   constructor(private svc: SearchService,
@@ -48,14 +48,14 @@ export class ItemLinksComponent implements OnChanges, OnInit {
 
     this.watchers = new Subscription();
     const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
-    let urlWatcher = url.subscribe((url) => {
-      this.authenticationPath = environment.authPath + '/' + url
+    const urlWatcher = url.subscribe((path) => {
+      this.authenticationPath = environment.authPath + '/' + path;
     });
     this.watchers.add(urlWatcher);
   }
 
   simpleSearch() {
-    let href = this.svc.executeSimpleSearchQuery(this.searchUrl, this.model.terms)
+    const href = this.svc.executeSimpleSearchQuery(this.searchUrl, this.model.terms);
     this.document.location.href = href;
   }
 
@@ -64,7 +64,7 @@ export class ItemLinksComponent implements OnChanges, OnInit {
     this.model = new SearchTerms();
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
 
-    let authWatcher = this.auth$.subscribe((auth) => {
+    const authWatcher = this.auth$.subscribe((auth) => {
       this.isAuthenticated = auth.status;
       this.changeDetector.markForCheck();
     });

@@ -16,11 +16,11 @@
  */
 
 import {Component, Input} from '@angular/core';
-import {RelatedType} from "../../shared/data-types/related-collection";
+import {RelatedType} from '../../shared/data-types/related-collection';
 import {environment} from '../../environments/environment';
 
 @Component({
-  selector: 'related-items',
+  selector: 'app-related-items',
   templateUrl: './related-items.component.html',
   styleUrls: ['./related-items.component.css']
 })

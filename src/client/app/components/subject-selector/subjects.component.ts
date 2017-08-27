@@ -20,17 +20,17 @@ import {
   OnInit, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
-import {SubjectType} from "../../shared/data-types/subject.type";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
+import {SubjectType} from '../../shared/data-types/subject.type';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 import {environment} from '../../environments/environment';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 
 
 @Component({
-  selector: 'subject-selector',
+  selector: 'app-subject-selector',
   templateUrl: 'subjects.component.html',
   styleUrls: ['subjects.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -48,12 +48,12 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   offsetWidth: number;
   selectorWidth: number;
   lastButtonWidth: number;
-  defaultOffset: number = 100;
+  defaultOffset = 100;
   lastSubjectButton: ElementRef;
-  leftScroll: number = 0;
-  isMobile: boolean = true;
-  leftIsVisible: boolean = false;
-  rightIsVisible: boolean = false;
+  leftScroll = 0;
+  isMobile = true;
+  leftIsVisible = false;
+  rightIsVisible = false;
   appRoot = environment.appRoot;
   private animation: number;
 
@@ -79,7 +79,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.watcher = new Subscription();
 
-    let mediaWatcher = this.media.subscribe((change: MediaChange) => {
+    const mediaWatcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
       } else {
@@ -108,7 +108,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.watcher.unsubscribe();
     this.changeDetector.detach();
    // this.changeDetector = null;
-    //this.media = null;
+    // this.media = null;
   //   this.animation = null;
   //   this.container = null;
   //   this.contentEls = null;
@@ -205,9 +205,9 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
 
     this.offsetWidth = this.container.nativeElement.offsetWidth;
-    let changeWatcher = this.contentEls.changes.subscribe((el) => {
+    const changeWatcher = this.contentEls.changes.subscribe((el) => {
       this.lastSubjectButton = el._results[this.subjectList.length - 1];
-      let leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
+      const leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
       this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;
       this.selectorWidth = leftOffset + this.lastButtonWidth;
       this.showSubjectNavigationArrow();

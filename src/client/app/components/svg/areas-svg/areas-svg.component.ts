@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-  selector: 'areas-svg',
+  selector: 'app-areas-svg',
   templateUrl: './areas-svg.component.html',
   styleUrls: ['./areas-svg.component.css']
 })

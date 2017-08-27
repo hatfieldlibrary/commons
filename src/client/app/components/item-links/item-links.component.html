@@ -31,8 +31,8 @@
       </div>
 
       <div *ngIf="linkOptions === 'opts'" style="width:100%;">
-        <item-select-component [isAuthenticated]="isAuthenticated" [restricted]="restricted" [optionList]="optionList"
-                               [url]="url"></item-select-component>
+        <app-item-select-component [isAuthenticated]="isAuthenticated" [restricted]="restricted" [optionList]="optionList"
+                                   [url]="url"></app-item-select-component>
       </div>
 
       <div
@@ -46,7 +46,7 @@
               <!--<button md-button (click)="simpleSearch();" class="btn" color="default"-->
               <!--[disabled]="!isAuthenticated && restricted">-->
               <a (click)="simpleSearch();">
-                <search-svg></search-svg>
+                <app-search-svg></app-search-svg>
               </a>
               <!--</button>-->
             </div>

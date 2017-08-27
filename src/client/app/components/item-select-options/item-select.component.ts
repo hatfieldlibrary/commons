@@ -16,11 +16,11 @@
  */
 
 import {ChangeDetectionStrategy, Component, Inject, Input, OnDestroy} from '@angular/core';
-import {SearchService} from "../../services/search.service";
-import {DOCUMENT} from "@angular/common";
+import {SearchService} from '../../services/search.service';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
-  selector: 'item-select-component',
+  selector: 'app-item-select-component',
   templateUrl: './item-select.component.html',
   styleUrls: ['./item-select.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -37,7 +37,7 @@ export class ItemSelectComponent implements OnDestroy {
               @Inject(DOCUMENT) private document) { }
 
   optionSearch(term) {
-    let href = this.svc.getOptionsQuery(this.url, term);
+    const href = this.svc.getOptionsQuery(this.url, term);
     this.document.location.href = href;
   }
 

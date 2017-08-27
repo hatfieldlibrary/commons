@@ -1,13 +1,13 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
+import {Component, Input, OnDestroy} from '@angular/core';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
-  selector: 'title-header',
+  selector: 'app-title-header',
   templateUrl: './title-header.component.html',
   styleUrls: ['./title-header.component.css']
 })
-export class TitleHeaderComponent implements OnInit, OnDestroy {
+export class TitleHeaderComponent implements OnDestroy {
 
   @Input() title;
   @Input() subtitle;
@@ -25,11 +25,6 @@ export class TitleHeaderComponent implements OnInit, OnDestroy {
         this.isMobile = false;
       }
     });
-  }
-
-  ngOnInit(): void {
-
-
   }
 
   ngOnDestroy(): void {

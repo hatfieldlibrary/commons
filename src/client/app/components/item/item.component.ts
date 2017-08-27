@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges, OnDestroy, OnInit} from '@angular/core';
 import {ItemType} from "../../shared/data-types/item.type";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {UtilitiesService} from "../../services/utilities.service";
@@ -24,12 +24,12 @@ import {Subscription} from "rxjs/Subscription";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 
 @Component({
-  selector: 'item',
+  selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemComponent implements OnChanges, OnDestroy {
+export class ItemComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() item: ItemType;
   @Input() selectedArea: string;

@@ -3,14 +3,14 @@ import {
   ChangeDetectionStrategy, Component, DoCheck, HostBinding, Input, OnDestroy, OnInit,
   SecurityContext
 } from '@angular/core';
-import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {environment} from '../../environments/environment';
-import {imageFadeIn} from "../../animation/animations";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
+import {imageFadeIn} from '../../animation/animations';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
-  selector: 'item-header-image',
+  selector: 'app-item-header-image',
   templateUrl: './item-header-image.component.html',
   styleUrls: ['./item-header-image.component.css'],
   animations: [imageFadeIn],
@@ -19,9 +19,9 @@ import {Subscription} from "rxjs/Subscription";
 export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
 
   backgroundImage: SafeResourceUrl;
-  currentImage: string = '';
-  imageLoaded: boolean = false;
-  isMobile: boolean = false;
+  currentImage = '';
+  imageLoaded = false;
+  isMobile = false;
   watcher: Subscription;
 
   @Input() image: string;

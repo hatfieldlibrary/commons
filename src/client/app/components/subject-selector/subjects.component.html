@@ -19,7 +19,7 @@
 
 
   <div fxShow="false" fxShow.gt-xs="true" class="subject-navigation left" [ngClass]="{'visible-nav': leftIsVisible, 'hidden-nav': !leftIsVisible, 'hide-for-mobile': isMobile}" (click)="onScrollRequest('left')">
-    <keyboard-arrow-back-svg></keyboard-arrow-back-svg>
+    <app-keyboard-arrow-back-svg></app-keyboard-arrow-back-svg>
   </div>
 
   <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'area'">
@@ -39,7 +39,7 @@
   </md-list>
 
   <div fxShow="false" fxShow.gt-xs="true" class="subject-navigation right" [ngClass]="{'visible-nav': rightIsVisible, 'hidden-nav': !rightIsVisible, 'hide-for-mobile': isMobile}" (click)="onScrollRequest('right')">
-    <keyboard-arrow-forward-svg></keyboard-arrow-forward-svg>
+    <app-keyboard-arrow-forward-svg></app-keyboard-arrow-forward-svg>
   </div>
 
 </div>

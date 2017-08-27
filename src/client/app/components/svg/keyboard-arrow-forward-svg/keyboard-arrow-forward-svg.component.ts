@@ -1,8 +1,8 @@
-import {Component} from "@angular/core";
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {Component} from '@angular/core';
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 @Component({
-  selector: 'keyboard-arrow-forward-svg',
+  selector: 'app-keyboard-arrow-forward-svg',
   templateUrl: './keyboard-arrow-forward-svg.component.html',
   styleUrls: ['./keyboard-arrow-forward-svg.component.css']
 })

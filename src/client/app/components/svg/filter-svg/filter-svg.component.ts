@@ -1,9 +1,9 @@
 
-import {Component} from "@angular/core";
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {Component} from '@angular/core';
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 @Component({
-  selector: 'filter-svg',
+  selector: 'app-filter-svg',
   templateUrl: './filter-svg.component.html',
   styleUrls: ['./filter-svg.component.css']
 })

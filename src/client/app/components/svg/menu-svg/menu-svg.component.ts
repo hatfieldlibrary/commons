@@ -5,7 +5,7 @@ import {MdIconRegistry} from '@angular/material';
 
 
 @Component({
-  selector: 'menu-svg',
+  selector: 'app-menu-svg',
   templateUrl: './menu-svg.component.html',
   styleUrls: ['./menu-svg.component.css']
 })

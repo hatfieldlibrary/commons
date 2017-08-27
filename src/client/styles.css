@@ -41,11 +41,11 @@ md-sidenav-container {
   background: #423e3e;
 }
 
-subject-selector .mat-list .mat-list-item .mat-list-item-content {
+app-subject-selector .mat-list .mat-list-item .mat-list-item-content {
   padding: 0 4px;
 }
 
-subject-selector md-list {
+app-subject-selector md-list {
   display: inline-flex !important;
 }
 
@@ -65,7 +65,7 @@ subject-selector md-list {
   text-decoration: none;
 }
 
-item-container .mat-list .mat-list-item div.mat-list-item-content.mat-ripple {
+app-item-container .mat-list .mat-list-item div.mat-list-item-content.mat-ripple {
   padding: 0 0;
 }
 
@@ -135,7 +135,7 @@ md-toolbar button {
   border-width: 0;
 }
 
-lock-svg .mat-icon {
+app-lock-svg .mat-icon {
   width: 40px;
   height: 40px;
   font-size: 56px;

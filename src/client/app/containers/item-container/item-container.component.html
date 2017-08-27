@@ -18,7 +18,7 @@
 
   <app-menus-component [selectedArea]="selectedArea" [selectedSubject]="selectedSubject$ | async" [areaList]="areas" [showBack]="true"></app-menus-component>
 
-  <item-header  [item]="item"></item-header>
+  <app-item-header [item]="item"></app-item-header>
 
   <md-card class="main-content-area">
     <md-card-content>
@@ -31,18 +31,18 @@
              fxFlex.gt-lg="50"
              fxLayoutGap="20px">
 
-          <item [item]="item" [selectedArea]="selectedArea" [selectedSubject]="selectedSubject$ | async" style="padding-bottom: 40px;"></item>
+          <app-item [item]="item" [selectedArea]="selectedArea" [selectedSubject]="selectedSubject$ | async" style="padding-bottom: 40px;"></app-item>
 
           <md-divider></md-divider>
 
-          <related-items [columns]="columns" [related]="related$ | async" [selectedArea]="selectedArea"></related-items>
+          <app-related-items [columns]="columns" [related]="related$ | async" [selectedArea]="selectedArea"></app-related-items>
 
         </div>
       </div>
     </md-card-content>
   </md-card>
 
-  <footer></footer>
+  <app-footer></app-footer>
 
 </md-sidenav-container>
 

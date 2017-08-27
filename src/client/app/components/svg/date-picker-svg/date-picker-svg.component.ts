@@ -1,9 +1,9 @@
 import { Component} from '@angular/core';
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
-  selector: 'date-picker-svg',
+  selector: 'app-date-picker-svg',
   templateUrl: './date-picker-svg.component.html',
   styleUrls: ['./date-picker-svg.component.css']
 })

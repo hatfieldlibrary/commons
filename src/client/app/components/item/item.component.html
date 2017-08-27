@@ -21,7 +21,7 @@
   <div fxFlex="80"
       *ngIf="!media.isActive('gt-sm')">
 
-    <item-links
+    <app-item-links
       [restricted]="item?.collection.restricted"
       [linkOptions]="item?.collection.linkOptions"
       [assetType]="item?.collection.assetType"
@@ -29,7 +29,7 @@
       [optionList]="optionList"
       [url]="item?.collection.url"
       [searchUrl]="item?.collection.searchUrl">
-    </item-links>
+    </app-item-links>
 
   </div>
 
@@ -39,7 +39,7 @@
        fxFlex.gt-lg="50">
     <div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" >
       <a md-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
-        <md-icon><back-black-svg></back-black-svg></md-icon>&nbsp;Back to List
+        <md-icon><app-back-black-svg></app-back-black-svg></md-icon>&nbsp;Back to List
       </a>
     </div>
     <md-card-title fxHide="true" fxShow.gt-sm="true" style="margin-top: 20px;">
@@ -79,7 +79,7 @@
        fxFlex.gt-md="30"
        *ngIf="media.isActive('gt-sm')">
 
-    <item-links
+    <app-item-links
       [restricted]="item?.collection.restricted"
       [linkOptions]="item?.collection.linkOptions"
       [assetType]="item?.collection.assetType"
@@ -88,7 +88,7 @@
       [url]="item?.collection.url"
       [searchUrl]="item?.collection.searchUrl">
 
-    </item-links>
+    </app-item-links>
   </div>
 </div>
 
@@ -124,7 +124,7 @@
       <md-list-item>
         <a md-button style="width:100%" href="http://libmedia.willamette.edu/academiccommons/student/index.php" target="_blank">
           <div fxLayout="row" fxLayoutAlign="start center">
-            <info-svg></info-svg>
+            <app-info-svg></app-info-svg>
             Submission Instructions
           </div>
         </a>
@@ -133,7 +133,7 @@
         <a md-button style="width:100%"
            href="http://library.willamette.edu/guide_on_the_side/tutorial/academic-commons-submission" target="_blank">
           <div fxLayout="row" fxLayoutAlign="start center">
-            <run-svg></run-svg>
+            <app-run-svg></app-run-svg>
             Tutorial
           </div>
         </a>

@@ -5,7 +5,7 @@ import {MdIconRegistry} from '@angular/material';
 
 
 @Component({
-  selector: 'icon-close-white',
+  selector: 'app-icon-close-white',
   templateUrl: './close-white-svg.component.html',
   viewProviders: [MdIconRegistry]
 })

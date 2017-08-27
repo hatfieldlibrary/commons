@@ -22,7 +22,7 @@ import {MdIconRegistry} from '@angular/material';
 
 
 @Component({
-  selector: 'home-black-svg',
+  selector: 'app-home-black-svg',
   templateUrl: './home-black-svg.component.html',
   styleUrls: ['./home-black-svg.component.css'],
   viewProviders: [MdIconRegistry]

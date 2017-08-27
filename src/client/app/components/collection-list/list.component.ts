@@ -17,15 +17,15 @@
 
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 
-import {CollectionType} from "../../shared/data-types/collection.type";
+import {CollectionType} from '../../shared/data-types/collection.type';
 import {environment} from '../../environments/environment';
-import {SelectedSubject} from "../../shared/data-types/selected-subject";
-import {Store} from "@ngrx/store";
+import {SelectedSubject} from '../../shared/data-types/selected-subject';
+import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 
 @Component({
-  selector: 'collection-list',
+  selector: 'app-collection-list',
   templateUrl: 'list.component.html',
   styleUrls: ['list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -46,7 +46,7 @@ export class ListComponent implements OnDestroy {
 
   deselect() {
     this.store.dispatch(new listActions.CollectionReset());
-    this.removeSubject.next()
+    this.removeSubject.next();
   }
 
   ngOnDestroy(): void {
