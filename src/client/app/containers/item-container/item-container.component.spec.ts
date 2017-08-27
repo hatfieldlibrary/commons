@@ -34,6 +34,7 @@ import {AppComponent} from "../../components/app.component";
 import {NavigationComponent} from "../../components/area-selector/area.component";
 import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
 import * as fromItem from '../../actions/item.actions';
+import * as fromRelated from '../../actions/related.actions';
 import {Renderer2} from "@angular/core";
 import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
 import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
@@ -261,10 +262,10 @@ describe('ItemContainerComponent', () => {
     component.ngOnInit();
     tick();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getItem);
-    expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ClearRelatedItems());
+    expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ClearRelatedItems());
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemRequest('1'));
     expect(component.getRelatedItems).toHaveBeenCalledWith(mockItem);
-    expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemActionRelated('1', '1,2'));
+    expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ItemActionRelated('1', '1,2'));
 
   }));
 

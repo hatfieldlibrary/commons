@@ -31,10 +31,10 @@ export class ItemEffects {
   }
 
   @Effect()
-  itemEffect$:Observable<Action> = this.actions$
+  itemEffect$: Observable<Action> = this.actions$
     .ofType(item.ItemActionTypes.ITEM_REQUEST)
     .map((action: ItemActions) => action.payload)
-    .switchMap((id:string) => this.svc.getItem(id))
+    .switchMap((id: string) => this.svc.getItem(id))
     .map(res => new item.ItemSuccess(res))
     .catch((err) => Observable.of(new item.ItemRequestFailed(err)));
 }

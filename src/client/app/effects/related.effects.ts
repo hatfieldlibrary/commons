@@ -15,12 +15,12 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Injectable} from "@angular/core";
-import {Actions, Effect} from "@ngrx/effects";
-import {Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '../actions/action.interface';
-import * as related from '../actions/item.actions';
-import {RelatedService} from "../services/related.service";
+import * as related from '../actions/related.actions';
+import {RelatedService} from '../services/related.service';
 /**
  * Created by mspalti on 4/10/17.
  */
@@ -34,10 +34,10 @@ export class RelatedEffects {
 
   @Effect()
   relatedEffect$: Observable<Action> = this.actions$
-    .ofType(related.ItemActionTypes.RELATED_COLLECTIONS)
+    .ofType(related.RelatedItemActionTypes.RELATED_COLLECTIONS)
     .map((action: related.ItemActionRelated) => action.payload)
     .switchMap((payload) => this.svc.getRelatedCollections(payload.id, payload.subjectIds))
     .map(res => new related.ItemActionRelatedSuccess(res))
-    .catch((err) => Observable.of(new related.ItemRequestFailed(err)));
+    .catch((err) => Observable.of(new related.RelatedItemRequestFailed(err)));
 
 }

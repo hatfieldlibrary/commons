@@ -19,7 +19,7 @@
  * Created by mspalti on 4/19/17.
  */
 import { reducer} from "./related.reducers";
-import {ClearRelatedItems, ItemActionRelated, ItemActionRelatedSuccess} from "../actions/item.actions";
+import {ClearRelatedItems, ItemActionRelated, ItemActionRelatedSuccess} from "../actions/related.actions";
 
 import {getRelatedList} from "./related.reducers";
 
@@ -62,7 +62,7 @@ describe('Related Item Reducers', () => {
       {
         related: [relatedItemMock],
         loading: false
-      })
+      });
   });
 
   it('should return item  information', () => {

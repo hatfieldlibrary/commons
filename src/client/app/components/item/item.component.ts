@@ -36,7 +36,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() selectedSubject: SubjectType;
   optionList;
   state = '';
-  watchers: Subscription;
+  // watchers: Subscription;
 
   constructor(private svc: SearchService,
               private utils: UtilitiesService,
@@ -45,7 +45,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getBackLink(): string {
-    let path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
+    const path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
     return path;
 
   }
@@ -65,7 +65,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-     this.watchers = new Subscription();
+   //  this.watchers = new Subscription();
     //
     // let mediaWatcher = this.media.asObservable()
     //   .subscribe((change: MediaChange) => {
@@ -76,7 +76,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.watchers.unsubscribe();
+    // this.watchers.unsubscribe();
     this.svc = null;
     this.utils = null;
    // this.media = null;

@@ -15,8 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {RelatedType} from "../shared/data-types/related-collection";
-import {ItemActions, ItemActionTypes} from "../actions/item.actions";
+import {RelatedType} from '../shared/data-types/related-collection';
+import {RelatedItemActions, RelatedItemActionTypes} from '../actions/related.actions';
 
 export interface State {
   related: RelatedType[];
@@ -29,17 +29,17 @@ const initialState: State = {
   loading: false
 };
 
-export function reducer(state = initialState, action: ItemActions): State {
+export function reducer(state = initialState, action: RelatedItemActions): State {
   switch (action.type) {
 
-    case ItemActionTypes.RELATED_COLLECTIONS: {
+    case RelatedItemActionTypes.RELATED_COLLECTIONS: {
       return Object.assign({}, state, {
         loading: true
       });
 
     }
 
-    case ItemActionTypes.RELATED_COLLECTIONS_SUCCESS: {
+    case RelatedItemActionTypes.RELATED_COLLECTIONS_SUCCESS: {
 
       const result: RelatedType[] = <RelatedType[]>action.payload;
       return Object.assign({}, state, {
@@ -49,12 +49,12 @@ export function reducer(state = initialState, action: ItemActions): State {
 
     }
 
-    case ItemActionTypes.CLEAR_RELATED_COLLECTIONS: {
+    case RelatedItemActionTypes.CLEAR_RELATED_COLLECTIONS: {
 
       return Object.assign({}, state, {
         related: [],
         loading: false
-      })
+      });
     }
 
     default:

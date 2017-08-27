@@ -25,6 +25,7 @@ import {Observable} from 'rxjs/Observable';
 import {ItemType} from '../../shared/data-types/item.type';
 import * as fromItem from '../../actions/item.actions';
 import * as areaActions from '../../actions/area.actions';
+import * as fromRelated from '../../actions/related.actions';
 import {RelatedType} from '../../shared/data-types/related-collection';
 import {AreaListItemType} from '../../shared/data-types/area-list.type';
 
@@ -45,7 +46,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   related$: Observable<RelatedType[]>;
   selectedSubject$: Observable<SubjectType>;
-  item: ItemType;
+  item$: Observable<ItemType>;
   areas: AreaListItemType[];
   id: string;
   areasAvailable = false;
@@ -53,6 +54,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   columns = 1;
   selectedArea: string;
   private watchers: Subscription;
+  related: RelatedType[];
 
   constructor(private store: Store<fromRoot.State>,
               private renderer: Renderer2,
@@ -114,20 +116,17 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * @param data the item object
    */
   getRelatedItems(data: ItemType) {
-
     if (typeof data.subjects !== 'undefined' &&
       typeof this.id !== 'undefined') {
-
 
       let subjectString = '';
       for (const subject of data.subjects) {
         subjectString += subject + ',';
-
       }
-      subjectString = subjectString.slice(0, -1);
       // dispatch if we have subjects
       if (subjectString.length > 0) {
-        this.store.dispatch(new fromItem.ItemActionRelated(this.id, subjectString));
+        subjectString = subjectString.slice(0, -1);
+        this.store.dispatch(new fromRelated.ItemActionRelated(this.id, subjectString));
       }
     }
   }
@@ -159,16 +158,15 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-
   ngOnInit() {
 
+    this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
     this.setAreasAvailable();
 
     // Once we have item information, request related items.
     const itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
-      this.item = data;
       this.getRelatedItems(data);
     });
     this.watchers.add(itemWatcher);
@@ -177,19 +175,16 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.store.dispatch(new fromItem.ItemReset());
-        this.store.dispatch(new fromItem.ClearRelatedItems());
+        this.store.dispatch(new fromRelated.ClearRelatedItems());
         this.selectedArea = params['areaId'];
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));
-
         }
-
+        this.initializeAreas();
+        this.initializeColumnCount();
       });
     this.watchers.add(routeWatcher);
-
-    this.initializeAreas();
-    this.initializeColumnCount();
 
   }
 

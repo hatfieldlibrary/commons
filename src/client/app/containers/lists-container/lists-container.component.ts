@@ -74,7 +74,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    let areasWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
+    const areasWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
       // id is 0 in initial state.
       if (areas[0].id > 0) {
         this.areas = areas;
@@ -90,7 +90,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   getAreaInfo(): void {
 
-    let areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
+    const areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
       this.areaInfo = info;
       this.title = '';
       this.subtitle = '';
@@ -230,7 +230,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       });
     this.watchers.add(mediaWatcher);
 
-    let routeWatcher = this.route.params
+    const routeWatcher = this.route.params
       .subscribe((params) => {
 
         this.subtitle = '';

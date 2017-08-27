@@ -15,19 +15,18 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {type} from "../shared/ngrx/type";
+import {type} from '../shared/ngrx/type';
 import {Action} from '../actions/action.interface';
-import {ItemType} from "../shared/data-types/item.type";
-import {RelatedType} from "../shared/data-types/related-collection";
+import {ItemType} from '../shared/data-types/item.type';
 
 export const ItemActionTypes = {
 
   ITEM_REQUEST: type('[Item] Request Item.'),
   ITEM_SUCCESS: type('[Item] Item Request Response'),
   ITEM_RESET: type('[Item] Item Reset'),
-  RELATED_COLLECTIONS: type('[Item] Find Related Collections'),
-  RELATED_COLLECTIONS_SUCCESS: type('[Item] Related Collections'),
-  CLEAR_RELATED_COLLECTIONS: type('[Item] Clear Related Collections'),
+  // RELATED_COLLECTIONS: type('[Item] Find Related Collections'),
+  // RELATED_COLLECTIONS_SUCCESS: type('[Item] Related Collections'),
+  // CLEAR_RELATED_COLLECTIONS: type('[Item] Clear Related Collections'),
   REQUEST_FAILED: type('[Item] Request Failed'),
   SET_CURRENT_IMAGE: type('[Item] Set Current Image'),
   GET_PREVIOUS_IMAGE: type('[Item] Get Previous Image')
@@ -39,7 +38,6 @@ export class ItemRequest implements Action {
 
   constructor(public payload: string) {
   }
-
 }
 
 export class ItemSuccess implements Action {
@@ -57,7 +55,7 @@ export class ItemRequestFailed implements Action {
   payload: void;
 
   constructor(err: string) {
-    console.log(err)
+    console.log(err);
   }
 }
 
@@ -67,40 +65,8 @@ export class ItemReset implements Action {
   constructor() {}
 }
 
-export class ItemActionRelated implements Action {
-  type = ItemActionTypes.RELATED_COLLECTIONS;
-  payload;
-
-  constructor(id: string, subjectIds: string) {
-    this.payload = {
-      id: id,
-      subjectIds: subjectIds
-    }
-  }
-
-}
-
-export class ItemActionRelatedSuccess implements Action {
-  type = ItemActionTypes.RELATED_COLLECTIONS_SUCCESS;
-
-  constructor(public payload: RelatedType[]) {
-  }
-
-}
-
-export class ClearRelatedItems implements Action {
-  type = ItemActionTypes.CLEAR_RELATED_COLLECTIONS;
-  payload: void;
-
-  constructor() {
-  }
-}
-
-
 export type ItemActions =
   ItemRequest |
   ItemSuccess |
   ItemReset |
-  ItemActionRelated |
-  ItemActionRelatedSuccess |
-  ItemRequestFailed ;
+  ItemRequestFailed;
