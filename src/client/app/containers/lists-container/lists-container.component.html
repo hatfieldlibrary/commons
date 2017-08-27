@@ -42,25 +42,27 @@
              fxFlex.lg="70"
              fxFlex.gt-lg="50">
 
-          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start" fxLayoutGap.gt-sm="30px">
+          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start"
+               fxLayoutGap.gt-sm="30px">
 
             <div fxFlex="100" fxFlex.gt-sm="70" style="width:100%;">
 
               <div style="margin-top: 25px;"></div>
 
               <md-card-subtitle class="area-info">
-              <app-area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
-                                    [areaInfo]="areaInfo"
-                               ></app-area-information>
-              <app-home-screen *ngIf="homeScreen"
-                               (removeSubject)="removeSubject($event)"></app-home-screen>
+                <app-area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
+                                      [areaInfo]="areaInfo"></app-area-information>
+                <app-home-screen *ngIf="homeScreen"
+                                 (removeSubject)="removeSubject($event)"></app-home-screen>
               </md-card-subtitle>
 
-              <app-collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async " [selectedSubject]="selectedSubject$ | async" [selectedArea]="areaId"></app-collection-list>
+              <app-collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async "
+                                   [selectedSubject]="selectedSubject$ | async"
+                                   [selectedArea]="areaId"></app-collection-list>
 
             </div>
             <div class="fill-remaining-space"></div>
-            <div fxFlex fxFlex.gt-sm="25" *ngIf="media.isActive('gt-sm')" >
+            <div fxFlex fxFlex.gt-sm="25" *ngIf="media.isActive('gt-sm')">
 
               <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas"></app-navigation-selector>
 

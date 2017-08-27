@@ -96,20 +96,16 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       this.subtitle = '';
       // If the local areaId field is set to '0' then just use
       // the default title.
-       if (this.areaId === '0') {
+      if (this.areaId === '0') {
         this._setAllCollectionTitle();
-      }
-      // Multiple areas selected, use subtitle format for multiple area info.
-      else if (info.length > 1) {
+      } else if (info.length > 1) {
+        // Multiple areas selected, use subtitle format for multiple area info.
         info.forEach((area) => this.subtitle += area.title + ' / ');
         this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
-      }
-      // Otherwise update the title using the new single area information.
-      else if (info[0].title.length > 0) {
+      } else if (info[0].title.length > 0) {
+        // Otherwise update the title using the new single area information.
         this.title = info[0].title;
-      }
-      // Default.
-      else {
+      } else {   // Default.
         this._setAllCollectionTitle();
       }
     });
@@ -195,7 +191,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @private
    */
   _setSelectedSubject(subjectId: string) {
-       this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+    this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
   }
 
   /**
@@ -224,7 +220,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
     this.setAreasAvailable();
 
-    let mediaWatcher = this.media.asObservable()
+    const mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ''
       });
@@ -246,8 +242,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           } else {
             this.getCollections(params['areaId']);
           }
-        }
-        else if (params['subjectId']) {
+        } else if (params['subjectId']) {
           this.subjectId = params['subjectId'];
           this.subjectLinkType = 'all';
           this.homeScreen = true;

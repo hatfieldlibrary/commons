@@ -24,9 +24,6 @@ export const ItemActionTypes = {
   ITEM_REQUEST: type('[Item] Request Item.'),
   ITEM_SUCCESS: type('[Item] Item Request Response'),
   ITEM_RESET: type('[Item] Item Reset'),
-  // RELATED_COLLECTIONS: type('[Item] Find Related Collections'),
-  // RELATED_COLLECTIONS_SUCCESS: type('[Item] Related Collections'),
-  // CLEAR_RELATED_COLLECTIONS: type('[Item] Clear Related Collections'),
   REQUEST_FAILED: type('[Item] Request Failed'),
   SET_CURRENT_IMAGE: type('[Item] Set Current Image'),
   GET_PREVIOUS_IMAGE: type('[Item] Get Previous Image')
