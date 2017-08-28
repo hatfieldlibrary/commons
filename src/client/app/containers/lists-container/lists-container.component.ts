@@ -48,6 +48,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   collections$: Observable<CollectionType[]>;
   subjects$: Observable<SubjectType[]>;
   selectedSubject$: Observable<SubjectType>;
+  areas$: Observable<AreaListItemType[]>;
+  areaInfo$: Observable<AreaType[]>;
   areasAvailable: boolean;
   areaId: string;
   subjectLinkType: string;
@@ -88,10 +90,9 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.title = 'All Collections';
   }
 
-  getAreaInfo(): void {
+  setItemTitle(): void {
 
     const areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
-      this.areaInfo = info;
       this.title = '';
       this.subtitle = '';
       // If the local areaId field is set to '0' then just use
@@ -215,10 +216,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.setItemTitle();
+    this.setAreasAvailable();
+
     this.collections$ = this.store.select(fromRoot.getCollections);
     this.subjects$ = this.store.select(fromRoot.getSubject);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
-    this.setAreasAvailable();
+    this.areas$ = this.store.select(fromRoot.getAreas);
+    this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
 
     const mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
@@ -256,7 +261,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.homeScreen = true;
           this.areaId = '0';
         }
-        this.getAreaInfo();
+
 
       });
 
