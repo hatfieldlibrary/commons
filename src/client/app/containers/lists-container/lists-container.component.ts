@@ -267,7 +267,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
     this.watchers.add(routeWatcher);
 
-
   }
 
   ngOnDestroy(): void {

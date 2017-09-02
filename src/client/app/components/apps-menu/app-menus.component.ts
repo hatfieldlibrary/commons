@@ -31,7 +31,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
 
   constructor(private utils: UtilitiesService,
               private router: Router,
-              public media:ObservableMedia,
+              public media: ObservableMedia,
               @Inject(DOCUMENT) private document) {
 
     this.listener = router.events
@@ -40,11 +40,10 @@ export class AppMenusComponent implements OnInit, OnDestroy {
         this.previousUrl = event.url;
       });
 
-    let mediaWatchcer = media.asObservable()
+    const mediaWatcher = media.asObservable()
       .subscribe((change:MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
       });
-    this.listener.add(mediaWatchcer);
   }
 
   goToHome(): void {
@@ -72,6 +71,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
     if (this.sideNavigate.close) {
       this.sideNavigate.close();
     }
+    console.log('on init')
   }
   ngOnDestroy(): void {
     this.listener.unsubscribe();
