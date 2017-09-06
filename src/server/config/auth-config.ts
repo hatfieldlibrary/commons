@@ -120,6 +120,19 @@ export class Authentication {
      * a user was returned.  The user object contains email and uid.
      *
      * CAS configuration is defined in the credentials file.
+     *
+     * TODO: This npm package includes an insecure dependency. No risk, but it triggers a bitbucket warning.
+     *
+     * The insecure library is used for saml requests.
+     *
+     * Although there is probably no risk even when using saml, it's a still good idea to manually update the
+     * package.json for this module. The issue has been reported via a pull request and the module author has not
+     * responded.
+     *
+     * Update node_modules/passport-cas/package.json: "node-uuid": "1.4.1", -> "node-uuid": "1.4.4"
+     *
+     * Details: A bug in node-uuid prior to 1.4.4 caused it to use the cryptographically insecure Math.random which can
+     * produce predictable values and should not be used in security-sensitive context.
      */
     let casStrategy = require('passport-cas');
 
@@ -143,13 +156,28 @@ export class Authentication {
       });
 
     }));
-
+    /**
+     * Previously we were able to use passport-cas2.  It now seems to handle the
+     * redirect and ticket but the callback function is not invoked.
+     */
+    // const CasStrategy = require('passport-cas2').Strategy;
+    //
+    // passport.use(new CasStrategy({
+    //     casURL: config.ssoBaseURL
+    //   },
+    //   // This is the `verify` callback
+    //   function (username, profile, done) {
+    //     console.log('in callback')
+    //     User.findOne({login: profile}, function (err, user) {
+    //       done(err, user);
+    //     });
+    //   }));
 
     /**
      * Checks whether the request is authenticated and returns boolean.
      * Angular 2 routes do not natively play well with session cookies.
      * Third-party middleware is not yet suited to our needs.  And Passport CAS
-     * authentication, as implemented, probably requires us to check with
+     * authentication, probably requires us to check with
      * the server in any case to determine whether the session has been assigned a user.
      * This API endpoint allows the client to quickly determine authentication status
      * and update the UI accordingly.
