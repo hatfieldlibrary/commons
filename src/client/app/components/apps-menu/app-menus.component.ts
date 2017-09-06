@@ -22,10 +22,10 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   @Input() showBack: boolean;
   @Input() title: string;
   @ViewChild('sidenav') sideNavigate: MdSidenav;
-  public previousUrl: string = '';
-  homeUrl: string = 'http://libmedia.willamette.edu/academiccommons';
-  secondaryUrl: string = 'http://library.willamette.edu';
-  tertiaryUrl: string = 'http://www.willamette.edu';
+  public previousUrl = '';
+  homeUrl = 'http://libmedia.willamette.edu/academiccommons';
+  secondaryUrl = 'http://library.willamette.edu';
+  tertiaryUrl = 'http://www.willamette.edu';
   listener: Subscription;
   state = '';
 
@@ -41,8 +41,8 @@ export class AppMenusComponent implements OnInit, OnDestroy {
       });
 
     const mediaWatcher = media.asObservable()
-      .subscribe((change:MediaChange) => {
-        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
+      .subscribe((change: MediaChange) => {
+        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
       });
   }
 

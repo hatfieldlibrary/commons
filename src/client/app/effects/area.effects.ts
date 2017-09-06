@@ -18,7 +18,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import * as areas from '../actions/area.actions';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {AreaService} from '../services/area.service';
 import {Action} from '../actions/action.interface';
 

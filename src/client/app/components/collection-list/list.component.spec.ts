@@ -17,22 +17,17 @@
 
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MdCardModule, MdChipsModule, MdInputContainer, MdInputModule, MdListModule} from "@angular/material";
+import {MdCardModule, MdChipsModule, MdInputModule, MdListModule} from "@angular/material";
 import {ListComponent} from './list.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {CloseWhiteSvgComponent} from "../svg/close-white-svg/close-white-svg.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CollectionsFilterPipe} from "../../services/filters/collections-filter.pipe";
 import {Store} from "@ngrx/store";
-import {Observable} from "rxjs/Observable";
-import {EventEmitter} from "@angular/core";
-
 
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
-
-  let collections = [];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

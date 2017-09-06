@@ -16,17 +16,15 @@
  */
 
 
-import {AreaEffects} from "./area.effects";
-import {AreaService} from "../services/area.service";
-import {fakeAsync, inject, TestBed, tick} from "@angular/core/testing";
-import {Observable, TestScheduler} from "rxjs";
-import {AreaAction, AreaActions, AreaActionSuccess, AreaActionTypes, AreaInformation} from "../actions/area.actions";
-import {HttpModule} from "@angular/http";
-import {AreaType} from "../shared/data-types/area.type";
-import {AreaListItemType} from "../shared/data-types/area-list.type";
+import {AreaEffects} from './area.effects';
+import {AreaService} from '../services/area.service';
+import {TestBed} from '@angular/core/testing';
+import {Observable, } from 'rxjs/Observable';
+import {AreaAction,  AreaActionSuccess} from '../actions/area.actions';
+import {AreaType} from '../shared/data-types/area.type';
+import {AreaListItemType} from '../shared/data-types/area-list.type';
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
-import {getTableUnknownColumnError} from "@angular/cdk";
 
 describe('Area Effect', () => {
 
