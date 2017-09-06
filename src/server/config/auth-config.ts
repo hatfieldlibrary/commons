@@ -121,7 +121,6 @@ export class Authentication {
      *
      * CAS configuration is defined in the credentials file.
      *
-     * TODO: This npm package includes an insecure dependency. No risk, but it triggers a bitbucket warning.
      *
      * The insecure library is used for saml requests.
      *
@@ -134,6 +133,7 @@ export class Authentication {
      * Details: A bug in node-uuid prior to 1.4.4 caused it to use the cryptographically insecure Math.random which can
      * produce predictable values and should not be used in security-sensitive context.
      */
+    /* TODO: This npm package includes an insecure dependency. No risk, but it triggers a bitbucket warning. */
     let casStrategy = require('passport-cas');
 
     passport.use(new (casStrategy.Strategy)({
