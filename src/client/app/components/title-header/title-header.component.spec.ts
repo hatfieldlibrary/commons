@@ -5,11 +5,9 @@ import {SubjectsComponent} from "../subject-selector/subjects.component";
 import {KeyboardArrowBackSvgComponent} from "../svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component";
 import {KeyboardArrowForwardSvgComponent} from "../svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component";
 import {RouterTestingModule} from "@angular/router/testing";
-import {MdButtonModule} from "@angular/material";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {ChangeDetectorRef} from "@angular/core";
-import {Store} from "@ngrx/store";
-import {Subscription} from "rxjs/Subscription";
+import {MdButtonModule, MdIconModule} from "@angular/material";
+import {FlexLayoutModule, ObservableMedia} from "@angular/flex-layout";
+import {Store, StoreModule} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 
 describe('TitleHeaderComponent', () => {
@@ -18,33 +16,38 @@ describe('TitleHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TitleHeaderComponent,
+      declarations: [
+        TitleHeaderComponent,
         SubjectsComponent,
         KeyboardArrowBackSvgComponent,
-        KeyboardArrowForwardSvgComponent
-      ],
-      providers: [
-        {
-          provide: ObservableMedia,
-          useClass: class {
-            subscribe = () => {
-             // return Observable.of('')
-            }
-          }
-        },
-      //  ChangeDetectorRef,
-        // {
-        //   Store,
-        //   useClass: class {
-        //     select = () => {
-        //       return Observable.of('')
-        //     }
-        //   }
-        // }
+        KeyboardArrowForwardSvgComponent,
+
       ],
       imports: [
         MdButtonModule,
-        RouterTestingModule
+        MdIconModule,
+        RouterTestingModule,
+        FlexLayoutModule,
+        StoreModule
+      ],
+      providers: [
+        // {
+        //   provide: FlexLayoutModule,
+        //   useClass: class {
+        //     subscribe = () => {
+        //       // return Observable.of('')
+        //     }
+        //   }
+        // },
+        //  ChangeDetectorRef,
+         {
+          provide: Store,
+          useClass: class {
+            select = () => {
+              return Observable.of('')
+            }
+          }
+        }
       ]
     })
       .compileComponents();

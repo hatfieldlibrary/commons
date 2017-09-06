@@ -15,6 +15,7 @@ import {ItemHeaderImageComponent} from "../item-header-image/item-header-image.c
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HomeBlackSvgComponent} from "../svg/home-black-svg/home-black-svg.component";
 import {FlexLayoutModule, ObservableMedia} from "@angular/flex-layout";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('ItemHeaderComponent', () => {
   let component: ItemHeaderComponent;
@@ -41,13 +42,16 @@ describe('ItemHeaderComponent', () => {
         MdCheckboxModule,
         MdToolbarModule,
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        // needed to test ObservableMedia
+        FlexLayoutModule
       ],
       providers: [
-        Location,
-        RouterTestingModule,
-        MdIconRegistry,
-        ObservableMedia
+        // Location,
+        // RouterTestingModule,
+        // MdIconRegistry,
+       // ObservableMedia
       ]
     })
     .compileComponents();

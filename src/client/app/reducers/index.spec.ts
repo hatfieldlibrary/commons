@@ -17,13 +17,15 @@
 
 import {reducers} from "./";
 import {SubjectActionSuccess} from "../actions/subject-actions";
-import {getAreasState, getAreaListState, getCollectionssState, getItemState, getSubjectsState} from "./index";
+import {getAreasState, getAreaListState, getCollectionssState, getItemState, getSubjectsState, State} from "./index";
 import {ItemSuccess} from "../actions/item.actions";
 import {AreaActionSuccess, AreaInformation, AreaInformationSuccess} from "../actions/area.actions";
 import {CollectionActionSuccess} from "../actions/collection.actions";
 import {AreaType} from "../shared/data-types/area.type";
 import {AreaListItemType} from "../shared/data-types/area-list.type";
 import {getAreaList} from "./area-list.reducers";
+import {getSubjectList, reducer} from "./subject.reducers";
+
 
 describe('Reducers ', () => {
 
@@ -35,12 +37,12 @@ describe('Reducers ', () => {
   let areaInfoState;
 
   const expectedSubjects = [
-    {
-      id: 1,
-      name: 'test subject',
-      url: ''
-    }
-  ];
+        {
+          id: 1,
+          name: 'test subject',
+          url: ''
+        }
+      ];
 
   const expectedAreas = [
     {
@@ -54,56 +56,46 @@ describe('Reducers ', () => {
     }
   ];
 
+  const expectedCollection = {
+    id: 1,
+    title: 'test title',
+    image: 'image',
+    url: 'url',
+    searchUrl: '',
+    desc: '',
+    dates: '',
+    items: '',
+    linkOptions: '',
+    searchOptions: '',
+    assetType: '',
+    restricted: false,
+    published: false
+  };
+
+  const expectedCategory = {
+    id: 1,
+    title: 'test category',
+    linkLabel: '',
+    url: '',
+    secondaryUrl: '',
+    description: '',
+    areaId: ''
+  };
+
+  const expectedItemTypes = [{
+    id: 0,
+    name: 'test item type',
+    icon: ''
+  }];
+
   const expectedItem = {
-    collection: {
-      id: 1,
-      title: 'test title',
-      image: 'image',
-      url: 'url',
-      searchUrl: '',
-      desc: '',
-      dates: '',
-      items: '',
-      linkOptions: '',
-      searchOptions: '',
-      assetType: '',
-      restricted: false,
-      published: false
-    },
-    category: {
-      id: 1,
-      title: 'test category',
-      linkLabel: '',
-      url: '',
-      secondaryUrl: '',
-      description: '',
-      areaId: ''
-    },
-    itemTypes: [{
-      id: 0,
-      name: 'test item type',
-      icon: ''
-    }],
+    collection: expectedCollection,
+    category: expectedCategory,
+    itemTypes: expectedItemTypes,
     subjects: [1]
   };
 
-  const expectedCollections = [
-    {
-      id: 1,
-      title: 'test title',
-      image: 'image',
-      url: 'url',
-      searchUrl: '',
-      desc: '',
-      dates: '',
-      items: '',
-      linkOptions: '',
-      searchOptions: '',
-      assetType: '',
-      restricted: false,
-      published: false
-    }
-  ];
+  const expectedCollections = [expectedCollection];
 
   const expectedArea = [{
     id: 1,
@@ -117,49 +109,35 @@ describe('Reducers ', () => {
 
 
   beforeEach(() => {
-    // subjectState = reducer(undefined, new SubjectActionSuccess(expectedSubjects));
-    // itemState = reducer(undefined, new ItemSuccess(expectedItem));
-    // areaState = reducer(undefined, new AreaInformationSuccess(expectedArea));
-    // areaListState = reducer(undefined, new AreaActionSuccess(expectedAreas)) ;
-    // collectionState = reducer(undefined, new CollectionActionSuccess(expectedCollections));
+    subjectState = reducers.subjects(undefined, new SubjectActionSuccess(expectedSubjects));
+    itemState = reducers.item(undefined, new ItemSuccess(expectedItem));
+    areaState = reducers.area(undefined, new AreaInformationSuccess(expectedArea));
+    areaListState = reducers.areaList(undefined, new AreaActionSuccess(expectedAreas));
+    collectionState = reducers.collections(undefined, new CollectionActionSuccess(expectedCollections));
 
   });
 
-  it('should return subject state', () => {
+  it('should return subject list state', () => {
 
     const result = getSubjectsState(subjectState);
-    expect(result).toEqual({
-      subjects: expectedSubjects,
-      selectedSubject: {id: 0, name: '', url: ''},
-      loading: false
-    });
+    expect(result).toBeDefined();
 
   });
 
   it('should return item state.', () => {
     const result = getItemState(itemState);
-    expect(result).toEqual({
-      item: expectedItem,
-      loading: false
-    });
+    expect(result).toBeDefined();
 
   });
 
   it('should return areaList state.', () => {
     const result = getAreaListState(areaListState);
-    expect(result).toEqual({
-      areaList: expectedAreas,
-      loading: false
-    });
-
+    expect(result).toBeDefined();
   });
 
   it('should return collections state.', () => {
     const result = getCollectionssState(collectionState);
-    expect(result).toEqual({
-      collections: expectedCollections,
-      loading: false
-    });
+    expect(result).toBeDefined();
 
   });
 

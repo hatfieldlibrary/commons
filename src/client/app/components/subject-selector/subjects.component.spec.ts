@@ -18,9 +18,13 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
 import { SubjectsComponent } from './subjects.component';
-import {MdButtonModule} from "@angular/material";
+import {MdButtonModule, MdIconModule} from "@angular/material";
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
+import {KeyboardArrowForwardSvgComponent} from "../svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component";
+import {KeyboardArrowBackSvgComponent} from "../svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {Store} from "@ngrx/store";
 
 
 describe('SubjectsComponent', () => {
@@ -30,11 +34,24 @@ describe('SubjectsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        SubjectsComponent
+        SubjectsComponent,
+        KeyboardArrowBackSvgComponent,
+        KeyboardArrowForwardSvgComponent
        ],
       imports: [
         MdButtonModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MdIconModule,
+        // needed to test ObservableMedia
+        FlexLayoutModule
+      ],
+      providers: [
+        {
+          provide: Store,
+          useClass: class {
+            dispatch = jasmine.createSpy('dispatch')
+          }
+        }
       ]
     })
     .compileComponents();

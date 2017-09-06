@@ -13,16 +13,15 @@ describe('CollectionsSvgComponent', () => {
       declarations: [ CollectionsSvgComponent ],
       imports: [
         MdIconModule
-      ],
-      providers: [
-        MdIconRegistry,
-        DomSanitizer
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    let iconRegistry = TestBed.get(MdIconRegistry);
+    let sanitizer = TestBed.get(DomSanitizer);
+    iconRegistry.addSvgIcon('collections', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_collections_white_24px.svg'));
     fixture = TestBed.createComponent(CollectionsSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

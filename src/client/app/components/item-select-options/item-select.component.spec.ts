@@ -19,7 +19,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ItemSelectComponent} from './item-select.component';
 import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
-import {MdIconRegistry, MdSelectModule} from "@angular/material";
+import {MdIconModule, MdSelectModule} from "@angular/material";
 import {SearchService} from "../../services/search.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
@@ -36,12 +36,12 @@ describe('ItemSelectComponent', () => {
       ],
       imports: [
         MdSelectModule,
+        MdIconModule,
         BrowserAnimationsModule
       ],
       providers: [
+        SearchService
 
-        SearchService,
-        MdIconRegistry
       ]
     })
       .compileComponents();

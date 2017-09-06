@@ -3,7 +3,7 @@ import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {AppMenusComponent} from './app-menus.component';
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
-import {MdCheckboxModule, MdIconModule, MdToolbarModule} from "@angular/material";
+import {MaterialModule, MdCheckboxModule, MdIconModule, MdIconRegistry, MdToolbarModule} from "@angular/material";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {NavigationComponent} from "../area-selector/area.component";
 import {RouterTestingModule} from "@angular/router/testing";
@@ -15,9 +15,10 @@ import {UtilitiesService} from "../../services/utilities.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {FlexLayoutModule, MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {DOCUMENT} from "@angular/common";
 import {Inject, InjectionToken} from "@angular/core";
+import {DomSanitizer} from "@angular/platform-browser";
 
 class MockRouter {
   public navEnd = new NavigationEnd(0, 'http://localhost:3000', 'http://localhost:3000');
@@ -41,7 +42,12 @@ class MockMediaObserver {
 }
 
 class MockDocument {
-   public DOCUMENT = new InjectionToken<Document>('DocumentToken');
+   //public DOCUMENT = new InjectionToken<Document>('DocumentToken');
+  public createElement() {}
+  public classList() {}
+}
+class MockIcon {
+
 }
 
 describe('AppMenusComponent', () => {
@@ -58,24 +64,26 @@ describe('AppMenusComponent', () => {
         CloseSvgComponent,
         NavigationComponent,
         HomeSvgComponent,
-        CollectionsSvgComponent],
+        CollectionsSvgComponent
+      ],
       imports: [
         MdToolbarModule,
         FormsModule,
         ReactiveFormsModule,
         MdCheckboxModule,
         MdIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        // needed to test ObservableMedia
+        FlexLayoutModule
+
       ],
       providers: [
         UtilitiesService,
-        { provide: DOCUMENT,
-          useValue: new InjectionToken<Document>('DocumentToken')
-        },
-        {
-          provide: ObservableMedia,
-          useClass: MockMediaObserver
-        },
+        // {
+        //   provide: DOCUMENT,
+        //   useValue: {value: document}
+        // },
+        //  {
         {
           provide: Store,
           useClass: class {
@@ -96,9 +104,15 @@ describe('AppMenusComponent', () => {
 
 
   beforeEach(() => {
+   // let iconRegistry = TestBed.get(MdIconRegistry);
+   // let sanitizer = TestBed.get(DomSanitizer);
+   //  iconRegistry.addSvgIcon( 'app-icon-back','app-home-svg','app-menu-svg','app-icon-close','app-home-black-svg');
+   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_black_24px.svg');
+   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_white_24px.svg');
+   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_white_24px.svg');
+   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_black_24px.svg');
     fixture = TestBed.createComponent(AppMenusComponent);
     component = fixture.componentInstance;
-
     fixture.detectChanges();
 
   });

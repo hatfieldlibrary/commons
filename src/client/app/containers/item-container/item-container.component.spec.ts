@@ -27,7 +27,7 @@ import {
 } from "@angular/material";
 import {Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
-import {ActivatedRoute, RouterModule} from "@angular/router";
+import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {Observable} from "rxjs";
 import * as fromRoot from '../../reducers';
 import {AppComponent} from "../../components/app.component";
@@ -98,6 +98,8 @@ let mockItem = {
     subjects: ['1', '2']
 
 };
+
+
 //
 // @Injectable()
 // class MockStore extends Store<any> {
@@ -111,8 +113,9 @@ let mockItem = {
 // }
 
 
+
 const setMockAreaRoute = (route:any, mock: string) => {
-  route.params = Observable.of({id: mock});
+  route.params = Observable.of({id: mock, areaId: 1});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -185,25 +188,32 @@ describe('ItemContainerComponent', () => {
             dispatch = jasmine.createSpy('dispatch');
             select = () => {
               return Observable.of(mockItem);
-            };}
+            };
+          }
         },
         {
-            provide: ActivatedRoute,
-            useValue: {
-              params: new Observable<any>(),
-              url: {
-                map: () =>  Observable.of('')
-              }
-            }
-
+          provide: ActivatedRoute,
+          useValue: {
+            params: Observable.of({ id: '0' })
+          }
         },
+        //ActivatedRoute,
+        // {
+        //     provide: ActivatedRoute,
+        //     useValue: {
+        //       params: this.route.params,
+        //       url: {
+        //         map: () =>  Observable.of('')
+        //       }
+        //     }
+        //
+        // },
         {
           provide: Renderer2,
           useValue: {
             setProperty: () => {}
           }
         },
-        RouterModule,
         SearchService,
         AuthCheckService
 
@@ -238,7 +248,6 @@ describe('ItemContainerComponent', () => {
   it('should dispatch request for item data', fakeAsync(() => {
 
     setMockAreaRoute(route, '1');
-
     component.ngOnInit();
     tick();
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemRequest('1'));
@@ -254,19 +263,34 @@ describe('ItemContainerComponent', () => {
 
   }));
 
-  it('should not dispatch request for related items.', fakeAsync(() => {
+  it('should dispatch request for related items.', fakeAsync(() => {
 
     setMockAreaRoute(route, '1');
     component.id = '1';
     spyOn(component, 'getRelatedItems').and.callThrough();
     component.ngOnInit();
     tick();
+
+    tick();
+
     expect(store.select).toHaveBeenCalledWith(fromRoot.getItem);
-    expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ClearRelatedItems());
-    expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemRequest('1'));
     expect(component.getRelatedItems).toHaveBeenCalledWith(mockItem);
     expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ItemActionRelated('1', '1,2'));
 
+  }));
+
+  it('should clear related items on init', fakeAsync( () => {
+    setMockAreaRoute(route, '1');
+    component.ngOnInit();
+    tick();
+    expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ClearRelatedItems());
+  }));
+
+  it('should reset the item reducer', fakeAsync(() => {
+    setMockAreaRoute(route, '1');
+    component.ngOnInit();
+    tick();
+    expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemReset());
   }));
 
 });

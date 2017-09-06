@@ -36,6 +36,7 @@ import {RunSvgComponent} from "../svg/run-svg/run-svg.component";
 import {ItemSelectComponent} from "../item-select-options/item-select.component";
 import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
 import {UtilitiesService} from "../../services/utilities.service";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 describe('ItemComponent', () => {
   let component: ItemComponent;
@@ -62,7 +63,9 @@ describe('ItemComponent', () => {
         MdSelectModule,
         MdGridListModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        // needed to test ObservableMedia
+        FlexLayoutModule
       ],
       providers: [
 
@@ -72,7 +75,7 @@ describe('ItemComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: new Observable<any>(),
+            params: Observable.from([{ 'id': 1 }]),
             url: {
               map: () =>  Observable.of('')
             }
@@ -83,7 +86,7 @@ describe('ItemComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = () => {
-              return Observable.of({});
+              return Observable.of('');
             };
           }
         },
@@ -96,6 +99,7 @@ describe('ItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
     fixture.detectChanges();
   });
 

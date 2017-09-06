@@ -15,14 +15,15 @@ describe('AreasSvgComponent', () => {
         MdIconModule
       ],
       providers: [
-        MdIconRegistry,
-        DomSanitizer
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    let iconRegistry = TestBed.get(MdIconRegistry);
+    let sanitizer = TestBed.get(DomSanitizer);
+    iconRegistry.addSvgIcon('areas', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_subject_white_24px.svg'));
     fixture = TestBed.createComponent(AreasSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -18,20 +18,22 @@
 
 import {AreaEffects} from "./area.effects";
 import {AreaService} from "../services/area.service";
-import {inject, TestBed} from "@angular/core/testing";
+import {fakeAsync, inject, TestBed, tick} from "@angular/core/testing";
 import {Observable, TestScheduler} from "rxjs";
-import {AreaActionTypes, AreaInformation} from "../actions/area.actions";
+import {AreaAction, AreaActions, AreaActionSuccess, AreaActionTypes, AreaInformation} from "../actions/area.actions";
 import {HttpModule} from "@angular/http";
 import {AreaType} from "../shared/data-types/area.type";
 import {AreaListItemType} from "../shared/data-types/area-list.type";
 import {provideMockActions} from '@ngrx/effects/testing';
-import { hot, cold } from 'jasmine-marbles';
+import {hot, cold} from 'jasmine-marbles';
+import {getTableUnknownColumnError} from "@angular/cdk";
 
 describe('Area Effect', () => {
 
+
   let actions: Observable<any>;
   let areaEffects: AreaEffects;
-  let areaService: AreaService;
+  let svc: AreaService;
   const mockAreasList: AreaListItemType[] = [
     {
       id: 1,
@@ -54,46 +56,36 @@ describe('Area Effect', () => {
     position: 2
   };
 
-  beforeEach(
-    () => TestBed.configureTestingModule({
-      imports: [
-        HttpModule,
-        TestScheduler
-      ],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       providers: [
         AreaEffects,
-        AreaService,
+        {
+          provide: AreaService,
+          useClass: class {
+            getAreaList = () => {
+              return Observable.of(mockAreasList);
+            }
+          }
+        },
         provideMockActions(() => actions)
-
-      ]
-    }));
-  areaEffects = TestBed.get(AreaEffects);
-
-  it('call Area Success action after areaList loaded.',
-    inject([
-         AreaService
       ],
-      ( _areaService: AreaService) => {
+    });
 
-        areaService = _areaService;
+    areaEffects = TestBed.get(AreaEffects);
 
-        spyOn(areaService, 'getAreaList')
-          .and.returnValue(Observable.of(mockAreasList));
+  });
 
-        const coldMarbleString: string = '{a: [{id: 1, title: \'test area 1\'. count: 2},{id: 2,title: \'test area two\',count: 1}]}';
-      //  const testScheduler = new TestScheduler(null);
-        // const hotObservable = testScheduler.createHotObservable(hotMarbleString);
-        const expected = cold('-a|', coldMarbleString);
+  it('call Area Success action after areaList loaded.', () => {
 
-        expect(areaEffects.areaListEffect$).toBeObservable(expected);
+    const startAction = new AreaAction();
+    const hotMarble = {a: startAction};
+    actions = hot('--a-', hotMarble);
+    const successAction = new AreaActionSuccess(mockAreasList);
+    const expectedResults = cold('--b', {b: successAction});
+    expect(areaEffects.areaListEffect$).toBeObservable(expectedResults);
 
-        // areaEffects.areaListEffect$.subscribe(result => {
-        //   expect(result.type).toEqual(AreaActionTypes.AREA_LIST_SUCCESS);
-        //   expect(result.payload.length).toBe(2);
-        //
-        // });
-      })
-  );
+  });
 
   // it('call Area Info Success action after area info is retrieved.',
   //   inject([

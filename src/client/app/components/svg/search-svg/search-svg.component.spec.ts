@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SearchSvgComponent} from './search-svg.component';
-import {MaterialModule, MdIconRegistry} from "@angular/material";
+import {MaterialModule, MdIconModule, MdIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
 
 describe('SearchSvgComponent', () => {
@@ -14,18 +14,16 @@ describe('SearchSvgComponent', () => {
         SearchSvgComponent,
       ],
       imports: [
-        MaterialModule
-      ],
-      providers: [
-        MdIconRegistry,
-        DomSanitizer
+        MdIconModule
       ]
-
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    let iconRegistry = TestBed.get(MdIconRegistry);
+    let sanitizer = TestBed.get(DomSanitizer);
+    iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_black_24px.svg'));
     fixture = TestBed.createComponent(SearchSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

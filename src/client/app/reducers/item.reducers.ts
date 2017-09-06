@@ -68,8 +68,7 @@ const initialState: State = {
       subjects: []
     },
     loading: false
-  }
-;
+  };
 
 
 

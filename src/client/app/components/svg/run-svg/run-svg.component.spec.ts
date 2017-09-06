@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RunSvgComponent } from './run-svg.component';
+import {RunSvgComponent} from './run-svg.component';
+import {MdIconModule, MdIconRegistry} from "@angular/material";
+import {DomSanitizer} from "@angular/platform-browser";
 
 describe('RunSvgComponent', () => {
   let component: RunSvgComponent;
@@ -8,12 +10,17 @@ describe('RunSvgComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RunSvgComponent ]
+      declarations: [RunSvgComponent],
+      imports: [MdIconModule],
+      providers: []
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
+    let iconRegistry = TestBed.get(MdIconRegistry);
+    let sanitizer = TestBed.get(DomSanitizer);
+    iconRegistry.addSvgIcon('run', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_directions_run_black_24px.svg'));
     fixture = TestBed.createComponent(RunSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

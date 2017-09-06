@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit, Optional, ViewChild} from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {MdSidenav} from "@angular/material";
 import {NavigationEnd, Router} from "@angular/router";
@@ -71,7 +71,6 @@ export class AppMenusComponent implements OnInit, OnDestroy {
     if (this.sideNavigate.close) {
       this.sideNavigate.close();
     }
-    console.log('on init')
   }
   ngOnDestroy(): void {
     this.listener.unsubscribe();

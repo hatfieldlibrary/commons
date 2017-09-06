@@ -19,10 +19,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RelatedItemsComponent} from './related-items.component';
 import {MdButtonModule, MdCardModule, MdGridListModule} from "@angular/material";
-import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
-import {ObservableMedia} from "@angular/flex-layout";
-import {Observable} from "rxjs/Observable";
+
 
 describe('RelatedItemsComponent', () => {
   let component: RelatedItemsComponent;
@@ -31,15 +29,7 @@ describe('RelatedItemsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RelatedItemsComponent],
-      providers: [
-        {
-          provide: ObservableMedia,
-          useClass: class {
-            subscribe = () => {
-              return Observable.of({});
-            };}
-        },
+        RelatedItemsComponent
       ],
       imports: [
         MdCardModule,
@@ -56,10 +46,13 @@ describe('RelatedItemsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RelatedItemsComponent);
     component = fixture.componentInstance;
+    component.related = [];
+    component.columns = 2;
     fixture.detectChanges();
   });
 
   it('should create', () => {
+
     expect(component).toBeTruthy();
   });
 });

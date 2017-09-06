@@ -73,8 +73,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
       this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
 
     });
-
-    this.watchers.add(routeEventWatcher);
+    if (routeEventWatcher) {
+      this.watchers.add(routeEventWatcher);
+    }
 
     // Set the media observable subscription for assigning the related items column count.
     const mediaWatcher = this.media.subscribe((change: MediaChange) => {
@@ -89,8 +90,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
         this.columns = 4;
       }
     });
-
+  if (mediaWatcher) {
     this.watchers.add(mediaWatcher);
+  }
 
   }
 
@@ -102,11 +104,15 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     const areaWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
       this.areas = areas;
       // id is 0 in initial state.
-      if (areas[0].id > 0) {
-        this.areasAvailable = true;
+      if (areas.length > 0) {
+        if (areas[0].id > 0) {
+          this.areasAvailable = true;
+        }
       }
     });
-    this.watchers.add(areaWatcher);
+    if (areaWatcher) {
+      this.watchers.add(areaWatcher);
+    }
 
   }
 
@@ -169,14 +175,18 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     const itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
       this.getRelatedItems(data);
     });
-    this.watchers.add(itemWatcher);
+    if(itemWatcher) {
+      this.watchers.add(itemWatcher);
+    }
 
     // Request item based on route parameter.
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.store.dispatch(new fromItem.ItemReset());
         this.store.dispatch(new fromRelated.ClearRelatedItems());
-        this.selectedArea = params['areaId'];
+        if (params['areaId']) {
+          this.selectedArea = params['areaId'];
+        }
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));
@@ -184,16 +194,18 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
         this.initializeAreas();
         this.initializeColumnCount();
       });
-    this.watchers.add(routeWatcher);
+    if(routeWatcher) {
+      this.watchers.add(routeWatcher);
+    }
 
   }
 
   ngOnDestroy(): void {
     this.watchers.unsubscribe();
-    this.renderer.destroy();
-    this.router.dispose();
+    //this.renderer.destroy();
+  //  this.router.dispose();
     this.renderer = null;
-    this.document = null;
+   // this.document = null;
   }
 
 }

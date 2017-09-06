@@ -13,16 +13,15 @@ describe('MenuSvgComponent', () => {
       declarations: [ MenuSvgComponent ],
       imports: [
         MdIconModule
-    ],
-      providers: [
-      MdIconRegistry,
-      DomSanitizer
     ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    let iconRegistry = TestBed.get(MdIconRegistry);
+    let sanitizer = TestBed.get(DomSanitizer);
+    iconRegistry.addSvgIcon('menu', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_menu_white_24px.svg'));
     fixture = TestBed.createComponent(MenuSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
