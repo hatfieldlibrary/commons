@@ -15,26 +15,37 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AreaInformationComponent } from './area-information.component';
+import {AreaInformationComponent} from './area-information.component';
 import {MdButtonModule, MdCardModule, MdChipsModule} from "@angular/material";
-import {EventEmitter} from "@angular/core";
+import {EventEmitter, SimpleChange} from "@angular/core";
 
 describe('AreaInformationComponent', () => {
   let component: AreaInformationComponent;
   let fixture: ComponentFixture<AreaInformationComponent>;
 
+  const mockArea = {
+    id: 1,
+    title: 'test area',
+    linkLabel: '',
+    url: '',
+    searchUrl: '',
+    description: '',
+    position: 1
+
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AreaInformationComponent ],
+      declarations: [AreaInformationComponent],
       imports: [
         MdCardModule,
         MdChipsModule,
         MdButtonModule,
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -46,4 +57,30 @@ describe('AreaInformationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should update single area information on change.', () => {
+    component.areaInfo = [mockArea];
+
+    component.ngOnChanges({
+      areaInfo: new SimpleChange(null, component.areaInfo, true)
+    });
+    fixture.detectChanges();
+
+    expect(component.title).toEqual('test area');
+
+  });
+
+  it('should update multiple area information on change.', () => {
+    component.areaInfo = [mockArea, mockArea];
+
+    component.ngOnChanges({
+      areaInfo: new SimpleChange(null, component.areaInfo, true)
+    });
+    fixture.detectChanges();
+
+    expect(component.title).toEqual('');
+    expect(component.description).toContain('Viewing collection areas');
+
+  });
+
 });

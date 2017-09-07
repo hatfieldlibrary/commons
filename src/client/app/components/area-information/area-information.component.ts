@@ -33,8 +33,7 @@ export class AreaInformationComponent implements OnChanges, OnDestroy{
 
 
   @Input() selectedSubject: SelectedSubject;
-  @Input() areaInfo: AreaType;
- // @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
+  @Input() areaInfo: AreaType[];
   description: string;
   url: string;
   linkLabel: string;
@@ -43,6 +42,7 @@ export class AreaInformationComponent implements OnChanges, OnDestroy{
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
     if (changes.areaInfo) {
       if (changes.areaInfo.currentValue.length > 1) {
         let areaList = changes.areaInfo.currentValue;

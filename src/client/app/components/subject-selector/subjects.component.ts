@@ -90,6 +90,9 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  /**
+   * Resets the subject ilst in store.
+   */
   resetList(): void {
     this.store.dispatch(new listActions.CollectionReset());
   }
@@ -204,8 +207,10 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   ngAfterViewInit(): void {
 
+    console.log(this.contentEls)
     this.offsetWidth = this.container.nativeElement.offsetWidth;
     const changeWatcher = this.contentEls.changes.subscribe((el) => {
+      console.log('subs')
       this.lastSubjectButton = el._results[this.subjectList.length - 1];
       const leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
       this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;

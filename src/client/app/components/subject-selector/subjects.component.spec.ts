@@ -16,8 +16,8 @@
  */
 
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
-import { SubjectsComponent } from './subjects.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {SubjectsComponent} from './subjects.component';
 import {MdButtonModule, MdIconModule} from "@angular/material";
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
@@ -25,11 +25,14 @@ import {KeyboardArrowForwardSvgComponent} from "../svg/keyboard-arrow-forward-sv
 import {KeyboardArrowBackSvgComponent} from "../svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {Store} from "@ngrx/store";
+import {Observable} from "rxjs/Observable";
+import {ElementRef} from "@angular/core";
 
 
 describe('SubjectsComponent', () => {
   let component: SubjectsComponent;
   let fixture: ComponentFixture<SubjectsComponent>;
+  let store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,7 +40,7 @@ describe('SubjectsComponent', () => {
         SubjectsComponent,
         KeyboardArrowBackSvgComponent,
         KeyboardArrowForwardSvgComponent
-       ],
+      ],
       imports: [
         MdButtonModule,
         RouterTestingModule,
@@ -54,16 +57,27 @@ describe('SubjectsComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
+
     fixture = TestBed.createComponent(SubjectsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    spyOn(component, 'showSubjectNavigationArrow');
+
+    store = fixture.debugElement.injector.get(Store);
+
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should reset subject list in store', () => {
+    component.resetList();
+    expect(store.dispatch).toHaveBeenCalled();
+  });
+
 });

@@ -20,7 +20,7 @@ import {AreaEffects} from './area.effects';
 import {AreaService} from '../services/area.service';
 import {TestBed} from '@angular/core/testing';
 import {Observable, } from 'rxjs/Observable';
-import {AreaAction,  AreaActionSuccess} from '../actions/area.actions';
+import {AreaAction, AreaActionSuccess, AreaInformation, AreaInformationSuccess} from '../actions/area.actions';
 import {AreaType} from '../shared/data-types/area.type';
 import {AreaListItemType} from '../shared/data-types/area-list.type';
 import {provideMockActions} from '@ngrx/effects/testing';
@@ -63,7 +63,10 @@ describe('Area Effect', () => {
           useClass: class {
             getAreaList = () => {
               return Observable.of(mockAreasList);
-            }
+            };
+            getAreaInfo = () => {
+              return Observable.of([mockAreaInfo]);
+            };
           }
         },
         provideMockActions(() => actions)
@@ -82,6 +85,17 @@ describe('Area Effect', () => {
     const successAction = new AreaActionSuccess(mockAreasList);
     const expectedResults = cold('--b', {b: successAction});
     expect(areaEffects.areaListEffect$).toBeObservable(expectedResults);
+
+  });
+
+  it('call Area Success action after areaList loaded.', () => {
+
+    const startAction = new AreaInformation('1');
+    const hotMarble = {a: startAction};
+    actions = hot('--a-', hotMarble);
+    const successAction = new AreaInformationSuccess([mockAreaInfo]);
+    const expectedResults = cold('--b', {b: successAction});
+    expect(areaEffects.areaInfoEffect$).toBeObservable(expectedResults);
 
   });
 
