@@ -62,6 +62,7 @@ import {ItemSelectComponent} from "../../components/item-select-options/item-sel
 import {HomeBlackSvgComponent} from "../../components/svg/home-black-svg/home-black-svg.component";
 import {DatePickerSvgComponent} from "../../components/svg/date-picker-svg/date-picker-svg.component";
 import {UtilitiesService} from "../../services/utilities.service";
+import {Subscription} from "rxjs/Subscription";
 
 
 let mockItem = {
@@ -130,6 +131,7 @@ describe('ItemContainerComponent', () => {
   let fixture: ComponentFixture<ItemContainerComponent>;
   let route;
   let store;
+  let watcher: Subscription;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -292,5 +294,15 @@ describe('ItemContainerComponent', () => {
     tick();
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemReset());
   }));
+
+  it('should remove listeners when component is destroyed', () => {
+    setMockAreaRoute(route, '1');
+    component.ngOnInit();
+    watcher = component.watchers;
+    spyOn(watcher, 'unsubscribe');
+    fixture.destroy();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
+  });
+
 
 });

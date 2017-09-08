@@ -18,7 +18,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SubjectsComponent} from './subjects.component';
-import {MdButtonModule, MdIconModule} from "@angular/material";
+import {MdButtonModule, MdIconModule, MdListItem, MdListModule} from "@angular/material";
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {KeyboardArrowForwardSvgComponent} from "../svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component";
@@ -27,12 +27,47 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {ElementRef} from "@angular/core";
+import {SetIntervalService} from "../../services/interval.service";
+import {By} from "@angular/platform-browser";
+import {SubjectType} from "../../shared/data-types/subject.type";
+import {Subscription} from "rxjs/Subscription";
 
+
+let mockSubjectList: SubjectType[] = [
+  {
+    id: 1,
+    name: 'sub one',
+    url: ''
+  },
+  {
+    id: 2,
+    name: 'sub two',
+    url: ''
+  }
+];
+
+class MockIntervalService {
+  callback;
+
+  clearInterval = jasmine.createSpy('clearInterval');
+
+  public setInterval(time: number, callback: () => void): any {
+    this.callback = callback;
+    return null;
+  }
+
+  tick() {
+    this.callback();
+  }
+}
 
 describe('SubjectsComponent', () => {
   let component: SubjectsComponent;
   let fixture: ComponentFixture<SubjectsComponent>;
+  let mockIntervalService = new MockIntervalService();
   let store;
+  let intervalService;
+  let watcher: Subscription;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -45,6 +80,7 @@ describe('SubjectsComponent', () => {
         MdButtonModule,
         RouterTestingModule,
         MdIconModule,
+        MdListModule,
         // needed to test ObservableMedia
         FlexLayoutModule
       ],
@@ -54,7 +90,12 @@ describe('SubjectsComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch')
           }
-        }
+        },
+        {
+          provide: SetIntervalService,
+          useValue: mockIntervalService
+        },
+
       ]
     })
       .compileComponents();
@@ -63,9 +104,17 @@ describe('SubjectsComponent', () => {
   beforeEach(() => {
 
     fixture = TestBed.createComponent(SubjectsComponent);
+    intervalService = fixture.debugElement.injector.get(SetIntervalService);
+
     component = fixture.componentInstance;
+    component.type = 'area';
+    component.areaId = 1;
+    component.subjectList = mockSubjectList;
     fixture.detectChanges();
+    spyOn(intervalService, 'setInterval');
     spyOn(component, 'showSubjectNavigationArrow');
+    watcher = component.watcher;
+    spyOn(watcher,'unsubscribe');
 
     store = fixture.debugElement.injector.get(Store);
 
@@ -78,6 +127,24 @@ describe('SubjectsComponent', () => {
   it('should reset subject list in store', () => {
     component.resetList();
     expect(store.dispatch).toHaveBeenCalled();
+  });
+
+  it('should animate scroll request', (done) => {
+    fixture.whenStable().then(
+      () => {
+        let debugElement = fixture.debugElement.query(By.directive(MdListItem));
+        component.subjects = debugElement;
+        component.onScrollRequest('right');
+        expect(intervalService.setInterval).toHaveBeenCalled();
+        done();
+      }
+    );
+  });
+
+  it('should remove listeners when component is destroyed', () => {
+    fixture.destroy();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
+    expect(intervalService.clearInterval).toHaveBeenCalled();
   });
 
 });

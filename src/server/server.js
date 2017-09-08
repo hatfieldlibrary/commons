@@ -26,10 +26,13 @@ var body_parser_1 = require("body-parser");
 var environment_1 = require("./config/environment");
 var auth_config_1 = require("./config/auth-config");
 var routes_1 = require("./config/routes");
+var helmet = require("helmet");
 var app = express();
 // Parsers for POST data
 app.use(body_parser_1.json());
 app.use(body_parser_1.urlencoded({ extended: false }));
+// Using default settings. See https://github.com/helmetjs/helmet
+app.use(helmet());
 var env = process.env.NODE_ENV || 'development';
 var configs = new environment_1.Configuration();
 var config = configs.getConfig(env);

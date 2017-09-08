@@ -21,7 +21,7 @@ import {SubjectType} from "../../shared/data-types/subject.type";
 import {UtilitiesService} from "../../services/utilities.service";
 import {SearchService} from "../../services/search.service";
 import {Subscription} from "rxjs/Subscription";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
+import {ObservableMedia} from "@angular/flex-layout";
 
 @Component({
   selector: 'app-item',
@@ -36,7 +36,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   @Input() selectedSubject: SubjectType;
   optionList;
   state = '';
-   watchers: Subscription;
+  watchers: Subscription;
 
   constructor(private svc: SearchService,
               private utils: UtilitiesService,
@@ -56,16 +56,14 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
         let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
           this.optionList = list.result;
         });
-        this.watchers.add(optionsWatcher);
+       // this.watchers.add(optionsWatcher);
       }
-
-
     }
   }
 
   ngOnInit(): void {
     this.watchers = new Subscription();
-    //
+
     // let mediaWatcher = this.media.asObservable()
     //   .subscribe((change: MediaChange) => {
     //     this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""

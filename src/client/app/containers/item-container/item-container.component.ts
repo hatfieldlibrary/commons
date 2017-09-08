@@ -53,7 +53,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   activeMediaQuery = 'xs';
   columns = 1;
   selectedArea: string;
-  private watchers: Subscription;
+  watchers: Subscription;
   related: RelatedType[];
 
   constructor(private store: Store<fromRoot.State>,
@@ -201,7 +201,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.watchers.unsubscribe();
+    if (this.watchers) {
+      this.watchers.unsubscribe();
+    }
     //this.renderer.destroy();
   //  this.router.dispose();
     this.renderer = null;

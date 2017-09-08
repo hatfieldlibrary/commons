@@ -15,16 +15,16 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { ItemComponent } from './item.component';
+import {ItemComponent} from './item.component';
 import {MdButtonModule, MdGridListModule, MdInputModule, MdListModule, MdSelectModule} from "@angular/material";
 import {LockSvgComponent} from "../svg/lock-svg/lock-svg.component";
 import {SearchSvgComponent} from "../svg/search-svg/search-svg.component";
 import {FormsModule} from "@angular/forms";
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {ItemLinksComponent} from "../item-links/item-links.component";
-import {ActivatedRoute, RouterModule} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {SearchService} from "../../services/search.service";
 import {AuthCheckService} from "../../services/auth-check.service";
@@ -37,10 +37,50 @@ import {ItemSelectComponent} from "../item-select-options/item-select.component"
 import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
 import {UtilitiesService} from "../../services/utilities.service";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {SimpleChange} from "@angular/core";
+
+let mockItem = {
+  collection: {
+    id: 1,
+    title: '',
+    image: '',
+    url: 'collegian',
+    searchUrl: '',
+    desc: '',
+    dates: '',
+    items: '',
+    linkOptions: 'opts',
+    searchOptions: '',
+    assetType: '',
+    restricted: false,
+    published: false
+  },
+  category: {
+    id: 0,
+    title: '',
+    linkLabel: '',
+    url: '',
+    secondaryUrl: '',
+    description: '',
+    areaId: ''
+  },
+  itemTypes: [{
+    id: 0,
+    name: '',
+    icon: ''
+
+  }],
+  subjects: [1, 2]
+
+};
 
 describe('ItemComponent', () => {
   let component: ItemComponent;
   let fixture: ComponentFixture<ItemComponent>;
+  let searchSvc;
+  let utilSvc;
+  let watcher;
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -68,16 +108,29 @@ describe('ItemComponent', () => {
         FlexLayoutModule
       ],
       providers: [
-
-        SearchService,
+        {
+          provide: SearchService,
+          useClass: class {
+            getOptionsList = () => {
+              return Observable.of([]);
+            };
+          }
+        },
         AuthCheckService,
-        UtilitiesService,
+        {
+          provide: UtilitiesService,
+          useValue: {
+            getBackLink: () => {
+              return 'test link'
+            }
+          }
+        },
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.from([{ 'id': 1 }]),
+            params: Observable.from([{'id': 1}]),
             url: {
-              map: () =>  Observable.of('')
+              map: () => Observable.of('')
             }
           }
         },
@@ -93,17 +146,46 @@ describe('ItemComponent', () => {
 
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemComponent);
     component = fixture.componentInstance;
-    component.ngOnInit();
-    fixture.detectChanges();
+    searchSvc = fixture.debugElement.injector.get(SearchService);
+    utilSvc = fixture.debugElement.injector.get(UtilitiesService);
+    spyOn(searchSvc, 'getOptionsList').and.callThrough();
+    spyOn(utilSvc, 'getBackLink').and.callThrough();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should fetch list of options full pull down list.', fakeAsync(() => {
+
+    component.item = mockItem;
+    component.ngOnChanges({
+      item: new SimpleChange(null, component.item, true)
+    });
+    tick();
+    expect(searchSvc.getOptionsList).toHaveBeenCalled();
+
+  }));
+
+  it('should get back link', () => {
+    component.getBackLink();
+    expect(utilSvc.getBackLink).toHaveBeenCalled();
+    let path = component.getBackLink();
+    expect(path).toEqual('test link');
+  });
+
+  it('should remove listeners when component is destroyed', () => {
+    component.ngOnInit();
+    watcher = component.watchers;
+    spyOn(watcher, 'unsubscribe');
+    fixture.destroy();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
+  });
+
 });

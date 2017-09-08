@@ -45,6 +45,7 @@ import {CollectionService} from './services/collection.service';
 import {AreaService} from './services/area.service';
 import {AreaEffects} from './effects/area.effects';
 import {SubjectService} from './services/subject.service';
+import {SetIntervalService} from './services/interval.service';
 import {SubjectEffects} from './effects/subject.effects';
 import {CollectionEffects} from './effects/collection.effects';
 import {ItemContainerComponent} from './containers/item-container/item-container.component';
@@ -212,6 +213,7 @@ export const appRoutes = [
     AuthCheckService,
     MdIconRegistry,
     UtilitiesService,
+    SetIntervalService,
     {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 

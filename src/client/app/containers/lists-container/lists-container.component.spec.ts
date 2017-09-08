@@ -21,7 +21,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import { Store, Action} from '@ngrx/store';
+import {Store, Action} from '@ngrx/store';
 import {
   MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
   MdListModule,
@@ -66,6 +66,8 @@ import {KeyboardArrowForwardSvgComponent} from "../../components/svg/keyboard-ar
 import {KeyboardArrowBackSvgComponent} from "../../components/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component";
 import {HomeBlackSvgComponent} from "../../components/svg/home-black-svg/home-black-svg.component";
 import {UtilitiesService} from "../../services/utilities.service";
+import {SetIntervalService} from "../../services/interval.service";
+import {Subscription} from "rxjs/Subscription";
 
 let areaSubscriptionMock =
   {
@@ -85,11 +87,11 @@ let areaSubscriptionMock =
   };
 
 let areaListMock = [
-    {
-      id: 1,
-      title: 'area one',
-      count: 1
-    }
+  {
+    id: 1,
+    title: 'area one',
+    count: 1
+  }
 ];
 
 let areaList = areaListMock;
@@ -122,7 +124,7 @@ class MockActivatedRoute extends ActivatedRoute {
 // }
 
 const setAllRoute = (route: any) => {
- route.params = Observable.of({});
+  route.params = Observable.of({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -147,6 +149,7 @@ describe('ListsContainerComponent', () => {
   let fixture: ComponentFixture<ListsContainerComponent>;
   let store;
   let route;
+  let watcher: Subscription;
 
   beforeEach(async(() => {
 
@@ -192,14 +195,16 @@ describe('ListsContainerComponent', () => {
         ReactiveFormsModule,
         MdCheckboxModule,
         FormsModule,
-        RouterTestingModule,
+        RouterTestingModule
       ],
       providers: [
         UtilitiesService,
+        SetIntervalService,
         {
           provide: Store,
           useClass: class {
-            dispatch = jasmine.createSpy('dispatch'); select = () => {
+            dispatch = jasmine.createSpy('dispatch');
+            select = () => {
               return Observable.of(areaList);
             };
           }
@@ -216,14 +221,14 @@ describe('ListsContainerComponent', () => {
 
 
   beforeEach(() => {
-     areaList = areaListMock;
-    TestBed.createComponent(AppComponent);
+    areaList = areaListMock;
+    //TestBed.createComponent(AppComponent);
     fixture = TestBed.createComponent(ListsContainerComponent);
+    component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    component = fixture.componentInstance;
+
     spyOn(store, 'select').and.callThrough();
-    //spyOn(store, 'dispatch');
     spyOn(component, 'getAllCollectionsForSubject').and.callThrough();
     spyOn(component, 'initializeAreas').and.callThrough();
     spyOn(component, 'getAreaInformation').and.callThrough();
@@ -298,7 +303,7 @@ describe('ListsContainerComponent', () => {
   it('should dispatch request to fetch the area list', fakeAsync(() => {
 
     setAllRoute(route);
-  //  Set areaList store mock to empty array. This should trigger request for area list.
+    //  Set areaList store mock to empty array. This should trigger request for area list.
     areaList = [
       {
         id: 0,
@@ -352,5 +357,16 @@ describe('ListsContainerComponent', () => {
     expect(store.dispatch).toHaveBeenCalledWith(new subjectActions.AllSubjectAction());
 
   }));
+
+  it('should remove listeners when component is destroyed', () => {
+    setAreaRoute(route, 'default');
+    fixture.detectChanges();
+    watcher = component.watchers;
+    spyOn(watcher, 'unsubscribe');
+    fixture.destroy();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
+  });
+
+
 
 });

@@ -60,15 +60,12 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   state = '';
   watchers: Subscription;
   areas: AreaListItemType[];
-  areaInfo: AreaType[];
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
               private router: Router,
               public media: ObservableMedia) {
 
-    // All component subscriptions will be added to this object.
-    this.watchers = new Subscription();
   }
 
   /**
@@ -216,6 +213,9 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    // All component subscriptions will be added to this object.
+    this.watchers = new Subscription();
+
     this.setItemTitle();
     this.setAreasAvailable();
 
@@ -270,8 +270,9 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.watchers.unsubscribe();
-    this.router.dispose();
+    if (this.watchers) {
+      this.watchers.unsubscribe();
+    }
   }
 
 }

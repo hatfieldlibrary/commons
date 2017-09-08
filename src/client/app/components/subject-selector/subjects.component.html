@@ -23,7 +23,7 @@
   </div>
 
   <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'area'">
-    <md-list-item #subjects *ngFor="let subject of subjectList">
+    <md-list-item subjects *ngFor="let subject of subjectList">
       <button md-raised-button color="primary" (click)="resetList()" [routerLink]="['/',appRoot,'collection','subject', subject.id, 'area', areaId]">
         {{subject.name}}
       </button>
@@ -31,7 +31,7 @@
   </md-list>
 
   <md-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'all'">
-    <md-list-item #subjects *ngFor="let subject of subjectList">
+    <md-list-item subjects *ngFor="let subject of subjectList">
       <button md-raised-button color="primary" (click)="resetList()" [routerLink]="['/', appRoot, 'collection','subject', subject.id]">
         {{subject.name}}
       </button>

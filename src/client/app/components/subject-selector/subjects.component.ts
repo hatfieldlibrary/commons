@@ -27,6 +27,8 @@ import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
+import {SetIntervalService} from "../../services/interval.service";
+import {MdListItem} from "@angular/material";
 
 
 @Component({
@@ -42,7 +44,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() type: string;
   @ViewChild('container') container: ElementRef;
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
-  @ViewChildren('subjects', {read: ElementRef}) contentEls: QueryList<ElementRef>;
+  @ViewChildren(MdListItem, {read: ElementRef}) contentEls: QueryList<ElementRef>;
 
   watcher: Subscription;
   offsetWidth: number;
@@ -55,7 +57,6 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   leftIsVisible = false;
   rightIsVisible = false;
   appRoot = environment.appRoot;
-  private animation: number;
 
   /**
    * Listen for window resize and adjust navigation arrows.
@@ -75,6 +76,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   constructor(private changeDetector: ChangeDetectorRef,
               private media: ObservableMedia,
+              private intervalService: SetIntervalService,
               private store: Store<fromRoot.State>) {
 
     this.watcher = new Subscription();
@@ -108,8 +110,11 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Unsubscribe media watcher.
    */
   ngOnDestroy(): void {
-    this.watcher.unsubscribe();
+    if (this.watcher) {
+      this.watcher.unsubscribe();
+    }
     this.changeDetector.detach();
+    this.intervalService.clearInterval();
    // this.changeDetector = null;
     // this.media = null;
   //   this.animation = null;
@@ -160,12 +165,12 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   onScrollRequest(direction: string): void {
 
     // Set animation counter.
-    let animationCouter;
+    let animationCounter;
     if (direction === 'right') {
-      animationCouter = 0;
+      animationCounter = 0;
     }
     if (direction === 'left') {
-      animationCouter = this.subjects.nativeElement.scrollLeft
+      animationCounter = this.subjects.nativeElement.scrollLeft
     }
     // Set the animation limit.
     let limit = this._setAnimiationLimit(direction);
@@ -173,30 +178,30 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     let interval = 20;
 
     // Start the animation.
-    this.animation = setInterval(() => {
+    this.intervalService.setInterval(5,() => {
       if (direction === 'right') {
-        animationCouter = animationCouter + interval;
+        animationCounter = animationCounter + interval;
         this.subjects.nativeElement.scrollLeft = this.subjects.nativeElement.scrollLeft + interval;
       }
       if (direction === 'left') {
         if (this.subjects.nativeElement.scrollLeft >= 0) {
-          animationCouter = animationCouter - interval;
+          animationCounter = animationCounter - interval;
           this.subjects.nativeElement.scrollLeft = this.subjects.nativeElement.scrollLeft - interval;
         }
       }
       // Stop the animation.
       if (direction === 'right') {
-        if (animationCouter >= limit - 25) {
-          clearInterval(this.animation);
+        if (animationCounter >= limit - 25) {
+          this.intervalService.clearInterval();
         }
       }
       if (direction === 'left') {
-        if (animationCouter <= limit || animationCouter === 0) {
-          clearInterval(this.animation);
+        if (animationCounter <= limit || animationCounter === 0) {
+          this.intervalService.clearInterval();
         }
       }
 
-    }, 5);
+    });
 
 
   }
@@ -207,10 +212,8 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   ngAfterViewInit(): void {
 
-    console.log(this.contentEls)
     this.offsetWidth = this.container.nativeElement.offsetWidth;
     const changeWatcher = this.contentEls.changes.subscribe((el) => {
-      console.log('subs')
       this.lastSubjectButton = el._results[this.subjectList.length - 1];
       const leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
       this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;

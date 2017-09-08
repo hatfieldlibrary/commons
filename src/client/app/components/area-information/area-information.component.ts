@@ -42,7 +42,6 @@ export class AreaInformationComponent implements OnChanges, OnDestroy{
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
     if (changes.areaInfo) {
       if (changes.areaInfo.currentValue.length > 1) {
         let areaList = changes.areaInfo.currentValue;

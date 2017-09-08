@@ -44,6 +44,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
       });
+    this.listener.add(mediaWatcher);
   }
 
   goToHome(): void {
@@ -73,8 +74,10 @@ export class AppMenusComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy(): void {
-    this.listener.unsubscribe();
-    this.router.dispose();
+    if (this.listener) {
+      this.listener.unsubscribe();
+    }
+   // this.router.dispose();
   //   this.router = null;
   // //  this.media = null;
   //   this.utils = null;

@@ -14,25 +14,23 @@
  *   You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-.chips {
-  margin-left: 12px;
-  margin-top: 24px;
-}
-md-chip {
-  color: #fff !important;
-}
-app-collection-list .mat-input-underline {
-  border-top-width: 2px !important;
-  border-color: #aba79a !important;
-}
-app-collection-list .mat-input-wrapper {
-  margin-bottom: 0;
-}
-.mat-list {
-  padding-top:0;
-}
-.collection-filter-input {
-  width:90%;
-  margin-top: 10px;
-  padding: 6px 12px;
+
+import {Injectable} from "@angular/core";
+
+/**
+ * Injectable wrapper around the global setInterval function.  Use this to allow for test mocks.
+ */
+@Injectable()
+export class SetIntervalService {
+
+  interval;
+
+  setInterval(time: number, callback: () => void) {
+    this.interval = setInterval(callback, time);
+  }
+
+  clearInterval() {
+    clearInterval(this.interval);
+  }
+
 }

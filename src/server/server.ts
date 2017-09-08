@@ -25,13 +25,17 @@ import * as http from 'http';
 import { json, urlencoded } from 'body-parser';
 import {Configuration} from './config/environment';
 import {Authentication} from './config/auth-config';
-import {AppRoutes} from "./config/routes";
+import {AppRoutes} from './config/routes';
+import * as helmet from 'helmet';
 
 const app = express();
 
 // Parsers for POST data
 app.use(json());
 app.use(urlencoded({ extended: false }));
+
+// Using default settings. See https://github.com/helmetjs/helmet
+app.use(helmet());
 
 const env = process.env.NODE_ENV || 'development';
 

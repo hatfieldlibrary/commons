@@ -28,10 +28,8 @@ import {hot, cold} from 'jasmine-marbles';
 
 describe('Area Effect', () => {
 
-
   let actions: Observable<any>;
   let areaEffects: AreaEffects;
-  let svc: AreaService;
   const mockAreasList: AreaListItemType[] = [
     {
       id: 1,
@@ -77,7 +75,7 @@ describe('Area Effect', () => {
 
   });
 
-  it('call Area Success action after areaList loaded.', () => {
+  it('should call Area Success action after areaList loaded.', () => {
 
     const startAction = new AreaAction();
     const hotMarble = {a: startAction};
@@ -88,7 +86,7 @@ describe('Area Effect', () => {
 
   });
 
-  it('call Area Success action after areaList loaded.', () => {
+  it('should call Area Success action after areaInfo loaded.', () => {
 
     const startAction = new AreaInformation('1');
     const hotMarble = {a: startAction};
@@ -99,23 +97,5 @@ describe('Area Effect', () => {
 
   });
 
-  // it('call Area Info Success action after area info is retrieved.',
-  //   inject([
-  //       EffectsRunner, AreaEffects, AreaService
-  //     ],
-  //     (_runner: EffectsRunner, _areaEffects: AreaEffects, _areaService: AreaService) => {
-  //       runner = _runner;
-  //       areaEffects = _areaEffects;
-  //       areaService = _areaService;
-  //       spyOn(areaService, 'getAreaInfo')
-  //         .and.returnValue(Observable.of(mockAreaInfo));
-  //       runner.queue(new AreaInformation('1'));
-  //
-  //       areaEffects.areaInfoEffect$.subscribe(result => {
-  //         expect(result.type).toEqual(AreaActionTypes.AREA_INFORMATION_SUCCESS);
-  //         expect(result.payload).toEqual(mockAreaInfo);
-  //
-  //       });
-  //     })
-  // );
+
 });
