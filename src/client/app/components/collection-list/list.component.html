@@ -16,9 +16,9 @@
   -->
 <div class="chips">
   <div fxLayout="row" fxLayoutAlign="start center">
-  <md-card-subtitle *ngIf="selectedSubject">Viewing subject:&nbsp;&nbsp;</md-card-subtitle>
+  <md-card-subtitle *ngIf="selectedSubject?.id!==0">Viewing subject:&nbsp;&nbsp;</md-card-subtitle>
   <md-chip-list>
-    <md-chip *ngIf="selectedSubject"
+    <md-chip *ngIf="selectedSubject?.id!==0"
              selected="true"
              color="default"
              (click)="deselect($event)" style="margin-bottom: 12px;">

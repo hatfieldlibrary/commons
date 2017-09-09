@@ -16,11 +16,13 @@
  */
 
 import {
-  AllSubjectActionSuccess, SubjectAction, SubjectActionFailed, SubjectActions,
+  AllSubjectAction,
+  AllSubjectActionSuccess, CurrentSubject, RemoveCurrentSubject, SubjectAction, SubjectActionFailed, SubjectActions,
   SubjectActionSuccess
 } from "../actions/subject-actions";
-import {getSubjectList, reducer} from "./subject.reducers";
+import {getSelectedSubject, getSubjectList, reducer} from "./subject.reducers";
 import {Action} from "@ngrx/store";
+import {AuthType} from "../shared/data-types/auth.type";
 /**
  * Created by mspalti on 3/27/17.
  */
@@ -33,6 +35,12 @@ const expectedSubjects = [
   }
 ];
 
+const mockState = {
+  subjects: expectedSubjects,
+  selectedSubject: undefined,
+  loading: false
+}
+
 class MockAction implements Action {
   type: string = '';
   payload: any;
@@ -41,7 +49,7 @@ class MockAction implements Action {
 
 describe('Subject Reducers', () => {
 
-  it('should return the initial state and loading true.', () => {
+  it('should return the initial state and loading boolean set to true for subject action', () => {
     expect(
       reducer(undefined, new SubjectAction('1'))
     ).toEqual({
@@ -64,6 +72,16 @@ describe('Subject Reducers', () => {
     )
   });
 
+  it('should return the initial state and loading boolean set to true all subject action', () => {
+    expect(
+      reducer(undefined, new AllSubjectAction())
+    ).toEqual({
+        subjects: [],
+        selectedSubject: {id: 0, name: '', url: ''},
+        loading: true
+      }
+    )
+  });
 
   it('should return subject list', () => {
 
@@ -100,6 +118,22 @@ describe('Subject Reducers', () => {
     let state = reducer(undefined, new SubjectActionFailed('I am a failure.'));
     let result = getSubjectList(state);
     expect(result).toEqual([]);
+  });
+
+  it('should find the current subject', () => {
+    let state = reducer(mockState, new CurrentSubject(1));
+    let result = getSelectedSubject(state);
+    expect(result).toEqual({id: 1, name: 'test subject', url: ''});
+  });
+
+  it('should remove the selected subject', () => {
+    expect(
+      reducer(mockState, new RemoveCurrentSubject()))
+      .toEqual({
+        subjects: expectedSubjects,
+        selectedSubject: {id: 0, name:'', url:''},
+        loading: false
+      });
   });
 
 });

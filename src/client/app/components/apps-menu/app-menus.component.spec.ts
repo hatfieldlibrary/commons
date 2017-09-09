@@ -3,7 +3,10 @@ import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {AppMenusComponent} from './app-menus.component';
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
-import {MaterialModule, MdCheckboxModule, MdIconModule, MdIconRegistry, MdToolbarModule} from "@angular/material";
+import {
+  MaterialModule, MdCheckboxModule, MdIconModule, MdIconRegistry, MdSidenav, MdSidenavModule,
+  MdToolbarModule
+} from "@angular/material";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {NavigationComponent} from "../area-selector/area.component";
 import {RouterTestingModule} from "@angular/router/testing";
@@ -18,7 +21,8 @@ import {Observable} from "rxjs/Observable";
 import {FlexLayoutModule, MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {DOCUMENT} from "@angular/common";
 import {Inject, InjectionToken} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
+import {By, DomSanitizer} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 class MockRouter {
   public navEnd = new NavigationEnd(0, 'http://localhost:3000', 'http://localhost:3000');
@@ -26,33 +30,15 @@ class MockRouter {
     observer.next(this.navEnd);
     observer.complete();
   });
-  public dispose() {}
-}
 
-class MockMediaObserver {
-  // https://github.com/angular/flex-layout/blob/master/src/lib/media-query/media-change.ts
- public mediaChange = new MediaChange(true, 'all', 'gt-lg', 'GtLg');
-
-//  public mediaChange: MediaChange = null;
-  public asObservable(): any {
-    const change = Observable.of(this.mediaChange);
-    return change
+  public dispose() {
   }
-
-}
-
-class MockDocument {
-   //public DOCUMENT = new InjectionToken<Document>('DocumentToken');
-  public createElement() {}
-  public classList() {}
-}
-class MockIcon {
-
 }
 
 describe('AppMenusComponent', () => {
   let component: AppMenusComponent;
   let fixture: ComponentFixture<AppMenusComponent>;
+  let utilSvc;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -68,6 +54,8 @@ describe('AppMenusComponent', () => {
       ],
       imports: [
         MdToolbarModule,
+        MdSidenavModule,
+        BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         MdCheckboxModule,
@@ -78,12 +66,14 @@ describe('AppMenusComponent', () => {
 
       ],
       providers: [
-        UtilitiesService,
-        // {
-        //   provide: DOCUMENT,
-        //   useValue: {value: document}
-        // },
-        //  {
+        {
+          provide: UtilitiesService,
+          useValue: {
+            getBackLink: () => {
+              return 'test link'
+            }
+          }
+        },
         {
           provide: Store,
           useClass: class {
@@ -104,20 +94,42 @@ describe('AppMenusComponent', () => {
 
 
   beforeEach(() => {
-   // let iconRegistry = TestBed.get(MdIconRegistry);
-   // let sanitizer = TestBed.get(DomSanitizer);
-   //  iconRegistry.addSvgIcon( 'app-icon-back','app-home-svg','app-menu-svg','app-icon-close','app-home-black-svg');
-   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_black_24px.svg');
-   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_white_24px.svg');
-   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_white_24px.svg');
-   //  sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_black_24px.svg');
     fixture = TestBed.createComponent(AppMenusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    utilSvc = fixture.debugElement.injector.get(UtilitiesService);
+    spyOn(utilSvc, 'getBackLink').and.callThrough();
 
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get back link', () => {
+    component.getBackLink();
+    expect(utilSvc.getBackLink).toHaveBeenCalled();
+    let path = component.getBackLink();
+    expect(path).toEqual('test link');
+  });
+
+  it('should animate scroll request', (done) => {
+    fixture.whenStable().then(
+      () => {
+        spyOn(component.sideNavigate, 'open');
+        component.openMenu();
+        expect(component.sideNavigate.open).toHaveBeenCalled();
+        done();
+      }
+    );
+  });
+
+  it('should cleanup listener on destroy', () => {
+    fixture.detectChanges();
+    let watcher = component.watcher;
+    spyOn(watcher, 'unsubscribe');
+    fixture.destroy();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
+  })
+
 });

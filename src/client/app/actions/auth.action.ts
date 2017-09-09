@@ -51,8 +51,9 @@ export const AuthActionTypes = {
  */
 export class GetAuthStatus implements Action {
   type = AuthActionTypes.GET_AUTH_STATUS;
+  payload: void;
 
-  constructor(public payload: void) {
+  constructor() {
   }
 
 }

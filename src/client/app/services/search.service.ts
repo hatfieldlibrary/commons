@@ -26,8 +26,8 @@ export class SearchService {
   }
 
   /**
-   * Opens simple search query target in a new window.
-   * @param baseURL base url for the query
+   * Returns query string/
+   * @param baseURL base url for the query, including query token {$query}
    * @param terms user provided search terms
    */
   executeSimpleSearchQuery(baseURL: string, terms: string): string {
@@ -35,8 +35,6 @@ export class SearchService {
     const query = encodeURIComponent(terms);
     let splitString = baseURL.split('{$query}');
     const href = splitString[0] + query + splitString[1];
-    //const href = baseURL + `all^${query}^all^and!`;
-    // const href = baseURL.template();
     return href;
   }
 

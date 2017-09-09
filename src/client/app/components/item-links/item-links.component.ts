@@ -12,7 +12,7 @@ import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
-
+import {SetAuthStatus} from "../../actions/auth.action";
 
 @Component({
   selector: 'app-item-links',
@@ -20,7 +20,7 @@ import {DOCUMENT} from '@angular/common';
   styleUrls: ['./item-links.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemLinksComponent implements OnChanges, OnInit, OnDestroy {
+export class ItemLinksComponent implements OnInit, OnDestroy {
 
 
   auth$: Observable<AuthType>;
@@ -62,31 +62,21 @@ export class ItemLinksComponent implements OnChanges, OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.model = new SearchTerms();
+    // Using the store to track authentication.
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
-
     const authWatcher = this.auth$.subscribe((auth) => {
       this.isAuthenticated = auth.status;
+      // Make sure to pick up the change next cycle.
       this.changeDetector.markForCheck();
     });
-
     this.watchers.add(authWatcher);
+    // Retrieve the current authentication status. We update the store,
+    // although that is not useful if this component remains the
+    // only interested party!
+    this.auth.getAuthStatus().subscribe((auth) => {
+      this.store.dispatch(new SetAuthStatus({status: auth}));
+    });
 
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-
-    // if (changes['linkOptions']) {
-    //   // if (changes['linkOptions'].currentValue === 'opts') {
-    //   //   this.svc.getOptionsList(changes['url'].currentValue).subscribe((list) => {
-    //   //     this.optionList = list.result;
-    //   //   })
-    //   // }
-    //
-    if (this.restricted) {
-      this.auth.getAuthStatus();
-    }
-    //
-    // }
   }
 
   ngOnDestroy(): void {
@@ -95,9 +85,9 @@ export class ItemLinksComponent implements OnChanges, OnInit, OnDestroy {
       this.watchers.unsubscribe();
     }
     //  this.route = null;
-    this.changeDetector.detach();
-    // this.changeDetector = null;
-    // this.document = null;
+    // this.changeDetector.detach();
+    this.changeDetector = null;
+    this.document = null;
     this.auth = null;
     // this.store = null;
     this.svc = null;

@@ -73,7 +73,7 @@ export class CurrentSubject implements Action {
   }
 }
 export class RemoveCurrentSubject implements Action {
-  type = SubjectActionTypes.CURRENT_SELECTED_SUBJECT;
+  type = SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT;
   payload: void;
 
   constructor() {

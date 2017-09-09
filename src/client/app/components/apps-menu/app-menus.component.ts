@@ -26,7 +26,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
-  listener: Subscription;
+  watcher: Subscription;
   state = '';
 
   constructor(private utils: UtilitiesService,
@@ -34,7 +34,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
               public media: ObservableMedia,
               @Inject(DOCUMENT) private document) {
 
-    this.listener = router.events
+    this.watcher = router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
         this.previousUrl = event.url;
@@ -44,7 +44,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
       });
-    this.listener.add(mediaWatcher);
+    this.watcher.add(mediaWatcher);
   }
 
   goToHome(): void {
@@ -74,8 +74,8 @@ export class AppMenusComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy(): void {
-    if (this.listener) {
-      this.listener.unsubscribe();
+    if (this.watcher) {
+      this.watcher.unsubscribe();
     }
    // this.router.dispose();
   //   this.router = null;

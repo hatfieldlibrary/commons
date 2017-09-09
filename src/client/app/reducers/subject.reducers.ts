@@ -73,9 +73,12 @@ export function reducer(state = initialState, action: SubjectActions): State {
     case SubjectActionTypes.CURRENT_SELECTED_SUBJECT: {
 
       const selectedId: number = <number>action.payload;
-      const selected = state.subjects.find((subject) => {
+      let selected = state.subjects.find((subject) => {
         return subject.id === selectedId;
       });
+      if (!selected) {
+        selected = initialState.selectedSubject;
+      }
       return Object.assign({}, state, {
         selectedSubject: selected
       });
@@ -84,7 +87,7 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     case SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT: {
       return Object.assign({}, state, {
-        selectedSubject: {}
+        selectedSubject: {id: 0, name:'', url:''}
       });
     }
 

@@ -28,6 +28,11 @@ import {Store} from "@ngrx/store";
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
+  let store;
+
+  class MockEmitter {
+    next() {}
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -51,8 +56,7 @@ describe('ListComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
           }
-        },
-
+        }
       ]
     })
       .compileComponents();
@@ -62,9 +66,18 @@ describe('ListComponent', () => {
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    store = fixture.debugElement.injector.get(Store);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should remove selected subject from store and emit event', () => {
+    spyOn(component.removeSubject, 'next');
+    component.deselect();
+    expect(component.removeSubject.next).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalled();
+  });
+
 });
