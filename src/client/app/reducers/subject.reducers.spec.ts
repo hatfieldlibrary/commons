@@ -126,6 +126,12 @@ describe('Subject Reducers', () => {
     expect(result).toEqual({id: 1, name: 'test subject', url: ''});
   });
 
+  it('should return the default selected subject with id zero', () => {
+    let state = reducer(mockState, new CurrentSubject(-1));
+    let result = getSelectedSubject(state);
+    expect(result).toEqual({id: 0, name:'', url:''});
+  });
+
   it('should remove the selected subject', () => {
     expect(
       reducer(mockState, new RemoveCurrentSubject()))

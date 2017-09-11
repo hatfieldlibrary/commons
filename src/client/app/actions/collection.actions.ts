@@ -58,7 +58,7 @@ export class CollectionReset implements Action {
 
 export class AllCollectionsAction implements Action {
   type = CollectionActionTypes.LIST_ALL_ACTION;
-
+  payload: void;
   constructor() {}
 
 }

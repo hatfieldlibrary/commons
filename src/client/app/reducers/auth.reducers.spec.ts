@@ -17,13 +17,15 @@
 
 import {AuthType} from "../shared/data-types/auth.type";
 import {GetAuthStatus, SetAuthStatus} from "../actions/auth.action";
-import {reducer} from "./auth.reducers";
+import {getAuthStatus, reducer} from "./auth.reducers";
 
 const mockAuthStatus: AuthType = {
-  status: true
+    status: true
+
 };
 const mockCurrentAuthState: AuthType = {
-  status: false
+    status: false
+
 };
 
 describe('Authentication Status Reducer', () => {
@@ -31,15 +33,26 @@ describe('Authentication Status Reducer', () => {
   it('should return the current auth status.', () => {
     expect(
       reducer(undefined, new GetAuthStatus())
-    ).toEqual(mockCurrentAuthState)
+    ).toEqual(
+      {
+        auth: mockCurrentAuthState
+      })
   });
 
   it('should set the auth status', () => {
 
     expect(
       reducer(undefined, new SetAuthStatus(mockAuthStatus))
-    ).toEqual(mockAuthStatus);
+    ).toEqual({
+      auth: mockAuthStatus
+    });
 
+  });
+
+  it('should return default state', () => {
+    let state = reducer(undefined,  {type: undefined, payload: undefined});
+    let result = getAuthStatus(state);
+    expect(result).toEqual(mockCurrentAuthState);
   });
 
 });

@@ -73,7 +73,7 @@ describe('Collection Service', () => {
       providers: [
         CollectionService,
         MockBackend,
-        {provide: XHRBackend, useClass: MockBackend}
+     //   {provide: XHRBackend, useClass: MockBackend}
       ]
     })
       .compileComponents();
@@ -82,7 +82,7 @@ describe('Collection Service', () => {
 
   it('get collections by area', inject([CollectionService, MockBackend], (collectionService, mockBackend) => {
     mockBackend.connections.subscribe(conn => {
-      conn.mockRespond(new Response(new ResponseOptions({body: mockCollections})));
+      conn.mockRespond(new Response(new ResponseOptions({body: JSON.stringify(mockCollections)})));
     });
     const result = collectionService.getCollectionsByAreaId('1');
     result.subscribe(res => {

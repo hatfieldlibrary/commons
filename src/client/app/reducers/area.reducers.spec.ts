@@ -115,5 +115,13 @@ describe('Area Reducer', () => {
 
   });
 
+  it('should return default state', () => {
+    let state = reducer(undefined, {type: undefined, payload: ''});
+    let result = getAreaInfo(state);
+    expect(result).toEqual(initialState);
+  });
+
+
+
 
 });

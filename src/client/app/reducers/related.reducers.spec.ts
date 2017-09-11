@@ -72,4 +72,15 @@ describe('Related Item Reducers', () => {
     expect(result).toEqual([relatedItemMock]);
   });
 
+
+  it('should return default state', () => {
+    expect(
+      reducer(undefined, {type: undefined, payload: undefined})
+    ).toEqual({
+      related: [],
+      loading: false
+    })
+
+  });
+
 });

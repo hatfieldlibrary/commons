@@ -20,7 +20,10 @@ import {AreaEffects} from './area.effects';
 import {AreaService} from '../services/area.service';
 import {TestBed} from '@angular/core/testing';
 import {Observable, } from 'rxjs/Observable';
-import {AreaAction, AreaActionSuccess, AreaInformation, AreaInformationSuccess} from '../actions/area.actions';
+import {
+  AreaAction, AreaActionFailed, AreaActionSuccess, AreaInformation,
+  AreaInformationSuccess
+} from '../actions/area.actions';
 import {AreaType} from '../shared/data-types/area.type';
 import {AreaListItemType} from '../shared/data-types/area-list.type';
 import {provideMockActions} from '@ngrx/effects/testing';
@@ -30,6 +33,8 @@ describe('Area Effect', () => {
 
   let actions: Observable<any>;
   let areaEffects: AreaEffects;
+  let areaService;
+
   const mockAreasList: AreaListItemType[] = [
     {
       id: 1,
@@ -68,11 +73,11 @@ describe('Area Effect', () => {
           }
         },
         provideMockActions(() => actions)
-      ],
+      ]
     });
 
     areaEffects = TestBed.get(AreaEffects);
-
+    areaService = TestBed.get(AreaService);
   });
 
   it('should call Area Success action after areaList loaded.', () => {
@@ -86,6 +91,19 @@ describe('Area Effect', () => {
 
   });
 
+  it('should return error response action for all collections request', () => {
+
+    spyOn(areaService, 'getAreaList').and.callFake(() => { return Observable.throw('error') });
+    const startAction =  new AreaAction();
+    const hotMarble = {a: startAction};
+    actions = hot('--a-', hotMarble);
+    const failAction = new AreaActionFailed('test');
+    // create error response and complete observable
+    const expectedResults = cold('--(b|)',  {b: failAction});
+    expect(areaEffects.areaListEffect$).toBeObservable(expectedResults);
+
+  });
+
   it('should call Area Success action after areaInfo loaded.', () => {
 
     const startAction = new AreaInformation('1');
@@ -93,6 +111,19 @@ describe('Area Effect', () => {
     actions = hot('--a-', hotMarble);
     const successAction = new AreaInformationSuccess([mockAreaInfo]);
     const expectedResults = cold('--b', {b: successAction});
+    expect(areaEffects.areaInfoEffect$).toBeObservable(expectedResults);
+
+  });
+
+  it('should return error response action for all collections request', () => {
+
+    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return Observable.throw('error') });
+    const startAction =  new AreaInformation('1');
+    const hotMarble = {a: startAction};
+    actions = hot('--a-', hotMarble);
+    const failAction = new AreaActionFailed('test');
+    // create error response and complete observable
+    const expectedResults = cold('--(b|)',  {b: failAction});
     expect(areaEffects.areaInfoEffect$).toBeObservable(expectedResults);
 
   });

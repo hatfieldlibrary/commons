@@ -101,7 +101,7 @@ export function reducer(state = initialState, action: ItemActions): State {
           itemTypes: initialItemTypes,
           subjects: []
         },
-        loading: true
+        loading: false
       });
     }
 

@@ -17,14 +17,20 @@
 
 import {reducers} from "./";
 import {SubjectActionSuccess} from "../actions/subject-actions";
-import {getAreasState, getAreaListState, getCollectionssState, getItemState, getSubjectsState, State} from "./index";
+import {
+  getAreasState,
+  getAreaListState,
+  getCollectionssState,
+  getItemState,
+  getSubjectsState,
+  getRelatedState,
+  getAuthStatusState
+} from "./index";
 import {ItemSuccess} from "../actions/item.actions";
-import {AreaActionSuccess, AreaInformation, AreaInformationSuccess} from "../actions/area.actions";
+import {AreaActionSuccess, AreaInformationSuccess} from "../actions/area.actions";
 import {CollectionActionSuccess} from "../actions/collection.actions";
-import {AreaType} from "../shared/data-types/area.type";
-import {AreaListItemType} from "../shared/data-types/area-list.type";
-import {getAreaList} from "./area-list.reducers";
-import {getSubjectList, reducer} from "./subject.reducers";
+import {ItemActionRelatedSuccess} from '../actions/related.actions';
+import {GetAuthStatus, SetAuthStatus} from "../actions/auth.action";
 
 
 describe('Reducers ', () => {
@@ -34,15 +40,16 @@ describe('Reducers ', () => {
   let areaState;
   let areaListState;
   let collectionState;
-  let areaInfoState;
+  let relatedItemsState;
+  let authState;
 
   const expectedSubjects = [
-        {
-          id: 1,
-          name: 'test subject',
-          url: ''
-        }
-      ];
+    {
+      id: 1,
+      name: 'test subject',
+      url: ''
+    }
+  ];
 
   const expectedAreas = [
     {
@@ -82,6 +89,19 @@ describe('Reducers ', () => {
     areaId: ''
   };
 
+  const expectedRelatedItems = [
+    {
+      id: 1,
+      title: 'related thing',
+      image: ''
+    },
+    {
+      id: 2,
+      title: 'related thing two',
+      image: ''
+    }
+  ];
+
   const expectedItemTypes = [{
     id: 0,
     name: 'test item type',
@@ -107,14 +127,14 @@ describe('Reducers ', () => {
     position: 0
   }];
 
-
   beforeEach(() => {
     subjectState = reducers.subjects(undefined, new SubjectActionSuccess(expectedSubjects));
     itemState = reducers.item(undefined, new ItemSuccess(expectedItem));
     areaState = reducers.area(undefined, new AreaInformationSuccess(expectedArea));
     areaListState = reducers.areaList(undefined, new AreaActionSuccess(expectedAreas));
     collectionState = reducers.collections(undefined, new CollectionActionSuccess(expectedCollections));
-
+    relatedItemsState = reducers.related(undefined, new ItemActionRelatedSuccess(expectedRelatedItems));
+    authState = reducers.auth(undefined, new SetAuthStatus({status: true}));
   });
 
   it('should return subject list state', () => {
@@ -139,6 +159,21 @@ describe('Reducers ', () => {
     const result = getCollectionssState(collectionState);
     expect(result).toBeDefined();
 
+  });
+
+  it('should return area state', () => {
+    const result = getAreasState(areaState);
+    expect(result).toBeDefined();
+  });
+
+  it('should return related areas state', () => {
+    const result = getRelatedState(relatedItemsState);
+    expect(result).toBeDefined();
+  });
+
+  it('should return the authentication status', () => {
+    const result = getAuthStatusState(authState);
+    expect(result).toBeDefined();
   });
 
 

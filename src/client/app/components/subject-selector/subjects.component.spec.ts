@@ -136,6 +136,7 @@ describe('SubjectsComponent', () => {
         component.subjects = debugElement;
         component.onScrollRequest('right');
         expect(intervalService.setInterval).toHaveBeenCalled();
+        expect(intervalService.clearInterval).toHaveBeenCalled();
         done();
       }
     );

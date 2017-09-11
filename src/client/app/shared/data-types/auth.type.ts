@@ -20,7 +20,6 @@
  */
 
 export class AuthType {
-
     status: boolean;
 
 }

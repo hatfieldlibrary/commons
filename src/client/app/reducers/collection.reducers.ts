@@ -92,7 +92,7 @@ export function reducer(state = initialState, action: CollectionActions) : State
     case CollectionActionTypes.LIST_ALL_BY_SUBJECT: {
 
       return Object.assign({}, state, {
-        loading: false
+        loading: true
       });
     }
 

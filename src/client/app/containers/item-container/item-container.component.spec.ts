@@ -27,7 +27,7 @@ import {
 } from "@angular/material";
 import {Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
-import {ActivatedRoute, Router, RouterModule} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router, RouterModule} from "@angular/router";
 import {Observable} from "rxjs";
 import * as fromRoot from '../../reducers';
 import {AppComponent} from "../../components/app.component";
@@ -64,63 +64,48 @@ import {DatePickerSvgComponent} from "../../components/svg/date-picker-svg/date-
 import {UtilitiesService} from "../../services/utilities.service";
 import {Subscription} from "rxjs/Subscription";
 
-
 let mockItem = {
-    collection: {
-      id: 1,
-      title: '',
-      image: '',
-      url: '',
-      searchUrl: '',
-      desc: '',
-      dates: '',
-      items: '',
-      linkOptions: '',
-      searchOptions: '',
-      assetType: '',
-      restricted: false,
-      published: false
-    },
-    category: {
-      id: 0,
-      title: '',
-      linkLabel: '',
-      url: '',
-      secondaryUrl: '',
-      description: '',
-      areaId: ''
-    },
-    itemTypes: [{
-      id: 0,
-      name: '',
-      icon: ''
+  collection: {
+    id: 1,
+    title: '',
+    image: '',
+    url: '',
+    searchUrl: '',
+    desc: '',
+    dates: '',
+    items: '',
+    linkOptions: '',
+    searchOptions: '',
+    assetType: '',
+    restricted: false,
+    published: false
+  },
+  category: {
+    id: 0,
+    title: '',
+    linkLabel: '',
+    url: '',
+    secondaryUrl: '',
+    description: '',
+    areaId: ''
+  },
+  itemTypes: [{
+    id: 0,
+    name: '',
+    icon: ''
 
-    }],
-    subjects: ['1', '2']
+  }],
+  subjects: ['1', '2']
 
 };
 
 
-//
-// @Injectable()
-// class MockStore extends Store<any> {
-//
-//   select = () => {
-//     return Observable.of(mockItem);
-//   };
-//
-//   dispatch (action: Action)  {}
-//
-// }
-
-
-
-const setMockAreaRoute = (route:any, mock: string) => {
+const setMockAreaRoute = (route: any, mock: string) => {
   route.params = Observable.of({id: mock, areaId: 1});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
-const setMockRoute = (route:any) => {
+const setMockRoute = (route: any) => {
   route.params = Observable.of({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
@@ -196,30 +181,18 @@ describe('ItemContainerComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.of({ id: '0' })
+            params: Observable.of({id: '0'})
           }
         },
-        //ActivatedRoute,
-        // {
-        //     provide: ActivatedRoute,
-        //     useValue: {
-        //       params: this.route.params,
-        //       url: {
-        //         map: () =>  Observable.of('')
-        //       }
-        //     }
-        //
-        // },
         {
           provide: Renderer2,
           useValue: {
-            setProperty: () => {}
+            setProperty: () => {
+            }
           }
         },
         SearchService,
         AuthCheckService
-
-
       ]
     })
       .compileComponents();
@@ -239,7 +212,7 @@ describe('ItemContainerComponent', () => {
 
     spyOn(route.params, 'subscribe').and.callThrough();
     spyOn(store, 'select').and.callThrough();
-  //  spyOn(store, 'dispatch');
+    //  spyOn(store, 'dispatch');
 
   });
 
@@ -281,7 +254,7 @@ describe('ItemContainerComponent', () => {
 
   }));
 
-  it('should clear related items on init', fakeAsync( () => {
+  it('should clear related items on init', fakeAsync(() => {
     setMockAreaRoute(route, '1');
     component.ngOnInit();
     tick();

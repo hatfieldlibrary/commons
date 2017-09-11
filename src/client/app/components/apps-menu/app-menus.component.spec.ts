@@ -23,6 +23,7 @@ import {DOCUMENT} from "@angular/common";
 import {Inject, InjectionToken} from "@angular/core";
 import {By, DomSanitizer} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {Subscription} from "rxjs/Subscription";
 
 class MockRouter {
   public navEnd = new NavigationEnd(0, 'http://localhost:3000', 'http://localhost:3000');
@@ -39,6 +40,7 @@ describe('AppMenusComponent', () => {
   let component: AppMenusComponent;
   let fixture: ComponentFixture<AppMenusComponent>;
   let utilSvc;
+  let watcher: Subscription;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -124,12 +126,12 @@ describe('AppMenusComponent', () => {
     );
   });
 
-  it('should cleanup listener on destroy', () => {
-    fixture.detectChanges();
-    let watcher = component.watcher;
+  it('should remove listeners when component is destroyed', () => {
+    component.ngOnInit();
+    watcher = component.watcher;
     spyOn(watcher, 'unsubscribe');
     fixture.destroy();
     expect(watcher.unsubscribe).toHaveBeenCalled();
-  })
+  });
 
 });

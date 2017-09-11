@@ -18,9 +18,10 @@
 import {Action} from "@ngrx/store";
 import {getCollectionList, reducer, State} from "./collection.reducers";
 import {
+  AllCollectionsAction,
   AllCollectionsActionSuccess,
   AllCollectionSubjectAction, AllCollectionSubjectActionSuccess,
-  CollectionAction, CollectionActionFailed, CollectionActionSuccess, CollectionSubjectAction,
+  CollectionAction, CollectionActionFailed, CollectionActionSuccess, CollectionReset, CollectionSubjectAction,
   CollectionSubjectActionSuccess
 } from "../actions/collection.actions";
 /**
@@ -44,6 +45,11 @@ const collectionListMock = [
     published: false
   }
 ];
+
+const initialStateMock = {
+  collections:[],
+  loading: false
+};
 
 class MockAction implements Action {
   type: string = '';
@@ -83,7 +89,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should request collection list for area and subject.', () => {
+  it('should set loading state to true for collection by subject', () => {
     expect(
       reducer(undefined, new CollectionSubjectAction('1', '1'))
     ).toEqual(
@@ -141,6 +147,7 @@ describe('Collection Reducer', () => {
     let state = reducer(undefined, new CollectionActionSuccess(collectionListMock));
     let result = getCollectionList(state);
     expect(result).toEqual(collectionListMock);
+
   });
 
   it('should return list of all collections by subject (all areas).', () => {
@@ -155,6 +162,15 @@ describe('Collection Reducer', () => {
 
   });
 
+  it('should set loading state to true for all collections', () => {
+    expect(
+      reducer(undefined, new AllCollectionsAction())
+    ).toEqual(
+      {
+        collections: [],
+        loading: true
+      })
+  });
 
   it('should return list of all collections .', () => {
     let collectionState: State = {collections: [], loading: true};
@@ -168,4 +184,27 @@ describe('Collection Reducer', () => {
 
   });
 
+  it('should set loading property to true for load collections by subject request', () => {
+
+    expect(reducer(undefined, new AllCollectionSubjectAction('1'))).toEqual(
+      {
+        collections: [],
+        loading: true
+      }
+    )
+  });
+
+  it('should reset collections to initial state', () => {
+    expect(
+      reducer(undefined, new CollectionReset())
+    ).toEqual(initialStateMock)
+
+  });
+
+  it('should return default state', () => {
+    expect(
+      reducer(undefined, {type: undefined, payload: undefined})
+    ).toEqual(initialStateMock)
+
+  });
 });

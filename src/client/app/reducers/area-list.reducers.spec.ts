@@ -62,5 +62,11 @@ describe('Area List Reducer', () => {
     expect(result).toEqual(areaListTypeMock);
   });
 
+  it('should return default state', () => {
+    let state = reducer(undefined, {type: undefined, payload: ''});
+    let result = getAreaList(state);
+    expect(result).toEqual(defaultState);
+  });
+
 
 });

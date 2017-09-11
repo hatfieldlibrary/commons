@@ -21,11 +21,15 @@ import {AuthType} from "../shared/data-types/auth.type";
  * Created by mspalti on 5/2/17.
  */
 export interface State {
+  auth:  {
     status: boolean
+  }
 }
 
 const initialState: State = {
+  auth:  {
     status: false
+  }
 
 };
 
@@ -38,9 +42,8 @@ export function reducer(state = initialState, action: AuthActions): State {
     }
 
     case AuthActionTypes.SET_AUTH_STATUS: {
-
       const result: AuthType = <AuthType>action.payload;
-      return Object.assign({}, state, result
+      return Object.assign({}, state, {auth: result }
       );
 
     }
@@ -52,4 +55,4 @@ export function reducer(state = initialState, action: AuthActions): State {
 
 }
 
-export const getAuthStatus = (state: State) => state;
+export const getAuthStatus = (state: State) => state.auth;

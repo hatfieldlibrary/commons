@@ -16,7 +16,7 @@
  */
 
 import {getItem, reducer, State} from "./item.reducers";
-import {ItemRequest, ItemRequestFailed, ItemSuccess} from "../actions/item.actions";
+import {ItemRequest, ItemRequestFailed, ItemSuccess, ItemReset} from "../actions/item.actions";
 import {Action} from "@ngrx/store";
 
 /**
@@ -142,10 +142,20 @@ describe('Item Reducers', () => {
   });
 
   it('should return item  information', () => {
-
     let state = reducer(undefined, new ItemSuccess(itemMock));
     let result = getItem(state);
     expect(result).toEqual(itemMock);
+  });
+
+  it('should reset item information to initial state', () => {
+    expect(
+      reducer(undefined, new ItemReset())
+    ).toEqual(
+      {
+        item: initializeItem,
+        loading: false
+      })
+
   });
 
 });
