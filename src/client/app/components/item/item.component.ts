@@ -41,7 +41,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private svc: SearchService,
               private utils: UtilitiesService,
               public media: ObservableMedia) {
-
+    this.watchers = new Subscription();
   }
 
   getBackLink(): string {
@@ -62,7 +62,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.watchers = new Subscription();
+
 
   }
 
