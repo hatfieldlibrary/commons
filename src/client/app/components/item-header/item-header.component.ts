@@ -57,7 +57,6 @@ export class ItemHeaderComponent implements OnInit, OnDestroy {
     if (this.watcher) {
       this.watcher.unsubscribe();
     }
-    //this.media = null;
   }
 
 

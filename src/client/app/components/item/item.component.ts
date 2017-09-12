@@ -56,7 +56,7 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
         let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
           this.optionList = list.result;
         });
-       // this.watchers.add(optionsWatcher);
+        this.watchers.add(optionsWatcher);
       }
     }
   }
@@ -64,21 +64,12 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.watchers = new Subscription();
 
-    // let mediaWatcher = this.media.asObservable()
-    //   .subscribe((change: MediaChange) => {
-    //     this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ""
-    //   });
-    // this.watchers.add(mediaWatcher);
-
   }
 
   ngOnDestroy(): void {
     if (this.watchers) {
       this.watchers.unsubscribe();
     }
-    this.svc = null;
-    this.utils = null;
-   // this.media = null;
   }
 
 }

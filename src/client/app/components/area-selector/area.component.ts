@@ -131,8 +131,6 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    // this.formBuilder = null;
-    // this.store  = null;
     this.areaFormArray = null;
     this.checkboxGroup = null;
     this.formArrayRef = null;

@@ -113,15 +113,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.watcher) {
       this.watcher.unsubscribe();
     }
-    this.changeDetector.detach();
     this.intervalService.clearInterval();
-   // this.changeDetector = null;
-    // this.media = null;
-  //   this.animation = null;
-  //   this.container = null;
-  //   this.contentEls = null;
-  //   this.subjects = null;
-  //   this.store = null;
   }
 
   /**
@@ -178,7 +170,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     let interval = 20;
 
     // Start the animation.
-    this.intervalService.setInterval(5,() => {
+    this.intervalService.setInterval(5, () => {
       if (direction === 'right') {
         animationCounter = animationCounter + interval;
         this.subjects.nativeElement.scrollLeft = this.subjects.nativeElement.scrollLeft + interval;

@@ -51,7 +51,6 @@ export class ListComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.removeSubject.unsubscribe();
-    this.store = null;
 
   }
 

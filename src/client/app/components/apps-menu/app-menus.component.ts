@@ -56,7 +56,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   }
 
   goToTertiary(): void {
-    document.location.href= this.tertiaryUrl;
+    document.location.href = this.tertiaryUrl;
   }
 
   openMenu() {
@@ -73,15 +73,10 @@ export class AppMenusComponent implements OnInit, OnDestroy {
       this.sideNavigate.close();
     }
   }
+
   ngOnDestroy(): void {
     if (this.watcher) {
       this.watcher.unsubscribe();
     }
-   // this.router.dispose();
-  //   this.router = null;
-  // //  this.media = null;
-  //   this.utils = null;
-  //  this.document = null;
   }
-
 }

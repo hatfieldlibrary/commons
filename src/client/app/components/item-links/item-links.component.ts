@@ -84,12 +84,6 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
     if (this.watchers) {
       this.watchers.unsubscribe();
     }
-    this.route = null;
-    this.changeDetector = null;
-    this.document = null;
-    this.auth = null;
-    this.store = null;
-    this.svc = null;
   }
 
 }

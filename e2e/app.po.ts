@@ -15,14 +15,18 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { browser, element, by } from 'protractor';
+import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
 
 export class CommonsPage {
   navigateTo() {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getAppMenu() {
+    return element(by.css('app-menus-component'));
+  }
+
+  getAppMenuItemLabels() {
+    return element.all(by.css('app-menus-component md-list-item h5'));
   }
 }

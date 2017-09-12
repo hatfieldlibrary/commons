@@ -61,15 +61,15 @@
           <app-icon-close (click)="sidenav.close()"></app-icon-close>
         </md-toolbar>
         <div>
-          <div fxLayout="row" fxLayoutAlign="start start">
+          <div id="#menu-items" fxLayout="row" fxLayoutAlign="start start">
             <md-list fxFlex>
               <md-list-item (click)="goToHome()" target="_top" style="cursor: default">
                 <app-home-black-svg></app-home-black-svg>
-                <h5>&nbsp;Commons Home</h5>
+                <h5>Commons Home</h5>
               </md-list-item>
               <md-divider></md-divider>
               <md-list-item (click)="goToSecondary()" target="_top" style="cursor: default">
-                <h5>&nbsp;Hatfield Library</h5>
+                <h5>Hatfield Library</h5>
               </md-list-item>
               <md-divider></md-divider>
               <md-list-item (click)="goToTertiary()" target="_top" style="cursor: default">

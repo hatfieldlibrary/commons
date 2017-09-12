@@ -42,8 +42,7 @@ export class ItemSelectComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.svc = null;
-    this.document = null;
+
   }
 
 

@@ -30,8 +30,6 @@ import {SelectedSubject} from "app/shared/data-types/selected-subject";
 })
 export class AreaInformationComponent implements OnChanges, OnDestroy{
 
-
-
   @Input() selectedSubject: SelectedSubject;
   @Input() areaInfo: AreaType[];
   description: string;

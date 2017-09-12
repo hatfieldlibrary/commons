@@ -85,8 +85,6 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
     if (this.watcher) {
       this.watcher.unsubscribe();
     }
-   // this.media = null;
-    this.sanitizer = null;
   }
 
 

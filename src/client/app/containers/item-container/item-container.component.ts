@@ -204,10 +204,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     if (this.watchers) {
       this.watchers.unsubscribe();
     }
-    //this.renderer.destroy();
-  //  this.router.dispose();
-    this.renderer = null;
-   // this.document = null;
   }
 
 }

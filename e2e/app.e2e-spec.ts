@@ -17,6 +17,17 @@
 
 import { CommonsPage } from './app.po';
 
+/**
+ * When using protractor flow control, promises are not required. But for this
+ * to work with typescript, you need to have the correct jasmine bindings in node_modules.
+ * If these bindings are not available or not working, in a pinch you can set the
+ * type for the expect function to any (expect<any>).
+ *
+ * Place all requests that return promises in the expect parameter. Jasmine expect
+ * is adapted to understand promises.
+ *
+ * https://github.com/angular/protractor/blob/master/docs/control-flow.md#promises-and-the-control-flow
+ */
 describe('commons App', function() {
   let page: CommonsPage;
 
@@ -24,8 +35,10 @@ describe('commons App', function() {
     page = new CommonsPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should show app menu', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Academic Commons Prototype');
+    expect(page.getAppMenu()).toBeDefined();
+    expect(page.getAppMenuItemLabels().get(0)).toEqual('Commons Home')
+
   });
 });
