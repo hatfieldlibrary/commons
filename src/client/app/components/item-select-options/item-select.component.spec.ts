@@ -22,20 +22,11 @@ import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.com
 import {MdIconModule, MdSelectModule} from "@angular/material";
 import {SearchService} from "../../services/search.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {DOCUMENT} from "@angular/common";
-import {_document} from "@angular/platform-browser/src/browser";
-
 
 describe('ItemSelectComponent', () => {
   let component: ItemSelectComponent;
   let fixture: ComponentFixture<ItemSelectComponent>;
-
-
-
-
-
-    const documentMock: Document = <any>{ location: <any> { href: 'http://localhost' }};
-
+  let svc;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -50,11 +41,13 @@ describe('ItemSelectComponent', () => {
       ],
       providers: [
         {
-          provide: DOCUMENT,
-          useValue: documentMock
-        },
-        SearchService
-
+          provide: SearchService,
+          useValue: {
+            getOptionsQuery: (url, term) => {
+              return term;
+            }
+          }
+        }
       ]
     })
       .compileComponents();
@@ -64,6 +57,7 @@ describe('ItemSelectComponent', () => {
     fixture = TestBed.createComponent(ItemSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    svc = fixture.debugElement.injector.get(SearchService);
 
   });
 
@@ -72,7 +66,10 @@ describe('ItemSelectComponent', () => {
   });
 
   it('should get query link', () => {
-    component.optionSearch('test');
+    spyOn(svc,'getOptionsQuery').and.callThrough();
+    // set redirect param to avoid loading new page during test.
+    component.optionSearch('test', false);
+    expect(svc.getOptionsQuery).toHaveBeenCalled();
     expect(component.href).toContain('test');
   })
 

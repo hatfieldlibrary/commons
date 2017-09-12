@@ -6,7 +6,7 @@ import {KeyboardArrowBackSvgComponent} from "../svg/keyboard-arrow-back-svg/keyb
 import {KeyboardArrowForwardSvgComponent} from "../svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {MdButtonModule, MdIconModule} from "@angular/material";
-import {FlexLayoutModule, ObservableMedia} from "@angular/flex-layout";
+import {FlexLayoutModule} from "@angular/flex-layout";
 import {Store, StoreModule} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {SetIntervalService} from "../../services/interval.service";
@@ -33,15 +33,6 @@ describe('TitleHeaderComponent', () => {
       ],
       providers: [
         SetIntervalService,
-        // {
-        //   provide: FlexLayoutModule,
-        //   useClass: class {
-        //     subscribe = () => {
-        //       // return Observable.of('')
-        //     }
-        //   }
-        // },
-        //  ChangeDetectorRef,
          {
           provide: Store,
           useClass: class {

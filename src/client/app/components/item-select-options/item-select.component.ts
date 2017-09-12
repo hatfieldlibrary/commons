@@ -37,9 +37,13 @@ export class ItemSelectComponent {
   constructor(private svc: SearchService,
               @Inject(DOCUMENT) private document: any) { }
 
-  optionSearch(term) {
+  // The redirect parameter is used by tests. Defaults to
+  // true in normal use.
+  optionSearch(term, redirect: boolean = true) {
     this.href = this.svc.getOptionsQuery(this.url, term);
-    this.document.location.href = this.href;
+    if (redirect) {
+      this.document.location.href = this.href;
+    }
   }
 
 }

@@ -98,31 +98,6 @@ let areaList = areaListMock;
 
 let areasMock = areaSubscriptionMock;
 
-//
-// const setParamMock = (mockRoute) => {
-//   if (mockRoute) {
-//     this.params = Observable.of(mockRoute);
-//   } else {
-//     this.params = Observable.of({});
-//   }
-// };
-
-class MockActivatedRoute extends ActivatedRoute {
-
-  params: Observable<any>;
-
-
-}
-
-// class MockStore<T> extends Store<any> {
-//
-//   select = () => {
-//     return Observable.of(areaList);
-//   };
-//   dispatch (action: Action) {};
-//
-// }
-
 const setAllRoute = (route: any) => {
   route.params = Observable.of({});
   spyOn(route.params, 'subscribe').and.callThrough();
