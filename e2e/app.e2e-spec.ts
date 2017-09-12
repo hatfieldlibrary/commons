@@ -38,7 +38,7 @@ describe('commons App', function() {
   it('should show app menu', () => {
     page.navigateTo();
     expect(page.getAppMenu()).toBeDefined();
-    expect(page.getAppMenuItemLabels().get(0)).toEqual('Commons Home')
+    expect(page.getAppMenuItemLabels().get(0).getText()).toEqual('Commons Home')
 
   });
 });

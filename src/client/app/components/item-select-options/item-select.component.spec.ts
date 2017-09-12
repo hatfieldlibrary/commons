@@ -22,11 +22,20 @@ import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.com
 import {MdIconModule, MdSelectModule} from "@angular/material";
 import {SearchService} from "../../services/search.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {DOCUMENT} from "@angular/common";
+import {_document} from "@angular/platform-browser/src/browser";
 
 
 describe('ItemSelectComponent', () => {
   let component: ItemSelectComponent;
   let fixture: ComponentFixture<ItemSelectComponent>;
+
+
+
+
+
+    const documentMock: Document = <any>{ location: <any> { href: 'http://localhost' }};
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -40,6 +49,10 @@ describe('ItemSelectComponent', () => {
         BrowserAnimationsModule
       ],
       providers: [
+        {
+          provide: DOCUMENT,
+          useValue: documentMock
+        },
         SearchService
 
       ]
@@ -51,10 +64,16 @@ describe('ItemSelectComponent', () => {
     fixture = TestBed.createComponent(ItemSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
   });
 
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get query link', () => {
+    component.optionSearch('test');
+    expect(component.href).toContain('test');
+  })
 
 });

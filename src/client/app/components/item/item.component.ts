@@ -41,7 +41,10 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private svc: SearchService,
               private utils: UtilitiesService,
               public media: ObservableMedia) {
+
+    // Initialize in constructor so it will be available to ngOnChanges.
     this.watchers = new Subscription();
+
   }
 
   getBackLink(): string {

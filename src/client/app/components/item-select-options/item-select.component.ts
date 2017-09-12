@@ -25,25 +25,21 @@ import {DOCUMENT} from '@angular/common';
   styleUrls: ['./item-select.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemSelectComponent implements OnDestroy {
+export class ItemSelectComponent {
 
   @Input() optionList;
   @Input() url: string;
   @Input() restricted: boolean;
   @Input() isAuthenticated: boolean = false;
   SEARCH_OPTIONS_LABEL: string = 'Browse by Date';
+  href: string;
 
   constructor(private svc: SearchService,
-              @Inject(DOCUMENT) private document) { }
+              @Inject(DOCUMENT) private document: any) { }
 
   optionSearch(term) {
-    const href = this.svc.getOptionsQuery(this.url, term);
-    this.document.location.href = href;
+    this.href = this.svc.getOptionsQuery(this.url, term);
+    this.document.location.href = this.href;
   }
-
-  ngOnDestroy(): void {
-
-  }
-
 
 }

@@ -29,7 +29,6 @@ export class TitleHeaderComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
-  //  this.media = null;
   }
 
 

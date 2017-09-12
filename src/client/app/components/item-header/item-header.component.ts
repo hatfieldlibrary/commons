@@ -38,7 +38,9 @@ export class ItemHeaderComponent implements OnInit, OnDestroy {
   isMobile: boolean = false;
 
   constructor(private media: ObservableMedia) {
+  }
 
+  ngOnInit(): void {
     this.watcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
@@ -46,11 +48,6 @@ export class ItemHeaderComponent implements OnInit, OnDestroy {
         this.isMobile = false;
       }
     });
-
-  }
-
-  ngOnInit(): void {
-
   }
 
   ngOnDestroy(): void {
