@@ -15,7 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { CommonsPage } from './app.po';
+import { CommonsPage } from './app-menu.po';
+import {browser} from "protractor";
 
 /**
  * When using protractor flow control, promises are not required. But for this
@@ -28,7 +29,7 @@ import { CommonsPage } from './app.po';
  *
  * https://github.com/angular/protractor/blob/master/docs/control-flow.md#promises-and-the-control-flow
  */
-describe('commons App', function() {
+describe('Application menu', function() {
   let page: CommonsPage;
 
   beforeEach(() => {
@@ -36,9 +37,25 @@ describe('commons App', function() {
   });
 
   it('should show app menu', () => {
-    page.navigateTo();
+    page.navigateTo('home');
     expect(page.getAppMenu()).toBeDefined();
-    expect(page.getAppMenuItemLabels().get(0).getText()).toEqual('Commons Home')
+    expect(page.getAppMenuItemLabels().get(0).isDisplayed()).toBe(false);
+    page.getMenuButton().click();
+    expect(page.getAppMenuItemLabels().get(0).isDisplayed()).toBe(true);
 
   });
+
+  it('should navigate back to collections for area page from item page', () => {
+    page.navigateTo('area');
+    page.navigateTo('item');
+    page.getBackButton().click();
+    expect(browser.getCurrentUrl()).toContain('/commons/collection/area/7');
+
+  });
+
+  it('should provide link to the static commons home page', () => {
+    page.navigateTo('home');
+    expect(page.getHomeLinkAnchor().getAttribute('href')).toEqual('http://libmedia.willamette.edu/academiccommons');
+  });
+
 });

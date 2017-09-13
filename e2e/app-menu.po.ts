@@ -18,8 +18,16 @@
 import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
 
 export class CommonsPage {
-  navigateTo() {
-    return browser.get('/');
+  navigateTo(location: string) {
+    if (location === 'home') {
+      return browser.get('/commons/collection');
+    }
+    if (location === 'area') {
+      return browser.get('/commons/collection/area/7');
+    }
+    if (location === 'item') {
+      return browser.get('/commons/item/id/20/7');
+    }
   }
 
   getAppMenu() {
@@ -28,5 +36,17 @@ export class CommonsPage {
 
   getAppMenuItemLabels() {
     return element.all(by.css('app-menus-component md-list-item h5'));
+  }
+
+  getMenuButton() {
+    return element(by.css('app-menus-component button#menu-button'));
+  }
+
+  getBackButton() {
+    return element(by.css('app-menus-component button#back-button'));
+  }
+
+  getHomeLinkAnchor() {
+    return element(by.css('app-menus-component a#home-link'));
   }
 }
