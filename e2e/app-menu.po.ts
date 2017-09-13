@@ -15,9 +15,10 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
+import {browser, element, by} from 'protractor';
 
 export class CommonsPage {
+
   navigateTo(location: string) {
     if (location === 'home') {
       return browser.get('/commons/collection');

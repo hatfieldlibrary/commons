@@ -6,6 +6,7 @@
 /src/dist
 /src/server/**/*.js
 /src/server/**/*.map
+!/src/server/credentials/*.js
 
 # dependencies
 /node_modules

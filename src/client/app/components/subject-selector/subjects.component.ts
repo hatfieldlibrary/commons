@@ -127,28 +127,40 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showSubjectNavigationArrow();
   }
 
+  /**
+   * Returns integer value for 10% of the current container width.
+   * @returns {number}
+   * @private
+   */
+  _getOffsetPaddingValue(): number  {
+    return Math.floor(0.1 * this.offsetWidth);
+  }
+
+  /**
+   *
+   * @param {string} direction
+   * @returns {number}
+   * @private
+   */
   _setAnimiationLimit(direction: string): number {
     let check: number;
     if (direction === 'right') {
       if (this.subjects.nativeElement.scrollLeft + this.offsetWidth >= this.subjects.nativeElement.offsetWidth) {
-        check = this.subjects.nativeElement.offsetWidth - 1;
+        check = this.subjects.nativeElement.offsetWidth - this._getOffsetPaddingValue();
       } else {
         check = this.subjects.nativeElement.scrollLeft + this.offsetWidth;
       }
-
     }
 
     if (direction === 'left') {
-
-      if (this.subjects.nativeElement.scrollLeft - this.offsetWidth >= this.offsetWidth) {
-        check = this.subjects.nativeElement.scrollLeft - this.offsetWidth;
+      if (this.subjects.nativeElement.scrollLeft  - (this.offsetWidth - this._getOffsetPaddingValue()) > 0) {
+        check = this.subjects.nativeElement.scrollLeft - (this.offsetWidth - this._getOffsetPaddingValue());
       } else {
         check = 0;
       }
     }
     return check;
   }
-
 
   /**
    * Using setInterval to animate horizontal scroll.
@@ -194,7 +206,6 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
     });
-
 
   }
 
