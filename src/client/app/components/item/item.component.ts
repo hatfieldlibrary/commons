@@ -15,35 +15,32 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges, OnDestroy, OnInit} from '@angular/core';
+import {
+  Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {ItemType} from "../../shared/data-types/item.type";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {UtilitiesService} from "../../services/utilities.service";
-import {SearchService} from "../../services/search.service";
-import {Subscription} from "rxjs/Subscription";
 import {ObservableMedia} from "@angular/flex-layout";
 
+/**
+ * This is the parent component for presenting all item data.
+ */
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemComponent implements OnInit, OnChanges, OnDestroy {
+export class ItemComponent  {
+
 
   @Input() item: ItemType;
   @Input() selectedArea: string;
   @Input() selectedSubject: SubjectType;
-  optionList;
   state = '';
-  watchers: Subscription;
 
-  constructor(private svc: SearchService,
-              private utils: UtilitiesService,
+  constructor(private utils: UtilitiesService,
               public media: ObservableMedia) {
-
-    // Initialize in constructor so it will be available to ngOnChanges.
-    this.watchers = new Subscription();
 
   }
 
@@ -51,28 +48,6 @@ export class ItemComponent implements OnInit, OnChanges, OnDestroy {
     const path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
     return path;
 
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['item']) {
-      if (changes['item'].currentValue.collection.linkOptions === 'opts') {
-        let optionsWatcher = this.svc.getOptionsList(changes['item'].currentValue.collection.url).subscribe((list) => {
-          this.optionList = list.result;
-        });
-        this.watchers.add(optionsWatcher);
-      }
-    }
-  }
-
-  ngOnInit(): void {
-
-
-  }
-
-  ngOnDestroy(): void {
-    if (this.watchers) {
-      this.watchers.unsubscribe();
-    }
   }
 
 }

@@ -15,35 +15,62 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Inject, Input, OnDestroy} from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnDestroy, OnInit,
+  ViewChild
+} from '@angular/core';
 import {SearchService} from '../../services/search.service';
 import {DOCUMENT} from '@angular/common';
+import {Observable} from "rxjs/Observable";
 
+/**
+ * This component creates an options list from date
+ * retrieved via the SearchService.
+ */
 @Component({
   selector: 'app-item-select-component',
   templateUrl: './item-select.component.html',
   styleUrls: ['./item-select.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemSelectComponent {
+export class ItemSelectComponent implements OnInit  {
 
-  @Input() optionList;
   @Input() url: string;
   @Input() restricted: boolean;
   @Input() isAuthenticated: boolean = false;
+  @ViewChild('selector', {read: ElementRef}) select: ElementRef;
   SEARCH_OPTIONS_LABEL: string = 'Browse by Date';
   href: string;
+  optionList: Observable<any[]>;
 
   constructor(private svc: SearchService,
-              @Inject(DOCUMENT) private document: any) { }
+              @Inject(DOCUMENT) private document: any) {
+  }
 
-  // The redirect parameter is used by tests. Defaults to
-  // true in normal use.
+  /**
+   * Uses the injected document token to change location.
+   * The redirect parameter is used by tests. Defaults to
+   * true in normal use.
+   */
   optionSearch(term, redirect: boolean = true) {
+    // This could be a local variable, but using a field makes
+    // this method testable.
     this.href = this.svc.getOptionsQuery(this.url, term);
     if (redirect) {
       this.document.location.href = this.href;
     }
   }
+
+  /**
+   * Inside the OnInit hook method, call the options list
+   * service for asynchronous data. The options list is
+   * not tracked in global state (redux store) so it makes
+   * sense to do this work in the leaf node and not farther up
+   * the component tree.
+   */
+  ngOnInit() {
+    this.optionList = this.svc.getOptionsList(this.url);
+  }
+
 
 }

@@ -40,7 +40,9 @@ export class SearchService {
 
   getOptionsList(collection: string) {
     return this.http.get(environment.apiHost + environment.apiRoot + '/options/external/' + collection)
-      .map(res => res.json());
+      .map(res => res.json())
+      .map(json => json.result)
+
   }
 
 

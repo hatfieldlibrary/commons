@@ -20,13 +20,14 @@
     <app-date-picker-svg></app-date-picker-svg>
   </div>
   <div fxFlex>
-    <md-select placeholder="{{SEARCH_OPTIONS_LABEL}}">
-      <md-option *ngFor="let option of optionList" [disabled]="!isAuthenticated && restricted"
-                 (click)="optionSearch(option.item.title)"
-                 target="_blank">
+
+    <md-select #selector placeholder="{{SEARCH_OPTIONS_LABEL}}" floatPlaceholder="never" ng-model="optionList">
+      <md-option *ngFor="let option of optionList | async" [disabled]="!isAuthenticated && restricted"
+                 (change)="optionSearch(option.item.title)" ng-value="option.title">
         {{option.item.title}}
       </md-option>
     </md-select>
+
   </div>
 </div>
 

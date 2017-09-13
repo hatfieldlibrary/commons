@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit
 } from '@angular/core';
 import {SearchService} from '../../services/search.service';
 import {SearchTerms} from '../../shared/data-types/simple-search.type';
@@ -14,6 +14,9 @@ import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {SetAuthStatus} from "../../actions/auth.action";
 
+/**
+ * This component is for the content access options presented to the user.
+ */
 @Component({
   selector: 'app-item-links',
   templateUrl: './item-links.component.html',
@@ -27,7 +30,6 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   authenticationPath: string;
   @Input() restricted: boolean;
   @Input() linkOptions: string;
-  @Input() optionList;
   @Input() assetType: string;
   @Input() searchOptions: string;
   @Input() url: string;
@@ -80,7 +82,6 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
     if (this.watchers) {
       this.watchers.unsubscribe();
     }

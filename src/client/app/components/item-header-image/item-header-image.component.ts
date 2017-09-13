@@ -64,8 +64,6 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
   setImage() {
 
     if (this.image !== this.currentImage) {
-      console.log('one ' + this.image)
-      console.log('two ' +this.currentImage)
       let url;
       if (this.isMobile) {
         url = environment.apiHost + environment.imagePath + '/resources/img/thumb/' + this.image;
