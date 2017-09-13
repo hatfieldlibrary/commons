@@ -6,3 +6,6 @@ md-sidenav md-toolbar {
   background-color: #ccc;
   color:#fff;
 }
+md-sidenav {
+  position: fixed;
+}
