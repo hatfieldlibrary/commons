@@ -5,8 +5,16 @@
 [![bitHound Dependencies](https://www.bithound.io/github/hatfieldlibrary/commons/badges/dependencies.svg)](https://www.bithound.io/github/hatfieldlibrary/commons/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/hatfieldlibrary/commons/badges/code.svg)](https://www.bithound.io/github/hatfieldlibrary/commons)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.31.
+The Commons is designed to publish information about digital projects and collections maintained within institutional repositories like DSpace, Contentdm, and Hydra or
+ existing independently as unique, standalone projects like Omeka exhibits and public websites created by members of a community.
 
+The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2) public API for data.  The Commons is loosely integrated with the [dspace-client project](https://github.com/hatfieldlibrary/dspace-angular-client) (a public DSpace client that works with a 
+ modified version of the DSpace 6 REST API servlet). [Passport](http://passportjs.org/) middleware authentication is available for CAS and Google OAUTH2 strategies.
+
+The project uses [Angular](https://angular.io/), [ngrx](https://github.com/ngrx), and [Angular Material](https://material.angular.io/).
+The [Angular-CLI](https://cli.angular.io/) is used to develop, test and build. The  project is published within a [Node.js](https://nodejs.org/en/) server
+ runtime using [Express](https://expressjs.com/) middleware.
+Both client and server code is written in Typescript. 
 ## Development server
 
 ### Via angular-cli
