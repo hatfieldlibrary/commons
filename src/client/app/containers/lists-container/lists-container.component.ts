@@ -35,6 +35,8 @@ import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {fadeIn} from '../../animation/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {SelectedSubject} from "../../shared/data-types/selected-subject";
+import {CurrentSubject} from "../../actions/subject-actions";
 
 @Component({
   selector: 'app-lists-container',
@@ -117,7 +119,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   getCollectionsBySubject(subjectId: string, areaId: string): void {
     this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
-    this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
     this.getAreaInformation(areaId);
     this._setSelectedSubject(subjectId);
   }
@@ -161,7 +162,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   getAreaInformation(areaId: string): void {
     this.store.dispatch(new areaActions.AreaInformation(areaId));
     this.store.dispatch((new subjectAction.SubjectAction((areaId))));
-    this._setSelectedSubject('-1');
   }
 
   /**
@@ -184,12 +184,17 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Dispatches update for selected subject.
+   * Dispatches action to set the selected subject after the subject list subscription
+   * tells us that subjects are available.
    * @param {string} subjectId
    * @private
    */
   _setSelectedSubject(subjectId: string) {
-    this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+    const subjectsWatcher = this.store.select(fromRoot.getSubject).subscribe(() => {
+      this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+    });
+    this.watchers.add(subjectsWatcher);
+
   }
 
   /**
@@ -219,8 +224,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.setItemTitle();
     this.setAreasAvailable();
 
-    this.collections$ = this.store.select(fromRoot.getCollections);
+    // The subjects$ Observable is used by child components. This component
+    // also subscribes to the subject store in the _setSelectedSubject function.
     this.subjects$ = this.store.select(fromRoot.getSubject);
+    this.collections$ = this.store.select(fromRoot.getCollections);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
@@ -254,6 +261,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.getAllCollectionsForSubject(params['subjectId']);
           this._setAllCollectionTitle();
           this.areaId = '0';
+
         }
         else {
           this.subjectLinkType = 'all';
