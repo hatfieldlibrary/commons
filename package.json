@@ -24,10 +24,10 @@
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve",
-    "test": "ng test --code-coverage --watch=false --browsers=Chrome --reporters=spec  --sourcemap=false",
+    "test": "ng test --code-coverage --watch=false --browsers=Chrome --reporters=spec  --sourcemaps=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "client:prod:build": "ng test --watch=false --browsers=Chrome --reporters=spec && ng build --prod --deploy-url=/commons-resource/ --base-href /commons/",
+    "client:prod:build": "ng test --watch=false --browsers=Chrome --reporters=spec  --sourcemaps=false && ng build --prod --deploy-url=/commons-resource/ --base-href /commons/",
     "server:prod:build": "tsc -p ./src/server",
     "build:prod": "npm run client:prod:build && npm run server:prod:build && exit 0",
     "build:demon": "nodemon --exec ts-node index.js",

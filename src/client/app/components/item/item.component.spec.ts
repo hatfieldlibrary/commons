@@ -162,17 +162,6 @@ describe('ItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch list of options full pull down list.', fakeAsync(() => {
-
-    component.item = mockItem;
-    component.ngOnChanges({
-      item: new SimpleChange(null, component.item, true)
-    });
-    tick();
-    expect(searchSvc.getOptionsList).toHaveBeenCalled();
-
-  }));
-
   it('should get back link', () => {
     component.getBackLink();
     expect(utilSvc.getBackLink).toHaveBeenCalled();
@@ -180,12 +169,5 @@ describe('ItemComponent', () => {
     expect(path).toEqual('test link');
   });
 
-  it('should remove listeners when component is destroyed', () => {
-    component.ngOnInit();
-    watcher = component.watchers;
-    spyOn(watcher, 'unsubscribe');
-    fixture.destroy();
-    expect(watcher.unsubscribe).toHaveBeenCalled();
-  });
 
 });

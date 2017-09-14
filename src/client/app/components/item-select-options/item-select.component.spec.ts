@@ -22,6 +22,9 @@ import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.com
 import {MdIconModule, MdSelectModule} from "@angular/material";
 import {SearchService} from "../../services/search.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MockBackend} from "@angular/http/testing";
+import {XHRBackend} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 
 describe('ItemSelectComponent', () => {
   let component: ItemSelectComponent;
@@ -40,11 +43,20 @@ describe('ItemSelectComponent', () => {
         BrowserAnimationsModule
       ],
       providers: [
+        MockBackend,
+        {provide: XHRBackend, useClass: MockBackend},
         {
           provide: SearchService,
           useValue: {
             getOptionsQuery: (url, term) => {
               return term;
+            },
+            getOptionsList: (url) => {
+              return Observable.of([{
+                  item: {
+                    title: 'test'
+                  }
+                }])
             }
           }
         }
@@ -66,11 +78,18 @@ describe('ItemSelectComponent', () => {
   });
 
   it('should get query link', () => {
-    spyOn(svc,'getOptionsQuery').and.callThrough();
+    spyOn(svc, 'getOptionsQuery').and.callThrough();
     // set redirect param to avoid loading new page during test.
     component.optionSearch('test', false);
     expect(svc.getOptionsQuery).toHaveBeenCalled();
     expect(component.href).toContain('test');
-  })
+  });
+
+  it('should fetch options list onInit', () => {
+    spyOn(svc,'getOptionsList').and.callThrough();
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(svc.getOptionsList).toHaveBeenCalled();
+  });
 
 });

@@ -12,6 +12,7 @@ import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {ItemSelectComponent} from "../item-select-options/item-select.component";
 import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
+import {MockBackend} from "@angular/http/testing";
 
 describe('ItemLinksComponent', () => {
   let component: ItemLinksComponent;
@@ -35,7 +36,6 @@ describe('ItemLinksComponent', () => {
 
       ],
       providers: [
-
         SearchService,
         AuthCheckService,
         {
