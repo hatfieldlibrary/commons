@@ -5,7 +5,12 @@
 [![bitHound Dependencies](https://www.bithound.io/github/hatfieldlibrary/commons/badges/dependencies.svg)](https://www.bithound.io/github/hatfieldlibrary/commons/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/hatfieldlibrary/commons/badges/code.svg)](https://www.bithound.io/github/hatfieldlibrary/commons)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.31.
+The goal of the Commons is to publish information about digital projects and collections that exist either as publications in digital repositories like DSpace, Contentdm, Hydra, and other local data sources
+ or as unique, standalone projects like Omeka exhibits and public websites created by members of the community.
+
+The Commons relies on the Tagger-2 public API for data.  The Commons is loosely integrated with the dspace-client project (a public DSpace client that works with a 
+ modified version of the DSpace 6 REST API servlet). Authentication is available via CAS or 
+Google OAUTH2 services.
 
 ## Development server
 
