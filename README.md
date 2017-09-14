@@ -5,8 +5,8 @@
 [![bitHound Dependencies](https://www.bithound.io/github/hatfieldlibrary/commons/badges/dependencies.svg)](https://www.bithound.io/github/hatfieldlibrary/commons/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/hatfieldlibrary/commons/badges/code.svg)](https://www.bithound.io/github/hatfieldlibrary/commons)
 
-The goal of the Commons is to publish information about digital projects and collections that reside in digital repositories like DSpace, Contentdm, Hydra, and other local data sources
- or as unique, standalone projects like Omeka exhibits and public websites created by members of the community.
+The goal of the Commons is to publish information about digital projects and collections maintained within institutional repositories like DSpace, Contentdm, and Hydra or
+ existing independently as unique, standalone projects like Omeka exhibits and public websites created by members of a community.
 
 The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2) public API for data.  The Commons is loosely integrated with the [dspace-client project](https://github.com/hatfieldlibrary/dspace-angular-client) (a public DSpace client that works with a 
  modified version of the DSpace 6 REST API servlet). [Passport](http://passportjs.org/) middleware authentication is available for CAS and Google OAUTH2 strategies.
