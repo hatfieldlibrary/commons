@@ -8,7 +8,7 @@
 The goal of the Commons is to publish information about digital projects and collections that exist either as publications in digital repositories like DSpace, Contentdm, Hydra, and other local data sources
  or as unique, standalone projects like Omeka exhibits and public websites created by members of the community.
 
-The Commons relies on the Tagger-2 public API for data.  The Commons is loosely integrated with the dspace-client project (a public DSpace client that works with a 
+The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2) public API for data.  The Commons is loosely integrated with the [dspace-client project](https://github.com/hatfieldlibrary/dspace-angular-client) (a public DSpace client that works with a 
  modified version of the DSpace 6 REST API servlet). Authentication is available via CAS or 
 Google OAUTH2 services.
 
