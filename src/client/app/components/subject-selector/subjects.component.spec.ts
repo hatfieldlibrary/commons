@@ -88,7 +88,10 @@ describe('SubjectsComponent', () => {
         {
           provide: Store,
           useClass: class {
-            dispatch = jasmine.createSpy('dispatch')
+            dispatch = jasmine.createSpy('dispatch');
+            select = () => {
+              return Observable.of({id: 1, name: '', url: ''});
+            }
           }
         },
         {
@@ -125,8 +128,17 @@ describe('SubjectsComponent', () => {
   });
 
   it('should reset subject list in store', () => {
-    component.resetList();
+    component.ngOnInit();
+
+    // Call resetList with subject id that does NOT match the mock select
+    component.resetList(2);
     expect(store.dispatch).toHaveBeenCalled();
+  });
+
+  it('should not reset the subject list if selected subject id has not changed', () => {
+    // Call resetList with subject id that does match the mock select
+    component.resetList(1);
+    expect(store.dispatch).not.toHaveBeenCalled();
   });
 
   it('should animate scroll request', (done) => {
