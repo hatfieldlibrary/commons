@@ -22,7 +22,7 @@
 
 export const environment = {
   production: false,
-  // REST API host.
+  // REST API host. Can be localhost or production host
   apiHost: 'http://libmedia.willamette.edu',
   // Base path, do not include beginning forward slash.
   appRoot: 'commons',
