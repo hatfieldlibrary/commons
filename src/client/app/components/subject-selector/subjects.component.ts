@@ -29,7 +29,6 @@ import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import {SetIntervalService} from "../../services/interval.service";
 import {MdListItem} from "@angular/material";
-import {Observable} from "rxjs/Observable";
 
 
 @Component({
