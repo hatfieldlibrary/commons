@@ -6,11 +6,11 @@
 [![bitHound Code](https://www.bithound.io/github/hatfieldlibrary/commons/badges/code.svg)](https://www.bithound.io/github/hatfieldlibrary/commons)
 
 The Commons is designed for publishing information about digital projects and collections that are maintained within institutional repositories like DSpace, Contentdm, and Hydra or
- that exist independently as unique, standalone projects like Omeka exhibits and public websites created by members of a community. The goals of the project include deep integration with 
+ that exist independently as unique, standalone projects like Omeka exhibits and public websites created by members of a community. The goals of the Commons project include deep integration with 
  repository services through shared authentication and authorization and targeted search capability.  
 
 The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2) public API for data.  The Commons is loosely integrated with the [dspace-client project](https://github.com/hatfieldlibrary/dspace-angular-client) (a standalone DSpace client that works with a 
- modified version of the DSpace 6 REST API servlet). [Passport](http://passportjs.org/) middleware authentication is available for CAS authentication. Other authentication services can be used by installing and configuring the required Passport authentication strategy. New 
+ modified version of the DSpace 6 REST API servlet). [Passport](http://passportjs.org/) middleware is available for CAS authentication. Other authentication services can be used by installing and configuring the required Passport authentication strategy. New 
  authentication strategies will require updates to credentials.js (described below) and the auth-config module. [Redis](https://redis.io/) is used as the session store in
  production environments and is necessary for deployment.
 
@@ -68,8 +68,8 @@ Strongloop can do more for you (see documentation).  For our purposes, we are st
 A docker file is provided. It can be used to create a container after the project has been built using `npm run build:prod`.
 ## Production Requirements
 
-Session management in the production environment requires redis (the redis port is configurable in credentials.js) for use as the session store. In development, we rely on Passport
-session and no session store is required.
+Session management in the production environment requires redis as the session store. The redis port is configurable in credentials.js. In development, we rely on Passport
+sessions. No session store is required.
 
 ## Running Unit Tests
 
