@@ -17,15 +17,17 @@
 
 export const environment = {
   production: true,
-  // REST API host.
+  // REST API host. It seems this path could be an empty string in production.
+  // Defining it is useful in development since it allows us to access
+  // the rest API service in production.
   apiHost: 'http://libmedia.willamette.edu',
   // Base path, do not include beginning forward slash.
   appRoot: 'commons',
-  // Path to the REST API.
+  // Path to the REST API (using proxy path)
   apiRoot: '/commons-rest',
-  // Path to images.
+  // Path to images (using proxy path)
   imagePath: '/commons-images',
-  // Authentication paths.
+  // Authentication paths (using proxy path)
   authPath: '/commons-auth',
   authCheck: '/commons-check'
 };
