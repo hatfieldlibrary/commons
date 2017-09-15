@@ -4,8 +4,7 @@ import {AppMenusComponent} from './app-menus.component';
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 import {
-  MaterialModule, MdCheckboxModule, MdIconModule, MdIconRegistry, MdSidenav, MdSidenavModule,
-  MdToolbarModule
+   MdCheckboxModule, MdIconModule, MdSidenavModule, MdToolbarModule
 } from "@angular/material";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {NavigationComponent} from "../area-selector/area.component";
@@ -18,10 +17,7 @@ import {UtilitiesService} from "../../services/utilities.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
-import {FlexLayoutModule, MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {DOCUMENT} from "@angular/common";
-import {Inject, InjectionToken} from "@angular/core";
-import {By, DomSanitizer} from "@angular/platform-browser";
+import {FlexLayoutModule} from "@angular/flex-layout";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Subscription} from "rxjs/Subscription";
 

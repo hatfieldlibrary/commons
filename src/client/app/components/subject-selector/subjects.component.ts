@@ -29,6 +29,7 @@ import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import {SetIntervalService} from "../../services/interval.service";
 import {MdListItem} from "@angular/material";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -46,6 +47,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
   @ViewChildren(MdListItem, {read: ElementRef}) contentEls: QueryList<ElementRef>;
 
+  selectedSubject: SubjectType;
   watcher: Subscription;
   offsetWidth: number;
   selectorWidth: number;
@@ -95,15 +97,20 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   /**
    * Resets the subject ilst in store.
    */
-  resetList(): void {
-    this.store.dispatch(new listActions.CollectionReset());
+  resetList(subjectId): void {
+    if (subjectId !== this.selectedSubject.id) {
+      this.store.dispatch(new listActions.CollectionReset());
+    }
   }
 
   /**
-   * Set up media watcher.
+   * Set up selected subject watcher.
    */
   ngOnInit(): void {
-
+    const subjectWatcher = this.store.select(fromRoot.getSelectedSubject).subscribe((id) => {
+      this.selectedSubject = id;
+    });
+    this.watcher.add(subjectWatcher);
   }
 
   /**
