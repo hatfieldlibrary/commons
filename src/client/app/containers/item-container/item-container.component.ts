@@ -67,10 +67,11 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
     /** Assures that the page scrolls to top if user chooses related item. */
     const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
+      console.log('route event')
       // Chrome canary supports the new standard usage with documentElement, but
       // Chrome and presumably other browsers still expect body.
-      this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-      this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
+      // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
+      // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
 
     });
     if (routeEventWatcher) {

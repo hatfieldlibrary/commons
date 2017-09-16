@@ -29,7 +29,7 @@
         </md-card-header>
         <img md-card-image src="{{imagePath}}/resources/img/thumb/{{collection.image}}">
         <md-card-actions align="end">
-          <button md-button [routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">VIEW</button>
+          <button md-button (click)="scrollToTop()"[routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">VIEW</button>
         </md-card-actions>
       </md-card>
     </md-grid-tile>

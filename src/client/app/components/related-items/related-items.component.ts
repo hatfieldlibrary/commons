@@ -34,4 +34,8 @@ export class RelatedItemsComponent {
 
   constructor() {}
 
+  scrollToTop() {
+
+  }
+
 }
