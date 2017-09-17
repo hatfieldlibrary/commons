@@ -27,7 +27,7 @@ import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
-import {SetIntervalService} from "../../services/interval.service";
+import {SetIntervalService} from "../../services/timers/interval.service";
 import {MdListItem} from "@angular/material";
 
 

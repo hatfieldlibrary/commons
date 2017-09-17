@@ -9,7 +9,7 @@ import {MdButtonModule, MdIconModule} from "@angular/material";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {Store, StoreModule} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
-import {SetIntervalService} from "../../services/interval.service";
+import {SetIntervalService} from "../../services/timers/interval.service";
 
 describe('TitleHeaderComponent', () => {
   let component: TitleHeaderComponent;

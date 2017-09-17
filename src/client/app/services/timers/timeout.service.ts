@@ -15,6 +15,22 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-md-sidenav {
-  position: fixed;
+import {Injectable} from "@angular/core";
+
+/**
+ * Injectable wrapper around the global setTimeout function.  Use this to allow for test mocks.
+ */
+@Injectable()
+export class SetTimeoutService {
+
+  timeout;
+
+  setTimeout(time: number, callback: () => void) {
+    this.timeout = setTimeout(callback, time);
+  }
+
+  clearTimeout() {
+    clearTimeout(this.timeout);
+  }
+
 }
