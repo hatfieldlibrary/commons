@@ -38,9 +38,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
-import {ListsContainerComponent} from "../containers/lists-container/lists-container.component";
 import {Component} from "@angular/core";
-import {FooterComponent} from "./footer/footer.component";
 
 @Component({
   selector: 'dummy-component',
