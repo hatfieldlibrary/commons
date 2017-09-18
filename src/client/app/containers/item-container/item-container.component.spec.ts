@@ -63,6 +63,8 @@ import {HomeBlackSvgComponent} from "../../components/svg/home-black-svg/home-bl
 import {DatePickerSvgComponent} from "../../components/svg/date-picker-svg/date-picker-svg.component";
 import {UtilitiesService} from "../../services/utilities.service";
 import {Subscription} from "rxjs/Subscription";
+import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
+import {SetTimeoutService} from "../../services/timers/timeout.service";
 
 let mockItem = {
   collection: {
@@ -168,6 +170,8 @@ describe('ItemContainerComponent', () => {
         RouterTestingModule
       ],
       providers: [
+        SetTimeoutService,
+        MenuInteractionService,
         UtilitiesService,
         {
           provide: Store,

@@ -57,7 +57,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   related: RelatedType[];
 
   constructor(private store: Store<fromRoot.State>,
-              private renderer: Renderer2,
               private media: ObservableMedia,
               private route: ActivatedRoute,
               private router: Router,
@@ -69,8 +68,8 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
       // Chrome canary supports the new standard usage with documentElement, but
       // Chrome and presumably other browsers still expect body.
-      this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-      this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
+       //this.renderer.setProperty(this.document.body, 'scrollTop', 0);
+       //this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
 
     });
     if (routeEventWatcher) {

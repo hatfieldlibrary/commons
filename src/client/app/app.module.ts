@@ -45,7 +45,6 @@ import {CollectionService} from './services/collection.service';
 import {AreaService} from './services/area.service';
 import {AreaEffects} from './effects/area.effects';
 import {SubjectService} from './services/subject.service';
-import {SetIntervalService} from './services/interval.service';
 import {SubjectEffects} from './effects/subject.effects';
 import {CollectionEffects} from './effects/collection.effects';
 import {ItemContainerComponent} from './containers/item-container/item-container.component';
@@ -87,6 +86,9 @@ import {HomeBlackSvgComponent} from "./components/svg/home-black-svg/home-black-
 import {environment} from 'app/environments/environment';
 import { ItemSelectComponent } from './components/item-select-options/item-select.component';
 import { DatePickerSvgComponent } from './components/svg/date-picker-svg/date-picker-svg.component';
+import {SetTimeoutService} from "./services/timers/timeout.service";
+import {SetIntervalService} from './services/timers/interval.service';
+import {MenuInteractionService} from "./services/menu/menu-interaction.service";
 
 export const appRoutes = [
 
@@ -211,9 +213,12 @@ export const appRoutes = [
     SearchService,
     RelatedService,
     AuthCheckService,
+    MenuInteractionService,
     MdIconRegistry,
     UtilitiesService,
     SetIntervalService,
+    SetTimeoutService,
+    MenuInteractionService,
     {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 
