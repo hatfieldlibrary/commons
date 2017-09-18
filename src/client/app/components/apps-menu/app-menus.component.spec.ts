@@ -20,6 +20,8 @@ import {Observable} from "rxjs/Observable";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Subscription} from "rxjs/Subscription";
+import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
+import {SetTimeoutService} from "../../services/timers/timeout.service";
 
 class MockRouter {
   public navEnd = new NavigationEnd(0, 'http://localhost:3000', 'http://localhost:3000');
@@ -64,6 +66,8 @@ describe('AppMenusComponent', () => {
 
       ],
       providers: [
+        SetTimeoutService,
+        MenuInteractionService,
         {
           provide: UtilitiesService,
           useValue: {
@@ -123,7 +127,6 @@ describe('AppMenusComponent', () => {
   // });
 
   it('should remove listeners when component is destroyed', () => {
-    component.ngOnInit();
     watcher = component.watcher;
     spyOn(watcher, 'unsubscribe');
     fixture.destroy();

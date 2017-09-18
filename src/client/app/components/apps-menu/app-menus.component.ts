@@ -19,7 +19,7 @@ import {MenuInteractionService} from "../../services/menu/menu-interaction.servi
 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppMenusComponent implements OnInit, OnDestroy {
+export class AppMenusComponent implements OnDestroy {
 
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
@@ -54,22 +54,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
     this.watcher.add(mediaWatcher);
   }
 
-  // goToHome(): void {
-  //   document.location.href = this.homeUrl;
-  // }
-  //
-  // goToSecondary(): void {
-  //   document.location.href = this.secondaryUrl;
-  // }
-  //
-  // goToTertiary(): void {
-  //   document.location.href = this.tertiaryUrl;
-  // }
-
   openMenu() {
-    //this.sideNavigate.open();
-   // this.openTheMenu.emit();
-    console.log('open')
     this.menuService.openMenu();
   }
 
@@ -78,11 +63,6 @@ export class AppMenusComponent implements OnInit, OnDestroy {
     return path;
   }
 
-  ngOnInit() {
-    // if (this.sideNavigate.close) {
-    //   this.sideNavigate.close();
-    // }
-  }
 
   ngOnDestroy(): void {
     if (this.watcher) {

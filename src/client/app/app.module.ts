@@ -218,6 +218,7 @@ export const appRoutes = [
     UtilitiesService,
     SetIntervalService,
     SetTimeoutService,
+    MenuInteractionService,
     {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 

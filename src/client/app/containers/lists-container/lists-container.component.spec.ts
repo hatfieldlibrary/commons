@@ -68,6 +68,8 @@ import {HomeBlackSvgComponent} from "../../components/svg/home-black-svg/home-bl
 import {UtilitiesService} from "../../services/utilities.service";
 import {SetIntervalService} from "../../services/timers/interval.service";
 import {Subscription} from "rxjs/Subscription";
+import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
+import {SetTimeoutService} from "../../services/timers/timeout.service";
 
 let areaSubscriptionMock =
   {
@@ -173,7 +175,9 @@ describe('ListsContainerComponent', () => {
         RouterTestingModule
       ],
       providers: [
+        SetTimeoutService,
         UtilitiesService,
+        MenuInteractionService,
         SetIntervalService,
         {
           provide: Store,

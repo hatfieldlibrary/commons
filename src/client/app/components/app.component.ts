@@ -21,7 +21,10 @@ import {
   ViewChild
 } from '@angular/core';
 import {NavigationEnd, NavigationStart, Router} from "@angular/router";
-import {DOCUMENT, Location, LocationStrategy, PathLocationStrategy, PopStateEvent} from "@angular/common";
+import {
+  DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy,
+  PopStateEvent
+} from "@angular/common";
 import {MdSidenav} from "@angular/material";
 import {MenuInteractionService} from "../services/menu/menu-interaction.service";
 import {Store} from "@ngrx/store";
@@ -47,7 +50,7 @@ import {SetTimeoutService} from "../services/timers/timeout.service";
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
-  providers: [MenuInteractionService, Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
+  providers: [ Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
@@ -60,7 +63,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('appcontent') appContent: ElementRef;
   @ViewChild(Scrollable) scrollElement: ElementRef;
 
-  private yScrollStack: number[] = [];
+   yScrollStack: number[] = [];
   state = '';
 
   constructor(private store: Store<fromRoot.State>,
@@ -104,57 +107,66 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
      * @type {Store<AreaListItemType[]>}
      */
     this.areas$ = this.store.select(fromRoot.getAreas);
-
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
-      this.sideNavigate.open();
+      this.sideNavigate.open().catch((err) => {
+        console.log(err);
+      });
+
     });
     this.watcher.add(openWatcher);
 
   }
 
   ngAfterViewInit() {
-    /**
-     * This sets the scrollTop position for navigation between views.
-     * At the NavitationStart event, get the current window rectangle
-     * position and push onto stack leaving the list view.  At the
-     * NavigationEnd event, set the scrollTop position of the scrollable
-     * element that was created by the md-sidenav-container directive.
-     * For list views, set the scrollTop to the saved value. For item
-     * views, always set scrollTop to zero.
-     */
-    this.router.events.subscribe((ev: any) => {
+    console.log('view init')
 
-      if (ev instanceof NavigationStart) {
-        // Get absolute value fo the bounding rectangle.
-        const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
+    // Anticipating angular universal ...
+    if (isPlatformBrowser) {
+      console.log('platform')
+      /**
+       * This sets the scrollTop position for navigation between views.
+       * At the NavigationStart event, get the current window rectangle
+       * position and push onto stack leaving the list view.  At the
+       * NavigationEnd event, set the scrollTop position of the scrollable
+       * element that was created by the md-sidenav-container directive.
+       * For list views, set the scrollTop to the saved value. For item
+       * views, always set scrollTop to zero.
+       */
+      this.router.events.subscribe((ev: any) => {
+        console.log(ev.url)
+        if (ev instanceof NavigationStart) {
 
-        // Push value onto stack if url is for the list view. This is the only page
-        // we currently need to adjust for scrollTop.
-        if (!ev.url.match(/\/commons\/collection/)) {
-          this.yScrollStack.push(top);
+          // Get absolute value fo the bounding rectangle.
+          const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
+
+          // Push value onto stack if url is for the list view. This is the only page
+          // we currently need to adjust for scrollTop.
+          if (!ev.url.match(/\/commons\/collection/)) {
+            this.yScrollStack.push(top);
+          }
+        } else if (ev instanceof NavigationEnd) {
+
+          // Using time to assure that the rendering thread has finsished drawing
+          // the scrollable element to full height (via *ngFor in
+          // app-collection-list component)
+          this.timeoutService.setTimeout(5, () => {
+            // Get the scrollable element.
+            const scrollable = this.document.querySelector('.mat-drawer-content');
+            if (ev.url.match(/\/commons\/collection/)) {
+              let stackPop = this.yScrollStack.pop();
+              scrollable.scrollTop = stackPop;
+            }
+            else {
+              // Currently the only other view is for items. This
+              // view should always initialize with scrollTop equal
+              // to zero.
+              scrollable.scrollTop = 0;
+            }
+
+          });
         }
-      } else if (ev instanceof NavigationEnd) {
-
-        // Using time to assure that the rendering thread has finsished drawing
-        // the scrollable element to full height (via *ngFor in
-        // app-collection-list component)
-        this.timeoutService.setTimeout(5, () => {
-          // Get the scrollable element.
-          const scrollable = this.document.querySelector('.mat-drawer-content');
-          if (ev.url.match(/\/commons\/collection/)) {
-            let stackPop = this.yScrollStack.pop();
-            scrollable.scrollTop = stackPop;
-          }
-          else {
-            // Currently the only other view is for items. This
-            // view should always initialize with scrollTop equal
-            // to zero.
-            scrollable.scrollTop = 0;
-          }
-
-        });
-      }
-    });
+      });
+    }
 
   }
 

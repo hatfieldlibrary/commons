@@ -17,8 +17,6 @@ export class MenuInteractionService {
 
   // Service message commands
   openMenu() {
-
-    console.log('service open')
     this.menuOpenSource.next(true);
   }
 
