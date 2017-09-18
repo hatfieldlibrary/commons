@@ -27,7 +27,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";
 import {ElementRef} from "@angular/core";
-import {SetIntervalService} from "../../services/interval.service";
+import {SetIntervalService} from "../../services/timers/interval.service";
 import {By} from "@angular/platform-browser";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {Subscription} from "rxjs/Subscription";
