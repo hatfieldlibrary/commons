@@ -63,6 +63,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('appcontent') appContent: ElementRef;
   @ViewChild(Scrollable) scrollElement: ElementRef;
 
+  scrollable: Element;
    yScrollStack: number[] = [];
   state = '';
 
@@ -82,12 +83,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   }
 
-  onDeactivate(event) {
+  //onDeactivate(event) {
     // Chrome canary supports the new standard usage with documentElement, but
     // Chrome and presumably other browsers still expect body.
     // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
     // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
-  }
+  //}
 
   goToHome(): void {
     document.location.href = this.homeUrl;
@@ -118,11 +119,11 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    console.log('view init')
+
 
     // Anticipating angular universal ...
     if (isPlatformBrowser) {
-      console.log('platform')
+
       /**
        * This sets the scrollTop position for navigation between views.
        * At the NavigationStart event, get the current window rectangle
@@ -133,7 +134,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
        * views, always set scrollTop to zero.
        */
       this.router.events.subscribe((ev: any) => {
-        console.log(ev.url)
         if (ev instanceof NavigationStart) {
 
           // Get absolute value fo the bounding rectangle.
@@ -142,25 +142,27 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // Push value onto stack if url is for the list view. This is the only page
           // we currently need to adjust for scrollTop.
           if (!ev.url.match(/\/commons\/collection/)) {
+
             this.yScrollStack.push(top);
+
           }
         } else if (ev instanceof NavigationEnd) {
-
           // Using time to assure that the rendering thread has finsished drawing
           // the scrollable element to full height (via *ngFor in
           // app-collection-list component)
           this.timeoutService.setTimeout(5, () => {
+            console.log('in timeout')
             // Get the scrollable element.
-            const scrollable = this.document.querySelector('.mat-drawer-content');
+            this.scrollable = this.document.querySelector('.mat-drawer-content');
             if (ev.url.match(/\/commons\/collection/)) {
               let stackPop = this.yScrollStack.pop();
-              scrollable.scrollTop = stackPop;
+              this.scrollable.scrollTop = stackPop;
             }
             else {
               // Currently the only other view is for items. This
               // view should always initialize with scrollTop equal
               // to zero.
-              scrollable.scrollTop = 0;
+              this.scrollable.scrollTop = 0;
             }
 
           });

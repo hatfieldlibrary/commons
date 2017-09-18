@@ -47,15 +47,29 @@ import {FooterComponent} from "./footer/footer.component";
   template: '<div></div>'
 })
 class MockComponent {
-  constructor() {}
+  constructor() {
+  }
 
 }
 
+/**
+ * Mock timeout in which the callback is immediately executed.
+ */
+class MockTimeoutService {
+
+  clearTimeout = jasmine.createSpy('clearInterval');
+  setTimeout(time: number, callback: () => void): any {
+    callback();
+  }
+
+
+}
 describe('AppComponent', () => {
 
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let router;
+  let callback;
 
   class MockInteractionService {
 
@@ -90,13 +104,19 @@ describe('AppComponent', () => {
         ReactiveFormsModule,
         MdCheckboxModule,
         MdIconModule,
-        RouterTestingModule.withRoutes([{path: 'commons/collection', component: MockComponent} ]),
+        RouterTestingModule.withRoutes([
+          {path: 'commons/item', component: MockComponent},
+          {path: 'commons/collection', component: MockComponent}
+        ]),
         // needed to test ObservableMedia
         FlexLayoutModule
 
       ],
       providers: [
-        SetTimeoutService,
+        {
+          provide: SetTimeoutService,
+          useClass: MockTimeoutService
+        },
         {
           provide: MenuInteractionService,
           useClass: MockInteractionService
@@ -115,8 +135,7 @@ describe('AppComponent', () => {
     TestBed.compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
-    let actualRouter = fixture.debugElement.injector.get(Router);
-    spyOn(actualRouter, 'navigate');
+
   });
 
   it('should create the app and add subscription to watcher', async(() => {
@@ -153,15 +172,47 @@ describe('AppComponent', () => {
     });
   }));
 
-  it('should route', () => {
-    router = TestBed.get(Router);
-    router.navigate(['commons/collection']);
+  it('should pop value onto the scroll position stack', async(() => {
+    router = fixture.debugElement.injector.get(Router);
+    fixture.detectChanges();
     spyOn(component.yScrollStack, 'push').and.callThrough();
-    expect(component.yScrollStack.push).toHaveBeenCalled();
+    router.navigate(['commons/item']).then(() => {
+      expect(component.yScrollStack.push).toHaveBeenCalled();
+    });
+  }));
 
-  });
 
+  it('should not pop value onto the scroll position stack', async(() => {
+    router = fixture.debugElement.injector.get(Router);
+    fixture.detectChanges();
+    spyOn(component.yScrollStack, 'push').and.callThrough();
+    router.navigate(['commons/collection']).then(() => {
+      expect(component.yScrollStack.push).not.toHaveBeenCalled();
+    });
+  }));
 
+  it('should pop value off of the position stack to apply to collection list',  async(() => {
+    const timeoutService = fixture.debugElement.injector.get(SetTimeoutService);
+    router = fixture.debugElement.injector.get(Router);
+    fixture.detectChanges();
+    spyOn(timeoutService, 'setTimeout').and.callThrough();
+    spyOn(component.yScrollStack, 'pop').and.callThrough();
+    router.navigate(['commons/collection']).then(() => {
+      expect(timeoutService.setTimeout).toHaveBeenCalled();
+      expect(component.yScrollStack.pop).toHaveBeenCalled();
+    });
+  }));
+
+  it('should set the cdk-scrollable element scrollTop to zero',  async(() => {
+    const timeoutService = fixture.debugElement.injector.get(SetTimeoutService);
+    router = fixture.debugElement.injector.get(Router);
+    fixture.detectChanges();
+    spyOn(timeoutService, 'setTimeout').and.callThrough();
+    router.navigate(['commons/item']).then(() => {
+      expect(timeoutService.setTimeout).toHaveBeenCalled();
+      expect(component.scrollable.scrollTop).toEqual(0);
+    });
+  }));
 
 
 });
