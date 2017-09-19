@@ -15,8 +15,6 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-
-<!--<script src="app.component.ts"></script>-->
 <md-sidenav-container fullscreen>
 
   <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
@@ -48,8 +46,8 @@
                              (onSelected)="sidenav.toggle()"></app-navigation-selector>
   </md-sidenav>
 
-  <div id="app-content" #appcontent (scroll)="onScroll($event)">
-    <router-outlet (deactivate)="onDeactivate($event)">
+  <div id="app-content" #appcontent>
+    <router-outlet>
     </router-outlet>
   </div>
 
