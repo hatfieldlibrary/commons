@@ -142,7 +142,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // Push value onto stack if url is for the list view. This is the only page
           // we currently need to adjust for scrollTop.
           if (!ev.url.match(/\/commons\/collection/)) {
-
+            // push the top
             this.yScrollStack.push(top);
 
           }
@@ -155,8 +155,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
             // Get the scrollable element.
             this.scrollable = this.document.querySelector('.mat-drawer-content');
             if (ev.url.match(/\/commons\/collection/)) {
-              let stackPop = this.yScrollStack.pop();
-              this.scrollable.scrollTop = stackPop;
+              // pop the top
+              this.scrollable.scrollTop = this.yScrollStack.pop();
             }
             else {
               // Currently the only other view is for items. This
