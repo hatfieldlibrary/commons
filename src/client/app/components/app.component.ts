@@ -22,18 +22,15 @@ import {
 } from '@angular/core';
 import {NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {
-  DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy,
-  PopStateEvent
+  DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
 } from "@angular/common";
 import {MdSidenav} from "@angular/material";
 import {MenuInteractionService} from "../services/menu/menu-interaction.service";
 import {Store} from "@ngrx/store";
 import * as fromRoot from '../reducers';
-import * as areaActions from '../actions/area.actions';
 import {AreaListItemType} from "../shared/data-types/area-list.type";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
-import {Scrollable} from "@angular/cdk/scrolling";
 import {SetTimeoutService} from "../services/timers/timeout.service";
 
 /**
@@ -50,7 +47,7 @@ import {SetTimeoutService} from "../services/timers/timeout.service";
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
-  providers: [ Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
@@ -61,11 +58,11 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   tertiaryUrl = 'http://www.willamette.edu';
   @ViewChild('sidenav') sideNavigate: MdSidenav;
   @ViewChild('appcontent') appContent: ElementRef;
-  @ViewChild(Scrollable) scrollElement: ElementRef;
 
   scrollable: Element;
-   yScrollStack: number[] = [];
+  yScrollStack: number[] = [];
   state = '';
+  selectedAreaIds: string;
 
   constructor(private store: Store<fromRoot.State>,
               private menuService: MenuInteractionService,
@@ -84,10 +81,11 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   //onDeactivate(event) {
-    // Chrome canary supports the new standard usage with documentElement, but
-    // Chrome and presumably other browsers still expect body.
-    // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-    // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
+  // Chrome canary supports the new standard usage with d
+  // ocumentElement, but
+  // Chrome and presumably other browsers still expect body.
+  // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
+  // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
   //}
 
   goToHome(): void {
@@ -102,12 +100,31 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     document.location.href = this.tertiaryUrl;
   }
 
+  _setSelectedAreas(areas: any) {
+    let selected = '';
+    if (areas.length === 0) {
+      selected = '0,';
+    }
+    else {
+      areas.forEach((area) => {
+        selected = area.id + ',';
+      });
+    }
+    this.selectedAreaIds = selected.slice(0, -1);
+  }
+
   ngOnInit() {
     /**
      * Get areas for side_nav.
      * @type {Store<AreaListItemType[]>}
      */
     this.areas$ = this.store.select(fromRoot.getAreas);
+    const selectedAreasWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((areas) => {
+      if (areas) {
+        this._setSelectedAreas(areas);
+      }
+    });
+    this.watcher.add(selectedAreasWatcher);
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {
         console.log(err);
@@ -147,11 +164,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
           }
         } else if (ev instanceof NavigationEnd) {
-          // Using time to assure that the rendering thread has finsished drawing
-          // the scrollable element to full height (via *ngFor in
-          // app-collection-list component)
+          // Push onto the callback queue to assure full rendering of
+          // the scrollable element before setting topScroll.
+          // (*ngFor in app-collection-list component)
           this.timeoutService.setTimeout(5, () => {
-            console.log('in timeout')
             // Get the scrollable element.
             this.scrollable = this.document.querySelector('.mat-drawer-content');
             if (ev.url.match(/\/commons\/collection/)) {

@@ -60,6 +60,13 @@ export function reducer(state = initialState, action: AreaActions): State {
         });
     }
 
+    case AreaActionTypes.AREA_DEFAULT_INFORMATION: {
+
+      return Object.assign({}, initialState, {
+        loading: false
+      });
+    }
+
     default:
       return state;
 

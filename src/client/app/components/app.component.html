@@ -42,7 +42,7 @@
 
     </div>
 
-    <app-navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areas$ | async"
+    <app-navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areas$ | async" [selectedAreas]="selectedAreaIds"
                              (onSelected)="sidenav.toggle()"></app-navigation-selector>
   </md-sidenav>
 

@@ -94,19 +94,23 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     const areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
       this.title = '';
       this.subtitle = '';
-      // If the local areaId field is set to '0' then just use
-      // the default title.
-      if (this.areaId === '0') {
-        this._setAllCollectionTitle();
-      } else if (info.length > 1) {
-        // Multiple areas selected, use subtitle format for multiple area info.
-        info.forEach((area) => this.subtitle += area.title + ' / ');
-        this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
-      } else if (info[0].title.length > 0) {
-        // Otherwise update the title using the new single area information.
-        this.title = info[0].title;
-      } else {   // Default.
-        this._setAllCollectionTitle();
+
+
+      if (info.length > 0) {
+        // If the local areaId field is set to '0' then just use
+        // the default title.
+        if (this.areaId === '0') {
+          this._setAllCollectionTitle();
+        } else if (info.length > 1) {
+          // Multiple areas selected, use subtitle format for multiple area info.
+          info.forEach((area) => this.subtitle += area.title + ' / ');
+          this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
+        } else if (info[0].title.length > 0) {
+          // Otherwise update the title using the new single area information.
+          this.title = info[0].title;
+        } else {   // Default.
+          this._setAllCollectionTitle();
+        }
       }
     });
     this.watchers.add(areaInfoWatcher);
@@ -141,6 +145,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new listActions.AllCollectionsAction());
     this.store.dispatch(new subjectAction.AllSubjectAction());
     this.store.dispatch(new subjectAction.RemoveCurrentSubject());
+    this.store.dispatch(new areaActions.AreaDefaultInformation());
 
   }
 
@@ -221,7 +226,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // All component subscriptions will be added to this object.
     this.watchers = new Subscription();
 
-    this.setItemTitle();
+    //this.setItemTitle();
     this.setAreasAvailable();
 
     // The subjects$ Observable is used by child components. This component
@@ -264,12 +269,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
         }
         else {
+          this.areaId = '0';
           this.subjectLinkType = 'all';
           this.getAllCollections();
           this.homeScreen = true;
-          this.areaId = '0';
-        }
 
+        }
+        this.areaId;
+        this.setItemTitle();
 
       });
 
