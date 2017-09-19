@@ -124,7 +124,7 @@ describe('AppComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = () => {
-              return Observable.of('');
+              return Observable.of([]);
             };
           }
         },
