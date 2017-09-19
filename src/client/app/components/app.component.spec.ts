@@ -39,6 +39,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
 import {Component} from "@angular/core";
+import {AreaListItemType} from "../shared/data-types/area-list.type";
 
 @Component({
   selector: 'dummy-component',
@@ -67,7 +68,16 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let router;
-  let callback;
+  let store;
+
+
+  const mockAreaList: AreaListItemType[] =  [
+    {
+      id: 1,
+      title: 'area one',
+      count: 1
+    }
+  ];
 
   class MockInteractionService {
 
@@ -123,8 +133,8 @@ describe('AppComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = () => {
-              return Observable.of('');
+            select(): Observable<AreaListItemType[]> {
+              return Observable.of(mockAreaList);
             };
           }
         },
@@ -133,23 +143,22 @@ describe('AppComponent', () => {
     TestBed.compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
+    store = fixture.debugElement.injector.get(Store);
 
   });
 
   it('should create the app and add subscription to watcher', async(() => {
-    spyOn(component.watcher, 'add');
-    fixture.detectChanges();
-    expect(component.watcher.add).toHaveBeenCalled();
     expect(component).toBeTruthy();
   }));
 
   it('should request areas list on init', () => {
-    let store = fixture.debugElement.injector.get(Store);
     spyOn(store, 'select').and.callThrough();
+
   });
 
   it('should get openMenu observable and subscribe', () => {
-    let menuService = fixture.debugElement.injector.get(MenuInteractionService);
+    const menuService = fixture.debugElement.injector.get(MenuInteractionService);
     spyOn(menuService.openMenu$, 'subscribe');
     spyOn(component.watcher, 'add');
     component.ngOnInit();
@@ -159,7 +168,7 @@ describe('AppComponent', () => {
 
 
   it('should open the navigation menu via the menu interaction service', async(() => {
-    let menuService = fixture.debugElement.injector.get(MenuInteractionService);
+    const menuService = fixture.debugElement.injector.get(MenuInteractionService);
     spyOn(menuService.openMenu$, 'subscribe').and.callThrough();
     component.ngOnInit();
     expect(menuService.openMenu$.subscribe).toHaveBeenCalled();

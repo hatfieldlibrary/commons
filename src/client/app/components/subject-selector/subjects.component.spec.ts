@@ -117,7 +117,7 @@ describe('SubjectsComponent', () => {
     spyOn(intervalService, 'setInterval');
     spyOn(component, 'showSubjectNavigationArrow');
     watcher = component.watcher;
-    spyOn(watcher,'unsubscribe');
+    spyOn(watcher, 'unsubscribe');
 
     store = fixture.debugElement.injector.get(Store);
 
@@ -144,7 +144,7 @@ describe('SubjectsComponent', () => {
   it('should animate scroll request', (done) => {
     fixture.whenStable().then(
       () => {
-        let debugElement = fixture.debugElement.query(By.directive(MdListItem));
+        const debugElement = fixture.debugElement.query(By.directive(MdListItem));
         component.subjects = debugElement;
         component.onScrollRequest('right');
         expect(intervalService.setInterval).toHaveBeenCalled();
