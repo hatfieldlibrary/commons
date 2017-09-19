@@ -39,6 +39,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Subject} from "rxjs/Subject";
 import {Router} from "@angular/router";
 import {Component} from "@angular/core";
+import {AreaListItemType} from "../shared/data-types/area-list.type";
 
 @Component({
   selector: 'dummy-component',
@@ -67,7 +68,15 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let router;
-  let callback;
+
+
+  const mockAreaList: AreaListItemType[] =  [
+    {
+      id: 1,
+      title: 'area one',
+      count: 1
+    }
+  ];
 
   class MockInteractionService {
 
@@ -124,7 +133,7 @@ describe('AppComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = () => {
-              return Observable.of([]);
+              return Observable.of(mockAreaList);
             };
           }
         },
@@ -146,6 +155,7 @@ describe('AppComponent', () => {
   it('should request areas list on init', () => {
     let store = fixture.debugElement.injector.get(Store);
     spyOn(store, 'select').and.callThrough();
+
   });
 
   it('should get openMenu observable and subscribe', () => {
