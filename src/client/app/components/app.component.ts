@@ -60,8 +60,22 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('appcontent') appContent: ElementRef;
 
   scrollable: Element;
-  yScrollStack: number[] = [];
   state = '';
+  /**
+   * The item stack allows us to know whether or not to add
+   * the current y position to the yScrollStack.
+   * @type {Array}
+   */
+  itemUrlStack: string[] = [];
+  /**
+   * The y scroll stack tracks the top of the collection view
+   * element.  The measurement is obtained from the bounding
+   * client rectangle of the #appContent child view and is used
+   * to set the scrollTop for the scrollable div (cdk-scrollable)
+   * created by the mdSidenavContainer directive (Angular Material).
+   * @type {Array}
+   */
+  yScrollStack: number[] = [];
   selectedAreaIds: string;
 
   constructor(private store: Store<fromRoot.State>,
@@ -137,41 +151,42 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
 
-
-    // Anticipating angular universal ...
+    // Anticipating angular universal.
     if (isPlatformBrowser) {
 
       /**
        * This sets the scrollTop position for navigation between views.
-       * At the NavigationStart event, get the current window rectangle
-       * position and push onto stack leaving the list view.  At the
-       * NavigationEnd event, set the scrollTop position of the scrollable
-       * element that was created by the md-sidenav-container directive.
-       * For list views, set the scrollTop to the saved value. For item
-       * views, always set scrollTop to zero.
        */
-      this.router.events.subscribe((ev: any) => {
-        if (ev instanceof NavigationStart) {
-
-          // Get absolute value fo the bounding rectangle.
+      this.router.events.subscribe((event: any) => {
+        if (event instanceof NavigationStart) {
+          // Get absolute value fo the bounding rectangle for #app-content.
           const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
 
-          // Push value onto stack if url is for the list view. This is the only page
-          // we currently need to adjust for scrollTop.
-          if (!ev.url.match(/\/commons\/collection/)) {
-            // push the top
+          // Push the value onto the y stack if the url is for an item view and the previous
+          // route transition was not also to an item view. This effectively limits
+          // y scroll value tracking to the collection view.
+          if (event.url.match(/\/commons\/item/) && this.itemUrlStack.length == 0) {
+            // Push the top
             this.yScrollStack.push(top);
-
+            // Add to item stack to prevent further updates of the stacks.
+            this.itemUrlStack.push(event.url);
           }
-        } else if (ev instanceof NavigationEnd) {
-          // Push onto the callback queue to assure full rendering of
-          // the scrollable element before setting topScroll.
-          // (*ngFor in app-collection-list component)
+        } else if (event instanceof NavigationEnd) {
+
+          // Use time out to push this work onto the browser's callback queue.
+          // This allows rendering to complete before setting scrollTop.
+          // If set to a value greater than the maximum available for the element,
+          // scrollTop settles itself to the maximum value and we don't see the
+          // desired result.
           this.timeoutService.setTimeout(5, () => {
-            // Get the scrollable element.
+            // Get the scrollable element (created by MdSidenavContainer)
+
             this.scrollable = this.document.querySelector('.mat-drawer-content');
-            if (ev.url.match(/\/commons\/collection/)) {
-              // pop the top
+            if (event.url.match(/\/commons\/collection/)) {
+              // Pop the item url stack to prepare for the next transition
+              // to the item route.
+              this.itemUrlStack.pop();
+              // Pop the top
               this.scrollable.scrollTop = this.yScrollStack.pop();
             }
             else {
@@ -180,12 +195,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               // to zero.
               this.scrollable.scrollTop = 0;
             }
-
           });
         }
       });
     }
-
   }
 
   ngOnDestroy() {
