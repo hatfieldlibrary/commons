@@ -65,16 +65,16 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.watchers = new Subscription();
 
     /** Assures that the page scrolls to top if user chooses related item. */
-    const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
+   // const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
       // Chrome canary supports the new standard usage with documentElement, but
       // Chrome and presumably other browsers still expect body.
        //this.renderer.setProperty(this.document.body, 'scrollTop', 0);
        //this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
 
-    });
-    if (routeEventWatcher) {
-      this.watchers.add(routeEventWatcher);
-    }
+    // });
+    // if (routeEventWatcher) {
+    //   this.watchers.add(routeEventWatcher);
+    // }
 
     // Set the media observable subscription for assigning the related items column count.
     const mediaWatcher = this.media.subscribe((change: MediaChange) => {
