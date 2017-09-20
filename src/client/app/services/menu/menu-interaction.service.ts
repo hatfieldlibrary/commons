@@ -4,10 +4,9 @@ import {Subject} from "rxjs/Subject";
 @Injectable()
 export class MenuInteractionService {
 
-
   // Observable string sources
-  private menuOpenSource = new Subject<boolean>();
-  private menuCloseSource = new Subject<void>();
+   menuOpenSource = new Subject<boolean>();
+   menuCloseSource = new Subject<void>();
 
   // Observable string streams
   public openMenu$ = this.menuOpenSource.asObservable();

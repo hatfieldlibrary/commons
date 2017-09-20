@@ -15,27 +15,18 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Based on ngrx sample app utility:
- * https://github.com/ngrx/example-app/blob/master/src/app/util.ts
- *
- * This function coerces a string into a string literal type.
- * Using tagged union types in TypeScript 2.0, this enables
- * powerful typechecking of our reducers.
- *
- * Since every action label passes through this function it
- * is a good place to ensure all of our action labels
- * are unique.
- */
+import {type} from './type';
 
-let typeCache: { [label: string]: boolean } = {};
+describe ('ngrx action type checking', () => {
+  const testLabel = '[test label] one';
 
-export function type<T>(label: T | ''): T {
-  if (typeCache[<string>label]) {
-    throw new Error(`Action type "${label}" is not unique`);
-  }
+  it('should return the unique label', () => {
+    expect(type(testLabel)).toEqual(testLabel);
 
-  typeCache[<string>label] = true;
+  });
 
-  return <T>label;
-}
+  it('should throw error for duplicate label', () =>{
+    expect(() => { type(testLabel) }).toThrowError('Action type "[test label] one" is not unique');
+  });
+
+});

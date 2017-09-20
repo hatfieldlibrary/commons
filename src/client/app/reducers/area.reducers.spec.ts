@@ -17,7 +17,7 @@
 
 import {getAreaInfo, reducer, State} from './area.reducers';
 import {
-  AreaAction, AreaActionFailed, AreaActionSuccess, AreaInformation, AreaInformationSuccess
+  AreaAction, AreaActionFailed, AreaActionSuccess, AreaDefaultInformation, AreaInformation, AreaInformationSuccess
 } from '../actions/area.actions';
 import {Action} from '@ngrx/store';
 import {AreaType} from '../shared/data-types/area.type';
@@ -117,6 +117,12 @@ describe('Area Reducer', () => {
 
   it('should return default state', () => {
     let state = reducer(undefined, {type: undefined, payload: ''});
+    let result = getAreaInfo(state);
+    expect(result).toEqual(initialState);
+  });
+
+  it('should return default state after reset request', () => {
+    let state = reducer(undefined, new AreaDefaultInformation());
     let result = getAreaInfo(state);
     expect(result).toEqual(initialState);
   });

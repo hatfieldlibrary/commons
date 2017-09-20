@@ -30,7 +30,7 @@ import {
   MdToolbarModule
 } from '@angular/material';
 import {Observable} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {ListsContainerComponent} from './lists-container.component';
 import {ListComponent} from '../../components/collection-list/list.component';
@@ -92,6 +92,19 @@ let areaListMock = [
   {
     id: 1,
     title: 'area one',
+    count: 1
+  }
+];
+
+let mulitpleAreaListMock = [
+  {
+    id: 1,
+    title: 'area one',
+    count: 1
+  },
+  {
+    id: 1,
+    title: 'area two',
     count: 1
   }
 ];
@@ -294,7 +307,6 @@ describe('ListsContainerComponent', () => {
 
     expect(component.areasAvailable).toBeFalsy();
     component.ngOnInit();
-
     expect(component.areasAvailable).toBeFalsy();
     expect(route.params.subscribe).toHaveBeenCalled();
     expect(component.setAreasAvailable).toHaveBeenCalled();
@@ -325,6 +337,28 @@ describe('ListsContainerComponent', () => {
 
   }));
 
+  it('should set title for multiple area result', fakeAsync(() => {
+    areaList = mulitpleAreaListMock;
+    setAreaRoute(route, '1,2');
+    component.ngOnInit();
+    tick();
+    expect(component.title).toEqual('');
+    expect(component.subtitle).toBeDefined();
+    expect(component.subtitle).toContain('area one / area two');
+
+  }));
+
+  it('should set title to all collections area id is zero', fakeAsync(() => {
+    setAllRoute(route);
+    component.ngOnInit();
+    component.areaId = '0';
+    tick();
+    expect(component.areaId).toEqual('0');
+    expect(component.title).toBeDefined();
+    expect(component.subtitle).toEqual('');
+    expect(component.title).toContain('All Collections');
+  }));
+
   it('should dispatch request for collections by subject only', fakeAsync(() => {
 
     setSubjectRoute(route, '1');
@@ -337,6 +371,21 @@ describe('ListsContainerComponent', () => {
 
   }));
 
+  it('should call router navigate after when remove subject is called', () => {
+    let router = fixture.debugElement.injector.get(Router);
+    spyOn(router, 'navigateByUrl');
+    component.removeSubject(null);
+    expect(router.navigateByUrl).toHaveBeenCalled();
+
+  });
+  it('should call router navigate to area after when remove subject is called', () => {
+    let router = fixture.debugElement.injector.get(Router);
+    spyOn(router, 'navigateByUrl');
+    component.areaId = '1';
+    component.removeSubject(null);
+    expect(router.navigateByUrl).toHaveBeenCalled();
+
+  });
   it('should remove listeners when component is destroyed', () => {
     setAreaRoute(route, 'default');
     fixture.detectChanges();

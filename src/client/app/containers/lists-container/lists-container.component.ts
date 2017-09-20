@@ -92,16 +92,17 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   setItemTitle(): void {
 
     const areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
+
+      // Clear the item and subtitle labels before proceeding.
       this.title = '';
       this.subtitle = '';
-
-
       if (info.length > 0) {
         // If the local areaId field is set to '0' then just use
         // the default title.
-        if (this.areaId === '0') {
+        if (info[0].id === 0) {
           this._setAllCollectionTitle();
         } else if (info.length > 1) {
+          // Use subtitle for multiple collection names
           // Multiple areas selected, use subtitle format for multiple area info.
           info.forEach((area) => this.subtitle += area.title + ' / ');
           this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
@@ -226,7 +227,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // All component subscriptions will be added to this object.
     this.watchers = new Subscription();
 
-    //this.setItemTitle();
+    this.setItemTitle();
     this.setAreasAvailable();
 
     // The subjects$ Observable is used by child components. This component
@@ -246,7 +247,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     const routeWatcher = this.route.params
       .subscribe((params) => {
 
-        this.subtitle = '';
         this.initializeAreas();
 
         if (params['areaId']) {
@@ -276,7 +276,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
         }
         this.areaId;
-        this.setItemTitle();
+
 
       });
 
