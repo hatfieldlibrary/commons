@@ -44,7 +44,7 @@ import {FooterComponent} from "../../components/footer/footer.component";
 import {ItemLinksComponent} from "../../components/item-links/item-links.component";
 import {SearchSvgComponent} from "../../components/svg/search-svg/search-svg.component";
 import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component";
-import {FlexLayoutModule} from "@angular/flex-layout";
+import {DEFAULT_BREAKPOINTS, FlexLayoutModule, ObservableMedia} from "@angular/flex-layout";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpModule} from "@angular/http";
@@ -101,6 +101,8 @@ let mockItem = {
 
 };
 
+let mqAlias = 'xs';
+
 
 const setMockAreaRoute = (route: any, mock: string) => {
   route.params = Observable.of({id: mock, areaId: 1});
@@ -118,6 +120,7 @@ describe('ItemContainerComponent', () => {
   let fixture: ComponentFixture<ItemContainerComponent>;
   let route;
   let store;
+  let media;
   let watcher: Subscription;
 
   beforeEach(async(() => {
@@ -209,6 +212,7 @@ describe('ItemContainerComponent', () => {
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
+    media = fixture.debugElement.injector.get(ObservableMedia);
 
   }));
 
