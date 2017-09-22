@@ -46,7 +46,7 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
               private store: Store<fromRoot.State>) {
   }
 
-  isSelected(id): boolean {
+  isSelected(id: string): boolean {
 
     if (this.selectedAreas) {
       return this.selectedAreas.indexOf(id) >= 0;

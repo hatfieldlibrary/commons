@@ -57,23 +57,41 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
+The npm production build will have used the `environment.prod` file from `src/client/app/environments`.  This file must contain information that will used
+ by the client when used in production.  Edit accordingly before you build.
+ 
 Run `npm run build:prod`. The build artifacts will be stored in the `dist/` directory. This script will build using the `--prod` and `--aot` flags.
+
 
 ### Deploy with Strongloop slc
 [Strongloop slc](http://strong-pm.io/) is a convenient way to bundle the application for deployment.  To install, execute `npm install -g strongloop`. This will install
 Strongloop globally on your system.  Then to build, execute `slc build --pack --install`.  This will create a .tgz file of the project with development dependencies removed. 
 Strongloop can do more for you (see documentation).  For our purposes, we are still using the [forever](https://github.com/foreverjs/forever) daemon and the linux SysV init system.
 
+You will need to provide the server's 'credentials.js` file in the directory `/etc/commons`. 
+
 ### Docker
+
+At the moment, the Commons docker image is experimental and not used in our production setting. To use Docker, you will first need to install it on your machine.
+ 
 A docker file is provided. It can be used to create a container after the project has been built using `npm run build:prod`.
+
+
+To build a docker image from the latest production build, execute `docker build -t <name>/<tag>`, substituting real values for the '<name>' and '<tag>' placeholders shown here.
+
+To pull the existing image from docker hub, use `docker pull mspalti/commons` or pull your own DockerHub image if you have one (and an account on DockerHub).
+
+Sot st
+
+
+
 ## Production Requirements
 
-Session management in the production environment requires redis as the session store. The redis port is configurable in credentials.js. In development, we rely on Passport
-sessions. No session store is required.
+Session management requires you to provide redis as the session store. The redis port is configurable in credentials.js. (In development, we rely on Passport
+sessions. No session store is required.)
 
 ## Running Unit Tests
 
-### Via npm Script
 Run `npm run test` to execute unit tests via [Karma](https://karma-runner.github.io) with code coverage.
 
 ## Running end-to-end Tests
