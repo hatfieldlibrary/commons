@@ -53,12 +53,12 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType[]>;
   areasAvailable: boolean;
-  areaId: number;
+  areaId: string;
   subjectLinkType: string;
   homeScreen: boolean;
   title: string;
   subtitle: string;
-  subjectId: number;
+  subjectId: string;
   state = '';
   watchers: Subscription;
   areas: AreaListItemType[];
@@ -215,7 +215,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   removeSubject(event) {
-    if (this.areaId && this.areaId !== 0) {
+    if (this.areaId && this.areaId !== '0') {
       this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId);
     } else {
       this.router.navigateByUrl('/' + environment.appRoot + '/collection');
@@ -250,26 +250,26 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.initializeAreas();
 
         if (params['areaId']) {
-          this.areaId = +params['areaId'];
+          this.areaId = params['areaId'];
           this.subjectLinkType = 'area';
           if (params['subjectId']) {
-            this.subjectId = +params['subjectId'];
+            this.subjectId = params['subjectId'];
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
           } else {
             this.getCollections(params['areaId']);
           }
         } else if (params['subjectId']) {
-          this.subjectId = +params['subjectId'];
+          this.subjectId = params['subjectId'];
           this.subjectLinkType = 'all';
           this.homeScreen = true;
           this.getAllCollectionsForSubject(params['subjectId']);
           this._setAllCollectionTitle();
-          this.areaId = 0;
+          this.areaId = '0';
 
         }
         else {
-          this.areaId = 0;
+          this.areaId = '0';
           this.subjectLinkType = 'all';
           this.getAllCollections();
           this.homeScreen = true;

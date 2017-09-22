@@ -26,14 +26,13 @@ export const environment = {
    apiHost: 'http://libmedia.willamette.edu',
   //apiHost: 'http://localhost:3001',
   // Base path, do not include beginning forward slash.
-  //appRoot: 'commons',
-  appRoot: '',
+  appRoot: 'commons',
   // Path to the REST API.
    apiRoot: '/commons-rest',
   // apiRoot: '/rest',
   // Path to images.
-  // imagePath: '/commons-images',
-  imagePath: '/images',
+  imagePath: '/commons-images',
+  //imagePath: '/images',
   // Authentication paths.
   authPath: '/auth',
   authCheck: '/check'
