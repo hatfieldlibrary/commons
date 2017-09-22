@@ -69,7 +69,7 @@ export class AllSubjectActionSuccess implements Action {
 export class CurrentSubject implements Action {
   type = SubjectActionTypes.CURRENT_SELECTED_SUBJECT;
 
-  constructor(public payload: number) {
+  constructor(public payload: string) {
   }
 }
 export class RemoveCurrentSubject implements Action {

@@ -33,8 +33,8 @@ export class ItemType {
     image: string;
     url: string;
     searchUrl: string;
-    desc: string;
-    dates: string;
+    description: string;
+    date: string;
     items: string;
     linkOptions: string;
     searchOptions: string;

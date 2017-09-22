@@ -351,9 +351,9 @@ describe('ListsContainerComponent', () => {
   it('should set title to all collections area id is zero', fakeAsync(() => {
     setAllRoute(route);
     component.ngOnInit();
-    component.areaId = '0';
+    component.areaId = 0;
     tick();
-    expect(component.areaId).toEqual('0');
+    expect(component.areaId).toEqual(0);
     expect(component.title).toBeDefined();
     expect(component.subtitle).toEqual('');
     expect(component.title).toContain('All Collections');
@@ -381,7 +381,7 @@ describe('ListsContainerComponent', () => {
   it('should call router navigate to area after when remove subject is called', () => {
     let router = fixture.debugElement.injector.get(Router);
     spyOn(router, 'navigateByUrl');
-    component.areaId = '1';
+    component.areaId = 1;
     component.removeSubject(null);
     expect(router.navigateByUrl).toHaveBeenCalled();
 
