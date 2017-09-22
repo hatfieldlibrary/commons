@@ -121,13 +121,13 @@ describe('Subject Reducers', () => {
   });
 
   it('should find the current subject', () => {
-    let state = reducer(mockState, new CurrentSubject(1));
+    let state = reducer(mockState, new CurrentSubject('1'));
     let result = getSelectedSubject(state);
     expect(result).toEqual({id: 1, name: 'test subject', url: ''});
   });
 
   it('should return the default selected subject with id zero', () => {
-    let state = reducer(mockState, new CurrentSubject(-1));
+    let state = reducer(mockState, new CurrentSubject('-1'));
     let result = getSelectedSubject(state);
     expect(result).toEqual({id: 0, name:'', url:''});
   });

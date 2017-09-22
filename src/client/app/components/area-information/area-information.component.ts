@@ -16,11 +16,9 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output,
-  SimpleChanges
+  ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges
 } from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
-import {SelectedSubject} from "app/shared/data-types/selected-subject";
 
 @Component({
   selector: 'app-area-information',
@@ -28,9 +26,8 @@ import {SelectedSubject} from "app/shared/data-types/selected-subject";
   styleUrls: ['./area-information.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AreaInformationComponent implements OnChanges, OnDestroy{
+export class AreaInformationComponent implements OnChanges{
 
-  @Input() selectedSubject: SelectedSubject;
   @Input() areaInfo: AreaType[];
   description: string;
   url: string;
@@ -57,9 +54,6 @@ export class AreaInformationComponent implements OnChanges, OnDestroy{
         this.linkLabel = changes.areaInfo.currentValue[0].linkLabel;
       }
     }
-  }
-
-  ngOnDestroy(): void {
   }
 
 }

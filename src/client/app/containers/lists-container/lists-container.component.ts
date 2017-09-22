@@ -53,7 +53,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType[]>;
   areasAvailable: boolean;
-  areaId: string;
+  areaId: number;
   subjectLinkType: string;
   homeScreen: boolean;
   title: string;
@@ -197,7 +197,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   _setSelectedSubject(subjectId: string) {
     const subjectsWatcher = this.store.select(fromRoot.getSubject).subscribe(() => {
-      this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+      this.store.dispatch(new subjectAction.CurrentSubject(subjectId));
     });
     this.watchers.add(subjectsWatcher);
 
@@ -215,7 +215,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   removeSubject(event) {
-    if (this.areaId && this.areaId !== '0') {
+    if (this.areaId && this.areaId !== 0) {
       this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId);
     } else {
       this.router.navigateByUrl('/' + environment.appRoot + '/collection');
@@ -250,33 +250,31 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.initializeAreas();
 
         if (params['areaId']) {
-          this.areaId = params['areaId'];
+          this.areaId = +params['areaId'];
           this.subjectLinkType = 'area';
           if (params['subjectId']) {
-            this.subjectId = params['subjectId'];
+            this.subjectId = +params['subjectId'];
             this.getCollectionsBySubject(params['subjectId'], params['areaId']);
 
           } else {
             this.getCollections(params['areaId']);
           }
         } else if (params['subjectId']) {
-          this.subjectId = params['subjectId'];
+          this.subjectId = +params['subjectId'];
           this.subjectLinkType = 'all';
           this.homeScreen = true;
           this.getAllCollectionsForSubject(params['subjectId']);
           this._setAllCollectionTitle();
-          this.areaId = '0';
+          this.areaId = 0;
 
         }
         else {
-          this.areaId = '0';
+          this.areaId = 0;
           this.subjectLinkType = 'all';
           this.getAllCollections();
           this.homeScreen = true;
 
         }
-        this.areaId;
-
 
       });
 
