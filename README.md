@@ -72,17 +72,28 @@ You will need to provide the server's 'credentials.js` file in the directory `/e
 
 ### Docker
 
-At the moment, the Commons docker image is experimental and not used in our production setting. To use Docker, you will first need to install it on your machine.
+At the moment, the docker image is experimental and not used in our production setting. But here are a few things to know. 
+
+To use Docker, you will first need to install it on your machine.
  
-A docker file is provided. It can be used to create a container after the project has been built using `npm run build:prod`.
+A DockerFile is included in the project. 
 
+Before working with Docker, be sure to first build the project with `npm run build:prod`.
 
-To build a docker image from the latest production build, execute `docker build -t <name>/<tag>`, substituting real values for the '<name>' and '<tag>' placeholders shown here.
+Next, to build a docker image from the latest production build, execute `docker build -t <name>/<tag>:latest .`, substituting real values for the '<name>' and '<tag>' placeholders shown here.
+You can push this image to DockerHub (or elsewhere) if you have an account.
 
-To pull the existing image from docker hub, use `docker pull mspalti/commons` or pull your own DockerHub image if you have one (and an account on DockerHub).
+To pull the existing image from DockerHub, use `docker pull mspalti/commons`, or pull your own DockerHub image if you have one (and an account on DockerHub).
 
-Sot st
+If all is proper, on the production host you should be able to start the container with this command: `docker run -v /etc/commons-2.0:/etc/commons-2.0 -p 3000:3000`. (Details may vary.) 
 
+It should be possible to preview the container on your development machine if you:
+
+  1. Install and run Tagger-2 on your local machine.
+  2. Modify the `src/client/app/environments/environment.prod` file accordingly.
+  3. Build the project with `npm run build:prod`
+  4. Build the docker image with `docker build -t <name>/<tag>:latest .`
+  5. Start the docker image with `docker run -v <home>/etc/commons:/etc/commons-2.0 -p 3000:3000` where `<home>` is your local home directory
 
 
 ## Production Requirements
