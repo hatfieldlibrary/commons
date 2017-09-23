@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SearchSvgComponent} from './search-svg.component';
-import {MaterialModule, MdIconModule, MdIconRegistry} from "@angular/material";
+import {MdIconModule, MdIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
 
 describe('SearchSvgComponent', () => {
