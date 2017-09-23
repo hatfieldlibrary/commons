@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloseSvgComponent } from './close-svg.component';
 import {DomSanitizer} from "@angular/platform-browser";
-import {MaterialModule, MdIconModule, MdIconRegistry} from "@angular/material";
+import { MdIconModule, MdIconRegistry} from "@angular/material";
 
 describe('CloseSvgComponent', () => {
   let component: CloseSvgComponent;
