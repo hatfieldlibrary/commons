@@ -19,9 +19,6 @@
   background: #eee;
   margin: 0;
 }
-.hide-image {
-  display: none;
-}
 a {
   color: rgb(15, 149, 159);
   transition-property: color;
@@ -35,131 +32,27 @@ a:visited {
 a.mat-button, a.mat-button:visited {
   color: #2f2f2f;
 }
-
-
-md-sidenav-container {
-  background: #423e3e;
-}
-
-app-subject-selector .mat-list .mat-list-item .mat-list-item-content {
-  padding: 0 4px;
-}
-
-app-subject-selector md-list {
-  display: inline-flex !important;
-}
-
 .fill-remaining-space {
   flex: 1 1 auto;
-}
-
-.collection-list-item {
-  border-bottom: 1px solid #eee;
-}
-
-.collection-list-item:hover {
-  background-color: #eee;
-}
-
-.collection-list-item a {
-  text-decoration: none;
-}
-
-app-item-container .mat-list .mat-list-item div.mat-list-item-content.mat-ripple {
-  padding: 0 0;
-}
-
-.mat-sidenav-container {
-  background-color: transparent !important;
-}
-
-md-card {
-  background: #fff;
-}
-
-
-.area-color {
-  color: #776a6a;
-}
-.margin-for-mobile {
-  margin-left: 4px;
-  margin-right: 4px;
-}
-.hide-for-mobile {
-  display: none;
-}
-.visible-nav {
-  opacity: 1;
-}
-.hidden-nav {
-  opacity: 0;
 }
 .accent-button {
   text-transform: uppercase;
 }
-
-.main-content-area {
-
-  padding-bottom: 80px !important;
+md-card {
+  background: #fff;
 }
-
-.footer {
-  background: #eee;
-  height: 200px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: #999;
-}
-
-.mat-sidenav-content {
-  overflow: hidden !important;
-}
-
-.mat-sidenav {
-  background: #ffffff !important;
-}
-
-/*.container-fix {*/
-/*position: absolute !important;*/
-/*right: 0;*/
-/*width: 200px;*/
-/*z-index: 1000;*/
-/*min-height: 300px !important;*/
-
-/*}*/
-md-toolbar {
-  z-index: 700;
-}
-
-md-toolbar button {
-  background: #000;
-  border-width: 0;
-}
-
-app-lock-svg .mat-icon {
-  width: 40px;
-  height: 40px;
-  font-size: 56px;
-}
-
-form.app-links button {
-  min-width: 40px !important;
-  max-width: 50px;
-  max-height: 35px;
-  padding: 0;
-}
-
-.mat-chip.mat-chip-selected:not(.mat-basic-chip) {
-  background-color: #3faab2 !important;
-}
-
 md-chip {
   cursor: pointer;
 }
-
 md-chip .mat-icon {
   height: 15px;
 }
-body {
-  background-color: #eee;
+/* Used by both container components */
+.main-content-area {
+  padding-bottom: 80px !important;
 }
-
+/* This rule needs to be defined here and not in the subject selector
+   component. */
+.subject-selector-container .mat-list .mat-list-item .mat-list-item-content {
+  padding: 0 4px !important;
+}

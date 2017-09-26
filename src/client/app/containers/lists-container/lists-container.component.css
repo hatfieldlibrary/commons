@@ -11,3 +11,14 @@
   font-style: normal;
 }
 
+.collection-list-item {
+  border-bottom: 1px solid #eee;
+}
+
+.collection-list-item:hover {
+  background-color: #eee;
+}
+
+.collection-list-item a {
+  text-decoration: none;
+}
