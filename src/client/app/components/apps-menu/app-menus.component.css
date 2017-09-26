@@ -2,10 +2,10 @@ md-toolbar {
   background-color: rgba(0,0,0, 0.7);
   color:#fff;
 }
-md-sidenav md-toolbar {
-  background-color: #ccc;
-  color:#fff;
+md-toolbar {
+  z-index: 700;
 }
-md-sidenav {
-  position: fixed;
+md-toolbar button {
+  border-width: 0;
 }
+
