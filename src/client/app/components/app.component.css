@@ -17,4 +17,22 @@
 
 md-sidenav {
   position: fixed;
+  width: 200px;
+}
+
+md-sidenav md-toolbar {
+  background-color: #ccc;
+  color:#fff;
+}
+
+.mat-sidenav-content {
+  overflow: hidden !important;
+}
+
+.mat-sidenav {
+  background: #ffffff !important;
+}
+
+.mat-sidenav-container {
+  background-color: transparent !important;
 }
