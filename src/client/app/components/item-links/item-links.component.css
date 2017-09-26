@@ -11,3 +11,9 @@ md-input-container div.mat-input-underline {
   border-top-width: 2px !important;
   border-color: #791716 !important;
 }
+form.app-links button {
+  min-width: 40px !important;
+  max-width: 50px;
+  max-height: 35px;
+  padding: 0;
+}

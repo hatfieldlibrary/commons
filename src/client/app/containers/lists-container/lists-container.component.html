@@ -50,7 +50,7 @@
               <div style="margin-top: 25px;"></div>
 
               <md-card-subtitle class="area-info">
-                <app-area-information *ngIf="!homeScreen" [selectedSubject]="selectedSubject$ | async"
+                <app-area-information *ngIf="!homeScreen"
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
                 <app-home-screen *ngIf="homeScreen"
                                  (removeSubject)="removeSubject($event)"></app-home-screen>

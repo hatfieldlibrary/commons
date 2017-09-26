@@ -125,6 +125,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       });
     }
     this.selectedAreaIds = selected.slice(0, -1);
+
   }
 
   ngOnInit() {

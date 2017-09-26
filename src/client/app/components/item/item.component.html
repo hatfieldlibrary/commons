@@ -45,14 +45,14 @@
       {{item?.collection.title}}
     </md-card-title>
 
-    <p [innerHTML]="item?.collection.desc" style="font-size: 1.2em"></p>
+    <p [innerHTML]="item?.collection.description" style="font-size: 1.2em"></p>
 
     <md-list>
-      <md-list-item *ngIf="item?.collection.dates">
+      <md-list-item *ngIf="item?.collection.date">
         <div fxLayout="row" fxFlexAlign="center">
           <h4>Dates: </h4>
           <h4 style="color: #666;margin-left: 12px;">
-            {{item?.collection.dates}}
+            {{item?.collection.date}}
           </h4>
         </div>
       </md-list-item>

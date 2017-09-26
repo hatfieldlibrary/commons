@@ -58,7 +58,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   homeScreen: boolean;
   title: string;
   subtitle: string;
-  subjectId: number;
+  subjectId: string;
   state = '';
   watchers: Subscription;
   areas: AreaListItemType[];
@@ -197,7 +197,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   _setSelectedSubject(subjectId: string) {
     const subjectsWatcher = this.store.select(fromRoot.getSubject).subscribe(() => {
-      this.store.dispatch(new subjectAction.CurrentSubject(+subjectId));
+      this.store.dispatch(new subjectAction.CurrentSubject(subjectId));
     });
     this.watchers.add(subjectsWatcher);
 
@@ -275,8 +275,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.homeScreen = true;
 
         }
-        this.areaId;
-
 
       });
 
