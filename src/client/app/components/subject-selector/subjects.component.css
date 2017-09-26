@@ -61,3 +61,30 @@ Attempts to define here failed.
   margin-left: 10px;
   margin-right: 10px;
 }
+.margin-for-mobile {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.hide-for-mobile {
+  display: none;
+}
+.visible-nav {
+  opacity: 1;
+}
+.hidden-nav {
+  opacity: 0;
+}
+md-list.subject-list {
+  display: inline-flex !important;
+}
+/*
+ * not clear why, but this rule and it's variants only works when
+ * it's defined in the global styles.css file.
+
+.subject-selector-container .mat-list .mat-list-item .mat-list-item-content {
+  padding: 0 4px !important;
+}
+ */
+
+
+

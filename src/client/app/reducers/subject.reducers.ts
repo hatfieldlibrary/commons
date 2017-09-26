@@ -72,9 +72,9 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     case SubjectActionTypes.CURRENT_SELECTED_SUBJECT: {
 
-      const selectedId: number = <number>action.payload;
+      const selectedId: string = <string>action.payload;
       let selected = state.subjects.find((subject) => {
-        return subject.id === selectedId;
+        return subject.id === +selectedId;
       });
       if (!selected) {
         selected = initialState.selectedSubject;

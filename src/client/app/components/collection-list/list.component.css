@@ -36,3 +36,7 @@ app-collection-list .mat-input-wrapper {
   margin-top: 10px;
   padding: 6px 12px;
 }
+
+.mat-chip.mat-chip-selected:not(.mat-basic-chip) {
+  background-color: #3faab2 !important;
+}

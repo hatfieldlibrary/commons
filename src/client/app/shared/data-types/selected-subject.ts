@@ -19,7 +19,7 @@
  * Created by mspalti on 4/21/17.
  */
 export class SelectedSubject {
-  id: string;
+  id: number;
   name: string;
 
 }

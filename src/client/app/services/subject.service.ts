@@ -29,8 +29,8 @@ export class SubjectService {
 
   constructor(private http: Http) {}
 
-  getSubjects(areaId: string): Observable<SubjectType[]> {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/subject/area/' + areaId)
+  getSubjects(areaIds: string): Observable<SubjectType[]> {
+    return this.http.get(environment.apiHost + environment.apiRoot + '/subject/area/' + areaIds)
       .map(res => res.json());
   }
 

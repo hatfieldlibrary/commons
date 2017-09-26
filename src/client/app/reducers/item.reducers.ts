@@ -27,14 +27,13 @@ export interface State {
 }
 
 const initialCollection = {
-
   id: 0,
   title: '',
   image: '',
   url: '',
   searchUrl: '',
-  desc: '',
-  dates: '',
+  description: '',
+  date: '',
   items: '',
   linkOptions: '',
   searchOptions: '',
