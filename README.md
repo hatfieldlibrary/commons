@@ -83,7 +83,7 @@ Before working with Docker, be sure to first build the project with `npm run bui
 Next, to build a docker image from the latest production build, execute `docker build -t <name>/<tag>:latest .`, substituting real values for the `<name>` and `<tag>` placeholders shown here.
 You can push this image to DockerHub (or elsewhere) if you have an account.
 
-To pull the existing image from DockerHub, use `docker pull mspalti/commons`, or pull your own DockerHub image if you have one (and an account on DockerHub).
+To pull the existing image from DockerHub, use `docker pull mspalti/commons`, or pull your own DockerHub image if you have one.
 
 If all is proper, on the production host you should be able to start the container with this command: `docker run -v /etc/commons-2.0:/etc/commons-2.0 -p 3000:3000`. (Details may vary.) 
 
