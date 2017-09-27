@@ -80,7 +80,7 @@ A DockerFile is included in the project.
 
 Before working with Docker, be sure to first build the project with `npm run build:prod`.
 
-Next, to build a docker image from the latest production build, execute `docker build -t <name>/<tag>:latest .`, substituting real values for the '<name>' and '<tag>' placeholders shown here.
+Next, to build a docker image from the latest production build, execute `docker build -t <name>/<tag>:latest .`, substituting real values for the `<name>` and `<tag>` placeholders shown here.
 You can push this image to DockerHub (or elsewhere) if you have an account.
 
 To pull the existing image from DockerHub, use `docker pull mspalti/commons`, or pull your own DockerHub image if you have one (and an account on DockerHub).
