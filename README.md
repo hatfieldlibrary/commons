@@ -10,12 +10,11 @@ The Commons is designed for publishing information about digital projects and co
  repository services through shared authentication and authorization and targeted search capability.  
 
 The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2) public API for data.  The Commons is loosely integrated with the [dspace-client project](https://github.com/hatfieldlibrary/dspace-angular-client) (a standalone DSpace client that works with a 
- modified version of the DSpace 6 REST API servlet). [Passport](http://passportjs.org/) middleware is available for CAS authentication. Other authentication services can be used by installing and configuring the required Passport authentication strategy. New 
- authentication strategies will require updates to credentials.js (described below) and the auth-config module. [Redis](https://redis.io/) is used as the session store in
+ modified version of the DSpace 6 REST API servlet). [Passport](http://passportjs.org/) middleware is used for CAS authentication. (Other authentication services can be used by installing and configuring the required Passport authentication strategy. See `server/config/auth-config.ts`)    Authentication strategies require information provided in the credentials.js file (described below). [Redis](https://redis.io/) is used as the session store in
  production environments and is necessary for deployment.
 
 The project uses [Angular](https://angular.io/), [ngrx](https://github.com/ngrx), and [Angular Material](https://material.angular.io/).
-The [Angular-CLI](https://cli.angular.io/) is used to develop, test and build. The  project is published within a [Node.js](https://nodejs.org/en/) server
+The [Angular-CLI](https://cli.angular.io/) is used to develop, test and build. The  project is published with a [Node.js](https://nodejs.org/en/) server
  runtime using [Express](https://expressjs.com/) middleware.
 Both client and server code is written in Typescript. 
 
@@ -80,10 +79,10 @@ A DockerFile is included in the project.
 
 Before working with Docker, be sure to first build the project with `npm run build:prod`.
 
-Next, to build a docker image from the latest production build, execute `docker build -t <name>/<tag>:latest .`, substituting real values for the '<name>' and '<tag>' placeholders shown here.
+Next, to build a docker image from the latest production build, execute `docker build -t <name>/<tag>:latest .`, substituting real values for the `<name>` and `<tag>` placeholders shown here.
 You can push this image to DockerHub (or elsewhere) if you have an account.
 
-To pull the existing image from DockerHub, use `docker pull mspalti/commons`, or pull your own DockerHub image if you have one (and an account on DockerHub).
+To pull the existing image from DockerHub, use `docker pull mspalti/commons`, or pull your own DockerHub image if you have one.
 
 If all is proper, on the production host you should be able to start the container with this command: `docker run -v /etc/commons-2.0:/etc/commons-2.0 -p 3000:3000`. (Details may vary.) 
 
