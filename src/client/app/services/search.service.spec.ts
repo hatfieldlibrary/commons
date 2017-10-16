@@ -25,7 +25,7 @@ describe('SearchService', () => {
 
   it('should get the query for list of options', inject([SearchService], (service: SearchService) => {
     let href = service.getOptionsQuery('bigcollection', '2000');
-    expect(href).toEqual('http://libmedia.willamette.edu/cview/bigcollection.html#!browse:search:bigcollection/date^2000^all^and!');
+    expect(href).toEqual('https://libmedia.willamette.edu/cview/bigcollection.html#!browse:search:bigcollection/date^2000^all^and!');
   }));
 
   it('should get the query for search', inject([SearchService], (service: SearchService) => {
