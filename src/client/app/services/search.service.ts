@@ -21,7 +21,7 @@ export class SearchService {
    */
   getOptionsQuery(collection: string, terms: string): string {
     const query = encodeURIComponent(terms);
-    const href = `http://libmedia.willamette.edu/cview/${collection}.html#!browse:search:${collection}/date^${query}^all^and!`;
+    const href = `https://libmedia.willamette.edu/cview/${collection}.html#!browse:search:${collection}/date^${query}^all^and!`;
     return href;
   }
 
