@@ -16,9 +16,9 @@
  */
 
 import {
-  Component, OnInit, ChangeDetectionStrategy, Renderer2, OnDestroy, Inject
+  Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject
 } from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import {Observable} from 'rxjs/Observable';

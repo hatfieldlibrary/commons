@@ -19,21 +19,21 @@
 
   <h2 *ngIf="related.length > 0">Similar Items</h2>
 
-  <md-grid-list cols="{{columns}}" rowHeight="320" gutterSize="6">
-    <md-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1">
-      <md-card>
-        <md-card-header>
-          <md-card-title style="margin-left: -20px;">
+  <mat-grid-list cols="{{columns}}" rowHeight="320" gutterSize="6">
+    <mat-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title style="margin-left: -20px;">
             {{collection.title}}
-          </md-card-title>
-        </md-card-header>
-        <img md-card-image src="{{imagePath}}/resources/img/thumb/{{collection.image}}">
-        <md-card-actions align="end">
-          <button md-button (click)="scrollToTop()"[routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">VIEW</button>
-        </md-card-actions>
-      </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+          </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="{{imagePath}}/resources/img/thumb/{{collection.image}}">
+        <mat-card-actions align="end">
+          <button mat-button (click)="scrollToTop()"[routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">VIEW</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 
 </div>
 

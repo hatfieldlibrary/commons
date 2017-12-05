@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatePickerSvgComponent } from './date-picker-svg.component';
-import {MdIconModule, MdIconRegistry} from "@angular/material";
+import {MatIconModule, MatIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
 
 describe('DatePickerSvgComponent', () => {
@@ -11,13 +11,13 @@ describe('DatePickerSvgComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DatePickerSvgComponent ],
-      imports: [MdIconModule]
+      imports: [MatIconModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    let iconRegistry = TestBed.get(MdIconRegistry);
+    let iconRegistry = TestBed.get(MatIconRegistry);
     let sanitizer = TestBed.get(DomSanitizer);
     iconRegistry.addSvgIcon('date-picker', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_date_range_black_24px.svg'));
     fixture = TestBed.createComponent(DatePickerSvgComponent);

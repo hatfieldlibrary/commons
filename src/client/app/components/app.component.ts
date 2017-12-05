@@ -24,7 +24,7 @@ import {NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
 } from "@angular/common";
-import {MdSidenav} from "@angular/material";
+import {MatSidenav} from "@angular/material";
 import {MenuInteractionService} from "../services/menu/menu-interaction.service";
 import {Store} from "@ngrx/store";
 import * as fromRoot from '../reducers';
@@ -56,7 +56,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
-  @ViewChild('sidenav') sideNavigate: MdSidenav;
+  @ViewChild('sidenav') sideNavigate: MatSidenav;
   @ViewChild('appcontent') appContent: ElementRef;
 
   scrollable: Element;

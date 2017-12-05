@@ -18,7 +18,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AreaInformationComponent} from './area-information.component';
-import {MdButtonModule, MdCardModule, MdChipsModule} from "@angular/material";
+import {MatButtonModule, MatCardModule, MatChipsModule} from "@angular/material";
 import {EventEmitter, SimpleChange} from "@angular/core";
 
 describe('AreaInformationComponent', () => {
@@ -40,9 +40,9 @@ describe('AreaInformationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AreaInformationComponent],
       imports: [
-        MdCardModule,
-        MdChipsModule,
-        MdButtonModule,
+        MatCardModule,
+        MatChipsModule,
+        MatButtonModule,
       ]
     })
       .compileComponents();

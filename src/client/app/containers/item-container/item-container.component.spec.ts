@@ -19,11 +19,11 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import {ItemContainerComponent} from './item-container.component';
 import {ItemComponent} from "../../components/item/item.component";
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule,
-  MdSelectModule,
-  MdSidenavModule,
-  MdToolbarModule
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatIconModule, MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatToolbarModule
 } from "@angular/material";
 import {Store, StoreModule} from "@ngrx/store";
 import {RouterTestingModule} from "@angular/router/testing";
@@ -44,7 +44,7 @@ import {FooterComponent} from "../../components/footer/footer.component";
 import {ItemLinksComponent} from "../../components/item-links/item-links.component";
 import {SearchSvgComponent} from "../../components/svg/search-svg/search-svg.component";
 import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component";
-import {DEFAULT_BREAKPOINTS, FlexLayoutModule, ObservableMedia} from "@angular/flex-layout";
+import {FlexLayoutModule, ObservableMedia} from "@angular/flex-layout";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpModule} from "@angular/http";
@@ -152,20 +152,20 @@ describe('ItemContainerComponent', () => {
       ],
       imports: [
         FlexLayoutModule,
-        MdButtonModule,
-        MdCardModule,
-        MdListModule,
-        MdToolbarModule,
-        MdSidenavModule,
-        MdInputModule,
-        MdIconModule,
-        MdSelectModule,
-        MdGridListModule,
-        MdCheckboxModule,
-        MdChipsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatListModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatInputModule,
+        MatIconModule,
+        MatSelectModule,
+        MatGridListModule,
+        MatCheckboxModule,
+        MatChipsModule,
         BrowserModule,
         BrowserAnimationsModule,
-        MdInputModule,
+        MatInputModule,
         FormsModule,
         ReactiveFormsModule,
         HttpModule,

@@ -21,6 +21,9 @@ import * as areas from '../actions/area.actions';
 import {Observable} from 'rxjs/Observable';
 import {AreaService} from '../services/area.service';
 import {Action} from '../actions/action.interface';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AreaEffects {

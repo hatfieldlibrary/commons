@@ -21,6 +21,9 @@ import * as subjects from '../actions/subject-actions';
 import {Observable} from "rxjs";
 import {Action} from '../actions/action.interface';
 import {SubjectService} from "../services/subject.service";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class SubjectEffects {

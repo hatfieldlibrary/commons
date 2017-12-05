@@ -24,6 +24,9 @@ import {Observable} from "rxjs";
 import {CollectionService} from "../services/collection.service";
 import * as collection from '../actions/collection.actions';
 import {Action} from '../actions/action.interface';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class CollectionEffects {

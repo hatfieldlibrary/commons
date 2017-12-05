@@ -31,14 +31,13 @@ export class CollectionService {
   constructor(private http: Http) {}
 
   getCollectionsByAreaId(id:string): Observable<CollectionType[]> {
-    // temporary test data source
     return this.http.get(environment.apiHost + environment.apiRoot + '/collection/area/' + id)
       .map(res => res.json());
   }
 
   getCollectionsByAreaSubject(id: string, areaId:string): Observable<CollectionType[]> {
     return this.http.get(environment.apiHost + environment.apiRoot + '/collection/subject/' + id + '/area/' + areaId)
-      .map(res => res.json());
+      .map(res => {console.log(res); return res.json()});
   }
 
   getCollectionsBySubject(id: string): Observable<CollectionType[]> {
@@ -47,7 +46,6 @@ export class CollectionService {
   }
 
   getAllCollections() : Observable<CollectionType[]> {
-
     return this.http.get(environment.apiHost + environment.apiRoot + '/collection')
       .map(res => res.json());
   }

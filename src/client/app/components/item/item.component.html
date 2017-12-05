@@ -37,34 +37,34 @@
        fxFlex.lg="60"
        fxFlex.gt-lg="50">
     <div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" >
-      <a md-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
-        <md-icon><app-back-black-svg></app-back-black-svg></md-icon>&nbsp;Back to List
+      <a mat-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
+        <mat-icon><app-back-black-svg></app-back-black-svg></mat-icon>&nbsp;Back to List
       </a>
     </div>
-    <md-card-title fxHide="true" fxShow.gt-sm="true" style="margin-top: 20px;">
+    <mat-card-title fxHide="true" fxShow.gt-sm="true" style="margin-top: 20px;">
       {{item?.collection.title}}
-    </md-card-title>
+    </mat-card-title>
 
     <p [innerHTML]="item?.collection.description" style="font-size: 1.2em"></p>
 
-    <md-list>
-      <md-list-item *ngIf="item?.collection.date">
+    <mat-list>
+      <mat-list-item *ngIf="item?.collection.date">
         <div fxLayout="row" fxFlexAlign="center">
           <h4>Dates: </h4>
           <h4 style="color: #666;margin-left: 12px;">
             {{item?.collection.date}}
           </h4>
         </div>
-      </md-list-item>
-      <md-list-item *ngIf="item?.collection.items">
+      </mat-list-item>
+      <mat-list-item *ngIf="item?.collection.items">
         <div fxLayout="row">
           <h4>Collection size: </h4>
           <h4 style="color: #666;margin-left: 12px;">
             {{item?.collection.items}}
           </h4>
         </div>
-      </md-list-item>
-    </md-list>
+      </mat-list-item>
+    </mat-list>
 
   </div>
 
@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<md-divider style="margin: 40px 0"></md-divider>
+<mat-divider style="margin: 40px 0"></mat-divider>
 
 <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-sm="40" style="margin-top: 50px;">
 
@@ -98,12 +98,12 @@
        fxFlex.lg="60"
        fxFlex.gt-lg="50">
 
-    <md-card-subtitle>This collection is part of</md-card-subtitle>
-    <md-card-title>{{item?.category?.title}}</md-card-title>
+    <mat-card-subtitle>This collection is part of</mat-card-subtitle>
+    <mat-card-title>{{item?.category?.title}}</mat-card-title>
 
     <p [innerHTML]="item?.category?.description" style="font-size: 1.2em"></p>
 
-    <a md-raised-button color="accent" class="accent-button" href="{{item?.category?.url}}"
+    <a mat-raised-button color="accent" class="accent-button" href="{{item?.category?.url}}"
        target="_blank">{{item?.category?.linkLabel}}</a>
 
   </div>
@@ -117,25 +117,25 @@
        fxShow.gt-sm="true"
        *ngIf="item?.category?.id === 1 || item?.category?.id === 7">
 
-    <md-list>
-      <md-list-item>
-        <a md-button style="width:100%" href="http://libmedia.willamette.edu/academiccommons/student/index.php" target="_blank">
+    <mat-list>
+      <mat-list-item>
+        <a mat-button style="width:100%" href="http://libmedia.willamette.edu/academiccommons/student/index.php" target="_blank">
           <div fxLayout="row" fxLayoutAlign="start center">
             <app-info-svg></app-info-svg>
             Submission Instructions
           </div>
         </a>
-      </md-list-item>
-      <md-list-item>
-        <a md-button style="width:100%"
+      </mat-list-item>
+      <mat-list-item>
+        <a mat-button style="width:100%"
            href="https://libguides.willamette.edu/thesis_submission" target="_blank">
           <div fxLayout="row" fxLayoutAlign="start center">
             <app-run-svg></app-run-svg>
             Tutorial
           </div>
         </a>
-      </md-list-item>
-    </md-list>
+      </mat-list-item>
+    </mat-list>
   </div>
 
 </div>
