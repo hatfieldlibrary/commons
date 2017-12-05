@@ -27,9 +27,9 @@
 
   </app-title-header>
 
-  <md-card class="main-content-area" style="padding:0;margin-top: 145px;">
+  <mat-card class="main-content-area" style="padding:0;margin-top: 145px;">
 
-    <md-card-content style="background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
+    <mat-card-content style="background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
     background-repeat: no-repeat,repeat-x;
     background-position: top center,top center;">
 
@@ -49,12 +49,12 @@
 
               <div style="margin-top: 25px;"></div>
 
-              <md-card-subtitle class="area-info">
+              <mat-card-subtitle class="area-info">
                 <app-area-information *ngIf="!homeScreen"
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
                 <app-home-screen *ngIf="homeScreen"
                                  (removeSubject)="removeSubject($event)"></app-home-screen>
-              </md-card-subtitle>
+              </mat-card-subtitle>
 
               <app-collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async "
                                    [selectedSubject]="selectedSubject$ | async"
@@ -74,9 +74,9 @@
 
       </div>
 
-    </md-card-content>
+    </mat-card-content>
 
-  </md-card>
+  </mat-card>
 
   <app-footer></app-footer>
 

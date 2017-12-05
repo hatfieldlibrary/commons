@@ -19,12 +19,13 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ItemSelectComponent} from './item-select.component';
 import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
-import {MdIconModule, MdSelectModule} from "@angular/material";
+import {MatIconModule, MatSelectModule} from "@angular/material";
 import {SearchService} from "../../services/search.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MockBackend} from "@angular/http/testing";
 import {XHRBackend} from "@angular/http";
 import {Observable} from "rxjs/Observable";
+import 'rxjs/add/observable/of';
 
 describe('ItemSelectComponent', () => {
   let component: ItemSelectComponent;
@@ -38,8 +39,8 @@ describe('ItemSelectComponent', () => {
         DatePickerSvgComponent
       ],
       imports: [
-        MdSelectModule,
-        MdIconModule,
+        MatSelectModule,
+        MatIconModule,
         BrowserAnimationsModule
       ],
       providers: [

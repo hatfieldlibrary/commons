@@ -38,13 +38,13 @@ a.mat-button, a.mat-button:visited {
 .accent-button {
   text-transform: uppercase;
 }
-md-card {
+mat-card {
   background: #fff;
 }
-md-chip {
+mat-chip {
   cursor: pointer;
 }
-md-chip .mat-icon {
+mat-chip .mat-icon {
   height: 15px;
 }
 /* Used by both container components */

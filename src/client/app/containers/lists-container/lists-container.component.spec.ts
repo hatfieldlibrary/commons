@@ -23,11 +23,11 @@ import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/t
 import {RouterTestingModule} from '@angular/router/testing';
 import {Store, Action} from '@ngrx/store';
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule,
-  MdSelectModule,
-  MdSidenavModule,
-  MdToolbarModule
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatIconModule, MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatToolbarModule
 } from '@angular/material';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -170,20 +170,20 @@ describe('ListsContainerComponent', () => {
       ],
       imports: [
         FlexLayoutModule,
-        MdButtonModule,
-        MdCardModule,
-        MdListModule,
-        MdToolbarModule,
-        MdSidenavModule,
-        MdInputModule,
-        MdIconModule,
-        MdSelectModule,
-        MdChipsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatListModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatInputModule,
+        MatIconModule,
+        MatSelectModule,
+        MatChipsModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpModule,
         ReactiveFormsModule,
-        MdCheckboxModule,
+        MatCheckboxModule,
         FormsModule,
         RouterTestingModule
       ],

@@ -21,9 +21,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, RequestOptions} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MdButtonModule, MdSelectModule, MdCardModule, MdListModule, MdToolbarModule, MdIconModule, MdChipsModule,
-  MdSidenavModule, MdIconRegistry, MdInputModule, MdGridListModule, MdCheckboxModule,
-  MdProgressSpinnerModule
+  MatButtonModule, MatSelectModule, MatCardModule, MatListModule, MatToolbarModule, MatIconModule, MatChipsModule,
+  MatSidenavModule, MatIconRegistry, MatInputModule, MatGridListModule, MatCheckboxModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
@@ -148,18 +148,18 @@ export const appRoutes = [
   ],
   imports: [
     FlexLayoutModule,
-    MdButtonModule,
-    MdCardModule,
-    MdListModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdInputModule,
-    MdIconModule,
-    MdSelectModule,
-    MdChipsModule,
-    MdGridListModule,
-    MdCheckboxModule,
-    MdProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule,
+    MatListModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatInputModule,
+    MatIconModule,
+    MatSelectModule,
+    MatChipsModule,
+    MatGridListModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -214,7 +214,7 @@ export const appRoutes = [
     RelatedService,
     AuthCheckService,
     MenuInteractionService,
-    MdIconRegistry,
+    MatIconRegistry,
     UtilitiesService,
     SetIntervalService,
     SetTimeoutService,

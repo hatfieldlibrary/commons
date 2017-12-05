@@ -28,7 +28,7 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import {SetIntervalService} from "../../services/timers/interval.service";
-import {MdListItem} from "@angular/material";
+import {MatListItem} from "@angular/material";
 
 
 @Component({
@@ -44,7 +44,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() type: string;
   @ViewChild('container') container: ElementRef;
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
-  @ViewChildren(MdListItem, {read: ElementRef}) contentEls: QueryList<ElementRef>;
+  @ViewChildren(MatListItem, {read: ElementRef}) contentEls: QueryList<ElementRef>;
 
   selectedSubject: SubjectType;
   watcher: Subscription;
@@ -97,15 +97,16 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Resets the subject ilst in store.
    */
   resetList(subjectId): void {
-    if (subjectId !== this.selectedSubject.id) {
-      this.store.dispatch(new listActions.CollectionReset());
-    }
+   if (subjectId !== this.selectedSubject.id) {
+     this.store.dispatch(new listActions.CollectionReset());
+   }
   }
 
   /**
    * Set up selected subject watcher.
    */
   ngOnInit(): void {
+
     const subjectWatcher = this.store.select(fromRoot.getSelectedSubject).subscribe((id) => {
       this.selectedSubject = id;
     });
@@ -232,6 +233,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.watcher.add(changeWatcher);
+
   }
 
   /**
