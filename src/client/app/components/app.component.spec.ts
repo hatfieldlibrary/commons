@@ -33,7 +33,7 @@ import {CloseSvgComponent} from "./svg/close-svg/close-svg.component";
 import {BackSvgComponent} from "./svg/back-svg/back-svg.component";
 import {HomeBlackSvgComponent} from "./svg/home-black-svg/home-black-svg.component";
 import {MenuSvgComponent} from "./svg/menu-svg/menu-svg.component";
-import {MdCheckboxModule, MdIconModule, MdSidenavModule, MdToolbarModule} from "@angular/material";
+import {MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule} from "@angular/material";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Subject} from "rxjs/Subject";
@@ -105,13 +105,13 @@ describe('AppComponent', () => {
         MockComponent
       ],
       imports: [
-        MdToolbarModule,
-        MdSidenavModule,
+        MatToolbarModule,
+        MatSidenavModule,
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        MdCheckboxModule,
-        MdIconModule,
+        MatCheckboxModule,
+        MatIconModule,
         RouterTestingModule.withRoutes([
           {path: 'commons/item', component: MockComponent},
           {path: 'commons/collection', component: MockComponent}

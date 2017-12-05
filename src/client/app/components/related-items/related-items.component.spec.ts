@@ -18,7 +18,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RelatedItemsComponent} from './related-items.component';
-import {MdButtonModule, MdCardModule, MdGridListModule} from "@angular/material";
+import {MatButtonModule, MatCardModule, MatGridListModule} from "@angular/material";
 import {RouterTestingModule} from "@angular/router/testing";
 
 
@@ -32,9 +32,9 @@ describe('RelatedItemsComponent', () => {
         RelatedItemsComponent
       ],
       imports: [
-        MdCardModule,
-        MdButtonModule,
-        MdGridListModule,
+        MatCardModule,
+        MatButtonModule,
+        MatGridListModule,
         RouterTestingModule
       ]
     })

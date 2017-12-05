@@ -18,7 +18,7 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {ItemComponent} from './item.component';
-import {MdButtonModule, MdGridListModule, MdInputModule, MdListModule, MdSelectModule} from "@angular/material";
+import {MatButtonModule, MatGridListModule, MatInputModule, MatListModule, MatSelectModule} from "@angular/material";
 import {LockSvgComponent} from "../svg/lock-svg/lock-svg.component";
 import {SearchSvgComponent} from "../svg/search-svg/search-svg.component";
 import {FormsModule} from "@angular/forms";
@@ -38,6 +38,8 @@ import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.com
 import {UtilitiesService} from "../../services/utilities.service";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {SimpleChange} from "@angular/core";
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/from';
 
 let mockItem = {
   collection: {
@@ -97,11 +99,11 @@ describe('ItemComponent', () => {
         MenuSvgComponent
       ],
       imports: [
-        MdListModule,
-        MdButtonModule,
-        MdInputModule,
-        MdSelectModule,
-        MdGridListModule,
+        MatListModule,
+        MatButtonModule,
+        MatInputModule,
+        MatSelectModule,
+        MatGridListModule,
         FormsModule,
         RouterTestingModule,
         // needed to test ObservableMedia

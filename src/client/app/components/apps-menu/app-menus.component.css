@@ -1,11 +1,11 @@
-md-toolbar {
+mat-toolbar {
   background-color: rgba(0,0,0, 0.7);
   color:#fff;
 }
-md-toolbar {
+mat-toolbar {
   z-index: 700;
 }
-md-toolbar button {
+mat-toolbar button {
   border-width: 0;
 }
 

@@ -1,13 +1,13 @@
-<md-card>
+<mat-card>
 
-  <md-card-content>
+  <mat-card-content>
 
     <div fxLayout="column"
          fxFlex="100"
          fxLayoutAlign="center center"
          *ngIf="restricted === true && !isAuthenticated">
-      <a md-raised-button color="primary" href="{{authenticationPath}}">WU Login</a>
-      <div md-subheader><br>Login required for access.</div>
+      <a mat-raised-button color="primary" href="{{authenticationPath}}">WU Login</a>
+      <div mat-subheader><br>Login required for access.</div>
     </div>
 
     <div
@@ -21,13 +21,13 @@
       <div style="padding-left: 30px"
            *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig' && linkOptions !== 'opts'">
 
-        <a md-raised-button color="primary" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
+        <a mat-raised-button color="primary" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
       </div>
 
       <div style="padding-left: 30px"
            *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'itm'">
 
-        <a md-raised-button color="primary" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
+        <a mat-raised-button color="primary" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
       </div>
 
       <div *ngIf="linkOptions === 'opts'" style="width:100%;">
@@ -43,7 +43,7 @@
               class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch();searchForm.reset();" novalidate>
           <div fxFlex fxLayout="row" fxLayoutAlign="start start">
             <div style="width: 33px;padding-top: 6px;">
-              <!--<button md-button (click)="simpleSearch();" class="btn" color="default"-->
+              <!--<button mat-button (click)="simpleSearch();" class="btn" color="default"-->
               <!--[disabled]="!isAuthenticated && restricted">-->
               <a (click)="simpleSearch();">
                 <app-search-svg></app-search-svg>
@@ -51,12 +51,12 @@
               <!--</button>-->
             </div>
             <div fxFlex>
-              <md-input-container
+              <mat-input-container
                 fxFlex="100"
                 fxFlex.gt-xs="70">
-                <input mdInput id="terms" [(ngModel)]="model.terms" name="search"
+                <input matInput id="terms" [(ngModel)]="model.terms" name="search"
                        placeholder="Enter Search Terms">
-              </md-input-container>
+              </mat-input-container>
             </div>
           </div>
 
@@ -66,6 +66,6 @@
 
     </div>
 
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
 

@@ -4,7 +4,7 @@ import {AppMenusComponent} from './app-menus.component';
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 import {
-   MdCheckboxModule, MdIconModule, MdSidenavModule, MdToolbarModule
+   MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule
 } from "@angular/material";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {NavigationComponent} from "../area-selector/area.component";
@@ -53,13 +53,13 @@ describe('AppMenusComponent', () => {
         CollectionsSvgComponent
       ],
       imports: [
-        MdToolbarModule,
-        MdSidenavModule,
+        MatToolbarModule,
+        MatSidenavModule,
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        MdCheckboxModule,
-        MdIconModule,
+        MatCheckboxModule,
+        MatIconModule,
         RouterTestingModule,
         // needed to test ObservableMedia
         FlexLayoutModule

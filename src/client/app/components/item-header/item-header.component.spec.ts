@@ -4,7 +4,7 @@ import {ItemHeaderComponent} from './item-header.component';
 import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
 import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
 import {NavigationComponent} from "../area-selector/area.component";
-import {MdCheckboxModule, MdSidenavModule, MdToolbarModule} from "@angular/material";
+import {MatCheckboxModule, MatSidenavModule, MatToolbarModule} from "@angular/material";
 import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AppMenusComponent} from "../apps-menu/app-menus.component";
@@ -39,9 +39,9 @@ describe('ItemHeaderComponent', () => {
         MenuSvgComponent
       ],
       imports: [
-        MdSidenavModule,
-        MdCheckboxModule,
-        MdToolbarModule,
+        MatSidenavModule,
+        MatCheckboxModule,
+        MatToolbarModule,
         ReactiveFormsModule,
         RouterTestingModule,
         BrowserAnimationsModule,

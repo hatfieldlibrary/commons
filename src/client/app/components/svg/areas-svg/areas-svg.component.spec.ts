@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AreasSvgComponent } from './areas-svg.component';
-import {MdIconModule, MdIconRegistry} from "@angular/material";
+import {MatIconModule, MatIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
 
 describe('AreasSvgComponent', () => {
@@ -12,7 +12,7 @@ describe('AreasSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AreasSvgComponent ],
       imports: [
-        MdIconModule
+        MatIconModule
       ],
       providers: [
       ]
@@ -21,7 +21,7 @@ describe('AreasSvgComponent', () => {
   }));
 
   beforeEach(() => {
-    let iconRegistry = TestBed.get(MdIconRegistry);
+    let iconRegistry = TestBed.get(MatIconRegistry);
     let sanitizer = TestBed.get(DomSanitizer);
     iconRegistry.addSvgIcon('areas', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_subject_white_24px.svg'));
     fixture = TestBed.createComponent(AreasSvgComponent);
