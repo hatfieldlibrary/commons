@@ -18,7 +18,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SubjectsComponent} from './subjects.component';
-import {MdButtonModule, MdIconModule, MdListItem, MdListModule} from "@angular/material";
+import {MatButtonModule, MatIconModule, MatListItem, MatListModule} from "@angular/material";
 import {RouterModule} from "@angular/router";
 import {RouterTestingModule} from "@angular/router/testing";
 import {KeyboardArrowForwardSvgComponent} from "../svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component";
@@ -31,7 +31,7 @@ import {SetIntervalService} from "../../services/timers/interval.service";
 import {By} from "@angular/platform-browser";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {Subscription} from "rxjs/Subscription";
-
+import 'rxjs/add/observable/of';
 
 let mockSubjectList: SubjectType[] = [
   {
@@ -77,10 +77,10 @@ describe('SubjectsComponent', () => {
         KeyboardArrowForwardSvgComponent
       ],
       imports: [
-        MdButtonModule,
+        MatButtonModule,
         RouterTestingModule,
-        MdIconModule,
-        MdListModule,
+        MatIconModule,
+        MatListModule,
         // needed to test ObservableMedia
         FlexLayoutModule
       ],
@@ -144,7 +144,7 @@ describe('SubjectsComponent', () => {
   it('should animate scroll request', (done) => {
     fixture.whenStable().then(
       () => {
-        const debugElement = fixture.debugElement.query(By.directive(MdListItem));
+        const debugElement = fixture.debugElement.query(By.directive(MatListItem));
         component.subjects = debugElement;
         component.onScrollRequest('right');
         expect(intervalService.setInterval).toHaveBeenCalled();

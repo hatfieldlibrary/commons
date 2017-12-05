@@ -21,6 +21,9 @@ import {Observable} from 'rxjs/Observable';
 import {Action} from '../actions/action.interface';
 import * as related from '../actions/related.actions';
 import {RelatedService} from '../services/related.service';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 /**
  * Created by mspalti on 4/10/17.
  */

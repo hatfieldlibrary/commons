@@ -16,7 +16,6 @@
  */
 
 import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AreaType} from "../../shared/data-types/area.type";
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {environment} from '../../environments/environment';

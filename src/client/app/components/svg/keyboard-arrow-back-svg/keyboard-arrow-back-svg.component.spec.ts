@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { KeyboardArrowBackSvgComponent } from './keyboard-arrow-back-svg.component';
-import {MdIconModule, MdIconRegistry} from "@angular/material";
+import {MatIconModule, MatIconRegistry} from "@angular/material";
 import {DomSanitizer} from "@angular/platform-browser";
 
 describe('KeyboardArrowBackSvgComponent', () => {
@@ -11,13 +11,13 @@ describe('KeyboardArrowBackSvgComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ KeyboardArrowBackSvgComponent ],
-      imports: [MdIconModule]
+      imports: [MatIconModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    let iconRegistry = TestBed.get(MdIconRegistry);
+    let iconRegistry = TestBed.get(MatIconRegistry);
     let sanitizer = TestBed.get(DomSanitizer);
     iconRegistry.addSvgIcon('keyboard-back', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_keyboard_arrow_left_black_48px.svg'));
     fixture = TestBed.createComponent(KeyboardArrowBackSvgComponent);

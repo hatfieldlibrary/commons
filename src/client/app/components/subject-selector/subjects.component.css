@@ -28,12 +28,12 @@ Attempts to define here failed.
   background: #b9b19f;
   width: auto;
 }
-.overflow-x-scroll-no-scrollbar > md-list {
+.overflow-x-scroll-no-scrollbar > mat-list {
   overflow-x: auto;
   margin-bottom: -17px;
   overflow-y: hidden;
 }
-.overflow-x-scroll-no-scrollbar > md-list-item * {
+.overflow-x-scroll-no-scrollbar > mat-list-item * {
   overflow-x: auto;
   width: 100%;
   padding-bottom: 17px;
@@ -74,7 +74,7 @@ Attempts to define here failed.
 .hidden-nav {
   opacity: 0;
 }
-md-list.subject-list {
+mat-list.subject-list {
   display: inline-flex !important;
 }
 /*
