@@ -18,14 +18,14 @@
 import {Component, OnDestroy} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
-import {MdIconRegistry} from '@angular/material';
+import {MatIconRegistry} from '@angular/material';
 
 
 @Component({
   selector: 'app-home-black-svg',
   templateUrl: './home-black-svg.component.html',
   styleUrls: ['./home-black-svg.component.css'],
-  viewProviders: [MdIconRegistry]
+  viewProviders: [MatIconRegistry]
 })
 export class HomeBlackSvgComponent implements  OnDestroy{
 
@@ -34,7 +34,7 @@ export class HomeBlackSvgComponent implements  OnDestroy{
     this.sanitizer = null;
   }
 
-  constructor(private iconRegistry: MdIconRegistry, private sanitizer: DomSanitizer) {
+  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'home-black',
       sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_black_24px.svg'));

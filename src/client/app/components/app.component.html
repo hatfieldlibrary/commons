@@ -15,42 +15,42 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<md-sidenav-container fullscreen>
+<mat-sidenav-container fullscreen>
 
-  <md-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
-    <md-toolbar>
+  <mat-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
+    <mat-toolbar>
       <app-icon-close (click)="sidenav.close()"></app-icon-close>
-    </md-toolbar>
+    </mat-toolbar>
     <div>
       <div id="#menu-items" fxLayout="row" fxLayoutAlign="start start">
-        <md-list fxFlex>
-          <md-list-item (click)="goToHome()" target="_top" style="cursor: default">
+        <mat-list fxFlex>
+          <mat-list-item (click)="goToHome()" target="_top" style="cursor: default">
             <app-home-black-svg></app-home-black-svg>
             <h5>&nbsp;Commons Home</h5>
-          </md-list-item>
-          <md-divider></md-divider>
-          <md-list-item (click)="goToSecondary()" target="_top" style="cursor: default">
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item (click)="goToSecondary()" target="_top" style="cursor: default">
             <h5>Hatfield Library</h5>
-          </md-list-item>
-          <md-divider></md-divider>
-          <md-list-item (click)="goToTertiary()" target="_top" style="cursor: default">
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item (click)="goToTertiary()" target="_top" style="cursor: default">
             <h5>Willamette University</h5>
-          </md-list-item>
-          <md-divider></md-divider>
-        </md-list>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </mat-list>
       </div>
 
     </div>
 
     <app-navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areas$ | async" [selectedAreas]="selectedAreaIds"
                              (onSelected)="sidenav.toggle()"></app-navigation-selector>
-  </md-sidenav>
+  </mat-sidenav>
 
   <div id="app-content" #appcontent>
     <router-outlet>
     </router-outlet>
   </div>
 
-</md-sidenav-container>
+</mat-sidenav-container>
 
 

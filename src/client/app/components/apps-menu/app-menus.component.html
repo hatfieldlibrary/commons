@@ -21,10 +21,10 @@
        fxFlex="100">
 
     <div fxLayout="row" fxLayoutAlign="start start">
-      <md-toolbar fxFlex="100">
+      <mat-toolbar fxFlex="100">
         <div fxLayout="row" fxLayoutAlign="center center">
           <div style="height: 24px;">
-            <button id="back-button" md-icon-button *ngIf="showBack" [routerLink]="getBackLink()">
+            <button id="back-button" mat-icon-button *ngIf="showBack" [routerLink]="getBackLink()">
               <app-icon-back></app-icon-back>
             </button>
           </div>
@@ -36,23 +36,23 @@
         <!-- This fills the remaining space of the current row -->
         <span class="fill-remaining-space"></span>
 
-        <md-divider style="border-color: #fff;"></md-divider>
+        <mat-divider style="border-color: #fff;"></mat-divider>
 
         <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="15">
-          <a id="home"[href]="homeUrl" target="_top" md-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+          <a id="home"[href]="homeUrl" target="_top" mat-button style="color:#ccc;font-size: 0.6em;font-weight: 500;">
             <app-home-svg></app-home-svg>
             <span>&nbsp;Commons Home</span></a>
         </div>
 
-        <md-divider></md-divider>
+        <mat-divider></mat-divider>
 
-        <button id="menu-button" md-button (click)="openMenu()"
+        <button id="menu-button" mat-button (click)="openMenu()"
                 style="color:#ccc;font-size: 0.6em;font-weight: 500;">
           <app-menu-svg></app-menu-svg>
           <span fxShow.gt-sm="true">&nbsp;Menu</span>
         </button>
 
-      </md-toolbar>
+      </mat-toolbar>
 
       <div class="fill-remaining-space"></div>
 

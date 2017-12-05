@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {MdIconRegistry} from '@angular/material';
+import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 @Component({
   selector: 'app-keyboard-arrow-forward-svg',
@@ -7,7 +7,7 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./keyboard-arrow-forward-svg.component.css']
 })
 export class KeyboardArrowForwardSvgComponent  {
-  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'keyboard-forward',
       sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_keyboard_arrow_right_black_48px.svg'));

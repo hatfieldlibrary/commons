@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MdCardModule, MdChipsModule, MdInputModule, MdListModule} from "@angular/material";
+import {MatCardModule, MatChipsModule, MatInputModule, MatListModule} from "@angular/material";
 import {ListComponent} from './list.component';
 import {RouterTestingModule} from "@angular/router/testing";
 import {CloseWhiteSvgComponent} from "../svg/close-white-svg/close-white-svg.component";
@@ -44,10 +44,10 @@ describe('ListComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        MdCardModule,
-        MdListModule,
-        MdChipsModule,
-        MdInputModule,
+        MatCardModule,
+        MatListModule,
+        MatChipsModule,
+        MatInputModule,
         RouterTestingModule
       ],
       providers: [

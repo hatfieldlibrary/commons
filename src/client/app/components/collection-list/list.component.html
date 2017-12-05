@@ -16,35 +16,35 @@
   -->
 <div class="chips">
   <div fxLayout="row" fxLayoutAlign="start center">
-  <md-card-subtitle *ngIf="selectedSubject?.id!==0">Viewing subject:&nbsp;&nbsp;</md-card-subtitle>
-  <md-chip-list>
-    <md-chip *ngIf="selectedSubject?.id!==0"
+  <mat-card-subtitle *ngIf="selectedSubject?.id!==0">Viewing subject:&nbsp;&nbsp;</mat-card-subtitle>
+  <mat-chip-list>
+    <mat-chip *ngIf="selectedSubject?.id!==0"
              selected="true"
              color="default"
              (click)="deselect($event)" style="margin-bottom: 12px;">
       {{selectedSubject?.name}}
       <app-icon-close-white></app-icon-close-white>
-    </md-chip>
-  </md-chip-list>
+    </mat-chip>
+  </mat-chip-list>
 </div>
 </div>
 
 <div *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
-  <md-spinner style="width:inherit"></md-spinner>
+  <mat-spinner style="width:inherit"></mat-spinner>
 </div>
 
 <div class="collection-filter-input">
-  <md-input-container *ngIf="collectionList?.length > 8" style="width:100%;">
-    <input mdInput id="terms" [(ngModel)]="filterTerm" name="search"
+  <mat-input-container *ngIf="collectionList?.length > 8" style="width:100%;">
+    <input matInput id="terms" [(ngModel)]="filterTerm" name="search"
            placeholder="Click here to look for titles in the list below">
-  </md-input-container>
+  </mat-input-container>
 </div>
 
-<md-card-content>
-  <md-list>
-    <md-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
+<mat-card-content>
+  <mat-list>
+    <mat-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
                   class="collection-list-item" *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
       {{collection.title}}
-    </md-list-item>
-  </md-list>
-</md-card-content>
+    </mat-list-item>
+  </mat-list>
+</mat-card-content>

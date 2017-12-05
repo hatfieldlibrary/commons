@@ -22,7 +22,9 @@ import {Observable} from "rxjs";
 import * as item from '../actions/item.actions';
 import {Action} from '../actions/action.interface';
 import {ItemActions} from "../actions/item.actions";
-
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class ItemEffects {

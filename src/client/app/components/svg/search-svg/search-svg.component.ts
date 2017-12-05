@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import {MdIconRegistry} from '@angular/material';
+import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
@@ -9,7 +9,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class SearchSvgComponent {
 
-  constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'search',
       sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_search_white_24px.svg'));
