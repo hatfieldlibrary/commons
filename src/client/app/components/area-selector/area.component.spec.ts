@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {MdButtonModule, MdCheckboxModule, MdListModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatListModule} from '@angular/material';
 import { NavigationComponent } from './area.component';
 
 import {RouterTestingModule} from "@angular/router/testing";
@@ -53,9 +53,9 @@ describe('NavigationComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        MdListModule,
-        MdButtonModule,
-        MdCheckboxModule,
+        MatListModule,
+        MatButtonModule,
+        MatCheckboxModule,
         RouterTestingModule
       ],
       providers: [

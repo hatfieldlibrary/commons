@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeScreenComponent } from './home-screen.component';
-import {MdCardModule, MdChipsModule} from "@angular/material";
+import {MatCardModule, MatChipsModule} from "@angular/material";
 
 describe('HomeScreenComponent', () => {
   let component: HomeScreenComponent;
@@ -11,8 +11,8 @@ describe('HomeScreenComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeScreenComponent ],
       imports: [
-        MdChipsModule,
-        MdCardModule
+        MatChipsModule,
+        MatCardModule
       ]
     })
     .compileComponents();

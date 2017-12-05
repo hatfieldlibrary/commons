@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemLinksComponent } from './item-links.component';
-import {MdButtonModule, MdInputModule, MdListModule, MdSelectModule} from "@angular/material";
+import {MatButtonModule, MatInputModule, MatListModule, MatSelectModule} from "@angular/material";
 import {FormsModule} from "@angular/forms";
 import {LockSvgComponent} from "../svg/lock-svg/lock-svg.component";
 import {SearchSvgComponent} from "../svg/search-svg/search-svg.component";
@@ -28,10 +28,10 @@ describe('ItemLinksComponent', () => {
         ItemSelectComponent
       ],
       imports: [
-        MdListModule,
-        MdButtonModule,
-        MdInputModule,
-        MdSelectModule,
+        MatListModule,
+        MatButtonModule,
+        MatInputModule,
+        MatSelectModule,
         FormsModule
 
       ],

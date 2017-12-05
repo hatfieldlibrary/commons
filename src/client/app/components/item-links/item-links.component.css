@@ -1,9 +1,9 @@
-md-card {
+mat-card {
   min-height: 90px;
   background: #efeadf;
 
 }
-md-input-container div.mat-input-underline {
+mat-input-container div.mat-input-underline {
   height: 2px !important;
   background-color: rgba(0, 0, 0, 0.57) !important;
 }

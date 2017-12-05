@@ -35,8 +35,6 @@ import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {fadeIn} from '../../animation/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {SelectedSubject} from "../../shared/data-types/selected-subject";
-import {CurrentSubject} from "../../actions/subject-actions";
 
 @Component({
   selector: 'app-lists-container',

@@ -1,9 +1,7 @@
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Optional, Output,
-  ViewChild
+  ChangeDetectionStrategy, Component, Inject, Input, OnDestroy
 } from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
-import {MdSidenav} from "@angular/material";
 import {NavigationEnd, Router} from "@angular/router";
 import {UtilitiesService} from "../../services/utilities.service";
 import {SubjectType} from "../../shared/data-types/subject.type";
@@ -11,6 +9,7 @@ import {Subscription} from "rxjs/Subscription";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {DOCUMENT} from "@angular/common";
 import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-menus-component',
@@ -26,12 +25,9 @@ export class AppMenusComponent implements OnDestroy {
   @Input() selectedSubject: SubjectType;
   @Input() showBack: boolean;
   @Input() title: string;
- // @Output() openTheMenu = new EventEmitter<boolean>();
-  // @ViewChild('sidenav') sideNavigate: MdSidenav;
   public previousUrl = '';
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
-  tertiaryUrl = 'http://www.willamette.edu';
   watcher: Subscription;
   state = '';
 

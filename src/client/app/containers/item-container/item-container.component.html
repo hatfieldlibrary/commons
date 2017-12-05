@@ -21,8 +21,8 @@
 
 <app-item-header [item]="item$ | async"></app-item-header>
 
-<md-card class="main-content-area">
-  <md-card-content>
+<mat-card class="main-content-area">
+  <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="center start">
       <div fxLayout="column"
            fxFlex="100"
@@ -35,15 +35,15 @@
         <app-item [item]="item$ | async" [selectedArea]="selectedArea" [selectedSubject]="selectedSubject$ | async"
                   style="padding-bottom: 40px;"></app-item>
 
-        <md-divider></md-divider>
+        <mat-divider></mat-divider>
 
         <app-related-items [columns]="columns" [related]="related$ | async"
                            [selectedArea]="selectedArea"></app-related-items>
 
       </div>
     </div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
 
 <app-footer></app-footer>
 
