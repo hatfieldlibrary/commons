@@ -16,13 +16,13 @@
  */
 
 import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {Router} from '@angular/router';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {environment} from '../../environments/environment';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
-import {AreaListItemType} from "../../shared/data-types/area-list.type";
+import {AreaListItemType} from '../../shared/data-types/area-list.type';
 
 @Component({
   selector: 'app-navigation-selector',
@@ -36,7 +36,7 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() areaList: AreaListItemType[];
   @Input() selectedAreas: string;
   private selectedAreaArray: string[];
-  checkboxGroup: FormGroup;
+  private checkboxGroup: FormGroup;
   formArrayRef: FormArray;
   areaFormArray: FormArray;
 
@@ -70,9 +70,9 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
   _navigateRoute(areaId: string) {
     // the area id can be a string object of length zero.
     if (areaId !== '0' && areaId.length > 0) {
-      this.router.navigate(['/',environment.appRoot,'collection','area', areaId]);
+      this.router.navigate(['/', environment.appRoot, 'collection', 'area', areaId]);
     } else {
-      this.router.navigate(['/',environment.appRoot,'collection']);
+      this.router.navigate(['/', environment.appRoot, 'collection']);
     }
   }
 
@@ -86,13 +86,13 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (checked) {
       // Remove the All Collections option from list if other collection area is selected.
-      let index = this.areaFormArray.controls.findIndex(x => x.value == '0');
+      const index = this.areaFormArray.controls.findIndex(x => x.value === '0');
       this._removeFromArray(index);
       // Add the selected collection area to FormArray.
       this.areaFormArray.push(new FormControl(area));
     } else {
       // Remove the collection area from FormArray.
-      let index = this.areaFormArray.controls.findIndex(x => x.value == area);
+      const index = this.areaFormArray.controls.findIndex(x => x.value === area);
       this._removeFromArray(index);
     }
 
@@ -106,11 +106,10 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
     if (area === '0') {
       this.areaFormArray.reset(['0']);
       this._navigateRoute(area);
-    }
-    else {
+    } else {
       // Otherwise, update the FormArray and navigate.
       this._updateAreaFormArray(area,  event.checked);
-      let areaId = this._createIdQueryParam(this.areaFormArray);
+      const areaId = this._createIdQueryParam(this.areaFormArray);
       this._navigateRoute(areaId);
     }
 

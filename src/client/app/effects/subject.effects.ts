@@ -43,7 +43,7 @@ subjectEffect$: Observable<Action> = this.actions$
   allSubjectEffect$: Observable<Action> = this.actions$
     .ofType(subjects.SubjectActionTypes.ALL_SUBJECT_LIST)
    // .map((action: subjects.SubjectAction) => action.payload)
-    .switchMap(()=> this.svc.getAllSubjects())
+    .switchMap(() => this.svc.getAllSubjects())
     .map(res => new subjects.AllSubjectActionSuccess(res))
     .catch((err) => Observable.of(new subjects.SubjectActionFailed(err)));
 

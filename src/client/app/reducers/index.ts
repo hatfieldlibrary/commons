@@ -19,19 +19,8 @@
  * Created by mspalti on 2/22/17.
  */
 import { createSelector } from 'reselect';
-import {ActionReducer, ActionReducerMap} from '@ngrx/store';
+import { ActionReducerMap} from '@ngrx/store';
 
-import { environment } from '../environments/environment';
-
-/**
- * The compose function is one of our most handy tools. In basic terms, you give
- * it any number of functions and it returns a function. This new function
- * takes a value and chains it through every composed function, returning
- * the output.
- *
- * More: https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html
- */
-import { compose } from '@ngrx/store';
 
 /**
  * storeFreeze prevents state from being mutated. When mutation occurs, an
@@ -39,16 +28,6 @@ import { compose } from '@ngrx/store';
  * ensure that none of the reducers accidentally mutates the state.
  */
 // import { storeFreeze } from 'ngrx-store-freeze';
-
-/**
- * combineReducers is another useful metareducer that takes a map of reducer
- * functions and creates a new reducer that stores the gathers the values
- * of each reducer and stores them using the reducer's key. Think of it
- * almost like a database, where every reducer is a table in the db.
- *
- * More: https://egghead.io/lessons/javascript-redux-implementing-combinereducers-from-scratch
- */
-import {combineReducers} from '@ngrx/store';
 
 /**
  * Every reducer module's default export is the reducer function itself. In
@@ -63,6 +42,7 @@ import * as fromSubject from './subject.reducers';
 import * as fromItem from './item.reducers';
 import * as fromRelated from './related.reducers';
 import * as fromAuth from './auth.reducers';
+import * as fromTypes from './type.reducers';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -73,47 +53,19 @@ export interface State {
   area: fromArea.State;
   areaList: fromAreaList.State
   subjects: fromSubject.State;
+  types: fromTypes.State;
   item: fromItem.State;
   related: fromRelated.State;
   auth: fromAuth.State;
 
 }
 
-
-/**
- * Because metareducers take a reducer function and return a new reducer,
- * we can use our compose helper to chain them together. Here we are
- * using combineReducers to make our top level reducer, and then
- * wrapping that in storeLogger. Remember that compose applies
- * the result from right to left.
- */
-// const reducers = {
-//   collections: fromCollection.reducer,
-//   area: fromArea.reducer,
-//   areaList: fromAreaList.reducer,
-//   subjects: fromSubject.reducer,
-//   item: fromItem.reducer,
-//   related: fromRelated.reducer,
-//   auth: fromAuth.reducer
-// };
-
-//const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
-//const productionReducer: ActionReducer<State> = combineReducers(reducers);
-
-//export function reducer(state: any, action: any) {
- // if (environment.production) {
-  //  return productionReducer(state, action);
- // }
- // else {
-  //  return developmentReducer(state, action);
- // }
-//}
-
 export const reducers: ActionReducerMap<State> = {
   collections: fromCollection.reducer,
   area: fromArea.reducer,
   areaList: fromAreaList.reducer,
   subjects: fromSubject.reducer,
+  types: fromTypes.reducer,
   item: fromItem.reducer,
   related: fromRelated.reducer,
   auth: fromAuth.reducer
@@ -148,6 +100,10 @@ export const getCollectionssState = (state: State) => state.collections;
 export const getCollections = createSelector(getCollectionssState, fromCollection.getCollectionList);
 
 export const getAreasState = (state: State) => state.area;
+
+export const getTypesState = (state: State) => state.types;
+
+export const getTypes = createSelector(getTypesState, fromTypes.getTypesList);
 
 export const getAreaInfo = createSelector(getAreasState, fromArea.getAreaInfo);
 

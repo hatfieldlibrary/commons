@@ -30,7 +30,7 @@ export interface State {
 
 const initialState: State = {
   subjects: [],
-  selectedSubject: {id: 0, name:'', url:''},
+  selectedSubject: {id: 0, name: '', url: ''},
   loading: false
 };
 
@@ -87,7 +87,7 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     case SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT: {
       return Object.assign({}, state, {
-        selectedSubject: {id: 0, name:'', url:''}
+        selectedSubject: {id: 0, name: '', url: ''}
       });
     }
 

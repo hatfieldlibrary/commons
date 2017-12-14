@@ -20,8 +20,8 @@
  */
 
 import {Action} from '../actions/action.interface';
-import { type } from "../shared/ngrx/type";
-import {SubjectType} from "../shared/data-types/subject.type";
+import { type } from '../shared/ngrx/type';
+import {SubjectType} from '../shared/data-types/subject.type';
 
 export const SubjectActionTypes = {
   SUBJECT_LIST: type('[SubjectType] List Subjects for Area Request'),
@@ -72,6 +72,7 @@ export class CurrentSubject implements Action {
   constructor(public payload: string) {
   }
 }
+
 export class RemoveCurrentSubject implements Action {
   type = SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT;
   payload: void;
@@ -89,5 +90,10 @@ export class SubjectActionFailed implements Action {
   }
 
 }
-
-export type SubjectActions = SubjectAction | SubjectActionSuccess | AllSubjectAction | AllSubjectActionSuccess | CurrentSubject | SubjectActionFailed;
+export type SubjectActions =
+  SubjectAction |
+  SubjectActionSuccess |
+  AllSubjectAction |
+  AllSubjectActionSuccess |
+  CurrentSubject |
+  SubjectActionFailed;

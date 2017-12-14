@@ -20,8 +20,9 @@
  */
 
 import {Action} from '../actions/action.interface';
-import {type} from "../shared/ngrx/type";
-import {CollectionType} from "../shared/data-types/collection.type";
+import {type} from '../shared/ngrx/type';
+import {CollectionType} from '../shared/data-types/collection.type';
+import {TypeAreaSubjectParams} from './type-area-subject-parameters.interface';
 
 export interface IdentifersPayload {
   id: string,
@@ -35,20 +36,20 @@ export const CollectionActionTypes = {
   LIST_BY_AREA_SUCCESS: type('[Collections] AreaType Collections'),
   LIST_BY_AREA_SUBJECT: type('[Collections] Search by SubjectType'),
   LIST_BY_AREA_SUBJECT_SUCCESS: type('[Collections] SubjectType Collections'),
+  LIST_BY_TYPE: type('[Collections] Collections by Type'),
+  LIST_BY_TYPE_AREA: type('[Collections] Collections by Type Area'),
+  LIST_BY_TYPE_AREA_SUBJECT: type('[Collections] Collection by Type Area Subject'),
+  LIST_BY_TYPE_SUCCESS: type('[Collections] Collections by Type Success'),
+  LIST_BY_TYPE_AREA_SUCCESS: type('[Collections] Collections by Type Area Success'),
+  LIST_BY_TYPE_SUBJECT: type('[Collections] Collections by Type Subject'),
+  LIST_BY_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Type Subject Success'),
+  LIST_BY_TYPE_AREA_SUBJECT_SUCCESS: type('[Collections] Collections by Type Area Subject Success'),
   LIST_ALL_BY_SUBJECT: type('[Collections] All Collections by Subject'),
   LIST_ALL_BY_SUBJECT_SUCCESS: type('[Collections] All Collections by Subject Success'),
   LIST_RESET: type('[Collections] Reset the Collection List to Empty'),
   REQUEST_FAILED: type('[Collections] Search Failed')
 
 };
-
-export class CollectionAction implements Action {
-  type = CollectionActionTypes.LIST_BY_AREA;
-
-  constructor(public payload: string) {
-  }
-
-}
 
 export class CollectionReset implements Action {
   type = CollectionActionTypes.LIST_RESET;
@@ -64,26 +65,45 @@ export class AllCollectionsAction implements Action {
 }
 export class AllCollectionsActionSuccess implements Action {
   type = CollectionActionTypes.LIST_ALL_SUCCESS_ACTION;
-
   constructor(public payload: CollectionType[]) {
   }
 
 }
 
-export class CollectionActionSuccess implements Action {
+export class CollectionsAreaAction implements Action {
+  type = CollectionActionTypes.LIST_BY_AREA;
+  constructor(public payload: string) {
+  }
+
+}
+
+export class CollectionsAreaActionSuccess implements Action {
   type = CollectionActionTypes.LIST_BY_AREA_SUCCESS;
   payload: CollectionType[];
-
   constructor(searchResult: CollectionType[]) {
     this.payload = searchResult;
   }
 
 }
 
-export class CollectionSubjectAction implements Action {
+export class CollectionsSubjectAction implements Action {
+  type = CollectionActionTypes.LIST_ALL_BY_SUBJECT;
+  constructor(public payload: string) {
+  }
+}
+
+export class CollectionsSubjectActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_ALL_BY_SUBJECT_SUCCESS;
+  payload: CollectionType[];
+  constructor(searchResult: CollectionType[]) {
+    this.payload = searchResult;
+  }
+
+}
+
+export class CollectionsAreaSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_AREA_SUBJECT;
   payload: IdentifersPayload;
-
   constructor(public id: string, public areaId: string) {
     this.payload = {
       id: id,
@@ -92,30 +112,74 @@ export class CollectionSubjectAction implements Action {
   }
 }
 
-export class CollectionSubjectActionSuccess implements Action {
+export class CollectionsAreaSubjectActionSuccess implements Action {
   type = CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS;
   payload: CollectionType[];
-
   constructor(searchResult: CollectionType[]) {
     this.payload = searchResult;
   }
 
 }
 
-export class AllCollectionSubjectAction implements Action {
-  type = CollectionActionTypes.LIST_ALL_BY_SUBJECT;
-
+export class CollectionsTypeAction implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE;
   constructor(public payload: string) {
 
   }
 }
 
-export class AllCollectionSubjectActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_ALL_BY_SUBJECT_SUCCESS;
+export class CollectionsTypeActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE_SUCCESS;
   payload: CollectionType[];
-
   constructor(searchResult: CollectionType[]) {
+    this.payload = searchResult;
+  }
 
+}
+
+export class CollectionsTypeAreaAction implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE_AREA;
+  constructor(public payload: TypeAreaSubjectParams) {
+
+  }
+}
+
+export class CollectionsTypeAreaActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUCCESS;
+  payload: CollectionType[];
+  constructor(searchResult: CollectionType[]) {
+    this.payload = searchResult;
+  }
+
+}
+
+export class CollectionsTypeSubjectAction implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT;
+  constructor(public payload: TypeAreaSubjectParams) {
+
+  }
+}
+
+export class CollectionsTypeSubjectActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT_SUCCESS;
+  payload: CollectionType[];
+  constructor(searchResult: CollectionType[]) {
+    this.payload = searchResult;
+  }
+
+}
+
+export class CollectionsTypeAreaSubjectAction implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT;
+  constructor(public payload: TypeAreaSubjectParams) {
+
+  }
+}
+
+export class CollectionsTypeAreaSubjectActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT_SUCCESS;
+  payload: CollectionType[];
+  constructor(searchResult: CollectionType[]) {
     this.payload = searchResult;
   }
 
@@ -124,13 +188,28 @@ export class AllCollectionSubjectActionSuccess implements Action {
 export class CollectionActionFailed implements Action {
   type = CollectionActionTypes.REQUEST_FAILED;
   payload: void;
-
   constructor(err: string) {
     console.log(err)
   }
 
 }
 
-
-export type CollectionActions = CollectionAction | CollectionReset | CollectionSubjectAction | CollectionActionSuccess |
-  CollectionSubjectActionSuccess | CollectionActionFailed;
+export type CollectionActions =
+  CollectionsAreaAction |
+  CollectionsAreaActionSuccess |
+  CollectionReset |
+  AllCollectionsAction |
+  AllCollectionsActionSuccess |
+  CollectionsSubjectAction |
+  CollectionsSubjectActionSuccess |
+  CollectionsAreaSubjectAction |
+  CollectionsAreaSubjectActionSuccess |
+  CollectionsTypeAction |
+  CollectionsTypeActionSuccess |
+  CollectionsTypeAreaAction |
+  CollectionsTypeAreaActionSuccess |
+  CollectionsTypeSubjectAction |
+  CollectionsTypeSubjectActionSuccess |
+  CollectionsTypeAreaSubjectAction |
+  CollectionsTypeAreaSubjectActionSuccess |
+  CollectionActionFailed;

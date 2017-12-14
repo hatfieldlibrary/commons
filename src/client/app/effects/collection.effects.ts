@@ -18,10 +18,10 @@
 /**
  * Created by mspalti on 2/21/17.
  */
-import {Injectable} from "@angular/core";
-import {Actions, Effect} from "@ngrx/effects";
-import {Observable} from "rxjs";
-import {CollectionService} from "../services/collection.service";
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs';
+import {CollectionService} from '../services/collection.service';
 import * as collection from '../actions/collection.actions';
 import {Action} from '../actions/action.interface';
 import 'rxjs/add/operator/map';
@@ -37,33 +37,67 @@ export class CollectionEffects {
   @Effect()
   collectionsByArea$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_BY_AREA)
-    .map((action: collection.CollectionAction) => action.payload)
+    .map((action: collection.CollectionsAreaAction) => action.payload)
     .switchMap(id => this.svc.getCollectionsByAreaId(id))
-    .map(res => new collection.CollectionActionSuccess(res))
+    .map(res => new collection.CollectionsAreaActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
   @Effect()
   collectionsBySubjectArea$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_BY_AREA_SUBJECT)
-    .map((action: collection.CollectionSubjectAction) => action.payload)
+    .map((action: collection.CollectionsAreaSubjectAction) => action.payload)
     .switchMap((payload) => this.svc.getCollectionsByAreaSubject(payload.id, payload.areaId))
-    .map((res) => new collection.CollectionSubjectActionSuccess(res))
+    .map((res) => new collection.CollectionsSubjectActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
   @Effect()
   collectionsBySubject$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_ALL_BY_SUBJECT)
-    .map((action: collection.AllCollectionSubjectAction) => action.payload)
+    .map((action: collection.CollectionsSubjectAction) => action.payload)
     .switchMap((payload) => this.svc.getCollectionsBySubject(payload))
-    .map((res) => new collection.AllCollectionSubjectActionSuccess(res))
+    .map((res) => new collection.CollectionsSubjectActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
   @Effect()
   collectionsAll$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_ALL_ACTION)
-   //.map((action: collection.AllCollectionsAction) => action.payload)
     .switchMap(() => this.svc.getAllCollections())
     .map((res) => new collection.AllCollectionsActionSuccess(res))
+    .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
+
+  @Effect()
+  collectionsByType$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_BY_TYPE)
+    .map((action: collection.CollectionsTypeAction) => action.payload)
+    .switchMap((payload) => this.svc.getCollectionsByType(payload))
+    .map((res) => new collection.CollectionsTypeActionSuccess(res))
+    .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
+
+  @Effect()
+  collectionsByTypeArea$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_BY_TYPE_AREA)
+    .map((action: collection.CollectionsTypeAreaAction) => action.payload)
+    .switchMap((payload) =>
+      this.svc.getCollectionsByTypeArea(payload.types.join(','), payload.areas.join(',')))
+    .map((res) => new collection.CollectionsTypeAreaActionSuccess(res))
+    .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
+
+  @Effect()
+  collectionsByTypeSubject$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_BY_TYPE_SUBJECT)
+    .map((action: collection.CollectionsTypeSubjectAction) => action.payload)
+    .switchMap((payload) =>
+      this.svc.getCollectionsByTypeSubject(payload.types.join(','), payload.subject))
+    .map((res) => new collection.CollectionsTypeSubjectActionSuccess(res))
+    .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
+
+  @Effect()
+  collectionsByTypeAreaSubject$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT)
+    .map((action: collection.CollectionsTypeAreaSubjectAction) => action.payload)
+    .switchMap((payload) =>
+      this.svc.getCollectionsByTypeAreaSubject(payload.types.join(','), payload.areas.join(','), payload.subject))
+    .map((res) => new collection.CollectionsTypeAreaActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
 }
