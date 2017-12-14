@@ -214,7 +214,6 @@ describe('ListsContainerComponent', () => {
 
   beforeEach(() => {
     areaList = areaListMock;
-    //TestBed.createComponent(AppComponent);
     fixture = TestBed.createComponent(ListsContainerComponent);
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
@@ -322,7 +321,7 @@ describe('ListsContainerComponent', () => {
     component.ngOnInit();
     tick();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getCollections);
-    expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionAction('1'));
+    expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionsAreaAction('1'));
     expect(store.dispatch).toHaveBeenCalledWith(new areaActions.AreaInformation('1'));
 
   }));
@@ -333,7 +332,7 @@ describe('ListsContainerComponent', () => {
     component.ngOnInit();
     tick();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getSubject);
-    expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionSubjectAction('2', '1'));
+    expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionsAreaSubjectAction('2', '1'));
 
   }));
 
@@ -366,7 +365,7 @@ describe('ListsContainerComponent', () => {
     component.ngOnInit();
     tick();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getSubject);
-    expect(store.dispatch).toHaveBeenCalledWith(new listActions.AllCollectionSubjectAction('1'));
+    expect(store.dispatch).toHaveBeenCalledWith(new listActions.CollectionsSubjectAction('1'));
     expect(store.dispatch).toHaveBeenCalledWith(new subjectActions.AllSubjectAction());
 
   }));

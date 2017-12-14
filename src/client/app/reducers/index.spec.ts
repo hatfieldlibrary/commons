@@ -15,8 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {reducers} from "./";
-import {SubjectActionSuccess} from "../actions/subject-actions";
+import {reducers} from './';
+import {SubjectActionSuccess} from '../actions/subject-actions';
 import {
   getAreasState,
   getAreaListState,
@@ -25,12 +25,12 @@ import {
   getSubjectsState,
   getRelatedState,
   getAuthStatusState
-} from "./index";
-import {ItemSuccess} from "../actions/item.actions";
-import {AreaActionSuccess, AreaInformationSuccess} from "../actions/area.actions";
-import {CollectionActionSuccess} from "../actions/collection.actions";
+} from './index';
+import {ItemSuccess} from '../actions/item.actions';
+import {AreaActionSuccess, AreaInformationSuccess} from '../actions/area.actions';
+import {CollectionsAreaActionSuccess} from '../actions/collection.actions';
 import {ItemActionRelatedSuccess} from '../actions/related.actions';
-import {GetAuthStatus, SetAuthStatus} from "../actions/auth.action";
+import {GetAuthStatus, SetAuthStatus} from '../actions/auth.action';
 
 
 describe('Reducers ', () => {
@@ -132,7 +132,7 @@ describe('Reducers ', () => {
     itemState = reducers.item(undefined, new ItemSuccess(expectedItem));
     areaState = reducers.area(undefined, new AreaInformationSuccess(expectedArea));
     areaListState = reducers.areaList(undefined, new AreaActionSuccess(expectedAreas));
-    collectionState = reducers.collections(undefined, new CollectionActionSuccess(expectedCollections));
+    collectionState = reducers.collections(undefined, new CollectionsAreaActionSuccess(expectedCollections));
     relatedItemsState = reducers.related(undefined, new ItemActionRelatedSuccess(expectedRelatedItems));
     authState = reducers.auth(undefined, new SetAuthStatus({status: true}));
   });
