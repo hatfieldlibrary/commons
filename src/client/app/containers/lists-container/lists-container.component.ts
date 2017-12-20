@@ -62,9 +62,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   title: string;
   subtitle: string;
   subjectId: string;
+  filterTerm = '';
   state = '';
   watchers: Subscription;
-  areas: AreaListItemType[];
+ // areas: AreaListItemType[];
   selectedTypes: string;
 
   constructor(private store: Store<fromRoot.State>,
@@ -82,7 +83,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     const areasWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
       // id is 0 in initial state.
       if (areas[0].id > 0) {
-        this.areas = areas;
+      //  this.areas = areas;
         this.areasAvailable = true;
       }
     });
@@ -160,7 +161,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   getCollections(areaId: string): void {
     this.getCollectionsByArea(areaId);
-    //this.getAreaInformation(areaId);
+    // this.getAreaInformation(areaId);
 
   }
 
@@ -298,7 +299,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // The subjects$ Observable is used by child components. This component
     // also subscribes to the subject store in the setSelectedSubject function.
     this.subjects$ = this.store.select(fromRoot.getSubject);
-    this.collections$ = this.store.select(fromRoot.getCollections);
+    this.collections$ = this.store.select(fromRoot.getFilteredCollections);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
@@ -358,7 +359,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.homeScreen = true;
 
         }
-
       });
 
     this.watchers.add(routeWatcher);

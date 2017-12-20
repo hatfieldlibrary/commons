@@ -20,17 +20,17 @@ import {SubjectActionSuccess} from '../actions/subject-actions';
 import {
   getAreasState,
   getAreaListState,
-  getCollectionssState,
   getItemState,
   getSubjectsState,
   getRelatedState,
-  getAuthStatusState
+  getAuthStatusState,
+  getCollectionsState
 } from './index';
 import {ItemSuccess} from '../actions/item.actions';
 import {AreaActionSuccess, AreaInformationSuccess} from '../actions/area.actions';
 import {CollectionsAreaActionSuccess} from '../actions/collection.actions';
 import {ItemActionRelatedSuccess} from '../actions/related.actions';
-import {GetAuthStatus, SetAuthStatus} from '../actions/auth.action';
+import {SetAuthStatus} from '../actions/auth.action';
 
 
 describe('Reducers ', () => {
@@ -156,7 +156,7 @@ describe('Reducers ', () => {
   });
 
   it('should return collections state.', () => {
-    const result = getCollectionssState(collectionState);
+    const result = getCollectionsState(collectionState);
     expect(result).toBeDefined();
 
   });

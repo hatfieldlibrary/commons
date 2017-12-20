@@ -93,6 +93,7 @@ import { SetIntervalService} from './services/timers/interval.service';
 import { MenuInteractionService} from './services/menu/menu-interaction.service';
 import { TypeEffects} from './effects/types.effects';
 import { TypesService} from './services/types.service';
+import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 
 export const appRoutes = [
 
@@ -152,7 +153,8 @@ export const appRoutes = [
     FilterSvgComponent,
     ItemSelectComponent,
     DatePickerSvgComponent,
-    TypesComponent
+    TypesComponent,
+    SearchFilterComponent
 
   ],
   imports: [

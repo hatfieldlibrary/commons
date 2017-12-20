@@ -87,54 +87,54 @@ describe('NavigationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create area form array', fakeAsync(() => {
-    component.selectedAreas = '1,2';
-    fixture.detectChanges();
-    component.ngOnInit();
-    expect(component.formArrayRef.length).toEqual(2);
-  }));
+  // it('should create area form array', fakeAsync(() => {
+  //   component.selectedAreas = '1,2';
+  //   fixture.detectChanges();
+  //   component.ngOnInit();
+  //   expect(component.formArrayRef.length).toEqual(2);
+  // }));
 
-  it('should add to the form array and navigate when checkbox is selected', fakeAsync(() => {
-    // initialize with two selected areas.
-   component.areaFormArray.push(new FormControl(1));
-    // add new area and navigate.
-    component.onChange('3', {checked: true});
-    expect(store.dispatch).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalled();
-    expect(component.areaFormArray.length).toEqual(2);
+  // it('should add to the form array and navigate when checkbox is selected', fakeAsync(() => {
+  //   // initialize with two selected areas.
+  //  component.areaFormArray.push(new FormControl(1));
+  //   // add new area and navigate.
+  //   component.onChange('3', {checked: true});
+  //   expect(store.dispatch).toHaveBeenCalled();
+  //   expect(router.navigate).toHaveBeenCalled();
+  //   expect(component.areaFormArray.length).toEqual(2);
 
-  }));
+  //}));
 
-  it('should reset the form array and navigate when checkbox is selected', fakeAsync(() => {
-    // initialize with two selected areas.
-    component.areaFormArray.push(new FormControl(1));
-    // add new area and navigate.
-    component.onChange('0', {checked: true});
-    expect(store.dispatch).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalled();
-    expect(component.areaFormArray.length).toEqual(1);
+  // it('should reset the form array and navigate when checkbox is selected', fakeAsync(() => {
+  //   // initialize with two selected areas.
+  //   component.areaFormArray.push(new FormControl(1));
+  //   // add new area and navigate.
+  //   component.onChange('0', {checked: true});
+  //   expect(store.dispatch).toHaveBeenCalled();
+  //   expect(router.navigate).toHaveBeenCalled();
+  //   expect(component.areaFormArray.length).toEqual(1);
+  //
+  // }));
 
-  }));
+  // it('should remove from the form array when checkbox in unselected', () => {
+  //   // initialize with two selected areas.
+  //   component.areaFormArray.push(new FormControl(1));
+  //   component.areaFormArray.push(new FormControl(2));
+  //   // add new area and navigate.
+  //   component.onChange('1', {checked: false});
+  //   expect(store.dispatch).toHaveBeenCalled();
+  //   expect(router.navigate).toHaveBeenCalled();
+  //   expect(component.areaFormArray.length).toEqual(1);
+  // });
 
-  it('should remove from the form array when checkbox in unselected', () => {
-    // initialize with two selected areas.
-    component.areaFormArray.push(new FormControl(1));
-    component.areaFormArray.push(new FormControl(2));
-    // add new area and navigate.
-    component.onChange('1', {checked: false});
-    expect(store.dispatch).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalled();
-    expect(component.areaFormArray.length).toEqual(1);
-  });
-
-  it('should return true for area selected', () => {
-    component.selectedAreas = '1';
-    expect(component.isSelected('1')).toBe(true);
-  });
+ // it('should return true for area selected', () => {
+  //  component.selectedAreas = '1';
+    // expect(component.isSelected('1')).toBe(true);
+ // });
 
 
-  it('should return false for area selected', () => {
-    component.selectedAreas = '1';
-    expect(component.isSelected('2')).toBe(false);
-  });
+//  it('should return false for area selected', () => {
+//    component.selectedAreas = '1';
+   // expect(component.isSelected('2')).toBe(false);
+//  });
 });

@@ -43,7 +43,8 @@ import * as fromItem from './item.reducers';
 import * as fromRelated from './related.reducers';
 import * as fromAuth from './auth.reducers';
 import * as fromTypes from './type.reducers';
-
+import * as fromFilter from './collection.filter.reducers';
+import {Observable} from 'rxjs/Observable';
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
@@ -57,7 +58,7 @@ export interface State {
   item: fromItem.State;
   related: fromRelated.State;
   auth: fromAuth.State;
-
+  filter: fromFilter.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -68,7 +69,8 @@ export const reducers: ActionReducerMap<State> = {
   types: fromTypes.reducer,
   item: fromItem.reducer,
   related: fromRelated.reducer,
-  auth: fromAuth.reducer
+  auth: fromAuth.reducer,
+  filter: fromFilter.reducer
 };
 
 /**
@@ -86,7 +88,7 @@ export const reducers: ActionReducerMap<State> = {
  * }
  * ```
  */
-export const getCollectionssState = (state: State) => state.collections;
+export const getCollectionsState = (state: State) => state.collections;
 /**
  * Every reducer module exports selector functions, however child reducers
  * have no knowledge of the overall state tree. To make them useable, we
@@ -97,13 +99,15 @@ export const getCollectionssState = (state: State) => state.collections;
  * The created selectors can also be composed together to select different
  * pieces of state.
  */
-export const getCollections = createSelector(getCollectionssState, fromCollection.getCollectionList);
+export const getCollections = createSelector(getCollectionsState, fromCollection.getCollectionList);
 
 export const getAreasState = (state: State) => state.area;
 
 export const getTypesState = (state: State) => state.types;
 
 export const getTypes = createSelector(getTypesState, fromTypes.getTypesList);
+
+export const getSelectedTypes = createSelector(getTypesState, fromTypes.getSelectedTypes);
 
 export const getAreaInfo = createSelector(getAreasState, fromArea.getAreaInfo);
 
@@ -129,3 +133,17 @@ export const getAuthStatusState = (state: State) => state.auth;
 
 export const getAuthStatus = createSelector(getAuthStatusState, fromAuth.getAuthStatus);
 
+export const getCollectionFilter = (state: State) => state.filter;
+
+export const getFilteredCollections = createSelector(getCollections, getCollectionFilter, filterFunction);
+
+function filterFunction(collections, filter) {
+  if (typeof filter.term !== 'undefined' && filter.term.length > 2 && collections.length > 1) {
+    return collections.filter(col => {
+      const collectionDescription: string = col.title + ' ' + col.description;
+      return (new RegExp(filter.term, 'i')).test(collectionDescription)
+    });
+  } else {
+    return collections;
+  }
+}

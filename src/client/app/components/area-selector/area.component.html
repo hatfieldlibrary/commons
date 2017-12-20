@@ -15,20 +15,17 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<div class="side-container">
-<mat-list>
-  <form [formGroup]="checkboxGroup">
-  <mat-list>
-    <mat-list-item>
-      <mat-checkbox class='local-navigation' [checked]="isSelected('0')" (change)="onChange('0', $event)">All Collections</mat-checkbox>
-    </mat-list-item>
-    <mat-list-item *ngFor="let area of areaList">
-    <mat-checkbox type="checkbox" [checked]="isSelected(area.id)" class='local-navigation' (change)="onChange(area.id, $event)">{{area.title}}
-        ({{area.count}})
-      </mat-checkbox>
+<div>
 
-    </mat-list-item>
-  </mat-list>
-  </form>
-</mat-list>
+  <mat-selection-list #areaSelectionList>
+    <h4 class="mat-body-2 list-caption">Limit By Area</h4>
+    <mat-list-option *ngFor="let area of areaList"
+                     class="local-navigation"
+                     [selected]="isSelected(area.id)"
+                     (click)="onAreaListControlChanged(areaSelectionList, area.id)"
+                     [value]="area.id">
+      {{area.title}} ({{area.count}})
+    </mat-list-option>
+  </mat-selection-list>
+
 </div>

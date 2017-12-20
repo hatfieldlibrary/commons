@@ -16,38 +16,56 @@
   -->
 
 
+<app-menus-component
+  [selectedArea]="areaId"
+  [areaList]="areas$ | async"
+  [showBack]="false">
+</app-menus-component>
+<!--<app-title-header [title]="title"-->
+<!--[subtitle]="subtitle"-->
+<!--[subjectList]="subjects$ | async"-->
+<!--[areaId]="areaId"-->
+<!--[type]="subjectLinkType">-->
 
-  <app-menus-component [selectedArea]="areaId" [areaList]="areas$ | async" [showBack]="false"></app-menus-component>
+<!--</app-title-header>-->
 
-  <app-title-header [title]="title"
-                    [subtitle]="subtitle"
-                    [subjectList]="subjects$ | async"
-                    [areaId]="areaId"
-                    [type]="subjectLinkType">
+<mat-card class="main-content-area" style="padding:0;">
 
-  </app-title-header>
-
-  <mat-card class="main-content-area" style="padding:0;margin-top: 145px;">
-
-    <mat-card-content style="background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
+  <mat-card-content style="background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
     background-repeat: no-repeat,repeat-x;
     background-position: top center,top center;">
 
-      <div fxLayout="row" fxLayoutAlign="center start" style="margin-top: 75px;padding-top: 35px;">
+
+    <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="start center" >
+
+      <div fxLayout="row" fxFlexFill fxLayoutAlign="center start">
+
+        <app-subject-selector fxFlex="1 1 85%" [subjectList]="subjects$ | async" [areaId]="areaId"
+                              [type]="subjectLinkType"></app-subject-selector>
+      </div>
+
+      <div fxLayout="row"  fxLayoutGap="10px" fxLayoutAlign="center start" >
+
+        <div fxFlex="1 1 85%" fxLayoutGap="10px">
+        <div fxLayout="column" fxFlex.gt-sm="1 1 25%" class="side-container" *ngIf="media.isActive('gt-sm')">
+          <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
+          <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></app-navigation-selector>
+          <app-types [selectedAreas]="areaId" [selectedSubject]="subjectId" [selectedTypes]="selectedTypes"
+                     [typeList]="types$ | async"></app-types>
+        </div>
+
+
 
         <div fxLayout="column"
-             fxFlex="100"
-             fxFlex.sm="100"
-             fxFlex.md="85"
-             fxFlex.lg="70"
-             fxFlex.gt-lg="50">
+             fxFlex.sm="1 1 100%"
+             fxFlex.md="1 1 70"
+             fxFlex.lg="1 1 70%"
+             fxFlex.gt-lg="1 1 50%">
 
           <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start"
                fxLayoutGap.gt-sm="30px">
 
-            <div fxFlex="100" fxFlex.gt-sm="70" style="width:100%;">
-
-              <div style="margin-top: 25px;"></div>
+            <div fxFlex="100" fxFlex.gt-sm="100" >
 
               <mat-card-subtitle class="area-info">
                 <app-area-information *ngIf="!homeScreen"
@@ -62,24 +80,17 @@
                                    [selectedArea]="areaId"></app-collection-list>
 
             </div>
-            <div class="fill-remaining-space"></div>
-            <div fxFlex fxFlex.gt-sm="25" *ngIf="media.isActive('gt-sm')">
 
-              <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></app-navigation-selector>
-
-              <app-types [selectedAreas]="areaId" [selectedSubject]="subjectId" [selectedTypes]="selectedTypes" [typeList]="types$ | async"></app-types>
-
-            </div>
 
           </div>
 
         </div>
-
+        </div>
       </div>
+    </div>
+  </mat-card-content>
 
-    </mat-card-content>
+</mat-card>
 
-  </mat-card>
-
-  <app-footer></app-footer>
+<app-footer></app-footer>
 

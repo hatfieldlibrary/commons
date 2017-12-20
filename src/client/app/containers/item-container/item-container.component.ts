@@ -34,6 +34,7 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {SubjectType} from '../../shared/data-types/subject.type';
+import {ContentTypeListType} from '../../shared/data-types/content-types.type';
 
 @Component({
   selector: 'app-item-container',
@@ -46,6 +47,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   related$: Observable<RelatedType[]>;
   selectedSubject$: Observable<SubjectType>;
+  selectedTypes$: Observable<string>;
   item$: Observable<ItemType>;
   areas: AreaListItemType[];
   id: string;
@@ -168,6 +170,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
+    this.selectedTypes$ = this.store.select(fromRoot.getSelectedTypes);
     this.setAreasAvailable();
 
     // Once we have item information, request related items.

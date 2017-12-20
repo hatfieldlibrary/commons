@@ -15,19 +15,14 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-mat-list {
-  padding: 0;
-  /*padding: 6px;*/
-}
-
-
 
 .local-navigation  {
   font-size: 14px;
 }
 
-.side-container {
-  margin-top: 24px;
-  background-color: rgba(255,255,255,.5);
+.list-caption {
+  padding: 0 16px;
+  margin: 0;
 }
+
 

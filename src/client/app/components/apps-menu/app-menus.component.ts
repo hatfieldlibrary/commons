@@ -23,6 +23,7 @@ export class AppMenusComponent implements OnDestroy {
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
   @Input() selectedSubject: SubjectType;
+  @Input() selectedTypes: string;
   @Input() showBack: boolean;
   @Input() title: string;
   public previousUrl = '';
@@ -55,7 +56,7 @@ export class AppMenusComponent implements OnDestroy {
   }
 
   getBackLink(): string {
-    let path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
+    let path = this.utils.getBackLink(this.selectedArea, this.selectedSubject, this.selectedTypes);
     return path;
   }
 

@@ -14,37 +14,33 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<div class="chips">
-  <div fxLayout="row" fxLayoutAlign="start center">
-  <mat-card-subtitle *ngIf="selectedSubject?.id!==0">Viewing subject:&nbsp;&nbsp;</mat-card-subtitle>
-  <mat-chip-list>
-    <mat-chip *ngIf="selectedSubject?.id!==0"
-             selected="true"
-             color="default"
-             (click)="deselect($event)" style="margin-bottom: 12px;">
-      {{selectedSubject?.name}}
-      <app-icon-close-white></app-icon-close-white>
-    </mat-chip>
-  </mat-chip-list>
-</div>
-</div>
+<div class="container">
+  <div class="chips">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-card-subtitle *ngIf="selectedSubject?.id!==0">Viewing subject:&nbsp;&nbsp;</mat-card-subtitle>
+      <mat-chip-list>
+        <mat-chip *ngIf="selectedSubject?.id!==0"
+                  selected="true"
+                  color="default"
+                  (click)="deselect($event)" style="margin-bottom: 12px;">
+          {{selectedSubject?.name}}
+          <app-icon-close-white></app-icon-close-white>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
 
-<div *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
-  <mat-spinner style="width:inherit"></mat-spinner>
-</div>
+  <div *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
+    <mat-spinner style="width:inherit"></mat-spinner>
+  </div>
 
-<div class="collection-filter-input">
-  <mat-input-container *ngIf="collectionList?.length > 8" style="width:100%;">
-    <input matInput id="terms" [(ngModel)]="filterTerm" name="search"
-           placeholder="Click here to look for titles in the list below">
-  </mat-input-container>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
+                     class="collection-list-item"
+                     *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
+        {{collection.title}}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
 </div>
-
-<mat-card-content>
-  <mat-list>
-    <mat-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
-                  class="collection-list-item" *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
-      {{collection.title}}
-    </mat-list-item>
-  </mat-list>
-</mat-card-content>

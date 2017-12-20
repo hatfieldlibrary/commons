@@ -37,6 +37,7 @@ export class ItemComponent  {
   @Input() item: ItemType;
   @Input() selectedArea: string;
   @Input() selectedSubject: SubjectType;
+  @Input() selectedTypes: string;
   state = '';
 
   constructor(private utils: UtilitiesService,
@@ -45,7 +46,8 @@ export class ItemComponent  {
   }
 
   getBackLink(): string {
-    const path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
+    const path =
+      this.utils.getBackLink(this.selectedArea, this.selectedSubject, this.selectedTypes);
     return path;
 
   }

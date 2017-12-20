@@ -22,3 +22,8 @@
 .collection-list-item a {
   text-decoration: none;
 }
+.side-container {
+  margin-top: 0px;
+  border: 1px solid #aaa;
+  background-color: rgba(255,255,255,.5);
+}

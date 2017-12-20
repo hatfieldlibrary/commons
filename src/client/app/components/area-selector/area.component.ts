@@ -15,14 +15,17 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {
+  AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit,
+  SimpleChanges
+} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import {AreaListItemType} from '../../shared/data-types/area-list.type';
+import {MatSelectionList} from '@angular/material';
 
 @Component({
   selector: 'app-navigation-selector',
@@ -30,39 +33,60 @@ import {AreaListItemType} from '../../shared/data-types/area-list.type';
   styleUrls: ['area.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
 
   @Input() areaList: AreaListItemType[];
   @Input() selectedAreas: string;
-  private selectedAreaArray: string[];
-  private checkboxGroup: FormGroup;
-  formArrayRef: FormArray;
-  areaFormArray: FormArray;
+  private lastSelectedIds: number[];
+  private selectedOptions: number[];
 
   constructor(private router: Router,
-              private formBuilder: FormBuilder,
               private store: Store<fromRoot.State>) {
   }
 
-  isSelected(id: string): boolean {
+  ngOnChanges(changes: SimpleChanges): void {
+    for (const propName in changes) {
+      if (propName === 'selectedAreas') {
+        const areas = changes['selectedAreas'].currentValue;
+        this.setLastAreaIds(areas);
+      }
+    }
+  }
 
-    if (this.selectedAreas) {
-      return this.selectedAreas.indexOf(id) >= 0;
+  isSelected(id: number): boolean {
+    if (this.lastSelectedIds ) {
+      return this.lastSelectedIds.indexOf(id) >= 0;
     }
     return false;
   }
 
-  _createIdQueryParam(areaList: FormArray): string {
-    if (areaList.getRawValue().length = 0) {
+  private setLastAreaIds(areas: string): void {
+    const areaArr = areas.split(',');
+    if (areaArr.length === 0) {
+      areaArr.push('0');
+    }
+    this.lastSelectedIds = [];
+    for (const area of areaArr) {
+      this.lastSelectedIds.push(parseInt(area, 10));
+    }
+  }
+
+
+  _createIdQueryParam(areaList: number[]): string {
+    console.log(areaList)
+    if (areaList.length === 0) {
       return '0';
     }
     let areaId = '';
-    areaList.getRawValue().forEach((id) => {
-      if (id !== '0') {
-        areaId += id + ','
+    areaList.forEach((id) => {
+      const strId = id.toString();
+      if (strId !== '0') {
+        areaId += strId + ','
       }
     });
+    console.log(areaList)
+    console.log(areaId)
     areaId = areaId.replace(/,\s*$/, '');
     return areaId;
   }
@@ -76,67 +100,79 @@ export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  _removeFromArray(index: number) {
+  private getIndex(list: number[], areaId: number): number {
+    return list.indexOf(areaId)
+  }
+
+  private removeFromList(list: any, areaId: number): any[] {
+
+    console.log(list)
+    const index = list.indexOf(areaId);
     if (index >= 0) {
-      this.areaFormArray.removeAt(index);
+      const test = list.splice(index, 1);
+      console.log(test)
+      return test;
     }
+    return list;
   }
 
-  _updateAreaFormArray(area: string, checked: boolean) {
+  onAreaListControlChanged(list: MatSelectionList, areaId: number) {
 
-    if (checked) {
-      // Remove the All Collections option from list if other collection area is selected.
-      const index = this.areaFormArray.controls.findIndex(x => x.value === '0');
-      this._removeFromArray(index);
-      // Add the selected collection area to FormArray.
-      this.areaFormArray.push(new FormControl(area));
+    if (areaId === 0 && this.lastSelectedIds.indexOf(0) >= 0) {
+      console.log('toggled all collections')
+      this._navigateRoute('0');
     } else {
-      // Remove the collection area from FormArray.
-      const index = this.areaFormArray.controls.findIndex(x => x.value === area);
-      this._removeFromArray(index);
-    }
+      let updatedAreaId: string;
+      this.selectedOptions = list.selectedOptions.selected.map(item => item.value);
+      this.store.dispatch(new listActions.CollectionReset());
+      const indexOfPrevious = this.getIndex(this.lastSelectedIds, areaId);
 
-  }
+      let updatedList: number[];
+      // // If the All Collection option is selected, reset the FormArray and navigate.
+      if (areaId === 0) {
+        updatedAreaId = '0';
+        console.log('zero')
 
-  onChange(area: string, event: any) {
+      } else if (indexOfPrevious >= 0) {
+        console.log('prev')
+        updatedList = this.removeFromList(this.selectedOptions, areaId);
 
-    this.store.dispatch(new listActions.CollectionReset());
-
-    // If the All Collection option is selected, reset the FormArray and navigate.
-    if (area === '0') {
-      this.areaFormArray.reset(['0']);
-      this._navigateRoute(area);
-    } else {
-      // Otherwise, update the FormArray and navigate.
-      this._updateAreaFormArray(area,  event.checked);
-      const areaId = this._createIdQueryParam(this.areaFormArray);
-      this._navigateRoute(areaId);
+        const zeroIndex = this.getIndex(this.selectedOptions, 0);
+        if (zeroIndex >= 0) {
+          console.log('removing zero ' + zeroIndex)
+          updatedList = this.removeFromList(updatedList, areaId);
+        }
+        updatedAreaId = this._createIdQueryParam(updatedList);
+      } else {
+        console.log('new')
+        const index = this.getIndex(this.selectedOptions, 0);
+        if (index >= 0) {
+          updatedList = this.removeFromList(this.selectedOptions, areaId);
+        } else {
+          updatedList = this.selectedOptions;
+        }
+        // Otherwise, update the FormArray and navigate.
+        // this._updateAreaFormArray(this.selectedOptions,  event.checked);
+        updatedAreaId = this._createIdQueryParam(updatedList);
+        // this._navigateRoute(updatedAreaId);
+      }
+      this._navigateRoute(updatedAreaId);
+      list.selectedOptions.clear();
     }
 
   }
 
   ngOnInit() {
-    this.checkboxGroup = this.formBuilder.group({
-      areas: this.formBuilder.array([])
-    });
-    this.formArrayRef = <FormArray>this.checkboxGroup.controls.areas;
-    if (this.selectedAreas) {
-      this.selectedAreaArray = this.selectedAreas.split(',');
-      this.selectedAreaArray.forEach((id) => {
-        this.formArrayRef.push(new FormControl(id));
-      })
-    }
+    this.selectedOptions = [];
+    this.lastSelectedIds = [];
   }
 
   ngOnDestroy(): void {
-    this.areaFormArray = null;
-    this.checkboxGroup = null;
-    this.formArrayRef = null;
 
   }
 
   ngAfterViewInit() {
-    this.areaFormArray = <FormArray>this.checkboxGroup.controls.areas;
+    this.setLastAreaIds(this.selectedAreas);
 
   }
 

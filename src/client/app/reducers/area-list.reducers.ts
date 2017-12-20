@@ -31,7 +31,7 @@ export interface State {
 const initialState: State = {
   areaList: <AreaListItemType[]>[
     {
-      id: 0,
+      id: -1,
       title: '',
       count: 0
     }

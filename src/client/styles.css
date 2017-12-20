@@ -56,3 +56,8 @@ mat-chip .mat-icon {
 .subject-selector-container .mat-list .mat-list-item .mat-list-item-content {
   padding: 0 4px !important;
 }
+.mat-selection-list .mat-list-item .mat-list-text,
+.mat-selection-list .mat-list-option .mat-list-text
+{
+  padding: 0 16 !important;
+}

@@ -16,7 +16,9 @@
   -->
 
 
-<app-menus-component [selectedArea]="selectedArea" [selectedSubject]="selectedSubject$ | async" [areaList]="areas"
+<app-menus-component [selectedArea]="selectedArea"
+                     [selectedTypes]="selectedTypes$ | async"
+                     [selectedSubject]="selectedSubject$ | async" [areaList]="areas"
                      [showBack]="true"></app-menus-component>
 
 <app-item-header [item]="item$ | async"></app-item-header>
@@ -32,9 +34,12 @@
            fxFlex.gt-lg="50"
            fxLayoutGap="20px">
 
-        <app-item [item]="item$ | async" [selectedArea]="selectedArea" [selectedSubject]="selectedSubject$ | async"
-                  style="padding-bottom: 40px;"></app-item>
-
+        <app-item
+          [item]="item$ | async"
+          [selectedArea]="selectedArea"
+          [selectedTypes]="selectedTypes$ | async"
+          [selectedSubject]="selectedSubject$ | async"
+          style="padding-bottom: 40px;"></app-item>
         <mat-divider></mat-divider>
 
         <app-related-items [columns]="columns" [related]="related$ | async"
