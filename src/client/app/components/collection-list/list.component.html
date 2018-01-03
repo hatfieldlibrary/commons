@@ -14,12 +14,15 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+
 <div class="container">
-  <div class="chips">
+
+  <!--<mat-divider *ngIf="selectedSubject?.id!==0"></mat-divider>-->
+  <div class="chips" *ngIf="selectedSubject?.id!==0">
     <div fxLayout="row" fxLayoutAlign="start center">
-      <mat-card-subtitle *ngIf="selectedSubject?.id!==0">Viewing subject:&nbsp;&nbsp;</mat-card-subtitle>
+      <div class="mat-body-2" style="padding: 0 0 12px; color: #999;">Selected Subject&nbsp;&nbsp;</div>
       <mat-chip-list>
-        <mat-chip *ngIf="selectedSubject?.id!==0"
+        <mat-chip
                   selected="true"
                   color="default"
                   (click)="deselect($event)" style="margin-bottom: 12px;">
@@ -28,16 +31,18 @@
         </mat-chip>
       </mat-chip-list>
     </div>
-  </div>
 
-  <div *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
+  </div>
+  <!--<mat-divider *ngIf="selectedSubject?.id!==0"></mat-divider>-->
+
+  <div  style="margin-top: 24px;" *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
     <mat-spinner style="width:inherit"></mat-spinner>
   </div>
 
-  <mat-card-content>
+  <mat-card-content style="margin-top: 24px;">
     <mat-list>
       <mat-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
-                     class="collection-list-item"
+                     class="mat-subheading-2 collection-list-item"
                      *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
         {{collection.title}}
       </mat-list-item>

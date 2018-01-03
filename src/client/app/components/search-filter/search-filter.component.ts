@@ -3,6 +3,7 @@ import {CollectionType} from '../../shared/data-types/collection.type';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import {SetCollectionsFilter} from '../../actions/collection.actions';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-search-filter',
@@ -22,6 +23,9 @@ export class SearchFilterComponent implements OnInit {
     this.store.dispatch(new SetCollectionsFilter(event));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.select(fromRoot.getCollectionFilterTerm)
+      .subscribe((x) => this.filterTerm = x);
+  }
 
 }

@@ -31,6 +31,7 @@ export interface IdentifersPayload {
 
 export const CollectionActionTypes = {
   SET_FILTER: type('[Collections] Set Collection Filter'),
+  CLEAR_FILTER: type('[Collections] Clear Collection Filter'),
   LIST_ALL_ACTION: type('[Collections] List all Collections'),
   LIST_ALL_SUCCESS_ACTION: type('[Collections] List all Collections Success'),
   LIST_BY_AREA: type('[Collections] Search by AreaType'),
@@ -51,6 +52,19 @@ export const CollectionActionTypes = {
   REQUEST_FAILED: type('[Collections] Search Failed')
 
 };
+
+export class SetCollectionsFilter implements Action {
+  type = CollectionActionTypes.SET_FILTER;
+  constructor(public payload: string) {
+  }
+}
+
+export class ClearCollectionsFilter implements Action {
+  type = CollectionActionTypes.CLEAR_FILTER;
+  payload: void;
+  constructor() {
+  }
+}
 
 export class CollectionReset implements Action {
   type = CollectionActionTypes.LIST_RESET;
@@ -136,12 +150,6 @@ export class CollectionsTypeActionSuccess implements Action {
     this.payload = searchResult;
   }
 
-}
-
-export class SetCollectionsFilter implements Action {
-  type = CollectionActionTypes.SET_FILTER;
-  constructor(public payload: string) {
-  }
 }
 
 export class CollectionsTypeAreaAction implements Action {

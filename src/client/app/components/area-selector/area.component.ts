@@ -26,6 +26,7 @@ import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {MatSelectionList} from '@angular/material';
+import {ClearCollectionsFilter} from '../../actions/collection.actions';
 
 @Component({
   selector: 'app-navigation-selector',
@@ -106,7 +107,6 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
 
   private removeFromList(list: any, areaId: number): any[] {
 
-    console.log(list)
     const index = list.indexOf(areaId);
     if (index >= 0) {
       const test = list.splice(index, 1);
@@ -117,6 +117,8 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
   }
 
   onAreaListControlChanged(list: MatSelectionList, areaId: number) {
+
+    this.store.dispatch(new ClearCollectionsFilter());
 
     if (areaId === 0 && this.lastSelectedIds.indexOf(0) >= 0) {
       console.log('toggled all collections')

@@ -166,7 +166,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // Push the value onto the y stack if the url is for an item view and the previous
           // route transition was not also to an item view. This effectively limits
           // y scroll value tracking to the collection view.
-          if (event.url.match(/\/commons\/item/) && this.itemUrlStack.length == 0) {
+          if (event.url.match(/\/commons\/item/) && this.itemUrlStack.length === 0) {
             // Push the top
             this.yScrollStack.push(top);
             // Add to item stack to prevent further updates of the stacks.
@@ -179,7 +179,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // If set to a value greater than the maximum available for the element,
           // scrollTop settles itself to the maximum value and we don't see the
           // desired result.
-          this.timeoutService.setTimeout(5, () => {
+          this.timeoutService.setTimeout(0, () => {
             // Get the scrollable element (created by MdSidenavContainer)
 
             this.scrollable = this.document.querySelector('.mat-drawer-content');

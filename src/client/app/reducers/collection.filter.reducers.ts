@@ -22,6 +22,12 @@ export function reducer(state = initialState, action: CollectionActions): State 
       });
     }
 
+    case CollectionActionTypes.CLEAR_FILTER: {
+      return Object.assign({}, state, {
+        term: ''
+      })
+    }
+
     default: return state;
   }
 

@@ -133,9 +133,11 @@ export const getAuthStatusState = (state: State) => state.auth;
 
 export const getAuthStatus = createSelector(getAuthStatusState, fromAuth.getAuthStatus);
 
-export const getCollectionFilter = (state: State) => state.filter;
+export const getCollectionFilterState = (state: State) => state.filter;
 
-export const getFilteredCollections = createSelector(getCollections, getCollectionFilter, filterFunction);
+export const getCollectionFilterTerm = createSelector(getCollectionFilterState, fromFilter.getCollectionFilter);
+
+export const getFilteredCollections = createSelector(getCollections, getCollectionFilterState, filterFunction);
 
 function filterFunction(collections, filter) {
   if (typeof filter.term !== 'undefined' && filter.term.length > 2 && collections.length > 1) {

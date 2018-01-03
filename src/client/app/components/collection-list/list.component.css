@@ -19,7 +19,7 @@
 }
 .chips {
   margin-left: 12px;
-  margin-top: 24px;
+  margin-top: 18px;
 }
 mat-chip {
   color: #fff !important;
@@ -36,5 +36,11 @@ app-collection-list .mat-input-wrapper {
 }
 
 .mat-chip.mat-chip-selected:not(.mat-basic-chip) {
-  background-color: #3faab2 !important;
+  /*background-color: #3faab2 !important;*/
+  background-color: #6f7a7f !important;
 }
+.collection-list-item {
+
+  color: #3faab2;
+}
+
