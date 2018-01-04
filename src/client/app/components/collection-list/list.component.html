@@ -41,10 +41,13 @@
 
   <mat-card-content style="margin-top: 24px;">
     <mat-list>
-      <mat-list-item style="cursor: default" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
+      <mat-list-item style="cursor: default;border-bottom: 1px solid #fff" [routerLink]="['/',rootPath,'item','id', collection.id, selectedArea]"
                      class="mat-subheading-2 collection-list-item"
                      *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
-        {{collection.title}}
+        <div fxLayout="column">
+          <div>{{collection.title}}</div>
+        <div class="mat-caption" style="color: #999;padding-bottom: 16px;">{{collection.assetType}}</div>
+        </div>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

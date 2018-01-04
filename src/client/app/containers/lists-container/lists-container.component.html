@@ -36,19 +36,26 @@
     background-position: top center,top center;">
 
 
-    <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="start center">
+    <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="center center">
 
       <div fxLayout="row" fxFlexFill fxLayoutAlign="center start">
 
-        <app-subject-selector fxFlex="1 1 85%" [subjectList]="subjects$ | async" [areaId]="areaId"
-                              [type]="subjectLinkType"></app-subject-selector>
+        <app-subject-selector
+          fxFlex="1 1 100%"
+          fxFlex.md="1 1 85%"
+          fxFlex.lg="1 1 85%"
+          fxFlex.gt-lg="1 1 55%"
+          [subjectList]="subjects$ | async"
+          [areaId]="areaId"
+          [type]="subjectLinkType">
+        </app-subject-selector>
       </div>
 
-      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center start">
+      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
 
-        <div fxFlex="1 1 85%" fxLayoutGap="30px">
+        <div fxFlex="1 1 100%" fxFlex.gt-sm="85%" fxFlex.gt-lg="1 1 70%" fxLayoutGap="30px" fxLayoutAlign="center start">
 
-          <div fxLayout="column" fxFlex.gt-sm="1 1 25%" class="side-container" *ngIf="media.isActive('gt-sm')">
+          <div fxLayout="column" fxFlex.gt-sm="1 1 25%" fxFlex.gt-lg="1 1 15%" class="side-container" *ngIf="media.isActive('gt-sm')">
             <div class="side-nav-header mat-title">FILTERS</div>
             <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
             <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></app-navigation-selector>
@@ -60,7 +67,7 @@
                fxFlex.sm="1 1 100%"
                fxFlex.md="1 1 70"
                fxFlex.lg="1 1 70%"
-               fxFlex.gt-lg="1 1 50%">
+               fxFlex.gt-lg="1 1 60%">
 
             <!--<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start"-->
                  <!--fxLayoutGap.gt-sm="30px">-->
