@@ -38,65 +38,65 @@
 
     <div fxLayout="column" fxLayoutGap="32px" fxLayoutAlign="center center">
 
-      <div fxLayout="row" fxFlexFill fxLayoutAlign="center start">
-
+      <div fxLayout="row"
+           fxLayoutAlign="center start"
+           fxFlexFill>
         <app-subject-selector
-          fxFlex="1 1 100%"
-          fxFlex.md="1 1 85%"
-          fxFlex.lg="1 1 85%"
-          fxFlex.gt-lg="1 1 55%"
+          fxFlex="1 1 100"
+          fxFlex.md="1 1 85"
+          fxFlex.lg="1 1 75"
+          fxFlex.gt-lg="1 1 55"
           [subjectList]="subjects$ | async"
           [areaId]="areaId"
           [type]="subjectLinkType">
         </app-subject-selector>
       </div>
 
-      <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+      <div fxLayout="row"
+           fxLayoutWrap
+           fxFlexFill
+           fxLayoutGap="30px"
+           fxLayoutAlign="center start">
+        <div fxLayout="column"
+             fxFlex.md="1 1 20"
+             fxFlex.lg="1 1 15"
+             fxFlex.gt-lg="1 1 10"
+             class="side-container"
+             *ngIf="media.isActive('gt-sm')">
+          <div class="side-nav-header mat-title">FILTERS</div>
+          <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
+          <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></app-navigation-selector>
+          <app-types [selectedAreas]="areaId" [selectedSubject]="subjectId" [selectedTypes]="selectedTypes"
+                     [typeList]="types$ | async"></app-types>
+        </div>
+        <div fxLayout="column"
+             fxFlex.sm="1 1 70"
+             fxFlex.md="1 1 60"
+             fxFlex.lg="1 1 50"
+             fxFlex.gt-lg="1 1 40">
+          <div class="mat-card info-card">
+            <div class="mat-card-header">
+              <mat-card-subtitle class="area-info">
+                <app-area-information *ngIf="!homeScreen"
+                                      [areaInfo]="areaInfo$ | async"></app-area-information>
+                <app-home-screen *ngIf="homeScreen"
+                                 (removeSubject)="removeSubject($event)"></app-home-screen>
+              </mat-card-subtitle>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="mat-card-content">
+              <app-collection-list (removeSubject)="removeSubject($event)"
+                                   [collectionList]="collections$ | async "
+                                   [selectedSubject]="selectedSubject$ | async"
+                                   [selectedArea]="areaId"></app-collection-list>
 
-        <div fxFlex="1 1 100%" fxFlex.gt-sm="85%" fxFlex.gt-lg="1 1 70%" fxLayoutGap="30px" fxLayoutAlign="center start">
-
-          <div fxLayout="column" fxFlex.gt-sm="1 1 25%" fxFlex.gt-lg="1 1 15%" class="side-container" *ngIf="media.isActive('gt-sm')">
-            <div class="side-nav-header mat-title">FILTERS</div>
-            <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
-            <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></app-navigation-selector>
-            <app-types [selectedAreas]="areaId" [selectedSubject]="subjectId" [selectedTypes]="selectedTypes"
-                       [typeList]="types$ | async"></app-types>
-          </div>
-
-          <div fxLayout="column"
-               fxFlex.sm="1 1 100%"
-               fxFlex.md="1 1 70"
-               fxFlex.lg="1 1 70%"
-               fxFlex.gt-lg="1 1 60%">
-
-            <!--<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start"-->
-                 <!--fxLayoutGap.gt-sm="30px">-->
-
-
-
-                <div class="mat-card info-card">
-                  <div class="mat-card-header">
-                    <mat-card-subtitle class="area-info">
-                      <app-area-information *ngIf="!homeScreen"
-                                            [areaInfo]="areaInfo$ | async"></app-area-information>
-                      <app-home-screen *ngIf="homeScreen"
-                                       (removeSubject)="removeSubject($event)"></app-home-screen>
-                    </mat-card-subtitle>
-                  </div>
-<mat-divider></mat-divider>
-                  <div class="mat-card-content">
-                    <app-collection-list (removeSubject)="removeSubject($event)"
-                                         [collectionList]="collections$ | async "
-                                         [selectedSubject]="selectedSubject$ | async"
-                                         [selectedArea]="areaId"></app-collection-list>
-
-                  </div>
-                </div>
-              </div>
-            <!--</div>-->
+            </div>
           </div>
         </div>
       </div>
+      <!--</div>-->
+    </div>
+
 
   </mat-card-content>
 </mat-card>
