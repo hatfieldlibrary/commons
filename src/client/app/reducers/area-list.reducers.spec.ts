@@ -25,12 +25,12 @@ import {getAreaList, reducer, State} from "./area-list.reducers";
 const areaListTypeMock = [
   {
     id: 1,
-    title: 'test area one',
+    title: 'test areas one',
     count: 2
 
   }, {
     id: 2,
-    title: 'test area two',
+    title: 'test areas two',
     count: 1
   }
 ];
@@ -44,7 +44,7 @@ const defaultState = [
 
 describe('Area List Reducer', () => {
 
-  it('should return the initial default area state and loading true.', () => {
+  it('should return the initial default areas state and loading true.', () => {
       expect(
         reducer(undefined, new AreaAction('1'))
       ).toEqual(
@@ -54,7 +54,7 @@ describe('Area List Reducer', () => {
         })
     });
 
-  it('should return area list', () => {
+  it('should return areas list', () => {
 
     let areaState: State = {areaList: areaListTypeMock, loading: true};
     let state = reducer(areaState, new AreaActionSuccess(areaListTypeMock));

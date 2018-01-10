@@ -77,7 +77,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return the collection list for area.', () => {
+  it('should return the collection list for areas.', () => {
     expect(
       reducer(undefined, new CollectionsAreaActionSuccess(collectionListMock))
     ).toEqual(
@@ -97,7 +97,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return the collection list for area and subject.', () => {
+  it('should return the collection list for areas and subject.', () => {
     expect(
       reducer(undefined, new CollectionsSubjectActionSuccess(collectionListMock))
     ).toEqual(
@@ -118,7 +118,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return current empty state if no area id is provided to CollectionAction', () => {
+  it('should return current empty state if no areas id is provided to CollectionAction', () => {
     const collectionState: State = {collections: collectionListMock, loading: false};
     expect(
       reducer(collectionState, new CollectionsAreaAction(''))
@@ -129,7 +129,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return empty state if either area or subject id is missing in CollectionSubjectAction.', () => {
+  it('should return empty state if either areas or subject id is missing in CollectionSubjectAction.', () => {
     const collectionState: State = {collections: collectionListMock, loading: false};
     expect(
       reducer(collectionState, new CollectionsSubjectAction(''))
@@ -140,7 +140,7 @@ describe('Collection Reducer', () => {
       })
   });
 
-  it('should return collection for area list.', () => {
+  it('should return collection for areas list.', () => {
 
     const state = reducer(undefined, new CollectionsAreaActionSuccess(collectionListMock));
     const result = getCollectionList(state);

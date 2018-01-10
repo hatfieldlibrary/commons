@@ -74,7 +74,7 @@ describe('AppComponent', () => {
   const mockAreaList: AreaListItemType[] =  [
     {
       id: 1,
-      title: 'area one',
+      title: 'areas one',
       count: 1
     }
   ];

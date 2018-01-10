@@ -16,7 +16,7 @@
  */
 
 /**
- * The main container component for subject selector, area selector and collection
+ * The main container component for subject selector, areas selector and collection
  * list components
  */
 import {ActivatedRoute, Router} from '@angular/router';
@@ -108,11 +108,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           this.setAllCollectionTitle();
         } else if (info.length > 1) {
           // Use subtitle for multiple collection names
-          // Multiple areas selected, use subtitle format for multiple area info.
+          // Multiple areas selected, use subtitle format for multiple areas info.
           info.forEach((area) => this.subtitle += area.title + ' / ');
           this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
         } else if (info[0].title.length > 0) {
-          // Otherwise update the title using the new single area information.
+          // Otherwise update the title using the new single areas information.
           this.title = info[0].title;
         } else {   // Default.
           this.setAllCollectionTitle();
@@ -123,7 +123,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Dispatches action for collections by subject and area.
+   * Dispatches action for collections by subject and areas.
    * @param subjectId
    * @param areaId
    */
@@ -134,7 +134,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Dispatches action for collections in an area.
+   * Dispatches action for collections in an areas.
    * @param areaId
    */
   getCollectionsByArea(areaId: string): void {
@@ -166,8 +166,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Dispatches action for area information and for list of
-   * subjects assigned to the area..
+   * Dispatches action for areas information and for list of
+   * subjects assigned to the areas..
    * @param areaId
    */
   getAreaInformation(areaId: string): void {
@@ -196,6 +196,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   getAllCollectionsForType(typeId: string): void {
     this.store.dispatch(new listActions.CollectionsTypeAction(typeId));
+    this.store.dispatch(new subjectAction.SubjectsForTypes(typeId));
   }
 
   getCollectionsForTypeSubject(typeId: string, subjectId: string): void {
@@ -223,6 +224,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       subject: ''
     };
     this.store.dispatch(new listActions.CollectionsTypeAreaAction(params));
+    this.store.dispatch(new subjectAction.SubjectsForAreaTypes(areaId, typeId));
   }
 
   /**
@@ -258,7 +260,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Dispatches action for area list if not currently available in the store.
+   * Dispatches action for areas list if not currently available in the store.
    * @param id
    */
   initializeAreas() {

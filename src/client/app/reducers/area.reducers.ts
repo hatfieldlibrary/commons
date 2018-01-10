@@ -22,13 +22,13 @@ import {AreaActions, AreaActionTypes} from "../actions/area.actions";
 import {AreaType} from "../shared/data-types/area.type";
 
 export interface State {
-  area: AreaType[];
+  areas: AreaType[];
   loading: boolean;
 
 }
 
 const initialState: State = {
-  area: [<AreaType>{
+  areas: [<AreaType>{
     id: 0,
     title: '',
     linkLabel: '',
@@ -74,4 +74,4 @@ export function reducer(state = initialState, action: AreaActions): State {
 
 }
 
-export const getAreaInfo = (state: State) => state.area;
+export const getAreaInfo = (state: State) => state.areas;

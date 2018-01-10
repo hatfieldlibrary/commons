@@ -38,18 +38,18 @@ describe('Area Effect', () => {
   const mockAreasList: AreaListItemType[] = [
     {
       id: 1,
-      title: 'test area one',
+      title: 'test areas one',
       count: 2
     }, {
       id: 2,
-      title: 'test area two',
+      title: 'test areas two',
       count: 1
     }
   ];
 
   const mockAreaInfo: AreaType = {
     id: 1,
-    title: 'test area',
+    title: 'test areas',
     linkLabel: '',
     url: '',
     searchUrl: '',

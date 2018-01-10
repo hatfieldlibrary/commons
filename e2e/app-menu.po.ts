@@ -24,7 +24,7 @@ export class CommonsPage {
       return browser.get('/commons/collection');
     }
     if (location === 'area') {
-      return browser.get('/commons/collection/area/7');
+      return browser.get('/commons/collection/areas/7');
     }
     if (location === 'item') {
       return browser.get('/commons/item/id/20/7');

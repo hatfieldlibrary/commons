@@ -18,22 +18,22 @@
 /**
  * Created by mspalti on 4/10/17.
  */
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs";
-import {SubjectType} from "../shared/data-types/subject.type";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import { environment } from '../environments/environment';
-import {RelatedType} from "../shared/data-types/related-collection";
+import {RelatedType} from '../shared/data-types/related-collection';
+import {RelatedItems} from '../shared/data-types/related-items';
 
 @Injectable()
 export class RelatedService {
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   getRelatedCollections(id: string, subjectIds: string): Observable<RelatedType[]> {
     // temporary test data source
-    return this.http.get(environment.apiHost + environment.apiRoot + '/collection/' + id + '/related/' + subjectIds)
-      .map(res => res.json().related);
+    return this.http.get<RelatedItems>(environment.apiHost + environment.apiRoot + '/collection/' + id + '/related/' + subjectIds)
+      .map(res => res.related);
   }
 
 }

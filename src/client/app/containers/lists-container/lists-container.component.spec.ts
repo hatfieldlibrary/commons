@@ -24,7 +24,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {Store, Action} from '@ngrx/store';
 import {
   MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatIconModule, MatInputModule,
-  MatListModule,
+  MatListModule, MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
   MatToolbarModule
@@ -51,7 +51,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
+// import {HttpModule} from "@angular/http";
 import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component";
 import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
 import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
@@ -70,6 +70,9 @@ import {SetIntervalService} from "../../services/timers/interval.service";
 import {Subscription} from "rxjs/Subscription";
 import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
 import {SetTimeoutService} from "../../services/timers/timeout.service";
+import {SearchFilterComponent} from '../../components/search-filter/search-filter.component';
+import {TypesComponent} from '../../components/types/types.component';
+import {HttpClientModule} from '@angular/common/http';
 
 let areaSubscriptionMock =
   {
@@ -91,7 +94,7 @@ let areaSubscriptionMock =
 let areaListMock = [
   {
     id: 1,
-    title: 'area one',
+    title: 'areas one',
     count: 1
   }
 ];
@@ -99,12 +102,12 @@ let areaListMock = [
 let mulitpleAreaListMock = [
   {
     id: 1,
-    title: 'area one',
+    title: 'areas one',
     count: 1
   },
   {
     id: 1,
-    title: 'area two',
+    title: 'areas two',
     count: 1
   }
 ];
@@ -166,7 +169,9 @@ describe('ListsContainerComponent', () => {
         CollectionsSvgComponent,
         KeyboardArrowForwardSvgComponent,
         KeyboardArrowBackSvgComponent,
-        CollectionsFilterPipe
+        CollectionsFilterPipe,
+        SearchFilterComponent,
+        TypesComponent
       ],
       imports: [
         FlexLayoutModule,
@@ -178,14 +183,15 @@ describe('ListsContainerComponent', () => {
         MatInputModule,
         MatIconModule,
         MatSelectModule,
+        MatProgressSpinnerModule,
         MatChipsModule,
         BrowserModule,
         BrowserAnimationsModule,
-        HttpModule,
         ReactiveFormsModule,
         MatCheckboxModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ],
       providers: [
         SetTimeoutService,
@@ -235,7 +241,7 @@ describe('ListsContainerComponent', () => {
 
   });
 
-  it('should fetch all collections if no area id provided in route parameters.', fakeAsync(() => {
+  it('should fetch all collections if no areas id provided in route parameters.', fakeAsync(() => {
 
     setAllRoute(route);
 
@@ -252,7 +258,7 @@ describe('ListsContainerComponent', () => {
 
   }));
 
-  it('should not update area id if unchanged,', fakeAsync(() => {
+  it('should not update areas id if unchanged,', fakeAsync(() => {
 
     setAreaRoute(route, 'default');
 
@@ -272,7 +278,7 @@ describe('ListsContainerComponent', () => {
   }));
 
 
-  it('should use the existing area list from the store.', fakeAsync(() => {
+  it('should use the existing areas list from the store.', fakeAsync(() => {
 
     setAreaRoute(route, '1');
     areaListMock = areaList;
@@ -291,10 +297,10 @@ describe('ListsContainerComponent', () => {
 
   }));
 
-  it('should dispatch request to fetch the area list', fakeAsync(() => {
+  it('should dispatch request to fetch the areas list', fakeAsync(() => {
 
     setAllRoute(route);
-    //  Set areaList store mock to empty array. This should trigger request for area list.
+    //  Set areaList store mock to empty array. This should trigger request for areas list.
     areaList = [
       {
         id: 0,
@@ -315,7 +321,7 @@ describe('ListsContainerComponent', () => {
 
   }));
 
-  it('should dispatch request for collections by area', fakeAsync(() => {
+  it('should dispatch request for collections by areas', fakeAsync(() => {
     setAreaRoute(route, '1');
     areasMock = areaSubscriptionMock;
     component.ngOnInit();
@@ -326,7 +332,7 @@ describe('ListsContainerComponent', () => {
 
   }));
 
-  it('should dispatch request for collections by subject and area', fakeAsync(() => {
+  it('should dispatch request for collections by subject and areas', fakeAsync(() => {
     setSubjectAreaRoute(route, '1', '2');
 
     component.ngOnInit();
@@ -336,18 +342,18 @@ describe('ListsContainerComponent', () => {
 
   }));
 
-  it('should set title for multiple area result', fakeAsync(() => {
+  it('should set title for multiple areas result', fakeAsync(() => {
     areaList = mulitpleAreaListMock;
     setAreaRoute(route, '1,2');
     component.ngOnInit();
     tick();
     expect(component.title).toEqual('');
     expect(component.subtitle).toBeDefined();
-    expect(component.subtitle).toContain('area one / area two');
+    expect(component.subtitle).toContain('areas one / areas two');
 
   }));
 
-  it('should set title to all collections area id is zero', fakeAsync(() => {
+  it('should set title to all collections areas id is zero', fakeAsync(() => {
     setAllRoute(route);
     component.ngOnInit();
     component.areaId = '0';
@@ -377,7 +383,7 @@ describe('ListsContainerComponent', () => {
     expect(router.navigateByUrl).toHaveBeenCalled();
 
   });
-  it('should call router navigate to area after when remove subject is called', () => {
+  it('should call router navigate to areas after when remove subject is called', () => {
     let router = fixture.debugElement.injector.get(Router);
     spyOn(router, 'navigateByUrl');
     component.areaId = '1';

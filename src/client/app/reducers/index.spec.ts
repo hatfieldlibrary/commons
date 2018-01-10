@@ -161,7 +161,7 @@ describe('Reducers ', () => {
 
   });
 
-  it('should return area state', () => {
+  it('should return areas state', () => {
     const result = getAreasState(areaState);
     expect(result).toBeDefined();
   });

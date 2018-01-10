@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TypesComponent } from './types.component';
+import {MatListModule, MatSelectionList} from '@angular/material';
 
 describe('TypesComponent', () => {
   let component: TypesComponent;
@@ -8,7 +9,8 @@ describe('TypesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TypesComponent ]
+      declarations: [ TypesComponent, MatSelectionList],
+      imports: [MatListModule]
     })
     .compileComponents();
   }));

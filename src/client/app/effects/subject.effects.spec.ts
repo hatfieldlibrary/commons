@@ -67,7 +67,7 @@ describe('Subject Effect', () => {
   });
 
 
-  it('should return subjects by area success action', () => {
+  it('should return subjects by areas success action', () => {
 
     const startAction = new SubjectAction('1');
     const hotMarble = {a: startAction};

@@ -181,10 +181,10 @@ console.log('removing from list')
   // _updateAreaFormArray(type: string, checked: boolean) {
   //
   //   if (checked) {
-  //     // Add the selected collection area to FormArray.
+  //     // Add the selected collection areas to FormArray.
   //     this.typesFormArray.push(new FormControl(type));
   //   } else {
-  //     // Remove the collection area from FormArray.
+  //     // Remove the collection areas from FormArray.
   //     const index = this.typesFormArray.controls.findIndex(x => x.value === type);
   //     this._removeFromArray(index);
   //   }

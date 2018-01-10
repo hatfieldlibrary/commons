@@ -189,8 +189,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               this.itemUrlStack.pop();
               // Pop the top
               this.scrollable.scrollTop = this.yScrollStack.pop();
-            }
-            else {
+            } else {
               // Currently the only other view is for items. This
               // view should always initialize with scrollTop equal
               // to zero.

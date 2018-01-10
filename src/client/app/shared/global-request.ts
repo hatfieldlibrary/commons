@@ -15,18 +15,18 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {RequestMethod, RequestOptions, Headers} from "@angular/http";
-/**
- * Extends RequestOptions for possible later use with session header.
- * Created by mspalti on 4/25/17.
- */
-export class GlobalHttpOptions extends RequestOptions {
-  constructor() {
-    super({
-      method: RequestMethod.Get,
-      // headers: new Headers({
-      //   'MySession': '',
-      // })
-    });
-  }
-}
+// import {RequestMethod, RequestOptions, Headers} from "@angular/http";
+// /**
+//  * Extends RequestOptions for possible later use with session header.
+//  * Created by mspalti on 4/25/17.
+//  */
+// export class GlobalHttpOptions extends RequestOptions {
+//   constructor() {
+//     super({
+//       method: RequestMethod.Get,
+//       // headers: new Headers({
+//       //   'MySession': '',
+//       // })
+//     });
+//   }
+// }

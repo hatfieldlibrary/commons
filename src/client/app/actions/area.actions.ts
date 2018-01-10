@@ -19,7 +19,7 @@
  * Created by mspalti on 2/24/17.
  */
 /**
- * Actions for area updates. These actions are dispatched from component
+ * Actions for areas updates. These actions are dispatched from component
  * controllers and effects map functions.
  */
 import {Action} from '../actions/action.interface';
@@ -31,8 +31,8 @@ export const AreaActionTypes = {
   AREA_LIST: type('[Areas] List Areas Request'),
   AREA_LIST_SUCCESS: type('[Areas] List All Areas Response'),
   REQUEST_FAILED: type('[Areas] Search Failed'),
-  AREA_INFORMATION: type('[Areas] Information for current area'),
-  AREA_INFORMATION_SUCCESS: type('[Areas] Update area information'),
+  AREA_INFORMATION: type('[Areas] Information for current areas'),
+  AREA_INFORMATION_SUCCESS: type('[Areas] Update areas information'),
   AREA_DEFAULT_INFORMATION: type('[Areas] Default information')
 };
 
@@ -73,7 +73,7 @@ export class AreaActionFailed implements Action {
 
 /**
  * Factory for the action used to initialize collection
- * information with load of the area list.
+ * information with load of the areas list.
  */
 export class AreaInformation implements Action {
   type = AreaActionTypes.AREA_INFORMATION;
@@ -92,7 +92,7 @@ export class AreaDefaultInformation implements Action {
 }
 
 /**
- * Factory for the action used to update area information.
+ * Factory for the action used to update areas information.
  */
 export class AreaInformationSuccess implements Action {
   type = AreaActionTypes.AREA_INFORMATION_SUCCESS;

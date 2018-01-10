@@ -13,14 +13,14 @@ describe('UtilitiesService', () => {
     expect(service).toBeTruthy();
   }));
 
-  // it('should return link back to list component showing collections for selected for area and subject',inject([UtilitiesService], (service: UtilitiesService) => {
+  // it('should return link back to list component showing collections for selected for areas and subject',inject([UtilitiesService], (service: UtilitiesService) => {
   //   let backLink = service.getBackLink('1',{id: 1, name: 'test', url: ''});
-  //   expect(backLink).toEqual('/commons/collection/subject/1/area/1');
+  //   expect(backLink).toEqual('/commons/collection/subject/1/areas/1');
   // }));
   //
-  // it('should return link back to list component showing collections for selected area',inject([UtilitiesService], (service: UtilitiesService) => {
+  // it('should return link back to list component showing collections for selected areas',inject([UtilitiesService], (service: UtilitiesService) => {
   //   let backLink = service.getBackLink('1',{id: 0, name: 'test', url: ''});
-  //   expect(backLink).toEqual('/commons/collection/area/1');
+  //   expect(backLink).toEqual('/commons/collection/areas/1');
   // }));
   //
   // it('should return link back to list component showing collections for selected subject',inject([UtilitiesService], (service: UtilitiesService) => {

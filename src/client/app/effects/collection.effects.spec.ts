@@ -83,7 +83,7 @@ describe('Collections Effect', () => {
 
   });
 
-  it('should call collection success action after collections by area are retrieved', () => {
+  it('should call collection success action after collections by areas are retrieved', () => {
 
     const startAction = new CollectionsAreaAction('1');
     const hotMarble = {a: startAction};
@@ -94,7 +94,7 @@ describe('Collections Effect', () => {
 
   });
 
-  it('should return error action for collections by area', () => {
+  it('should return error action for collections by areas', () => {
 
     spyOn(collectionService, 'getCollectionsByAreaId').and.callFake(() => { return Observable.throw('error') });
     const startAction = new CollectionsAreaAction('1');
@@ -107,7 +107,7 @@ describe('Collections Effect', () => {
 
   });
 
-  it('should call success action after collections by subject and area are retrieved', () => {
+  it('should call success action after collections by subject and areas are retrieved', () => {
 
     const startAction = new CollectionsAreaSubjectAction('1', '1');
     const hotMarble = {a: startAction};
@@ -118,7 +118,7 @@ describe('Collections Effect', () => {
 
   });
 
-  it('should return error action for collections by subject and area', () => {
+  it('should return error action for collections by subject and areas', () => {
 
     spyOn(collectionService, 'getCollectionsByAreaSubject').and.callFake(() => { return Observable.throw('error') });
     const startAction = new CollectionsAreaSubjectAction('1', '1');

@@ -18,7 +18,7 @@
 import { BrowserModule} from '@angular/platform-browser';
 import { NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpModule, RequestOptions} from '@angular/http';
+// import { RequestOptions} from '@angular/http';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -61,7 +61,7 @@ import { CloseSvgComponent } from './components/svg/close-svg/close-svg.componen
 import { HomeScreenComponent } from './components/home-screen/home-screen.component';
 import { ItemHeaderComponent } from './components/item-header/item-header.component';
 import { BackSvgComponent } from './components/svg/back-svg/back-svg.component';
-import { GlobalHttpOptions} from './shared/global-request';
+// import { GlobalHttpOptions} from './shared/global-request';
 import { LockSvgComponent } from './components/svg/lock-svg/lock-svg.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ItemLinksComponent } from './components/item-links/item-links.component';
@@ -100,7 +100,7 @@ export const appRoutes = [
   {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/subject/:subjectId/areas/:areaId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
@@ -176,7 +176,6 @@ export const appRoutes = [
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    HttpModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
@@ -232,8 +231,8 @@ export const appRoutes = [
     UtilitiesService,
     SetIntervalService,
     SetTimeoutService,
-    MenuInteractionService,
-    {provide: RequestOptions, useClass: GlobalHttpOptions}
+    MenuInteractionService
+   // {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 
   bootstrap: [ AppComponent]

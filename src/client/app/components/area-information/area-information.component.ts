@@ -43,7 +43,7 @@ export class AreaInformationComponent implements OnChanges{
         let areaTitles = '';
         areaList.forEach((area) => areaTitles += area.title + ', ');
         areaTitles = areaTitles.slice(0, -2);
-        this.description = 'Viewing collection areas: <span class="area-color">' + areaTitles + '</span>';
+        this.description = 'Viewing collection areas: <span class="areas-color">' + areaTitles + '</span>';
         this.url = '';
         this.linkLabel = '';
         this.title = '';

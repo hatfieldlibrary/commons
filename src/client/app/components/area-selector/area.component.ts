@@ -93,7 +93,7 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
   }
 
   _navigateRoute(areaId: string) {
-    // the area id can be a string object of length zero.
+    // the areas id can be a string object of length zero.
     if (areaId !== '0' && areaId.length > 0) {
       this.router.navigate(['/', environment.appRoot, 'collection', 'area', areaId]);
     } else {
@@ -116,6 +116,34 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
     return list;
   }
 
+  private setSelectedAreas(areaId: number, lastSelectedIds: number[], currentSelectedIds: number[]): string {
+
+    let updatedAreaId: string;
+    let updatedList: number[];
+
+    const indexOfPrevious = this.getIndex(lastSelectedIds, areaId);
+
+    if (areaId === 0) {
+      updatedAreaId = '0';
+    } else if (indexOfPrevious >= 0) {
+      updatedList = this.removeFromList(currentSelectedIds, areaId);
+      const zeroIndex = this.getIndex(currentSelectedIds, 0);
+      if (zeroIndex >= 0) {
+        updatedList = this.removeFromList(updatedList, areaId);
+      }
+      updatedAreaId = this._createIdQueryParam(updatedList);
+    } else {
+      const index = this.getIndex(currentSelectedIds, 0);
+      if (index >= 0) {
+        updatedList = this.removeFromList(currentSelectedIds, areaId);
+      } else {
+        updatedList = currentSelectedIds;
+      }
+      updatedAreaId = this._createIdQueryParam(updatedList);
+    }
+    return updatedAreaId;
+  }
+
   onAreaListControlChanged(list: MatSelectionList, areaId: number) {
 
     this.store.dispatch(new ClearCollectionsFilter());
@@ -124,42 +152,11 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
       console.log('toggled all collections')
       this._navigateRoute('0');
     } else {
-      let updatedAreaId: string;
-      this.selectedOptions = list.selectedOptions.selected.map(item => item.value);
       this.store.dispatch(new listActions.CollectionReset());
-      const indexOfPrevious = this.getIndex(this.lastSelectedIds, areaId);
-
-      let updatedList: number[];
-      // // If the All Collection option is selected, reset the FormArray and navigate.
-      if (areaId === 0) {
-        updatedAreaId = '0';
-        console.log('zero')
-
-      } else if (indexOfPrevious >= 0) {
-        console.log('prev')
-        updatedList = this.removeFromList(this.selectedOptions, areaId);
-
-        const zeroIndex = this.getIndex(this.selectedOptions, 0);
-        if (zeroIndex >= 0) {
-          console.log('removing zero ' + zeroIndex)
-          updatedList = this.removeFromList(updatedList, areaId);
-        }
-        updatedAreaId = this._createIdQueryParam(updatedList);
-      } else {
-        console.log('new')
-        const index = this.getIndex(this.selectedOptions, 0);
-        if (index >= 0) {
-          updatedList = this.removeFromList(this.selectedOptions, areaId);
-        } else {
-          updatedList = this.selectedOptions;
-        }
-        // Otherwise, update the FormArray and navigate.
-        // this._updateAreaFormArray(this.selectedOptions,  event.checked);
-        updatedAreaId = this._createIdQueryParam(updatedList);
-        // this._navigateRoute(updatedAreaId);
-      }
-      this._navigateRoute(updatedAreaId);
+      const selectedOptions = list.selectedOptions.selected.map(item => item.value);
+      const updatedAreaId = this.setSelectedAreas(areaId, this.lastSelectedIds, selectedOptions);
       list.selectedOptions.clear();
+      this._navigateRoute(updatedAreaId);
     }
 
   }
