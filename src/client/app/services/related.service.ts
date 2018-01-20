@@ -20,8 +20,9 @@
  */
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import { environment } from '../environments/environment';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import {environment} from '../environments/environment';
 import {RelatedType} from '../shared/data-types/related-collection';
 import {RelatedItems} from '../shared/data-types/related-items';
 
@@ -31,7 +32,6 @@ export class RelatedService {
   constructor(private http: HttpClient) {}
 
   getRelatedCollections(id: string, subjectIds: string): Observable<RelatedType[]> {
-    // temporary test data source
     return this.http.get<RelatedItems>(environment.apiHost + environment.apiRoot + '/collection/' + id + '/related/' + subjectIds)
       .map(res => res.related);
   }

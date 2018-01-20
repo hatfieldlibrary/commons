@@ -19,7 +19,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Outp
 
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {environment} from '../../environments/environment';
-import {SelectedSubject} from '../../shared/data-types/selected-subject';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
@@ -35,7 +35,7 @@ export class ListComponent implements OnDestroy {
 
   rootPath: string = environment.appRoot;
   @Input() collectionList: CollectionType[];
-  @Input() selectedSubject: SelectedSubject;
+  @Input() selectedSubject: SubjectFilterType;
   @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
   @Input() selectedArea: string;
   filterTerm: string;
@@ -47,6 +47,14 @@ export class ListComponent implements OnDestroy {
   deselect() {
     this.store.dispatch(new listActions.CollectionReset());
     this.removeSubject.next();
+  }
+
+  setAssetType(type) {
+    if (type === 'dig') {
+      return 'collection';
+    } else {
+      return 'single item';
+    }
   }
 
   ngOnDestroy(): void {

@@ -18,7 +18,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
 import * as subjects from '../actions/subject-actions';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {Action} from '../actions/action.interface';
 import {SubjectService} from '../services/subject.service';
 import 'rxjs/add/operator/map';

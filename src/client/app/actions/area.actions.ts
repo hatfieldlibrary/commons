@@ -42,7 +42,6 @@ export const AreaActionTypes = {
  */
 export class AreaAction implements Action {
   type = AreaActionTypes.AREA_LIST;
-
   constructor(public payload: string = null) {
   }
 
@@ -53,7 +52,6 @@ export class AreaAction implements Action {
  */
 export class AreaActionSuccess implements Action {
   type = AreaActionTypes.AREA_LIST_SUCCESS;
-
   constructor(public payload: AreaListItemType[]) {
   }
 }
@@ -64,7 +62,6 @@ export class AreaActionSuccess implements Action {
 export class AreaActionFailed implements Action {
   type = AreaActionTypes.REQUEST_FAILED;
   payload: void;
-
   constructor(err: string) {
     console.log(err)
   }
@@ -77,7 +74,6 @@ export class AreaActionFailed implements Action {
  */
 export class AreaInformation implements Action {
   type = AreaActionTypes.AREA_INFORMATION;
-
   constructor(public payload: string) {
   }
 
@@ -86,7 +82,6 @@ export class AreaInformation implements Action {
 export class AreaDefaultInformation implements Action {
   type = AreaActionTypes.AREA_DEFAULT_INFORMATION;
   payload: void;
-
   constructor() {
   }
 }
@@ -96,7 +91,6 @@ export class AreaDefaultInformation implements Action {
  */
 export class AreaInformationSuccess implements Action {
   type = AreaActionTypes.AREA_INFORMATION_SUCCESS;
-
   constructor(public payload: AreaType[]) {
   }
 }

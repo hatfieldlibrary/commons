@@ -2,7 +2,7 @@
 
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
-import {ContentTypeListType} from '../shared/data-types/content-types.type';
+import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {AreaSubjectParams} from './area-subject-parameters.interface';
 
 export const ContentTypeActionTypes = {
@@ -31,7 +31,7 @@ export class CurrentSelectedTypesList implements Action {
 
 export class ContentTypesAllSuccessAction implements Action {
   type = ContentTypeActionTypes.TYPE_LIST_SUCCESS;
-  constructor(public payload: ContentTypeListType[]) {
+  constructor(public payload: TypesFilterType[]) {
   }
 
 }
@@ -45,8 +45,8 @@ export class ContentTypesAreaAction implements Action {
 
 export class ContentTypesAreaSuccessAction implements Action {
   type = ContentTypeActionTypes.TYPE_AREA_LIST_SUCCESS;
-  payload: ContentTypeListType[];
-  constructor(payload: ContentTypeListType[]) {
+  payload: TypesFilterType[];
+  constructor(payload: TypesFilterType[]) {
     this.payload = payload;
   }
 
@@ -61,7 +61,7 @@ export class ContentTypesSubjectAction implements Action {
 
 export class ContentTypesSubjectSuccessAction implements Action {
   type = ContentTypeActionTypes.TYPE_SUBJECT_LIST_SUCCESS;
-  constructor(public payload: ContentTypeListType[]) {
+  constructor(public payload: TypesFilterType[]) {
   }
 
 }
@@ -75,7 +75,7 @@ export class ContentTypesAreaSubjectAction implements Action {
 
 export class ContentTypesAreaSubjectSuccessAction implements Action {
   type = ContentTypeActionTypes.TYPE_SUBJECT_AREA_LIST_SUCCESS;
-  constructor(public payload: ContentTypeListType[]) {
+  constructor(public payload: TypesFilterType[]) {
   }
 }
 

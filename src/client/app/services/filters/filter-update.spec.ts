@@ -1,8 +1,8 @@
-import {AreaListOptions} from './area-list';
+import {FilterUpdateService} from './filter-update.service';
 
 describe('CollectionsFilterPipe', () => {
   it('create an instance', () => {
-    const pipe = new AreaListOptions();
+    const pipe = new FilterUpdateService();
     expect(pipe).toBeTruthy();
   });
 });

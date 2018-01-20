@@ -27,6 +27,9 @@ import * as listActions from '../../actions/collection.actions';
 import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {MatSelectionList} from '@angular/material';
 import {ClearCollectionsFilter} from '../../actions/collection.actions';
+import {SetAreaFilter, SetDefaultAreaFilter} from '../../actions/filter.actions';
+import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 
 @Component({
   selector: 'app-navigation-selector',
@@ -38,12 +41,13 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
 
 
   @Input() areaList: AreaListItemType[];
-  @Input() selectedAreas: string;
+  @Input() selectedAreas: AreaFilterType[];
   private lastSelectedIds: number[];
   private selectedOptions: number[];
 
   constructor(private router: Router,
-              private store: Store<fromRoot.State>) {
+              private store: Store<fromRoot.State>,
+              private filterUpdate: FilterUpdateService) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,14 +66,10 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
     return false;
   }
 
-  private setLastAreaIds(areas: string): void {
-    const areaArr = areas.split(',');
-    if (areaArr.length === 0) {
-      areaArr.push('0');
-    }
+  private setLastAreaIds(areas: AreaFilterType[]): void {
     this.lastSelectedIds = [];
-    for (const area of areaArr) {
-      this.lastSelectedIds.push(parseInt(area, 10));
+    for (const area of areas) {
+      this.lastSelectedIds.push(area.id);
     }
   }
 
@@ -116,6 +116,14 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
     return list;
   }
 
+  private getSelectedAreaInfo(areaId) {
+    return this.areaList.find((current) => current.id === areaId);
+  }
+
+  private getPositionInAreaInfo(areaId) {
+    return this.areaList.findIndex((current) => current.id === areaId);
+  }
+
   private setSelectedAreas(areaId: number, lastSelectedIds: number[], currentSelectedIds: number[]): string {
 
     let updatedAreaId: string;
@@ -127,6 +135,12 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
       updatedAreaId = '0';
     } else if (indexOfPrevious >= 0) {
       updatedList = this.removeFromList(currentSelectedIds, areaId);
+
+      // This updates the filter list.
+      const positionInList = this.getPositionInAreaInfo(areaId);
+      const updatedFilterList = this.filterUpdate.removeFilter(this.areaList, positionInList);
+      this.store.dispatch(new SetAreaFilter(<AreaFilterType[]>updatedFilterList));
+
       const zeroIndex = this.getIndex(currentSelectedIds, 0);
       if (zeroIndex >= 0) {
         updatedList = this.removeFromList(updatedList, areaId);
@@ -139,6 +153,12 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
       } else {
         updatedList = currentSelectedIds;
       }
+
+      // This updates the filter list
+      const areaValue = this.getSelectedAreaInfo(areaId);
+      const updatedAreaList = this.filterUpdate.addFilter(this.areaList, areaValue);
+      this.store.dispatch(new SetAreaFilter(<AreaFilterType[]>updatedAreaList));
+
       updatedAreaId = this._createIdQueryParam(updatedList);
     }
     return updatedAreaId;
@@ -149,7 +169,7 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
     this.store.dispatch(new ClearCollectionsFilter());
 
     if (areaId === 0 && this.lastSelectedIds.indexOf(0) >= 0) {
-      console.log('toggled all collections')
+      this.store.dispatch(new SetDefaultAreaFilter());
       this._navigateRoute('0');
     } else {
       this.store.dispatch(new listActions.CollectionReset());

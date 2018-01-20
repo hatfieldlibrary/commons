@@ -18,7 +18,7 @@
 /**
  * Created by mspalti on 4/21/17.
  */
-export class SelectedSubject {
+export class SubjectFilterType {
   id: number;
   name: string;
 

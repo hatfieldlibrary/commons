@@ -43,7 +43,7 @@ import * as fromItem from './item.reducers';
 import * as fromRelated from './related.reducers';
 import * as fromAuth from './auth.reducers';
 import * as fromTypes from './type.reducers';
-import * as fromFilter from './collection.filter.reducers';
+import * as fromFilter from './filter.reducers';
 import {Observable} from 'rxjs/Observable';
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -133,11 +133,17 @@ export const getAuthStatusState = (state: State) => state.auth;
 
 export const getAuthStatus = createSelector(getAuthStatusState, fromAuth.getAuthStatus);
 
-export const getCollectionFilterState = (state: State) => state.filter;
+export const getFilterState = (state: State) => state.filter;
 
-export const getCollectionFilterTerm = createSelector(getCollectionFilterState, fromFilter.getCollectionFilter);
+export const getSubjectsFilter = createSelector(getFilterState, fromFilter.getSubjectsFilter);
 
-export const getFilteredCollections = createSelector(getCollections, getCollectionFilterState, filterFunction);
+export const getTypesFilter = createSelector(getFilterState, fromFilter.getTypesFilter);
+
+export const getAreasFilter = createSelector(getFilterState, fromFilter.getAreasFilter);
+
+export const getCollectionFilterTerm = createSelector(getFilterState, fromFilter.getFilterTerm);
+
+export const getFilteredCollections = createSelector(getCollections, getFilterState, filterFunction);
 
 function filterFunction(collections, filter) {
   if (typeof filter.term !== 'undefined' && filter.term.length > 2 && collections.length > 1) {

@@ -34,7 +34,7 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {SubjectType} from '../../shared/data-types/subject.type';
-import {ContentTypeListType} from '../../shared/data-types/content-types.type';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 
 @Component({
   selector: 'app-item-container',

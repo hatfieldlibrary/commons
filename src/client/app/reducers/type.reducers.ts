@@ -1,16 +1,16 @@
 
-import {ContentTypeListType} from '../shared/data-types/content-types.type';
+import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {ContentTypeActions, ContentTypeActionTypes} from '../actions/type.actions';
 
 export interface State {
-  types: ContentTypeListType[];
+  types: TypesFilterType[];
   selected: string;
   loading: boolean;
 
 }
 
 const initialState: State = {
-  types: [<ContentTypeListType>{
+  types: [<TypesFilterType>{
     id: 0,
     name: ''
   }],
@@ -38,7 +38,7 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
     case ContentTypeActionTypes.TYPE_LIST_SUCCESS: {
 
-      const result: ContentTypeListType[] = <ContentTypeListType[]>action.payload;
+      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
       return Object.assign({}, state, {
         types: result,
         loading: false
@@ -55,7 +55,7 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
     case ContentTypeActionTypes.TYPE_AREA_LIST_SUCCESS: {
 
-      const result: ContentTypeListType[] = <ContentTypeListType[]>action.payload;
+      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
       return Object.assign({}, state, {
         types: result,
         loading: false
@@ -72,7 +72,7 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
     case ContentTypeActionTypes.TYPE_SUBJECT_LIST_SUCCESS: {
 
-      const result: ContentTypeListType[] = <ContentTypeListType[]>action.payload;
+      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
       return Object.assign({}, state, {
         types: result,
         loading: false
@@ -89,7 +89,7 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
     case ContentTypeActionTypes.TYPE_SUBJECT_AREA_LIST_SUCCESS: {
 
-      const result: ContentTypeListType[] = <ContentTypeListType[]>action.payload;
+      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
       return Object.assign({}, state, {
         types: result,
         loading: false

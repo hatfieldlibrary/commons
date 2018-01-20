@@ -36,9 +36,10 @@ import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {fadeIn} from '../../animation/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {ContentTypeListType} from '../../shared/data-types/content-types.type';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {AreaSubjectParams} from '../../actions/area-subject-parameters.interface';
 import {TypeAreaSubjectParams} from '../../actions/type-area-subject-parameters.interface';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 
 @Component({
   selector: 'app-lists-container',
@@ -52,9 +53,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   collections$: Observable<CollectionType[]>;
   subjects$: Observable<SubjectType[]>;
   selectedSubject$: Observable<SubjectType>;
+  selectedAreas$: Observable<AreaFilterType[]>;
   areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType[]>;
-  types$: Observable<ContentTypeListType[]>;
+  types$: Observable<TypesFilterType[]>;
   areasAvailable: boolean;
   areaId: string;
   subjectLinkType: string;
@@ -65,7 +67,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   filterTerm = '';
   state = '';
   watchers: Subscription;
- // areas: AreaListItemType[];
   selectedTypes: string;
 
   constructor(private store: Store<fromRoot.State>,
@@ -306,6 +307,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
     this.types$ = this.store.select(fromRoot.getTypes);
+    this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
 
     const mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
@@ -317,7 +319,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
 
         this.initializeAreas();
-        this.setIds(params);
+       // this.setIds(params);
+
 
         if (params['areaId']) {
           this.subjectLinkType = 'area';

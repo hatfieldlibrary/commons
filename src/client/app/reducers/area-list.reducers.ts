@@ -15,8 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AreaListItemType} from "../shared/data-types/area-list.type";
-import {AreaActions, AreaActionTypes} from "../actions/area.actions";
+import {AreaListItemType} from '../shared/data-types/area-list.type';
+import {AreaActions, AreaActionTypes} from '../actions/area.actions';
 /**
  * Created by mspalti on 4/11/17.
  */

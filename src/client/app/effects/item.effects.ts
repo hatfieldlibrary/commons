@@ -15,13 +15,13 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Injectable} from "@angular/core";
-import {ItemService} from "../services/item.service";
-import {Actions, Effect} from "@ngrx/effects";
-import {Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {ItemService} from '../services/item.service';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
 import * as item from '../actions/item.actions';
 import {Action} from '../actions/action.interface';
-import {ItemActions} from "../actions/item.actions";
+import {ItemActions} from '../actions/item.actions';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';

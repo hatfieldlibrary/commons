@@ -94,7 +94,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   /**
-   * Resets the subject ilst in store.
+   * Resets the collection list in store.
    */
   resetList(subjectId): void {
    if (subjectId !== this.selectedSubject.id) {
@@ -184,9 +184,9 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       animationCounter = this.subjects.nativeElement.scrollLeft
     }
     // Set the animation limit.
-    let limit = this._setAnimiationLimit(direction);
+    const limit = this._setAnimiationLimit(direction);
 
-    let interval = 20;
+    const interval = 20;
 
     // Start the animation.
     this.intervalService.setInterval(5, () => {

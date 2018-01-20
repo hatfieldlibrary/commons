@@ -20,7 +20,7 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {CollectionService} from '../services/collection.service';
 import * as collection from '../actions/collection.actions';
 import {Action} from '../actions/action.interface';

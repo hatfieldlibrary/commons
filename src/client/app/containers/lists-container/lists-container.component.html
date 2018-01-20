@@ -59,13 +59,13 @@
            fxLayoutAlign="center start">
         <div fxLayout="column"
              fxFlex.md="1 1 20"
-             fxFlex.lg="1 1 20"
+             fxFlex.lg="1 1 15"
              fxFlex.gt-lg="1 1 10"
              class="side-container"
              *ngIf="media.isActive('gt-sm')">
           <div class="side-nav-header mat-title">FILTERS</div>
           <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
-          <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></app-navigation-selector>
+          <app-navigation-selector [selectedAreas]="selectedAreas$ | async" [areaList]="areas$ | async"></app-navigation-selector>
           <app-types [selectedAreas]="areaId" [selectedSubject]="subjectId" [selectedTypes]="selectedTypes"
                      [typeList]="types$ | async"></app-types>
         </div>

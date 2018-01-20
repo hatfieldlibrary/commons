@@ -4,7 +4,7 @@ import * as listActions from '../../actions/collection.actions';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ContentTypeListType} from '../../shared/data-types/content-types.type';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {MatSelectionList} from '@angular/material';
@@ -19,7 +19,7 @@ export class TypesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private lastSelectedIds: number[];
   private selectedOptions: number[];
-  @Input() typeList: ContentTypeListType[];
+  @Input() typeList: TypesFilterType[];
   @Input() selectedAreas: string;
   @Input() selectedSubject: string;
   @Input() selectedTypes: string;
