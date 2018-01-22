@@ -20,13 +20,13 @@ export class TypesService {
   }
 
   getTypesArea(areaIds: string): Observable<TypesFilterType[]> {
-    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type/areas/' + areaIds);
+    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type/area/' + areaIds);
   }
 
   getTypesAreaSubject(params: AreaSubjectParams): Observable<TypesFilterType[]> {
     const areaIds = params.areas.join(',');
     return this.http.get<TypesFilterType[]>(environment.apiHost
-      + environment.apiRoot + '/type/areas/'
+      + environment.apiRoot + '/type/area/'
       + areaIds + '/subject/'
       + params.subject);
 

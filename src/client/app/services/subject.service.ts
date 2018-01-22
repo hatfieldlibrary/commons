@@ -30,7 +30,7 @@ export class SubjectService {
   constructor(private http: HttpClient) {}
 
   getSubjects(areaIds: string): Observable<SubjectType[]> {
-    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject/areas/' + areaIds);
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject/area/' + areaIds);
   }
 
   getAllSubjects(): Observable<SubjectType[]> {

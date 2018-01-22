@@ -16,7 +16,8 @@ export interface State {
   }];
   selectedAreas: [{
     id: 0,
-    title: ''
+    title: '',
+    count: 0
   }]
 }
 
@@ -33,7 +34,8 @@ const initialState: State = {
   }],
   selectedAreas: [{
     id: 0,
-    title: ''
+    title: '',
+    count: 0
   }]
 };
 
@@ -86,13 +88,14 @@ export function reducer(state = initialState, action: FilterActions): State {
 
     case FilterActionTypes.SET_AREA_FILTER: {
       const filter: AreaFilterType[] = <AreaFilterType[]>action.payload;
+      console.log(filter)
       return Object.assign({}, state, {
         selectedAreas: filter
       });
     }
 
     case FilterActionTypes.SET_DEFAULT_AREA_FILTER: {
-      const filter: AreaFilterType[] = [{id: 0, title: ''}];
+      const filter: AreaFilterType[] = [{id: 0, title: '', count: 0}];
       return Object.assign({}, state, {
         selectedAreas: filter
       });

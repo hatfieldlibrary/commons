@@ -95,6 +95,8 @@ console.log('removing from list')
       indexOfPrevious = -1;
     }
     this.selectedOptions = list.selectedOptions.selected.map(item => item.value);
+    console.log('selected: ' + this.selectedOptions);
+    console.log('selected types ' + this.selectedTypes);
     this.store.dispatch(new listActions.CollectionReset());
 
     let updatedList: number[];

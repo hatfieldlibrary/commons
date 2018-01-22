@@ -321,7 +321,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.initializeAreas();
        // this.setIds(params);
 
-
         if (params['areaId']) {
           this.subjectLinkType = 'area';
           this.getAreaInformation(params['areaId']);

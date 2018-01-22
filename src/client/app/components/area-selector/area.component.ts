@@ -16,9 +16,7 @@
  */
 
 import {
-  AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit,
-  SimpleChanges
-} from '@angular/core';
+  ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
@@ -28,7 +26,6 @@ import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {MatSelectionList} from '@angular/material';
 import {ClearCollectionsFilter} from '../../actions/collection.actions';
 import {SetAreaFilter, SetDefaultAreaFilter} from '../../actions/filter.actions';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 
 @Component({
@@ -37,63 +34,25 @@ import {AreaFilterType} from '../../shared/data-types/area-filter.type';
   styleUrls: ['area.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class NavigationComponent {
 
 
   @Input() areaList: AreaListItemType[];
   @Input() selectedAreas: AreaFilterType[];
-  private lastSelectedIds: number[];
-  private selectedOptions: number[];
 
   constructor(private router: Router,
-              private store: Store<fromRoot.State>,
-              private filterUpdate: FilterUpdateService) {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    for (const propName in changes) {
-      if (propName === 'selectedAreas') {
-        const areas = changes['selectedAreas'].currentValue;
-        this.setLastAreaIds(areas);
-      }
-    }
+              private store: Store<fromRoot.State>) {
   }
 
   isSelected(id: number): boolean {
-    if (this.lastSelectedIds ) {
-      return this.lastSelectedIds.indexOf(id) >= 0;
+    if (this.selectedAreas) {
+      return this.getPositionInSelectedList(id) > -1;
     }
     return false;
   }
 
-  private setLastAreaIds(areas: AreaFilterType[]): void {
-    this.lastSelectedIds = [];
-    for (const area of areas) {
-      this.lastSelectedIds.push(area.id);
-    }
-  }
-
-
-  _createIdQueryParam(areaList: number[]): string {
-    console.log(areaList)
-    if (areaList.length === 0) {
-      return '0';
-    }
-    let areaId = '';
-    areaList.forEach((id) => {
-      const strId = id.toString();
-      if (strId !== '0') {
-        areaId += strId + ','
-      }
-    });
-    console.log(areaList)
-    console.log(areaId)
-    areaId = areaId.replace(/,\s*$/, '');
-    return areaId;
-  }
-
-  _navigateRoute(areaId: string) {
-    // the areas id can be a string object of length zero.
+  private navigateRoute(areaId: string) {
+    // the global areaId can be a string with length zero, or 0.
     if (areaId !== '0' && areaId.length > 0) {
       this.router.navigate(['/', environment.appRoot, 'collection', 'area', areaId]);
     } else {
@@ -101,98 +60,84 @@ export class NavigationComponent implements OnInit, OnChanges, OnDestroy, AfterV
     }
   }
 
-  private getIndex(list: number[], areaId: number): number {
-    return list.indexOf(areaId)
-  }
-
-  private removeFromList(list: any, areaId: number): any[] {
-
-    const index = list.indexOf(areaId);
-    if (index >= 0) {
-      const test = list.splice(index, 1);
-      console.log(test)
-      return test;
-    }
-    return list;
-  }
-
-  private getSelectedAreaInfo(areaId) {
+  private getSelectedAreaInfo(areaId: number) {
     return this.areaList.find((current) => current.id === areaId);
   }
 
-  private getPositionInAreaInfo(areaId) {
-    return this.areaList.findIndex((current) => current.id === areaId);
+  private getPositionInSelectedList(areaId: number) {
+    return this.selectedAreas.findIndex((current) => current.id === areaId);
   }
 
-  private setSelectedAreas(areaId: number, lastSelectedIds: number[], currentSelectedIds: number[]): string {
-
-    let updatedAreaId: string;
-    let updatedList: number[];
-
-    const indexOfPrevious = this.getIndex(lastSelectedIds, areaId);
-
-    if (areaId === 0) {
-      updatedAreaId = '0';
-    } else if (indexOfPrevious >= 0) {
-      updatedList = this.removeFromList(currentSelectedIds, areaId);
-
-      // This updates the filter list.
-      const positionInList = this.getPositionInAreaInfo(areaId);
-      const updatedFilterList = this.filterUpdate.removeFilter(this.areaList, positionInList);
-      this.store.dispatch(new SetAreaFilter(<AreaFilterType[]>updatedFilterList));
-
-      const zeroIndex = this.getIndex(currentSelectedIds, 0);
-      if (zeroIndex >= 0) {
-        updatedList = this.removeFromList(updatedList, areaId);
-      }
-      updatedAreaId = this._createIdQueryParam(updatedList);
-    } else {
-      const index = this.getIndex(currentSelectedIds, 0);
-      if (index >= 0) {
-        updatedList = this.removeFromList(currentSelectedIds, areaId);
-      } else {
-        updatedList = currentSelectedIds;
-      }
-
-      // This updates the filter list
-      const areaValue = this.getSelectedAreaInfo(areaId);
-      const updatedAreaList = this.filterUpdate.addFilter(this.areaList, areaValue);
-      this.store.dispatch(new SetAreaFilter(<AreaFilterType[]>updatedAreaList));
-
-      updatedAreaId = this._createIdQueryParam(updatedList);
+  private getAreaIds(list: AreaFilterType[]) {
+    let ids = '';
+    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
+      list.forEach(area => {
+        ids = ids + area.id + ','
+      });
     }
-    return updatedAreaId;
+    return ids.slice(0, -1);
+  }
+
+  private removeAllCollectionsArea() {
+    // If zero (all collections) is in list, remove.
+    const zeroIndex = this.getPositionInSelectedList(0);
+    if (zeroIndex === 0) {
+      this.selectedAreas.shift()
+    }
+  }
+
+  private updateSelectedAreas(selectedArea: AreaFilterType, areaId: number) {
+    const currentIndex = this.getPositionInSelectedList(areaId);
+    if (currentIndex >= 0) {
+      // If the currently selected index is in the list, remove.
+      this.selectedAreas.splice(currentIndex, 1);
+      // If the selected list is empty, set to default (all collections).
+      if (this.selectedAreas.length === 0) {
+        this.selectedAreas.push({id: 0, title: '', count: 0});
+      }
+    } else {
+      // Otherwise, just add the new area.
+      this.selectedAreas.push(selectedArea);
+    }
+  }
+
+  /**
+   * This function updates the selected areas store and
+   * returns new area ids for routing.
+   * @param {number} areaId
+   * @returns {string} area ids for new route.
+   */
+  private setSelectedAreas(areaId: number): string {
+    // Get area filter information for the selected areaId.
+    const selectedArea: AreaFilterType = this.getSelectedAreaInfo(areaId);
+    if (selectedArea) {
+      // If the all collections area is currently selected, is must be removed now.
+      this.removeAllCollectionsArea();
+      // Update selectedAreas.
+      this.updateSelectedAreas(selectedArea, areaId);
+      // Update the store.
+      this.store.dispatch(new SetAreaFilter(this.selectedAreas));
+    }
+    // Get area ids for routing.
+    const areaIds = this.getAreaIds(this.selectedAreas);
+    return areaIds;
   }
 
   onAreaListControlChanged(list: MatSelectionList, areaId: number) {
-
     this.store.dispatch(new ClearCollectionsFilter());
 
-    if (areaId === 0 && this.lastSelectedIds.indexOf(0) >= 0) {
+    list.selectedOptions.clear();
+
+    if (areaId === 0) {
+      // For zero (all collections) set default and navigate.
       this.store.dispatch(new SetDefaultAreaFilter());
-      this._navigateRoute('0');
+      this.navigateRoute('0');
     } else {
+      // For other areas, update the selected areas and navigate.
       this.store.dispatch(new listActions.CollectionReset());
-      const selectedOptions = list.selectedOptions.selected.map(item => item.value);
-      const updatedAreaId = this.setSelectedAreas(areaId, this.lastSelectedIds, selectedOptions);
-      list.selectedOptions.clear();
-      this._navigateRoute(updatedAreaId);
+      const updatedAreaId = this.setSelectedAreas(areaId);
+      this.navigateRoute(updatedAreaId);
     }
 
   }
-
-  ngOnInit() {
-    this.selectedOptions = [];
-    this.lastSelectedIds = [];
-  }
-
-  ngOnDestroy(): void {
-
-  }
-
-  ngAfterViewInit() {
-    this.setLastAreaIds(this.selectedAreas);
-
-  }
-
 }

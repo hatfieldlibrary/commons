@@ -30,6 +30,7 @@
     "client:prod:build": "ng test --watch=false --browsers=Chrome --reporters=spec  --sourcemaps=false && ng build --prod --deploy-url=/commons-resource/ --base-href /commons/",
     "server:prod:build": "tsc -p ./src/server",
     "build:prod": "npm run client:prod:build && npm run server:prod:build && exit 0",
+    "compodoc": "compodoc -p ./src/client/tsconfig.json",
     "build:demon": "nodemon --exec ts-node index.js",
     "client:build:watch": "ng build --watch",
     "build:server:dev": "npm run client:build:watch & npm run server:prod:build & npm run build:demon",
@@ -76,6 +77,7 @@
   "devDependencies": {
     "@angular/cli": "^1.6.0",
     "@angular/language-service": "^5.1.0",
+    "@compodoc/compodoc": "^1.0.5",
     "@ngrx/store-devtools": "^4.1.1",
     "@types/body-parser": "^1.16.8",
     "@types/express": "^4.0.39",
