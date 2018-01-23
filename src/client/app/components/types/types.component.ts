@@ -1,213 +1,140 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import * as typeActions from '../../actions/type.actions';
+import {Component, Input} from '@angular/core';
 import * as listActions from '../../actions/collection.actions';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {MatSelectionList} from '@angular/material';
-
+import {SetTypeFilter} from '../../actions/filter.actions';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 
 @Component({
   selector: 'app-types',
   templateUrl: './types.component.html',
   styleUrls: ['./types.component.css']
 })
-export class TypesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TypesComponent {
 
-  private lastSelectedIds: number[];
-  private selectedOptions: number[];
   @Input() typeList: TypesFilterType[];
-  @Input() selectedAreas: string;
-  @Input() selectedSubject: string;
-  @Input() selectedTypes: string;
+  @Input() selectedTypes: TypesFilterType[];
+  @Input() selectedAreas: AreaFilterType[];
+  @Input() selectedSubject: SubjectFilterType;
 
   constructor(private router: Router,
               private store: Store<fromRoot.State>) {
   }
-
-  private _setLastTypeIds(types: string): void {
-    if (types) {
-      const typeArr = types.split(',');
-      if (typeArr.length === 0) {
-        typeArr.push('0');
-      }
-      this.lastSelectedIds = [];
-      for (const area of typeArr) {
-        this.lastSelectedIds.push(parseInt(area, 10));
-      }
-    }
+  /**
+   * Gets the type list item with the provided id from the list of all types.
+   * @param {number} typeId the id of the type to retrieve
+   * @returns {TypesListItemType}
+   */
+  private getSelectedTypeInfo(typeId: number): TypesFilterType {
+    return this.typeList.find((current) => current.id === typeId);
   }
 
-  private _createIdQueryParam(typeList: number[]): string {
-    if (typeList.length === 0) {
-      return null;
-    }
-    let typeId = '';
-    typeList.forEach((id) => {
-      const strId = id.toString();
-      if (strId !== '0') {
-        typeId += strId + ','
+  /**
+   * Gets the position index in selectedTypes for the type that
+   * matches the provided id.
+   * @param {number} typeId the id of the area
+   * @returns {number}
+   */
+  private getPositionInSelectedTypeList(typeId: number): number {
+    return this.selectedTypes.findIndex((current) => current.id === typeId);
+  }
+  /**
+   * Update selected types.
+   * @param {TypesFilterType} selectedType
+   * @param {number} areaId
+   */
+  private updateSelectedTypes(selectedType: TypesFilterType, typeId: number) {
+    const currentIndex = this.getPositionInSelectedTypeList(typeId);
+    if (currentIndex >= 0) {
+      // If the currently selected index is in the list, remove.
+      this.selectedTypes.splice(currentIndex, 1);
+      // If the selected list is empty, set to default (all collections).
+      if (this.selectedTypes.length === 0) {
+        this.selectedTypes.push({id: 0, name: ''});
       }
-    });
-    typeId = typeId.replace(/,\s*$/, '');
-    return typeId;
-  }
-
-  private getIndex(list: number[], typeId: number): number {
-    return list.indexOf(typeId)
-  }
-
-  private removeFromList(list: any, typeId: number): any[] {
-console.log('removing from list')
-    console.log(typeId)
-    console.log(list)
-    const index = list.indexOf(typeId);
-    if (index >= 0) {
-      console.log(index)
-      if (list.length === 1) {
-        return []
-      } else {
-        return list.splice(index, 1)
-      }
-
-    }
-    return list;
-  }
-
-  private _updateCurrentTypeStore(types: string) {
-    if (types) {
-      console.log(types)
-      this.store.dispatch(new typeActions.CurrentSelectedTypesList(types));
     } else {
-      this.store.dispatch(new typeActions.CurrentSelectedTypesList(''));
+      // Otherwise, just add the new area.
+      this.selectedTypes.push(selectedType);
+    }
+  }
+  /**
+   * This function updates the selected types store.
+   * @param {number} areaId
+   */
+  private setSelectedTypes(typeId: number): void {
+
+    // Get area filter information for the selected areaId.
+    const selectedType: TypesFilterType = this.getSelectedTypeInfo(typeId);
+    if (selectedType) {
+      // Update selectedAreas.
+      this.updateSelectedTypes(selectedType, typeId);
+      // Make sure the default id: '0' does not creep in!
+      this.removeDefaultType();
+      // Update the store.
+      this.store.dispatch(new SetTypeFilter(this.selectedTypes));
+    }
+  }
+  /**
+   * Generates the comma-separated list of ids.
+   * @param {any[]} list list of areas
+   * @returns {string}
+   */
+  private getIds(list: any[]): string {
+    let ids = '';
+    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
+      list.forEach(area => {
+        ids = ids + area.id + ','
+      });
+    }
+    return ids.slice(0, -1);
+  }
+  /**
+   * Removes the default type (id: 0) from selectedTypes
+   * (if it is present).
+   */
+  private removeDefaultType(): void {
+    const zeroIndex = this.getPositionInSelectedTypeList(0);
+    if (zeroIndex === 0) {
+      this.selectedTypes.shift()
     }
   }
 
   onTypeListControlChanged(list: MatSelectionList, typeId: number) {
-
-    let indexOfPrevious: number;
-    if (this.lastSelectedIds) {
-      indexOfPrevious = this.getIndex(this.lastSelectedIds, typeId);
-    } else {
-      indexOfPrevious = -1;
-    }
-    this.selectedOptions = list.selectedOptions.selected.map(item => item.value);
-    console.log('selected: ' + this.selectedOptions);
-    console.log('selected types ' + this.selectedTypes);
-    this.store.dispatch(new listActions.CollectionReset());
-
-    let updatedList: number[];
-    let updatedTypeId: string;
-    if (indexOfPrevious >= 0) {
-      console.log('prev')
-      updatedList = this.removeFromList(this.selectedOptions, typeId);
-
-      const zeroIndex = this.getIndex(this.selectedOptions, 0);
-      if (zeroIndex >= 0) {
-        console.log('removing zero ' + zeroIndex)
-        updatedList = this.removeFromList(updatedList, typeId);
-      }
-      updatedTypeId = this._createIdQueryParam(updatedList);
-    } else {
-      console.log('new')
-      const index = this.getIndex(this.selectedOptions, 0);
-      if (index >= 0) {
-        updatedList = this.removeFromList(this.selectedOptions, typeId);
-      } else {
-        updatedList = this.selectedOptions;
-      }
-      // Otherwise, update the FormArray and navigate.
-      // this._updateAreaFormArray(this.selectedOptions,  event.checked);
-      updatedTypeId = this._createIdQueryParam(updatedList);
-      // this._navigateRoute(updatedAreaId);
-    }
-    this._updateCurrentTypeStore(updatedTypeId);
-    this._navigateRoute(updatedTypeId);
     list.selectedOptions.clear();
-
-
-    // if (areaId === 0 && this.lastSelectedIds.indexOf(0) >= 0) {
-    //   console.log('toggled all collections')
-    //   this._navigateRoute('0');
-    // } else {
-    //   let updatedAreaId: string;
-    //   this.selectedOptions = list.selectedOptions.selected.map(item => item.value);
-    //   this.store.dispatch(new listActions.CollectionReset());
-    //   const indexOfPrevious = this.getIndex(this.lastSelectedIds, areaId);
-    //
-    //   let updatedList: number[];
-    //   // // If the All Collection option is selected, reset the FormArray and navigate.
-    //   if (areaId === 0) {
-    //     updatedAreaId = '0';
-    //     console.log('zero')
-    //
-    //   } else if (indexOfPrevious >= 0) {
-    //     console.log('prev')
-    //     updatedList = this.removeFromList(this.selectedOptions, areaId);
-    //
-    //     const zeroIndex = this.getIndex(this.selectedOptions, 0);
-    //     if (zeroIndex >= 0) {
-    //       console.log('removing zero ' + zeroIndex)
-    //       updatedList = this.removeFromList(updatedList, areaId);
-    //     }
-    //     updatedAreaId = this._createIdQueryParam(updatedList);
-    //   } else {
-    //     console.log('new')
-    //     const index = this.getIndex(this.selectedOptions, 0);
-    //     if (index >= 0) {
-    //       updatedList = this.removeFromList(this.selectedOptions, areaId);
-    //     } else {
-    //       updatedList = this.selectedOptions;
-    //     }
-    //     // Otherwise, update the FormArray and navigate.
-    //     // this._updateAreaFormArray(this.selectedOptions,  event.checked);
-    //     updatedAreaId = this._createIdQueryParam(updatedList);
-    //     // this._navigateRoute(updatedAreaId);
-    //   }
-    //   this._navigateRoute(updatedAreaId);
-    //   list.selectedOptions.clear();
-    // }
-
+    this.store.dispatch(new listActions.CollectionReset());
+    // Updates the selected types.
+    this.setSelectedTypes(typeId);
+    // Get updated type url query parameter value.
+    const updatedId = this.getIds(this.selectedTypes);
+    // Navigate.
+    this.navigateRoute(updatedId);
   }
 
-
-  // _removeFromArray(index: number) {
-  //   if (index >= 0) {
-  //     this.typesFormArray.removeAt(index);
-  //   }
-  // }
-  //
-  // _updateAreaFormArray(type: string, checked: boolean) {
-  //
-  //   if (checked) {
-  //     // Add the selected collection areas to FormArray.
-  //     this.typesFormArray.push(new FormControl(type));
-  //   } else {
-  //     // Remove the collection areas from FormArray.
-  //     const index = this.typesFormArray.controls.findIndex(x => x.value === type);
-  //     this._removeFromArray(index);
-  //   }
-  //
-  // }
-
-  _navigateRoute(typeId: string) {
-    console.log(typeId)
-    if (this.selectedAreas !== '0' && typeof this.selectedAreas !== 'undefined') {
-      if (typeof this.selectedSubject !== 'undefined') {
+  /**
+   * Provides router navigation.
+   * @param {string} typeId
+   */
+  private navigateRoute(typeId: string) {
+    const selectedAreaIds = this.getIds(this.selectedAreas);
+    const selectedSubject = this.selectedSubject.id;
+    if (selectedAreaIds !== '0' && typeof selectedAreaIds !== 'undefined') {
+      if (selectedSubject !== 0) {
         if (typeId) {
           this.router.navigate([
             '/',
             environment.appRoot,
             'collection',
             'area',
-            this.selectedAreas,
+            selectedAreaIds,
             'type',
             typeId,
             'subject',
-            this.selectedSubject
+            selectedSubject
           ]);
         } else {
           this.router.navigate([
@@ -215,9 +142,9 @@ console.log('removing from list')
             environment.appRoot,
             'collection',
             'subject',
-            this.selectedSubject,
+            selectedSubject,
             'area',
-            this.selectedAreas,
+            selectedAreaIds,
           ]);
         }
       } else {
@@ -227,7 +154,7 @@ console.log('removing from list')
             environment.appRoot,
             'collection',
             'area',
-            this.selectedAreas,
+            selectedAreaIds,
             'type',
             typeId]);
         } else {
@@ -236,16 +163,16 @@ console.log('removing from list')
             environment.appRoot,
             'collection',
             'area',
-            this.selectedAreas
+            selectedAreaIds
           ]);
         }
       }
-    } else if (this.selectedAreas === '0') {
-      if (this.selectedSubject) {
+    } else if (selectedAreaIds === '0') {
+      if (selectedSubject !== 0) {
         if (typeId) {
-          this.router.navigate(['/', environment.appRoot, 'collection', 'type', typeId, 'subject', this.selectedSubject]);
+          this.router.navigate(['/', environment.appRoot, 'collection', 'type', typeId, 'subject', selectedSubject]);
         } else {
-          this.router.navigate(['/', environment.appRoot, 'collection', 'subject', this.selectedSubject]);
+          this.router.navigate(['/', environment.appRoot, 'collection', 'subject', selectedSubject]);
         }
       } else {
         if (typeId) {
@@ -263,34 +190,11 @@ console.log('removing from list')
     }
   }
 
-  isSelected(id: string): boolean {
+  isSelected(id: number): boolean {
     if (this.selectedTypes) {
-      return this.selectedTypes.indexOf(id) >= 0;
+      return this.getPositionInSelectedTypeList(id) > -1;
     }
     return false;
-  }
-
-  // onChange(type: any, event: any) {
-  //   this.store.dispatch(new listActions.CollectionReset());
-  //   this._updateAreaFormArray(type.toString(), event.checked);
-  //   const typeId = this._createIdQueryParam(this.typesFormArray);
-  //   this._navigateRoute(typeId);
-  //
-  // }
-
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    console.log('after view init ' + this.selectedTypes)
-    this._setLastTypeIds(this.selectedTypes);
-  }
-
-  ngOnDestroy(): void {
-    // this.typesFormArray = null;
-    // this.checkboxGroup = null;
-    // this.formArrayRef = null;
-
   }
 
 }

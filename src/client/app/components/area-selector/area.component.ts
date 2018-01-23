@@ -44,6 +44,11 @@ export class NavigationComponent {
               private store: Store<fromRoot.State>) {
   }
 
+  /**
+   * Used by the area form options.
+   * @param {number} id
+   * @returns {boolean}
+   */
   isSelected(id: number): boolean {
     if (this.selectedAreas) {
       return this.getPositionInSelectedList(id) > -1;
@@ -51,7 +56,11 @@ export class NavigationComponent {
     return false;
   }
 
-  private navigateRoute(areaId: string) {
+  /**
+   * Uses router to navigate to a route based on the provided areaId.
+   * @param {string} areaId area id (can be comma-separated list).
+   */
+  private navigateRoute(areaId: string): void {
     // the global areaId can be a string with length zero, or 0.
     if (areaId !== '0' && areaId.length > 0) {
       this.router.navigate(['/', environment.appRoot, 'collection', 'area', areaId]);
@@ -60,15 +69,31 @@ export class NavigationComponent {
     }
   }
 
-  private getSelectedAreaInfo(areaId: number) {
+  /**
+   * Gets the area list item with the provided id from the list of all areas.
+   * @param {number} areaId the id of the area to retrieve
+   * @returns {AreaListItemType}
+   */
+  private getSelectedAreaInfo(areaId: number): AreaListItemType {
     return this.areaList.find((current) => current.id === areaId);
   }
 
-  private getPositionInSelectedList(areaId: number) {
+  /**
+   * Gets the position index in selectedAreas for the area that
+   * matches the provided id.
+   * @param {number} areaId the id of the area
+   * @returns {number}
+   */
+  private getPositionInSelectedList(areaId: number): number {
     return this.selectedAreas.findIndex((current) => current.id === areaId);
   }
 
-  private getAreaIds(list: AreaFilterType[]) {
+  /**
+   * Generates the comma-separated list of ids.
+   * @param {AreaFilterType[]} list list of areas
+   * @returns {string}
+   */
+  private getAreaIds(list: AreaFilterType[]): string {
     let ids = '';
     if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
       list.forEach(area => {
@@ -78,7 +103,11 @@ export class NavigationComponent {
     return ids.slice(0, -1);
   }
 
-  private removeAllCollectionsArea() {
+  /**
+   * Removes the all collections area (id: 0) from selectedAreas
+   * (if it is present).
+   */
+  private removeAllCollectionsArea(): void {
     // If zero (all collections) is in list, remove.
     const zeroIndex = this.getPositionInSelectedList(0);
     if (zeroIndex === 0) {
@@ -86,6 +115,11 @@ export class NavigationComponent {
     }
   }
 
+  /**
+   * Update selected areas.
+   * @param {AreaFilterType} selectedArea
+   * @param {number} areaId
+   */
   private updateSelectedAreas(selectedArea: AreaFilterType, areaId: number) {
     const currentIndex = this.getPositionInSelectedList(areaId);
     if (currentIndex >= 0) {
@@ -102,12 +136,21 @@ export class NavigationComponent {
   }
 
   /**
+   * Get the comma-separated area id's used for routing.
+   * @returns {string}
+   */
+  private getAreaParameter(): string {
+    const areaIds = this.getAreaIds(this.selectedAreas);
+    return areaIds;
+  }
+
+  /**
    * This function updates the selected areas store and
    * returns new area ids for routing.
    * @param {number} areaId
    * @returns {string} area ids for new route.
    */
-  private setSelectedAreas(areaId: number): string {
+  private setSelectedAreas(areaId: number): void {
     // Get area filter information for the selected areaId.
     const selectedArea: AreaFilterType = this.getSelectedAreaInfo(areaId);
     if (selectedArea) {
@@ -118,14 +161,15 @@ export class NavigationComponent {
       // Update the store.
       this.store.dispatch(new SetAreaFilter(this.selectedAreas));
     }
-    // Get area ids for routing.
-    const areaIds = this.getAreaIds(this.selectedAreas);
-    return areaIds;
   }
 
+  /**
+   * Handles area selection event.
+   * @param {MatSelectionList} list
+   * @param {number} areaId
+   */
   onAreaListControlChanged(list: MatSelectionList, areaId: number) {
     this.store.dispatch(new ClearCollectionsFilter());
-
     list.selectedOptions.clear();
 
     if (areaId === 0) {
@@ -135,7 +179,8 @@ export class NavigationComponent {
     } else {
       // For other areas, update the selected areas and navigate.
       this.store.dispatch(new listActions.CollectionReset());
-      const updatedAreaId = this.setSelectedAreas(areaId);
+      this.setSelectedAreas(areaId);
+      const updatedAreaId = this.getAreaParameter();
       this.navigateRoute(updatedAreaId);
     }
 

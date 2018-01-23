@@ -23,6 +23,7 @@ import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 
 @Component({
   selector: 'app-collection-list',
@@ -37,7 +38,7 @@ export class ListComponent implements OnDestroy {
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SubjectFilterType;
   @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
-  @Input() selectedArea: string;
+  @Input() selectedAreas: AreaFilterType[];
   filterTerm: string;
 
   constructor(private store: Store<fromRoot.State>) {
@@ -48,6 +49,23 @@ export class ListComponent implements OnDestroy {
     this.store.dispatch(new listActions.CollectionReset());
     this.removeSubject.next();
   }
+
+
+  /**
+   * Generates the comma-separated list of ids.
+   * @param {AreaFilterType[]} list list of areas
+   * @returns {string}
+   */
+  getSelectedArea(): string {
+    let ids = '';
+    if (typeof this.selectedAreas !== 'undefined' && typeof this.selectedAreas[0] !== 'undefined') {
+      this.selectedAreas.forEach(area => {
+        ids = ids + area.id + ','
+      });
+    }
+    return ids.slice(0, -1);
+  }
+
 
   setAssetType(type) {
     if (type === 'dig') {

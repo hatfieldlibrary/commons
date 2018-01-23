@@ -54,6 +54,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   subjects$: Observable<SubjectType[]>;
   selectedSubject$: Observable<SubjectType>;
   selectedAreas$: Observable<AreaFilterType[]>;
+  selectedTypes$: Observable<TypesFilterType[]>;
   areas$: Observable<AreaListItemType[]>;
   areaInfo$: Observable<AreaType[]>;
   types$: Observable<TypesFilterType[]>;
@@ -272,6 +273,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   removeSubject(event) {
+    console.log(this.areaId)
     if (this.areaId && this.areaId !== '0') {
       this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId);
     } else {
@@ -308,6 +310,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
     this.types$ = this.store.select(fromRoot.getTypes);
     this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
+    this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
 
     const mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
@@ -319,7 +322,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
 
         this.initializeAreas();
-       // this.setIds(params);
+        // Set the areaId value. Used by removeSubject().
+        this.setIds(params);
 
         if (params['areaId']) {
           this.subjectLinkType = 'area';

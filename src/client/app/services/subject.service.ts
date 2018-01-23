@@ -43,7 +43,7 @@ export class SubjectService {
 
   getSubjectsForAreaAndType(areaId: string, typeId: string): Observable<SubjectType[]> {
     return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot
-      + '/subject/areas/' + areaId + '/type/' + typeId);
+      + '/subject/area/' + areaId + '/type/' + typeId);
   }
 
 }

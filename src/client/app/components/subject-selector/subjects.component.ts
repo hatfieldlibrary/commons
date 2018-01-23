@@ -27,8 +27,11 @@ import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
-import {SetIntervalService} from "../../services/timers/interval.service";
-import {MatListItem} from "@angular/material";
+import {SetIntervalService} from '../../services/timers/interval.service';
+import {MatListItem} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 
 
 @Component({
@@ -40,7 +43,7 @@ import {MatListItem} from "@angular/material";
 export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() subjectList: SubjectType[];
-  @Input() areaId: number;
+  @Input() selectedAreas: Observable<AreaFilterType>;
   @Input() type: string;
   @ViewChild('container') container: ElementRef;
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
@@ -100,6 +103,20 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    if (subjectId !== this.selectedSubject.id) {
      this.store.dispatch(new listActions.CollectionReset());
    }
+  }
+  /**
+   * Generates the comma-separated list of ids.
+   * @param {AreaFilterType[]} list list of areas
+   * @returns {string}
+   */
+   getAreaIds(): string {
+    let ids = '';
+    if (typeof this.selectedAreas !== 'undefined' && typeof this.selectedAreas[0] !== 'undefined') {
+      this.selectedAreas.forEach(area => {
+        ids = ids + area.id + ','
+      });
+    }
+    return ids.slice(0, -1);
   }
 
   /**

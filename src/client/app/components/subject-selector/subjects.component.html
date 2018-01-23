@@ -23,7 +23,7 @@
 
   <mat-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'area'">
     <mat-list-item subjects *ngFor="let subject of subjectList">
-      <button mat-raised-button color="primary" (click)="resetList(subject.id)" [routerLink]="['/',appRoot,'collection','subject', subject.id, 'area', areaId]">
+      <button mat-raised-button color="primary" (click)="resetList(subject.id)" [routerLink]="['/',appRoot,'collection','subject', subject.id, 'area', getAreaIds()]">
         {{subject.name}}
       </button>
     </mat-list-item>

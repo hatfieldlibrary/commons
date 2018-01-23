@@ -113,7 +113,7 @@ describe('SubjectsComponent', () => {
 
     component = fixture.componentInstance;
     component.type = 'area';
-    component.areaId = 1;
+    component.selectedAreas = Observable.of({id: 1, title: 'test', count: 0});
     component.subjectList = mockSubjectList;
     fixture.detectChanges();
     spyOn(intervalService, 'setInterval');

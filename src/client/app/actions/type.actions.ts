@@ -24,10 +24,10 @@ export class ContentTypesAllAction implements Action {
   constructor() {}
 }
 
-export class CurrentSelectedTypesList implements Action {
-  type = ContentTypeActionTypes.CURRENT_SELECTED_TYPE;
-  constructor (public payload: string) {}
-}
+// export class CurrentSelectedTypesList implements Action {
+//   type = ContentTypeActionTypes.CURRENT_SELECTED_TYPE;
+//   constructor (public payload: string) {}
+// }
 
 export class ContentTypesAllSuccessAction implements Action {
   type = ContentTypeActionTypes.TYPE_LIST_SUCCESS;
@@ -88,7 +88,7 @@ export class TypeActionFailed implements Action {
 }
 
 export type ContentTypeActions =
-  CurrentSelectedTypesList |
+ // CurrentSelectedTypesList |
   ContentTypesAllAction |
   ContentTypesAllSuccessAction |
   ContentTypesAreaAction |
