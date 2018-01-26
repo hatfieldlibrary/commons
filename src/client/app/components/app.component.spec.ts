@@ -39,6 +39,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Subject} from 'rxjs/Subject';
 import {Router} from '@angular/router';
 import {Component} from '@angular/core';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 @Component({
   selector: 'dummy-component',

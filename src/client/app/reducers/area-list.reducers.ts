@@ -47,20 +47,73 @@ export function reducer(state = initialState, action: AreaActions): State {
 
     case AreaActionTypes.AREA_LIST: {
       return Object.assign({}, state, {
-        areaList: initialState.areaList,
         loading: true
       });
-
     }
 
     case AreaActionTypes.AREA_LIST_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
 
-      const result: AreaFilterType[] = <AreaFilterType[]>action.payload;
+      return Object.assign({}, state,
+        {
+          areaList: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_LIST_SUBJECT: {
       return Object.assign({}, state, {
-        areaList: result,
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_LIST_SUBJECT_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
+
+      return Object.assign({}, state,
+        {
+          areaList: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
+
+      return Object.assign({}, state,
+        {
+          areaList: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE_SUBJECT: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE_SUBJECT_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
+
+      return Object.assign({}, state,
+        {
+          areaList: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_DEFAULT_LIST: {
+
+      return Object.assign({}, initialState, {
         loading: false
       });
-
     }
 
     default:

@@ -22,7 +22,6 @@ import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
-import {AreaFilterType} from '../../shared/data-types/area-list.type';
 import {MatSelectionList} from '@angular/material';
 import {ClearCollectionsFilter} from '../../actions/collection.actions';
 import {SetAreaFilter, SetDefaultAreaFilter} from '../../actions/filter.actions';

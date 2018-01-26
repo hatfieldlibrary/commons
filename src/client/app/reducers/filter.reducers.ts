@@ -61,7 +61,6 @@ export function reducer(state = initialState, action: FilterActions): State {
     case FilterActionTypes.SET_SEARCH_FILTER: {
 
       const filter: string = <string>action.payload;
-      console.log(filter)
       return Object.assign({}, state, {
         filterTerm: filter
       });

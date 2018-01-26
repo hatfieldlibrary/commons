@@ -21,7 +21,6 @@ export class SearchFilterComponent implements OnInit {
   }
 
   onChange(event): void {
-    console.log(event)
     this.store.dispatch(new SetSearchFilter(event));
   }
 

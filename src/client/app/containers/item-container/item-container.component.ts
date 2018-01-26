@@ -27,7 +27,7 @@ import * as fromItem from '../../actions/item.actions';
 import * as areaActions from '../../actions/area.actions';
 import * as fromRelated from '../../actions/related.actions';
 import {RelatedType} from '../../shared/data-types/related-collection';
-import {AreaFilterType} from '../../shared/data-types/area-list.type';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 
 import {fadeIn} from '../../animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';

@@ -20,18 +20,18 @@ import {
   ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
-import {NavigationEnd, NavigationStart, Router} from "@angular/router";
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
-} from "@angular/common";
-import {MatSidenav} from "@angular/material";
-import {MenuInteractionService} from "../services/menu/menu-interaction.service";
-import {Store} from "@ngrx/store";
+} from '@angular/common';
+import {MatSidenav} from '@angular/material';
+import {MenuInteractionService} from '../services/menu/menu-interaction.service';
+import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
-import {AreaFilterType} from "../shared/data-types/area-list.type";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
-import {SetTimeoutService} from "../services/timers/timeout.service";
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
+import {SetTimeoutService} from '../services/timers/timeout.service';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -118,8 +118,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     let selected = '';
     if (areas.length === 0) {
       selected = '0,';
-    }
-    else {
+    } else {
       areas.forEach((area) => {
         selected = area.id + ',';
       });

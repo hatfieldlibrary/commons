@@ -83,7 +83,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   // are these being used...what is the purpose.
   private setItemTitle(): void {
     const areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
-      console.log(info)
       // Clear the item and subtitle labels before proceeding.
       this.title = '';
       this.subtitle = '';
@@ -131,7 +130,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param areaId
    */
   private getAreaInformation(areaId: string): void {
-    console.log('getting area info')
     this.store.dispatch(new areaActions.AreaInformation(areaId));
   }
 
@@ -313,7 +311,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     } else if (this.isSubjectSelected()) {
       this.getAreasBySubject(params['subjectId']);
     } else if (this.isTypeSelected()) {
-      console.log('is see type is selected')
       this.getAreasByType(params['typeId']);
     } else {
       this.getAllAreas();

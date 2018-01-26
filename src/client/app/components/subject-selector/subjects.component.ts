@@ -147,9 +147,6 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   private navigateRoute(selectedSubject: number) {
     const selectedAreaIds = this.getIds(this.selectedAreas);
     const selectedTypeIds = this.getIds(this.selectedTypes);
-    console.log(selectedSubject);
-    console.log(this.isTypeSelected());
-    console.log(this.isAreaSelected());
 
     if (selectedSubject !== 0) {
       if (this.isTypeSelected() && this.isAreaSelected()) {

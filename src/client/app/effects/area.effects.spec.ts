@@ -25,7 +25,7 @@ import {
   AreaInformationSuccess
 } from '../actions/area.actions';
 import {AreaType} from '../shared/data-types/area.type';
-import {AreaFilterType} from '../shared/data-types/area-list.type';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 

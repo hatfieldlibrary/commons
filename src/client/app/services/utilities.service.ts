@@ -66,7 +66,6 @@ export class UtilitiesService {
   }
 
   getBackLink(selectedArea: string, selectedSubject: SubjectType, selectedTypes: string): string {
-    console.log(selectedTypes)
     if (selectedArea && selectedArea !== '0') {
       return this._handleAreaBackLinks(selectedArea, selectedSubject, selectedTypes);
     } else if (selectedArea === '0') {

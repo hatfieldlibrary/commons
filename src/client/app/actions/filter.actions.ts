@@ -21,7 +21,7 @@ export const FilterActionTypes = {
  */
 export class SetSearchFilter implements Action {
   public type = FilterActionTypes.SET_SEARCH_FILTER;
-  constructor (public payload: string) {console.log(payload)}
+  constructor (public payload: string) {}
 }
 
 /**
