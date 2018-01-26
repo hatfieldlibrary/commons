@@ -61,6 +61,7 @@ export function reducer(state = initialState, action: FilterActions): State {
     case FilterActionTypes.SET_SEARCH_FILTER: {
 
       const filter: string = <string>action.payload;
+      console.log(filter)
       return Object.assign({}, state, {
         filterTerm: filter
       });
@@ -88,7 +89,6 @@ export function reducer(state = initialState, action: FilterActions): State {
 
     case FilterActionTypes.SET_AREA_FILTER: {
       const filter: AreaFilterType[] = <AreaFilterType[]>action.payload;
-      console.log(filter)
       return Object.assign({}, state, {
         selectedAreas: filter
       });

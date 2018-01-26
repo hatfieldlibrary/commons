@@ -48,7 +48,7 @@
           fxFlex.gt-lg="1 1 55"
           [subjectList]="subjects$ | async"
           [selectedAreas]="selectedAreas$ | async"
-          [type]="subjectLinkType">
+          [selectedTypes]="selectedTypes$ | async">
         </app-subject-selector>
       </div>
 
@@ -65,7 +65,11 @@
              *ngIf="media.isActive('gt-sm')">
           <div class="side-nav-header mat-title">FILTERS</div>
           <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
-          <app-navigation-selector [selectedAreas]="selectedAreas$ | async" [areaList]="areas$ | async"></app-navigation-selector>
+          <app-navigation-selector
+            [selectedAreas]="selectedAreas$ | async"
+            [areaList]="areas$ | async"
+            [selectedTypes]="selectedTypes$ | async"
+            [selectedSubject]="selectedSubject$ | async"></app-navigation-selector>
           <app-types [selectedAreas]="selectedAreas$ | async" [selectedSubject]="selectedSubject$ | async" [selectedTypes]="selectedTypes$ | async"
                      [typeList]="types$ | async"></app-types>
         </div>

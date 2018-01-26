@@ -63,9 +63,9 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_BY_AREA_SUBJECT: {
       const payload = <IdentifersPayload>action.payload;
-      const id = payload.id;
+      const subjectId = payload.subjectId;
       const areaId = payload.areaId;
-      if (id === '' || areaId === '') {
+      if (subjectId === '' || areaId === '') {
         return {
           collections: [],
           loading: false,

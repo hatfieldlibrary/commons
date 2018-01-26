@@ -27,7 +27,7 @@ import * as fromItem from '../../actions/item.actions';
 import * as areaActions from '../../actions/area.actions';
 import * as fromRelated from '../../actions/related.actions';
 import {RelatedType} from '../../shared/data-types/related-collection';
-import {AreaListItemType} from '../../shared/data-types/area-list.type';
+import {AreaFilterType} from '../../shared/data-types/area-list.type';
 
 import {fadeIn} from '../../animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
@@ -49,7 +49,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   selectedSubject$: Observable<SubjectType>;
   selectedTypes$: Observable<string>;
   item$: Observable<ItemType>;
-  areas: AreaListItemType[];
+  areas: AreaFilterType[];
   id: string;
   areasAvailable = false;
   activeMediaQuery = 'xs';
@@ -144,7 +144,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    */
   initializeAreas() {
     if (!this.areasAvailable) {
-      this.store.dispatch(new areaActions.AreaAction());
+      this.store.dispatch(new areaActions.AreaListAction());
     }
 
   }

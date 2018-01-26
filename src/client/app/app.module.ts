@@ -101,7 +101,7 @@ export const appRoutes = [
   {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/area/:areaId/subject/:subjectId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/type/:typeId', component: ListsContainerComponent},

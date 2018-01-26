@@ -34,8 +34,8 @@ export class CollectionService {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/area/' + id);
   }
 
-  getCollectionsByAreaSubject(id: string, areaId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/subject/' + id + '/area/' + areaId);
+  getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/area/' + areaId + '/subject/' + subjectId);
   }
 
   getCollectionsBySubject(id: string): Observable<CollectionType[]> {
@@ -58,8 +58,8 @@ export class CollectionService {
 
   getCollectionsByTypeAreaSubject(typeId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
-      + '/collection/type/' + typeId
-      + '/area/' + areaId
+      + '/collection/area/' + areaId
+      + '/type/' + typeId
       + '/subject/' + subjectId );
   }
 

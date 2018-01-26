@@ -4,6 +4,7 @@ import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import {SetCollectionsFilter} from '../../actions/collection.actions';
 import {Observable} from 'rxjs/Observable';
+import {SetSearchFilter} from '../../actions/filter.actions';
 
 @Component({
   selector: 'app-search-filter',
@@ -20,7 +21,8 @@ export class SearchFilterComponent implements OnInit {
   }
 
   onChange(event): void {
-    this.store.dispatch(new SetCollectionsFilter(event));
+    console.log(event)
+    this.store.dispatch(new SetSearchFilter(event));
   }
 
   ngOnInit() {

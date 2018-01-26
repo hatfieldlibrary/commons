@@ -18,8 +18,9 @@
 /**
  * Created by mspalti on 2/24/17.
  */
-import {AreaActions, AreaActionTypes} from "../actions/area.actions";
-import {AreaType} from "../shared/data-types/area.type";
+import {AreaActions, AreaActionTypes} from '../actions/area.actions';
+import {AreaType} from '../shared/data-types/area.type';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 export interface State {
   areas: AreaType[];
@@ -55,12 +56,76 @@ export function reducer(state = initialState, action: AreaActions): State {
 
       return Object.assign({}, state,
         {
+          areas: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_LIST: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_LIST_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
+
+      return Object.assign({}, state,
+        {
           area: payload,
           loading: false
         });
     }
 
-    case AreaActionTypes.AREA_DEFAULT_INFORMATION: {
+    case AreaActionTypes.AREA_LIST_SUBJECT: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_LIST_SUBJECT_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
+
+      return Object.assign({}, state,
+        {
+          area: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
+
+      return Object.assign({}, state,
+        {
+          area: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE_SUBJECT: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_LIST_TYPE_SUBJECT_SUCCESS: {
+      const payload = <AreaFilterType[]>action.payload;
+
+      return Object.assign({}, state,
+        {
+          area: payload,
+          loading: false
+        });
+    }
+
+    case AreaActionTypes.AREA_DEFAULT_LIST: {
 
       return Object.assign({}, initialState, {
         loading: false

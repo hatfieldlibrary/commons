@@ -22,10 +22,10 @@
     <div fxLayout="row" fxLayoutAlign="start center">
       <div class="mat-body-2" style="padding: 0 0 12px; color: #999;">Selected Subject&nbsp;&nbsp;</div>
       <mat-chip-list>
-        <mat-chip
+        <mat-chip class="subject-chip"
                   selected="true"
                   color="default"
-                  (click)="deselect($event)" style="margin-bottom: 12px;">
+                  (click)="deselect($event)">
           {{selectedSubject?.name}}
           <app-icon-close-white></app-icon-close-white>
         </mat-chip>

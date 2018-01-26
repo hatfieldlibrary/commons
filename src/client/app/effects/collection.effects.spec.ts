@@ -144,7 +144,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for all collections for a given subject', () => {
 
-    spyOn(collectionService, 'getCollectionsBySubject').and.callFake(() => { return Observable.throw('error') });
+    spyOn(collectionService, 'getCollectionsForSubject').and.callFake(() => { return Observable.throw('error') });
     const startAction = new CollectionsSubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

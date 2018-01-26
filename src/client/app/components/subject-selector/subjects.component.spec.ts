@@ -112,8 +112,8 @@ describe('SubjectsComponent', () => {
     intervalService = fixture.debugElement.injector.get(SetIntervalService);
 
     component = fixture.componentInstance;
-    component.type = 'area';
-    component.selectedAreas = Observable.of({id: 1, title: 'test', count: 0});
+   // component.type = 'area';
+    component.selectedAreas = [{id: 1, title: 'test', count: 0}];
     component.subjectList = mockSubjectList;
     fixture.detectChanges();
     spyOn(intervalService, 'setInterval');

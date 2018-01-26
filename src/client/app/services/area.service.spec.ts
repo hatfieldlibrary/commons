@@ -18,13 +18,13 @@
 import {AreaService, AreasResponse} from './area.service';
 import {inject, TestBed} from '@angular/core/testing';
 import {AreaType} from '../shared/data-types/area.type';
-import {AreaListItemType} from '../shared/data-types/area-list.type';
+import {AreaFilterType} from '../shared/data-types/area-list.type';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 
 describe('Area Service', () => {
 
-  const mockAreasList: AreaListItemType[] = [
+  const mockAreasList: AreaFilterType[] = [
     {
       id: 1,
       title: 'test areas one',

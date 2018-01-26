@@ -29,10 +29,10 @@ import * as listActions from '../../actions/collection.actions';
 import * as areaActions from '../../actions/area.actions';
 import * as subjectAction from '../../actions/subject-actions';
 import * as typeActions from '../../actions/type.actions';
+import * as filterActions from '../../actions/filter.actions';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
-import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {fadeIn} from '../../animation/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
@@ -40,6 +40,7 @@ import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {AreaSubjectParams} from '../../actions/area-subject-parameters.interface';
 import {TypeAreaSubjectParams} from '../../actions/type-area-subject-parameters.interface';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {AreaParams} from '../../actions/area.actions';
 
 @Component({
   selector: 'app-lists-container',
@@ -55,12 +56,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   selectedSubject$: Observable<SubjectType>;
   selectedAreas$: Observable<AreaFilterType[]>;
   selectedTypes$: Observable<TypesFilterType[]>;
-  areas$: Observable<AreaListItemType[]>;
+  areas$: Observable<AreaFilterType[]>;
   areaInfo$: Observable<AreaType[]>;
   types$: Observable<TypesFilterType[]>;
-  areasAvailable: boolean;
   areaId: string;
-  subjectLinkType: string;
   homeScreen: boolean;
   title: string;
   subtitle: string;
@@ -77,29 +76,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   }
 
-  /**
-   * Subscribes to areaList observable and sets member variable to true if the array
-   * is not empty.
-   */
-  setAreasAvailable(): void {
-    const areasWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
-      // id is 0 in initial state.
-      if (areas[0].id > 0) {
-      //  this.areas = areas;
-        this.areasAvailable = true;
-      }
-    });
-    this.watchers.add(areasWatcher);
-  }
-
-  setAllCollectionTitle() {
+  private setAllCollectionTitle() {
     this.title = 'All Collections';
   }
 
-  setItemTitle(): void {
-
+  // are these being used...what is the purpose.
+  private setItemTitle(): void {
     const areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
-
+      console.log(info)
       // Clear the item and subtitle labels before proceeding.
       this.title = '';
       this.subtitle = '';
@@ -124,47 +108,21 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.watchers.add(areaInfoWatcher);
   }
 
-  /**
-   * Dispatches action for collections by subject and areas.
-   * @param subjectId
-   * @param areaId
-   */
-  getCollectionsBySubject(subjectId: string, areaId: string): void {
-    this.store.dispatch(new listActions.CollectionsSubjectAction(subjectId));
-    // this.getAreaInformation(areaId);
-    this.setSelectedSubject(subjectId);
+  private getAllAreas(): void {
+    this.store.dispatch(new areaActions.AreaListAction());
   }
 
-  /**
-   * Dispatches action for collections in an areas.
-   * @param areaId
-   */
-  getCollectionsByArea(areaId: string): void {
-    this.store.dispatch(new listActions.CollectionsAreaAction(areaId));
-    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
-
+  private getAreasByType(typeId: string): void {
+    this.store.dispatch(new areaActions.AreaListByType(typeId))
   }
 
-  /**
-   * Dispatches action to fetch all collections.
-   */
-  getAllCollections(): void {
-    this.title = 'All Collections';
-    this.store.dispatch(new listActions.AllCollectionsAction());
-    this.store.dispatch(new subjectAction.AllSubjectAction());
-    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
-    this.store.dispatch(new areaActions.AreaDefaultInformation());
-
+  private getAreasBySubject(subjectId: string): void {
+    this.store.dispatch(new areaActions.AreaListBySubject(subjectId));
   }
 
-  /**
-   * Wrapper for collection actions.
-   * @param areaId
-   */
-  getCollections(areaId: string): void {
-    this.getCollectionsByArea(areaId);
-    // this.getAreaInformation(areaId);
-
+  private getAreasByTypeAndSubject(typeId: string, subjectId: string): void {
+    const parameters: AreaParams = {typeId: typeId, subjectId: subjectId};
+    this.store.dispatch(new areaActions.AreaListByTypeSubject(parameters));
   }
 
   /**
@@ -172,36 +130,46 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * subjects assigned to the areas..
    * @param areaId
    */
-  getAreaInformation(areaId: string): void {
+  private getAreaInformation(areaId: string): void {
+    console.log('getting area info')
     this.store.dispatch(new areaActions.AreaInformation(areaId));
-    this.store.dispatch((new subjectAction.SubjectAction((areaId))));
+  }
+
+
+  /**
+   * Dispatches action for collections by subject and areas.
+   * @param subjectId
+   * @param areaId
+   */
+  private getCollectionsForSubject(subjectId: string): void {
+    this.store.dispatch(new listActions.CollectionsSubjectAction(subjectId));
+  }
+
+  private getCollectionsForAreaSubject(areaId: string, subjectId: string): void {
+    this.store.dispatch(new listActions.CollectionsAreaSubjectAction(areaId, subjectId));
   }
 
   /**
-   * Dispatches request for all collections that have the given subject.
-   *
-   * Also dispatches request for list of subjects. This assures that subjects
-   * are in the store when user links directly to this page. If global subjects
-   * are implemented in the final product, it may make sense to assign these
-   * to their own reducer, since the state of the global list will not change.
-   * That way we can initialize once.
-   *
-   * @param subjectId
+   * Dispatches action for collections in an areas.
+   * @param areaId
    */
-  getAllCollectionsForSubject(subjectId: string): void {
-
-    this.store.dispatch((new listActions.CollectionsSubjectAction(subjectId)));
-    this.store.dispatch(new subjectAction.AllSubjectAction());
-    this.setSelectedSubject(subjectId);
-
+  private getCollectionsForArea(areaId: string): void {
+    this.store.dispatch(new listActions.CollectionsAreaAction(areaId));
   }
 
-  getAllCollectionsForType(typeId: string): void {
+  /**
+   * Dispatches action to fetch all collections.
+   */
+  private getAllCollections(): void {
+    this.title = 'All Collections';
+    this.store.dispatch(new listActions.AllCollectionsAction());
+  }
+
+  private getCollectionsForType(typeId: string): void {
     this.store.dispatch(new listActions.CollectionsTypeAction(typeId));
-    this.store.dispatch(new subjectAction.SubjectsForTypes(typeId));
   }
 
-  getCollectionsForTypeSubject(typeId: string, subjectId: string): void {
+  private getCollectionsForTypeSubject(typeId: string, subjectId: string): void {
     const params: TypeAreaSubjectParams = {
       areas: [],
       types: typeId.split(','),
@@ -210,7 +178,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new listActions.CollectionsTypeSubjectAction(params));
   }
 
-  getCollectionsForTypeAreaSubject(areaId: string, typeId: string, subjectId: string): void {
+  private getCollectionsForTypeAreaSubject(areaId: string, typeId: string, subjectId: string): void {
     const params: TypeAreaSubjectParams = {
       areas: areaId.split(','),
       types: typeId.split(','),
@@ -219,14 +187,13 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new listActions.CollectionsTypeAreaSubjectAction(params));
   }
 
-  getCollectionsForAreaType(areaId: string, typeId: string): void {
+  private getCollectionsForAreaType(areaId: string, typeId: string): void {
     const params: TypeAreaSubjectParams = {
       areas: areaId.split(','),
       types: typeId.split(','),
       subject: ''
     };
     this.store.dispatch(new listActions.CollectionsTypeAreaAction(params));
-    this.store.dispatch(new subjectAction.SubjectsForAreaTypes(areaId, typeId));
   }
 
   /**
@@ -235,12 +202,75 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param {string} subjectId
    * @private
    */
-  private setSelectedSubject(subjectId: string) {
+  private setSelectedSubject(subjectId: string): void {
     const subjectsWatcher = this.store.select(fromRoot.getSubject).subscribe(() => {
       this.store.dispatch(new subjectAction.CurrentSubject(subjectId));
     });
     this.watchers.add(subjectsWatcher);
 
+  }
+
+  /**
+   * Adds a watcher for the area list. The callback function uses the provided areaId
+   * to create an array of selected areas from the current list of areas. The selected
+   * areas are dispatched to the store. This initializes the selected areas on page load.
+   *
+   * @param {string} areaId comma separated string of area ids.
+   */
+  private setSelectedArea(areaId: string): void {
+    const areasWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
+      const areaArr = areaId.split(',');
+      const selectedAreas: AreaFilterType[] = [];
+      areaArr.forEach(function (singleAreaId) {
+        const selected = areas.find((area) => area.id === +singleAreaId);
+        if (selected) {
+          selectedAreas.push(selected);
+        }
+      });
+      if (selectedAreas.length > 0) {
+        this.store.dispatch(new filterActions.SetAreaFilter(selectedAreas));
+      }
+    });
+    this.watchers.add(areasWatcher);
+  }
+  /**
+   * Adds a watcher for the type list. The callback function uses the provided typeId
+   * to create an array of selected types from the current list of types. The selected
+   * types are dispatched to the store. This initializes the selected types on page load.
+   *
+   * @param {string} areaId comma separated string of area ids.
+   */
+  private setSelectedTypes(typeId: string): void {
+    const typesWatcher = this.store.select(fromRoot.getTypes).subscribe((types) => {
+      const areaArr = typeId.split(',');
+      const selectedTypes: TypesFilterType[] = [];
+      areaArr.forEach(function (singleTypeId) {
+        const selected = types.find((type) => type.id === +singleTypeId);
+        if (selected) {
+          selectedTypes.push(selected);
+        }
+      });
+      if (selectedTypes.length > 0) {
+        this.store.dispatch(new filterActions.SetTypeFilter(selectedTypes));
+      }
+    });
+    this.watchers.add(typesWatcher);
+  }
+
+  private getAllSubjects(): void {
+    this.store.dispatch(new subjectAction.AllSubjectAction());
+  }
+
+  private getSubjectsForArea(areaId: string): void {
+    this.store.dispatch((new subjectAction.SubjectAction((areaId))));
+  }
+
+  private getSubjectsForType(typeId: string): void {
+    this.store.dispatch(new subjectAction.SubjectsForTypes(typeId));
+  }
+
+  private getSubjectsForAreaType(areaId: string, typeId: string): void {
+    this.store.dispatch(new subjectAction.SubjectsForAreaTypes(areaId, typeId));
   }
 
   private getAllTypes() {
@@ -261,48 +291,76 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new typeActions.ContentTypesAreaSubjectAction(requestParams));
   }
 
+  private isAreaSelected(): boolean {
+    return this.areaId && this.areaId !== '0';
+  }
+
+  private isTypeSelected(): boolean {
+    return (typeof this.selectedTypes !== 'undefined' && this.selectedTypes !== '0');
+  }
+
+  private isSubjectSelected(): boolean {
+    return (typeof this.subjectId !== 'undefined' && this.subjectId !== '0');
+  }
+
   /**
    * Dispatches action for areas list if not currently available in the store.
    * @param id
    */
-  initializeAreas() {
-    if (!this.areasAvailable) {
-      this.store.dispatch(new areaActions.AreaAction());
+  private initializeAreas(params: any) {
+    if (this.isTypeSelected() && this.isSubjectSelected()) {
+      this.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
+    } else if (this.isSubjectSelected()) {
+      this.getAreasBySubject(params['subjectId']);
+    } else if (this.isTypeSelected()) {
+      console.log('is see type is selected')
+      this.getAreasByType(params['typeId']);
+    } else {
+      this.getAllAreas();
     }
-
   }
 
   removeSubject(event) {
-    console.log(this.areaId)
-    if (this.areaId && this.areaId !== '0') {
+    if (this.isAreaSelected() && this.isTypeSelected()) {
+      this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId + '/type/' + this.selectedTypes);
+    } else if (this.isAreaSelected()) {
       this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId);
     } else {
       this.router.navigateByUrl('/' + environment.appRoot + '/collection');
     }
+    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
   }
 
-  setIds(params: any): void {
+  private setQueryState(params: any): void {
+
     if (params['areaId']) {
       this.areaId = params['areaId'];
+      this.setSelectedArea(params['areaId']);
     }
     if (params['subjectId']) {
-      this.subjectId = params['subjectId']
+      this.subjectId = params['subjectId'];
+      this.setSelectedSubject(params['subjectId']);
     }
     if (params['typeId']) {
       this.selectedTypes = params['typeId'];
+      this.setSelectedTypes(params['typeId']);
     }
+  }
+
+  private setMediaWatcher(): void {
+    const mediaWatcher = this.media.asObservable()
+      .subscribe((change: MediaChange) => {
+        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ''
+      });
+    this.watchers.add(mediaWatcher);
   }
 
   ngOnInit() {
 
-    // All component subscriptions will be added to this object.
+    // All subscriptions are added to this Subscription so
+    // the can be removed in ngOnDestroy.
     this.watchers = new Subscription();
-
     this.setItemTitle();
-    this.setAreasAvailable();
-
-    // The subjects$ Observable is used by child components. This component
-    // also subscribes to the subject store in the setSelectedSubject function.
     this.subjects$ = this.store.select(fromRoot.getSubject);
     this.collections$ = this.store.select(fromRoot.getFilteredCollections);
     this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
@@ -312,60 +370,56 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
     this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
 
-    const mediaWatcher = this.media.asObservable()
-      .subscribe((change: MediaChange) => {
-        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ''
-      });
-    this.watchers.add(mediaWatcher);
+    this.setMediaWatcher();
 
     const routeWatcher = this.route.params
       .subscribe((params) => {
-
-        this.initializeAreas();
-        // Set the areaId value. Used by removeSubject().
-        this.setIds(params);
-
+        this.setQueryState(params);
+        this.initializeAreas(params);
         if (params['areaId']) {
-          this.subjectLinkType = 'area';
           this.getAreaInformation(params['areaId']);
           if (params['subjectId']) {
             if (params['typeId']) {
               this.getCollectionsForTypeAreaSubject(params['areaId'], params['typeId'], params['subjectId']);
+              this.getSubjectsForAreaType(params['areaId'], params['typeId']);
             } else {
-              this.getCollectionsBySubject(params['subjectId'], params['areaId']);
+              this.getCollectionsForAreaSubject(params['areaId'], params['subjectId']);
+              this.getSubjectsForArea(params['areaId']);
             }
             this.getTypesForAreaSubject(params['areaId'], params['subjectId']);
           } else {
             if (params['typeId']) {
               this.getCollectionsForAreaType(params['areaId'], params['typeId']);
+              this.getSubjectsForAreaType(params['areaId'], params['typeId']);
             } else {
-              this.getCollections(params['areaId']);
+              this.getCollectionsForArea(params['areaId']);
+              this.getSubjectsForArea(params['areaId']);
             }
             this.getTypesForArea(params['areaId']);
           }
         } else if (params['subjectId']) {
-          this.subjectLinkType = 'all';
           this.homeScreen = true;
           if (params['typeId']) {
             this.getCollectionsForTypeSubject(params['typeId'], params['subjectId']);
+            this.getSubjectsForType(params['typeId']);
           } else {
-            this.getAllCollectionsForSubject(params['subjectId']);
+            this.getCollectionsForSubject(params['subjectId']);
+            this.getAllSubjects();
           }
           this.setAllCollectionTitle();
           this.getTypesForSubject(params['subjectId']);
           this.areaId = '0';
-
         } else {
           this.areaId = '0';
-          this.subjectLinkType = 'all';
           if (params['typeId']) {
-            this.getAllCollectionsForType(params['typeId']);
+            this.getCollectionsForType(params['typeId']);
+            this.getSubjectsForType(params['typeId']);
           } else {
             this.getAllCollections();
+            this.getAllSubjects();
           }
           this.getAllTypes();
           this.homeScreen = true;
-
         }
       });
 

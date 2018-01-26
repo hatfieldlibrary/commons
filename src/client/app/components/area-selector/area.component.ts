@@ -22,11 +22,13 @@ import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
-import {AreaListItemType} from '../../shared/data-types/area-list.type';
+import {AreaFilterType} from '../../shared/data-types/area-list.type';
 import {MatSelectionList} from '@angular/material';
 import {ClearCollectionsFilter} from '../../actions/collection.actions';
 import {SetAreaFilter, SetDefaultAreaFilter} from '../../actions/filter.actions';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 
 @Component({
   selector: 'app-navigation-selector',
@@ -37,8 +39,10 @@ import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 export class NavigationComponent {
 
 
-  @Input() areaList: AreaListItemType[];
+  @Input() areaList: AreaFilterType[];
   @Input() selectedAreas: AreaFilterType[];
+  @Input() selectedTypes: TypesFilterType[];
+  @Input() selectedSubject: SubjectFilterType;
 
   constructor(private router: Router,
               private store: Store<fromRoot.State>) {
@@ -56,25 +60,79 @@ export class NavigationComponent {
     return false;
   }
 
+  private isAreaSelected(areaId: string): boolean {
+    // the global areaId can be a string with length zero, or 0.
+    return (areaId !== '0') && (areaId.length > 0);
+  }
+
+  private isSubjectSelected(): boolean {
+    return (typeof this.selectedSubject !== 'undefined') && (this.selectedSubject.id !== 0);
+  }
+
+  private isTypeSelected(): boolean {
+    return (typeof this.selectedTypes !== 'undefined') && (this.selectedTypes[0].id !== 0);
+  }
+
+  // This needs to become a utility function:
+  /**
+   * Generates the comma-separated list of ids.
+   * @param {any[]} list list of areas
+   * @returns {string}
+   */
+  private getIds(list: any[]): string {
+    let ids = '';
+    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
+      list.forEach(area => {
+        ids = ids + area.id + ','
+      });
+    }
+    return ids.slice(0, -1);
+  }
+
   /**
    * Uses router to navigate to a route based on the provided areaId.
    * @param {string} areaId area id (can be comma-separated list).
    */
   private navigateRoute(areaId: string): void {
-    // the global areaId can be a string with length zero, or 0.
-    if (areaId !== '0' && areaId.length > 0) {
+
+    if (this.isSubjectSelected() && this.isTypeSelected() && this.isAreaSelected(areaId)) {
+      this.router.navigate(['/',
+        environment.appRoot,
+        'collection',
+        'area', areaId,
+        'type', this.getIds(this.selectedTypes),
+        'subject', this.selectedSubject.id
+      ]);
+    } else if (this.isSubjectSelected() && this.isAreaSelected(areaId)) {
+      this.router.navigate(['/',
+        environment.appRoot,
+        'collection',
+        'area', areaId,
+        'subject', this.selectedSubject.id
+      ]);
+    } else if (this.isTypeSelected() && this.isAreaSelected(areaId)) {
+      this.router.navigate(['/',
+        environment.appRoot,
+        'collection',
+        'area', areaId,
+        'type', this.getIds(this.selectedTypes)
+      ]);
+    } else if (this.isTypeSelected()) {
+      this.router.navigate(['/', environment.appRoot, 'collection', 'type', this.getIds(this.selectedTypes)]);
+    } else if (this.isAreaSelected(areaId)) {
       this.router.navigate(['/', environment.appRoot, 'collection', 'area', areaId]);
     } else {
       this.router.navigate(['/', environment.appRoot, 'collection']);
     }
+
   }
 
   /**
    * Gets the area list item with the provided id from the list of all areas.
    * @param {number} areaId the id of the area to retrieve
-   * @returns {AreaListItemType}
+   * @returns {AreaFilterType}
    */
-  private getSelectedAreaInfo(areaId: number): AreaListItemType {
+  private getSelectedAreaInfo(areaId: number): AreaFilterType {
     return this.areaList.find((current) => current.id === areaId);
   }
 
@@ -85,7 +143,7 @@ export class NavigationComponent {
    * @returns {number}
    */
   private getPositionInSelectedList(areaId: number): number {
-    return this.selectedAreas.findIndex((current) => current.id === areaId);
+      return this.selectedAreas.findIndex((current) => current.id === areaId);
   }
 
   /**

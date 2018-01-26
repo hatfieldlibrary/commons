@@ -25,7 +25,7 @@ import {CollectionType} from '../shared/data-types/collection.type';
 import {TypeAreaSubjectParams} from './type-area-subject-parameters.interface';
 
 export interface IdentifersPayload {
-  id: string,
+  subjectId: string,
   areaId: string
 }
 
@@ -121,7 +121,7 @@ export class CollectionsAreaSubjectAction implements Action {
   payload: IdentifersPayload;
   constructor(public id: string, public areaId: string) {
     this.payload = {
-      id: id,
+      subjectId: id,
       areaId: areaId
     }
   }

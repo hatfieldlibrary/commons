@@ -146,10 +146,12 @@ export const getCollectionFilterTerm = createSelector(getFilterState, fromFilter
 export const getFilteredCollections = createSelector(getCollections, getFilterState, filterFunction);
 
 function filterFunction(collections, filter) {
-  if (typeof filter.term !== 'undefined' && filter.term.length > 2 && collections.length > 1) {
+  if (typeof filter.filterTerm !== 'undefined' && filter.filterTerm.length > 2 && collections.length > 1) {
     return collections.filter(col => {
       const collectionDescription: string = col.title + ' ' + col.description;
-      return (new RegExp(filter.term, 'i')).test(collectionDescription)
+      // catch illegal characters
+      const filterTerm = filter.filterTerm.replace(/\\/g, '');
+      return (new RegExp(filterTerm, 'i')).test(collectionDescription)
     });
   } else {
     return collections;

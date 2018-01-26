@@ -29,9 +29,11 @@ import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import {SetIntervalService} from '../../services/timers/interval.service';
 import {MatListItem} from '@angular/material';
-import {Observable} from 'rxjs/Observable';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {Router} from '@angular/router';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SetSubjectFilter} from '../../actions/filter.actions';
 
 
 @Component({
@@ -43,8 +45,8 @@ import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() subjectList: SubjectType[];
-  @Input() selectedAreas: Observable<AreaFilterType>;
-  @Input() type: string;
+  @Input() selectedAreas: AreaFilterType[];
+  @Input() selectedTypes: TypesFilterType[];
   @ViewChild('container') container: ElementRef;
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
   @ViewChildren(MatListItem, {read: ElementRef}) contentEls: QueryList<ElementRef>;
@@ -81,6 +83,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private changeDetector: ChangeDetectorRef,
               private media: ObservableMedia,
               private intervalService: SetIntervalService,
+              private router: Router,
               private store: Store<fromRoot.State>) {
 
     this.watcher = new Subscription();
@@ -100,24 +103,105 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Resets the collection list in store.
    */
   resetList(subjectId): void {
-   if (subjectId !== this.selectedSubject.id) {
-     this.store.dispatch(new listActions.CollectionReset());
-   }
+    if (subjectId !== this.selectedSubject.id) {
+      this.store.dispatch(new listActions.CollectionReset());
+    }
   }
+
   /**
    * Generates the comma-separated list of ids.
-   * @param {AreaFilterType[]} list list of areas
+   * @param {any[]} list list of areas
    * @returns {string}
    */
-   getAreaIds(): string {
+  private getIds(list: any[]): string {
     let ids = '';
-    if (typeof this.selectedAreas !== 'undefined' && typeof this.selectedAreas[0] !== 'undefined') {
-      this.selectedAreas.forEach(area => {
+    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
+      list.forEach(area => {
         ids = ids + area.id + ','
       });
     }
     return ids.slice(0, -1);
   }
+
+  private isAreaSelected(): boolean {
+    return (typeof this.selectedAreas !== 'undefined' && this.selectedAreas[0].id !== 0)
+  }
+
+  private isTypeSelected(): boolean {
+    return (typeof this.selectedTypes !== 'undefined' && this.selectedTypes[0].id !== 0);
+  }
+
+  private getSelectedSubjectInfo(subjectId: number): SubjectFilterType {
+    return this.subjectList.find((current) => current.id === subjectId);
+  }
+
+  public navigate(subjectId: string): void {
+    this.store.dispatch(new SetSubjectFilter(this.getSelectedSubjectInfo(+subjectId)));
+    this.navigateRoute(+subjectId)
+  }
+
+  /**
+   * Provides router navigation.
+   * @param {string}
+   */
+  private navigateRoute(selectedSubject: number) {
+    const selectedAreaIds = this.getIds(this.selectedAreas);
+    const selectedTypeIds = this.getIds(this.selectedTypes);
+    console.log(selectedSubject);
+    console.log(this.isTypeSelected());
+    console.log(this.isAreaSelected());
+
+    if (selectedSubject !== 0) {
+      if (this.isTypeSelected() && this.isAreaSelected()) {
+        this.router.navigate([
+          '/',
+          environment.appRoot,
+          'collection',
+          'area',
+          selectedAreaIds,
+          'type',
+          selectedTypeIds,
+          'subject',
+          selectedSubject
+        ]);
+      } else if (this.isAreaSelected()) {
+        this.router.navigate([
+          '/',
+          environment.appRoot,
+          'collection',
+          'area',
+          selectedAreaIds,
+          'subject',
+          selectedSubject
+        ]);
+      } else if (this.isTypeSelected()) {
+        this.router.navigate([
+          '/',
+          environment.appRoot,
+          'collection',
+          'type',
+          selectedTypeIds,
+          'subject',
+          selectedSubject
+        ]);
+      } else {
+        this.router.navigate([
+          '/',
+          environment.appRoot,
+          'collection',
+          'subject',
+          selectedSubject
+        ]);
+      }
+    } else {
+      this.router.navigate([
+        '/',
+        environment.appRoot,
+        'collection'
+      ]);
+    }
+  }
+
 
   /**
    * Set up selected subject watcher.
@@ -156,7 +240,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns {number}
    * @private
    */
-  _getOffsetPaddingValue(): number  {
+  _getOffsetPaddingValue(): number {
     return Math.floor(0.1 * this.offsetWidth);
   }
 
@@ -177,7 +261,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (direction === 'left') {
-      if (this.subjects.nativeElement.scrollLeft  - (this.offsetWidth - this._getOffsetPaddingValue()) > 0) {
+      if (this.subjects.nativeElement.scrollLeft - (this.offsetWidth - this._getOffsetPaddingValue()) > 0) {
         check = this.subjects.nativeElement.scrollLeft - (this.offsetWidth - this._getOffsetPaddingValue());
       } else {
         check = 0;
@@ -241,12 +325,16 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.offsetWidth = this.container.nativeElement.offsetWidth;
     const changeWatcher = this.contentEls.changes.subscribe((el) => {
-      this.lastSubjectButton = el._results[this.subjectList.length - 1];
-      const leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
-      this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;
-      this.selectorWidth = leftOffset + this.lastButtonWidth;
-      this.showSubjectNavigationArrow();
-      this.changeDetector.detectChanges();
+      if(this.subjectList) {
+        this.lastSubjectButton = el._results[this.subjectList.length - 1];
+        if (this.lastSubjectButton) {
+          const leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
+          this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;
+          this.selectorWidth = leftOffset + this.lastButtonWidth;
+          this.showSubjectNavigationArrow();
+          this.changeDetector.detectChanges();
+        }
+      }
     });
 
     this.watcher.add(changeWatcher);

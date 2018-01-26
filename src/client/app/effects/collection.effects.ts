@@ -46,7 +46,7 @@ export class CollectionEffects {
   collectionsBySubjectArea$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_BY_AREA_SUBJECT)
     .map((action: collection.CollectionsAreaSubjectAction) => action.payload)
-    .switchMap((payload) => this.svc.getCollectionsByAreaSubject(payload.id, payload.areaId))
+    .switchMap((payload) => this.svc.getCollectionsByAreaSubject(payload.areaId, payload.subjectId))
     .map((res) => new collection.CollectionsSubjectActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 

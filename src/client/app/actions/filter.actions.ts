@@ -21,7 +21,7 @@ export const FilterActionTypes = {
  */
 export class SetSearchFilter implements Action {
   public type = FilterActionTypes.SET_SEARCH_FILTER;
-  constructor (public payload: string) {}
+  constructor (public payload: string) {console.log(payload)}
 }
 
 /**
@@ -38,7 +38,7 @@ export class ClearSearchFilter implements Action {
  */
 export class SetAreaFilter implements Action {
   public type = FilterActionTypes.SET_AREA_FILTER;
-  constructor(public payload: AreaFilterType[]) {console.log(payload)}
+  constructor(public payload: AreaFilterType[]) {}
 }
 
 /**
@@ -72,7 +72,7 @@ export class RemoveSubjectFilter implements Action {
  * Redux action for setting the selected type filter value.
  */
 export class SetTypeFilter implements Action {
-  public type = FilterActionTypes.SET_TYPE_FILTER
+  public type = FilterActionTypes.SET_TYPE_FILTER;
   constructor(public payload: TypesFilterType[]) {}
 }
 

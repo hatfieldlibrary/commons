@@ -28,7 +28,7 @@ import {MatSidenav} from "@angular/material";
 import {MenuInteractionService} from "../services/menu/menu-interaction.service";
 import {Store} from "@ngrx/store";
 import * as fromRoot from '../reducers';
-import {AreaListItemType} from "../shared/data-types/area-list.type";
+import {AreaFilterType} from "../shared/data-types/area-list.type";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
 import {Subscription} from "rxjs/Subscription";
 import {SetTimeoutService} from "../services/timers/timeout.service";
@@ -52,7 +52,7 @@ import {SetTimeoutService} from "../services/timers/timeout.service";
 })
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   watcher: Subscription;
-  areas$: Store<AreaListItemType[]>;
+  areas$: Store<AreaFilterType[]>;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -131,7 +131,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnInit() {
     /**
      * Get areas for side_nav.
-     * @type {Store<AreaListItemType[]>}
+     * @type {Store<AreaFilterType[]>}
      */
     this.areas$ = this.store.select(fromRoot.getAreas);
     const selectedAreasWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((areas) => {

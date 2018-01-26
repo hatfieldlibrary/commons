@@ -18,7 +18,7 @@
 
 import {getAreaInfo, reducer, State} from './area.reducers';
 import {
-  AreaAction, AreaActionFailed, AreaActionSuccess, AreaDefaultInformation, AreaInformation, AreaInformationSuccess
+  AreaListAction, AreaListActionFailed, AreaListActionSuccess, AreaDefaultList, AreaInformation, AreaInformationSuccess
 } from '../actions/area.actions';
 import {Action} from '@ngrx/store';
 import {AreaType} from '../shared/data-types/area.type';
@@ -107,7 +107,7 @@ describe('Area Reducer', () => {
   it('should return current state and fail.', () => {
     const areaState: State = {areas: areaMock, loading: false};
     expect(
-      reducer(areaState, new AreaActionFailed('error'))
+      reducer(areaState, new AreaListActionFailed('error'))
     ).toEqual(
       {
         areas: areaMock,
@@ -123,7 +123,7 @@ describe('Area Reducer', () => {
   });
 
   it('should return default state after reset request', () => {
-    let state = reducer(undefined, new AreaDefaultInformation());
+    let state = reducer(undefined, new AreaDefaultList());
     let result = getAreaInfo(state);
     expect(result).toEqual(initialState);
   });

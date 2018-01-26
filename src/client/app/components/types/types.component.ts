@@ -6,7 +6,7 @@ import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {MatSelectionList} from '@angular/material';
-import {SetTypeFilter} from '../../actions/filter.actions';
+import {SetDefaultTypeFilter, SetTypeFilter} from '../../actions/filter.actions';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 
@@ -76,6 +76,10 @@ export class TypesComponent {
       // Make sure the default id: '0' does not creep in!
       this.removeDefaultType();
       // Update the store.
+      if (this.selectedTypes.length === 0) {
+        this.store.dispatch(new SetDefaultTypeFilter());
+        return;
+      }
       this.store.dispatch(new SetTypeFilter(this.selectedTypes));
     }
   }
@@ -123,8 +127,11 @@ export class TypesComponent {
     const selectedAreaIds = this.getIds(this.selectedAreas);
     const selectedSubject = this.selectedSubject.id;
     if (selectedAreaIds !== '0' && typeof selectedAreaIds !== 'undefined') {
+      console.log('got selected area')
       if (selectedSubject !== 0) {
+        console.log('selected subject is ' + selectedSubject)
         if (typeId) {
+          console.log('with type id ' + typeId)
           this.router.navigate([
             '/',
             environment.appRoot,
@@ -137,6 +144,7 @@ export class TypesComponent {
             selectedSubject
           ]);
         } else {
+          console.log('with not type id')
           this.router.navigate([
             '/',
             environment.appRoot,
@@ -148,7 +156,9 @@ export class TypesComponent {
           ]);
         }
       } else {
+        console.log('got NO selected subject')
         if (typeId) {
+          console.log('with type id ' + typeId)
           this.router.navigate([
             '/',
             environment.appRoot,
@@ -158,6 +168,7 @@ export class TypesComponent {
             'type',
             typeId]);
         } else {
+          console.log(' with no type id')
           this.router.navigate([
             '/',
             environment.appRoot,
@@ -168,23 +179,33 @@ export class TypesComponent {
         }
       }
     } else if (selectedAreaIds === '0') {
+      console.log('selected area is 0')
       if (selectedSubject !== 0) {
+        console.log('with selected subject ' + this.selectedSubject)
         if (typeId) {
+          console.log('with type id ' + typeId)
           this.router.navigate(['/', environment.appRoot, 'collection', 'type', typeId, 'subject', selectedSubject]);
         } else {
+          console.log('with no type id')
           this.router.navigate(['/', environment.appRoot, 'collection', 'subject', selectedSubject]);
         }
       } else {
+        console.log('with no subject or area')
         if (typeId) {
+          console.log('with type id ' + typeId)
           this.router.navigate(['/', environment.appRoot, 'collection', 'type', typeId]);
         } else {
+          console.log('with no type id')
           this.router.navigate(['/', environment.appRoot, 'collection']);
         }
       }
     } else {
+      console.log('default type axn')
       if (typeId) {
+        console.log('with type id ' + typeId)
         this.router.navigate(['/', environment.appRoot, 'collection', 'type', typeId]);
       } else {
+        console.log('with no type id')
         this.router.navigate(['/', environment.appRoot, 'collection']);
       }
     }

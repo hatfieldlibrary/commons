@@ -34,10 +34,34 @@ export class AreaEffects {
   @Effect()
   areaListEffect$: Observable<Action> = this.actions$
     .ofType(areas.AreaActionTypes.AREA_LIST)
-    .map((action: areas.AreaAction) => action.payload)
+    .map((action: areas.AreaListAction) => action.payload)
     .switchMap(() => this.svc.getAreaList())
-    .map(res =>   new areas.AreaActionSuccess(res))
-    .catch((err) => Observable.of(new areas.AreaActionFailed(err)));
+    .map(res =>   new areas.AreaListActionSuccess(res))
+    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+
+  @Effect()
+  areaListSubjectEffect$: Observable<Action> = this.actions$
+    .ofType(areas.AreaActionTypes.AREA_LIST_SUBJECT)
+    .map((action: areas.AreaListByType) => action.payload)
+    .switchMap((id) => this.svc.getAreaListBySubject(id))
+    .map(res =>   new areas.AreaListSubjectSuccess(res))
+    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+
+  @Effect()
+  areaListTypeEffect$: Observable<Action> = this.actions$
+    .ofType(areas.AreaActionTypes.AREA_LIST_TYPE)
+    .map((action: areas.AreaListBySubject) => action.payload)
+    .switchMap((id) => this.svc.getAreaListByType(id))
+    .map(res =>   new areas.AreaListTypeSuccess(res))
+    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+
+  @Effect()
+  areaListTypeSubjectEffect$: Observable<Action> = this.actions$
+    .ofType(areas.AreaActionTypes.AREA_LIST_TYPE_SUBJECT)
+    .map((action: areas.AreaListByTypeSubject) => action.payload)
+    .switchMap((payload) => this.svc.getAreaListByTypeSubject(payload.typeId, payload.subjectId))
+    .map(res =>   new areas.AreaListTypeSubjectSuccess(res))
+    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
   @Effect()
   areaInfoEffect$: Observable<Action> = this.actions$
@@ -45,7 +69,7 @@ export class AreaEffects {
     .map((action: areas.AreaInformation) => action.payload)
     .switchMap(id => this.svc.getAreaInfo(id))
     .map(res => new areas.AreaInformationSuccess(res) )
-    .catch((err) => Observable.of(new areas.AreaActionFailed(err)));
+    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
 }
 

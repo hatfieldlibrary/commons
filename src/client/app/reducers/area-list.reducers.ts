@@ -15,21 +15,21 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AreaListItemType} from '../shared/data-types/area-list.type';
 import {AreaActions, AreaActionTypes} from '../actions/area.actions';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
 /**
  * Created by mspalti on 4/11/17.
  */
 
 
 export interface State {
-  areaList: AreaListItemType[];
+  areaList: AreaFilterType[];
   loading: boolean;
 
 }
 
 const initialState: State = {
-  areaList: <AreaListItemType[]>[
+  areaList: <AreaFilterType[]>[
     {
       id: -1,
       title: '',
@@ -55,7 +55,7 @@ export function reducer(state = initialState, action: AreaActions): State {
 
     case AreaActionTypes.AREA_LIST_SUCCESS: {
 
-      const result: AreaListItemType[] = <AreaListItemType[]>action.payload;
+      const result: AreaFilterType[] = <AreaFilterType[]>action.payload;
       return Object.assign({}, state, {
         areaList: result,
         loading: false

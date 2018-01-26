@@ -57,6 +57,7 @@ export class ListComponent implements OnDestroy {
    * @returns {string}
    */
   getSelectedArea(): string {
+
     let ids = '';
     if (typeof this.selectedAreas !== 'undefined' && typeof this.selectedAreas[0] !== 'undefined') {
       this.selectedAreas.forEach(area => {
@@ -77,7 +78,6 @@ export class ListComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.removeSubject.unsubscribe();
-
   }
 
 }
