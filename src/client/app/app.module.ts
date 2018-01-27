@@ -18,7 +18,6 @@
 import { BrowserModule} from '@angular/platform-browser';
 import { NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-// import { RequestOptions} from '@angular/http';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -61,7 +60,6 @@ import { CloseSvgComponent } from './components/svg/close-svg/close-svg.componen
 import { HomeScreenComponent } from './components/home-screen/home-screen.component';
 import { ItemHeaderComponent } from './components/item-header/item-header.component';
 import { BackSvgComponent } from './components/svg/back-svg/back-svg.component';
-// import { GlobalHttpOptions} from './shared/global-request';
 import { LockSvgComponent } from './components/svg/lock-svg/lock-svg.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ItemLinksComponent } from './components/item-links/item-links.component';
@@ -83,7 +81,7 @@ import { LoadingSvgComponent } from './components/svg/loading-svg/loading-svg.co
 import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-black-svg.component';
 import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
-import { UtilitiesService} from './services/utilities.service';
+import { UtilitiesService} from './services/utils/utilities.service';
 import { HomeBlackSvgComponent} from './components/svg/home-black-svg/home-black-svg.component';
 import { environment} from 'app/environments/environment';
 import { ItemSelectComponent } from './components/item-select-options/item-select.component';
@@ -94,7 +92,9 @@ import { MenuInteractionService} from './services/menu/menu-interaction.service'
 import { TypeEffects} from './effects/types.effects';
 import { TypesService} from './services/types.service';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
-import {FilterUpdateService} from './services/filters/filter-update.service';
+import { FilterUpdateService} from './services/filters/filter-update.service';
+import { NavigationService} from './services/navigation/navigation.service';
+import { CurrentFiltersComponent } from './components/current-filters/current-filters.component';
 
 export const appRoutes = [
 
@@ -156,7 +156,8 @@ export const appRoutes = [
     ItemSelectComponent,
     DatePickerSvgComponent,
     TypesComponent,
-    SearchFilterComponent
+    SearchFilterComponent,
+    CurrentFiltersComponent
 
   ],
   imports: [
@@ -230,6 +231,7 @@ export const appRoutes = [
     AuthCheckService,
     MenuInteractionService,
     MatIconRegistry,
+    NavigationService,
     UtilitiesService,
     SetIntervalService,
     SetTimeoutService,

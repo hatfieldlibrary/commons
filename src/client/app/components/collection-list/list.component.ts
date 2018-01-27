@@ -45,8 +45,11 @@ export class ListComponent implements OnDestroy {
     this.filterTerm = '';
   }
 
+  /**
+   * Emits event to parent component when the subject is deselected. The
+   * $event object is not used.
+   */
   deselect() {
-    this.store.dispatch(new listActions.CollectionReset());
     this.removeSubject.next();
   }
 

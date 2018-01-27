@@ -19,7 +19,7 @@ import {
   Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {ItemType} from "../../shared/data-types/item.type";
 import {SubjectType} from "../../shared/data-types/subject.type";
-import {UtilitiesService} from "../../services/utilities.service";
+import {UtilitiesService} from "../../services/utils/utilities.service";
 import {ObservableMedia} from "@angular/flex-layout";
 
 /**

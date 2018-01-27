@@ -60,7 +60,7 @@ import {RunSvgComponent} from '../../components/svg/run-svg/run-svg.component';
 import {ItemSelectComponent} from '../../components/item-select-options/item-select.component';
 import {HomeBlackSvgComponent} from '../../components/svg/home-black-svg/home-black-svg.component';
 import {DatePickerSvgComponent} from '../../components/svg/date-picker-svg/date-picker-svg.component';
-import {UtilitiesService} from '../../services/utilities.service';
+import {UtilitiesService} from '../../services/utils/utilities.service';
 import {Subscription} from 'rxjs/Subscription';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import {SetTimeoutService} from '../../services/timers/timeout.service';

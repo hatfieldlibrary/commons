@@ -45,6 +45,7 @@ import * as fromAuth from './auth.reducers';
 import * as fromTypes from './type.reducers';
 import * as fromFilter from './filter.reducers';
 import {Observable} from 'rxjs/Observable';
+import {getAllFilters} from './filter.reducers';
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
@@ -136,6 +137,8 @@ export const getAuthStatus = createSelector(getAuthStatusState, fromAuth.getAuth
 export const getFilterState = (state: State) => state.filter;
 
 export const getSubjectsFilter = createSelector(getFilterState, fromFilter.getSubjectsFilter);
+
+export const getFilters = createSelector(getFilterState, getAllFilters);
 
 export const getTypesFilter = createSelector(getFilterState, fromFilter.getTypesFilter);
 

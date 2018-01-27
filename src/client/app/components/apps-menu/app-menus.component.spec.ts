@@ -13,7 +13,7 @@ import {HomeSvgComponent} from "../svg/home-svg/home-svg.component";
 import {CollectionsSvgComponent} from "../svg/collections-svg/collections-svg.component";
 import {HomeBlackSvgComponent} from "../svg/home-black-svg/home-black-svg.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {UtilitiesService} from "../../services/utilities.service";
+import {UtilitiesService} from "../../services/utils/utilities.service";
 import {NavigationEnd, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs/Observable";

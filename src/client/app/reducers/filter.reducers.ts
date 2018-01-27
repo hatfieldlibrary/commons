@@ -114,3 +114,5 @@ export const getAreasFilter = (state: State) => state.selectedAreas;
 
 export const getFilterTerm = (state: State) => state.filterTerm;
 
+export const getAllFilters = (state: State) => state;
+

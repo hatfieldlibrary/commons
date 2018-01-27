@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import {SubjectType} from '../shared/data-types/subject.type';
-import {environment} from '../environments/environment';
+import {SubjectType} from '../../shared/data-types/subject.type';
+import {environment} from '../../environments/environment';
+import {AreaFilterType} from 'app/shared/data-types/area-filter.type';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 
 @Injectable()
 export class UtilitiesService {

@@ -65,12 +65,15 @@
              *ngIf="media.isActive('gt-sm')">
           <div class="side-nav-header mat-title">FILTERS</div>
           <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
+          <app-current-filters (removeFilter)="removeFilter($event)"></app-current-filters>
           <app-navigation-selector
             [selectedAreas]="selectedAreas$ | async"
             [areaList]="areas$ | async"
             [selectedTypes]="selectedTypes$ | async"
             [selectedSubject]="selectedSubject$ | async"></app-navigation-selector>
-          <app-types [selectedAreas]="selectedAreas$ | async" [selectedSubject]="selectedSubject$ | async" [selectedTypes]="selectedTypes$ | async"
+          <app-types [selectedAreas]="selectedAreas$ | async"
+                     [selectedSubject]="selectedSubject$ | async"
+                     [selectedTypes]="selectedTypes$ | async"
                      [typeList]="types$ | async"></app-types>
         </div>
         <div fxLayout="column"

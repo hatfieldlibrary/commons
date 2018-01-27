@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import {AreaType} from "../../shared/data-types/area.type";
 import {NavigationEnd, Router} from "@angular/router";
-import {UtilitiesService} from "../../services/utilities.service";
+import {UtilitiesService} from "../../services/utils/utilities.service";
 import {SubjectType} from "../../shared/data-types/subject.type";
 import {Subscription} from "rxjs/Subscription";
 import {MediaChange, ObservableMedia} from "@angular/flex-layout";
