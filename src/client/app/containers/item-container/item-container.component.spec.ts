@@ -174,7 +174,7 @@ describe('ItemContainerComponent', () => {
       providers: [
         SetTimeoutService,
         MenuInteractionService,
-        UtilitiesService,
+      //  UtilitiesService,
         {
           provide: Store,
           useClass: class {

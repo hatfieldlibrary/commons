@@ -1,27 +1,26 @@
 import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 
 import {AppMenusComponent} from './app-menus.component';
-import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
-import {BackSvgComponent} from "../svg/back-svg/back-svg.component";
+import {MenuSvgComponent} from '../svg/menu-svg/menu-svg.component';
+import {BackSvgComponent} from '../svg/back-svg/back-svg.component';
 import {
    MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule
-} from "@angular/material";
-import {CloseSvgComponent} from "../svg/close-svg/close-svg.component";
-import {NavigationComponent} from "../area-selector/area.component";
-import {RouterTestingModule} from "@angular/router/testing";
-import {HomeSvgComponent} from "../svg/home-svg/home-svg.component";
-import {CollectionsSvgComponent} from "../svg/collections-svg/collections-svg.component";
-import {HomeBlackSvgComponent} from "../svg/home-black-svg/home-black-svg.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {UtilitiesService} from "../../services/utils/utilities.service";
-import {NavigationEnd, Router} from "@angular/router";
-import {Store} from "@ngrx/store";
-import {Observable} from "rxjs/Observable";
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {Subscription} from "rxjs/Subscription";
-import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
-import {SetTimeoutService} from "../../services/timers/timeout.service";
+} from '@angular/material';
+import {CloseSvgComponent} from '../svg/close-svg/close-svg.component';
+import {NavigationComponent} from '../area-selector/area.component';
+import {RouterTestingModule} from '@angular/router/testing';
+import {HomeSvgComponent} from '../svg/home-svg/home-svg.component';
+import {CollectionsSvgComponent} from '../svg/collections-svg/collections-svg.component';
+import {HomeBlackSvgComponent} from '../svg/home-black-svg/home-black-svg.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NavigationEnd, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Subscription} from 'rxjs/Subscription';
+import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
+import {SetTimeoutService} from '../../services/timers/timeout.service';
 
 class MockRouter {
   public navEnd = new NavigationEnd(0, 'http://localhost:3000', 'http://localhost:3000');
@@ -69,7 +68,7 @@ describe('AppMenusComponent', () => {
         SetTimeoutService,
         MenuInteractionService,
         {
-          provide: UtilitiesService,
+      //    provide: UtilitiesService,
           useValue: {
             getBackLink: () => {
               return 'test link'
@@ -99,7 +98,7 @@ describe('AppMenusComponent', () => {
     fixture = TestBed.createComponent(AppMenusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    utilSvc = fixture.debugElement.injector.get(UtilitiesService);
+   // utilSvc = fixture.debugElement.injector.get(UtilitiesService);
     spyOn(utilSvc, 'getBackLink').and.callThrough();
 
   });
@@ -111,7 +110,7 @@ describe('AppMenusComponent', () => {
   it('should get back link', () => {
     component.getBackLink();
     expect(utilSvc.getBackLink).toHaveBeenCalled();
-    let path = component.getBackLink();
+    const path = component.getBackLink();
     expect(path).toEqual('test link');
   });
 

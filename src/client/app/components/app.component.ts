@@ -20,7 +20,7 @@ import {
   ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
 } from '@angular/common';
@@ -32,6 +32,7 @@ import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {SetTimeoutService} from '../services/timers/timeout.service';
+import {SetSelectedService} from '../services/set-selected.service';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -76,14 +77,15 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
    * @type {Array}
    */
   yScrollStack: number[] = [];
-  selectedAreaIds: string;
 
   constructor(private store: Store<fromRoot.State>,
               private menuService: MenuInteractionService,
               public media: ObservableMedia,
               private router: Router,
+              private route: ActivatedRoute,
               @Inject(DOCUMENT) private document,
-              private timeoutService: SetTimeoutService) {
+              private timeoutService: SetTimeoutService,
+              private setSelected: SetSelectedService) {
 
     this.watcher = new Subscription();
     const mediaWatcher = media.asObservable()
@@ -94,13 +96,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   }
 
-  //onDeactivate(event) {
-  // Chrome canary supports the new standard usage with d
-  // ocumentElement, but
+  // onDeactivate(event) {
+  // Chrome canary supports the new standard usage with documentElement, but
   // Chrome and presumably other browsers still expect body.
   // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
   // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
-  //}
+  // }
 
   goToHome(): void {
     document.location.href = this.homeUrl;
@@ -114,31 +115,15 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     document.location.href = this.tertiaryUrl;
   }
 
-  _setSelectedAreas(areas: any) {
-    let selected = '';
-    if (areas.length === 0) {
-      selected = '0,';
-    } else {
-      areas.forEach((area) => {
-        selected = area.id + ',';
-      });
-    }
-    this.selectedAreaIds = selected.slice(0, -1);
-
-  }
-
   ngOnInit() {
-    /**
-     * Get areas for side_nav.
-     * @type {Store<AreaFilterType[]>}
-     */
-    this.areas$ = this.store.select(fromRoot.getAreas);
-    const selectedAreasWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((areas) => {
-      if (areas) {
-        this._setSelectedAreas(areas);
-      }
-    });
-    this.watcher.add(selectedAreasWatcher);
+
+    const routeWatcher = this.route.params
+      .subscribe((params) => {
+        this.setSelected.setSelectedArea(params['areaId']);
+      });
+
+    this.watcher.add(routeWatcher);
+
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {
         console.log(err);
@@ -207,6 +192,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.timeoutService) {
       this.timeoutService.clearTimeout();
     }
+    // Unsubscribe all watchers in the service. Each component
+    // instance will resubscribe. The prevents the multiple
+    // subscriptions within service.
+    this.setSelected.unsubscribe();
   }
 
 

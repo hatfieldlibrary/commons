@@ -72,6 +72,7 @@ export class NavigationComponent {
    * @returns {number}
    */
   private getPositionInSelectedList(areaId: number): number {
+    console.log(this.selectedAreas)
     return this.selectedAreas.findIndex((current) => current.id === areaId);
   }
 

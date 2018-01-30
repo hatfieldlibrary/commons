@@ -16,6 +16,7 @@
   -->
 
 
+<script src="lists-container.component.ts"></script>
 <app-menus-component
   [selectedArea]="areaId"
   [areaList]="areas$ | async"
@@ -82,9 +83,9 @@
           <div class="mat-card info-card">
             <div class="mat-card-header">
               <mat-card-subtitle class="area-info">
-                <app-area-information *ngIf="!homeScreen"
+                <app-area-information *ngIf="areaScreen"
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
-                <app-home-screen *ngIf="homeScreen"
+                <app-home-screen *ngIf="!areaScreen"
                                  (subjectNavigation)="subjectNavigation($event)"></app-home-screen>
               </mat-card-subtitle>
             </div>

@@ -94,6 +94,8 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
 import { FilterUpdateService} from './services/filters/filter-update.service';
 import { NavigationService} from './services/navigation/navigation.service';
 import { CurrentFiltersComponent } from './components/current-filters/current-filters.component';
+import { DispatchService} from './services/dispatch.service';
+import { SetSelectedService} from './services/set-selected.service';
 
 export const appRoutes = [
 
@@ -222,6 +224,8 @@ export const appRoutes = [
     {provide: APP_BASE_HREF, useValue: '/'},
     CollectionService,
     AreaService,
+    DispatchService,
+    SetSelectedService,
     SubjectService,
     TypesService,
     ItemService,

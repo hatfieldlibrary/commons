@@ -65,7 +65,6 @@ import {TitleHeaderComponent} from '../../components/title-header/title-header.c
 import {KeyboardArrowForwardSvgComponent} from '../../components/svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component';
 import {KeyboardArrowBackSvgComponent} from '../../components/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component';
 import {HomeBlackSvgComponent} from '../../components/svg/home-black-svg/home-black-svg.component';
-import {UtilitiesService} from '../../services/utils/utilities.service';
 import {SetIntervalService} from '../../services/timers/interval.service';
 import {Subscription} from 'rxjs/Subscription';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
@@ -194,7 +193,7 @@ describe('ListsContainerComponent', () => {
       ],
       providers: [
         SetTimeoutService,
-        UtilitiesService,
+      //  UtilitiesService,
         MenuInteractionService,
         SetIntervalService,
         {
@@ -378,7 +377,7 @@ describe('ListsContainerComponent', () => {
   it('should call router navigate after when remove subject is called', () => {
   //  let router = fixture.debugElement.injector.get(Router);
     // spyOn(router, 'navigateByUrl');
-    component.removeSubject();
+  //  component.removeSubject();
     // expect(router.navigateByUrl).toHaveBeenCalled();
 
   });
@@ -386,7 +385,7 @@ describe('ListsContainerComponent', () => {
  //   let router = fixture.debugElement.injector.get(Router);
   //  spyOn(router, 'navigateByUrl');
     component.areaId = '1';
-    component.removeSubject();
+  //  component.removeSubject();
   //  expect(router.navigateByUrl).toHaveBeenCalled();
 
   });

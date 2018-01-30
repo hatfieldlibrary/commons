@@ -113,7 +113,7 @@ describe('SubjectsComponent', () => {
 
     component = fixture.componentInstance;
    // component.type = 'area';
-    component.selectedAreas = [{id: 1, title: 'test', count: 0}];
+  //  component.selectedAreas = [{id: 1, title: 'test', count: 0}];
     component.subjectList = mockSubjectList;
     fixture.detectChanges();
     spyOn(intervalService, 'setInterval');
@@ -133,13 +133,13 @@ describe('SubjectsComponent', () => {
     component.ngOnInit();
 
     // Call resetList with subject id that does NOT match the mock select
-    component.resetList(2);
+   // component.resetList(2);
     expect(store.dispatch).toHaveBeenCalled();
   });
 
   it('should not reset the subject list if selected subject id has not changed', () => {
     // Call resetList with subject id that does match the mock select
-    component.resetList(1);
+ //   component.resetList(1);
     expect(store.dispatch).not.toHaveBeenCalled();
   });
 
