@@ -16,15 +16,15 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, Input
+  ChangeDetectionStrategy, Component, EventEmitter, Input, Output
 } from '@angular/core';
 import {MatSelectionList} from '@angular/material';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
-import {NavigationService} from '../../services/navigation/navigation.service';
-import {UtilitiesService} from 'app/services/utils/utilities.service';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
+
+export interface SelectedAreaEvent {
+  selected: AreaFilterType[];
+}
 
 @Component({
   selector: 'app-navigation-selector',
@@ -36,12 +36,9 @@ export class NavigationComponent {
 
   @Input() areaList: AreaFilterType[];
   @Input() selectedAreas: AreaFilterType[];
-  @Input() selectedTypes: TypesFilterType[];
-  @Input() selectedSubject: SubjectFilterType;
+  @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
 
-  constructor(private utils: UtilitiesService,
-              private filterService: FilterUpdateService,
-              private navigation: NavigationService) {
+  constructor(private filterService: FilterUpdateService) {
   }
 
   /**
@@ -63,13 +60,9 @@ export class NavigationComponent {
    */
   onAreaListControlChanged(list: MatSelectionList, areaId: number) {
     list.selectedOptions.clear();
-    const typeIds = this.filterService.getIds(this.selectedTypes);
-    const subjectId = this.selectedSubject.id.toString();
     const updatedSelectedAreas = this.filterService.updateSelectedAreaStore(this.selectedAreas, this.areaList, areaId);
-    console.log(updatedSelectedAreas)
-    const updatedAreaId = this.filterService.getIds(updatedSelectedAreas);
-    this.navigation.navigateRoute(updatedAreaId, typeIds, subjectId);
-
+    const selectedEmitted: SelectedAreaEvent = {selected: updatedSelectedAreas};
+    this.areaNavigation.emit(selectedEmitted);
   }
 
   /**

@@ -19,11 +19,10 @@
  * The main container component for subject selector, areas selector and collection
  * list components
  */
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
-import {environment} from '../../environments/environment';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
 import * as areaActions from '../../actions/area.actions';
@@ -43,6 +42,11 @@ import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {AreaParams} from '../../actions/area.actions';
 import {NavigationService} from '../../services/navigation/navigation.service';
 import {DeselectedFilter} from 'app/components/current-filters/current-filters.component';
+import {SelectedAreaEvent} from '../../components/area-selector/area.component';
+import {SelectedTypeEvent} from '../../components/types/types.component';
+import {SelectedSubjectEvent} from '../../components/subject-selector/subjects.component';
+import {SetSubjectFilter} from '../../actions/filter.actions';
+import {FilterUpdateService} from '../../services/filters/filter-update.service';
 
 
 @Component({
@@ -74,7 +78,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
-              private router: Router,
               public media: ObservableMedia,
               private navigation: NavigationService) {
 
@@ -134,9 +137,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param areaId
    */
   private getAreaInformation(areaId: string): void {
+    if (!this.navigation.isAreaSelected(areaId)) {
+      areaId = '0';
+    }
     this.store.dispatch(new areaActions.AreaInformation(areaId));
   }
-
 
   /**
    * Dispatches action for collections by subject and areas.
@@ -205,11 +210,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @private
    */
   private setSelectedSubject(subjectId: string): void {
-    const subjectsWatcher = this.selectedSubject$.subscribe(() => {
-      this.store.dispatch(new subjectAction.CurrentSubject(subjectId));
+    const subjectWatcher = this.subjects$.subscribe((subjects) => {
+      subjects.forEach((subject) => {
+        if (subject.id === +subjectId) {
+          this.store.dispatch(new SetSubjectFilter(subject));
+        }
+      })
     });
-    this.watchers.add(subjectsWatcher);
-
+    this.watchers.add(subjectWatcher);
   }
 
   /**
@@ -220,22 +228,17 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param {string} areaId comma separated string of area ids.
    */
   private setSelectedArea(areaId: string): void {
-    console.log(areaId)
     if (areaId) {
       const areasWatcher = this.areas$.subscribe((areas) => {
         const areaArr = areaId.split(',');
         const selectedAreas: AreaFilterType[] = [];
         areaArr.forEach(function (singleAreaId) {
-          console.log(singleAreaId)
           const selected = areas.find((area) => area.id === +singleAreaId);
-          console.log(selected)
           if (selected) {
             selectedAreas.push(selected);
           }
         });
-        console.log(selectedAreas)
         if (selectedAreas.length > 0) {
-          console.log(selectedAreas)
           this.store.dispatch(new filterActions.SetAreaFilter(selectedAreas));
         } else {
           this.store.dispatch(new filterActions.SetAreaFilter([{id: 0, title: '', count: 0}]));
@@ -292,10 +295,12 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   private getAllTypes() {
+    console.log('getting all types')
     this.store.dispatch(new typeActions.ContentTypesAllAction());
   }
 
   private getTypesForArea(areaId) {
+    console.log('getting types for area')
     this.store.dispatch(new typeActions.ContentTypesAreaAction(areaId));
   }
 
@@ -309,28 +314,16 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new typeActions.ContentTypesAreaSubjectAction(requestParams));
   }
 
-  private isAreaSelected(): boolean {
-    return this.areaId && this.areaId !== '0';
-  }
-
-  private isTypeSelected(): boolean {
-    return (typeof this.typeId !== 'undefined' && this.typeId.length > 0 && this.typeId !== '0');
-  }
-
-  private isSubjectSelected(): boolean {
-    return (typeof this.subjectId !== 'undefined' && this.subjectId !== '0');
-  }
-
   /**
    * Dispatches action for areas list if not currently available in the store.
    * @param id
    */
   private initializeAreas(params: any) {
-    if (this.isTypeSelected() && this.isSubjectSelected()) {
+    if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
       this.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
-    } else if (this.isSubjectSelected()) {
+    } else if (this.navigation.isSubjectSelected(params['subjectId'])) {
       this.getAreasBySubject(params['subjectId']);
-    } else if (this.isTypeSelected()) {
+    } else if (this.navigation.isTypeSelected(params['typeId'])) {
       this.getAreasByType(params['typeId']);
     } else {
       this.getAllAreas();
@@ -341,15 +334,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * This function used by ListComponent event binding to update the collection list
    * whenever a subject has been deselected.
    */
-  removeSubject(): void {
-    if (this.isAreaSelected() && this.isTypeSelected()) {
-      this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId + '/type/' + this.typeId);
-    } else if (this.isAreaSelected()) {
-      this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId);
-    } else {
-      this.router.navigateByUrl('/' + environment.appRoot + '/collection');
-    }
-    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
+  subjectNavigation(subjectEventPayload: SelectedSubjectEvent): void {
+    this.navigation.navigateFilterRoute(this.areaId, this.typeId, subjectEventPayload.selected.id.toString());
   }
 
   /**
@@ -360,15 +346,13 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   removeFilter(deselected: DeselectedFilter): void {
     const test = deselected.id + '[^0-9]*';
-    console.log(test);
     const regex = new RegExp(test);
     if (deselected.type === 'area') {
-        this.areaId = this.areaId.replace(regex, '');
+      this.areaId = this.areaId.replace(regex, '');
     } else {
       this.typeId = this.typeId.replace(regex, '');
     }
-    console.log(typeof this.areaId)
-    this.navigation.navigateRoute(this.areaId, this.typeId, this.subjectId);
+    this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId);
   }
 
   private setQueryParams(params: any): void {
@@ -411,8 +395,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   private dispatchActions(): void {
+    this.getAreaInformation(this.areaId);
     if (this.areaId) {
-      this.getAreaInformation(this.areaId);
       if (this.subjectId) {
         if (this.typeId) {
           this.getCollectionsForTypeAreaSubject(this.areaId, this.typeId, this.subjectId);
@@ -443,9 +427,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       }
       this.setAllCollectionTitle();
       this.getTypesForSubject(this.subjectId);
-      this.areaId = '0';
     } else {
-      this.areaId = '0';
+      this.homeScreen = true;
       if (this.typeId) {
         this.getCollectionsForType(this.typeId);
         this.getSubjectsForType(this.typeId);
@@ -458,23 +441,45 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     }
   }
 
+  collectionNavigation(id: string): void {
+    this.navigation.navigateItemRoute(id, this.areaId);
+  }
+
+  /**
+   * Navigates to new location when area NavigationComponent is updated. This function is
+   * the callback provided to the component's Output() event binding.
+   * @param {SelectedAreaEvent} updatedAreaList the updated area list
+   */
+  areaNavigation(updatedAreaList: SelectedAreaEvent) {
+    const areaIds = this.navigation.getIds(updatedAreaList.selected);
+    this.navigation.navigateFilterRoute(areaIds, this.typeId, this.subjectId);
+  }
+
+  /**
+   * Navigates to new location when the TypesComponent is updated. This function is
+   * the callback provided to the component's Output() event binding.
+   * @param {SelectedTypeEvent} updatedTypeList the updated area list
+   */
+  typeNavigation(updatedTypeList: SelectedTypeEvent) {
+    const typeIds = this.navigation.getIds(updatedTypeList.selected);
+    this.navigation.navigateFilterRoute(this.areaId, typeIds, this.subjectId);
+  }
+
   ngOnInit() {
 
     // All subscriptions are added to this Subscription so
     // the can be removed in ngOnDestroy.
     this.watchers = new Subscription();
-    // this.setItemTitle();
 
     this.setMediaWatcher();
     const routeWatcher = this.route.params
       .subscribe((params) => {
-      console.log(params)
         this.subjects$ = this.store.select(fromRoot.getSubject);
         this.collections$ = this.store.select(fromRoot.getFilteredCollections);
-        this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
         this.areas$ = this.store.select(fromRoot.getAreas);
         this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
         this.types$ = this.store.select(fromRoot.getTypes);
+        this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
         this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
         this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
         this.setQueryParams(params);
@@ -482,6 +487,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.initializeAreas(params);
         this.dispatchActions();
       });
+
     this.watchers.add(routeWatcher);
   }
 

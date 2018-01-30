@@ -23,7 +23,7 @@
 
   <mat-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)">
     <mat-list-item subjects *ngFor="let subject of subjectList">
-      <button mat-raised-button color="primary" (click)="resetList(subject.id);navigate(subject.id);">
+      <button mat-raised-button color="primary" (click)="addSubject(subject.id);">
         {{subject.name}}
       </button>
     </mat-list-item>

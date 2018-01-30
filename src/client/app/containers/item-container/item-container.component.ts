@@ -35,6 +35,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 
 @Component({
   selector: 'app-item-container',
@@ -46,8 +47,8 @@ import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 export class ItemContainerComponent implements OnInit, OnDestroy {
 
   related$: Observable<RelatedType[]>;
-  selectedSubject$: Observable<SubjectType>;
-  selectedTypes$: Observable<string>;
+  selectedSubject$: Observable<SubjectFilterType>;
+  selectedTypes$: Observable<TypesFilterType[]>;
   item$: Observable<ItemType>;
   areas: AreaFilterType[];
   id: string;
@@ -169,8 +170,8 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
-    this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
-    this.selectedTypes$ = this.store.select(fromRoot.getSelectedTypes);
+    this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
+    this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
     this.setAreasAvailable();
 
     // Once we have item information, request related items.

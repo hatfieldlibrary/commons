@@ -18,7 +18,7 @@
 import {
   ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges
 } from '@angular/core';
-import {AreaType} from "../../shared/data-types/area.type";
+import {AreaType} from '../../shared/data-types/area.type';
 
 @Component({
   selector: 'app-area-information',
@@ -26,7 +26,7 @@ import {AreaType} from "../../shared/data-types/area.type";
   styleUrls: ['./area-information.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AreaInformationComponent implements OnChanges{
+export class AreaInformationComponent implements OnChanges {
 
   @Input() areaInfo: AreaType[];
   description: string;
@@ -37,9 +37,9 @@ export class AreaInformationComponent implements OnChanges{
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.areaInfo) {
+    if (changes.areaInfo.currentValue) {
       if (changes.areaInfo.currentValue.length > 1) {
-        let areaList = changes.areaInfo.currentValue;
+        const areaList = changes.areaInfo.currentValue;
         let areaTitles = '';
         areaList.forEach((area) => areaTitles += area.title + ', ');
         areaTitles = areaTitles.slice(0, -2);
@@ -47,7 +47,7 @@ export class AreaInformationComponent implements OnChanges{
         this.url = '';
         this.linkLabel = '';
         this.title = '';
-      } else {
+      } else if (changes.areaInfo.currentValue[0]) {
         this.title = changes.areaInfo.currentValue[0].title;
         this.description = changes.areaInfo.currentValue[0].description;
         this.url = changes.areaInfo.currentValue[0].url;

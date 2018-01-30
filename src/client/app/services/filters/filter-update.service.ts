@@ -2,7 +2,7 @@
 
 import {Injectable} from '@angular/core';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {SetAreaFilter, SetTypeFilter} from '../../actions/filter.actions';
+import {SetAreaFilter, SetSubjectFilter, SetTypeFilter} from '../../actions/filter.actions';
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
@@ -18,6 +18,10 @@ export class FilterUpdateService {
   private TYPE_KEY = 'types';
 
   constructor(private store: Store<fromRoot.State>) {}
+
+  removeSelectedAreaFilter(): void {
+    this.store.dispatch(new SetSubjectFilter({id: 0, name: ''}));
+  }
 
   /**
    * Updates the selected area Store and returns the new selected areas array.
@@ -61,43 +65,43 @@ export class FilterUpdateService {
     }
   }
 
-  /**
-   * Generates the comma-separated list of ids. The string returned can
-   * be empty. This function accepts an array of objects that include
-   * an id field. If the id field is missing, an empty string is returned
-   * and an illegal type message is logged to console.
-   * @param {any[]} list list of filters
-   * @returns {string}
-   */
-  getIds(list: any[]): string {
-    // do runtime check of the list shape.
-    if (this.isIllegalType(list)) {
-      throw new Error('Illegal type: The Array must contain objects that have an id field.');
-    }
-    let ids = '';
-    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
-      list.forEach(item => {
-        ids = ids + item.id + ','
-      });
-    }
-    return ids.slice(0, -1);
-  }
-
-  /**
-   * Verifies that the request is an array of objects that
-   * include and id field. All filter types must include an
-   * id (AreaFilterTypes, TypesFilterType, SubjectFilterType).
-   * These objects to not have an identical shape, to all do
-   * include the id field.
-   * @param list the list of objects
-   * @returns {boolean}
-   */
-  private isIllegalType(list) {
-    if (list.length > 0) {
-      return typeof list[0].id === 'undefined';
-    }
-    return false;
-  }
+  // /**
+  //  * Generates the comma-separated list of ids. The string returned can
+  //  * be empty. This function accepts an array of objects that include
+  //  * an id field. If the id field is missing, an empty string is returned
+  //  * and an illegal type message is logged to console.
+  //  * @param {any[]} list list of filters
+  //  * @returns {string}
+  //  */
+  // getIds(list: any[]): string {
+  //   // do runtime check of the list shape.
+  //   if (this.isIllegalType(list)) {
+  //     throw new Error('Illegal type: The Array must contain objects that have an id field.');
+  //   }
+  //   let ids = '';
+  //   if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
+  //     list.forEach(item => {
+  //       ids = ids + item.id + ','
+  //     });
+  //   }
+  //   return ids.slice(0, -1);
+  // }
+  //
+  // /**
+  //  * Verifies that the request is an array of objects that
+  //  * include and id field. All filter types must include an
+  //  * id (AreaFilterTypes, TypesFilterType, SubjectFilterType).
+  //  * These objects to not have an identical shape, to all do
+  //  * include the id field.
+  //  * @param list the list of objects
+  //  * @returns {boolean}
+  //  */
+  // private isIllegalType(list) {
+  //   if (list.length > 0) {
+  //     return typeof list[0].id === 'undefined';
+  //   }
+  //   return false;
+  // }
 
   /**
    * Update selected types.

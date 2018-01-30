@@ -1,15 +1,16 @@
 import {
   ChangeDetectionStrategy, Component, Inject, Input, OnDestroy
 } from '@angular/core';
-import {AreaType} from "../../shared/data-types/area.type";
-import {NavigationEnd, Router} from "@angular/router";
-import {UtilitiesService} from "../../services/utils/utilities.service";
-import {SubjectType} from "../../shared/data-types/subject.type";
-import {Subscription} from "rxjs/Subscription";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {DOCUMENT} from "@angular/common";
-import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
+import {AreaType} from '../../shared/data-types/area.type';
+import {NavigationEnd, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {DOCUMENT} from '@angular/common';
+import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import 'rxjs/add/operator/filter';
+import {NavigationService} from '../../services/navigation/navigation.service';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 
 @Component({
   selector: 'app-menus-component',
@@ -22,8 +23,8 @@ export class AppMenusComponent implements OnDestroy {
 
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
-  @Input() selectedSubject: SubjectType;
-  @Input() selectedTypes: string;
+  @Input() selectedSubject: SubjectFilterType;
+  @Input() selectedTypes: TypesFilterType[];
   @Input() showBack: boolean;
   @Input() title: string;
   public previousUrl = '';
@@ -33,7 +34,7 @@ export class AppMenusComponent implements OnDestroy {
   state = '';
 
   constructor(private menuService: MenuInteractionService,
-              private utils: UtilitiesService,
+              private navigationService: NavigationService,
               private router: Router,
               public media: ObservableMedia,
               @Inject(DOCUMENT) private document) {
@@ -56,7 +57,8 @@ export class AppMenusComponent implements OnDestroy {
   }
 
   getBackLink(): string {
-    let path = this.utils.getBackLink(this.selectedArea, this.selectedSubject, this.selectedTypes);
+    const typeIds = this.navigationService.getIds(this.selectedTypes);
+    const path = this.navigationService.getBackLink(this.selectedArea, this.selectedSubject.id.toString(), typeIds);
     return path;
   }
 

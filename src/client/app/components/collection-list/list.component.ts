@@ -18,12 +18,11 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 
 import {CollectionType} from '../../shared/data-types/collection.type';
-import {environment} from '../../environments/environment';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import * as listActions from '../../actions/collection.actions';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
+import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-collection-list',
@@ -33,16 +32,17 @@ import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 })
 export class ListComponent implements OnDestroy {
 
-
-  rootPath: string = environment.appRoot;
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SubjectFilterType;
-  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
-  @Input() selectedAreas: AreaFilterType[];
+  @Output() subjectNavigation: EventEmitter<any> = new EventEmitter<any>();
+  @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   filterTerm: string;
 
-  constructor(private store: Store<fromRoot.State>) {
+  emptySubject: SubjectFilterType = {id: 0, name: ''};
+
+  constructor(private filterService: FilterUpdateService) {
     this.filterTerm = '';
+
   }
 
   /**
@@ -50,25 +50,30 @@ export class ListComponent implements OnDestroy {
    * $event object is not used.
    */
   deselect() {
-    this.removeSubject.next();
+    this.filterService.removeSelectedAreaFilter();
+    const emptySubject: SelectedSubjectEvent = {selected: this.emptySubject};
+    this.subjectNavigation.emit(emptySubject);
   }
 
-
-  /**
-   * Generates the comma-separated list of ids.
-   * @param {AreaFilterType[]} list list of areas
-   * @returns {string}
-   */
-  getSelectedArea(): string {
-
-    let ids = '';
-    if (typeof this.selectedAreas !== 'undefined' && typeof this.selectedAreas[0] !== 'undefined') {
-      this.selectedAreas.forEach(area => {
-        ids = ids + area.id + ','
-      });
-    }
-    return ids.slice(0, -1);
+  navigateToItem(id: string) {
+    this.collectionNavigation.emit(id);
   }
+
+  // /**
+  //  * Generates the comma-separated list of ids.
+  //  * @param {AreaFilterType[]} list list of areas
+  //  * @returns {string}
+  //  */
+  // getSelectedArea(): string {
+  //
+  //   let ids = '';
+  //   if (typeof this.selectedAreas !== 'undefined' && typeof this.selectedAreas[0] !== 'undefined') {
+  //     this.selectedAreas.forEach(area => {
+  //       ids = ids + area.id + ','
+  //     });
+  //   }
+  //   return ids.slice(0, -1);
+  // }
 
 
   setAssetType(type) {
@@ -80,7 +85,7 @@ export class ListComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.removeSubject.unsubscribe();
+    this.subjectNavigation.unsubscribe();
   }
 
 }

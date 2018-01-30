@@ -81,7 +81,6 @@ import { LoadingSvgComponent } from './components/svg/loading-svg/loading-svg.co
 import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-black-svg.component';
 import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
-import { UtilitiesService} from './services/utils/utilities.service';
 import { HomeBlackSvgComponent} from './components/svg/home-black-svg/home-black-svg.component';
 import { environment} from 'app/environments/environment';
 import { ItemSelectComponent } from './components/item-select-options/item-select.component';
@@ -232,7 +231,6 @@ export const appRoutes = [
     MenuInteractionService,
     MatIconRegistry,
     NavigationService,
-    UtilitiesService,
     SetIntervalService,
     SetTimeoutService,
     MenuInteractionService,

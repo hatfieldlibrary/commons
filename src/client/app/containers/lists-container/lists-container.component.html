@@ -46,9 +46,9 @@
           fxFlex.md="1 1 85"
           fxFlex.lg="1 1 75"
           fxFlex.gt-lg="1 1 55"
+          (subjectNavigation)="subjectNavigation($event)"
           [subjectList]="subjects$ | async"
-          [selectedAreas]="selectedAreas$ | async"
-          [selectedTypes]="selectedTypes$ | async">
+          [selectedSubject]="selectedSubject$ | async">
         </app-subject-selector>
       </div>
 
@@ -67,12 +67,10 @@
           <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
           <app-current-filters (removeFilter)="removeFilter($event)"></app-current-filters>
           <app-navigation-selector
+            (areaNavigation) = "areaNavigation($event)"
             [selectedAreas]="selectedAreas$ | async"
-            [areaList]="areas$ | async"
-            [selectedTypes]="selectedTypes$ | async"
-            [selectedSubject]="selectedSubject$ | async"></app-navigation-selector>
-          <app-types [selectedAreas]="selectedAreas$ | async"
-                     [selectedSubject]="selectedSubject$ | async"
+            [areaList]="areas$ | async"></app-navigation-selector>
+          <app-types (typeNavigation) = "typeNavigation($event)"
                      [selectedTypes]="selectedTypes$ | async"
                      [typeList]="types$ | async"></app-types>
         </div>
@@ -87,15 +85,15 @@
                 <app-area-information *ngIf="!homeScreen"
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
                 <app-home-screen *ngIf="homeScreen"
-                                 (removeSubject)="removeSubject($event)"></app-home-screen>
+                                 (subjectNavigation)="subjectNavigation($event)"></app-home-screen>
               </mat-card-subtitle>
             </div>
             <mat-divider></mat-divider>
             <div class="mat-card-content">
-              <app-collection-list (removeSubject)="removeSubject($event)"
+              <app-collection-list (subjectNavigation)="subjectNavigation($event)"
+                                   (collectionNavigation)="collectionNavigation($event)"
                                    [collectionList]="collections$ | async "
-                                   [selectedSubject]="selectedSubject$ | async"
-                                   [selectedAreas]="selectedAreas$ | async"></app-collection-list>
+                                   [selectedSubject]="selectedSubject$ | async"></app-collection-list>
 
             </div>
           </div>

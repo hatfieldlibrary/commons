@@ -29,21 +29,6 @@ export class CurrentFiltersComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>) { }
 
   /**
-   * Generates the comma-separated list of ids.
-   * @param {any[]} list list of areas
-   * @returns {string}
-   */
-  private getIds(list: any[]): string {
-    let ids = '';
-    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
-      list.forEach(area => {
-        ids = ids + area.id + ','
-      });
-    }
-    return ids.slice(0, -1);
-  }
-
-  /**
    * Returns boolean for the *ngIf conditional. If true,
    * the component will show the element.
    * @returns {boolean}
@@ -59,7 +44,6 @@ export class CurrentFiltersComponent implements OnInit {
    * @param types the currently selected types
    */
   createNormalizedFilter(areas, types) {
-    console.log(types)
     areas.forEach(area => {
       if (area.id !== 0) {
         this.normalizedFilter.push({type: 'area', name: area.title, id: area.id})
@@ -73,49 +57,12 @@ export class CurrentFiltersComponent implements OnInit {
   }
 
   /**
-   * Updates the filter store for areas.
-   * @param {number} id
-   */
-  private dispatchAreaUpdate(id: number): void {
-    const index = this.areas.findIndex(a => a.id === id);
-    this.areas.splice(index, 1);
-    console.log('dispatching are with  ')
-    console.log(this.areas)
-    if (this.areas.length === 0) {
-      this.store.dispatch(new SetAreaFilter([{id: 0, title: '', count: 0}]));
-    } else {
-      this.store.dispatch(new SetAreaFilter(this.areas));
-    }
-  }
-
-  /**
-   * Updates the filter store for types.
-   * @param {number} id
-   */
-  private dispatchTypeUpdate(id: number): void {
-    const index = this.types.findIndex(t => t.id === id);
-    this.types.splice(index, 1);
-    console.log('TYPES: ' + this.types + ' ' + this.types.length)
-    if (this.types.length === 0) {
-      this.store.dispatch(new SetTypeFilter([{id: 0, name: ''}]));
-    } else {
-      console.log(this.types)
-      this.store.dispatch(new SetTypeFilter(this.types));
-    }
-  }
-
-  /**
    * Deselects the filter
    * @param type the type of filter to be removed
    * @param id the id of the filter to be removed
    */
   deselect(type, id): void {
     const deselected: DeselectedFilter = {type: type, id: id};
-    if (type === 'area') {
-     // this.dispatchAreaUpdate(id);
-    } else {
-     // this.dispatchTypeUpdate(id);
-    }
     this.removeFilter.emit(deselected);
   }
 
@@ -124,7 +71,6 @@ export class CurrentFiltersComponent implements OnInit {
     this.filters$.subscribe(filter => {
       this.areas = filter.selectedAreas;
       this.types = filter.selectedTypes;
-      console.log(this.areas);
       this.normalizedFilter = [];
       this.createNormalizedFilter(this.areas, this.types);
     });

@@ -120,6 +120,7 @@ export const getSubjectsState = (state: State) => state.subjects;
 
 export const getSubject = createSelector(getSubjectsState, fromSubject.getSubjectList);
 
+// This is probably unused. If not, it should be. See getSubjectsFilter.
 export const getSelectedSubject = createSelector(getSubjectsState, fromSubject.getSelectedSubject);
 
 export const getItemState = (state: State) => state.item;
