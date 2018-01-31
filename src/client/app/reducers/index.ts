@@ -158,7 +158,7 @@ function filterFunction(collections, filter) {
       const filterTerm = filter.filterTerm.replace(/\\/g, '');
       return (new RegExp(filterTerm, 'i')).test(collectionDescription)
     });
-  } else {
-    return collections;
   }
+  return collections;
+
 }
