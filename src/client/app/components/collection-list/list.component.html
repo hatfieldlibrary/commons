@@ -34,7 +34,7 @@
   </div>
   <!--<mat-divider *ngIf="selectedSubject?.id!==0"></mat-divider>-->
 
-  <div  style="margin-top: 24px;" *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
+  <div style="margin-top: 24px;" *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
     <mat-spinner style="width:inherit"></mat-spinner>
   </div>
 
@@ -44,8 +44,14 @@
                      class="mat-subheading-2"
                      *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
         <div fxLayout="column">
-          <div><span class="collection-list-item">{{collection.title}}</span> : <span class="mat-caption">{{setAssetType(collection.assetType)}}</span></div>
-        <div class="mat-caption" style="color: #999;padding-bottom: 16px;">{{setAssetType(collection.assetType)}}</div>
+          <div><span class="collection-list-item">{{collection.title}}</span></div>
+          <div>
+           <span class="mat-caption"
+                 style="color: #999;padding-bottom: 16px;">{{setAssetType(collection.ctype)}}: Content Type: </span>
+          <span class="mat-caption" *ngFor="let type of collection.types ; let i = index"
+               style="color: #999;padding-bottom: 16px;">
+            {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
+          </div>
         </div>
       </mat-list-item>
     </mat-list>

@@ -16,7 +16,7 @@
  */
 
 /**
- * The main container component for subject selector, areas selector and collection
+ * The main container component for subject selector, areas/types selectors and collection
  * list components
  */
 import {ActivatedRoute} from '@angular/router';
@@ -106,16 +106,16 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * This function used by ListComponent event binding to update the collection list
-   * whenever a subject has been deselected.
+   * Event binding callback to update the collection list
+   * when a subject is deselected.
    */
   subjectNavigation(subjectEventPayload: SelectedSubjectEvent): void {
     this.navigation.navigateFilterRoute(this.areaId, this.typeId, subjectEventPayload.selected.id.toString());
   }
 
   /**
-   * Function used by CurrentFilters component event binding to update the collection list
-   * whenever an area or type filter is removed.
+   * Event binding callback to update the collection list
+   * whene an area or type filter is removed.
    * @param areaId the area id
    * @param typeId the type id
    */
@@ -176,6 +176,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.watchers.add(mediaWatcher);
   }
 
+  /**
+   * Event binding callback for navigation to an item.
+   * @param {string} id
+   */
   collectionNavigation(id: string): void {
     this.navigation.navigateItemRoute(id, this.areaId);
   }
@@ -201,8 +205,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // All subscriptions are added to this Subscription so
-    // the can be removed in ngOnDestroy.
+    // All local subscriptions are added to this Subscription
+    // and removed in ngOnDestroy.
     this.watchers = new Subscription();
 
     this.setMediaWatcher();

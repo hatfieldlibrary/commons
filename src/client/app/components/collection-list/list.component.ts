@@ -78,9 +78,9 @@ export class ListComponent implements OnDestroy {
 
   setAssetType(type) {
     if (type === 'dig') {
-      return 'collection';
+      return 'Collection';
     } else {
-      return 'single item';
+      return 'Single Item';
     }
   }
 
