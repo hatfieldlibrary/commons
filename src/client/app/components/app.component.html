@@ -21,6 +21,8 @@
     <mat-toolbar>
       <app-icon-close (click)="sidenav.close()"></app-icon-close>
     </mat-toolbar>
+    <app-navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areas$ | async" [selectedAreas]="selectedAreas$ | async"
+                             (onSelected)="sidenav.toggle()"></app-navigation-selector>
     <div>
       <div id="#menu-items" fxLayout="row" fxLayoutAlign="start start">
         <mat-list fxFlex>
@@ -42,8 +44,6 @@
 
     </div>
 
-    <app-navigation-selector *ngIf="!media.isActive('gt-sm')" [areaList]="areas$ | async" [selectedAreas]="selectedAreaIds"
-                             (onSelected)="sidenav.toggle()"></app-navigation-selector>
   </mat-sidenav>
 
   <div id="app-content" #appcontent>

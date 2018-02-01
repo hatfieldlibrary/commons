@@ -20,10 +20,9 @@
   <!--<mat-divider *ngIf="selectedSubject?.id!==0"></mat-divider>-->
   <div class="chips" *ngIf="selectedSubject?.id!==0">
     <div fxLayout="row" fxLayoutAlign="start center">
-      <div class="mat-body-2" style="padding: 0 0 12px; color: #999;">Selected Subject&nbsp;&nbsp;</div>
+      <div class="mat-body-2 subject-label">Selected Subject&nbsp;&nbsp;</div>
       <mat-chip-list>
-        <mat-chip class="subject-chip"
-                  selected="true"
+        <mat-chip selected="true"
                   color="default"
                   (click)="deselect()">
           {{selectedSubject?.name}}
@@ -37,19 +36,19 @@
   <div style="margin-top: 24px;" *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
     <mat-spinner style="width:inherit"></mat-spinner>
   </div>
-
-  <mat-card-content style="margin-top: 24px;">
+  <mat-card-content>
     <mat-list>
-      <mat-list-item style="cursor: default;border-bottom: 1px solid #fff" (click)="navigateToItem(collection.id)"
-                     class="mat-subheading-2"
+      <mat-list-item class="collection-list-item" (click)="navigateToItem(collection.id)"
                      *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
         <div fxLayout="column">
-          <div><span class="collection-list-item">{{collection.title}}</span></div>
+          <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
           <div>
-           <span class="mat-caption"
-                 style="color: #999;padding-bottom: 16px;">{{setAssetType(collection.ctype)}}: Content Type: </span>
-          <span class="mat-caption" *ngFor="let type of collection.types ; let i = index"
-               style="color: #999;padding-bottom: 16px;">
+            <span class="mat-caption bold-caption">Item Type:</span>
+           <span class="mat-caption">{{setAssetType(collection.ctype)}}</span>
+          </div>
+          <div>
+            <span class="mat-caption bold-caption ">Content Types:</span>
+          <span class="mat-caption" *ngFor="let type of collection.types ; let i = index">
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
           </div>
         </div>

@@ -56,7 +56,7 @@
       <div fxLayout="row"
            fxLayoutWrap
            fxFlexFill
-           fxLayoutGap="30px"
+           fxLayoutGap="15px"
            fxLayoutAlign="center start">
         <div fxLayout="column"
              fxFlex.md="1 1 20"
@@ -66,7 +66,6 @@
              *ngIf="media.isActive('gt-sm')">
           <div class="side-nav-header mat-title">FILTERS</div>
           <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
-          <app-current-filters (removeFilter)="removeFilter($event)"></app-current-filters>
           <app-navigation-selector
             (areaNavigation) = "areaNavigation($event)"
             [selectedAreas]="selectedAreas$ | async"
@@ -78,11 +77,11 @@
         <div fxLayout="column"
              fxFlex.sm="1 1 70"
              fxFlex.md="1 1 60"
-             fxFlex.lg="1 1 50"
+             fxFlex.lg="1 1 55"
              fxFlex.gt-lg="1 1 40">
           <div class="mat-card info-card">
             <div class="mat-card-header">
-              <mat-card-subtitle class="area-info">
+              <mat-card-subtitle class="area-info-container">
                 <app-area-information *ngIf="areaScreen"
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
                 <app-home-screen *ngIf="!areaScreen"
@@ -90,6 +89,7 @@
               </mat-card-subtitle>
             </div>
             <mat-divider></mat-divider>
+            <app-current-filters (removeFilter)="removeFilter($event)"></app-current-filters>
             <div class="mat-card-content">
               <app-collection-list (subjectNavigation)="subjectNavigation($event)"
                                    (collectionNavigation)="collectionNavigation($event)"

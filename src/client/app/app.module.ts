@@ -23,7 +23,7 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatSelectModule, MatCardModule, MatListModule, MatToolbarModule, MatIconModule, MatChipsModule,
   MatSidenavModule, MatIconRegistry, MatInputModule, MatGridListModule, MatCheckboxModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule, MatTooltipModule
 } from '@angular/material';
 import { RouterModule} from '@angular/router';
 import { APP_BASE_HREF} from '@angular/common';
@@ -176,6 +176,7 @@ export const appRoutes = [
     MatCheckboxModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,

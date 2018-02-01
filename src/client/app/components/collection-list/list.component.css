@@ -15,14 +15,11 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 .container {
-  padding: 0 32px;
+  padding: 0;
 }
 .chips {
   margin-left: 12px;
   margin-top: 18px;
-}
-.subject-chip {
-  margin-bottom: 12px;
 }
 mat-chip {
   color: #fff !important;
@@ -34,16 +31,34 @@ app-collection-list .mat-input-underline {
 app-collection-list .mat-input-wrapper {
   margin-bottom: 0;
 }
-.mat-list {
-  padding-top:0;
-}
-
 .mat-chip.mat-chip-selected:not(.mat-basic-chip) {
   /*background-color: #3faab2 !important;*/
   background-color: #6f7a7f !important;
 }
-.collection-list-item {
 
+.subject-label {
+  padding: 8px 4px 8px 56px;
+  color: #404040;
+}
+.collection-list-item {
+  height: 80px;
+  padding: 8px 54px;
+  border-bottom: 1px solid #ccc;
+}
+
+.collection-item{
   color: #791716;
+  cursor: default;
+}
+
+.bold-caption {
+  font-weight: 800;
+}
+
+.contents-info {
+  padding: 0 0 0 40px;
+}
+.mat-card-content {
+  margin-bottom: 0px;
 }
 

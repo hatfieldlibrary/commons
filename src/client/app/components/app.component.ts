@@ -54,6 +54,7 @@ import {SetSelectedService} from '../services/set-selected.service';
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   watcher: Subscription;
   areas$: Store<AreaFilterType[]>;
+  selectedAreas$: Store<AreaFilterType[]>;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -117,12 +118,14 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit() {
 
-    const routeWatcher = this.route.params
-      .subscribe((params) => {
-        this.setSelected.setSelectedArea(params['areaId']);
-      });
-
-    this.watcher.add(routeWatcher);
+    // const routeWatcher = this.route.params
+    //   .subscribe((params) => {
+    //     this.setSelected.setSelectedArea(params['areaId']);
+    //   });
+    //
+    // this.watcher.add(routeWatcher);
+    this.areas$ = this.store.select(fromRoot.getAreas);
+    this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
 
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {

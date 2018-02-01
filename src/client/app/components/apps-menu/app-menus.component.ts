@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, Component, Inject, Input, OnDestroy
+  ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, ViewEncapsulation
 } from '@angular/core';
 import {AreaType} from '../../shared/data-types/area.type';
 import {NavigationEnd, Router} from '@angular/router';
@@ -16,7 +16,6 @@ import {TypesFilterType} from '../../shared/data-types/types-filter.type';
   selector: 'app-menus-component',
   templateUrl: './app-menus.component.html',
   styleUrls: ['./app-menus.component.css'],
-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppMenusComponent implements OnDestroy {
@@ -32,6 +31,7 @@ export class AppMenusComponent implements OnDestroy {
   secondaryUrl = 'http://library.willamette.edu';
   watcher: Subscription;
   state = '';
+  position = 'left';
 
   constructor(private menuService: MenuInteractionService,
               private navigationService: NavigationService,

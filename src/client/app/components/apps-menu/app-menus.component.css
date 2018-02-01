@@ -8,4 +8,7 @@ mat-toolbar {
 mat-toolbar button {
   border-width: 0;
 }
+.md-tooltip {
+  background-color: red;
+}
 

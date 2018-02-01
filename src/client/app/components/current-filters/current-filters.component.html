@@ -1,6 +1,8 @@
-<div class="chips" >
+<div flex class="chips filter-container" >
   <div fxLayout="row" fxLayoutAlign="start center">
+    <div class="mat-body-2 filter-label" *ngIf="normalizedFilter.length > 0">Using Filters: </div>
     <mat-chip-list>
+
       <mat-chip class="filter-chip"
                 selected="true"
                 color="default"
