@@ -1,15 +1,16 @@
-<div flex class="chips filter-container" >
+<div flex class="chips filter-container">
   <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="mat-body-2 filter-label" *ngIf="normalizedFilter.length > 0">Using Filters: </div>
+    <div class="mat-body-2 filter-label" *ngIf="normalizedFilter.length > 0">Using Filters:</div>
     <mat-chip-list>
-
-      <mat-chip class="filter-chip"
-                selected="true"
+      <mat-chip fxLayoutAlign="start center" class="filter-chip"
                 color="default"
-                (click)="deselect(filter.type, filter.id)"
-      *ngFor="let filter of normalizedFilter">
-        <app-icon-close></app-icon-close>
-        {{filter.name}}
+                *ngFor="let filter of normalizedFilter"
+                (click)="deselect(filter.type, filter.id, filter.active)"
+                >
+        <app-icon-close-disabled *ngIf="filter.active === false"></app-icon-close-disabled>
+        <app-icon-close *ngIf="filter.active === true"></app-icon-close>
+        <div class="chip-layout" [ngClass]="{deselected: isFilterInActive(filter)}">{{filter.name}}
+        <span *ngIf="isFilterInActive(filter)"> (removed)</span></div>
       </mat-chip>
     </mat-chip-list>
   </div>

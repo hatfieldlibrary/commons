@@ -10,13 +10,13 @@
  // padding: 2px 2px !important;
   background: transparent;
   /*border: 1px solid #666;*/
-  color: #000;
+  color: rgb(15, 149, 159);
   margin: 0 !important;
 }
 .mat-chip {
   line-height: 8px;
   padding: 7px 12px !important;
-  border-right: 1px solid #ccc;
+  /*border-right: 1px solid #999;*/
 }
 .mat-chip-list {
   vertical-align: middle;
@@ -24,4 +24,11 @@
 .filter-label {
   display: block;
 }
+.deselected {
+  color: #999;
 
+
+}
+.chip-layout {
+  display: inline-block;
+}

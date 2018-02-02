@@ -40,7 +40,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.2",
-    "@angular/cdk": "^5.1.0",
+    "@angular/cdk": "^5.1.1",
     "@angular/cli": "^1.6.6",
     "@angular/common": "^5.2.2",
     "@angular/compiler": "^5.2.2",
@@ -49,7 +49,7 @@
     "@angular/flex-layout": "^2.0.0-beta.12",
     "@angular/forms": "^5.2.2",
     "@angular/language-service": "^5.2.2",
-    "@angular/material": "^5.1.0",
+    "@angular/material": "^5.1.1",
     "@angular/platform-browser": "^5.2.2",
     "@angular/platform-browser-dynamic": "^5.2.2",
     "@angular/platform-server": "^5.2.2",

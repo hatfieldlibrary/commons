@@ -21,7 +21,7 @@
  */
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
+import {State, Store} from '@ngrx/store';
 import {Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 import * as fromRoot from '../../reducers';
 import {AreaType} from '../../shared/data-types/area.type';
@@ -39,6 +39,7 @@ import {SelectedTypeEvent} from '../../components/types/types.component';
 import {SelectedSubjectEvent} from '../../components/subject-selector/subjects.component';
 import {DispatchService} from '../../services/dispatch.service';
 import {SetSelectedService} from '../../services/set-selected.service';
+import 'rxjs/add/operator/take';
 
 
 @Component({
@@ -79,6 +80,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * component or the default home information.
    */
   areaScreen: boolean;
+  private previousAreas: AreaFilterType[];
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,

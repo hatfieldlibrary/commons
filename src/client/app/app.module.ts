@@ -96,6 +96,7 @@ import { NavigationService} from './services/navigation/navigation.service';
 import { CurrentFiltersComponent } from './components/current-filters/current-filters.component';
 import { DispatchService} from './services/dispatch.service';
 import { SetSelectedService} from './services/set-selected.service';
+import {CloseSvgDisabledComponent} from './components/svg/close-svg-disabled/close-svg-disabled.component';
 
 export const appRoutes = [
 
@@ -141,6 +142,7 @@ export const appRoutes = [
     HomeSvgComponent,
     HomeBlackSvgComponent,
     CollectionsSvgComponent,
+    CloseSvgDisabledComponent,
     AreasSvgComponent,
     BackBlackSvgComponent,
     TitleHeaderComponent,
