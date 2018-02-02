@@ -1,11 +1,12 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-title-header',
   templateUrl: './title-header.component.html',
-  styleUrls: ['./title-header.component.css']
+  styleUrls: ['./title-header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TitleHeaderComponent implements OnDestroy {
 
@@ -14,7 +15,7 @@ export class TitleHeaderComponent implements OnDestroy {
   @Input() subjectList;
   @Input() areaId;
   @Input() type;
-  isMobile:boolean = true;
+  isMobile: boolean = true;
   private watcher: Subscription;
 
   constructor(private media: ObservableMedia) {

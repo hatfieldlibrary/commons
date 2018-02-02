@@ -21,6 +21,7 @@ import {
 import {MatSelectionList} from '@angular/material';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {AreasFilter} from '../../shared/data-types/areas-filter';
 
 export interface SelectedAreaEvent {
   selected: AreaFilterType[];
@@ -34,8 +35,7 @@ export interface SelectedAreaEvent {
 })
 export class NavigationComponent {
 
-  @Input() areaList: AreaFilterType[];
-  @Input() selectedAreas: AreaFilterType[];
+  @Input() filter: AreasFilter;
   @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
 
   constructor(private filterService: FilterUpdateService) {
@@ -47,7 +47,7 @@ export class NavigationComponent {
    * @returns {boolean}
    */
   isSelected(id: number): boolean {
-    if (this.selectedAreas) {
+    if (this.filter.selectedAreas) {
       return this.getPositionInSelectedList(id) > -1;
     }
     return false;
@@ -59,8 +59,7 @@ export class NavigationComponent {
    * @param {number} areaId
    */
   onAreaListControlChanged(list: MatSelectionList, areaId: number) {
-    list.selectedOptions.clear();
-    const updatedSelectedAreas = this.filterService.updateSelectedAreaStore(this.selectedAreas, this.areaList, areaId);
+    const updatedSelectedAreas = this.filterService.updateSelectedAreaStore(this.filter.selectedAreas, this.filter.areas, areaId);
     const selectedEmitted: SelectedAreaEvent = {selected: updatedSelectedAreas};
     this.areaNavigation.emit(selectedEmitted);
   }
@@ -72,8 +71,7 @@ export class NavigationComponent {
    * @returns {number}
    */
   private getPositionInSelectedList(areaId: number): number {
-    console.log(this.selectedAreas)
-    return this.selectedAreas.findIndex((current) => current.id === areaId);
+    return this.filter.selectedAreas.findIndex((current) => current.id === areaId);
   }
 
 

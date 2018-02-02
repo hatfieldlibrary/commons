@@ -42,7 +42,6 @@ export class ListComponent implements OnDestroy {
 
   constructor(private filterService: FilterUpdateService) {
     this.filterTerm = '';
-
   }
 
   /**

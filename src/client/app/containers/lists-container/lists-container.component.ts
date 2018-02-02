@@ -21,8 +21,8 @@
  */
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {State, Store} from '@ngrx/store';
-import {Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import * as fromRoot from '../../reducers';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
@@ -39,12 +39,14 @@ import {SelectedTypeEvent} from '../../components/types/types.component';
 import {SelectedSubjectEvent} from '../../components/subject-selector/subjects.component';
 import {DispatchService} from '../../services/dispatch.service';
 import {SetSelectedService} from '../../services/set-selected.service';
+import {TypesFilter} from '../../shared/data-types/types-filter';
+import * as fromFilter from '../../reducers/filter.reducers';
 import 'rxjs/add/operator/take';
-
+import 'rxjs/add/observable/combineLatest';
+import {AreasFilter} from '../../shared/data-types/areas-filter';
 
 @Component({
   selector: 'app-lists-container',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'lists-container.component.html',
   styleUrls: ['lists-container.component.css'],
   animations: [fadeIn]
@@ -65,6 +67,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   areas$: Observable<AreaFilterType[]>;
   areaInfo$: Observable<AreaType[]>;
   types$: Observable<TypesFilterType[]>;
+  filters$: Observable<fromFilter.State>;
+  typesFilter$: Observable<TypesFilter>;
+  areasFilter$: Observable<AreasFilter>;
+  selectedAreas: AreaFilterType[];
+  selectedTypes: TypesFilterType[];
   /**
    * These member variables contain the route parameters.
    */
@@ -80,7 +87,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * component or the default home information.
    */
   areaScreen: boolean;
-  private previousAreas: AreaFilterType[];
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
@@ -116,18 +122,24 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Event binding callback to update the collection list
-   * whene an area or type filter is removed.
-   * @param areaId the area id
-   * @param typeId the type id
+   * Deselect filter callback for areas and types. This filter
+   * uses the currently selected areas and types to assure correct
+   * state across filter changes.
+   * @param {DeselectedFilter} deselected
    */
   removeFilter(deselected: DeselectedFilter): void {
     const test = deselected.id + '[^0-9]*';
     const regex = new RegExp(test);
     if (deselected.type === 'area') {
-      this.areaId = this.areaId.replace(regex, '');
+      // Get url query parameter for current areas.
+      const areaIds = this.navigation.getIds(this.selectedAreas);
+      this.areaId = areaIds.replace(regex, '');
+      this.typeId = this.navigation.getIds(this.selectedTypes);
     } else {
-      this.typeId = this.typeId.replace(regex, '');
+      // Get url query parameter for current types.
+      const typeIds = this.navigation.getIds(this.selectedTypes);
+      this.typeId = typeIds.replace(regex, '');
+      this.areaId = this.navigation.getIds(this.selectedAreas);
     }
     this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId);
   }
@@ -187,8 +199,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigates to new location when area NavigationComponent is updated. This function is
-   * the callback provided to the component's Output() event binding.
+   * Navigates to new location when area NavigationComponent is updated.
    * @param {SelectedAreaEvent} updatedAreaList the updated area list
    */
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
@@ -197,38 +208,61 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigates to new location when the TypesComponent is updated. This function is
-   * the callback provided to the component's Output() event binding.
+   * Navigates to new location when the TypesComponent is updated.
    * @param {SelectedTypeEvent} updatedTypeList the updated area list
    */
   typeNavigation(updatedTypeList: SelectedTypeEvent) {
+    const areaIds = this.navigation.getIds(this.selectedAreas);
     const typeIds = this.navigation.getIds(updatedTypeList.selected);
-    this.navigation.navigateFilterRoute(this.areaId, typeIds, this.subjectId);
+    this.navigation.navigateFilterRoute(areaIds, typeIds, this.subjectId);
   }
 
   ngOnInit() {
     // All local subscriptions are added to this Subscription
     // and removed in ngOnDestroy.
     this.watchers = new Subscription();
-
     this.setMediaWatcher();
+    this.subjects$ = this.store.select(fromRoot.getSubject);
+    this.collections$ = this.store.select(fromRoot.getFilteredCollections);
+    this.areas$ = this.store.select(fromRoot.getAreas);
+    this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
+    this.types$ = this.store.select(fromRoot.getTypes);
+    this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
+    this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
+    this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
+    this.filters$ = this.store.select(fromRoot.getFilters);
+    this.areasFilter$ = Observable.combineLatest(
+      this.store.select(fromRoot.getAreas),
+      this.store.select(fromRoot.getAreasFilter),
+      (areas, selected) => {
+        this.selectedAreas = selected;
+        console.log(this.selectedAreas)
+        return {
+          areas: areas,
+          selectedAreas: selected
+        }
+      }
+    );
+    this.typesFilter$ = Observable.combineLatest(
+      this.store.select(fromRoot.getTypes),
+      this.store.select(fromRoot.getTypesFilter),
+      (types, selected) => {
+        this.selectedTypes = selected;
+        console.log(this.selectedTypes);
+        return {
+          types: types,
+          selectedTypes: selected
+        }
+      }
+    );
     const routeWatcher = this.route.params
       .subscribe((params) => {
-        this.subjects$ = this.store.select(fromRoot.getSubject);
-        this.collections$ = this.store.select(fromRoot.getFilteredCollections);
-        this.areas$ = this.store.select(fromRoot.getAreas);
-        this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
-        this.types$ = this.store.select(fromRoot.getTypes);
-        this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
-        this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
-        this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
         this.setQueryParams(params);
         this.updateSelected(params);
         this.initializeAreas(params);
         this.areaScreen = this.navigation.isAreaSelected(params['areaId']);
         this.dispatchService.dispatchActions(params['areaId'], params['typeId'], params['subjectId']);
       });
-
     this.watchers.add(routeWatcher);
   }
 

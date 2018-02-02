@@ -82,9 +82,9 @@ export class SetSelectedService {
   setSelectedTypes(typeId: string): void {
     if (typeId) {
       const typesWatcher = this.types$.subscribe((types) => {
-        const areaArr = typeId.split(',');
+        const filtersArr = typeId.split(',');
         const selectedTypes: TypesFilterType[] = [];
-        areaArr.forEach(function (singleTypeId) {
+        filtersArr.forEach(function (singleTypeId) {
           const selected = types.find((type) => type.id === +singleTypeId);
           if (selected) {
             selectedTypes.push(selected);

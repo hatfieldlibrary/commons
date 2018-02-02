@@ -1,10 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {MatSelectionList} from '@angular/material';
-import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
-import {NavigationService} from '../../services/navigation/navigation.service';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {TypesFilter} from '../../shared/data-types/types-filter';
 
 export interface SelectedTypeEvent {
   selected: TypesFilterType[];
@@ -13,12 +11,12 @@ export interface SelectedTypeEvent {
 @Component({
   selector: 'app-types',
   templateUrl: './types.component.html',
-  styleUrls: ['./types.component.css']
+  styleUrls: ['./types.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TypesComponent {
+export class TypesComponent implements OnInit {
 
-  @Input() typeList: TypesFilterType[];
-  @Input() selectedTypes: TypesFilterType[];
+  @Input() filter: TypesFilter;
   @Output() typeNavigation: EventEmitter <any> = new EventEmitter<any>();
 
   constructor(private filterService: FilterUpdateService) {
@@ -31,22 +29,24 @@ export class TypesComponent {
    * @returns {number}
    */
   private getPositionInSelectedTypeList(typeId: number): number {
-    return this.selectedTypes.findIndex((current) => current.id === typeId);
+    return this.filter.selectedTypes.findIndex((current) => current.id === typeId);
   }
 
   onTypeListControlChanged(list: MatSelectionList, typeId: number) {
-    list.selectedOptions.clear();
-    const updatedSelectedTypes = this.filterService.updateSelectedTypeStore(this.selectedTypes, this.typeList, typeId);
-   // const updatedTypeId = this.filterService.getIds(updatedSelectedTypes);
+    const updatedSelectedTypes = this.filterService
+      .updateSelectedTypeStore(this.filter.selectedTypes, this.filter.types, typeId);
     const updatedTypeEvent: SelectedTypeEvent = {selected: updatedSelectedTypes};
     this.typeNavigation.emit(updatedTypeEvent);
   }
 
   isSelected(id: number): boolean {
-    if (this.selectedTypes) {
+    if (this.filter.selectedTypes) {
       return this.getPositionInSelectedTypeList(id) > -1;
     }
     return false;
+  }
+
+  ngOnInit(): void {
   }
 
 }

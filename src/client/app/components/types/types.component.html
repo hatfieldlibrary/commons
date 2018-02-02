@@ -1,7 +1,7 @@
 <div class="side-nav-section">
   <mat-selection-list #typeSelectionList>
     <h4 class="mat-body-2 list-caption">CONTENT TYPES</h4>
-    <mat-list-option *ngFor="let type of typeList"
+    <mat-list-option *ngFor="let type of filter.types"
                      class="local-navigation"
                      [selected]="isSelected(type.id)"
                      (click)="onTypeListControlChanged(typeSelectionList, type.id)"

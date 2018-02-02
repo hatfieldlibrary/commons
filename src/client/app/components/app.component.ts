@@ -28,11 +28,13 @@ import {MatSidenav} from '@angular/material';
 import {MenuInteractionService} from '../services/menu/menu-interaction.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {SetTimeoutService} from '../services/timers/timeout.service';
 import {SetSelectedService} from '../services/set-selected.service';
+import {Observable} from 'rxjs/Observable';
+import {AreasFilter} from '../shared/data-types/areas-filter';
+import {NavigationService} from '../services/navigation/navigation.service';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -49,12 +51,12 @@ import {SetSelectedService} from '../services/set-selected.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
+
   watcher: Subscription;
-  areas$: Store<AreaFilterType[]>;
-  selectedAreas$: Store<AreaFilterType[]>;
+  filters$: Observable<AreasFilter>;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -86,7 +88,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               private route: ActivatedRoute,
               @Inject(DOCUMENT) private document,
               private timeoutService: SetTimeoutService,
-              private setSelected: SetSelectedService) {
+              private setSelected: SetSelectedService,
+              private navigation: NavigationService) {
 
     this.watcher = new Subscription();
     const mediaWatcher = media.asObservable()
@@ -117,31 +120,27 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
-    // const routeWatcher = this.route.params
-    //   .subscribe((params) => {
-    //     this.setSelected.setSelectedArea(params['areaId']);
-    //   });
-    //
-    // this.watcher.add(routeWatcher);
-    this.areas$ = this.store.select(fromRoot.getAreas);
-    this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
-
+    this.filters$ = Observable.combineLatest(
+      this.store.select(fromRoot.getAreas),
+      this.store.select(fromRoot.getAreasFilter),
+      (areas, selected) => {
+        return {
+          areas: areas,
+          selectedAreas: selected
+        }
+      });
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {
         console.log(err);
       });
-
     });
     this.watcher.add(openWatcher);
-
   }
 
   ngAfterViewInit() {
 
     // Anticipating angular universal.
     if (isPlatformBrowser) {
-
       /**
        * This sets the scrollTop position for navigation between views.
        */

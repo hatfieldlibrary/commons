@@ -68,11 +68,9 @@
           <app-search-filter [collectionList]="collections$ | async"></app-search-filter>
           <app-navigation-selector
             (areaNavigation) = "areaNavigation($event)"
-            [selectedAreas]="selectedAreas$ | async"
-            [areaList]="areas$ | async"></app-navigation-selector>
+            [filter]="areasFilter$ | async"></app-navigation-selector>
           <app-types (typeNavigation) = "typeNavigation($event)"
-                     [selectedTypes]="selectedTypes$ | async"
-                     [typeList]="types$ | async"></app-types>
+                     [filter]="typesFilter$ | async"></app-types>
         </div>
         <div fxLayout="column"
              fxFlex.sm="1 1 70"
@@ -89,7 +87,7 @@
               </mat-card-subtitle>
             </div>
             <mat-divider></mat-divider>
-            <app-current-filters (removeFilter)="removeFilter($event)"></app-current-filters>
+            <app-current-filters [filters]="filters$ | async" (removeFilter)="removeFilter($event)"></app-current-filters>
             <div class="mat-card-content">
               <app-collection-list (subjectNavigation)="subjectNavigation($event)"
                                    (collectionNavigation)="collectionNavigation($event)"

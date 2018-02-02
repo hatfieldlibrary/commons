@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
+import {
+  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output,
+  SimpleChanges
+} from '@angular/core';
 import * as fromFilter from '../../reducers/filter.reducers';
-import {Observable} from 'rxjs/Observable';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {NormalizedFilter} from '../../shared/data-types/normalized-filter';
@@ -15,21 +15,21 @@ export interface DeselectedFilter {
 @Component({
   selector: 'app-current-filters',
   templateUrl: './current-filters.component.html',
-  styleUrls: ['./current-filters.component.css']
+  styleUrls: ['./current-filters.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CurrentFiltersComponent implements OnInit {
+export class CurrentFiltersComponent implements OnChanges {
 
   @Output() removeFilter: EventEmitter<any> = new EventEmitter<any>();
-  @Input() previousAreas: AreaFilterType[];
-  filters$: Observable<fromFilter.State>;
+  @Input() filters: fromFilter.State;
   areas: AreaFilterType[];
   types: TypesFilterType[];
   normalizedFilter: NormalizedFilter[];
 
-  constructor(private store: Store<fromRoot.State>) { }
+  constructor() { }
 
   /**
-   * Returns boolean for the *ngIf conditional. If true,
+   * Returns boolean for *ngIf conditional. If true,
    * the component will show the element.
    * @returns {boolean}
    */
@@ -37,17 +37,29 @@ export class CurrentFiltersComponent implements OnInit {
     return (this.areas.length > 0 || this.types.length > 0);
   }
 
+  /**
+   * Returns boolean for *ngIf conditional. Returns true if
+   * the filter in the the filter list is marked as inactive.
+   * @param filter
+   * @returns {boolean}
+   */
   isFilterInActive(filter): boolean {
     return !filter.active;
   }
 
+  /**
+   * Sets the active field to true or false based on whether an
+   * item from the current array is present in the previous filter
+   * array.  This is used to set the status of the filter in the
+   * view.
+   * @param areas
+   */
   private setFilteredAreaState(areas) {
-    this.previousAreas.forEach(area => {
+    this.filters.previousAreas.forEach(area => {
       const activeListIndex = areas.findIndex(a => a.id === area.id)
       if (activeListIndex >= 0) {
         this.normalizedFilter.push({type: 'area', name: area.title, id: area.id, active: true});
       } else {
-        console.log('adding inactive area to list: ' + area.title)
         this.normalizedFilter.push({type: 'area', name: area.title, id: area.id, active: false})
       }
     })
@@ -59,7 +71,7 @@ export class CurrentFiltersComponent implements OnInit {
    * @param types the currently selected types
    */
   createNormalizedFilter(areas, types) {
-    if (areas.length < this.previousAreas.length) {
+    if (areas.length < this.filters.previousAreas.length) {
       this.setFilteredAreaState(areas);
     } else {
       areas.forEach(area => {
@@ -87,15 +99,17 @@ export class CurrentFiltersComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.filters$ = this.store.select(fromRoot.getFilters);
-    this.filters$.subscribe(filter => {
-      this.areas = filter.selectedAreas;
-      this.previousAreas = filter.previousAreas;
-      this.types = filter.selectedTypes;
-      this.normalizedFilter = [];
-      this.createNormalizedFilter(this.areas, this.types);
-    });
+  /**
+   * Since Angular chooses to reuse this component on subsequent
+   * routing events, use ngOnChanges to trigger creation of the
+   * filters array after an input change.
+   * @param {SimpleChanges} changes
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    this.normalizedFilter = [];
+    this.createNormalizedFilter(this.filters.selectedAreas, this.filters.selectedTypes);
   }
+
+
 
 }
