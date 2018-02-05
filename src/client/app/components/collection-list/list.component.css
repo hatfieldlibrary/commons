@@ -14,12 +14,16 @@
  *   You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+.mat-list {
+  padding-top: 0;
+}
 .container {
   padding: 0;
 }
 .chips {
   margin-left: 3px;
-  margin-top: 8px;
+  margin-top: 0;
+  background: #fff;
 }
 mat-chip {
   color: #000 !important;
@@ -44,7 +48,6 @@ mat-chip .subject-icon .mat-icon {
   /*background-color: #3faab2 !important;*/
   background-color: #dcdcdc !important;
 }
-
 .subject-label {
   padding: 8px 4px 8px 64px;
   color: #404040;
@@ -54,7 +57,16 @@ mat-chip .subject-icon .mat-icon {
   padding: 8px 54px;
   border-bottom: 1px solid #ccc;
 }
-
+.collection-list-item {
+  height: 80px;
+  padding: 8px 54px;
+  border-bottom: 1px solid #ccc;
+}
+.collection-list-item.result-info {
+  height: 20px;
+  font-size: 12px;
+  background: #fff;
+}
 .collection-item{
   color: #791716;
   cursor: default;
@@ -68,6 +80,6 @@ mat-chip .subject-icon .mat-icon {
   padding: 0 0 0 40px;
 }
 .mat-card-content {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 

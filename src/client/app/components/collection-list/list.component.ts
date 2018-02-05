@@ -19,10 +19,8 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Outp
 
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
-import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-collection-list',
@@ -54,26 +52,12 @@ export class ListComponent implements OnDestroy {
     this.subjectNavigation.emit(emptySubject);
   }
 
+  totalResults(): string {
+    return this.collectionList.length.toString();
+  }
   navigateToItem(id: string) {
     this.collectionNavigation.emit(id);
   }
-
-  // /**
-  //  * Generates the comma-separated list of ids.
-  //  * @param {AreaFilterType[]} list list of areas
-  //  * @returns {string}
-  //  */
-  // getSelectedArea(): string {
-  //
-  //   let ids = '';
-  //   if (typeof this.selectedAreas !== 'undefined' && typeof this.selectedAreas[0] !== 'undefined') {
-  //     this.selectedAreas.forEach(area => {
-  //       ids = ids + area.id + ','
-  //     });
-  //   }
-  //   return ids.slice(0, -1);
-  // }
-
 
   setAssetType(type) {
     if (type === 'dig') {
