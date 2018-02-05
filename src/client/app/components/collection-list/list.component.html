@@ -22,11 +22,11 @@
     <div fxLayout="row" fxLayoutAlign="start center">
       <div class="mat-body-2 subject-label">Selected Subject&nbsp;&nbsp;</div>
       <mat-chip-list>
-        <mat-chip selected="true"
+        <mat-chip class="subject-chip" selected="true"
                   color="default"
                   (click)="deselect()">
+          <app-icon-close class="subject-icon"></app-icon-close>
           {{selectedSubject?.name}}
-          <app-icon-close-white></app-icon-close-white>
         </mat-chip>
       </mat-chip-list>
     </div>

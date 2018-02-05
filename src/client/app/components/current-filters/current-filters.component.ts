@@ -110,6 +110,4 @@ export class CurrentFiltersComponent implements OnChanges {
     this.createNormalizedFilter(this.filters.selectedAreas, this.filters.selectedTypes);
   }
 
-
-
 }
