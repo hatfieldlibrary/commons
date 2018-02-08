@@ -119,6 +119,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     document.location.href = this.tertiaryUrl;
   }
 
+  areaNavigation(): void {
+
+  }
+
   ngOnInit() {
     this.filters$ = Observable.combineLatest(
       this.store.select(fromRoot.getAreas),
