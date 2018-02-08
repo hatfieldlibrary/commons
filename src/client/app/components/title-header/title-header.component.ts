@@ -15,7 +15,7 @@ export class TitleHeaderComponent implements OnDestroy {
   @Input() subjectList;
   @Input() areaId;
   @Input() type;
-  isMobile: boolean = true;
+  isMobile = true;
   private watcher: Subscription;
 
   constructor(private media: ObservableMedia) {

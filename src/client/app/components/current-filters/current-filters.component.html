@@ -1,4 +1,4 @@
-<div flex class="chips filter-container">
+<div flex class="chips filter-container" [ngClass]="{'mobile-padding': isMobile}">
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="mat-body-2 filter-label" *ngIf="normalizedFilter.length > 0">Using Filters:</div>
     <mat-chip-list>

@@ -79,7 +79,7 @@
              fxFlex.gt-lg="1 1 40">
           <div class="mat-card info-card">
             <div class="mat-card-header">
-              <mat-card-subtitle class="area-info-container">
+              <mat-card-subtitle class="area-info-container" [ngClass]="{'large-device-info': media.isActive('gt-sm')}">
                 <app-area-information *ngIf="areaScreen"
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
                 <app-home-screen *ngIf="!areaScreen"

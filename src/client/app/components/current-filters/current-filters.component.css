@@ -5,6 +5,10 @@
   vertical-align: middle;
   min-height: 20px;
 }
+
+div.mobile-padding {
+  padding: 8px 16px;
+}
 .filter-chip {
   border-radius: 0px !important;
  // padding: 2px 2px !important;

@@ -21,6 +21,8 @@ import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-collection-list',
@@ -35,11 +37,20 @@ export class ListComponent implements OnDestroy {
   @Output() subjectNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   filterTerm: string;
-
+  isMobile = false;
+  watcher: Subscription;
   emptySubject: SubjectFilterType = {id: 0, name: ''};
 
-  constructor(private filterService: FilterUpdateService) {
+  constructor(private filterService: FilterUpdateService,
+              private media: ObservableMedia) {
     this.filterTerm = '';
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
   }
 
   /**
@@ -68,6 +79,7 @@ export class ListComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.watcher.unsubscribe();
     this.subjectNavigation.unsubscribe();
   }
 

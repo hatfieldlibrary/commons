@@ -33,14 +33,14 @@
            fxFlex.lg="70"
            fxFlex.gt-lg="50"
            fxLayoutGap="20px">
-
         <app-item
           [item]="item$ | async"
           [selectedArea]="selectedArea"
           [selectedTypes]="selectedTypes$ | async"
           [selectedSubject]="selectedSubject$ | async"
           style="padding-bottom: 40px;"></app-item>
-        <mat-divider></mat-divider>
+
+
 
         <app-related-items [columns]="columns" [related]="related$ | async"
                            [selectedArea]="selectedArea"></app-related-items>

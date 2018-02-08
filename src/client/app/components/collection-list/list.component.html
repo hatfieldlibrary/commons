@@ -15,8 +15,7 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<div class="container">
-  <!--<mat-divider *ngIf="selectedSubject?.id!==0"></mat-divider>-->
+<div class="container" [ngClass]="{'mobile-padding': isMobile}">
   <div class="chips" *ngIf="selectedSubject?.id!==0">
     <div fxLayout="row" fxLayoutAlign="start center">
       <div class="mat-body-2 subject-label">Selected Subject&nbsp;&nbsp;</div>
@@ -30,18 +29,20 @@
       </mat-chip-list>
     </div>
   </div>
-  <!--<mat-divider *ngIf="selectedSubject?.id!==0"></mat-divider>-->
 
   <div style="margin-top: 24px;" *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
     <mat-spinner style="width:inherit"></mat-spinner>
   </div>
   <mat-card-content>
     <mat-list>
-      <mat-list-item class="collection-list-item result-info">
+      <mat-list-item class="collection-list-item result-info"
+                     [ngClass]="{'mobile-list-item-padding': isMobile}">
         <span class="mat-caption bold-caption">Items:&nbsp;</span> {{totalResults()}}</mat-list-item>
-      <mat-list-item class="collection-list-item" (click)="navigateToItem(collection.id)"
+      <mat-list-item class="collection-list-item"
+                     [ngClass]="{'mobile-list-item-padding': isMobile}"
+                     (click)="navigateToItem(collection.id)"
                      *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
-        <div fxLayout="column">
+        <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
           <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
           <div>
             <span class="mat-caption bold-caption">Item Type:</span>

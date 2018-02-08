@@ -34,7 +34,6 @@ import {NavigationService} from '../../services/navigation/navigation.service';
 })
 export class ItemComponent  {
 
-
   @Input() item: ItemType;
   @Input() selectedArea: string;
   @Input() selectedSubject: SubjectFilterType;
@@ -42,9 +41,7 @@ export class ItemComponent  {
   state = '';
 
   constructor(private navigationService: NavigationService,
-              public media: ObservableMedia) {
-
-  }
+              public media: ObservableMedia) {}
 
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);

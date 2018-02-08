@@ -1,11 +1,13 @@
 import {
-  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output,
+  ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output,
   SimpleChanges
 } from '@angular/core';
 import * as fromFilter from '../../reducers/filter.reducers';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {NormalizedFilter} from '../../shared/data-types/normalized-filter';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 export interface DeselectedFilter {
   type: string,
@@ -18,15 +20,25 @@ export interface DeselectedFilter {
   styleUrls: ['./current-filters.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CurrentFiltersComponent implements OnChanges {
+export class CurrentFiltersComponent implements OnChanges, OnDestroy {
 
   @Output() removeFilter: EventEmitter<any> = new EventEmitter<any>();
   @Input() filters: fromFilter.State;
   areas: AreaFilterType[];
   types: TypesFilterType[];
   normalizedFilter: NormalizedFilter[];
+  watcher: Subscription;
+  isMobile = false;
 
-  constructor() { }
+  constructor(private media: ObservableMedia) {
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+  }
 
   /**
    * Returns boolean for *ngIf conditional. If true,
@@ -108,6 +120,10 @@ export class CurrentFiltersComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.normalizedFilter = [];
     this.createNormalizedFilter(this.filters.selectedAreas, this.filters.selectedTypes);
+  }
+
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
   }
 
 }

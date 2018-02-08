@@ -16,9 +16,11 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges
+  ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges
 } from '@angular/core';
 import {AreaType} from '../../shared/data-types/area.type';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-area-information',
@@ -34,7 +36,8 @@ export class AreaInformationComponent implements OnChanges {
   linkLabel: string;
   title: string;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.areaInfo.currentValue) {

@@ -5,17 +5,12 @@
 }
 
 .area-info-container  {
-  /*background: rgb(239, 234, 223);*/
   color: #302e2e;
   background: #fff;
-  /*padding: 22px;*/
   margin: 0;
-  /*font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;*/
-  /*font-weight: 400;*/
-  /*font-style: normal;*/
-  padding: 32px 68px;
+  padding: 24px 16px 12px;
   width: 100%;
-  min-height: 230px;
+  min-height: 154px;
 }
 
 .collection-list-item {
@@ -31,8 +26,12 @@
 }
 .side-container {
   margin-top: 0px;
-  /*background-color: rgba(255,255,255,.5);*/
 }
 .side-nav-header {
   margin: 16px 16px 16px;
+}
+/* Reset padding for devices larger than small. */
+mat-card-subtitle.large-device-info {
+  padding: 32px 68px;
+
 }
