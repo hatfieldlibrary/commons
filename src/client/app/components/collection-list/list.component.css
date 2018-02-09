@@ -21,23 +21,22 @@
   padding: 0;
 }
 .mobile-list-container {
-  padding: 8px 54px;
+  padding: 12px 0;
 }
 div.mobile-padding {
-  padding: 8px 0 0;
+  padding: 0;
 }
 .chips {
-  margin-left: 3px;
   margin-top: 0;
-  background: #fff;
+  background: #efefef;
 }
 mat-chip {
-  color: #000 !important;
+  color: #fff !important;
 }
 mat-chip.subject-chip {
   font-size: 13px;
   line-height: 11px !important;
-  padding: 4px 10px 4px 0;
+  padding: 6px 10px 6px 0;
 }
 app-collection-list .mat-input-underline {
   border-top-width: 2px !important;
@@ -52,32 +51,37 @@ mat-chip .subject-icon .mat-icon {
 }
 .mat-chip.mat-chip-selected:not(.mat-basic-chip) {
   /*background-color: #3faab2 !important;*/
-  background-color: #dcdcdc !important;
+  /*background-color: #dcdcdc !important;*/
+  background: #ad7201;
 }
 .subject-label {
-  padding: 8px 4px 8px 12px;
+  padding: 12px 4px 8px 66px;
   color: #404040;
+}
+div.mobile-subject-label {
+  padding: 8px 4px 8px 12px;
 }
 .collection-list-item {
   height: auto;
   padding: 12px 50px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ddd;
 }
-mat-list-item.mobile-list-item-padding {
-  padding: 0;
+mat-list-item.mobile-list-item-padding,
+div.mobile-list-item-padding {
+  padding: 0 !important;
 }
 .item-info-container {
   padding: 8px 0;
 }
-/* something like this...*/
-mat-list-item, mat-list-item .mat-list-inner {
-  min-height: 80px;
+mat-list-item.collection-list-item.mobile-item-info-height {
+  height: 42px;
+  min-height: 42px;
 }
 .collection-list-item.result-info {
-  height: 20px;
-  min-height: 20px;
+  height: 32px;
+  min-height: 32px;
   font-size: 12px;
-  background: #fff;
+  background: #efefef;
 }
 .collection-item{
   color: #791716;

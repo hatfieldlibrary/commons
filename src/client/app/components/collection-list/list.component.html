@@ -18,12 +18,14 @@
 <div class="container" [ngClass]="{'mobile-padding': isMobile}">
   <div class="chips" *ngIf="selectedSubject?.id!==0">
     <div fxLayout="row" fxLayoutAlign="start center">
-      <div class="mat-body-2 subject-label">Selected Subject&nbsp;&nbsp;</div>
+      <div class="mat-body-2 subject-label"
+           [ngClass]="{'mobile-subject-label': isMobile}"
+      >SUBJECT:&nbsp;&nbsp;</div>
       <mat-chip-list>
         <mat-chip class="subject-chip" selected="true"
                   color="default"
                   (click)="deselect()">
-          <app-icon-close class="subject-icon"></app-icon-close>
+          <app-icon-close-white class="subject-icon"></app-icon-close-white>
           {{selectedSubject?.name}}
         </mat-chip>
       </mat-chip-list>
@@ -36,8 +38,8 @@
   <mat-card-content>
     <mat-list>
       <mat-list-item class="collection-list-item result-info"
-                     [ngClass]="{'mobile-list-item-padding': isMobile}">
-        <span class="mat-caption bold-caption">Items:&nbsp;</span> {{totalResults()}}</mat-list-item>
+                     [ngClass]="{'mobile-list-item-padding': isMobile, 'mobile-item-info-height': isMobile}">
+        <span class="mat-caption bold-caption">Item Count:&nbsp;</span> {{totalResults()}}</mat-list-item>
       <mat-list-item class="collection-list-item"
                      [ngClass]="{'mobile-list-item-padding': isMobile}"
                      (click)="navigateToItem(collection.id)"

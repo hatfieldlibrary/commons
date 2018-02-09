@@ -16,7 +16,7 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges
+  ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation
 } from '@angular/core';
 import {AreaType} from '../../shared/data-types/area.type';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
@@ -26,6 +26,7 @@ import {Subscription} from 'rxjs/Subscription';
   selector: 'app-area-information',
   templateUrl: './area-information.component.html',
   styleUrls: ['./area-information.component.css'],
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AreaInformationComponent implements OnChanges {
