@@ -28,7 +28,7 @@ div.mobile-padding {
 }
 .chips {
   margin-top: 0;
-  background: #efefef;
+  background: #a5a09f26;
 }
 mat-chip {
   color: #fff !important;
@@ -50,9 +50,7 @@ mat-chip .subject-icon .mat-icon {
   width: 20px !important;
 }
 .mat-chip.mat-chip-selected:not(.mat-basic-chip) {
-  /*background-color: #3faab2 !important;*/
-  /*background-color: #dcdcdc !important;*/
-  background: #ad7201;
+  background: #36696d;
 }
 .subject-label {
   padding: 12px 4px 8px 66px;
@@ -81,10 +79,11 @@ mat-list-item.collection-list-item.mobile-item-info-height {
   height: 32px;
   min-height: 32px;
   font-size: 12px;
-  background: #efefef;
+  background: #a5a09f26;
 }
 .collection-item{
   color: #791716;
+  font-weight: 800;
   cursor: default;
 }
 .bold-caption {

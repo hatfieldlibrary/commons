@@ -3,12 +3,13 @@
     <div class="mat-body-2 filter-label" >FILTERS:&nbsp;&nbsp;</div>
     <mat-chip-list>
       <mat-chip fxLayoutAlign="start center" class="filter-chip"
+                [ngClass]="{'disable-chip': !filter.active}"
                 color="default"
                 *ngFor="let filter of normalizedFilter"
                 (click)="deselect(filter.type, filter.id, filter.active)">
         <app-icon-close-disabled *ngIf="filter.active === false"></app-icon-close-disabled>
         <app-icon-close-white *ngIf="filter.active === true"></app-icon-close-white>
-        <div class="chip-layout" [ngClass]="{deselected: isFilterInActive(filter)}">{{filter.name}}
+        <div class="chip-layout">{{filter.name}}
         <span *ngIf="isFilterInActive(filter)"> (removed)</span></div>
       </mat-chip>
     </mat-chip-list>

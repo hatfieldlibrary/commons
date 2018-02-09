@@ -40,7 +40,7 @@ export class NavigationService {
       throw new Error('Illegal type: The Array must contain objects that have an id field.');
     }
     let ids = '';
-    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
+    if (typeof list !== 'undefined' && typeof list[0] !== 'undefined' && list[0].id !== 0) {
       list.forEach(item => {
         ids = ids + item.id + ','
       });
@@ -122,6 +122,8 @@ export class NavigationService {
   }
 
   private _handleAreaBackLinks(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
+    console.log('types ' + selectedTypes)
+    console.log('subject ' + selectedSubject)
     if (this.isSubjectSelected(selectedSubject) && selectedTypes) {
       return this._areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
     } else if (this.isSubjectSelected(selectedSubject)) {
@@ -150,10 +152,11 @@ export class NavigationService {
   }
 
   private _areaSubjectLink(selectedArea: string, selectedSubject: string): string {
-    return '/' +  this.urlRootPath + `/collection/subject/${selectedSubject}/area/${selectedArea}`;
+    return '/' +  this.urlRootPath + `/collection/area/${selectedArea}/subject/${selectedSubject}`;
   }
 
   private _areaTypeLink(selectedArea: string, selectedTypes: string): string {
+    console.log('getting area type link')
     return '/' +  this.urlRootPath + `/collection/area/${selectedArea}/type/${selectedTypes}`;
   }
 
@@ -179,6 +182,7 @@ export class NavigationService {
 
   getBackLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
     if (selectedArea && selectedArea !== '0') {
+      console.log('getting link for area type')
       return this._handleAreaBackLinks(selectedArea, selectedSubject, selectedTypes);
     } else if (selectedArea === '0') {
       return this._handleGlobalBackLinks(selectedSubject, selectedTypes);

@@ -24,5 +24,8 @@
   padding: 0 16px;
   margin: 0;
 }
+.area-selection .mat-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  background: #168b94 !important;
+}
 
 
