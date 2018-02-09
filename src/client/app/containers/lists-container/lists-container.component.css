@@ -14,6 +14,10 @@
   background: #6b6552b8;
   background: #615b4ab8;
   background: #696456b8;
+  background: #2f2c22b8;
+  background: #4c4839b8;
+  background: #403e36b8;
+  background: #2f2e2acf;
   margin: 0;
   padding: 32px 16px 12px;
   width: 100%;
@@ -34,7 +38,7 @@
   margin-top: 0px;
 }
 .side-nav-header {
-  margin: 16px 16px 16px;
+  margin: 0 16px 16px;
 }
 /* Reset padding for devices larger than small. */
 mat-card-subtitle.large-device-info {

@@ -28,7 +28,7 @@ div.mobile-padding {
 }
 .chips {
   margin-top: 0;
-  background: #a5a09f26;
+  background: #80756052;
 }
 mat-chip {
   color: #fff !important;
@@ -79,10 +79,11 @@ mat-list-item.collection-list-item.mobile-item-info-height {
   height: 32px;
   min-height: 32px;
   font-size: 12px;
-  background: #a5a09f26;
+  background: #80756052;
 }
 .collection-item{
   color: #791716;
+  color: #0b8a94;
   font-weight: 800;
   cursor: default;
 }
