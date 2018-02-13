@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
@@ -71,6 +71,7 @@ export class ListComponent implements OnDestroy {
   }
 
   setAssetType(type) {
+
     if (type === 'dig') {
       return 'Collection';
     } else {
