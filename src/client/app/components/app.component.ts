@@ -66,12 +66,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   scrollable: Element;
   state = '';
   /**
-   * The item stack allows us to know whether or not to add
-   * the current y position to the yScrollStack.
-   * @type {Array}
-   */
-  itemUrlStack: string[] = [];
-  /**
    * The y scroll stack tracks the top of the collection view
    * element.  The measurement is obtained from the bounding
    * client rectangle of the #appContent child view and is used
@@ -156,27 +150,21 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // Push the value onto the y stack if the url is for an item view and the previous
           // route transition was not also to an item view. This effectively limits
           // y scroll value tracking to the collection view.
-          if (event.url.match(/\/commons\/item/) && this.itemUrlStack.length === 0) {
+          if (event.url.match(/\/commons\/item/) && this.yScrollStack.length === 0) {
             // Push the top
-            this.yScrollStack.push(top);
-            // Add to item stack to prevent further updates of the stacks.
-            this.itemUrlStack.push(event.url);
+            this.yScrollStack.unshift(top);
           }
         } else if (event instanceof NavigationEnd) {
-
           // Use time out to push this work onto the browser's callback queue.
           // This allows rendering to complete before setting scrollTop.
           // If set to a value greater than the maximum available for the element,
           // scrollTop settles itself to the maximum value and we don't see the
           // desired result.
-          this.timeoutService.setTimeout(0, () => {
+          this.timeoutService.setTimeout(300, () => {
             // Get the scrollable element (created by MdSidenavContainer)
 
             this.scrollable = this.document.querySelector('.mat-drawer-content');
-            if (event.url.match(/\/commons\/collection/)) {
-              // Pop the item url stack to prepare for the next transition
-              // to the item route.
-              this.itemUrlStack.pop();
+            if (event.url.match(/\/commons\/collection/) && this.yScrollStack.length > 0) {
               // Pop the top
               this.scrollable.scrollTop = this.yScrollStack.pop();
             } else {
