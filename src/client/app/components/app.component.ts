@@ -17,7 +17,7 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
+  ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
@@ -35,6 +35,10 @@ import {SetSelectedService} from '../services/set-selected.service';
 import {Observable} from 'rxjs/Observable';
 import {AreasFilter} from '../shared/data-types/areas-filter';
 import {NavigationService} from '../services/navigation/navigation.service';
+import {SelectedAreaEvent} from './area-selector/area.component';
+import {TypesFilter} from '../shared/data-types/types-filter';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {TypesFilterType} from '../shared/data-types/types-filter.type';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -56,7 +60,10 @@ import {NavigationService} from '../services/navigation/navigation.service';
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   watcher: Subscription;
-  filters$: Observable<AreasFilter>;
+  areaFilter$: Observable<AreasFilter>;
+  selectedAreas: string;
+  selectedTypes: string;
+  selectedSubject: string;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -113,20 +120,35 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     document.location.href = this.tertiaryUrl;
   }
 
-  areaNavigation(): void {
-
+  areaNavigation(updatedAreaList: SelectedAreaEvent): void {
+    const areaIds = this.navigation.getIds(updatedAreaList.selected);
+    this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject);
   }
 
   ngOnInit() {
-    this.filters$ = Observable.combineLatest(
-      this.store.select(fromRoot.getAreas),
-      this.store.select(fromRoot.getAreasFilter),
+
+    const areaList = this.store.select(fromRoot.getAreas);
+    const areaFilters = this.store.select(fromRoot.getAreasFilter);
+    this.areaFilter$ = Observable.combineLatest(
+      areaList,
+      areaFilters,
       (areas, selected) => {
+        this.selectedAreas = this.navigation.getIds(areas);
         return {
           areas: areas,
           selectedAreas: selected
         }
-      });
+      }
+    );
+    const typeQuery: Subscription = this.store.select(fromRoot.getTypesFilter).subscribe(
+      types => this.selectedTypes = this.navigation.getIds(types),
+      err => console.log(err));
+    this.watcher.add(typeQuery);
+    const subjectQuery: Subscription = this.store.select(fromRoot.getSubjectsFilter).subscribe(
+      subject => this.selectedSubject = subject.id.toString(),
+      err => console.log(err));
+    this.watcher.add(subjectQuery);
+
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {
         console.log(err);

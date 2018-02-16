@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {TypesFilterType} from '../shared/data-types/types-filter.type';
-import {SetSubjectFilter} from '../actions/filter.actions';
+import {RemoveSubjectFilter, SetSubjectFilter} from '../actions/filter.actions';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import * as filterActions from '../actions/filter.actions';
 import * as fromRoot from '../reducers';
@@ -31,14 +31,18 @@ export class SetSelectedService {
    * @private
    */
   setSelectedSubject(subjectId: string): void {
-    const subjectWatcher = this.subjects$.subscribe((subjects) => {
-      subjects.forEach((subject) => {
-        if (subject.id === +subjectId) {
-          this.store.dispatch(new SetSubjectFilter(subject));
-        }
-      })
-    });
-    this.watchers.add(subjectWatcher);
+    if (subjectId) {
+      const subjectWatcher = this.subjects$.subscribe((subjects) => {
+        subjects.forEach((subject) => {
+          if (subject.id === +subjectId) {
+            this.store.dispatch(new SetSubjectFilter(subject));
+          }
+        })
+      });
+      this.watchers.add(subjectWatcher);
+    } else {
+      this.store.dispatch(new RemoveSubjectFilter());
+    }
   }
 
   /**
@@ -49,7 +53,6 @@ export class SetSelectedService {
    * @param {string} areaId comma separated string of area ids.
    */
   setSelectedArea(areaId: string): void {
-    console.log(areaId)
     if (areaId) {
       const areasWatcher = this.areas$.subscribe((areas) => {
         const areaArr = areaId.split(',');

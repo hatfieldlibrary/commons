@@ -32,14 +32,14 @@
     </div>
   </div>
 
-  <div style="margin-top: 24px;" *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">
-    <mat-spinner style="width:inherit"></mat-spinner>
-  </div>
+  <!--<div style="margin-top: 24px;" *ngIf="collectionList?.length === 0" fxHide.gt-sm style="width:100%;margin-top: 50px;">-->
+    <!--<mat-spinner style="width:inherit"></mat-spinner>-->
+  <!--</div>-->
   <mat-card-content>
     <mat-list>
       <mat-list-item class="collection-list-item result-info"
                      [ngClass]="{'mobile-list-item-padding': isMobile, 'mobile-item-info-height': isMobile}">
-        <span class="mat-caption bold-caption">Item Count:&nbsp;</span> {{totalResults()}}</mat-list-item>
+        <span class="mat-caption bold-caption">ITEM COUNT:&nbsp;</span> {{totalResults()}}</mat-list-item>
       <mat-list-item class="collection-list-item"
                      [ngClass]="{'mobile-list-item-padding': isMobile}"
                      (click)="navigateToItem(collection.id)"

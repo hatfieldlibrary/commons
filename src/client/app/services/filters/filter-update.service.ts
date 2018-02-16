@@ -144,7 +144,6 @@ export class FilterUpdateService {
    * @returns {number}
    */
   private getPositionInSelectedList(id: number, type: string): number {
-    console.log(type)
     if (type === this.AREA_KEY) {
       return this.selectedAreas.findIndex((current) => current.id === id);
     } else if (type === this.TYPE_KEY) {

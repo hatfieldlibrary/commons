@@ -2,8 +2,6 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import {SetCollectionsFilter} from '../../actions/collection.actions';
-import {Observable} from 'rxjs/Observable';
 import {SetSearchFilter} from '../../actions/filter.actions';
 
 @Component({

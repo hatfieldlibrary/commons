@@ -22,7 +22,7 @@
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectionStrategy, AfterViewInit} from '@angular/core';
 import * as fromRoot from '../../reducers';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
@@ -49,6 +49,7 @@ import {AreasFilter} from '../../shared/data-types/areas-filter';
   selector: 'app-lists-container',
   templateUrl: 'lists-container.component.html',
   styleUrls: ['lists-container.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default,
   animations: [fadeIn]
 })
 export class ListsContainerComponent implements OnInit, OnDestroy {
@@ -56,14 +57,13 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   title: string;
   subtitle: string;
   state = '';
+  toolTipPosition = 'below';
   /**
    * Redux selectors.
    */
   collections$: Observable<CollectionType[]>;
   subjects$: Observable<SubjectType[]>;
   selectedSubject$: Observable<SubjectType>;
-  selectedAreas$: Observable<AreaFilterType[]>;
-  selectedTypes$: Observable<TypesFilterType[]>;
   areas$: Observable<AreaFilterType[]>;
   areaInfo$: Observable<AreaType[]>;
   types$: Observable<TypesFilterType[]>;
@@ -133,8 +133,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     if (deselected.type === 'area') {
       // Get url query parameter for current areas.
       const areaIds = this.navigation.getIds(this.selectedAreas);
+
       this.areaId = areaIds.replace(regex, '');
-      this.typeId = this.navigation.getIds(this.selectedTypes);
+      if (this.selectedTypes) {
+        this.typeId = this.navigation.getIds(this.selectedTypes);
+      }
     } else {
       // Get url query parameter for current types.
       const typeIds = this.navigation.getIds(this.selectedTypes);
@@ -228,15 +231,17 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
     this.types$ = this.store.select(fromRoot.getTypes);
     this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
-    this.selectedAreas$ = this.store.select(fromRoot.getAreasFilter);
-    this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
     this.filters$ = this.store.select(fromRoot.getFilters);
+    const areaList = this.store.select(fromRoot.getAreas);
+    const areaFilters = this.store.select(fromRoot.getAreasFilter);
+    areaFilters.subscribe(filter => {
+      this.selectedAreas = filter;
+    });
     this.areasFilter$ = Observable.combineLatest(
-      this.store.select(fromRoot.getAreas),
-      this.store.select(fromRoot.getAreasFilter),
+      areaList,
+      areaFilters,
       (areas, selected) => {
         this.selectedAreas = selected;
-        console.log(this.selectedAreas)
         return {
           areas: areas,
           selectedAreas: selected
@@ -248,7 +253,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       this.store.select(fromRoot.getTypesFilter),
       (types, selected) => {
         this.selectedTypes = selected;
-        console.log(this.selectedTypes);
         return {
           types: types,
           selectedTypes: selected

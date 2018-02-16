@@ -29,14 +29,6 @@
     </mat-list-item>
   </mat-list>
 
-  <!--<mat-list #list class="subject-list" fxLayout="row" style="height: 80px;" [ngClass]="{'margin-for-mobile': isMobile}" (scroll)="onScroll($event)" *ngIf="type === 'all'">-->
-    <!--<mat-list-item subjects *ngFor="let subject of subjectList">-->
-      <!--<button mat-raised-button color="primary" (click)="resetList();navigate(subject.id);">-->
-        <!--{{subject.name}}-->
-      <!--</button>-->
-    <!--</mat-list-item>-->
-  <!--</mat-list>-->
-
   <div fxShow="false" fxShow.gt-xs="true" class="subject-navigation right" [ngClass]="{'visible-nav': rightIsVisible, 'hidden-nav': !rightIsVisible, 'hide-for-mobile': isMobile}" (click)="onScrollRequest('right')">
     <app-keyboard-arrow-forward-svg></app-keyboard-arrow-forward-svg>
   </div>

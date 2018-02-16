@@ -20,11 +20,7 @@ export class TitleHeaderComponent implements OnDestroy {
 
   constructor(private media: ObservableMedia) {
     this.watcher = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs') {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
+      this.isMobile = change.mqAlias === 'xs';
     });
   }
 

@@ -16,15 +16,14 @@
   -->
 
 <mat-sidenav-container fullscreen>
-
   <mat-sidenav fxLayout="column" #sidenav align="end" opened="false" mode="over" style="z-index: 4001">
     <mat-toolbar>
       <app-icon-close (click)="sidenav.close()"></app-icon-close>
     </mat-toolbar>
     <div *ngIf="!media.isActive('gt-sm')">
-      <app-navigation-selector [filter]="filters$ | async"
+      <app-area-selector-mobile [filter]="areaFilter$ | async"
                                (areaNavigation)="areaNavigation($event)"
-                               (onSelected)="sidenav.toggle()"></app-navigation-selector>
+                               (onSelected)="sidenav.toggle()"></app-area-selector-mobile>
     </div>
     <mat-divider></mat-divider>
     <div>

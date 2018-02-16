@@ -122,8 +122,6 @@ export class NavigationService {
   }
 
   private _handleAreaBackLinks(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
-    console.log('types ' + selectedTypes)
-    console.log('subject ' + selectedSubject)
     if (this.isSubjectSelected(selectedSubject) && selectedTypes) {
       return this._areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
     } else if (this.isSubjectSelected(selectedSubject)) {
@@ -182,7 +180,6 @@ export class NavigationService {
 
   getBackLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
     if (selectedArea && selectedArea !== '0') {
-      console.log('getting link for area type')
       return this._handleAreaBackLinks(selectedArea, selectedSubject, selectedTypes);
     } else if (selectedArea === '0') {
       return this._handleGlobalBackLinks(selectedSubject, selectedTypes);

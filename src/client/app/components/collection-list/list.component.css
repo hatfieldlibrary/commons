@@ -80,6 +80,7 @@ mat-list-item.collection-list-item.mobile-item-info-height {
   min-height: 32px;
   font-size: 12px;
   background: #80756052;
+  border-bottom: 1px solid #aaa;
 }
 .collection-item{
   color: #791716;
@@ -89,6 +90,7 @@ mat-list-item.collection-list-item.mobile-item-info-height {
 }
 .bold-caption {
   font-weight: 800;
+  color: #666;
 }
 .contents-info {
   padding: 0 0 0 40px;

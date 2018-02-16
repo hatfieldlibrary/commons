@@ -97,6 +97,8 @@ import { CurrentFiltersComponent } from './components/current-filters/current-fi
 import { DispatchService} from './services/dispatch.service';
 import { SetSelectedService} from './services/set-selected.service';
 import {CloseSvgDisabledComponent} from './components/svg/close-svg-disabled/close-svg-disabled.component';
+import {HelpSvgComponent} from './components/svg/help-svg/help-svg.component';
+import { AreaSelectorMobileComponent } from './components/area-selector-mobile/area-selector-mobile.component';
 
 export const appRoutes = [
 
@@ -121,6 +123,7 @@ export const appRoutes = [
     BackSvgComponent,
     LockSvgComponent,
     MenuSvgComponent,
+    HelpSvgComponent,
     CloseSvgComponent,
     AppComponent,
     NavigationComponent,
@@ -160,7 +163,8 @@ export const appRoutes = [
     DatePickerSvgComponent,
     TypesComponent,
     SearchFilterComponent,
-    CurrentFiltersComponent
+    CurrentFiltersComponent,
+    AreaSelectorMobileComponent
 
   ],
   imports: [

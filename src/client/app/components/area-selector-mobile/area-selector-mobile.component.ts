@@ -28,12 +28,12 @@ export interface SelectedAreaEvent {
 }
 
 @Component({
-  selector: 'app-navigation-selector',
-  templateUrl: 'area.component.html',
-  styleUrls: ['area.component.css'],
+  selector: 'app-area-selector-mobile',
+  templateUrl: 'area-selector-mobile.component.html',
+  styleUrls: ['area-selector-mobile.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavigationComponent {
+export class AreaSelectorMobileComponent {
 
   @Input() filter: AreasFilter;
   @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
