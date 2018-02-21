@@ -15,14 +15,15 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {RelatedType} from '../../shared/data-types/related-collection';
 import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-related-items',
   templateUrl: './related-items.component.html',
-  styleUrls: ['./related-items.component.css']
+  styleUrls: ['./related-items.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RelatedItemsComponent {
 

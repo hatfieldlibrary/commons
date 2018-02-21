@@ -15,14 +15,17 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {environment} from '../../environments/environment';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import * as listActions from '../../actions/collection.actions';
-import {AreaListItemType} from '../../shared/data-types/area-list.type';
+import {
+  ChangeDetectionStrategy, Component, EventEmitter, Input, Output
+} from '@angular/core';
+import {MatSelectionList} from '@angular/material';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {AreasFilter} from '../../shared/data-types/areas-filter';
+
+export interface SelectedAreaEvent {
+  selected: AreaFilterType[];
+}
 
 @Component({
   selector: 'app-navigation-selector',
@@ -30,114 +33,47 @@ import {AreaListItemType} from '../../shared/data-types/area-list.type';
   styleUrls: ['area.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavigationComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NavigationComponent {
 
+  @Input() filter: AreasFilter;
+  @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
+  position = 'before';
 
-  @Input() areaList: AreaListItemType[];
-  @Input() selectedAreas: string;
-  private selectedAreaArray: string[];
-  private checkboxGroup: FormGroup;
-  formArrayRef: FormArray;
-  areaFormArray: FormArray;
-
-  constructor(private router: Router,
-              private formBuilder: FormBuilder,
-              private store: Store<fromRoot.State>) {
+  constructor(private filterService: FilterUpdateService) {
   }
 
-  isSelected(id: string): boolean {
-
-    if (this.selectedAreas) {
-      return this.selectedAreas.indexOf(id) >= 0;
+  /**
+   * Used by the area form options.
+   * @param {number} id
+   * @returns {boolean}
+   */
+  isSelected(id: number): boolean {
+    if (this.filter.selectedAreas) {
+      return this.getPositionInSelectedList(id) > -1;
     }
     return false;
   }
 
-  _createIdQueryParam(areaList: FormArray): string {
-    if (areaList.getRawValue().length = 0) {
-      return '0';
-    }
-    let areaId = '';
-    areaList.getRawValue().forEach((id) => {
-      if (id !== '0') {
-        areaId += id + ','
-      }
-    });
-    areaId = areaId.replace(/,\s*$/, '');
-    return areaId;
+  /**
+   * Handles area selection event.
+   * @param {MatSelectionList} list
+   * @param {number} areaId
+   */
+  onAreaListControlChanged(list: MatSelectionList, areaId: number) {
+    const updatedSelectedAreas = this.filterService.updateSelectedAreaStore(this.filter.selectedAreas, this.filter.areas, areaId);
+    const selectedEmitted: SelectedAreaEvent = {selected: updatedSelectedAreas};
+    this.areaNavigation.emit(selectedEmitted);
   }
 
-  _navigateRoute(areaId: string) {
-    // the area id can be a string object of length zero.
-    if (areaId !== '0' && areaId.length > 0) {
-      this.router.navigate(['/', environment.appRoot, 'collection', 'area', areaId]);
-    } else {
-      this.router.navigate(['/', environment.appRoot, 'collection']);
-    }
+  /**
+   * Gets the position index in selectedAreas for the area that
+   * matches the provided id.
+   * @param {number} areaId the id of the area
+   * @returns {number}
+   */
+  private getPositionInSelectedList(areaId: number): number {
+    return this.filter.selectedAreas.findIndex((current) => current.id === areaId);
   }
 
-  _removeFromArray(index: number) {
-    if (index >= 0) {
-      this.areaFormArray.removeAt(index);
-    }
-  }
-
-  _updateAreaFormArray(area: string, checked: boolean) {
-
-    if (checked) {
-      // Remove the All Collections option from list if other collection area is selected.
-      const index = this.areaFormArray.controls.findIndex(x => x.value === '0');
-      this._removeFromArray(index);
-      // Add the selected collection area to FormArray.
-      this.areaFormArray.push(new FormControl(area));
-    } else {
-      // Remove the collection area from FormArray.
-      const index = this.areaFormArray.controls.findIndex(x => x.value === area);
-      this._removeFromArray(index);
-    }
-
-  }
-
-  onChange(area: string, event: any) {
-
-    this.store.dispatch(new listActions.CollectionReset());
-
-    // If the All Collection option is selected, reset the FormArray and navigate.
-    if (area === '0') {
-      this.areaFormArray.reset(['0']);
-      this._navigateRoute(area);
-    } else {
-      // Otherwise, update the FormArray and navigate.
-      this._updateAreaFormArray(area,  event.checked);
-      const areaId = this._createIdQueryParam(this.areaFormArray);
-      this._navigateRoute(areaId);
-    }
-
-  }
-
-  ngOnInit() {
-    this.checkboxGroup = this.formBuilder.group({
-      areas: this.formBuilder.array([])
-    });
-    this.formArrayRef = <FormArray>this.checkboxGroup.controls.areas;
-    if (this.selectedAreas) {
-      this.selectedAreaArray = this.selectedAreas.split(',');
-      this.selectedAreaArray.forEach((id) => {
-        this.formArrayRef.push(new FormControl(id));
-      })
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.areaFormArray = null;
-    this.checkboxGroup = null;
-    this.formArrayRef = null;
-
-  }
-
-  ngAfterViewInit() {
-    this.areaFormArray = <FormArray>this.checkboxGroup.controls.areas;
-
-  }
 
 }

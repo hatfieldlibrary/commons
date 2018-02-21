@@ -63,15 +63,16 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_BY_AREA_SUBJECT: {
       const payload = <IdentifersPayload>action.payload;
-      const id = payload.id;
+      const subjectId = payload.subjectId;
       const areaId = payload.areaId;
-      if (id === '' || areaId === '') {
+      if (subjectId === '' || areaId === '') {
         return {
           collections: [],
           loading: false,
         };
       }
       return Object.assign({}, state, {
+        collections: [],
         loading: true
       });
     }
@@ -86,6 +87,7 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_ALL_BY_SUBJECT: {
       return Object.assign({}, state, {
+        collections: [],
         loading: true
       });
     }
@@ -101,6 +103,7 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_ALL_ACTION: {
       return Object.assign({}, state, {
+        collections: [],
         loading: true
       });
     }
@@ -115,6 +118,7 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_BY_TYPE: {
       return Object.assign({}, state, {
+        collections: [],
         loading: true
       });
     }
@@ -129,6 +133,7 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_BY_TYPE_AREA: {
       return Object.assign({}, state, {
+        collections: [],
         loading: true
       });
     }
@@ -143,6 +148,7 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_BY_TYPE_SUBJECT: {
       return Object.assign({}, state, {
+        collections: [],
         loading: true
       });
     }
@@ -157,6 +163,7 @@ export function reducer(state = initialState, action: CollectionActions): State 
 
     case CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT: {
       return Object.assign({}, state, {
+        collections: [],
         loading: true
       });
     }

@@ -18,3 +18,7 @@
 app-item-container .mat-list .mat-list-item div.mat-list-item-content.mat-ripple {
   padding: 0 0;
 }
+.app-item {
+  padding-bottom: 40px;
+  min-height: 900px;
+}

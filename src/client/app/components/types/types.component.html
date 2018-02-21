@@ -1,13 +1,14 @@
-<div class="side-container">
-  <mat-list *ngIf="typeList.length > 1">
-    <form [formGroup]="checkboxGroup">
-      <mat-list>
-        <mat-list-item *ngFor="let type of typeList">
-          <mat-checkbox type="checkbox" [checked]="isSelected(type.id)" (change)="onChange(type.id, $event)" class='local-navigation' >
-            {{type.name}}
-          </mat-checkbox>
-        </mat-list-item>
-      </mat-list>
-    </form>
-  </mat-list>
+<div class="side-nav-section">
+  <mat-selection-list dense #typeSelectionList>
+    <h4 class="mat-body-2 list-caption">CONTENT TYPES</h4>
+    <mat-list-option *ngFor="let type of filter.types"
+                     class="local-navigation"
+                     [selected]="isSelected(type.id)"
+                     [checkboxPosition]="before"
+                     (click)="onTypeListControlChanged(typeSelectionList, type.id)"
+                     [value]="type.id">
+      {{type.name}}
+    </mat-list-option>
+  </mat-selection-list>
+
 </div>

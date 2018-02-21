@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Http} from "@angular/http";
-import {Store} from "@ngrx/store";
-import * as fromRoot from "../reducers";
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../reducers';
 import {environment} from '../environments/environment';
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Observable';
+import {HttpClient} from '@angular/common/http';
+import {AuthType} from '../shared/data-types/auth.type';
 
 /**
  * This service solves the problem of how to track the current authentication status
@@ -13,13 +14,13 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class AuthCheckService {
 
-  constructor(private http: Http,public store: Store<fromRoot.State>) {}
+  constructor(private http: HttpClient, public store: Store<fromRoot.State>) {}
 
   /**
    * Gets the current authentication status via server request.
    */
   getAuthStatus():  Observable<boolean> {
-        return this.http.get(environment.authCheck)
-          .map(res => res.json().auth);
+        return this.http.get<AuthType>(environment.authCheck)
+          .map(res => res.status);
       }
 }

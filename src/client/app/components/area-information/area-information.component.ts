@@ -16,17 +16,20 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges
+  ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation
 } from '@angular/core';
-import {AreaType} from "../../shared/data-types/area.type";
+import {AreaType} from '../../shared/data-types/area.type';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-area-information',
   templateUrl: './area-information.component.html',
   styleUrls: ['./area-information.component.css'],
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AreaInformationComponent implements OnChanges{
+export class AreaInformationComponent implements OnChanges {
 
   @Input() areaInfo: AreaType[];
   description: string;
@@ -34,20 +37,21 @@ export class AreaInformationComponent implements OnChanges{
   linkLabel: string;
   title: string;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.areaInfo) {
+    if (changes.areaInfo.currentValue) {
       if (changes.areaInfo.currentValue.length > 1) {
-        let areaList = changes.areaInfo.currentValue;
+        const areaList = changes.areaInfo.currentValue;
         let areaTitles = '';
         areaList.forEach((area) => areaTitles += area.title + ', ');
         areaTitles = areaTitles.slice(0, -2);
-        this.description = 'Viewing collection areas: <span class="area-color">' + areaTitles + '</span>';
+        this.description = '<div>Search in collection areas: </div><div class="mat-title areas-color">' + areaTitles + '</div>';
         this.url = '';
         this.linkLabel = '';
         this.title = '';
-      } else {
+      } else if (changes.areaInfo.currentValue[0]) {
         this.title = changes.areaInfo.currentValue[0].title;
         this.description = changes.areaInfo.currentValue[0].description;
         this.url = changes.areaInfo.currentValue[0].url;

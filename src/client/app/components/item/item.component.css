@@ -15,3 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+.item-divider {
+  position: relative;
+  margin: 40px 0;
+}

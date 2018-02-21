@@ -18,13 +18,12 @@
 import { BrowserModule} from '@angular/platform-browser';
 import { NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpModule, RequestOptions} from '@angular/http';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatSelectModule, MatCardModule, MatListModule, MatToolbarModule, MatIconModule, MatChipsModule,
   MatSidenavModule, MatIconRegistry, MatInputModule, MatGridListModule, MatCheckboxModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule, MatTooltipModule
 } from '@angular/material';
 import { RouterModule} from '@angular/router';
 import { APP_BASE_HREF} from '@angular/common';
@@ -61,7 +60,6 @@ import { CloseSvgComponent } from './components/svg/close-svg/close-svg.componen
 import { HomeScreenComponent } from './components/home-screen/home-screen.component';
 import { ItemHeaderComponent } from './components/item-header/item-header.component';
 import { BackSvgComponent } from './components/svg/back-svg/back-svg.component';
-import { GlobalHttpOptions} from './shared/global-request';
 import { LockSvgComponent } from './components/svg/lock-svg/lock-svg.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ItemLinksComponent } from './components/item-links/item-links.component';
@@ -83,7 +81,6 @@ import { LoadingSvgComponent } from './components/svg/loading-svg/loading-svg.co
 import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-black-svg.component';
 import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
-import { UtilitiesService} from './services/utilities.service';
 import { HomeBlackSvgComponent} from './components/svg/home-black-svg/home-black-svg.component';
 import { environment} from 'app/environments/environment';
 import { ItemSelectComponent } from './components/item-select-options/item-select.component';
@@ -93,13 +90,23 @@ import { SetIntervalService} from './services/timers/interval.service';
 import { MenuInteractionService} from './services/menu/menu-interaction.service';
 import { TypeEffects} from './effects/types.effects';
 import { TypesService} from './services/types.service';
+import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { FilterUpdateService} from './services/filters/filter-update.service';
+import { NavigationService} from './services/navigation/navigation.service';
+import { CurrentFiltersComponent } from './components/current-filters/current-filters.component';
+import { DispatchService} from './services/dispatch.service';
+import { SetSelectedService} from './services/set-selected.service';
+import {CloseSvgDisabledComponent} from './components/svg/close-svg-disabled/close-svg-disabled.component';
+import {HelpSvgComponent} from './components/svg/help-svg/help-svg.component';
+import { AreaSelectorMobileComponent } from './components/area-selector-mobile/area-selector-mobile.component';
 
 export const appRoutes = [
 
   {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/area/:areaId/subject/:subjectId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
@@ -116,6 +123,7 @@ export const appRoutes = [
     BackSvgComponent,
     LockSvgComponent,
     MenuSvgComponent,
+    HelpSvgComponent,
     CloseSvgComponent,
     AppComponent,
     NavigationComponent,
@@ -137,6 +145,7 @@ export const appRoutes = [
     HomeSvgComponent,
     HomeBlackSvgComponent,
     CollectionsSvgComponent,
+    CloseSvgDisabledComponent,
     AreasSvgComponent,
     BackBlackSvgComponent,
     TitleHeaderComponent,
@@ -152,7 +161,10 @@ export const appRoutes = [
     FilterSvgComponent,
     ItemSelectComponent,
     DatePickerSvgComponent,
-    TypesComponent
+    TypesComponent,
+    SearchFilterComponent,
+    CurrentFiltersComponent,
+    AreaSelectorMobileComponent
 
   ],
   imports: [
@@ -170,11 +182,11 @@ export const appRoutes = [
     MatCheckboxModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    HttpModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
@@ -219,6 +231,8 @@ export const appRoutes = [
     {provide: APP_BASE_HREF, useValue: '/'},
     CollectionService,
     AreaService,
+    DispatchService,
+    SetSelectedService,
     SubjectService,
     TypesService,
     ItemService,
@@ -227,11 +241,12 @@ export const appRoutes = [
     AuthCheckService,
     MenuInteractionService,
     MatIconRegistry,
-    UtilitiesService,
+    NavigationService,
     SetIntervalService,
     SetTimeoutService,
     MenuInteractionService,
-    {provide: RequestOptions, useClass: GlobalHttpOptions}
+    FilterUpdateService
+   // {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 
   bootstrap: [ AppComponent]

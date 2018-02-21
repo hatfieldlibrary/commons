@@ -16,18 +16,34 @@
  */
 
 export const environment = {
-  production: true,
-  // REST API host. This path will typically be an empty string in production.
-  // Defining a host is useful in development since it allows us to access
-  // the rest API on the production host.
-  apiHost: '',
+  // production: true,
+  // // REST API host. This path will typically be an empty string in production.
+  // // Defining a host is useful in development since it allows us to access
+  // // the rest API on the production host.
+  // apiHost: '',
+  // // Base path, do not include beginning forward slash.
+  // appRoot: 'commons',
+  // // Path to the REST API (using proxy path)
+  // apiRoot: '/commons-rest',
+  // // Path to images (using proxy path)
+  // imagePath: '/commons-images',
+  // // Authentication paths (using proxy path)
+  // authPath: '/commons-auth',
+  // // authCheck: '/commons-check'
+
+  production: false,
+  // REST API host. Can be localhost or production host
+  // apiHost: 'https://libmedia.willamette.edu',
+  apiHost: 'http://158.104.4.106:3001',
   // Base path, do not include beginning forward slash.
   appRoot: 'commons',
-  // Path to the REST API (using proxy path)
-  apiRoot: '/commons-rest',
-  // Path to images (using proxy path)
-  imagePath: '/commons-images',
-  // Authentication paths (using proxy path)
-  authPath: '/commons-auth',
-  authCheck: '/commons-check'
+  // Path to the REST API.
+  // apiRoot: '/commons-rest',
+  apiRoot: '/rest',
+  // Path to images.
+  // imagePath: '/commons-images',
+  imagePath: '',
+  // Authentication paths.
+  authPath: '/auth',
+  authCheck: '/check'
 };

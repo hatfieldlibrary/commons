@@ -19,27 +19,27 @@
 
 import {TestBed, async, ComponentFixture} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {RouterTestingModule} from "@angular/router/testing";
+import {RouterTestingModule} from '@angular/router/testing';
 import {} from 'jasmine';
-import {SetTimeoutService} from "../services/timers/timeout.service";
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {MenuInteractionService} from "../services/menu/menu-interaction.service";
-import {Observable} from "rxjs/Observable";
-import {Store} from "@ngrx/store";
-import {CollectionsSvgComponent} from "app/components/svg/collections-svg/collections-svg.component";
-import {HomeSvgComponent} from "./svg/home-svg/home-svg.component";
-import {NavigationComponent} from "./area-selector/area.component";
-import {CloseSvgComponent} from "./svg/close-svg/close-svg.component";
-import {BackSvgComponent} from "./svg/back-svg/back-svg.component";
-import {HomeBlackSvgComponent} from "./svg/home-black-svg/home-black-svg.component";
-import {MenuSvgComponent} from "./svg/menu-svg/menu-svg.component";
-import {MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule} from "@angular/material";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {Subject} from "rxjs/Subject";
-import {Router} from "@angular/router";
-import {Component} from "@angular/core";
-import {AreaListItemType} from "../shared/data-types/area-list.type";
+import {SetTimeoutService} from '../services/timers/timeout.service';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MenuInteractionService} from '../services/menu/menu-interaction.service';
+import {Observable} from 'rxjs/Observable';
+import {Store} from '@ngrx/store';
+import {CollectionsSvgComponent} from 'app/components/svg/collections-svg/collections-svg.component';
+import {HomeSvgComponent} from './svg/home-svg/home-svg.component';
+import {NavigationComponent} from './area-selector/area.component';
+import {CloseSvgComponent} from './svg/close-svg/close-svg.component';
+import {BackSvgComponent} from './svg/back-svg/back-svg.component';
+import {HomeBlackSvgComponent} from './svg/home-black-svg/home-black-svg.component';
+import {MenuSvgComponent} from './svg/menu-svg/menu-svg.component';
+import {MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Subject} from 'rxjs/Subject';
+import {Router} from '@angular/router';
+import {Component} from '@angular/core';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 @Component({
   selector: 'dummy-component',
@@ -71,10 +71,10 @@ describe('AppComponent', () => {
   let store;
 
 
-  const mockAreaList: AreaListItemType[] =  [
+  const mockAreaList: AreaFilterType[] =  [
     {
       id: 1,
-      title: 'area one',
+      title: 'areas one',
       count: 1
     }
   ];
@@ -133,7 +133,7 @@ describe('AppComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select(): Observable<AreaListItemType[]> {
+            select(): Observable<AreaFilterType[]> {
               return Observable.of(mockAreaList);
             };
           }

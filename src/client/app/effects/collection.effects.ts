@@ -20,7 +20,7 @@
  */
 import {Injectable} from '@angular/core';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
 import {CollectionService} from '../services/collection.service';
 import * as collection from '../actions/collection.actions';
 import {Action} from '../actions/action.interface';
@@ -46,7 +46,7 @@ export class CollectionEffects {
   collectionsBySubjectArea$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_BY_AREA_SUBJECT)
     .map((action: collection.CollectionsAreaSubjectAction) => action.payload)
-    .switchMap((payload) => this.svc.getCollectionsByAreaSubject(payload.id, payload.areaId))
+    .switchMap((payload) => this.svc.getCollectionsByAreaSubject(payload.areaId, payload.subjectId))
     .map((res) => new collection.CollectionsSubjectActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 

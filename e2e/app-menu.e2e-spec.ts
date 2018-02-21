@@ -45,11 +45,11 @@ describe('Application menu', function() {
 
   });
 
-  it('should navigate back to collections for area page from item page', () => {
+  it('should navigate back to collections for areas page from item page', () => {
     page.navigateTo('area');
     page.navigateTo('item');
     page.getBackButton().click();
-    expect(browser.getCurrentUrl()).toContain('/commons/collection/area/7');
+    expect(browser.getCurrentUrl()).toContain('/commons/collection/areas/7');
 
   });
 

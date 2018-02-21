@@ -1,34 +1,34 @@
 
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../environments/environment';
-import {ContentTypeListType} from '../shared/data-types/content-types.type';
+import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {AreaSubjectParams} from '../actions/area-subject-parameters.interface';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class TypesService {
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
-  getTypesAll(): Observable<ContentTypeListType[]> {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/type')
-      .map(res => res.json());
+  getTypesAll(): Observable<TypesFilterType[]> {
+    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type');
   }
 
-  getTypesSubject(subjectId: string): Observable<ContentTypeListType[]> {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/type/subject/' + subjectId)
-      .map(res => res.json());
+  getTypesSubject(subjectId: string): Observable<TypesFilterType[]> {
+    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type/subject/' + subjectId);
   }
 
-  getTypesArea(areaIds: string): Observable<ContentTypeListType[]> {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/type/area/' + areaIds)
-      .map(res => res.json());
+  getTypesArea(areaIds: string): Observable<TypesFilterType[]> {
+    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type/area/' + areaIds);
   }
 
-  getTypesAreaSubject(params: AreaSubjectParams): Observable<ContentTypeListType[]> {
+  getTypesAreaSubject(params: AreaSubjectParams): Observable<TypesFilterType[]> {
     const areaIds = params.areas.join(',');
-    return this.http.get(environment.apiHost + environment.apiRoot + '/type/area/' + areaIds + '/subject/' + params.subject)
-      .map(res => res.json());
+    return this.http.get<TypesFilterType[]>(environment.apiHost
+      + environment.apiRoot + '/type/area/'
+      + areaIds + '/subject/'
+      + params.subject);
+
   }
 }

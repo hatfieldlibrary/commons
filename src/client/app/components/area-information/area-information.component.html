@@ -14,10 +14,12 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
-  <h2>{{title}}</h2>
-  <div [innerHTML]="description"></div>
-  <p *ngIf="url">
-    <a mat-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>
-  </p>
-
+<div class="area-info">
+  <h1 class="mat-display-1">{{title}}</h1>
+  <div class="text-padding">
+    <div [innerHTML]="description"></div>
+    <p *ngIf="url" class="mat-body-1 area-button">
+      <a mat-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>
+    </p>
+  </div>
+</div>

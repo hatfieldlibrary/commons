@@ -14,10 +14,30 @@
  *   You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-h1, h2 {
-  color: #791716;
+h1, h2,
+.mat-display-1,
+.mat-display-2 {
   margin: 0 0 5px;
 }
-.area-color {
-  color: #776a6a;
+.text-padding {
+  padding: 0 0 16px;
 }
+.area-info {
+  font-size: 16px;
+  color: #fff;
+}
+body .area-info .text-padding p  a,
+body .area-info .text-padding p a:visited {
+  color: #deb468;
+  font-weight: 800;
+}
+.area-info .text-padding .area-button a,
+.area-info .text-padding .area-button a:visited {
+  color: #e6ecec;
+  text-decoration: none;
+}
+.area-button {
+  margin: 32px 0 0;
+}
+
+

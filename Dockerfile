@@ -1,4 +1,4 @@
-FROM node:6.11.3
+FROM node:8.9.4
 
 # This Dockerfile assumes that you have build production code using npm run build:prod
 
