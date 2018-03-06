@@ -28,7 +28,7 @@ div.mobile-padding {
 }
 .chips {
   margin-top: 0;
-  background: #80756052;
+  background: rgba(128, 117, 96, 0.32);
 }
 mat-chip {
   color: #fff !important;
@@ -61,7 +61,7 @@ div.mobile-subject-label {
 }
 .collection-list-item {
   height: auto;
-  padding: 12px 50px;
+  padding: 8px 50px;
   border-bottom: 1px solid #ddd;
 }
 mat-list-item.mobile-list-item-padding,
@@ -79,7 +79,7 @@ mat-list-item.collection-list-item.mobile-item-info-height {
   height: 32px;
   min-height: 32px;
   font-size: 12px;
-  background: #80756052;
+  background: rgba(128, 117, 96, 0.32);
   border-bottom: 1px solid #aaa;
 }
 .collection-item{

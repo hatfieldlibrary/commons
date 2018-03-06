@@ -10,18 +10,7 @@ mat-card-content.list-container {
 }
 
 .area-info-container  {
-  /*color: #302e2e color: #f0f0f0;
-  /*background: #1717179c;*/
-  /*background: #25252569;*/
-  background: #716958a1;
-  background: #68655cb8;
-  background: #6b6552b8;
-  background: #615b4ab8;
-  background: #696456b8;
-  background: #2f2c22b8;
-  background: #4c4839b8;
-  background: #403e36b8;
-  background: #2f2e2acf;
+  background: rgba(33, 33, 33, 0.81);
   margin: 0;
   padding: 16px 16px 12px;
   width: 100%;

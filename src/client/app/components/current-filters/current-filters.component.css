@@ -1,5 +1,5 @@
 .filter-container {
-  background: #80756052;
+  background: rgba(128, 117, 96, 0.32);
   padding: 16px 68px 8px;
   vertical-align: middle;
   min-height: 20px;
@@ -10,6 +10,7 @@ div.mobile-padding {
 .filter-chip {
   background: #ad7201;
   background: #905f02;
+  background: #bd7d02;
   color: #fff;
   font-size: 13px;
 }
