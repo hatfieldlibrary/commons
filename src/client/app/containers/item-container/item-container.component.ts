@@ -27,13 +27,15 @@ import * as fromItem from '../../actions/item.actions';
 import * as areaActions from '../../actions/area.actions';
 import * as fromRelated from '../../actions/related.actions';
 import {RelatedType} from '../../shared/data-types/related-collection';
-import {AreaListItemType} from '../../shared/data-types/area-list.type';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 
 import {fadeIn} from '../../animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {SubjectType} from '../../shared/data-types/subject.type';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 
 @Component({
   selector: 'app-item-container',
@@ -45,9 +47,10 @@ import {SubjectType} from '../../shared/data-types/subject.type';
 export class ItemContainerComponent implements OnInit, OnDestroy {
 
   related$: Observable<RelatedType[]>;
-  selectedSubject$: Observable<SubjectType>;
+  selectedSubject$: Observable<SubjectFilterType>;
+  selectedTypes$: Observable<TypesFilterType[]>;
   item$: Observable<ItemType>;
-  areas: AreaListItemType[];
+  areas: AreaFilterType[];
   id: string;
   areasAvailable = false;
   activeMediaQuery = 'xs';
@@ -142,7 +145,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    */
   initializeAreas() {
     if (!this.areasAvailable) {
-      this.store.dispatch(new areaActions.AreaAction());
+      this.store.dispatch(new areaActions.AreaListAction());
     }
 
   }
@@ -167,7 +170,8 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
-    this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
+    this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
+    this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
     this.setAreasAvailable();
 
     // Once we have item information, request related items.

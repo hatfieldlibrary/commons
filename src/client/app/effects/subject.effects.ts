@@ -15,12 +15,12 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Injectable} from "@angular/core";
-import {Actions, Effect} from "@ngrx/effects";
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
 import * as subjects from '../actions/subject-actions';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs/Observable';
 import {Action} from '../actions/action.interface';
-import {SubjectService} from "../services/subject.service";
+import {SubjectService} from '../services/subject.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
@@ -32,19 +32,35 @@ export class SubjectEffects {
   }
 
   @Effect()
-subjectEffect$: Observable<Action> = this.actions$
-  .ofType(subjects.SubjectActionTypes.SUBJECT_LIST)
-  .map((action: subjects.SubjectAction) => action.payload)
-  .switchMap(id => this.svc.getSubjects(id))
-  .map(res => new subjects.SubjectActionSuccess(res))
-  .catch((err) => Observable.of(new subjects.SubjectActionFailed(err)));
+  subjectEffect$: Observable<Action> = this.actions$
+    .ofType(subjects.SubjectActionTypes.SUBJECT_LIST)
+    .map((action: subjects.SubjectAction) => action.payload)
+    .switchMap(id => this.svc.getSubjects(id))
+    .map(res => new subjects.SubjectActionSuccess(res))
+    .catch((err) => Observable.of(new subjects.SubjectActionFailed(err)));
 
   @Effect()
   allSubjectEffect$: Observable<Action> = this.actions$
     .ofType(subjects.SubjectActionTypes.ALL_SUBJECT_LIST)
-   // .map((action: subjects.SubjectAction) => action.payload)
-    .switchMap(()=> this.svc.getAllSubjects())
+    // .map((action: subjects.SubjectAction) => action.payload)
+    .switchMap(() => this.svc.getAllSubjects())
     .map(res => new subjects.AllSubjectActionSuccess(res))
     .catch((err) => Observable.of(new subjects.SubjectActionFailed(err)));
+
+  @Effect()
+  subjectsForTypeEffect$: Observable<Action> = this.actions$
+    .ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_TYPE)
+    .map((action: subjects.SubjectsForTypes) => action.payload)
+    .switchMap(id => this.svc.getSubjectsForType(id))
+    .map(res => new subjects.SubjectsForTypesSuccess(res))
+    .catch(err => Observable.of(new subjects.SubjectActionFailed(err)));
+
+  @Effect()
+  subjectsForAreaTypeEffect$: Observable<Action> = this.actions$
+    .ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE)
+    .map((action: subjects.SubjectsForAreaTypes) => action.payload)
+    .switchMap(payload => this.svc.getSubjectsForAreaAndType(payload.areaId, payload.typeId))
+    .map(res => new subjects.SubjectsForAreaTypesSuccess(res))
+    .catch(err => Observable.of(new subjects.SubjectActionFailed(err)));
 
 }

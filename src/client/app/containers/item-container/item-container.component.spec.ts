@@ -17,54 +17,53 @@
 
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ItemContainerComponent} from './item-container.component';
-import {ItemComponent} from "../../components/item/item.component";
+import {ItemComponent} from '../../components/item/item.component';
 import {
   MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatIconModule, MatInputModule,
   MatListModule,
   MatSelectModule,
   MatSidenavModule,
   MatToolbarModule
-} from "@angular/material";
-import {Store, StoreModule} from "@ngrx/store";
-import {RouterTestingModule} from "@angular/router/testing";
-import {ActivatedRoute, NavigationEnd, Router, RouterModule} from "@angular/router";
-import {Observable} from "rxjs";
+} from '@angular/material';
+import {Store, StoreModule} from '@ngrx/store';
+import {RouterTestingModule} from '@angular/router/testing';
+import {ActivatedRoute, NavigationEnd, Router, RouterModule} from '@angular/router';
+import {Observable} from 'rxjs';
 import * as fromRoot from '../../reducers';
-import {AppComponent} from "../../components/app.component";
-import {NavigationComponent} from "../../components/area-selector/area.component";
-import {RelatedItemsComponent} from "../../components/related-items/related-items.component";
+import {AppComponent} from '../../components/app.component';
+import {NavigationComponent} from '../../components/area-selector/area.component';
+import {RelatedItemsComponent} from '../../components/related-items/related-items.component';
 import * as fromItem from '../../actions/item.actions';
 import * as fromRelated from '../../actions/related.actions';
-import {Renderer2} from "@angular/core";
-import {BackSvgComponent} from "../../components/svg/back-svg/back-svg.component";
-import {LockSvgComponent} from "../../components/svg/lock-svg/lock-svg.component";
-import {CloseSvgComponent} from "../../components/svg/close-svg/close-svg.component";
-import {ItemHeaderComponent} from "../../components/item-header/item-header.component";
-import {FooterComponent} from "../../components/footer/footer.component";
-import {ItemLinksComponent} from "../../components/item-links/item-links.component";
-import {SearchSvgComponent} from "../../components/svg/search-svg/search-svg.component";
-import {MenuSvgComponent} from "../../components/svg/menu-svg/menu-svg.component";
-import {FlexLayoutModule, ObservableMedia} from "@angular/flex-layout";
-import {BrowserModule} from "@angular/platform-browser";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpModule} from "@angular/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AuthCheckService} from "../../services/auth-check.service";
-import {SearchService} from "../../services/search.service";
-import {AppMenusComponent} from "../../components/apps-menu/app-menus.component";
-import {HomeSvgComponent} from "../../components/svg/home-svg/home-svg.component";
-import {CollectionsSvgComponent} from "../../components/svg/collections-svg/collections-svg.component";
-import {ItemHeaderImageComponent} from "../../components/item-header-image/item-header-image.component";
-import {BackBlackSvgComponent} from "../../components/svg/back-black-svg/back-black-svg.component";
-import {InfoSvgComponent} from "../../components/svg/info-svg/info-svg.component";
-import {RunSvgComponent} from "../../components/svg/run-svg/run-svg.component";
-import {ItemSelectComponent} from "../../components/item-select-options/item-select.component";
-import {HomeBlackSvgComponent} from "../../components/svg/home-black-svg/home-black-svg.component";
-import {DatePickerSvgComponent} from "../../components/svg/date-picker-svg/date-picker-svg.component";
-import {UtilitiesService} from "../../services/utilities.service";
-import {Subscription} from "rxjs/Subscription";
-import {MenuInteractionService} from "../../services/menu/menu-interaction.service";
-import {SetTimeoutService} from "../../services/timers/timeout.service";
+import {Renderer2} from '@angular/core';
+import {BackSvgComponent} from '../../components/svg/back-svg/back-svg.component';
+import {LockSvgComponent} from '../../components/svg/lock-svg/lock-svg.component';
+import {CloseSvgComponent} from '../../components/svg/close-svg/close-svg.component';
+import {ItemHeaderComponent} from '../../components/item-header/item-header.component';
+import {FooterComponent} from '../../components/footer/footer.component';
+import {ItemLinksComponent} from '../../components/item-links/item-links.component';
+import {SearchSvgComponent} from '../../components/svg/search-svg/search-svg.component';
+import {MenuSvgComponent} from '../../components/svg/menu-svg/menu-svg.component';
+import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AuthCheckService} from '../../services/auth-check.service';
+import {SearchService} from '../../services/search.service';
+import {AppMenusComponent} from '../../components/apps-menu/app-menus.component';
+import {HomeSvgComponent} from '../../components/svg/home-svg/home-svg.component';
+import {CollectionsSvgComponent} from '../../components/svg/collections-svg/collections-svg.component';
+import {ItemHeaderImageComponent} from '../../components/item-header-image/item-header-image.component';
+import {BackBlackSvgComponent} from '../../components/svg/back-black-svg/back-black-svg.component';
+import {InfoSvgComponent} from '../../components/svg/info-svg/info-svg.component';
+import {RunSvgComponent} from '../../components/svg/run-svg/run-svg.component';
+import {ItemSelectComponent} from '../../components/item-select-options/item-select.component';
+import {HomeBlackSvgComponent} from '../../components/svg/home-black-svg/home-black-svg.component';
+import {DatePickerSvgComponent} from '../../components/svg/date-picker-svg/date-picker-svg.component';
+import {Subscription} from 'rxjs/Subscription';
+import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
+import {SetTimeoutService} from '../../services/timers/timeout.service';
+import {HttpClientModule} from '@angular/common/http';
 
 let mockItem = {
   collection: {
@@ -101,7 +100,7 @@ let mockItem = {
 
 };
 
-let mqAlias = 'xs';
+const mqAlias = 'xs';
 
 
 const setMockAreaRoute = (route: any, mock: string) => {
@@ -168,14 +167,14 @@ describe('ItemContainerComponent', () => {
         MatInputModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule,
+        HttpClientModule,
         StoreModule.forRoot({}),
         RouterTestingModule
       ],
       providers: [
         SetTimeoutService,
         MenuInteractionService,
-        UtilitiesService,
+      //  UtilitiesService,
         {
           provide: Store,
           useClass: class {

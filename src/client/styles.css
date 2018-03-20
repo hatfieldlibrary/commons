@@ -45,7 +45,7 @@ mat-chip {
   cursor: pointer;
 }
 mat-chip .mat-icon {
-  height: 15px;
+  height: 12px;
 }
 /* Used by both container components */
 .main-content-area {
@@ -55,4 +55,9 @@ mat-chip .mat-icon {
    component. */
 .subject-selector-container .mat-list .mat-list-item .mat-list-item-content {
   padding: 0 4px !important;
+}
+.mat-selection-list .mat-list-item .mat-list-text,
+.mat-selection-list .mat-list-option .mat-list-text
+{
+  padding: 0 16px !important;
 }

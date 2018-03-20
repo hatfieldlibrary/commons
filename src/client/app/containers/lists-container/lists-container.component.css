@@ -1,18 +1,30 @@
+mat-card-content.list-container {
+  background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
+  background-repeat: no-repeat,repeat-x;
+  background-position: top center,top center;
+}
+.info-card {
+  /*background: rgba(222, 220, 205, 0.06);*/
+  background: transparent;
+  padding: 0;
+}
 
+.info-card .mat-card-header {
+  background: #666;
+}
 
-.area-info  {
-  font-size: 16px;
-  background: rgb(239, 234, 223);
-  color: #5d5b5b;
-  padding: 22px;
+.area-info-container  {
+  background: rgba(33, 33, 33, 0.81);
+  background: rgba(255, 255, 255, 0.41);
+  background: rgba(239, 234, 223, 0.5);
   margin: 0;
-  font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  padding: 16px 16px 12px;
+  width: 100%;
+  min-height: 154px;
 }
 
 .collection-list-item {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ccc;
 }
 
 .collection-list-item:hover {
@@ -22,3 +34,22 @@
 .collection-list-item a {
   text-decoration: none;
 }
+.side-container {
+  margin-top: 0px;
+}
+.side-nav-header {
+  margin: 0 6px 0 16px;
+}
+/deep/ .mat-tooltip {
+  width: 12em;
+  white-space: normal;
+}
+/* Reset padding for devices larger than small. */
+mat-card-subtitle.large-device-info {
+  padding: 32px 68px;
+
+}
+.filters-margin {
+  margin-top: 16px;
+}
+

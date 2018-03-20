@@ -15,68 +15,89 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
+<app-menus-component
+  [selectedArea]="areaId"
+  [areaList]="areas$ | async"
+  [showBack]="false">
+</app-menus-component>
 
+<mat-card class="main-content-area" style="padding:0;">
 
-  <app-menus-component [selectedArea]="areaId" [areaList]="areas$ | async" [showBack]="false"></app-menus-component>
+  <mat-card-content class="list-container">
 
-  <app-title-header [title]="title"
-                    [subtitle]="subtitle"
-                    [subjectList]="subjects$ | async"
-                    [areaId]="areaId"
-                    [type]="subjectLinkType">
+    <div fxLayout="column" fxLayoutGap.xs="0" fxLayoutGap="32px" fxLayoutAlign="center center">
 
-  </app-title-header>
-
-  <mat-card class="main-content-area" style="padding:0;margin-top: 145px;">
-
-    <mat-card-content style="background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
-    background-repeat: no-repeat,repeat-x;
-    background-position: top center,top center;">
-
-      <div fxLayout="row" fxLayoutAlign="center start" style="margin-top: 75px;padding-top: 35px;">
-
+      <div fxLayout="row"
+           fxLayoutAlign="center start"
+           fxFlexFill>
+        <app-subject-selector
+          fxFlex="1 1 100"
+          fxFlex.md="1 1 85"
+          fxFlex.lg="1 1 76"
+          fxFlex.gt-lg="1 1 51"
+          (subjectNavigation)="subjectNavigation($event)"
+          [subjectList]="subjects$ | async"
+          [selectedSubject]="selectedSubject$ | async">
+        </app-subject-selector>
+      </div>
+      <div fxLayout="row"
+           fxLayoutWrap
+           fxFlexFill
+           fxLayoutGap="20px"
+           fxLayoutAlign="center start">
         <div fxLayout="column"
-             fxFlex="100"
-             fxFlex.sm="100"
-             fxFlex.md="85"
-             fxFlex.lg="70"
-             fxFlex.gt-lg="50">
-
-          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center start"
-               fxLayoutGap.gt-sm="30px">
-
-            <div fxFlex="100" fxFlex.gt-sm="70" style="width:100%;">
-
-              <div style="margin-top: 25px;"></div>
-
-              <mat-card-subtitle class="area-info">
-                <app-area-information *ngIf="!homeScreen"
+             fxFlex.md="1 1 20"
+             fxFlex.lg="1 1 15"
+             fxFlex.gt-lg="1 1 10"
+             class="side-container"
+             *ngIf="media.isActive('gt-sm')">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="side-nav-header mat-title">FILTERS</div>
+            <app-help-svg
+              matTooltip="Use these options to explore collections and items in the Academic Commons. Search by keyword
+or apply filters by selecting from the lists below."
+              [matTooltipPosition]="toolTipPosition"></app-help-svg>
+          </div>
+          <app-search-filter class="filters-margin" [collectionList]="collections$ | async"></app-search-filter>
+          <app-navigation-selector
+            (areaNavigation)="areaNavigation($event)"
+            [filter]="areasFilter$ | async"></app-navigation-selector>
+          <app-types (typeNavigation)="typeNavigation($event)"
+                     [filter]="typesFilter$ | async"></app-types>
+        </div>
+        <div fxLayout="column"
+             fxFlex.xs="1 1 100"
+             fxFlex.sm="1 1 95"
+             fxFlex.md="1 1 60"
+             fxFlex.lg="1 1 60"
+             fxFlex.gt-lg="1 1 40">
+          <div class="mat-card info-card">
+            <div class="mat-card-header">
+              <mat-card-subtitle class="area-info-container" *ngIf="areaScreen" [ngClass]="{'large-device-info': media.isActive('gt-sm')}">
+                <app-area-information
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
-                <app-home-screen *ngIf="homeScreen"
-                                 (removeSubject)="removeSubject($event)"></app-home-screen>
               </mat-card-subtitle>
 
-              <app-collection-list (removeSubject)="removeSubject($event)" [collectionList]="collections$ | async "
-                                   [selectedSubject]="selectedSubject$ | async"
-                                   [selectedArea]="areaId"></app-collection-list>
-
-            </div>
-            <div class="fill-remaining-space"></div>
-            <div fxFlex fxFlex.gt-sm="25" *ngIf="media.isActive('gt-sm')">
-
-              <app-navigation-selector [selectedAreas]="areaId" [areaList]="areas$ | async"></app-navigation-selector>
+                <app-home-screen *ngIf="!areaScreen"
+                                 (subjectNavigation)="subjectNavigation($event)"></app-home-screen>
 
             </div>
 
+            <app-current-filters [filters]="filters$ | async"
+                                 (removeFilter)="removeFilter($event)"></app-current-filters>
+            <div class="mat-card-content">
+              <app-collection-list (subjectNavigation)="subjectNavigation($event)"
+                                   (collectionNavigation)="collectionNavigation($event)"
+                                   [collectionList]="collections$ | async "
+                                   [selectedSubject]="selectedSubject$ | async"></app-collection-list>
+
+            </div>
           </div>
-
         </div>
-
       </div>
+    </div>
+  </mat-card-content>
+</mat-card>
 
-    </mat-card-content>
-
-  </mat-card>
-
-  <app-footer></app-footer>
+<app-footer></app-footer>
 

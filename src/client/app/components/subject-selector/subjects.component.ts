@@ -16,8 +16,8 @@
  */
 
 import {
-  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy,
-  OnInit, QueryList,
+  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy,
+  OnInit, Output, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {SubjectType} from '../../shared/data-types/subject.type';
@@ -27,9 +27,18 @@ import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/collection.actions';
-import {SetIntervalService} from "../../services/timers/interval.service";
-import {MatListItem} from "@angular/material";
+import {SetIntervalService} from '../../services/timers/interval.service';
+import {MatListItem} from '@angular/material';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {Router} from '@angular/router';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SetSubjectFilter} from '../../actions/filter.actions';
+import {NavigationService} from '../../services/navigation/navigation.service';
 
+export interface SelectedSubjectEvent {
+  selected: SubjectFilterType;
+}
 
 @Component({
   selector: 'app-subject-selector',
@@ -40,18 +49,17 @@ import {MatListItem} from "@angular/material";
 export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() subjectList: SubjectType[];
-  @Input() areaId: number;
-  @Input() type: string;
+  @Input() selectedSubject: SubjectFilterType;
+  @Output() subjectNavigation: any = new EventEmitter<any>();
   @ViewChild('container') container: ElementRef;
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
   @ViewChildren(MatListItem, {read: ElementRef}) contentEls: QueryList<ElementRef>;
 
-  selectedSubject: SubjectType;
   watcher: Subscription;
   offsetWidth: number;
   selectorWidth: number;
   lastButtonWidth: number;
-  defaultOffset = 100;
+  defaultOffset = 120;
   lastSubjectButton: ElementRef;
   leftScroll = 0;
   isMobile = true;
@@ -93,24 +101,30 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  /**
-   * Resets the subject ilst in store.
-   */
-  resetList(subjectId): void {
-   if (subjectId !== this.selectedSubject.id) {
-     this.store.dispatch(new listActions.CollectionReset());
-   }
+  private getSelectedSubjectInfo(subjectId: number): SubjectFilterType {
+    return this.subjectList.find((current) => current.id === subjectId);
   }
+
+  /**
+   * Resets the collection list in store.
+   */
+  addSubject(subjectId): void {
+    const selectedSubject: SubjectFilterType = this.getSelectedSubjectInfo(+subjectId);
+    this.store.dispatch(new SetSubjectFilter(selectedSubject));
+    const subjectEventPayload: SelectedSubjectEvent = {selected: selectedSubject};
+    this.subjectNavigation.emit(subjectEventPayload);
+  }
+
 
   /**
    * Set up selected subject watcher.
    */
   ngOnInit(): void {
 
-    const subjectWatcher = this.store.select(fromRoot.getSelectedSubject).subscribe((id) => {
-      this.selectedSubject = id;
-    });
-    this.watcher.add(subjectWatcher);
+    // const subjectWatcher = this.store.select(fromRoot.getSelectedSubject).subscribe((id) => {
+    //   this.selectedSubject = id;
+    // });
+    // this.watcher.add(subjectWatcher);
   }
 
   /**
@@ -139,7 +153,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @returns {number}
    * @private
    */
-  _getOffsetPaddingValue(): number  {
+  _getOffsetPaddingValue(): number {
     return Math.floor(0.1 * this.offsetWidth);
   }
 
@@ -160,7 +174,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (direction === 'left') {
-      if (this.subjects.nativeElement.scrollLeft  - (this.offsetWidth - this._getOffsetPaddingValue()) > 0) {
+      if (this.subjects.nativeElement.scrollLeft - (this.offsetWidth - this._getOffsetPaddingValue()) > 0) {
         check = this.subjects.nativeElement.scrollLeft - (this.offsetWidth - this._getOffsetPaddingValue());
       } else {
         check = 0;
@@ -184,9 +198,9 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       animationCounter = this.subjects.nativeElement.scrollLeft
     }
     // Set the animation limit.
-    let limit = this._setAnimiationLimit(direction);
+    const limit = this._setAnimiationLimit(direction);
 
-    let interval = 20;
+    const interval = 20;
 
     // Start the animation.
     this.intervalService.setInterval(5, () => {
@@ -224,12 +238,16 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.offsetWidth = this.container.nativeElement.offsetWidth;
     const changeWatcher = this.contentEls.changes.subscribe((el) => {
-      this.lastSubjectButton = el._results[this.subjectList.length - 1];
-      const leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
-      this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;
-      this.selectorWidth = leftOffset + this.lastButtonWidth;
-      this.showSubjectNavigationArrow();
-      this.changeDetector.detectChanges();
+      if (this.subjectList) {
+        this.lastSubjectButton = el._results[this.subjectList.length - 1];
+        if (this.lastSubjectButton) {
+          const leftOffset: number = this.lastSubjectButton.nativeElement.lastElementChild.offsetLeft;
+          this.lastButtonWidth = this.lastSubjectButton.nativeElement.lastElementChild.offsetWidth;
+          this.selectorWidth = leftOffset + this.lastButtonWidth;
+          this.showSubjectNavigationArrow();
+          this.changeDetector.detectChanges();
+        }
+      }
     });
 
     this.watcher.add(changeWatcher);
@@ -249,11 +267,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.rightIsVisible = false;
       return;
     }
-    if ((this.leftScroll - this.defaultOffset) > 0) {
-      this.leftIsVisible = true;
-    } else {
-      this.leftIsVisible = false;
-    }
+    this.leftIsVisible = (this.leftScroll - this.defaultOffset) > 0;
     if ((this.leftScroll + this.offsetWidth + this.lastButtonWidth) >= this.selectorWidth + this.defaultOffset) {
       this.rightIsVisible = false;
     }

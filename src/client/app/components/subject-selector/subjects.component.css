@@ -25,7 +25,7 @@ Attempts to define here failed.
 .overflow-x-scroll-no-scrollbar {
   overflow: hidden;
   position: relative;
-  background: #b9b19f;
+  background: rgba(185, 177, 159, 0.64);
   width: auto;
 }
 .overflow-x-scroll-no-scrollbar > mat-list {

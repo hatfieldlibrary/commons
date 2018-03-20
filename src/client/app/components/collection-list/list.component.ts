@@ -18,40 +18,86 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 
 import {CollectionType} from '../../shared/data-types/collection.type';
-import {environment} from '../../environments/environment';
-import {SelectedSubject} from '../../shared/data-types/selected-subject';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import * as listActions from '../../actions/collection.actions';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
+import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-collection-list',
   templateUrl: 'list.component.html',
   styleUrls: ['list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({opacity: '0'}),
+        animate('200ms ease-in', style({opacity: '1'})),
+      ])
+    ])]
 })
 export class ListComponent implements OnDestroy {
 
-
-  rootPath: string = environment.appRoot;
   @Input() collectionList: CollectionType[];
-  @Input() selectedSubject: SelectedSubject;
-  @Output() removeSubject: EventEmitter<void> = new EventEmitter<void>();
-  @Input() selectedArea: string;
+  @Input() selectedSubject: SubjectFilterType;
+  @Output() subjectNavigation: EventEmitter<any> = new EventEmitter<any>();
+  @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   filterTerm: string;
+  isMobile = false;
+  watcher: Subscription;
+  emptySubject: SubjectFilterType = {id: 0, name: ''};
+  state = 'end';
 
-  constructor(private store: Store<fromRoot.State>) {
+  constructor(private filterService: FilterUpdateService,
+              private media: ObservableMedia) {
     this.filterTerm = '';
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
   }
 
+  /**
+   * Emits event to parent component when the subject is deselected. The
+   * $event object is not used.
+   */
   deselect() {
-    this.store.dispatch(new listActions.CollectionReset());
-    this.removeSubject.next();
+    this.filterService.removeSelectedAreaFilter();
+    const emptySubject: SelectedSubjectEvent = {selected: this.emptySubject};
+    this.subjectNavigation.emit(emptySubject);
+  }
+
+  setAccessStatus(restricted: boolean): string {
+    if (restricted) {
+      return 'Restricted to Willamette University';
+    }
+    return 'Public Access';
+  }
+
+  totalResults(): string {
+    return this.collectionList.length.toString();
+  }
+
+  navigateToItem(id: string) {
+    this.collectionNavigation.emit(id);
+  }
+
+  setAssetType(type) {
+    if (type === 'dig') {
+      return 'Collection';
+    } else {
+      return 'Single Item';
+    }
   }
 
   ngOnDestroy(): void {
-    this.removeSubject.unsubscribe();
-
+    this.watcher.unsubscribe();
+    this.subjectNavigation.unsubscribe();
   }
 
 }

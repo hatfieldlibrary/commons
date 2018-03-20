@@ -15,11 +15,17 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Created by mspalti on 4/21/17.
- */
-export class SelectedSubject {
-  id: number;
-  name: string;
 
+.local-navigation  {
+  font-size: 14px;
 }
+
+.list-caption {
+  padding: 0 16px;
+  margin: 0;
+}
+.area-selection .mat-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  background: #168b94 !important;
+}
+
+

@@ -14,12 +14,30 @@
  *   You should have received a copy of the GNU General Public License
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+.mat-list {
+  padding-top: 0;
+}
+.container {
+  padding: 0;
+}
+.mobile-list-container {
+  padding: 12px 0;
+}
+div.mobile-padding {
+  padding: 0;
+}
 .chips {
-  margin-left: 12px;
-  margin-top: 24px;
+  margin-top: 0;
+  background: rgba(128, 117, 96, 0.15);
+  background: rgb(228, 224, 214);
 }
 mat-chip {
   color: #fff !important;
+}
+mat-chip.subject-chip {
+  font-size: 13px;
+  line-height: 11px !important;
+  padding: 6px 10px 6px 0;
 }
 app-collection-list .mat-input-underline {
   border-top-width: 2px !important;
@@ -28,15 +46,61 @@ app-collection-list .mat-input-underline {
 app-collection-list .mat-input-wrapper {
   margin-bottom: 0;
 }
-.mat-list {
-  padding-top:0;
+mat-chip .subject-icon .mat-icon {
+  height: 12px !important;
+  width: 20px !important;
 }
-.collection-filter-input {
-  width:90%;
-  margin-top: 10px;
-  padding: 6px 12px;
+.mat-chip.mat-chip-selected:not(.mat-basic-chip) {
+  background: #36696d;
+}
+.subject-label {
+  padding: 12px 4px 8px 66px;
+  color: #404040;
+}
+div.mobile-subject-label {
+  padding: 8px 4px 8px 12px;
+}
+.collection-list-item {
+  height: auto;
+  padding: 8px 50px;
+   border-bottom: 1px solid #ddd;
+}
+mat-list-item.mobile-list-item-padding,
+div.mobile-list-item-padding {
+  padding: 0 !important;
+}
+.item-info-container {
+  padding: 8px 0;
+}
+.result-item {
+
+}
+mat-list-item.collection-list-item.mobile-item-info-height {
+  height: 42px;
+  min-height: 42px;
+}
+.collection-list-item.result-info {
+  height: 32px;
+  min-height: 32px;
+  font-size: 12px;
+  background: rgba(128, 117, 96, 0.15);
+  background: rgb(228, 224, 214);
+  border-bottom: 1px solid #ddd;
+}
+.collection-item{
+  color: #791716;
+  color: #0b8a94;
+  font-weight: 800;
+  cursor: default;
+}
+.bold-caption {
+  font-weight: 800;
+  color: #666;
+}
+.contents-info {
+  padding: 0 0 0 40px;
+}
+.mat-card-content {
+  margin-bottom: 0;
 }
 
-.mat-chip.mat-chip-selected:not(.mat-basic-chip) {
-  background-color: #3faab2 !important;
-}

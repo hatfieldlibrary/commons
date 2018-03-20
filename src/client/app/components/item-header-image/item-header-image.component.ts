@@ -57,6 +57,9 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
     this.setImage();
   }
 
+  /**
+   *
+   */
   setImageLoaded(): void {
     this.imageLoaded = true;
   }

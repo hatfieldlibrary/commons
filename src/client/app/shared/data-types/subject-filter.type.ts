@@ -16,12 +16,10 @@
  */
 
 /**
- * Created by mspalti on 4/11/17.
+ * Created by mspalti on 4/21/17.
  */
-
-export class AreaListItemType {
+export class SubjectFilterType {
   id: number;
-  title: string;
-  count: number;
+  name: string;
 
 }

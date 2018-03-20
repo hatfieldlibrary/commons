@@ -18,30 +18,28 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {ItemComponent} from './item.component';
-import {MatButtonModule, MatGridListModule, MatInputModule, MatListModule, MatSelectModule} from "@angular/material";
-import {LockSvgComponent} from "../svg/lock-svg/lock-svg.component";
-import {SearchSvgComponent} from "../svg/search-svg/search-svg.component";
-import {FormsModule} from "@angular/forms";
-import {MenuSvgComponent} from "../svg/menu-svg/menu-svg.component";
-import {ItemLinksComponent} from "../item-links/item-links.component";
-import {ActivatedRoute} from "@angular/router";
-import {RouterTestingModule} from "@angular/router/testing";
-import {SearchService} from "../../services/search.service";
-import {AuthCheckService} from "../../services/auth-check.service";
-import {Observable} from "rxjs/Observable";
-import {Store} from "@ngrx/store";
-import {BackBlackSvgComponent} from "../svg/back-black-svg/back-black-svg.component";
-import {InfoSvgComponent} from "../svg/info-svg/info-svg.component";
-import {RunSvgComponent} from "../svg/run-svg/run-svg.component";
-import {ItemSelectComponent} from "../item-select-options/item-select.component";
-import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
-import {UtilitiesService} from "../../services/utilities.service";
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {SimpleChange} from "@angular/core";
+import {MatButtonModule, MatGridListModule, MatInputModule, MatListModule, MatSelectModule} from '@angular/material';
+import {LockSvgComponent} from '../svg/lock-svg/lock-svg.component';
+import {SearchSvgComponent} from '../svg/search-svg/search-svg.component';
+import {FormsModule} from '@angular/forms';
+import {MenuSvgComponent} from '../svg/menu-svg/menu-svg.component';
+import {ItemLinksComponent} from '../item-links/item-links.component';
+import {ActivatedRoute} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import {SearchService} from '../../services/search.service';
+import {AuthCheckService} from '../../services/auth-check.service';
+import {Observable} from 'rxjs/Observable';
+import {Store} from '@ngrx/store';
+import {BackBlackSvgComponent} from '../svg/back-black-svg/back-black-svg.component';
+import {InfoSvgComponent} from '../svg/info-svg/info-svg.component';
+import {RunSvgComponent} from '../svg/run-svg/run-svg.component';
+import {ItemSelectComponent} from '../item-select-options/item-select.component';
+import {DatePickerSvgComponent} from '../svg/date-picker-svg/date-picker-svg.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
 
-let mockItem = {
+const mockItem = {
   collection: {
     id: 1,
     title: '',
@@ -120,7 +118,7 @@ describe('ItemComponent', () => {
         },
         AuthCheckService,
         {
-          provide: UtilitiesService,
+         // provide: UtilitiesService,
           useValue: {
             getBackLink: () => {
               return 'test link'
@@ -155,7 +153,7 @@ describe('ItemComponent', () => {
     fixture = TestBed.createComponent(ItemComponent);
     component = fixture.componentInstance;
     searchSvc = fixture.debugElement.injector.get(SearchService);
-    utilSvc = fixture.debugElement.injector.get(UtilitiesService);
+  //  utilSvc = fixture.debugElement.injector.get(UtilitiesService);
     spyOn(searchSvc, 'getOptionsList').and.callThrough();
     spyOn(utilSvc, 'getBackLink').and.callThrough();
   });
@@ -167,7 +165,7 @@ describe('ItemComponent', () => {
   it('should get back link', () => {
     component.getBackLink();
     expect(utilSvc.getBackLink).toHaveBeenCalled();
-    let path = component.getBackLink();
+    const path = component.getBackLink();
     expect(path).toEqual('test link');
   });
 

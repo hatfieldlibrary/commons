@@ -13,9 +13,9 @@ export class CollectionsFilterPipe implements PipeTransform, OnDestroy {
 
   transform(input: any[], value: string): any[] {
     this.collections = input;
-    if (!this.collections) return [];
-    let query = value ? value : '.*';
-    let regex = new RegExp(query, 'i');
+    if (!this.collections) { return []; }
+    const query = value ? value : '.*';
+    const regex = new RegExp(query, 'i');
     return this.collections.filter(it => regex.test(it.title));
 
   }

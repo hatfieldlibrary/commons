@@ -1,4 +1,45 @@
-h1, h2 {
-  color: #791716;
+h1, h2,
+.mat-display-1,
+.mat-display-2 {
   margin: 0 0 5px;
+}
+.home-image {
+  background-image: url(/assets/img/eaton.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  min-height: 250px;
+
+}
+mat-card-subtitle.area-info-container .home-info {
+  padding: 0 !important;
+}
+.text-padding {
+  padding: 0 0 16px;
+}
+.text-area {
+  padding: 32px;
+  background: #efeadf;
+  background: #701716;
+  background: #0f959f;
+  background: rgba(0, 0, 0, 0.85);
+  line-height: 1.125;
+
+}
+.area-info {
+  font-size: 16px;
+  color: #efefef;
+}
+body .area-info .text-padding p  a,
+body .area-info .text-padding p a:visited {
+  color: #0f959f;
+  font-weight: 800;
+}
+.area-info .text-padding .area-button a,
+.area-info .text-padding .area-button a:visited {
+  color: #e6ecec;
+  text-decoration: none;
+}
+.area-button {
+  margin: 32px 0 0;
 }

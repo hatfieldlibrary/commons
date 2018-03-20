@@ -15,22 +15,22 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {reducers} from "./";
-import {SubjectActionSuccess} from "../actions/subject-actions";
+import {reducers} from './';
+import {SubjectActionSuccess} from '../actions/subject-actions';
 import {
   getAreasState,
   getAreaListState,
-  getCollectionssState,
   getItemState,
   getSubjectsState,
   getRelatedState,
-  getAuthStatusState
-} from "./index";
-import {ItemSuccess} from "../actions/item.actions";
-import {AreaActionSuccess, AreaInformationSuccess} from "../actions/area.actions";
-import {CollectionActionSuccess} from "../actions/collection.actions";
+  getAuthStatusState,
+  getCollectionsState
+} from './index';
+import {ItemSuccess} from '../actions/item.actions';
+import {AreaListActionSuccess, AreaInformationSuccess} from '../actions/area.actions';
+import {CollectionsAreaActionSuccess} from '../actions/collection.actions';
 import {ItemActionRelatedSuccess} from '../actions/related.actions';
-import {GetAuthStatus, SetAuthStatus} from "../actions/auth.action";
+import {SetAuthStatus} from '../actions/auth.action';
 
 
 describe('Reducers ', () => {
@@ -131,8 +131,8 @@ describe('Reducers ', () => {
     subjectState = reducers.subjects(undefined, new SubjectActionSuccess(expectedSubjects));
     itemState = reducers.item(undefined, new ItemSuccess(expectedItem));
     areaState = reducers.area(undefined, new AreaInformationSuccess(expectedArea));
-    areaListState = reducers.areaList(undefined, new AreaActionSuccess(expectedAreas));
-    collectionState = reducers.collections(undefined, new CollectionActionSuccess(expectedCollections));
+    areaListState = reducers.areaList(undefined, new AreaListActionSuccess(expectedAreas));
+    collectionState = reducers.collections(undefined, new CollectionsAreaActionSuccess(expectedCollections));
     relatedItemsState = reducers.related(undefined, new ItemActionRelatedSuccess(expectedRelatedItems));
     authState = reducers.auth(undefined, new SetAuthStatus({status: true}));
   });
@@ -156,12 +156,12 @@ describe('Reducers ', () => {
   });
 
   it('should return collections state.', () => {
-    const result = getCollectionssState(collectionState);
+    const result = getCollectionsState(collectionState);
     expect(result).toBeDefined();
 
   });
 
-  it('should return area state', () => {
+  it('should return areas state', () => {
     const result = getAreasState(areaState);
     expect(result).toBeDefined();
   });

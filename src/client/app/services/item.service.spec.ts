@@ -17,8 +17,8 @@
  */
 
 import {inject, TestBed} from "@angular/core/testing";
-import {HttpModule, ResponseOptions, XHRBackend } from "@angular/http";
-import {MockBackend } from "@angular/http/testing";
+// import {HttpModule, ResponseOptions, XHRBackend } from "@angular/http";
+// import {MockBackend } from "@angular/http/testing";
 import {ItemService} from "./item.service";
 import {ItemType} from "../shared/data-types/item.type";
 
@@ -59,33 +59,33 @@ describe('Item Service', () => {
 
   };
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpModule
-      ],
-      providers: [
-        ItemService,
-        MockBackend,
-        {provide: XHRBackend, useClass: MockBackend}
-      ]
-    })
-      .compileComponents();
-  });
+  // beforeEach(() => {
+  //   TestBed.configureTestingModule({
+  //     imports: [
+  //       HttpModule
+  //     ],
+  //     providers: [
+  //       ItemService,
+  //       MockBackend,
+  //       {provide: XHRBackend, useClass: MockBackend}
+  //     ]
+  //   })
+  //     .compileComponents();
+  // });
 
 
-  it('get item', inject([ItemService, MockBackend], (itemService:ItemService, mockBackend:MockBackend) => {
-    mockBackend.connections.subscribe(conn => {
-      conn.mockRespond(new Response(new ResponseOptions({body: itemMock})));
-    });
-    const result = itemService.getItem('1');
-    result.subscribe(res => {
-      expect(res).toEqual(
-        itemMock
-      );
-    });
-
-  }));
+  // it('get item', inject([ItemService, MockBackend], (itemService:ItemService, mockBackend:MockBackend) => {
+  //   mockBackend.connections.subscribe(conn => {
+  //     conn.mockRespond(new Response(new ResponseOptions({body: itemMock})));
+  //   });
+  //   const result = itemService.getItem('1');
+  //   result.subscribe(res => {
+  //     expect(res).toEqual(
+  //       itemMock
+  //     );
+  //   });
+  //
+  // }));
 
 });
 

@@ -22,8 +22,8 @@ import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.com
 import {MatIconModule, MatSelectModule} from "@angular/material";
 import {SearchService} from "../../services/search.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MockBackend} from "@angular/http/testing";
-import {XHRBackend} from "@angular/http";
+// import {MockBackend} from "@angular/http/testing";
+// import {XHRBackend} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/of';
 
@@ -32,39 +32,39 @@ describe('ItemSelectComponent', () => {
   let fixture: ComponentFixture<ItemSelectComponent>;
   let svc;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ItemSelectComponent,
-        DatePickerSvgComponent
-      ],
-      imports: [
-        MatSelectModule,
-        MatIconModule,
-        BrowserAnimationsModule
-      ],
-      providers: [
-        MockBackend,
-        {provide: XHRBackend, useClass: MockBackend},
-        {
-          provide: SearchService,
-          useValue: {
-            getOptionsQuery: (url, term) => {
-              return term;
-            },
-            getOptionsList: (url) => {
-              return Observable.of([{
-                  item: {
-                    title: 'test'
-                  }
-                }])
-            }
-          }
-        }
-      ]
-    })
-      .compileComponents();
-  }));
+  // beforeEach(async(() => {
+  //   TestBed.configureTestingModule({
+  //     declarations: [
+  //       ItemSelectComponent,
+  //       DatePickerSvgComponent
+  //     ],
+  //     imports: [
+  //       MatSelectModule,
+  //       MatIconModule,
+  //       BrowserAnimationsModule
+  //     ],
+  //     providers: [
+  //       MockBackend,
+  //       {provide: XHRBackend, useClass: MockBackend},
+  //       {
+  //         provide: SearchService,
+  //         useValue: {
+  //           getOptionsQuery: (url, term) => {
+  //             return term;
+  //           },
+  //           getOptionsList: (url) => {
+  //             return Observable.of([{
+  //                 item: {
+  //                   title: 'test'
+  //                 }
+  //               }])
+  //           }
+  //         }
+  //       }
+  //     ]
+  //   })
+  //     .compileComponents();
+  // }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemSelectComponent);
@@ -87,7 +87,7 @@ describe('ItemSelectComponent', () => {
   });
 
   it('should fetch options list onInit', () => {
-    spyOn(svc,'getOptionsList').and.callThrough();
+    spyOn(svc, 'getOptionsList').and.callThrough();
     component.ngOnInit();
     fixture.detectChanges();
     expect(svc.getOptionsList).toHaveBeenCalled();

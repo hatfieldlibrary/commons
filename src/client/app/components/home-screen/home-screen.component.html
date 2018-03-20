@@ -1,6 +1,21 @@
+<div class="area-info">
+  <div fxLayout="row">
+    <div fxHide fxFlex="40" fxFlex.sm="0" fxShow.gt-sm="true" fxShow.sm="false" class="home-image">
+    </div>
 
-  <h2>All Collections</h2>
-  <p> You can search for a known item or collection by using the search option below to filter titles. Or focus your search by
-    selecting one of the collection areas to the right. You can also choose from the list of subjects above to explore
-    collections by type and topic.</p>
+    <div fxFlex.gt-sm="60" fxFlex.sm="100" class="text-area">
+      <!--<h2 class="mat-display-1">Academic Commons</h2>-->
+      <div class="text-padding">
+        <p>The Academic Commons is a clearinghouse for digital projects, collections and research at
+          <a href="https://www.willamette.edu">Willamette University.</a></p>
+
+        <p> A complete list of projects and collections is shown below.
+          <span *ngIf="!isMobile">Filter the list using options to the left or by choosing a subject from the list
+          above.</span>
+          <span *ngIf="isMobile">Filter the list using the application menu or by choosing a subject from the list above.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
