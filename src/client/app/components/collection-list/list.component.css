@@ -28,7 +28,8 @@ div.mobile-padding {
 }
 .chips {
   margin-top: 0;
-  background: rgba(128, 117, 96, 0.32);
+  background: rgba(128, 117, 96, 0.15);
+  background: rgb(228, 224, 214);
 }
 mat-chip {
   color: #fff !important;
@@ -62,7 +63,7 @@ div.mobile-subject-label {
 .collection-list-item {
   height: auto;
   padding: 8px 50px;
-  border-bottom: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
 }
 mat-list-item.mobile-list-item-padding,
 div.mobile-list-item-padding {
@@ -70,6 +71,9 @@ div.mobile-list-item-padding {
 }
 .item-info-container {
   padding: 8px 0;
+}
+.result-item {
+
 }
 mat-list-item.collection-list-item.mobile-item-info-height {
   height: 42px;
@@ -79,8 +83,9 @@ mat-list-item.collection-list-item.mobile-item-info-height {
   height: 32px;
   min-height: 32px;
   font-size: 12px;
-  background: rgba(128, 117, 96, 0.32);
-  border-bottom: 1px solid #aaa;
+  background: rgba(128, 117, 96, 0.15);
+  background: rgb(228, 224, 214);
+  border-bottom: 1px solid #ddd;
 }
 .collection-item{
   color: #791716;

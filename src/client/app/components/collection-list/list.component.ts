@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
@@ -23,12 +23,20 @@ import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-collection-list',
   templateUrl: 'list.component.html',
   styleUrls: ['list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({opacity: '0'}),
+        animate('200ms ease-in', style({opacity: '1'})),
+      ])
+    ])]
 })
 export class ListComponent implements OnDestroy {
 
@@ -40,6 +48,7 @@ export class ListComponent implements OnDestroy {
   isMobile = false;
   watcher: Subscription;
   emptySubject: SubjectFilterType = {id: 0, name: ''};
+  state = 'end';
 
   constructor(private filterService: FilterUpdateService,
               private media: ObservableMedia) {
@@ -63,9 +72,17 @@ export class ListComponent implements OnDestroy {
     this.subjectNavigation.emit(emptySubject);
   }
 
+  setAccessStatus(restricted: boolean): string {
+    if (restricted) {
+      return 'Restricted to Willamette University';
+    }
+    return 'Public Access';
+  }
+
   totalResults(): string {
     return this.collectionList.length.toString();
   }
+
   navigateToItem(id: string) {
     this.collectionNavigation.emit(id);
   }

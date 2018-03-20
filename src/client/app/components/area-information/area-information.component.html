@@ -15,11 +15,17 @@
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <div class="area-info">
-  <h1 class="mat-display-1">{{title}}</h1>
-  <div class="text-padding">
-    <div [innerHTML]="description"></div>
-    <p *ngIf="url" class="mat-body-1 area-button">
-      <a mat-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>
-    </p>
+  <div fxLayout="row">
+    <div fxHide fxFlex="42" fxFlex.sm="0" fxShow.gt-sm="true" fxShow.sm="false" class="area-image">
+    </div>
+    <div fxFlex.gt-sm="58" fxFlex.sm="100" class="area-description">
+      <h1 class="mat-display-1">{{title}}</h1>
+      <div class="text-padding">
+        <div [innerHTML]="description"></div>
+        <p *ngIf="url" class="mat-body-1 area-button">
+          <a mat-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>
+        </p>
+      </div>
+    </div>
   </div>
 </div>

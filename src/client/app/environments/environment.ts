@@ -35,5 +35,6 @@ export const environment = {
   imagePath: '',
   // Authentication paths.
   authPath: '/auth',
-  authCheck: '/check'
+  authCheck: '/check',
+  isDebugMode: true
 };

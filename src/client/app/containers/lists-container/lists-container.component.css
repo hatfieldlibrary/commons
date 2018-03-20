@@ -9,13 +9,20 @@ mat-card-content.list-container {
   padding: 0;
 }
 
+.info-card .mat-card-header {
+  background: #666;
+}
+
 .area-info-container  {
   background: rgba(33, 33, 33, 0.81);
+  background: rgba(255, 255, 255, 0.41);
+  background: rgba(239, 234, 223, 0.5);
   margin: 0;
   padding: 16px 16px 12px;
   width: 100%;
   min-height: 154px;
 }
+
 .collection-list-item {
   border-bottom: 1px solid #ccc;
 }
@@ -43,6 +50,6 @@ mat-card-subtitle.large-device-info {
 
 }
 .filters-margin {
-  margin-top: 8px;
+  margin-top: 16px;
 }
 

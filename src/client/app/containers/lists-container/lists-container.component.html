@@ -33,8 +33,8 @@
         <app-subject-selector
           fxFlex="1 1 100"
           fxFlex.md="1 1 85"
-          fxFlex.lg="1 1 75"
-          fxFlex.gt-lg="1 1 55"
+          fxFlex.lg="1 1 76"
+          fxFlex.gt-lg="1 1 51"
           (subjectNavigation)="subjectNavigation($event)"
           [subjectList]="subjects$ | async"
           [selectedSubject]="selectedSubject$ | async">
@@ -43,24 +43,46 @@
       <div fxLayout="row"
            fxLayoutWrap
            fxFlexFill
-           fxLayoutGap="15px"
+           fxLayoutGap="20px"
            fxLayoutAlign="center start">
+        <div fxLayout="column"
+             fxFlex.md="1 1 20"
+             fxFlex.lg="1 1 15"
+             fxFlex.gt-lg="1 1 10"
+             class="side-container"
+             *ngIf="media.isActive('gt-sm')">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="side-nav-header mat-title">FILTERS</div>
+            <app-help-svg
+              matTooltip="Use these options to explore collections and items in the Academic Commons. Search by keyword
+or apply filters by selecting from the lists below."
+              [matTooltipPosition]="toolTipPosition"></app-help-svg>
+          </div>
+          <app-search-filter class="filters-margin" [collectionList]="collections$ | async"></app-search-filter>
+          <app-navigation-selector
+            (areaNavigation)="areaNavigation($event)"
+            [filter]="areasFilter$ | async"></app-navigation-selector>
+          <app-types (typeNavigation)="typeNavigation($event)"
+                     [filter]="typesFilter$ | async"></app-types>
+        </div>
         <div fxLayout="column"
              fxFlex.xs="1 1 100"
              fxFlex.sm="1 1 95"
              fxFlex.md="1 1 60"
-             fxFlex.lg="1 1 55"
+             fxFlex.lg="1 1 60"
              fxFlex.gt-lg="1 1 40">
           <div class="mat-card info-card">
             <div class="mat-card-header">
-              <mat-card-subtitle class="area-info-container" [ngClass]="{'large-device-info': media.isActive('gt-sm')}">
-                <app-area-information *ngIf="areaScreen"
+              <mat-card-subtitle class="area-info-container" *ngIf="areaScreen" [ngClass]="{'large-device-info': media.isActive('gt-sm')}">
+                <app-area-information
                                       [areaInfo]="areaInfo$ | async"></app-area-information>
+              </mat-card-subtitle>
+
                 <app-home-screen *ngIf="!areaScreen"
                                  (subjectNavigation)="subjectNavigation($event)"></app-home-screen>
-              </mat-card-subtitle>
+
             </div>
-            <mat-divider></mat-divider>
+
             <app-current-filters [filters]="filters$ | async"
                                  (removeFilter)="removeFilter($event)"></app-current-filters>
             <div class="mat-card-content">
@@ -71,25 +93,6 @@
 
             </div>
           </div>
-        </div>
-        <div fxLayout="column"
-             fxFlex.md="1 1 20"
-             fxFlex.lg="1 1 15"
-             fxFlex.gt-lg="1 1 10"
-             class="side-container"
-             *ngIf="media.isActive('gt-sm')">
-          <div fxLayout="row" fxLayoutAlign="start center">
-            <div class="side-nav-header mat-title">FILTERS</div>
-            <app-help-svg
-              matTooltip="Use these options to explore collections and items in the Academic Commons."
-              [matTooltipPosition]="toolTipPosition"></app-help-svg>
-          </div>
-          <app-search-filter class="filters-margin" [collectionList]="collections$ | async"></app-search-filter>
-          <app-navigation-selector
-            (areaNavigation)="areaNavigation($event)"
-            [filter]="areasFilter$ | async"></app-navigation-selector>
-          <app-types (typeNavigation)="typeNavigation($event)"
-                     [filter]="typesFilter$ | async"></app-types>
         </div>
       </div>
     </div>

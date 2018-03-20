@@ -40,7 +40,8 @@
       <mat-list-item class="collection-list-item result-info"
                      [ngClass]="{'mobile-list-item-padding': isMobile, 'mobile-item-info-height': isMobile}">
         <span class="mat-caption bold-caption">ITEM COUNT:&nbsp;</span> {{totalResults()}}</mat-list-item>
-      <mat-list-item class="collection-list-item"
+      <mat-list-item class="collection-list-item result-item"
+                     [@fadeIn]
                      [ngClass]="{'mobile-list-item-padding': isMobile}"
                      (click)="navigateToItem(collection.id)"
                      *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
@@ -49,6 +50,10 @@
           <div>
             <span class="mat-caption bold-caption">Item Type:</span>
            <span class="mat-caption">{{setAssetType(collection.ctype)}}</span>
+          </div>
+          <div>
+            <span class="mat-caption bold-caption">Availability:</span>
+            <span class="mat-caption">{{setAccessStatus(collection.restricted)}}</span>
           </div>
           <div>
             <span class="mat-caption bold-caption ">Content Types:</span>
