@@ -19,20 +19,19 @@
  * Created by mspalti on 3/23/17.
  */
 
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs";
-import {ItemType} from "../shared/data-types/item.type";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {ItemType} from '../shared/data-types/item.type';
 import { environment } from '../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class ItemService {
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
     getItem(itemId: string): Observable<ItemType> {
-      return this.http.get(environment.apiHost + environment.apiRoot + '/collection/id/' + itemId)
-        .map(res =>  <ItemType>res.json() );
+      return this.http.get<ItemType>(environment.apiHost + environment.apiRoot + '/collection/id/' + itemId);
     }
 
 

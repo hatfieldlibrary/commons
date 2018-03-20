@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2017.
  *
@@ -18,34 +19,45 @@
 /**
  * Created by mspalti on 2/24/17.
  */
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs";
-import {AreaType} from "../shared/data-types/area.type";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {AreaType} from '../shared/data-types/area.type';
 import { environment } from '../environments/environment';
-import {AreaListItemType} from "../shared/data-types/area-list.type";
+import {HttpClient} from '@angular/common/http';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 
 export interface AreasResponse {
   area: string;
-  response: AreaListItemType[]
+  response: AreaFilterType[]
 }
 
 @Injectable()
 export class AreaService {
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
-  getAreaList(): Observable<AreaListItemType[]> {
-    // temporary test data source
-    return this.http.get(environment.apiHost + environment.apiRoot + '/area/collection')
-      .map(res => <AreaListItemType[]> res.json());
+  getAreaList(): Observable<AreaFilterType[]> {
+    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot + '/area/collection');
   }
 
-  getAreaInfo(id:string): Observable<AreaType[]> {
-    // temporary test data source
-    return this.http.get(environment.apiHost + environment.apiRoot + '/area/id/' + id)
-      .map(res => <AreaType[]> res.json());
+  getAreaListBySubject(id: string): Observable<AreaFilterType[]> {
+    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot + '/area/subject/' + id);
+  }
+
+  getAreaListByType(id: string): Observable<AreaFilterType[]> {
+    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot + '/area/type/' + id);
+  }
+
+  getAreaListByTypeSubject(typeId: string, subjectId: string): Observable<AreaFilterType[]> {
+    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot +
+      '/area/type/' +
+      typeId + '/subject/' +
+      subjectId);
+  }
+
+  getAreaInfo(id: string): Observable<AreaType[]> {
+    return this.http.get<AreaType[]>(environment.apiHost + environment.apiRoot + '/area/id/' + id);
   }
 
 }

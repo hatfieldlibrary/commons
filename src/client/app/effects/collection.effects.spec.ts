@@ -20,13 +20,13 @@ import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
 import {Observable,} from 'rxjs/Observable';
-import {CollectionService} from "../services/collection.service";
-import {CollectionEffects} from "./collection.effects";
+import {CollectionService} from '../services/collection.service';
+import {CollectionEffects} from './collection.effects';
 import {
-  AllCollectionsAction, AllCollectionSubjectAction, CollectionAction, CollectionActionSuccess,
-  CollectionSubjectActionSuccess, CollectionActionFailed,
-  CollectionSubjectAction, AllCollectionSubjectActionSuccess, AllCollectionsActionSuccess
-} from "../actions/collection.actions";
+  AllCollectionsAction, CollectionsAreaAction, CollectionsAreaActionSuccess,
+  CollectionsSubjectActionSuccess, CollectionActionFailed,
+  CollectionsSubjectAction, CollectionsAreaSubjectAction, AllCollectionsActionSuccess
+} from '../actions/collection.actions';
 
 describe('Collections Effect', () => {
 
@@ -83,21 +83,21 @@ describe('Collections Effect', () => {
 
   });
 
-  it('should call collection success action after collections by area are retrieved', () => {
+  it('should call collection success action after collections by areas are retrieved', () => {
 
-    const startAction = new CollectionAction('1');
+    const startAction = new CollectionsAreaAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new CollectionActionSuccess(mockCollections);
+    const successAction = new CollectionsAreaActionSuccess(mockCollections);
     const expectedResults = cold('--b', {b: successAction});
     expect(collectionEffects.collectionsByArea$).toBeObservable(expectedResults);
 
   });
 
-  it('should return error action for collections by area', () => {
+  it('should return error action for collections by areas', () => {
 
     spyOn(collectionService, 'getCollectionsByAreaId').and.callFake(() => { return Observable.throw('error') });
-    const startAction = new CollectionAction('1');
+    const startAction = new CollectionsAreaAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
@@ -107,21 +107,21 @@ describe('Collections Effect', () => {
 
   });
 
-  it('should call success action after collections by subject and area are retrieved', () => {
+  it('should call success action after collections by subject and areas are retrieved', () => {
 
-    const startAction = new CollectionSubjectAction('1', '1');
+    const startAction = new CollectionsAreaSubjectAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a', hotMarble);
-    const successAction = new CollectionSubjectActionSuccess(mockCollections);
+    const successAction = new CollectionsSubjectActionSuccess(mockCollections);
     const expectedResults = cold('--b', {b: successAction});
     expect(collectionEffects.collectionsBySubjectArea$).toBeObservable(expectedResults);
 
   });
 
-  it('should return error action for collections by subject and area', () => {
+  it('should return error action for collections by subject and areas', () => {
 
     spyOn(collectionService, 'getCollectionsByAreaSubject').and.callFake(() => { return Observable.throw('error') });
-    const startAction = new CollectionSubjectAction('1', '1');
+    const startAction = new CollectionsAreaSubjectAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
@@ -133,10 +133,10 @@ describe('Collections Effect', () => {
 
   it('should call success action after all collections for a subject retrieved', () => {
 
-    const startAction = new AllCollectionSubjectAction('1');
+    const startAction = new CollectionsSubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new AllCollectionSubjectActionSuccess(mockCollections);
+    const successAction = new CollectionsSubjectActionSuccess(mockCollections);
     const expectedResults = cold('--b', {b: successAction});
     expect(collectionEffects.collectionsBySubject$).toBeObservable(expectedResults);
 
@@ -144,8 +144,8 @@ describe('Collections Effect', () => {
 
   it('should return error action for all collections for a given subject', () => {
 
-    spyOn(collectionService, 'getCollectionsBySubject').and.callFake(() => { return Observable.throw('error') });
-    const startAction = new AllCollectionSubjectAction('1');
+    spyOn(collectionService, 'getCollectionsForSubject').and.callFake(() => { return Observable.throw('error') });
+    const startAction = new CollectionsSubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');

@@ -52,7 +52,7 @@ export class ItemSelectComponent implements OnInit  {
    * The redirect parameter is used by tests. Defaults to
    * true in normal use.
    */
-  optionSearch(term, redirect: boolean = true) {
+  optionSearch(term, redirect = true) {
     // This could be a local variable, but using a field makes
     // this method testable.
     this.href = this.svc.getOptionsQuery(this.url, term);

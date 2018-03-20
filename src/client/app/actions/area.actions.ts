@@ -19,76 +19,42 @@
  * Created by mspalti on 2/24/17.
  */
 /**
- * Actions for area updates. These actions are dispatched from component
+ * Actions for areas updates. These actions are dispatched from component
  * controllers and effects map functions.
  */
 import {Action} from '../actions/action.interface';
-import {type} from "../shared/ngrx/type";
-import {AreaType} from "../shared/data-types/area.type";
-import {AreaListItemType} from "../shared/data-types/area-list.type";
+import {type} from '../shared/ngrx/type';
+import {AreaType} from '../shared/data-types/area.type';
+import {AreaFilterType} from 'app/shared/data-types/area-filter.type';
 
 export const AreaActionTypes = {
+  REQUEST_FAILED: type('[Areas] Search Failed'),
+  AREA_INFORMATION: type('[Areas] List for default areas'),
+  AREA_INFORMATION_SUCCESS: type('[Areas] Updating area information'),
   AREA_LIST: type('[Areas] List Areas Request'),
   AREA_LIST_SUCCESS: type('[Areas] List All Areas Response'),
-  REQUEST_FAILED: type('[Areas] Search Failed'),
-  AREA_INFORMATION: type('[Areas] Information for current area'),
-  AREA_INFORMATION_SUCCESS: type('[Areas] Update area information'),
-  AREA_DEFAULT_INFORMATION: type('[Areas] Default information')
+  AREA_LIST_SUBJECT: type('[Areas] List of areas by subject'),
+  AREA_LIST_SUBJECT_SUCCESS: type('[Areas] Updating list of areas by subject'),
+  AREA_LIST_TYPE: type('[Areas] List of areas by type'),
+  AREA_LIST_TYPE_SUCCESS: type('[Areas] Updating list of areas by type'),
+  AREA_LIST_TYPE_SUBJECT: type('[Areas] List of areas by type/subject'),
+  AREA_LIST_TYPE_SUBJECT_SUCCESS: type('[Areas] Updating list of areas by type/subject'),
+  AREA_DEFAULT_LIST: type('[Areas] Default area list information')
 };
 
-
-/**
- * Factory for the request all areaList action.
- */
-export class AreaAction implements Action {
-  type = AreaActionTypes.AREA_LIST;
-
-  constructor(public payload: string = null) {
-  }
-
+export interface AreaParams {
+  typeId: string,
+  subjectId: string
 }
 
 /**
- * Factory for the areaList received action.
- */
-export class AreaActionSuccess implements Action {
-  type = AreaActionTypes.AREA_LIST_SUCCESS;
-
-  constructor(public payload: AreaListItemType[]) {
-  }
-}
-
-/**
- * Factory for the areaList request failed action.
- */
-export class AreaActionFailed implements Action {
-  type = AreaActionTypes.REQUEST_FAILED;
-  payload: void;
-
-  constructor(err: string) {
-    console.log(err)
-  }
-
-}
-
-/**
- * Factory for the action used to initialize collection
- * information with load of the area list.
+ * Factory for the action used to initialize area information
  */
 export class AreaInformation implements Action {
   type = AreaActionTypes.AREA_INFORMATION;
-
   constructor(public payload: string) {
   }
 
-}
-
-export class AreaDefaultInformation implements Action {
-  type = AreaActionTypes.AREA_DEFAULT_INFORMATION;
-  payload: void;
-
-  constructor() {
-  }
 }
 
 /**
@@ -96,8 +62,104 @@ export class AreaDefaultInformation implements Action {
  */
 export class AreaInformationSuccess implements Action {
   type = AreaActionTypes.AREA_INFORMATION_SUCCESS;
-
   constructor(public payload: AreaType[]) {
+  }
+}
+
+// used, but really needed?
+export class AreaDefaultList implements Action {
+  type = AreaActionTypes.AREA_DEFAULT_LIST;
+  payload: void;
+  constructor() {
+  }
+}
+
+
+/**
+ * Factory for the request all areas list action.
+ */
+export class AreaListAction implements Action {
+  type = AreaActionTypes.AREA_LIST;
+  constructor(public payload: string = null) {
+  }
+
+}
+
+/**
+ * Factory for the areas list received action.
+ */
+export class AreaListActionSuccess implements Action {
+  type = AreaActionTypes.AREA_LIST_SUCCESS;
+  constructor(public payload: AreaFilterType[]) {
+  }
+}
+
+/**
+ * Factory for the areas list request failed action.
+ */
+export class AreaListActionFailed implements Action {
+  type = AreaActionTypes.REQUEST_FAILED;
+  payload: void;
+  constructor(err: string) {
+    console.log(err)
+  }
+
+}
+
+/**
+ * Factory for the action used to request area list by subject
+ */
+export class AreaListBySubject implements Action {
+  type = AreaActionTypes.AREA_LIST_SUBJECT;
+  constructor(public payload: string) {
+  }
+
+}
+
+/**
+ * Factory for the action used request area list by type
+ */
+export class AreaListByType implements Action {
+  type = AreaActionTypes.AREA_LIST_TYPE;
+  constructor(public payload: string) {
+  }
+
+}
+
+/**
+ * Factory for the action used to request area list by subject and type.
+ */
+export class AreaListByTypeSubject implements Action {
+  type = AreaActionTypes.AREA_LIST_TYPE_SUBJECT;
+  constructor(public payload: AreaParams) {
+  }
+
+}
+
+/**
+ * Factory for the action used to update the area list by subject.
+ */
+export class AreaListSubjectSuccess implements Action {
+  type = AreaActionTypes.AREA_LIST_SUBJECT_SUCCESS;
+  constructor(public payload: AreaFilterType[]) {
+  }
+}
+
+/**
+ * Factory for the action used to update the area list by type.
+ */
+export class AreaListTypeSuccess implements Action {
+  type = AreaActionTypes.AREA_LIST_TYPE_SUCCESS;
+  constructor(public payload: AreaFilterType[]) {
+  }
+}
+
+/**
+ * Factory for the action used to update the area list by type and subject.
+ */
+export class AreaListTypeSubjectSuccess implements Action {
+  type = AreaActionTypes.AREA_LIST_TYPE_SUBJECT_SUCCESS;
+  constructor(public payload: AreaFilterType[]) {
   }
 }
 
@@ -105,9 +167,15 @@ export class AreaInformationSuccess implements Action {
  * Union type.
  */
 export type AreaActions =
-  AreaAction
-  | AreaActionSuccess
-  | AreaActionFailed
+  AreaListAction
+  | AreaListActionSuccess
+  | AreaListActionFailed
   | AreaInformation
   | AreaInformationSuccess
-  | AreaDefaultInformation;
+  | AreaListBySubject
+  | AreaListSubjectSuccess
+  | AreaListByType
+  | AreaListTypeSuccess
+  | AreaListByTypeSubject
+  | AreaListTypeSubjectSuccess
+  | AreaDefaultList;

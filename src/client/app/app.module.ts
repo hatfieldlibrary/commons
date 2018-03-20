@@ -15,57 +15,57 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {BrowserModule} from '@angular/platform-browser';
+import { BrowserModule} from '@angular/platform-browser';
 import { NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule, RequestOptions} from '@angular/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatSelectModule, MatCardModule, MatListModule, MatToolbarModule, MatIconModule, MatChipsModule,
   MatSidenavModule, MatIconRegistry, MatInputModule, MatGridListModule, MatCheckboxModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule, MatTooltipModule
 } from '@angular/material';
-import {RouterModule} from '@angular/router';
-import {APP_BASE_HREF} from '@angular/common';
-import {StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { RouterModule} from '@angular/router';
+import { APP_BASE_HREF} from '@angular/common';
+import { StoreModule} from '@ngrx/store';
+import { EffectsModule} from '@ngrx/effects';
+import { StoreDevtoolsModule} from '@ngrx/store-devtools';
+import { FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 
-import {AppComponent} from './components/app.component';
-import {ListsContainerComponent} from "./containers/lists-container/lists-container.component";
-import {NavigationComponent} from './components/area-selector/area.component';
-import {ListComponent} from './components/collection-list/list.component';
-import {ItemComponent} from './components/item/item.component';
-import {AreaInformationComponent} from './components/area-information/area-information.component';
-import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
-import {SubjectsComponent} from './components/subject-selector/subjects.component';
-import {CollectionService} from './services/collection.service';
-import {AreaService} from './services/area.service';
-import {AreaEffects} from './effects/area.effects';
-import {SubjectService} from './services/subject.service';
-import {SubjectEffects} from './effects/subject.effects';
-import {CollectionEffects} from './effects/collection.effects';
-import {ItemContainerComponent} from './containers/item-container/item-container.component';
-import {reducers} from './reducers';
-import {ItemEffects} from "./effects/item.effects";
-import {ItemService} from "./services/item.service";
-import {RelatedEffects} from "./effects/related.effects";
+import { AppComponent} from './components/app.component';
+import { ListsContainerComponent} from './containers/lists-container/lists-container.component';
+import { NavigationComponent} from './components/area-selector/area.component';
+import { ListComponent} from './components/collection-list/list.component';
+import { ItemComponent} from './components/item/item.component';
+import { AreaInformationComponent} from './components/area-information/area-information.component';
+import { PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
+import { SubjectsComponent} from './components/subject-selector/subjects.component';
+import { CollectionService} from './services/collection.service';
+import { AreaService} from './services/area.service';
+import { AreaEffects} from './effects/area.effects';
+import { SubjectService} from './services/subject.service';
+import { SubjectEffects} from './effects/subject.effects';
+import { CollectionEffects} from './effects/collection.effects';
+import { ItemContainerComponent} from './containers/item-container/item-container.component';
+import { reducers} from './reducers';
+import { ItemEffects} from './effects/item.effects';
+import { ItemService} from './services/item.service';
+import { RelatedEffects} from './effects/related.effects';
 import { RelatedItemsComponent } from './components/related-items/related-items.component';
-import {RelatedService} from "./services/related.service";
+import { RelatedService} from './services/related.service';
+import { TypesComponent } from './components/types/types.component';
 import { MenuSvgComponent } from './components/svg/menu-svg/menu-svg.component';
 import { CloseSvgComponent } from './components/svg/close-svg/close-svg.component';
 import { HomeScreenComponent } from './components/home-screen/home-screen.component';
 import { ItemHeaderComponent } from './components/item-header/item-header.component';
 import { BackSvgComponent } from './components/svg/back-svg/back-svg.component';
-import {GlobalHttpOptions} from "./shared/global-request";
 import { LockSvgComponent } from './components/svg/lock-svg/lock-svg.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ItemLinksComponent } from './components/item-links/item-links.component';
 import { SearchSvgComponent } from './components/svg/search-svg/search-svg.component';
-import {SearchService} from "./services/search.service";
-import {AuthCheckService} from "./services/auth-check.service";
+import { SearchService} from './services/search.service';
+import { AuthCheckService} from './services/auth-check.service';
 import { AppMenusComponent } from './components/apps-menu/app-menus.component';
 import { HomeSvgComponent } from './components/svg/home-svg/home-svg.component';
 import { CollectionsSvgComponent } from './components/svg/collections-svg/collections-svg.component';
@@ -81,22 +81,39 @@ import { LoadingSvgComponent } from './components/svg/loading-svg/loading-svg.co
 import { BackBlackSvgComponent } from './components/svg/back-black-svg/back-black-svg.component';
 import { CollectionsFilterPipe } from './services/filters/collections-filter.pipe';
 import { FilterSvgComponent } from './components/svg/filter-svg/filter-svg.component';
-import {UtilitiesService} from "./services/utilities.service";
-import {HomeBlackSvgComponent} from "./components/svg/home-black-svg/home-black-svg.component";
-import {environment} from 'app/environments/environment';
+import { HomeBlackSvgComponent} from './components/svg/home-black-svg/home-black-svg.component';
+import { environment} from 'app/environments/environment';
 import { ItemSelectComponent } from './components/item-select-options/item-select.component';
 import { DatePickerSvgComponent } from './components/svg/date-picker-svg/date-picker-svg.component';
-import {SetTimeoutService} from "./services/timers/timeout.service";
-import {SetIntervalService} from './services/timers/interval.service';
-import {MenuInteractionService} from "./services/menu/menu-interaction.service";
+import { SetTimeoutService} from './services/timers/timeout.service';
+import { SetIntervalService} from './services/timers/interval.service';
+import { MenuInteractionService} from './services/menu/menu-interaction.service';
+import { TypeEffects} from './effects/types.effects';
+import { TypesService} from './services/types.service';
+import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { FilterUpdateService} from './services/filters/filter-update.service';
+import { NavigationService} from './services/navigation/navigation.service';
+import { CurrentFiltersComponent } from './components/current-filters/current-filters.component';
+import { DispatchService} from './services/dispatch.service';
+import { SetSelectedService} from './services/set-selected.service';
+import {CloseSvgDisabledComponent} from './components/svg/close-svg-disabled/close-svg-disabled.component';
+import {HelpSvgComponent} from './components/svg/help-svg/help-svg.component';
+import { AreaSelectorMobileComponent } from './components/area-selector-mobile/area-selector-mobile.component';
+import {ConsoleLoggerService} from './shared/logger/console-logger.service';
+import {LoggerService} from './shared/logger/logger.service';
 
 export const appRoutes = [
 
   {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/area/:areaId/subject/:subjectId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/type/:typeId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/area/:areaId/type/:typeId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/area/:areaId/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
   {path: environment.appRoot, redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '', redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
@@ -108,6 +125,7 @@ export const appRoutes = [
     BackSvgComponent,
     LockSvgComponent,
     MenuSvgComponent,
+    HelpSvgComponent,
     CloseSvgComponent,
     AppComponent,
     NavigationComponent,
@@ -129,6 +147,7 @@ export const appRoutes = [
     HomeSvgComponent,
     HomeBlackSvgComponent,
     CollectionsSvgComponent,
+    CloseSvgDisabledComponent,
     AreasSvgComponent,
     BackBlackSvgComponent,
     TitleHeaderComponent,
@@ -143,7 +162,11 @@ export const appRoutes = [
     CollectionsFilterPipe,
     FilterSvgComponent,
     ItemSelectComponent,
-    DatePickerSvgComponent
+    DatePickerSvgComponent,
+    TypesComponent,
+    SearchFilterComponent,
+    CurrentFiltersComponent,
+    AreaSelectorMobileComponent
 
   ],
   imports: [
@@ -161,10 +184,11 @@ export const appRoutes = [
     MatCheckboxModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
@@ -200,26 +224,32 @@ export const appRoutes = [
       AreaEffects,
       SubjectEffects,
       ItemEffects,
-      RelatedEffects
+      RelatedEffects,
+      TypeEffects
     ])
 
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
+    { provide: LoggerService, useClass: ConsoleLoggerService },
     CollectionService,
     AreaService,
+    DispatchService,
+    SetSelectedService,
     SubjectService,
+    TypesService,
     ItemService,
     SearchService,
     RelatedService,
     AuthCheckService,
     MenuInteractionService,
     MatIconRegistry,
-    UtilitiesService,
+    NavigationService,
     SetIntervalService,
     SetTimeoutService,
     MenuInteractionService,
-    {provide: RequestOptions, useClass: GlobalHttpOptions}
+    FilterUpdateService
+   // {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 
   bootstrap: [ AppComponent]

@@ -17,21 +17,29 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
+  ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
-import {NavigationEnd, NavigationStart, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
-} from "@angular/common";
-import {MatSidenav} from "@angular/material";
-import {MenuInteractionService} from "../services/menu/menu-interaction.service";
-import {Store} from "@ngrx/store";
+} from '@angular/common';
+import {MatSidenav} from '@angular/material';
+import {MenuInteractionService} from '../services/menu/menu-interaction.service';
+import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
-import {AreaListItemType} from "../shared/data-types/area-list.type";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
-import {SetTimeoutService} from "../services/timers/timeout.service";
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
+import {SetTimeoutService} from '../services/timers/timeout.service';
+import {SetSelectedService} from '../services/set-selected.service';
+import {Observable} from 'rxjs/Observable';
+import {AreasFilter} from '../shared/data-types/areas-filter';
+import {NavigationService} from '../services/navigation/navigation.service';
+import {SelectedAreaEvent} from './area-selector/area.component';
+import {TypesFilter} from '../shared/data-types/types-filter';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {TypesFilterType} from '../shared/data-types/types-filter.type';
+import {LoggerService} from '../shared/logger/logger.service';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -48,11 +56,15 @@ import {SetTimeoutService} from "../services/timers/timeout.service";
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css'],
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
+
   watcher: Subscription;
-  areas$: Store<AreaListItemType[]>;
+  areaFilter$: Observable<AreasFilter>;
+  selectedAreas: string;
+  selectedTypes: string;
+  selectedSubject: string;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -62,12 +74,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   scrollable: Element;
   state = '';
   /**
-   * The item stack allows us to know whether or not to add
-   * the current y position to the yScrollStack.
-   * @type {Array}
-   */
-  itemUrlStack: string[] = [];
-  /**
    * The y scroll stack tracks the top of the collection view
    * element.  The measurement is obtained from the bounding
    * client rectangle of the #appContent child view and is used
@@ -76,14 +82,17 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
    * @type {Array}
    */
   yScrollStack: number[] = [];
-  selectedAreaIds: string;
 
   constructor(private store: Store<fromRoot.State>,
               private menuService: MenuInteractionService,
               public media: ObservableMedia,
               private router: Router,
+              private route: ActivatedRoute,
               @Inject(DOCUMENT) private document,
-              private timeoutService: SetTimeoutService) {
+              private timeoutService: SetTimeoutService,
+              private setSelected: SetSelectedService,
+              private navigation: NavigationService,
+              private logger: LoggerService ) {
 
     this.watcher = new Subscription();
     const mediaWatcher = media.asObservable()
@@ -94,13 +103,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   }
 
-  //onDeactivate(event) {
-  // Chrome canary supports the new standard usage with d
-  // ocumentElement, but
+  // onDeactivate(event) {
+  // Chrome canary supports the new standard usage with documentElement, but
   // Chrome and presumably other browsers still expect body.
   // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
   // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
-  //}
+  // }
 
   goToHome(): void {
     document.location.href = this.homeUrl;
@@ -114,51 +122,53 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     document.location.href = this.tertiaryUrl;
   }
 
-  _setSelectedAreas(areas: any) {
-    let selected = '';
-    if (areas.length === 0) {
-      selected = '0,';
-    }
-    else {
-      areas.forEach((area) => {
-        selected = area.id + ',';
-      });
-    }
-    this.selectedAreaIds = selected.slice(0, -1);
-
+  areaNavigation(updatedAreaList: SelectedAreaEvent): void {
+    const areaIds = this.navigation.getIds(updatedAreaList.selected);
+    this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject);
   }
 
   ngOnInit() {
-    /**
-     * Get areas for side_nav.
-     * @type {Store<AreaListItemType[]>}
-     */
-    this.areas$ = this.store.select(fromRoot.getAreas);
-    const selectedAreasWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((areas) => {
-      if (areas) {
-        this._setSelectedAreas(areas);
+
+    const areaList = this.store.select(fromRoot.getAreas);
+    const areaFilters = this.store.select(fromRoot.getAreasFilter);
+    this.areaFilter$ = Observable.combineLatest(
+      areaList,
+      areaFilters,
+      (areas, selected) => {
+        this.selectedAreas = this.navigation.getIds(areas);
+        return {
+          areas: areas,
+          selectedAreas: selected
+        }
       }
-    });
-    this.watcher.add(selectedAreasWatcher);
+    );
+    const typeQuery: Subscription = this.store.select(fromRoot.getTypesFilter).subscribe(
+      types => this.selectedTypes = this.navigation.getIds(types),
+      err => console.log(err));
+    this.watcher.add(typeQuery);
+    const subjectQuery: Subscription = this.store.select(fromRoot.getSubjectsFilter).subscribe(
+      subject => this.selectedSubject = subject.id.toString(),
+      err => console.log(err));
+    this.watcher.add(subjectQuery);
+
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {
         console.log(err);
       });
-
     });
     this.watcher.add(openWatcher);
-
   }
 
   ngAfterViewInit() {
 
     // Anticipating angular universal.
     if (isPlatformBrowser) {
-
       /**
        * This sets the scrollTop position for navigation between views.
        */
       this.router.events.subscribe((event: any) => {
+        // Get the scrollable element (created by MdSidenavContainer)
+        this.scrollable = this.document.querySelector('.mat-drawer-content');
         if (event instanceof NavigationStart) {
           // Get absolute value fo the bounding rectangle for #app-content.
           const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
@@ -166,31 +176,25 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // Push the value onto the y stack if the url is for an item view and the previous
           // route transition was not also to an item view. This effectively limits
           // y scroll value tracking to the collection view.
-          if (event.url.match(/\/commons\/item/) && this.itemUrlStack.length == 0) {
+          if (event.url.match(/\/commons\/item/) && this.yScrollStack.length === 0) {
             // Push the top
-            this.yScrollStack.push(top);
-            // Add to item stack to prevent further updates of the stacks.
-            this.itemUrlStack.push(event.url);
+            this.yScrollStack.unshift(top);
+            this.logger.info('Bounding rectangle: ' + top);
+            this.scrollable.scrollTop = 0;
           }
         } else if (event instanceof NavigationEnd) {
-
           // Use time out to push this work onto the browser's callback queue.
           // This allows rendering to complete before setting scrollTop.
           // If set to a value greater than the maximum available for the element,
           // scrollTop settles itself to the maximum value and we don't see the
           // desired result.
-          this.timeoutService.setTimeout(5, () => {
-            // Get the scrollable element (created by MdSidenavContainer)
-
-            this.scrollable = this.document.querySelector('.mat-drawer-content');
-            if (event.url.match(/\/commons\/collection/)) {
-              // Pop the item url stack to prepare for the next transition
-              // to the item route.
-              this.itemUrlStack.pop();
+          this.timeoutService.setTimeout(350, () => {
+            if (event.url.match(/\/commons\/collection/) && this.yScrollStack.length > 0) {
+              const top = this.yScrollStack.pop();
+              this.logger.info('setting scrollTop to: ' + top);
               // Pop the top
-              this.scrollable.scrollTop = this.yScrollStack.pop();
-            }
-            else {
+              this.scrollable.scrollTop = top;
+            } else {
               // Currently the only other view is for items. This
               // view should always initialize with scrollTop equal
               // to zero.
@@ -209,6 +213,10 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.timeoutService) {
       this.timeoutService.clearTimeout();
     }
+    // Unsubscribe all watchers in the service. Each component
+    // instance will resubscribe. The prevents the multiple
+    // subscriptions within service.
+    this.setSelected.unsubscribe();
   }
 
 

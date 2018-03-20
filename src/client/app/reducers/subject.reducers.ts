@@ -18,8 +18,8 @@
 /**
  * Created by mspalti on 2/24/17.
  */
-import {SubjectActions, SubjectActionTypes} from "../actions/subject-actions";
-import {SubjectType} from "../shared/data-types/subject.type";
+import {SubjectActions, SubjectActionTypes} from '../actions/subject-actions';
+import {SubjectType} from '../shared/data-types/subject.type';
 
 export interface State {
   subjects: SubjectType[];
@@ -30,7 +30,7 @@ export interface State {
 
 const initialState: State = {
   subjects: [],
-  selectedSubject: {id: 0, name:'', url:''},
+  selectedSubject: {id: 0, name: '', url: ''},
   loading: false
 };
 
@@ -70,6 +70,42 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
+
+    case SubjectActionTypes.SUBJECT_LIST_FOR_TYPE: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+
+    }
+
+    case SubjectActionTypes.SUBJECT_LIST_FOR_TYPE_SUCCESS: {
+
+      const result: SubjectType[] = <SubjectType[]>action.payload;
+      return Object.assign({}, state, {
+        subjects: result,
+        loading: false
+      });
+
+    }
+
+    case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+
+    }
+
+    case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS: {
+
+      const result: SubjectType[] = <SubjectType[]>action.payload;
+      return Object.assign({}, state, {
+        subjects: result,
+        loading: false
+      });
+
+    }
+
+
     case SubjectActionTypes.CURRENT_SELECTED_SUBJECT: {
 
       const selectedId: string = <string>action.payload;
@@ -87,7 +123,7 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     case SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT: {
       return Object.assign({}, state, {
-        selectedSubject: {id: 0, name:'', url:''}
+        selectedSubject: {id: 0, name: '', url: ''}
       });
     }
 

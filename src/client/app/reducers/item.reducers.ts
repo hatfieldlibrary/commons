@@ -15,8 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ItemType} from "../shared/data-types/item.type";
-import {ItemActions, ItemActionTypes} from "../actions/item.actions";
+import {ItemType} from '../shared/data-types/item.type';
+import {ItemActions, ItemActionTypes} from '../actions/item.actions';
 /**
  * Created by mspalti on 3/23/17.
  */

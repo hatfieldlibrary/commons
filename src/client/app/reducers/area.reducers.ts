@@ -18,17 +18,18 @@
 /**
  * Created by mspalti on 2/24/17.
  */
-import {AreaActions, AreaActionTypes} from "../actions/area.actions";
-import {AreaType} from "../shared/data-types/area.type";
+import {AreaActions, AreaActionTypes} from '../actions/area.actions';
+import {AreaType} from '../shared/data-types/area.type';
+import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 export interface State {
-  area: AreaType[];
+  areas: AreaType[];
   loading: boolean;
 
 }
 
 const initialState: State = {
-  area: [<AreaType>{
+  areas: [<AreaType>{
     id: 0,
     title: '',
     linkLabel: '',
@@ -55,16 +56,9 @@ export function reducer(state = initialState, action: AreaActions): State {
 
       return Object.assign({}, state,
         {
-          area: payload,
+          areas: payload,
           loading: false
         });
-    }
-
-    case AreaActionTypes.AREA_DEFAULT_INFORMATION: {
-
-      return Object.assign({}, initialState, {
-        loading: false
-      });
     }
 
     default:
@@ -74,4 +68,4 @@ export function reducer(state = initialState, action: AreaActions): State {
 
 }
 
-export const getAreaInfo = (state: State) => state.area;
+export const getAreaInfo = (state: State) => state.areas;

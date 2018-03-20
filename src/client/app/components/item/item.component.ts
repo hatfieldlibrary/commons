@@ -17,10 +17,11 @@
 
 import {
   Component, Input, ChangeDetectionStrategy} from '@angular/core';
-import {ItemType} from "../../shared/data-types/item.type";
-import {SubjectType} from "../../shared/data-types/subject.type";
-import {UtilitiesService} from "../../services/utilities.service";
-import {ObservableMedia} from "@angular/flex-layout";
+import {ItemType} from '../../shared/data-types/item.type';
+import {ObservableMedia} from '@angular/flex-layout';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {NavigationService} from '../../services/navigation/navigation.service';
 
 /**
  * This is the parent component for presenting all item data.
@@ -33,19 +34,19 @@ import {ObservableMedia} from "@angular/flex-layout";
 })
 export class ItemComponent  {
 
-
   @Input() item: ItemType;
   @Input() selectedArea: string;
-  @Input() selectedSubject: SubjectType;
+  @Input() selectedSubject: SubjectFilterType;
+  @Input() selectedTypes: TypesFilterType[];
   state = '';
 
-  constructor(private utils: UtilitiesService,
-              public media: ObservableMedia) {
-
-  }
+  constructor(private navigationService: NavigationService,
+              public media: ObservableMedia) {}
 
   getBackLink(): string {
-    const path = this.utils.getBackLink(this.selectedArea, this.selectedSubject);
+    const typeIds = this.navigationService.getIds(this.selectedTypes);
+    const path =
+      this.navigationService.getBackLink(this.selectedArea, this.selectedSubject.id.toString(), typeIds);
     return path;
 
   }

@@ -16,274 +16,269 @@
  */
 
 /**
- * The main container component for subject selector, area selector and collection
+ * The main container component for subject selector, areas/types selectors and collection
  * list components
  */
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import {Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
-import {environment} from '../../environments/environment';
+import {Component, OnInit, OnDestroy, ChangeDetectionStrategy, AfterViewInit} from '@angular/core';
 import * as fromRoot from '../../reducers';
-import * as listActions from '../../actions/collection.actions';
-import * as areaActions from '../../actions/area.actions';
-import * as subjectAction from '../../actions/subject-actions';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
-import {AreaListItemType} from '../../shared/data-types/area-list.type';
 import {fadeIn} from '../../animation/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {NavigationService} from '../../services/navigation/navigation.service';
+import {DeselectedFilter} from 'app/components/current-filters/current-filters.component';
+import {SelectedAreaEvent} from '../../components/area-selector/area.component';
+import {SelectedTypeEvent} from '../../components/types/types.component';
+import {SelectedSubjectEvent} from '../../components/subject-selector/subjects.component';
+import {DispatchService} from '../../services/dispatch.service';
+import {SetSelectedService} from '../../services/set-selected.service';
+import {TypesFilter} from '../../shared/data-types/types-filter';
+import * as fromFilter from '../../reducers/filter.reducers';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/observable/combineLatest';
+import {AreasFilter} from '../../shared/data-types/areas-filter';
 
 @Component({
   selector: 'app-lists-container',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'lists-container.component.html',
   styleUrls: ['lists-container.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default,
   animations: [fadeIn]
 })
 export class ListsContainerComponent implements OnInit, OnDestroy {
 
+  title: string;
+  subtitle: string;
+  state = '';
+  toolTipPosition = 'below';
+  /**
+   * Redux selectors.
+   */
   collections$: Observable<CollectionType[]>;
   subjects$: Observable<SubjectType[]>;
   selectedSubject$: Observable<SubjectType>;
-  areas$: Observable<AreaListItemType[]>;
+  areas$: Observable<AreaFilterType[]>;
   areaInfo$: Observable<AreaType[]>;
-  areasAvailable: boolean;
+  types$: Observable<TypesFilterType[]>;
+  filters$: Observable<fromFilter.State>;
+  typesFilter$: Observable<TypesFilter>;
+  areasFilter$: Observable<AreasFilter>;
+  selectedAreas: AreaFilterType[];
+  selectedTypes: TypesFilterType[];
+  /**
+   * These member variables contain the route parameters.
+   */
   areaId: string;
-  subjectLinkType: string;
-  homeScreen: boolean;
-  title: string;
-  subtitle: string;
+  typeId: string;
   subjectId: string;
-  state = '';
+  /**
+   * Used to clean up subscriptions OnDestroy.
+   */
   watchers: Subscription;
-  areas: AreaListItemType[];
+  /**
+   * Boolean value determines whether to show the area information
+   * component or the default home information.
+   */
+  areaScreen: boolean;
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
-              private router: Router,
-              public media: ObservableMedia) {
+              public media: ObservableMedia,
+              private navigation: NavigationService,
+              private setSelected: SetSelectedService,
+              private dispatchService: DispatchService) {
 
   }
 
   /**
-   * Subscribes to areaList observable and sets member variable to true if the array
-   * is not empty.
-   */
-  setAreasAvailable(): void {
-    const areasWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
-      // id is 0 in initial state.
-      if (areas[0].id > 0) {
-        this.areas = areas;
-        this.areasAvailable = true;
-      }
-    });
-    this.watchers.add(areasWatcher);
-  }
-
-  _setAllCollectionTitle() {
-    this.title = 'All Collections';
-  }
-
-  setItemTitle(): void {
-
-    const areaInfoWatcher = this.store.select(fromRoot.getAreaInfo).subscribe((info) => {
-
-      // Clear the item and subtitle labels before proceeding.
-      this.title = '';
-      this.subtitle = '';
-      if (info.length > 0) {
-        // If the local areaId field is set to '0' then just use
-        // the default title.
-        if (info[0].id === 0) {
-          this._setAllCollectionTitle();
-        } else if (info.length > 1) {
-          // Use subtitle for multiple collection names
-          // Multiple areas selected, use subtitle format for multiple area info.
-          info.forEach((area) => this.subtitle += area.title + ' / ');
-          this.subtitle = this.subtitle.substring(0, this.subtitle.length - 2);
-        } else if (info[0].title.length > 0) {
-          // Otherwise update the title using the new single area information.
-          this.title = info[0].title;
-        } else {   // Default.
-          this._setAllCollectionTitle();
-        }
-      }
-    });
-    this.watchers.add(areaInfoWatcher);
-  }
-
-  /**
-   * Dispatches action for collections by subject and area.
-   * @param subjectId
-   * @param areaId
-   */
-  getCollectionsBySubject(subjectId: string, areaId: string): void {
-    this.store.dispatch(new listActions.CollectionSubjectAction(subjectId, areaId));
-    this.getAreaInformation(areaId);
-    this._setSelectedSubject(subjectId);
-  }
-
-  /**
-   * Dispatches action for collections in an area.
-   * @param areaId
-   */
-  getCollectionsByArea(areaId: string): void {
-    this.store.dispatch(new listActions.CollectionAction(areaId));
-    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
-
-  }
-
-  /**
-   * Dispatches action to fetch all collections.
-   */
-  getAllCollections(): void {
-    this.title = 'All Collections';
-    this.store.dispatch(new listActions.AllCollectionsAction());
-    this.store.dispatch(new subjectAction.AllSubjectAction());
-    this.store.dispatch(new subjectAction.RemoveCurrentSubject());
-    this.store.dispatch(new areaActions.AreaDefaultInformation());
-
-  }
-
-  /**
-   * Wrapper for collection actions.
-   * @param areaId
-   */
-  getCollections(areaId: string): void {
-    this.getCollectionsByArea(areaId);
-    this.getAreaInformation(areaId);
-
-  }
-
-  /**
-   * Dispatches action for area information and for list of
-   * subjects assigned to the area..
-   * @param areaId
-   */
-  getAreaInformation(areaId: string): void {
-    this.store.dispatch(new areaActions.AreaInformation(areaId));
-    this.store.dispatch((new subjectAction.SubjectAction((areaId))));
-  }
-
-  /**
-   * Dispatches request for all collections that have the given subject.
-   *
-   * Also dispatches request for list of subjects. This assures that subjects
-   * are in the store when user links directly to this page. If global subjects
-   * are implemented in the final product, it may make sense to assign these
-   * to their own reducer, since the state of the global list will not change.
-   * That way we can initialize once.
-   *
-   * @param subjectId
-   */
-  getAllCollectionsForSubject(subjectId: string) {
-
-    this.store.dispatch((new listActions.AllCollectionSubjectAction(subjectId)));
-    this.store.dispatch(new subjectAction.AllSubjectAction());
-    this._setSelectedSubject(subjectId);
-
-  }
-
-  /**
-   * Dispatches action to set the selected subject after the subject list subscription
-   * tells us that subjects are available.
-   * @param {string} subjectId
-   * @private
-   */
-  _setSelectedSubject(subjectId: string) {
-    const subjectsWatcher = this.store.select(fromRoot.getSubject).subscribe(() => {
-      this.store.dispatch(new subjectAction.CurrentSubject(subjectId));
-    });
-    this.watchers.add(subjectsWatcher);
-
-  }
-
-  /**
-   * Dispatches action for area list if not currently available in the store.
+   * Dispatches action for areas list if not currently available in the store.
    * @param id
    */
-  initializeAreas() {
-    if (!this.areasAvailable) {
-      this.store.dispatch(new areaActions.AreaAction());
-    }
-
-  }
-
-  removeSubject(event) {
-    if (this.areaId && this.areaId !== '0') {
-      this.router.navigateByUrl('/' + environment.appRoot + '/collection/area/' + this.areaId);
+  private initializeAreas(params: any) {
+    if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
+      this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
+    } else if (this.navigation.isSubjectSelected(params['subjectId'])) {
+      this.dispatchService.getAreasBySubject(params['subjectId']);
+    } else if (this.navigation.isTypeSelected(params['typeId'])) {
+      this.dispatchService.getAreasByType(params['typeId']);
     } else {
-      this.router.navigateByUrl('/' + environment.appRoot + '/collection');
+      this.dispatchService.getAllAreas();
     }
   }
 
-  ngOnInit() {
+  /**
+   * Event binding callback to update the collection list
+   * when a subject is deselected.
+   */
+  subjectNavigation(subjectEventPayload: SelectedSubjectEvent): void {
+    this.navigation.navigateFilterRoute(this.areaId, this.typeId, subjectEventPayload.selected.id.toString());
+  }
 
-    // All component subscriptions will be added to this object.
-    this.watchers = new Subscription();
+  /**
+   * Deselect filter callback for areas and types. This filter
+   * uses the currently selected areas and types to assure correct
+   * state across filter changes.
+   * @param {DeselectedFilter} deselected
+   */
+  removeFilter(deselected: DeselectedFilter): void {
+    const test = deselected.id + '[^0-9]*';
+    const regex = new RegExp(test);
+    if (deselected.type === 'area') {
+      // Get url query parameter for current areas.
+      const areaIds = this.navigation.getIds(this.selectedAreas);
 
-    this.setItemTitle();
-    this.setAreasAvailable();
+      this.areaId = areaIds.replace(regex, '');
+      if (this.selectedTypes) {
+        this.typeId = this.navigation.getIds(this.selectedTypes);
+      }
+    } else {
+      // Get url query parameter for current types.
+      const typeIds = this.navigation.getIds(this.selectedTypes);
+      this.typeId = typeIds.replace(regex, '');
+      this.areaId = this.navigation.getIds(this.selectedAreas);
+    }
+    this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId);
+  }
 
-    // The subjects$ Observable is used by child components. This component
-    // also subscribes to the subject store in the _setSelectedSubject function.
-    this.subjects$ = this.store.select(fromRoot.getSubject);
-    this.collections$ = this.store.select(fromRoot.getCollections);
-    this.selectedSubject$ = this.store.select(fromRoot.getSelectedSubject);
-    this.areas$ = this.store.select(fromRoot.getAreas);
-    this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
+  /**
+   * Sets the local query parameter fields.
+   * @param params
+   */
+  private setQueryParams(params: any): void {
+    if (params['areaId']) {
+      this.areaId = params['areaId'];
+    }
+    if (params['subjectId']) {
+      this.subjectId = params['subjectId'];
+    }
+    if (params['typeId']) {
+      this.typeId = params['typeId'];
+    }
+  }
 
+  /**
+   * Updates the selected filters based on the current route query parameters.
+   * @param params query parameters
+   */
+  private updateSelected(params: any): void {
+    if (params['areaId']) {
+      this.setSelected.setSelectedArea(params['areaId']);
+    } else {
+      this.setSelected.setSelectedArea(null);
+    }
+    if (params['subjectId']) {
+      this.setSelected.setSelectedSubject(params['subjectId']);
+    } else {
+      this.setSelected.setSelectedSubject(null);
+    }
+    if (params['typeId']) {
+      this.setSelected.setSelectedTypes(params['typeId']);
+    } else {
+      this.setSelected.setSelectedTypes(null);
+    }
+  }
+
+  private setMediaWatcher(): void {
     const mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ''
       });
     this.watchers.add(mediaWatcher);
+  }
 
+  /**
+   * Event binding callback for navigation to an item.
+   * @param {string} id
+   */
+  collectionNavigation(id: string): void {
+    this.navigation.navigateItemRoute(id, this.areaId);
+  }
+
+  /**
+   * Navigates to new location when area NavigationComponent is updated.
+   * @param {SelectedAreaEvent} updatedAreaList the updated area list
+   */
+  areaNavigation(updatedAreaList: SelectedAreaEvent) {
+    const areaIds = this.navigation.getIds(updatedAreaList.selected);
+    this.navigation.navigateFilterRoute(areaIds, this.typeId, this.subjectId);
+  }
+
+  /**
+   * Navigates to new location when the TypesComponent is updated.
+   * @param {SelectedTypeEvent} updatedTypeList the updated area list
+   */
+  typeNavigation(updatedTypeList: SelectedTypeEvent) {
+    const areaIds = this.navigation.getIds(this.selectedAreas);
+    const typeIds = this.navigation.getIds(updatedTypeList.selected);
+    this.navigation.navigateFilterRoute(areaIds, typeIds, this.subjectId);
+  }
+
+  ngOnInit() {
+    // All local subscriptions are added to this Subscription
+    // and removed in ngOnDestroy.
+    this.watchers = new Subscription();
+    this.setMediaWatcher();
+    this.subjects$ = this.store.select(fromRoot.getSubject);
+    this.collections$ = this.store.select(fromRoot.getFilteredCollections);
+    this.areas$ = this.store.select(fromRoot.getAreas);
+    this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
+    this.types$ = this.store.select(fromRoot.getTypes);
+    this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
+    this.filters$ = this.store.select(fromRoot.getFilters);
+    const areaList = this.store.select(fromRoot.getAreas);
+    const areaFilters = this.store.select(fromRoot.getAreasFilter);
+    areaFilters.subscribe(filter => {
+      this.selectedAreas = filter;
+    });
+    this.areasFilter$ = Observable.combineLatest(
+      areaList,
+      areaFilters,
+      (areas, selected) => {
+        this.selectedAreas = selected;
+        return {
+          areas: areas,
+          selectedAreas: selected
+        }
+      }
+    );
+    this.typesFilter$ = Observable.combineLatest(
+      this.store.select(fromRoot.getTypes),
+      this.store.select(fromRoot.getTypesFilter),
+      (types, selected) => {
+        this.selectedTypes = selected;
+        return {
+          types: types,
+          selectedTypes: selected
+        }
+      }
+    );
     const routeWatcher = this.route.params
       .subscribe((params) => {
-
-        this.initializeAreas();
-
-        if (params['areaId']) {
-          this.areaId = params['areaId'];
-          this.subjectLinkType = 'area';
-          if (params['subjectId']) {
-            this.subjectId = params['subjectId'];
-            this.getCollectionsBySubject(params['subjectId'], params['areaId']);
-
-          } else {
-            this.getCollections(params['areaId']);
-          }
-        } else if (params['subjectId']) {
-          this.subjectId = params['subjectId'];
-          this.subjectLinkType = 'all';
-          this.homeScreen = true;
-          this.getAllCollectionsForSubject(params['subjectId']);
-          this._setAllCollectionTitle();
-          this.areaId = '0';
-
-        }
-        else {
-          this.areaId = '0';
-          this.subjectLinkType = 'all';
-          this.getAllCollections();
-          this.homeScreen = true;
-
-        }
-
+        this.setQueryParams(params);
+        this.updateSelected(params);
+        this.initializeAreas(params);
+        this.areaScreen = this.navigation.isAreaSelected(params['areaId']);
+        this.dispatchService.dispatchActions(params['areaId'], params['typeId'], params['subjectId']);
       });
-
     this.watchers.add(routeWatcher);
-
   }
 
   ngOnDestroy(): void {
     if (this.watchers) {
+      // Unsubscribe local watchers.
       this.watchers.unsubscribe();
     }
+    // Unsubscribe all watchers in the service. Each component
+    // instance will resubscribe. The prevents the multiple
+    // subscriptions within the service.
+    this.setSelected.unsubscribe();
   }
 
 }

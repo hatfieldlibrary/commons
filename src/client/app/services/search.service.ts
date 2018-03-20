@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../environments/environment";
-import {Http} from "@angular/http";
+import {environment} from '../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {ExternalItems, ExternalLinks} from '../shared/data-types/external-links';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class SearchService {
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   /*
@@ -33,15 +35,14 @@ export class SearchService {
   executeSimpleSearchQuery(baseURL: string, terms: string): string {
 
     const query = encodeURIComponent(terms);
-    let splitString = baseURL.split('{$query}');
+    const splitString = baseURL.split('{$query}');
     const href = splitString[0] + query + splitString[1];
     return href;
   }
 
-  getOptionsList(collection: string) {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/options/external/' + collection)
-      .map(res => res.json())
-      .map(json => json.result)
+  getOptionsList(collection: string): Observable<ExternalItems[]> {
+    return this.http.get<ExternalLinks>(environment.apiHost + environment.apiRoot + '/options/external/' + collection)
+      .map(res => res.result);
 
   }
 

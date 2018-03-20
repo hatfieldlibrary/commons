@@ -27,7 +27,7 @@ describe('AreaInformationComponent', () => {
 
   const mockArea = {
     id: 1,
-    title: 'test area',
+    title: 'test areas',
     linkLabel: '',
     url: '',
     searchUrl: '',
@@ -58,7 +58,7 @@ describe('AreaInformationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update single area information on change.', () => {
+  it('should update single areas information on change.', () => {
     component.areaInfo = [mockArea];
 
     component.ngOnChanges({
@@ -66,11 +66,11 @@ describe('AreaInformationComponent', () => {
     });
     fixture.detectChanges();
 
-    expect(component.title).toEqual('test area');
+    expect(component.title).toEqual('test areas');
 
   });
 
-  it('should update multiple area information on change.', () => {
+  it('should update multiple areas information on change.', () => {
     component.areaInfo = [mockArea, mockArea];
 
     component.ngOnChanges({

@@ -18,25 +18,32 @@
 /**
  * Created by mspalti on 2/24/17.
  */
-import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs";
-import {SubjectType} from "../shared/data-types/subject.type";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {SubjectType} from '../shared/data-types/subject.type';
 import { environment } from '../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class SubjectService {
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   getSubjects(areaIds: string): Observable<SubjectType[]> {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/subject/area/' + areaIds)
-      .map(res => res.json());
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject/area/' + areaIds);
   }
 
   getAllSubjects(): Observable<SubjectType[]> {
-    return this.http.get(environment.apiHost + environment.apiRoot + '/subject')
-      .map(res => res.json());
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject');
+  }
+
+  getSubjectsForType(typeId: string): Observable<SubjectType[]> {
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject/type/' + typeId);
+  }
+
+  getSubjectsForAreaAndType(areaId: string, typeId: string): Observable<SubjectType[]> {
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot
+      + '/subject/area/' + areaId + '/type/' + typeId);
   }
 
 }

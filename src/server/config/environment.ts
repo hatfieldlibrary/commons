@@ -25,7 +25,7 @@ const env = process.env.NODE_ENV || 'development';
 
 let credentials;
 
-let credentialsPath = require('./require-paths');
+const credentialsPath = require('./require-paths');
 
 try {
 

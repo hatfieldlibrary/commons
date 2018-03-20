@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2017.
  *
@@ -17,7 +18,7 @@
 
 import {getAreaInfo, reducer, State} from './area.reducers';
 import {
-  AreaAction, AreaActionFailed, AreaActionSuccess, AreaDefaultInformation, AreaInformation, AreaInformationSuccess
+  AreaListAction, AreaListActionFailed, AreaListActionSuccess, AreaDefaultList, AreaInformation, AreaInformationSuccess
 } from '../actions/area.actions';
 import {Action} from '@ngrx/store';
 import {AreaType} from '../shared/data-types/area.type';
@@ -28,12 +29,12 @@ import {AreaType} from '../shared/data-types/area.type';
 const areaListTypeMock = [
   {
     id: 1,
-    title: 'test area one',
+    title: 'test areas one',
     count: 2
 
   }, {
     id: 2,
-    title: 'test area tw0',
+    title: 'test areas tw0',
     count: 1
   }
 ];
@@ -68,48 +69,48 @@ class MockAction implements Action {
 describe('Area Reducer', () => {
 
 
-  it('should return state with area information', () => {
+  it('should return state with areas information', () => {
     expect(
       reducer(undefined, new AreaInformation('1'))
     ).toEqual(
       {
-        area: initialState,
+        areas: initialState,
         loading: true
       });
   });
 
   it('should return the current state', () => {
-    const areaState: State = {area: areaMock, loading: false};
+    const areaState: State = {areas: areaMock, loading: false};
 
     expect(
       reducer(areaState, new MockAction())
     ).toEqual(
       {
-        area: areaMock,
+        areas: areaMock,
         loading: false
       });
   });
 
-  it('should return state with updated area information', () => {
+  it('should return state with updated areas information', () => {
 
-    const areaState: State = {area: areaMock, loading: true};
+    const areaState: State = {areas: areaMock, loading: true};
     expect(
       reducer(areaState, new AreaInformationSuccess(areaMock))
     ).toEqual(
       {
-        area: areaMock,
+        areas: areaMock,
         loading: false
       });
   });
 
 
   it('should return current state and fail.', () => {
-    const areaState: State = {area: areaMock, loading: false};
+    const areaState: State = {areas: areaMock, loading: false};
     expect(
-      reducer(areaState, new AreaActionFailed('error'))
+      reducer(areaState, new AreaListActionFailed('error'))
     ).toEqual(
       {
-        area: areaMock,
+        areas: areaMock,
         loading: false
       });
 
@@ -122,7 +123,7 @@ describe('Area Reducer', () => {
   });
 
   it('should return default state after reset request', () => {
-    let state = reducer(undefined, new AreaDefaultInformation());
+    let state = reducer(undefined, new AreaDefaultList());
     let result = getAreaInfo(state);
     expect(result).toEqual(initialState);
   });
