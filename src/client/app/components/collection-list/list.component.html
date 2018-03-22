@@ -41,24 +41,26 @@
                      [ngClass]="{'mobile-list-item-padding': isMobile, 'mobile-item-info-height': isMobile}">
         <span class="mat-caption bold-caption">ITEM COUNT:&nbsp;</span> {{totalResults()}}</mat-list-item>
       <mat-list-item class="collection-list-item result-item"
-                     [@fadeIn]
+
                      [ngClass]="{'mobile-list-item-padding': isMobile}"
                      (click)="navigateToItem(collection.id)"
                      *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
         <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
           <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
+
           <div>
-            <span class="mat-caption bold-caption">Item Type:</span>
+            <span class="mat-caption bold-caption">Type:</span>
            <span class="mat-caption">{{setAssetType(collection.ctype)}}</span>
           </div>
           <div>
-            <span class="mat-caption bold-caption">Availability:</span>
-            <span class="mat-caption">{{setAccessStatus(collection.restricted)}}</span>
-          </div>
-          <div>
-            <span class="mat-caption bold-caption ">Content Types:</span>
+            <span class="mat-caption bold-caption ">Content:</span>
           <span class="mat-caption" *ngFor="let type of collection.types ; let i = index">
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
+          </div>
+
+          <div>
+            <!--<span class="mat-caption bold-caption">Availability:</span>-->
+            <span class="mat-caption bold-caption">{{setAccessStatus(collection.restricted)}}</span>
           </div>
         </div>
       </mat-list-item>
