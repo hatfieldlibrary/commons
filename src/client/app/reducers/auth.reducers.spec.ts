@@ -15,16 +15,16 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AuthType} from "../shared/data-types/auth.type";
-import {GetAuthStatus, SetAuthStatus} from "../actions/auth.action";
-import {getAuthStatus, reducer} from "./auth.reducers";
+import {AuthType} from '../shared/data-types/auth.type';
+import {GetAuthStatus, SetAuthStatus} from '../actions/auth.action';
+import {getAuthStatus, reducer} from './auth.reducers';
 
 const mockAuthStatus: AuthType = {
-    status: true
+    auth: true
 
 };
 const mockCurrentAuthState: AuthType = {
-    status: false
+    auth: false
 
 };
 
@@ -50,8 +50,8 @@ describe('Authentication Status Reducer', () => {
   });
 
   it('should return default state', () => {
-    let state = reducer(undefined,  {type: undefined, payload: undefined});
-    let result = getAuthStatus(state);
+    const state = reducer(undefined,  {type: undefined, payload: undefined});
+    const result = getAuthStatus(state);
     expect(result).toEqual(mockCurrentAuthState);
   });
 

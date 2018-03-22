@@ -3,6 +3,7 @@ import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {MatSelectionList} from '@angular/material';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
 import {TypesFilter} from '../../shared/data-types/types-filter';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 export interface SelectedTypeEvent {
   selected: TypesFilterType[];
@@ -12,7 +13,14 @@ export interface SelectedTypeEvent {
   selector: 'app-types',
   templateUrl: './types.component.html',
   styleUrls: ['./types.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({opacity: '0.5'}),
+        animate('200ms ease-in', style({opacity: '1'})),
+      ])
+    ])]
 })
 export class TypesComponent implements OnInit {
 

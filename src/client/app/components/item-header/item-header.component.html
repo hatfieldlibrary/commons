@@ -1,4 +1,4 @@
-<div fxFlex="100" class="header-image-container" style="overflow:hidden">
+<div fxFlex="100" class="header-image-container" [ngClass]="{'mobile-header': isMobile}" style="overflow:hidden">
 
   <div class="header-background-overlay"></div>
 
@@ -11,7 +11,7 @@
          fxFlex.gt-lg="60">
 
       <div fxLayout="column">
-        <div class="header-overlay"></div>
+        <div class="header-overlay" [ngClass]="{'mobile-overlay': isMobile}"></div>
         <div class="header-title item-title" [ngClass]="{'mobile-margins': isMobile}">
           <h1>{{item?.collection.title}}</h1>
         </div>

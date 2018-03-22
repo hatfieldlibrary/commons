@@ -23,14 +23,29 @@ import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
+import {animate, query, stagger, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-collection-list',
   templateUrl: 'list.component.html',
   styleUrls: ['list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('fadeIn', [
+      transition('* => *', [ // each time the binding value changes
+        query(':enter', style({opacity: 0}), {optional: true}),
+       // query(':leave', style({opacity: 0}), {optional: true}),
+        query(':enter', [
+          style({opacity: 0}),
+          stagger(300, [
+            animate('0.5s', style({opacity: 1}))
+          ])
+        ], {optional: true})
+      ])
+    ])
+  ]
 })
-export class ListComponent implements OnDestroy {
+export class ListComponent implements OnDestroy, OnInit {
 
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SubjectFilterType;
@@ -63,9 +78,17 @@ export class ListComponent implements OnDestroy {
     this.subjectNavigation.emit(emptySubject);
   }
 
+  setAccessStatus(restricted: boolean): string {
+    if (restricted) {
+      return 'Restricted to Willamette University';
+    }
+    return 'Open Access';
+  }
+
   totalResults(): string {
     return this.collectionList.length.toString();
   }
+
   navigateToItem(id: string) {
     this.collectionNavigation.emit(id);
   }
@@ -76,6 +99,17 @@ export class ListComponent implements OnDestroy {
     } else {
       return 'Single Item';
     }
+  }
+
+  getListLength() {
+    if (this.collectionList) {
+      return this.collectionList.length;
+    } else {
+      return 0;
+    }
+  }
+
+  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

@@ -29,7 +29,7 @@
   const devDirectory = getUserHome() + '/etc/commons-ONE/';
 
   // Home of the production credentials file.
-  const prodDirectory =  '/etc/commons-2.0/';
+  const prodDirectory =  '/etc/commons-3.0/';
 
   const path = {
     development: devDirectory,

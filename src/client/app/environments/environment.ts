@@ -24,7 +24,7 @@ export const environment = {
   production: false,
   // REST API host. Can be localhost or production host
    // apiHost: 'https://libmedia.willamette.edu',
-  apiHost: 'http://158.104.4.106:3001',
+  apiHost: 'http://libapps.willamette.edu:3007',
   // Base path, do not include beginning forward slash.
   appRoot: 'commons',
   // Path to the REST API.
@@ -35,5 +35,6 @@ export const environment = {
   imagePath: '',
   // Authentication paths.
   authPath: '/auth',
-  authCheck: '/check'
+  authCheck: '/check',
+  isDebugMode: true
 };

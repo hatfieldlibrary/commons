@@ -35,7 +35,7 @@ export class ItemHeaderComponent implements OnInit, OnDestroy {
 
   @Input() item: ItemType;
   watcher: Subscription;
-  isMobile: boolean = false;
+  isMobile = false;
 
   constructor(private media: ObservableMedia) {
   }

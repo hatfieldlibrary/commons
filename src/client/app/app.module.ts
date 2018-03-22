@@ -99,6 +99,8 @@ import { SetSelectedService} from './services/set-selected.service';
 import {CloseSvgDisabledComponent} from './components/svg/close-svg-disabled/close-svg-disabled.component';
 import {HelpSvgComponent} from './components/svg/help-svg/help-svg.component';
 import { AreaSelectorMobileComponent } from './components/area-selector-mobile/area-selector-mobile.component';
+import {ConsoleLoggerService} from './shared/logger/console-logger.service';
+import {LoggerService} from './shared/logger/logger.service';
 
 export const appRoutes = [
 
@@ -229,6 +231,7 @@ export const appRoutes = [
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'},
+    { provide: LoggerService, useClass: ConsoleLoggerService },
     CollectionService,
     AreaService,
     DispatchService,

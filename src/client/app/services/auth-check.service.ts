@@ -21,6 +21,6 @@ export class AuthCheckService {
    */
   getAuthStatus():  Observable<boolean> {
         return this.http.get<AuthType>(environment.authCheck)
-          .map(res => res.status);
+          .map(res => res.auth);
       }
 }

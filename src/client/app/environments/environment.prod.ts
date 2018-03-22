@@ -31,19 +31,20 @@ export const environment = {
   // authPath: '/commons-auth',
   // // authCheck: '/commons-check'
 
-  production: false,
+  production: true,
   // REST API host. Can be localhost or production host
   // apiHost: 'https://libmedia.willamette.edu',
-  apiHost: 'http://158.104.4.106:3001',
+  apiHost: '',
   // Base path, do not include beginning forward slash.
   appRoot: 'commons',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
-  apiRoot: '/rest',
+  apiRoot: '/tagger-3-api',
   // Path to images.
-  // imagePath: '/commons-images',
-  imagePath: '',
+   imagePath: '/commons-images',
+ // imagePath: '',
   // Authentication paths.
-  authPath: '/auth',
-  authCheck: '/check'
+  authPath: '/commons-auth',
+  authCheck: '/commons-check',
+  isDebugMode: false
 };
