@@ -67,7 +67,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
     // Using the store to track authentication.
     this.auth$ = this.store.select(fromRoot.getAuthStatus);
     const authWatcher = this.auth$.subscribe((auth) => {
-      this.isAuthenticated = auth.status;
+      this.isAuthenticated = auth.auth;
       // Make sure to pick up the change next cycle.
       this.changeDetector.markForCheck();
     });
@@ -76,7 +76,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
     // although that is not useful if this component remains the
     // only interested party!
     this.auth.getAuthStatus().subscribe((auth) => {
-      this.store.dispatch(new SetAuthStatus({status: auth}));
+      this.store.dispatch(new SetAuthStatus({auth: auth}));
     });
 
   }
