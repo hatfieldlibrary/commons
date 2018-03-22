@@ -22,13 +22,13 @@ import {AuthType} from "../shared/data-types/auth.type";
  */
 export interface State {
   auth:  {
-    status: boolean
+    auth: boolean
   }
 }
 
 const initialState: State = {
   auth:  {
-    status: false
+    auth: false
   }
 
 };

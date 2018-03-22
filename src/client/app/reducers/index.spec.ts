@@ -134,7 +134,7 @@ describe('Reducers ', () => {
     areaListState = reducers.areaList(undefined, new AreaListActionSuccess(expectedAreas));
     collectionState = reducers.collections(undefined, new CollectionsAreaActionSuccess(expectedCollections));
     relatedItemsState = reducers.related(undefined, new ItemActionRelatedSuccess(expectedRelatedItems));
-    authState = reducers.auth(undefined, new SetAuthStatus({status: true}));
+    authState = reducers.auth(undefined, new SetAuthStatus({auth: true}));
   });
 
   it('should return subject list state', () => {
