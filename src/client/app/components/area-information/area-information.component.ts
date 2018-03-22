@@ -29,15 +29,26 @@ import {Subscription} from 'rxjs/Subscription';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AreaInformationComponent implements OnChanges {
+export class AreaInformationComponent implements OnChanges, OnDestroy {
+
 
   @Input() areaInfo: AreaType[];
   description: string;
   url: string;
   linkLabel: string;
   title: string;
+  areaId: any; // initialize with out of range value.
+  private watcher: Subscription;
+  isMobile: boolean;
 
-  constructor() {
+  constructor(private media: ObservableMedia) {
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,17 +58,23 @@ export class AreaInformationComponent implements OnChanges {
         let areaTitles = '';
         areaList.forEach((area) => areaTitles += area.title + ', ');
         areaTitles = areaTitles.slice(0, -2);
-        this.description = '<div>Search in collection areas: </div><div class="mat-title areas-color">' + areaTitles + '</div>';
+        this.description = '<div>Search in collection groups: </div><div class="mat-title areas-color">' + areaTitles + '</div>';
         this.url = '';
         this.linkLabel = '';
         this.title = '';
+        this.areaId = 20;
       } else if (changes.areaInfo.currentValue[0]) {
         this.title = changes.areaInfo.currentValue[0].title;
         this.description = changes.areaInfo.currentValue[0].description;
         this.url = changes.areaInfo.currentValue[0].url;
         this.linkLabel = changes.areaInfo.currentValue[0].linkLabel;
+        this.areaId = changes.areaInfo.currentValue[0].id;
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
   }
 
 }

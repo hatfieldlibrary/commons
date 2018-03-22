@@ -4,6 +4,7 @@
     <mat-list-option *ngFor="let type of filter.types"
                      class="local-navigation"
                      [selected]="isSelected(type.id)"
+                     [@fadeIn]
                      [checkboxPosition]="before"
                      (click)="onTypeListControlChanged(typeSelectionList, type.id)"
                      [value]="type.id">

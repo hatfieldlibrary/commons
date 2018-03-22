@@ -16,10 +16,18 @@
   -->
 <div class="area-info">
   <div fxLayout="row">
-    <div fxHide fxFlex="42" fxFlex.sm="0" fxShow.gt-sm="true" fxShow.sm="false" class="area-image">
+    <div fxHide fxFlex="42" fxFlex.sm="0" fxShow.gt-sm="true" fxShow.sm="false"
+         class="area-image"
+         [ngClass]="{
+         'area-image-student': areaId == 1,
+         'area-image-archive': areaId == 5,
+         'area-image-art': areaId == 6,
+         'area-image-faculty': areaId == 9,
+         'area-image-any': areaId == 20
+         }">
     </div>
-    <div fxFlex.gt-sm="58" fxFlex.sm="100" class="area-description">
-      <h1 class="mat-display-1">{{title}}</h1>
+    <div fxFlex.gt-sm="58" fxFlex.sm="100" class="area-description" [ngClass]="{'mobile': isMobile}">
+      <h1 class="mat-headline">{{title}}</h1>
       <div class="text-padding">
         <div [innerHTML]="description"></div>
         <p *ngIf="url" class="mat-body-1 area-button">

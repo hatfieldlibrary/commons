@@ -22,6 +22,7 @@ import {MatSelectionList} from '@angular/material';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
 import {AreasFilter} from '../../shared/data-types/areas-filter';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 export interface SelectedAreaEvent {
   selected: AreaFilterType[];
@@ -31,7 +32,14 @@ export interface SelectedAreaEvent {
   selector: 'app-navigation-selector',
   templateUrl: 'area.component.html',
   styleUrls: ['area.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({opacity: '.5'}),
+        animate('200ms ease-in', style({opacity: '1'})),
+      ])
+    ])]
 })
 export class NavigationComponent {
 

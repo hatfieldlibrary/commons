@@ -34,7 +34,7 @@
           fxFlex="1 1 100"
           fxFlex.md="1 1 85"
           fxFlex.lg="1 1 76"
-          fxFlex.gt-lg="1 1 51"
+          fxFlex.gt-lg="1 1 61"
           (subjectNavigation)="subjectNavigation($event)"
           [subjectList]="subjects$ | async"
           [selectedSubject]="selectedSubject$ | async">
@@ -48,7 +48,7 @@
         <div fxLayout="column"
              fxFlex.md="1 1 20"
              fxFlex.lg="1 1 15"
-             fxFlex.gt-lg="1 1 10"
+             fxFlex.gt-lg="1 1 13"
              class="side-container"
              *ngIf="media.isActive('gt-sm')">
           <div fxLayout="row" fxLayoutAlign="start center">
@@ -68,9 +68,9 @@ or apply filters by selecting from the lists below."
         <div fxLayout="column"
              fxFlex.xs="1 1 100"
              fxFlex.sm="1 1 95"
-             fxFlex.md="1 1 60"
+             fxFlex.md="1 1 64"
              fxFlex.lg="1 1 60"
-             fxFlex.gt-lg="1 1 40">
+             fxFlex.gt-lg="1 1 47">
           <div class="mat-card info-card">
             <div class="mat-card-header">
               <mat-card-subtitle class="area-info-container" *ngIf="areaScreen" [ngClass]="{'large-device-info': media.isActive('gt-sm')}">

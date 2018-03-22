@@ -123,6 +123,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   areaNavigation(updatedAreaList: SelectedAreaEvent): void {
+    this.sideNavigate.close();
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
     this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject);
   }
@@ -188,7 +189,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // If set to a value greater than the maximum available for the element,
           // scrollTop settles itself to the maximum value and we don't see the
           // desired result.
-          this.timeoutService.setTimeout(350, () => {
+          this.timeoutService.setTimeout(500, () => {
             if (event.url.match(/\/commons\/collection/) && this.yScrollStack.length > 0) {
               const top = this.yScrollStack.pop();
               this.logger.info('setting scrollTop to: ' + top);

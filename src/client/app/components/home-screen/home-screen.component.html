@@ -3,7 +3,7 @@
     <div fxHide fxFlex="40" fxFlex.sm="0" fxShow.gt-sm="true" fxShow.sm="false" class="home-image">
     </div>
 
-    <div fxFlex.gt-sm="60" fxFlex.sm="100" class="text-area">
+    <div fxFlex.gt-sm="60" fxFlex.sm="100" class="text-area" [ngClass]="{'mobile': isMobile}">
       <!--<h2 class="mat-display-1">Academic Commons</h2>-->
       <div class="text-padding">
         <p>The Academic Commons is a clearinghouse for digital projects, collections and research at
