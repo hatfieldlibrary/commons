@@ -18,27 +18,11 @@
 /**
  * Created by mspalti on 5/2/17.
  */
-/*
- * Copyright (c) 2017.
- *
- *   This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 
 import {Action} from '../actions/action.interface';
-import { type } from "../shared/ngrx/type";
-import {AuthType} from "../shared/data-types/auth.type";
+import { type } from '../shared/ngrx/type';
+import {AuthType} from '../shared/data-types/auth.type';
 
 export const AuthActionTypes = {
   GET_AUTH_STATUS: type('[Auth] Get Auth Status'),
@@ -47,7 +31,7 @@ export const AuthActionTypes = {
 
 
 /**
- * Factory for the request all areaList action.
+ * Factory for authentication check action.
  */
 export class GetAuthStatus implements Action {
   type = AuthActionTypes.GET_AUTH_STATUS;
@@ -59,7 +43,7 @@ export class GetAuthStatus implements Action {
 }
 
 /**
- * Factory for the areaList received action.
+ * Factory for the authentication response.
  */
 export class SetAuthStatus implements Action {
   type = AuthActionTypes.SET_AUTH_STATUS;
