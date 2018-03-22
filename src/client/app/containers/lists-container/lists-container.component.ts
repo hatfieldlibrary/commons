@@ -44,6 +44,8 @@ import * as fromFilter from '../../reducers/filter.reducers';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/combineLatest';
 import {AreasFilter} from '../../shared/data-types/areas-filter';
+import {AreaDefaultList} from '../../actions/area.actions';
+import {ClearCollectionsFilter, CollectionReset} from '../../actions/collection.actions';
 
 @Component({
   selector: 'app-lists-container',
@@ -198,6 +200,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param {string} id
    */
   collectionNavigation(id: string): void {
+    this.store.dispatch(new CollectionReset());
     this.navigation.navigateItemRoute(id, this.areaId);
   }
 

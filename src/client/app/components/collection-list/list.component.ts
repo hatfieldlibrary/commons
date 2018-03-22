@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
@@ -23,7 +23,7 @@ import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {animate, query, stagger, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-collection-list',
@@ -32,13 +32,20 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fadeIn', [
-      transition(':enter', [
-        style({opacity: '0'}),
-        animate('200ms ease-in', style({opacity: '1'})),
+      transition('* => *', [ // each time the binding value changes
+        query(':enter', style({opacity: 0}), {optional: true}),
+       // query(':leave', style({opacity: 0}), {optional: true}),
+        query(':enter', [
+          style({opacity: 0}),
+          stagger(300, [
+            animate('0.5s', style({opacity: 1}))
+          ])
+        ], {optional: true})
       ])
-    ])]
+    ])
+  ]
 })
-export class ListComponent implements OnDestroy {
+export class ListComponent implements OnDestroy, OnInit {
 
   @Input() collectionList: CollectionType[];
   @Input() selectedSubject: SubjectFilterType;
@@ -48,7 +55,6 @@ export class ListComponent implements OnDestroy {
   isMobile = false;
   watcher: Subscription;
   emptySubject: SubjectFilterType = {id: 0, name: ''};
-  state = 'end';
 
   constructor(private filterService: FilterUpdateService,
               private media: ObservableMedia) {
@@ -76,7 +82,7 @@ export class ListComponent implements OnDestroy {
     if (restricted) {
       return 'Restricted to Willamette University';
     }
-    return 'Public Access';
+    return 'Open Access';
   }
 
   totalResults(): string {
@@ -93,6 +99,17 @@ export class ListComponent implements OnDestroy {
     } else {
       return 'Single Item';
     }
+  }
+
+  getListLength() {
+    if (this.collectionList) {
+      return this.collectionList.length;
+    } else {
+      return 0;
+    }
+  }
+
+  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {

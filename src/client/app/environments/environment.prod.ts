@@ -41,10 +41,10 @@ export const environment = {
   // apiRoot: '/commons-rest',
   apiRoot: '/tagger-3-api',
   // Path to images.
-   imagePath: '/commons3-images',
+   imagePath: '/commons-images',
  // imagePath: '',
   // Authentication paths.
-  authPath: '/commons3-auth',
-  authCheck: '/commons3-check',
+  authPath: '/commons-auth',
+  authCheck: '/commons-check',
   isDebugMode: false
 };

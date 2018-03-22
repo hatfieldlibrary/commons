@@ -26,7 +26,7 @@ mat-card-subtitle.area-info-container  {
   padding: 0 !important;
 }
 .area-info {
-  color: #efefef;
+
 }
 body .area-info .text-padding p  a,
 body .area-info .text-padding p a:visited {
@@ -43,12 +43,24 @@ body .area-info .text-padding p a:visited {
 }
 
 .area-image {
-  background-image: url(/assets/img/79University2.jpg);
-  background-repeat: no-repeat;
+  background: no-repeat center center;
   background-size: cover;
-  background-position: center center;
   min-height: 250px;
-
+}
+.area-image.area-image-student {
+  background-image: url(/assets/img/student_sm.jpg);
+}
+.area-image.area-image-archive {
+  background-image: url(/assets/img/79University2.jpg);
+}
+.area-image.area-image-art {
+  background-image: url(/assets/img/fowler_md.jpg);
+}
+.area-image.area-image-faculty {
+  background-image: url(/assets/img/holy_beauty.jpg);
+}
+.area-image-any {
+  background-image: url(/assets/img/eaton_md.jpg);
 }
 mat-card-subtitle.area-info-container .home-info {
   padding: 0 !important;
@@ -62,7 +74,13 @@ mat-card-subtitle.area-info-container .home-info {
   background: #efeadf;
   background: #701716;
   background: #0f959f;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.8);
   line-height: 1.125;
+  color: #efefef;
+}
 
+.area-description.mobile {
+  padding: 16px;
+  background: rgba(202, 197, 192, 0.54);
+  color: #464545;
 }

@@ -154,7 +154,6 @@ export class NavigationService {
   }
 
   private _areaTypeLink(selectedArea: string, selectedTypes: string): string {
-    console.log('getting area type link')
     return '/' +  this.urlRootPath + `/collection/area/${selectedArea}/type/${selectedTypes}`;
   }
 
