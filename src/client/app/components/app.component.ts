@@ -39,6 +39,7 @@ import {SelectedAreaEvent} from './area-selector/area.component';
 import {TypesFilter} from '../shared/data-types/types-filter';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {TypesFilterType} from '../shared/data-types/types-filter.type';
+import {LoggerService} from '../shared/logger/logger.service';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -90,7 +91,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               @Inject(DOCUMENT) private document,
               private timeoutService: SetTimeoutService,
               private setSelected: SetSelectedService,
-              private navigation: NavigationService) {
+              private navigation: NavigationService,
+              private logger: LoggerService ) {
 
     this.watcher = new Subscription();
     const mediaWatcher = media.asObservable()
@@ -121,6 +123,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   areaNavigation(updatedAreaList: SelectedAreaEvent): void {
+    this.sideNavigate.close();
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
     this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject);
   }
@@ -165,6 +168,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
        * This sets the scrollTop position for navigation between views.
        */
       this.router.events.subscribe((event: any) => {
+        // Get the scrollable element (created by MdSidenavContainer)
+        this.scrollable = this.document.querySelector('.mat-drawer-content');
         if (event instanceof NavigationStart) {
           // Get absolute value fo the bounding rectangle for #app-content.
           const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
@@ -175,6 +180,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           if (event.url.match(/\/commons\/item/) && this.yScrollStack.length === 0) {
             // Push the top
             this.yScrollStack.unshift(top);
+            this.logger.info('Bounding rectangle: ' + top);
+            this.scrollable.scrollTop = 0;
           }
         } else if (event instanceof NavigationEnd) {
           // Use time out to push this work onto the browser's callback queue.
@@ -182,13 +189,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           // If set to a value greater than the maximum available for the element,
           // scrollTop settles itself to the maximum value and we don't see the
           // desired result.
-          this.timeoutService.setTimeout(300, () => {
-            // Get the scrollable element (created by MdSidenavContainer)
-
-            this.scrollable = this.document.querySelector('.mat-drawer-content');
+          this.timeoutService.setTimeout(500, () => {
             if (event.url.match(/\/commons\/collection/) && this.yScrollStack.length > 0) {
+              const top = this.yScrollStack.pop();
+              this.logger.info('setting scrollTop to: ' + top);
               // Pop the top
-              this.scrollable.scrollTop = this.yScrollStack.pop();
+              this.scrollable.scrollTop = top;
             } else {
               // Currently the only other view is for items. This
               // view should always initialize with scrollTop equal

@@ -59,7 +59,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   offsetWidth: number;
   selectorWidth: number;
   lastButtonWidth: number;
-  defaultOffset = 100;
+  defaultOffset = 120;
   lastSubjectButton: ElementRef;
   leftScroll = 0;
   isMobile = true;

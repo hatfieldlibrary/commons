@@ -22,13 +22,15 @@ h1, h2,
 .text-padding {
   padding: 0 0 16px;
 }
+mat-card-subtitle.area-info-container  {
+  padding: 0 !important;
+}
 .area-info {
-  font-size: 16px;
-  color: #fff;
+
 }
 body .area-info .text-padding p  a,
 body .area-info .text-padding p a:visited {
-  color: #deb468;
+  color: #0f959f;
   font-weight: 800;
 }
 .area-info .text-padding .area-button a,
@@ -40,4 +42,45 @@ body .area-info .text-padding p a:visited {
   margin: 32px 0 0;
 }
 
+.area-image {
+  background: no-repeat center center;
+  background-size: cover;
+  min-height: 250px;
+}
+.area-image.area-image-student {
+  background-image: url(/assets/img/student_sm.jpg);
+}
+.area-image.area-image-archive {
+  background-image: url(/assets/img/79University2.jpg);
+}
+.area-image.area-image-art {
+  background-image: url(/assets/img/fowler_md.jpg);
+}
+.area-image.area-image-faculty {
+  background-image: url(/assets/img/holy_beauty.jpg);
+}
+.area-image-any {
+  background-image: url(/assets/img/eaton_md.jpg);
+}
+mat-card-subtitle.area-info-container .home-info {
+  padding: 0 !important;
+}
+.text-padding {
+  padding: 0 0 16px;
+}
+.area-description {
+  font-size: 14px;
+  padding: 32px;
+  background: #efeadf;
+  background: #701716;
+  background: #0f959f;
+  background: rgba(0, 0, 0, 0.8);
+  line-height: 1.125;
+  color: #efefef;
+}
 
+.area-description.mobile {
+  padding: 16px;
+  background: rgba(202, 197, 192, 0.54);
+  color: #464545;
+}

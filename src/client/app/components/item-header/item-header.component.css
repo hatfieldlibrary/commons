@@ -1,8 +1,8 @@
-.mobile-margins {
+.header-image-container .header-title.mobile-margins {
   margin-left: 16px;
-  margin-top: 46px;
+  margin-top: 66px;
 }
-.mobile-margins h1 {
+.header-image-container .header-title.mobile-margins h1 {
   font-size: 1.5em;
 }
 .hide-image {
@@ -14,6 +14,9 @@
   font-family: Roboto, "Helvetica Neue", sans-serif;
   color: #fff;
   border: none;
+}
+.header-image-container.mobile-header {
+  margin-top: 94px;
 }
 
 .header-image-container .header-title {
@@ -57,6 +60,10 @@
   top: 0;
   left: 0;
   right: 0;
+}
+
+.header-overlay.mobile-overlay {
+  background-color: #000;
 }
 
 .header-background-overlay {

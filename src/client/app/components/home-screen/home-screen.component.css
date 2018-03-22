@@ -3,16 +3,37 @@ h1, h2,
 .mat-display-2 {
   margin: 0 0 5px;
 }
+.home-image {
+  background: rgba(0, 0, 0, 0.73) url(/assets/img/eaton_md.jpg) no-repeat center center;
+  background-size: cover;
+  min-height: 250px;
+}
+mat-card-subtitle.area-info-container .home-info {
+  padding: 0 !important;
+}
 .text-padding {
   padding: 0 0 16px;
 }
+.text-area {
+  padding: 32px;
+  background: #efeadf;
+  background: #701716;
+  background: #0f959f;
+  background: rgba(0, 0, 0, 0.8);
+  line-height: 1.125;
+  color: #efefef;
+}
+.text-area.mobile {
+  padding: 16px;
+  background: rgba(202, 197, 192, 0.54);
+  color: #464545;
+}
 .area-info {
   font-size: 16px;
-  color: #fff;
 }
 body .area-info .text-padding p  a,
 body .area-info .text-padding p a:visited {
-  color: #deb468;
+  color: #0f959f;
   font-weight: 800;
 }
 .area-info .text-padding .area-button a,
