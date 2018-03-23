@@ -6,11 +6,11 @@
 [![bitHound Code](https://www.bithound.io/github/hatfieldlibrary/commons/badges/code.svg)](https://www.bithound.io/github/hatfieldlibrary/commons)
 
 The Commons is designed for publishing information about digital projects and collections that are maintained within institutional repositories like DSpace, Contentdm, and Hydra or
- that exist independently as unique, standalone projects like Omeka exhibits and public websites created by members of a community. The goals of the Commons project include deep integration with 
+ that exist independently as unique, standalone projects like Omeka exhibits and public websites. The goals of the Commons project include deep integration with 
  repository services through shared authentication and authorization and targeted search capability.  
 
-The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2) public API for data.  The Commons is loosely integrated with the [dspace-client project](https://github.com/hatfieldlibrary/dspace-angular-client) (a standalone DSpace client that works with a 
- modified version of the DSpace 6 REST API servlet). [Passport](http://passportjs.org/) middleware is used for CAS authentication. (Other authentication services can be used by installing and configuring the required Passport authentication strategy. See `server/config/auth-config.ts`)    Authentication strategies require information provided in the credentials.js file (described below). [Redis](https://redis.io/) is used as the session store in
+The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2) public API for data.  The Commons is integrated with the [dspace-client project](https://github.com/hatfieldlibrary/dspace-angular-client) for single sign on and automatic login. 
+ [Passport](http://passportjs.org/) middleware is used for CAS authentication. (Other authentication services can be used by installing and configuring the required Passport authentication strategy. See `server/config/auth-config.ts`)    Authentication strategies require information provided in the credentials.js file (described below). [Redis](https://redis.io/) is used as the session store in
  production environments and is necessary for deployment.
 
 The project uses [Angular](https://angular.io/), [ngrx](https://github.com/ngrx), and [Angular Material](https://material.angular.io/).
