@@ -14,12 +14,15 @@ export class NavigationService {
    * Verifies that the request is an array of objects that
    * include and id field. All filter types must include an
    * id (AreaFilterTypes, TypesFilterType, SubjectFilterType).
-   * These objects to not have an identical shape, to all do
+   * These objects to not have an identical shape, but all
    * include the id field.
-   * @param list the list of objects
+   * @param list the array of objects
    * @returns {boolean}
    */
-  private isIllegalType(list) {
+  private isIllegalType(list: any[]) {
+    if (typeof list === 'undefined') {
+      return false;
+    }
     if (list.length > 0) {
       return typeof list[0].id === 'undefined';
     }
