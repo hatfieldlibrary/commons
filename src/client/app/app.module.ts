@@ -101,6 +101,7 @@ import {HelpSvgComponent} from './components/svg/help-svg/help-svg.component';
 import { AreaSelectorMobileComponent } from './components/area-selector-mobile/area-selector-mobile.component';
 import {ConsoleLoggerService} from './shared/logger/console-logger.service';
 import {LoggerService} from './shared/logger/logger.service';
+import { SubmitDspaceComponent } from './components/submit-dspace/submit-dspace.component';
 
 export const appRoutes = [
 
@@ -114,6 +115,7 @@ export const appRoutes = [
   {path: environment.appRoot + '/collection/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/item/submit/:typeId', component: SubmitDspaceComponent}, // requires type id, e.g. senior theses
   {path: environment.appRoot, redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '', redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
@@ -133,7 +135,6 @@ export const appRoutes = [
     ListsContainerComponent,
     SubjectsComponent,
     PageNotFoundComponent,
-   // ListHeaderComponent,
     AreaInformationComponent,
     ItemComponent,
     ItemContainerComponent,
@@ -166,7 +167,8 @@ export const appRoutes = [
     TypesComponent,
     SearchFilterComponent,
     CurrentFiltersComponent,
-    AreaSelectorMobileComponent
+    AreaSelectorMobileComponent,
+    SubmitDspaceComponent
 
   ],
   imports: [
