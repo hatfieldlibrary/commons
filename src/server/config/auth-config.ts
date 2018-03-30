@@ -33,7 +33,7 @@ const
   /**
    * CAS authentication strategy
    */
-  //cas = require('passport-cas'),
+  // cas = require('passport-cas'),
   /**
    * Redis client
    * @type {exports|module.exports}
@@ -69,7 +69,7 @@ export class Authentication {
     } else if (app.get('env') === 'production') {
 
       const redisPort = config.redisPort || 6379;
-      let client = redis.createClient(
+      const client = redis.createClient(
         redisPort, '127.0.0.1',
         {}
       );
@@ -105,7 +105,7 @@ export class Authentication {
     /**
      * Class for validating the user.
      */
-    let User = {
+    const User = {
 
       findOne: function (profile, callback) {
         if (typeof profile === 'undefined') {
@@ -134,7 +134,7 @@ export class Authentication {
      * produce predictable values and should not be used in security-sensitive context.
      */
     /* TODO: This npm package includes an insecure dependency. No risk, but it triggers a bitbucket warning. */
-    let casStrategy = require('passport-cas');
+    const casStrategy = require('passport-cas');
 
     passport.use(new (casStrategy.Strategy)({
       version: 'CAS3.0',
@@ -219,11 +219,11 @@ export class Authentication {
     app.ensureAuthenticated = function (req, res, next) {
 
       // Get the auth path prefix from configuration.
-      let find = config.authPath;
+      const find = config.authPath;
 
-      let path = req._parsedOriginalUrl.pathname;
+      const path = req._parsedOriginalUrl.pathname;
       // Removes the auth path prefix from the current path.
-      let redirect = path.replace(find, '');
+      const redirect = path.replace(find, '');
 
       passport.authenticate('cas', (err, user, info) => {
 
@@ -237,10 +237,10 @@ export class Authentication {
           return res.redirect(redirect);
         }
 
-        req.logIn(user, function (err) {
+        req.logIn(user, function (error) {
 
-          if (err) {
-            return next(err);
+          if (error) {
+            return next(error);
           }
 
           req.session.messages = '';
