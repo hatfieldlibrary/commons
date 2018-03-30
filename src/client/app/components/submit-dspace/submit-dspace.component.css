@@ -1,0 +1,66 @@
+
+mat-card-content.list-container {
+  background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
+  background-repeat: no-repeat,repeat-x;
+  background-position: top center,top center;
+}
+
+.info-card {
+  padding: 0;
+  margin-top: 60px;
+}
+
+/* Reset padding for devices larger than small. */
+mat-card-subtitle.large-device-info {
+  padding: 32px 68px;
+
+}
+mat-card-subtitle.area-info-container  {
+  padding: 0 !important;
+}
+.area-info {
+  font-size: 14px;
+  padding: 32px;
+  background: #efeadf;
+  background: #701716;
+  background: #0f959f;
+  background: rgb(60, 60, 60);
+  line-height: 1.125;
+  color: #efefef;
+
+}
+body .area-info .text-padding p  a,
+body .area-info .text-padding p a:visited {
+  color: #0f959f;
+  font-weight: 800;
+}
+.area-info .text-padding .area-button a,
+.area-info .text-padding .area-button a:visited {
+  color: #e6ecec;
+  text-decoration: none;
+}
+.area-button {
+  margin: 24px 0 0;
+}
+.collection-list-item {
+  height: auto;
+  padding: 24px 32px;
+  border-bottom: 1px solid #b1b1b1;
+}
+mat-list-item.mobile-list-item-padding,
+div.mobile-list-item-padding {
+  padding: 0 !important;
+}
+mat-list-item.collection-list-item.mobile-item-info-height {
+  height: 62px;
+  min-height: 62px;
+}
+.collection-item{
+  color: #791716;
+  color: #0b8a94;
+  font-weight: 800;
+  cursor: default;
+}
+.collection-list-item {
+  border-bottom: 1px solid #ddd;
+}
