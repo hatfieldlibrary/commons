@@ -1,7 +1,7 @@
 <app-menus-component
   [selectedArea]="areaId"
   [areaList]="areas$ | async"
-  [showBack]="false">
+  [showBack]="true">
 </app-menus-component>
 
 <mat-card class="main-content-area" style="padding:0;">
@@ -20,18 +20,14 @@
            fxFlex.gt-lg="1 1 47">
 
         <div class="mat-card info-card">
-          <div class="mat-card-header">
-            <div class="area-info" fxFlexFill>
-              <div fxFlex="100" class="area-description">
-                <h1 class="mat-headline">Senior Thesis Submission</h1>
-                <div class="text-padding">
-                  <div><p>Seniors may submit their thesis or capstone project to the Academic Commons. </p>
-                    <p>Select the collection for your major from the list below. Additional
-                      submission instructions are available at this link.</p></div>
-                  <p><a mat-raised-button class="accent-button area-button" href="https://libguides.willamette.edu/thesis_submission"
-                        target="_blank" color="accent">Additional Submission Instructions</a></p>
-                </div>
-              </div>
+          <div class="mat-card-header area-info ">
+            <div class="area-description">
+              <h1 class="mat-headline"><span style="color: yellow">Next Step:</span> Choose Your Major from the List
+                Below</h1>
+              <!--<div class="text-padding">-->
+              <!--<p><a mat-raised-button class="accent-button area-button" href="https://libguides.willamette.edu/thesis_submission"-->
+              <!--target="_blank" color="accent">Additional Submission Instructions</a></p>-->
+              <!--</div>-->
             </div>
           </div>
           <div class="mat-card-content">
@@ -39,16 +35,16 @@
               <mat-list>
                 <mat-list-item class="collection-list-item result-item"
                                [ngClass]="{'mobile-list-item-padding': isMobile}"
-                                matTooltip="Submit to {{collection.title}}"
+                               matTooltip="Submit to {{collection.title}}"
                                [matTooltipPosition]="position"
                                (click)="navigateToItem(collection.url)"
                                *ngFor="let collection of collections$ | async">
                   <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
                     <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
                     <!--<div>-->
-                      <!--<span class="mat-caption bold-caption ">Content:</span>-->
-                      <!--<span class="mat-caption" *ngFor="let type of collection.types ; let i = index">-->
-            <!--{{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>-->
+                    <!--<span class="mat-caption bold-caption ">Content:</span>-->
+                    <!--<span class="mat-caption" *ngFor="let type of collection.types ; let i = index">-->
+                    <!--{{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>-->
                     <!--</div>-->
                   </div>
                 </mat-list-item>
