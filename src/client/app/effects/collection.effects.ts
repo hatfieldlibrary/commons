@@ -100,4 +100,24 @@ export class CollectionEffects {
     .map((res) => new collection.CollectionsTypeAreaActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
+  @Effect()
+  collectionsByCategoryType$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_BY_CATEGORY_TYPE)
+    .map((action: collection.CollectionsCategoryTypeAction) => action.payload)
+    .switchMap(payload =>
+      this.svc.getCollectionsByCategoryType(payload.categories, payload.types))
+    .map(res => new collection.CollectionsCategoryTypeActionSuccess(res))
+    .catch(err => Observable.of(new collection.CollectionActionFailed(err)));
+
+  @Effect()
+  collectionsByCategoryAreaType$: Observable<Action> = this.actions$
+    .ofType(collection.CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE)
+    .map((action: collection.CollectionsCategoryAreaTypeAction) => action.payload)
+    .switchMap(payload =>
+      this.svc.getCollectionsByCategoryAreaType(payload.categories,
+        payload.areas,
+        payload.types))
+    .map(res => new collection.CollectionsCategoryAreaTypeActionSuccess(res))
+    .catch(err => Observable.of(new collection.CollectionActionFailed(err)));
+
 }

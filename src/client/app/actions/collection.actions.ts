@@ -23,6 +23,8 @@ import {Action} from '../actions/action.interface';
 import {type} from '../shared/ngrx/type';
 import {CollectionType} from '../shared/data-types/collection.type';
 import {TypeAreaSubjectParams} from './type-area-subject-parameters.interface';
+import {CategoryAreaTypeParams} from "./category-area-type.interface";
+import {CategoryTypeParams} from "./category-type.interface";
 
 export interface IdentifersPayload {
   subjectId: string,
@@ -41,6 +43,8 @@ export const CollectionActionTypes = {
   LIST_BY_TYPE: type('[Collections] Collections by Type'),
   LIST_BY_TYPE_AREA: type('[Collections] Collections by Type Area'),
   LIST_BY_TYPE_AREA_SUBJECT: type('[Collections] Collection by Type Area Subject'),
+  LIST_BY_CATEGORY_TYPE: type('[Collections] Search by Catgory Type'),
+  LIST_BY_CATEGORY_AREA_TYPE: type('[Collections] Category Area Type'),
   LIST_BY_TYPE_SUCCESS: type('[Collections] Collections by Type Success'),
   LIST_BY_TYPE_AREA_SUCCESS: type('[Collections] Collections by Type Area Success'),
   LIST_BY_TYPE_SUBJECT: type('[Collections] Collections by Type Subject'),
@@ -48,6 +52,8 @@ export const CollectionActionTypes = {
   LIST_BY_TYPE_AREA_SUBJECT_SUCCESS: type('[Collections] Collections by Type Area Subject Success'),
   LIST_ALL_BY_SUBJECT: type('[Collections] All Collections by Subject'),
   LIST_ALL_BY_SUBJECT_SUCCESS: type('[Collections] All Collections by Subject Success'),
+  LIST_BY_CATEGORY_TYPE_SUCCESS: type('[Collections] Collections by Catgetory Type Success'),
+  LIST_BY_CATEGORY_AREA_TYPE_SUCCESS: type('[Collections] Collections by Category Area Type Success'),
   LIST_RESET: type('[Collections] Reset the Collection List to Empty'),
   REQUEST_FAILED: type('[Collections] Search Failed')
 
@@ -116,6 +122,16 @@ export class CollectionsSubjectActionSuccess implements Action {
 
 }
 
+
+export class CollectionsAreaSubjectActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS;
+  payload: CollectionType[];
+  constructor(searchResult: CollectionType[]) {
+    this.payload = searchResult;
+  }
+
+}
+
 export class CollectionsAreaSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_AREA_SUBJECT;
   payload: IdentifersPayload;
@@ -126,9 +142,40 @@ export class CollectionsAreaSubjectAction implements Action {
     }
   }
 }
+export class CollectionsCategoryTypeAction implements Action {
+  type = CollectionActionTypes.LIST_BY_AREA_SUBJECT;
+  payload: CategoryTypeParams;
+  constructor(categoryId: string, typeId: string) {
+    this. payload = {
+      categories: categoryId,
+      types: typeId
+    }
+  }
+}
 
-export class CollectionsAreaSubjectActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS;
+export class CollectionsCategoryTypeActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUCCESS;
+  payload: CollectionType[];
+  constructor(searchResult: CollectionType[]) {
+    this.payload = searchResult;
+  }
+
+}
+
+export class CollectionsCategoryAreaTypeAction implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE;
+  payload: CategoryAreaTypeParams;
+  constructor(categoryId: string, areaId: string, typeId: string ) {
+    this.payload = {
+      categories: categoryId,
+      areas: areaId,
+      types: typeId
+    }
+  }
+}
+
+export class CollectionsCategoryAreaTypeActionSuccess implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUCCESS;
   payload: CollectionType[];
   constructor(searchResult: CollectionType[]) {
     this.payload = searchResult;

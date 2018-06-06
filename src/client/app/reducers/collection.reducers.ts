@@ -176,6 +176,36 @@ export function reducer(state = initialState, action: CollectionActions): State 
       });
     }
 
+    case CollectionActionTypes.LIST_BY_CATEGORY_TYPE: {
+    return Object.assign({}, state, {
+      collections: [],
+      loading: true
+    });
+  }
+
+    case CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUCCESS: {
+      const result: CollectionType[] = <CollectionType[]>action.payload;
+      return Object.assign({}, state, {
+        collections: result,
+        loading: false
+      });
+    }
+
+    case CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE: {
+      return Object.assign({}, state, {
+        collections: [],
+        loading: true
+      });
+    }
+
+    case CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUCCESS: {
+      const result: CollectionType[] = <CollectionType[]>action.payload;
+      return Object.assign({}, state, {
+        collections: result,
+        loading: false
+      });
+    }
+
     case CollectionActionTypes.REQUEST_FAILED: {
       return state;
     }

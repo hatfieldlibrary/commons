@@ -268,7 +268,12 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.updateSelected(params);
         this.initializeAreas(params);
         this.areaScreen = this.navigation.isAreaSelected(params['areaId']);
-        this.dispatchService.dispatchActions(params['areaId'], params['typeId'], params['subjectId']);
+        this.dispatchService.dispatchActions(
+          params['areaId'],
+          params['typeId'],
+          params['subjectId'],
+          params['categoryId'
+            ]);
       });
     this.watchers.add(routeWatcher);
   }

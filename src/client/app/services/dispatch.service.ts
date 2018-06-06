@@ -10,15 +10,33 @@ import * as listActions from '../actions/collection.actions';
 import {TypeAreaSubjectParams} from '../actions/type-area-subject-parameters.interface';
 import {NavigationService} from './navigation/navigation.service';
 
+/**
+ * This class handles all store dispatch requests for the application.
+ */
 @Injectable()
 export class DispatchService {
 
   constructor(private store: Store<fromRoot.State>,
               private navigation: NavigationService) { }
 
-  dispatchActions(areaId: string, typeId: string, subjectId: string): void {
+  dispatchActions(areaId: string, typeId: string, subjectId: string, categoryId: string): void {
     this.getAreaInformation(areaId);
-    if (areaId) {
+    if (categoryId) {
+      // Category lookups are provided with types and areas. This provides and
+      // option for lookups by administrative units (e.g. HFMA or Archives).
+      if (typeId) {
+        if (areaId) {
+          this.getCollectionsForCategoryAreaType(categoryId, areaId, typeId);
+          this.getSubjectsForAreaType(areaId, typeId);
+          this.getTypesForArea(areaId);
+        } else {
+          this.getCollectionsForCategoryType(categoryId, typeId);
+          this.getSubjectsForType(typeId);
+          this.getAllTypes();
+        }
+      }
+    } else if (areaId) {
+      // Area lookups can be by subject, type, or all collections in an area.
       if (subjectId) {
         if (typeId) {
           this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
@@ -39,7 +57,7 @@ export class DispatchService {
         this.getTypesForArea(areaId);
       }
     } else if (subjectId) {
-      // this.areaScreen = true;
+      // Subject lookups can be by type or all collections.
       if (typeId) {
         this.getCollectionsForTypeSubject(typeId, subjectId);
         this.getSubjectsForType(typeId);
@@ -47,10 +65,9 @@ export class DispatchService {
         this.getCollectionsForSubject(subjectId);
         this.getAllSubjects();
       }
-      // this.setAllCollectionTitle();
       this.getTypesForSubject(subjectId);
     } else {
-     // this.areaScreen = true;
+     // Type lookup (with fallback to all collections if type is missing.)
       if (typeId) {
         this.getCollectionsForType(typeId);
         this.getSubjectsForType(typeId);
@@ -58,8 +75,8 @@ export class DispatchService {
         this.getAllCollections();
         this.getAllSubjects();
       }
+      // All collections
       this.getAllTypes();
-     // this.areaScreen = true;
     }
   }
 
@@ -123,6 +140,17 @@ export class DispatchService {
       areaId = '0';
     }
     this.store.dispatch(new areaActions.AreaInformation(areaId));
+  }
+
+  private getCollectionsForCategoryAreaType(categoryId: string, areaId: string, typeId: string) {
+    if (!this.navigation.isAreaSelected(areaId)) {
+      areaId = '0';
+    }
+    this.store.dispatch(new listActions.CollectionsCategoryAreaTypeAction(categoryId, areaId, typeId))
+  }
+
+  private getCollectionsForCategoryType(categoryId: string, typeId: string) {
+    this.store.dispatch(new listActions.CollectionsCategoryTypeAction(categoryId, typeId))
   }
   /**
    * Dispatches action for collections by subject and areas.

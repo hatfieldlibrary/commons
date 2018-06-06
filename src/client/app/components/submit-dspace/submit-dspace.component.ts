@@ -51,7 +51,7 @@ export class SubmitDspaceComponent implements OnInit, OnDestroy {
 
     const routeWatcher = this.route.params
       .subscribe((params) => {
-        this.dispatchService.dispatchActions(undefined, params['typeId'], undefined);
+        this.dispatchService.dispatchActions(undefined, params['typeId'], undefined, undefined);
       });
     this.watchers.add(routeWatcher);
 
