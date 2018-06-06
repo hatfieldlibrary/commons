@@ -115,6 +115,8 @@ export const appRoutes = [
   {path: environment.appRoot + '/collection/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/category/:categoryId/type/:typeId', component: ListsContainerComponent},
+  {path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/type/:typeId', component: ListsContainerComponent},
   {path: environment.appRoot + '/item/submit/:typeId', component: SubmitDspaceComponent}, // requires type id, e.g. senior theses
   {path: environment.appRoot, redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
   {path: '', redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
