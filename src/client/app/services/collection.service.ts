@@ -20,7 +20,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/observable';
 import {CollectionType} from '../shared/data-types/collection.type';
 import { environment } from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
@@ -35,7 +35,9 @@ export class CollectionService {
   }
 
   getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/area/' + areaId + '/subject/' + subjectId);
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot +
+      '/collection/area/' +
+      areaId + '/subject/' + subjectId);
   }
 
   getCollectionsBySubject(id: string): Observable<CollectionType[]> {
@@ -61,6 +63,20 @@ export class CollectionService {
       + '/collection/area/' + areaId
       + '/type/' + typeId
       + '/subject/' + subjectId );
+  }
+
+  getCollectionsByCategoryType(categoryId: string, typeId: string): Observable<CollectionType[]> {
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/type/' + typeId );
+  }
+
+  getCollectionsByCategoryAreaType(categoryId: string, areaId: string, typeId: string): Observable<CollectionType[]> {
+
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/area/' + areaId
+      + '/type/' + typeId );
   }
 
   getAllCollections(): Observable<CollectionType[]> {
