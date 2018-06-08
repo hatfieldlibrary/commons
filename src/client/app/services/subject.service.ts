@@ -19,7 +19,7 @@
  * Created by mspalti on 2/24/17.
  */
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/observable';
 import {SubjectType} from '../shared/data-types/subject.type';
 import { environment } from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
