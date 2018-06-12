@@ -44,7 +44,7 @@ import * as fromRelated from './related.reducers';
 import * as fromAuth from './auth.reducers';
 import * as fromTypes from './type.reducers';
 import * as fromFilter from './filter.reducers';
-import {Observable} from 'rxjs/Observable';
+import * as fromCollectionGroups from './collection-group.reducers';
 import {getAllFilters} from './filter.reducers';
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -52,6 +52,7 @@ import {getAllFilters} from './filter.reducers';
  */
 export interface State {
   collections: fromCollection.State;
+  collectionGroups: fromCollectionGroups.State;
   area: fromArea.State;
   areaList: fromAreaList.State
   subjects: fromSubject.State;
@@ -64,6 +65,7 @@ export interface State {
 
 export const reducers: ActionReducerMap<State> = {
   collections: fromCollection.reducer,
+  collectionGroups: fromCollectionGroups.reducer,
   area: fromArea.reducer,
   areaList: fromAreaList.reducer,
   subjects: fromSubject.reducer,
@@ -101,6 +103,10 @@ export const getCollectionsState = (state: State) => state.collections;
  * pieces of state.
  */
 export const getCollections = createSelector(getCollectionsState, fromCollection.getCollectionList);
+
+export const getCollectionGroupState = (state: State) => state.collectionGroups;
+
+export const getCollectionGroups = createSelector(getCollectionGroupState, fromCollectionGroups.getCollectionGroupList);
 
 export const getAreasState = (state: State) => state.area;
 

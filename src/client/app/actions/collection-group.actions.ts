@@ -25,14 +25,12 @@ export class AllGroupsAction implements Action {
   type = GroupActionTypes.ALL_GROUP_REQUEST;
   payload: void;
   constructor() {}
-
 }
 
 export class AllGroupsActionSuccess implements Action {
   type = GroupActionTypes.ALL_GROUP_REQUEST_SUCCESS;
   constructor(public payload: CollectionGroupType[]) {
   }
-
 }
 
 export class GroupActionFailed implements Action {
@@ -41,6 +39,12 @@ export class GroupActionFailed implements Action {
   constructor(err: string) {
     console.log(err)
   }
-
 }
+
+export type CollectionGroupActions =
+  GroupsReset |
+  AllGroupsAction |
+  AllGroupsActionSuccess |
+  GroupActionFailed;
+
 
