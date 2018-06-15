@@ -9,7 +9,7 @@ import {DOCUMENT} from '@angular/common';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import 'rxjs/add/operator/filter';
 import {NavigationService} from '../../services/navigation/navigation.service';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {SubjectType} from '../../shared/data-types/subject.type';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 
 @Component({
@@ -22,7 +22,7 @@ export class AppMenusComponent implements OnDestroy {
 
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
-  @Input() selectedSubject: SubjectFilterType;
+  @Input() selectedSubjects: SubjectType[];
   @Input() selectedTypes: TypesFilterType[];
   @Input() showBack: boolean;
   @Input() title: string;
@@ -58,7 +58,8 @@ export class AppMenusComponent implements OnDestroy {
 
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
-    const path = this.navigationService.getBackLink(this.selectedArea, this.selectedSubject.id.toString(), typeIds);
+    const subjectIds = this.navigationService.getIds(this.selectedSubjects);
+    const path = this.navigationService.getBackLink(this.selectedArea, subjectIds, typeIds);
     return path;
   }
 

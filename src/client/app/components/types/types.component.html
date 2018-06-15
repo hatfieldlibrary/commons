@@ -5,7 +5,7 @@
                      class="local-navigation"
                      [selected]="isSelected(type.id)"
                      [@fadeIn]
-                     [checkboxPosition]="before"
+                     [checkboxPosition]="position"
                      (click)="onTypeListControlChanged(typeSelectionList, type.id)"
                      [value]="type.id">
       {{type.name}}

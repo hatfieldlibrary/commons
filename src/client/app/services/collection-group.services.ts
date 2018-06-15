@@ -11,6 +11,7 @@ export class CollectionGroupServices {
   constructor(private http: HttpClient) {}
 
   getAllGroups(): Observable<CollectionGroupType[]> {
+    console.log(environment.apiHost + environment.apiRoot + '/category')
     return this.http.get<CollectionGroupType[]>(environment.apiHost + environment.apiRoot + '/category');
   }
 
@@ -26,27 +27,27 @@ export class CollectionGroupServices {
 
   getGroupsBySubject(subjectId: string): Observable<CollectionGroupType[]> {
     return this.http.get<CollectionGroupType[]>(environment.apiHost + environment.apiRoot +
-      '/category/subject' + subjectId);
+      '/category/subject/' + subjectId);
   }
 
   getGroupsByAreaType(areaId: string, typeId: string): Observable<CollectionGroupType[]> {
     return this.http.get<CollectionGroupType[]>(environment.apiHost + environment.apiRoot +
-      '/category/area/' + areaId + 'type/' + typeId);
+      '/category/area/' + areaId + '/type/' + typeId);
   }
 
   getGroupsByAreaSubject(areaId: string, subjectId: string): Observable<CollectionGroupType[]> {
     return this.http.get<CollectionGroupType[]>(environment.apiHost + environment.apiRoot +
-      '/category/area/' + areaId + 'subject/' + subjectId);
+      '/category/area/' + areaId + '/subject/' + subjectId);
   }
 
   getGroupsBySubjectType(subjectId: string, typeId: string): Observable<CollectionGroupType[]> {
     return this.http.get<CollectionGroupType[]>(environment.apiHost + environment.apiRoot +
-      '/category/subject/' + subjectId + 'type/' + typeId);
+      '/category/subject/' + subjectId + '/type/' + typeId);
   }
 
   getGroupsByAreaSubjectType(areaId: string, subjectId: string, typeId: string): Observable<CollectionGroupType[]> {
     return this.http.get<CollectionGroupType[]>(environment.apiHost + environment.apiRoot +
-      '/category/area/' + areaId + 'subject/' + subjectId + 'type/' + typeId);
+      '/category/area/' + areaId + '/subject/' + subjectId + '/type/' + typeId);
   }
 
 }

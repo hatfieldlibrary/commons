@@ -13,7 +13,7 @@ export class NavigationService {
   /**
    * Verifies that the request is an array of objects that
    * include and id field. All filter types must include an
-   * id (AreaFilterTypes, TypesFilterType, SubjectFilterType).
+   * id (AreaFilterTypes, TypesFilterType, SubjectType).
    * These objects to not have an identical shape, but all
    * include the id field.
    * @param list the array of objects
@@ -70,9 +70,13 @@ export class NavigationService {
    * @param {string} typeId the type id (can be comma-separated list).
    * @param {string} subjectId the subject id.
    */
-  public navigateFilterRoute(areaId: string, typeId: string, subjectId: string): void {
+  /*
+   * TODO: this builds in a 4-way permutation that includes area.  Area could be omitted if the design doesn't require.
+   */
+  public navigateFilterRoute(areaId: string, typeId: string, subjectId: string, groupId: string): void {
 
-    if (this.isSubjectSelected(subjectId) && this.isTypeSelected(typeId) && this.isAreaSelected(areaId)) {
+    if (this.isFieldSelected(subjectId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId) && this.isFieldSelected(groupId)) {
+
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
@@ -80,21 +84,29 @@ export class NavigationService {
         'type', typeId,
         'subject', subjectId
       ]);
-    } else if (this.isSubjectSelected(subjectId) && this.isAreaSelected(areaId)) {
+    } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'area', areaId,
+        'type', typeId,
+        'subject', subjectId
+      ]);
+    } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'area', areaId,
         'subject', subjectId
       ]);
-    } else if (this.isTypeSelected(typeId) && this.isAreaSelected(areaId)) {
+    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'area', areaId,
         'type', typeId
       ]);
-    } else if (this.isTypeSelected(typeId) && this.isSubjectSelected(subjectId)) {
+    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(subjectId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
@@ -117,11 +129,15 @@ export class NavigationService {
   }
 
   public isSubjectSelected(subjectId: string): boolean {
-    return (typeof subjectId !== 'undefined') && (subjectId !== '0');
+    return (typeof subjectId !== 'undefined') && (subjectId.length) !== 0 && (subjectId !== '0');
   }
 
   public isTypeSelected(typeId: string): boolean {
     return (typeof typeId !== 'undefined') && (typeId.length) !== 0 && (typeId !== '0');
+  }
+
+  public isFieldSelected(id: string): boolean {
+    return (typeof id !== 'undefined') && (id.length) !== 0 && (id !== '0');
   }
 
   private _handleAreaBackLinks(selectedArea: string, selectedSubject: string, selectedTypes: string): string {

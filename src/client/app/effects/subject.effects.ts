@@ -35,7 +35,7 @@ export class SubjectEffects {
   subjectEffect$: Observable<Action> = this.actions$
     .ofType(subjects.SubjectActionTypes.SUBJECT_LIST)
     .map((action: subjects.SubjectAction) => action.payload)
-    .switchMap(id => this.svc.getSubjects(id))
+    .switchMap(id => this.svc.getSubjectsForArea(id))
     .map(res => new subjects.SubjectActionSuccess(res))
     .catch((err) => Observable.of(new subjects.SubjectActionFailed(err)));
 

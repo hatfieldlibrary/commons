@@ -27,16 +27,25 @@ export class SetSelectedService {
   /**
    * Dispatches action to set the selected subject after the subject list subscription
    * tells us that subjects are available.
+   *
+   * TODO: this is no longer correct after move to multiple subject selections.  It is used
+   * only by the original (top of page) subject selector.  That component assumes a single
+   * subject is chosen.  The new (side of page) subject options allows multiple subjects. If
+   * both components are kept, then there needs to be a single subject data type and some
+   * refactoring of other code. Update here so that the app will compile!
+   *
    * @param {string} subjectId
    * @private
    */
   setSelectedSubject(subjectId: string): void {
     if (subjectId) {
       const subjectWatcher = this.subjects$.subscribe((subjects) => {
+        const subjectsArr: SubjectType[] = [];
         subjects.forEach((subject) => {
           if (subject.id === +subjectId) {
-            this.store.dispatch(new SetSubjectFilter(subject));
+            subjectsArr.push(subject);
           }
+          this.store.dispatch(new SetSubjectFilter(subjectsArr));
         })
       });
       this.watchers.add(subjectWatcher);

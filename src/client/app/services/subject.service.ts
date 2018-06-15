@@ -19,7 +19,7 @@
  * Created by mspalti on 2/24/17.
  */
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/observable';
+import {Observable} from 'rxjs';
 import {SubjectType} from '../shared/data-types/subject.type';
 import { environment } from '../environments/environment';
 import {HttpClient} from '@angular/common/http';
@@ -29,12 +29,12 @@ export class SubjectService {
 
   constructor(private http: HttpClient) {}
 
-  getSubjects(areaIds: string): Observable<SubjectType[]> {
-    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject/area/' + areaIds);
-  }
-
   getAllSubjects(): Observable<SubjectType[]> {
     return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject');
+  }
+
+  getSubjectsForArea(areaIds: string): Observable<SubjectType[]> {
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot + '/subject/area/' + areaIds);
   }
 
   getSubjectsForType(typeId: string): Observable<SubjectType[]> {

@@ -20,24 +20,19 @@ import {
   OnInit, Output, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import * as listActions from '../../actions/collection.actions';
+
 import {SetIntervalService} from '../../services/timers/interval.service';
 import {MatListItem} from '@angular/material';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
-import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {Router} from '@angular/router';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {SubjectType} from '../../shared/data-types/subject.type';
 import {SetSubjectFilter} from '../../actions/filter.actions';
-import {NavigationService} from '../../services/navigation/navigation.service';
 
 export interface SelectedSubjectEvent {
-  selected: SubjectFilterType;
+  selected: SubjectType;
 }
 
 @Component({
@@ -49,7 +44,7 @@ export interface SelectedSubjectEvent {
 export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() subjectList: SubjectType[];
-  @Input() selectedSubject: SubjectFilterType;
+  @Input() selectedSubject: SubjectType;
   @Output() subjectNavigation: any = new EventEmitter<any>();
   @ViewChild('container') container: ElementRef;
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
@@ -101,7 +96,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  private getSelectedSubjectInfo(subjectId: number): SubjectFilterType {
+  private getSelectedSubjectInfo(subjectId: number): SubjectType {
     return this.subjectList.find((current) => current.id === subjectId);
   }
 
@@ -109,8 +104,8 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Resets the collection list in store.
    */
   addSubject(subjectId): void {
-    const selectedSubject: SubjectFilterType = this.getSelectedSubjectInfo(+subjectId);
-    this.store.dispatch(new SetSubjectFilter(selectedSubject));
+    const selectedSubject: SubjectType = this.getSelectedSubjectInfo(+subjectId);
+    this.store.dispatch(new SetSubjectFilter([selectedSubject]));
     const subjectEventPayload: SelectedSubjectEvent = {selected: selectedSubject};
     this.subjectNavigation.emit(subjectEventPayload);
   }
@@ -122,7 +117,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
 
     // const subjectWatcher = this.store.select(fromRoot.getSelectedSubject).subscribe((id) => {
-    //   this.selectedSubject = id;
+    //   this.selectedSubjects = id;
     // });
     // this.watcher.add(subjectWatcher);
   }

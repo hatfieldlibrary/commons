@@ -2,8 +2,10 @@
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
-import {SubjectFilterType} from '../shared/data-types/subject-filter.type';
+import {SubjectType} from '../shared/data-types/subject.type';
 import {TypesFilterType} from '../shared/data-types/types-filter.type';
+import {CollectionGroupFilter} from '../shared/data-types/collection-group-filter.type';
+import {CollectionGroupType} from '../shared/data-types/collection-group-type';
 
 export const FilterActionTypes = {
   SET_SEARCH_FILTER: type('[Filters] Set Search Filter'),
@@ -13,7 +15,8 @@ export const FilterActionTypes = {
   SET_TYPE_FILTER: type('[Filters] Set Types Filter'),
   SET_DEFAULT_TYPE_FILTER: type('[Filters] Set default type filter'),
   SET_SUBJECT_FILTER: type('[Filters] Set Subject Filter'),
-  REMOVE_SUBJECT_FILTER: type('[Filter] Remove Subject Filter')
+  REMOVE_SUBJECT_FILTER: type('[Filter] Remove Subject Filter'),
+  SET_GROUP_FILTER: type('[Filters] Set filter for collection groups')
 };
 
 /**
@@ -56,7 +59,7 @@ export class SetDefaultAreaFilter implements Action {
  */
 export class SetSubjectFilter implements Action {
   public type = FilterActionTypes.SET_SUBJECT_FILTER;
-  constructor(public payload: SubjectFilterType) {}
+  constructor(public payload: SubjectType[]) {}
 }
 
 /**
@@ -87,6 +90,15 @@ export class SetDefaultTypeFilter implements Action {
 }
 
 /**
+ * Redux action for setting the selected collection group filter value.
+ */
+export class SetGroupFilter implements Action {
+  public type = FilterActionTypes.SET_GROUP_FILTER;
+  constructor(public payload: CollectionGroupType[]) {}
+}
+
+
+/**
  * Union type.
  */
 export type FilterActions =
@@ -95,4 +107,5 @@ export type FilterActions =
   | SetAreaFilter
   | SetSubjectFilter
   | RemoveSubjectFilter
-  | SetTypeFilter;
+  | SetTypeFilter
+  | SetGroupFilter;

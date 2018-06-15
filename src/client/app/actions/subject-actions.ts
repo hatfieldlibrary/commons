@@ -69,9 +69,7 @@ export class AllSubjectAction implements Action {
 
 export class AllSubjectActionSuccess implements Action {
   type = SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS;
-
   constructor(public payload: SubjectType[]) {
-
   }
 }
 

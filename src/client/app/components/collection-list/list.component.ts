@@ -18,7 +18,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
 import {CollectionType} from '../../shared/data-types/collection.type';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {SubjectType} from '../../shared/data-types/subject.type';
 import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {FilterUpdateService} from '../../services/filters/filter-update.service';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
@@ -48,13 +48,13 @@ import {animate, query, stagger, state, style, transition, trigger} from '@angul
 export class ListComponent implements OnDestroy, OnInit {
 
   @Input() collectionList: CollectionType[];
-  @Input() selectedSubject: SubjectFilterType;
+  @Input() selectedSubject: SubjectType;
   @Output() subjectNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   filterTerm: string;
   isMobile = false;
   watcher: Subscription;
-  emptySubject: SubjectFilterType = {id: 0, name: ''};
+  emptySubject: SubjectType = {id: 0, name: ''};
 
   constructor(private filterService: FilterUpdateService,
               private media: ObservableMedia) {

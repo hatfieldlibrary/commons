@@ -33,10 +33,10 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {NavigationService} from '../../services/navigation/navigation.service';
-import {DeselectedFilter} from 'app/components/current-filters/current-filters.component';
+import {DeselectedFilter} from 'app/components/area-filters/area-filters.component';
 import {SelectedAreaEvent} from '../../components/area-selector/area.component';
 import {SelectedTypeEvent} from '../../components/types/types.component';
-import {SelectedSubjectEvent} from '../../components/subject-selector/subjects.component';
+import {SelectedSubjectEvent} from '../../components/subject-options/subject-options.component';
 import {DispatchService} from '../../services/dispatch.service';
 import {SetSelectedService} from '../../services/set-selected.service';
 import {TypesFilter} from '../../shared/data-types/types-filter';
@@ -44,8 +44,11 @@ import * as fromFilter from '../../reducers/filter.reducers';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/combineLatest';
 import {AreasFilter} from '../../shared/data-types/areas-filter';
-import {AreaDefaultList} from '../../actions/area.actions';
-import {ClearCollectionsFilter, CollectionReset} from '../../actions/collection.actions';
+import {CollectionReset} from '../../actions/collection.actions';
+import {SubjectFilter} from '../../shared/data-types/subject-filter';
+import {SelectedGroupEvent} from '../../components/group-options/group-options.component';
+import {CollectionGroupType} from '../../shared/data-types/collection-group-type';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
 
 @Component({
   selector: 'app-lists-container',
@@ -64,22 +67,26 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * Redux selectors.
    */
   collections$: Observable<CollectionType[]>;
-  subjects$: Observable<SubjectType[]>;
-  selectedSubject$: Observable<SubjectType>;
   areas$: Observable<AreaFilterType[]>;
   areaInfo$: Observable<AreaType[]>;
   types$: Observable<TypesFilterType[]>;
+  groups$: Observable<CollectionGroupType[]>;
   filters$: Observable<fromFilter.State>;
   typesFilter$: Observable<TypesFilter>;
   areasFilter$: Observable<AreasFilter>;
+  subjectsFilter$: Observable<SubjectFilter>;
+  groupsFilter$: Observable<CollectionGroupFilter>;
   selectedAreas: AreaFilterType[];
   selectedTypes: TypesFilterType[];
+  selectedSubjects: SubjectType[];
+  selectedGroups: CollectionGroupType[];
   /**
    * These member variables contain the route parameters.
    */
   areaId: string;
   typeId: string;
   subjectId: string;
+  groupId: string;
   /**
    * Used to clean up subscriptions OnDestroy.
    */
@@ -101,10 +108,13 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   /**
    * Dispatches action for areas list if not currently available in the store.
+   * TODO: Review...this assume dynamic areas. If so, need to add collection group support.
    * @param id
    */
   private initializeAreas(params: any) {
     if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
+      this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
+    } else if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
       this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
     } else if (this.navigation.isSubjectSelected(params['subjectId'])) {
       this.dispatchService.getAreasBySubject(params['subjectId']);
@@ -119,14 +129,13 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * Event binding callback to update the collection list
    * when a subject is deselected.
    */
-  subjectNavigation(subjectEventPayload: SelectedSubjectEvent): void {
-    this.navigation.navigateFilterRoute(this.areaId, this.typeId, subjectEventPayload.selected.id.toString());
-  }
+  // subjectNavigation(subjectEventPayload: SelectedSubjectEvent): void {
+  //   this.navigation.navigateFilterRoute(this.areaId, this.typeId, subjectEventPayload.selected.id.toString());
+  // }
 
   /**
-   * Deselect filter callback for areas and types. This filter
-   * uses the currently selected areas and types to assure correct
-   * state across filter changes.
+   * Deselect filter callback for areas, types and subjects. This filter
+   * modifies the currently selected ids to assure correct state across filter changes.
    * @param {DeselectedFilter} deselected
    */
   removeFilter(deselected: DeselectedFilter): void {
@@ -135,18 +144,23 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     if (deselected.type === 'area') {
       // Get url query parameter for current areas.
       const areaIds = this.navigation.getIds(this.selectedAreas);
-
       this.areaId = areaIds.replace(regex, '');
-      if (this.selectedTypes) {
-        this.typeId = this.navigation.getIds(this.selectedTypes);
-      }
-    } else {
+      this.typeId = this.navigation.getIds(this.selectedTypes);
+      this.groupId = this.navigation.getIds(this.selectedGroups);
+    } else if (deselected.type === 'type') {
       // Get url query parameter for current types.
       const typeIds = this.navigation.getIds(this.selectedTypes);
       this.typeId = typeIds.replace(regex, '');
       this.areaId = this.navigation.getIds(this.selectedAreas);
+      this.groupId = this.navigation.getIds(this.selectedGroups);
+    } else {
+      // Get url query parameter for current subjects.
+      const subjectIds = this.navigation.getIds(this.selectedSubjects);
+      this.subjectId = subjectIds.replace(regex, '');
+      this.areaId = this.navigation.getIds(this.selectedAreas);
+      this.groupId = this.navigation.getIds(this.selectedGroups);
     }
-    this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId);
+    this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
   }
 
   /**
@@ -185,6 +199,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     } else {
       this.setSelected.setSelectedTypes(null);
     }
+    if (params['groupId']) {
+      this.setSelected.setSelectedTypes(params['groupId']);
+    } else {
+      this.setSelected.setSelectedTypes(null);
+    }
   }
 
   private setMediaWatcher(): void {
@@ -210,7 +229,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
-    this.navigation.navigateFilterRoute(areaIds, this.typeId, this.subjectId);
+    this.navigation.navigateFilterRoute(areaIds, this.typeId, this.subjectId, this.groupId);
   }
 
   /**
@@ -220,7 +239,25 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   typeNavigation(updatedTypeList: SelectedTypeEvent) {
     const areaIds = this.navigation.getIds(this.selectedAreas);
     const typeIds = this.navigation.getIds(updatedTypeList.selected);
-    this.navigation.navigateFilterRoute(areaIds, typeIds, this.subjectId);
+    const subjectIds = this.navigation.getIds(this.selectedSubjects);
+    const groupIds = this.navigation.getIds(this.selectedGroups);
+    this.navigation.navigateFilterRoute(areaIds, typeIds, subjectIds, groupIds);
+  }
+
+  subjectNavigation(updatedSubjectList: SelectedSubjectEvent) {
+    const areaIds = this.navigation.getIds(this.selectedAreas);
+    const typeIds = this.navigation.getIds(this.selectedTypes);
+    const groupIds = this.navigation.getIds(this.selectedGroups);
+    const subjectIds = this.navigation.getIds(updatedSubjectList.selected);
+    this.navigation.navigateFilterRoute(areaIds, typeIds, subjectIds, groupIds);
+  }
+
+  groupNavigation(updatedGroupList: SelectedGroupEvent) {
+    const areaIds = this.navigation.getIds(this.selectedAreas);
+    const typeIds = this.navigation.getIds(this.selectedTypes);
+    const subjectIds = this.navigation.getIds(this.selectedSubjects);
+    const groupIds = this.navigation.getIds(updatedGroupList.selected);
+    this.navigation.navigateFilterRoute(areaIds, typeIds, subjectIds, groupIds);
   }
 
   ngOnInit() {
@@ -228,21 +265,24 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // and removed in ngOnDestroy.
     this.watchers = new Subscription();
     this.setMediaWatcher();
-    this.subjects$ = this.store.select(fromRoot.getSubject);
+    // this.subjects$ = this.store.select(fromRoot.getSubject);
     this.collections$ = this.store.select(fromRoot.getFilteredCollections);
+    // For now, areas$ is used in app menu.
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
     this.types$ = this.store.select(fromRoot.getTypes);
-    this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
+    this.groups$ = this.store.select(fromRoot.getCollectionGroups);
+    // this.subjectFilter$ = this.store.select(fromRoot.getSubjectsFilter);
     this.filters$ = this.store.select(fromRoot.getFilters);
-    const areaList = this.store.select(fromRoot.getAreas);
-    const areaFilters = this.store.select(fromRoot.getAreasFilter);
-    areaFilters.subscribe(filter => {
-      this.selectedAreas = filter;
-    });
+    // const areaList = this.store.select(fromRoot.getAreas);
+    // const areaFilters = this.store.select(fromRoot.getAreasFilter);
+    //
+    // areaFilters.subscribe(filter => {
+    //   this.selectedAreas = filter;
+    // });
     this.areasFilter$ = Observable.combineLatest(
-      areaList,
-      areaFilters,
+      this.store.select(fromRoot.getAreas),
+      this.store.select(fromRoot.getAreasFilter),
       (areas, selected) => {
         this.selectedAreas = selected;
         return {
@@ -262,6 +302,27 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.subjectsFilter$ = Observable.combineLatest(
+      this.store.select(fromRoot.getSubject),
+      this.store.select(fromRoot.getSubjectsFilter),
+      (types, selected) => {
+        this.selectedSubjects = selected;
+        return {
+          subjects: types,
+          selectedSubjects: selected
+        }
+      }
+    );
+    this.groupsFilter$ = Observable.combineLatest(
+      this.store.select(fromRoot.getCollectionGroups),
+      this.store.select(fromRoot.getCollectionsGroupFilter),
+      (groups, selected) => {
+        this.selectedGroups = selected;
+        return {
+          groups: groups,
+          selectedGroups: selected
+        }
+      });
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.setQueryParams(params);
@@ -272,8 +333,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           params['areaId'],
           params['typeId'],
           params['subjectId'],
-          params['categoryId'
-            ]);
+          params['categoryId']);
       });
     this.watchers.add(routeWatcher);
   }

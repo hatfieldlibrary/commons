@@ -20,7 +20,7 @@ import {
 import {ItemType} from '../../shared/data-types/item.type';
 import {ObservableMedia} from '@angular/flex-layout';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {SubjectType} from '../../shared/data-types/subject.type';
 import {NavigationService} from '../../services/navigation/navigation.service';
 
 /**
@@ -36,7 +36,7 @@ export class ItemComponent  {
 
   @Input() item: ItemType;
   @Input() selectedArea: string;
-  @Input() selectedSubject: SubjectFilterType;
+  @Input() selectedSubjects: SubjectType[];
   @Input() selectedTypes: TypesFilterType[];
   state = '';
 
@@ -45,8 +45,9 @@ export class ItemComponent  {
 
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
+    const subjectIds = this.navigationService.getIds(this.selectedSubjects)
     const path =
-      this.navigationService.getBackLink(this.selectedArea, this.selectedSubject.id.toString(), typeIds);
+      this.navigationService.getBackLink(this.selectedArea, subjectIds, typeIds);
     return path;
 
   }

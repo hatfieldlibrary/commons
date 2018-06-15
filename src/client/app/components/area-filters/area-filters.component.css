@@ -1,0 +1,42 @@
+.filter-container {
+  padding: 16px 16px 8px;
+  vertical-align: middle;
+  min-height: 20px;
+}
+div.mobile-padding {
+  padding: 18px 14px 8px;
+}
+.filter-chip {
+  background: #ad7201;
+  background: #905f02;
+  background: #b77e10;
+  background: #755c45;
+  background: #25796f;
+  color: #fff;
+  font-size: 13px;
+}
+.filter-container .filter-chip {
+  line-height: 11px;
+  padding: 6px 10px 6px 0;
+  margin: 2px 0 0 8px !important;
+}
+mat-chip  .mat-icon {
+  height: 12px !important;
+  width: 20px !important;
+}
+.mat-chip.mat-chip-selected:not(.mat-basic-chip) {
+  background-color: #d5d5d5 !important;
+}
+.mat-chip-list {
+  vertical-align: middle;
+}
+.filter-label {
+  display: block;
+}
+.disable-chip {
+  color: #666;
+  background: #ccc;
+}
+.chip-layout {
+  display: inline-block;
+}

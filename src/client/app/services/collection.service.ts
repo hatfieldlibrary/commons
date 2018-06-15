@@ -20,7 +20,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/observable';
+import {Observable} from 'rxjs';
 import {CollectionType} from '../shared/data-types/collection.type';
 import { environment } from '../environments/environment';
 import {HttpClient} from '@angular/common/http';

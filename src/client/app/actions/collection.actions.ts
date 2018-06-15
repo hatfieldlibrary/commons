@@ -23,8 +23,8 @@ import {Action} from '../actions/action.interface';
 import {type} from '../shared/ngrx/type';
 import {CollectionType} from '../shared/data-types/collection.type';
 import {TypeAreaSubjectParams} from './type-area-subject-parameters.interface';
-import {CategoryAreaTypeParams} from "./category-area-type.interface";
-import {CategoryTypeParams} from "./category-type.interface";
+import {CategoryAreaTypeParams} from './category-area-type.interface';
+import {CategoryTypeParams} from './category-type.interface';
 
 export interface IdentifersPayload {
   subjectId: string,

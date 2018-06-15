@@ -26,6 +26,7 @@ export class TypesComponent implements OnInit {
 
   @Input() filter: TypesFilter;
   @Output() typeNavigation: EventEmitter <any> = new EventEmitter<any>();
+  position = 'before';
 
   constructor(private filterService: FilterUpdateService) {
   }

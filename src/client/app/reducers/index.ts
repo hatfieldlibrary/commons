@@ -151,6 +151,8 @@ export const getTypesFilter = createSelector(getFilterState, fromFilter.getTypes
 
 export const getAreasFilter = createSelector(getFilterState, fromFilter.getAreasFilter);
 
+export const getCollectionsGroupFilter = createSelector(getFilterState, fromFilter.getCollectionGroupFilter);
+
 export const getCollectionFilterTerm = createSelector(getFilterState, fromFilter.getFilterTerm);
 
 export const getFilteredCollections = createSelector(getCollections, getFilterState, filterFunction);

@@ -87,7 +87,7 @@ export class CollectionEffects {
     .ofType(collection.CollectionActionTypes.LIST_BY_TYPE_SUBJECT)
     .map((action: collection.CollectionsTypeSubjectAction) => action.payload)
     .switchMap((payload) =>
-      this.svc.getCollectionsByTypeSubject(payload.types.join(','), payload.subject))
+      this.svc.getCollectionsByTypeSubject(payload.types.join(','), payload.subjects))
     .map((res) => new collection.CollectionsTypeSubjectActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 
@@ -96,7 +96,7 @@ export class CollectionEffects {
     .ofType(collection.CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT)
     .map((action: collection.CollectionsTypeAreaSubjectAction) => action.payload)
     .switchMap((payload) =>
-      this.svc.getCollectionsByTypeAreaSubject(payload.types.join(','), payload.areas.join(','), payload.subject))
+      this.svc.getCollectionsByTypeAreaSubject(payload.types.join(','), payload.areas.join(','), payload.subjects))
     .map((res) => new collection.CollectionsTypeAreaActionSuccess(res))
     .catch((err) => Observable.of(new collection.CollectionActionFailed(err)));
 

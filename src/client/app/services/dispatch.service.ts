@@ -5,6 +5,7 @@ import * as typeActions from '../actions/type.actions';
 import {AreaSubjectParams} from '../actions/area-subject-parameters.interface';
 import * as subjectAction from '../actions/subject-actions';
 import * as areaActions from '../actions/area.actions';
+import * as groupActions from '../actions/collection-group.actions';
 import {AreaParams} from '../actions/area.actions';
 import * as listActions from '../actions/collection.actions';
 import {TypeAreaSubjectParams} from '../actions/type-area-subject-parameters.interface';
@@ -39,10 +40,14 @@ export class DispatchService {
       // Area lookups can be by subject, type, or all collections in an area.
       if (subjectId) {
         if (typeId) {
+          console.log('all 3')
           this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
+          this.getCollectionGroupsBySubjectType(subjectId, typeId);
           this.getSubjectsForAreaType(areaId, typeId);
         } else {
+          console.log('just 2')
           this.getCollectionsForAreaSubject(areaId, subjectId);
+          this.getCollectionGroupsBySubject(subjectId);
           this.getSubjectsForArea(areaId);
         }
         this.getTypesForAreaSubject(areaId, subjectId);
@@ -50,20 +55,25 @@ export class DispatchService {
         if (typeId) {
           this.getCollectionsForAreaType(areaId, typeId);
           this.getSubjectsForAreaType(areaId, typeId);
+          this.getCollectionGroupsByType(typeId);
         } else {
           this.getCollectionsForArea(areaId);
           this.getSubjectsForArea(areaId);
+          this.getCollectionGroupsByArea(areaId);
         }
         this.getTypesForArea(areaId);
       }
     } else if (subjectId) {
       // Subject lookups can be by type or all collections.
       if (typeId) {
+        console.log('here?')
         this.getCollectionsForTypeSubject(typeId, subjectId);
         this.getSubjectsForType(typeId);
+        this.getCollectionGroupsBySubjectType(subjectId, typeId);
       } else {
         this.getCollectionsForSubject(subjectId);
         this.getAllSubjects();
+        this.getCollectionGroupsBySubject(subjectId);
       }
       this.getTypesForSubject(subjectId);
     } else {
@@ -71,12 +81,14 @@ export class DispatchService {
       if (typeId) {
         this.getCollectionsForType(typeId);
         this.getSubjectsForType(typeId);
+        this.getCollectionGroupsByType(typeId);
+        this.getAllTypes();
       } else {
         this.getAllCollections();
         this.getAllSubjects();
+        this.getAllCollectionGroups();
+        this.getAllTypes();
       }
-      // All collections
-      this.getAllTypes();
     }
   }
 
@@ -123,6 +135,39 @@ export class DispatchService {
 
   private getTypesForSubject(subjectId) {
     this.store.dispatch(new typeActions.ContentTypesSubjectAction(subjectId));
+  }
+
+  private getAllCollectionGroups() {
+    this.store.dispatch(new groupActions.AllGroupsAction());
+  }
+
+  private getCollectionGroupsByArea(id: string) {
+    this.store.dispatch(new groupActions.GroupsByArea(id));
+  }
+
+  private getCollectionGroupsByType(id: string) {
+    this.store.dispatch(new groupActions.GroupsByType(id));
+  }
+
+  private getCollectionGroupsBySubject(id: string) {
+    this.store.dispatch(new groupActions.GroupsBySubject(id));
+  }
+
+  private getCollectionGroupsByAreaSubject(areaId: string, subjectId: string) {
+    this.store.dispatch(new groupActions.GroupsByAreaSubject(areaId, subjectId));
+  }
+
+  private getCollectionGroupsByAreaType(areaId: string, typeId: string) {
+    this.store.dispatch(new groupActions.GroupsByAreaType(areaId, typeId));
+  }
+
+  private getCollectionGroupsBySubjectType(subjectId: string, typeId: string) {
+    this.store.dispatch(new groupActions.GroupsBySubjectType(subjectId, typeId));
+  }
+
+
+  private getCollectionGroupsByAreaSubjectType(areaId: string, subjectId: string, typeId: string) {
+    this.store.dispatch(new groupActions.GroupsByAreaSubjectType(areaId, subjectId, typeId));
   }
 
   private getTypesForAreaSubject(areaId: string, subjectId: string) {
@@ -187,7 +232,7 @@ export class DispatchService {
     const params: TypeAreaSubjectParams = {
       areas: [],
       types: typeId.split(','),
-      subject: subjectId
+      subjects: subjectId
     };
     this.store.dispatch(new listActions.CollectionsTypeSubjectAction(params));
   }
@@ -196,7 +241,7 @@ export class DispatchService {
     const params: TypeAreaSubjectParams = {
       areas: areaId.split(','),
       types: typeId.split(','),
-      subject: subjectId
+      subjects: subjectId
     };
     this.store.dispatch(new listActions.CollectionsTypeAreaSubjectAction(params));
   }
@@ -205,7 +250,7 @@ export class DispatchService {
     const params: TypeAreaSubjectParams = {
       areas: areaId.split(','),
       types: typeId.split(','),
-      subject: ''
+      subjects: ''
     };
     this.store.dispatch(new listActions.CollectionsTypeAreaAction(params));
   }

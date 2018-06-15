@@ -37,13 +37,11 @@ import {HttpClientModule} from '@angular/common/http';
 const mockSubjectList: SubjectType[] = [
   {
     id: 1,
-    name: 'sub one',
-    url: ''
+    name: 'sub one'
   },
   {
     id: 2,
-    name: 'sub two',
-    url: ''
+    name: 'sub two'
   }
 ];
 

@@ -1,0 +1,21 @@
+.thumb-image {
+  height: 135px;
+}
+mat-card {
+  width: calc(100% - 70px);
+  height: calc(100% - 70px);
+  background: #f9f8f7;
+}
+
+.bold-caption {
+  font-weight: 800;
+  color: #666;
+}
+
+.grid-result-info {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.collection-item {
+  color: #0F959F;
+}
