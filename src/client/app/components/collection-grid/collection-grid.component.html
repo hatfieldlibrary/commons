@@ -12,7 +12,7 @@
   <span class="mat-caption bold-caption">ITEM COUNT:&nbsp;</span> {{totalResults()}}
 </div>
 
-<mat-grid-list cols="3" rowHeight="320" gutterSize="6">
+<mat-grid-list cols="3" rowHeight="410" gutterSize="6">
 
   <mat-grid-tile class="collection-list-item result-item"
                  [ngClass]="{'mobile-list-item-padding': isMobile}"
@@ -24,20 +24,29 @@
       <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
         <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
 
-        <div>
+        <!--<div>-->
+          <!--<span class="mat-caption">{{setAssetType(collection.ctype)}}</span>-->
+        <!--</div>-->
 
-          <span class="mat-caption">{{setAssetType(collection.ctype)}}</span>
-        </div>
-        <div>
+        <div style="position: absolute;left: 0px; top: 245px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+          <div class="mat-body-2" style="color: #999;">Content</div>
           <!--<span class="mat-caption bold-caption ">Content:</span>-->
           <span class="mat-caption" *ngFor="let type of collection.types ; let i = index">
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
         </div>
 
-        <div>
-          <!--<span class="mat-caption bold-caption">Availability:</span>-->
-          <span class="mat-caption bold-caption">{{setAccessStatus(collection.restricted)}}</span>
+        <div style="position: absolute; left: 0px; top: 310px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+
+          <div class="mat-body-2" style="color: #999;">Contains</div>
+             <span class="mat-caption" *ngFor="let parent of collection.parent ; let i = index">
+            {{parent.title}}<span *ngIf="collection.parent.length !== i + 1">,</span></span>
+
+
+
         </div>
+
+        <app-lock-svg *ngIf="collection.restricted" style="position: absolute; right: 4px; bottom: 4px;"></app-lock-svg>
+
       </div>
     </mat-card>
 

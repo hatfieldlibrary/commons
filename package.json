@@ -93,6 +93,7 @@
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-node6": "^11.0.0",
+    "codelyzer": "^4.3.0",
     "coveralls": "^3.0.1",
     "enhanced-resolve": "4.0.0",
     "jasmine-core": "^3.1.0",

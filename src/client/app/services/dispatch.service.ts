@@ -40,12 +40,10 @@ export class DispatchService {
       // Area lookups can be by subject, type, or all collections in an area.
       if (subjectId) {
         if (typeId) {
-          console.log('all 3')
           this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
           this.getCollectionGroupsBySubjectType(subjectId, typeId);
           this.getSubjectsForAreaType(areaId, typeId);
         } else {
-          console.log('just 2')
           this.getCollectionsForAreaSubject(areaId, subjectId);
           this.getCollectionGroupsBySubject(subjectId);
           this.getSubjectsForArea(areaId);
@@ -66,7 +64,6 @@ export class DispatchService {
     } else if (subjectId) {
       // Subject lookups can be by type or all collections.
       if (typeId) {
-        console.log('here?')
         this.getCollectionsForTypeSubject(typeId, subjectId);
         this.getSubjectsForType(typeId);
         this.getCollectionGroupsBySubjectType(subjectId, typeId);

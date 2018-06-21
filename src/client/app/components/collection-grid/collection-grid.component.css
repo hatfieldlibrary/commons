@@ -4,7 +4,12 @@
 mat-card {
   width: calc(100% - 70px);
   height: calc(100% - 70px);
-  background: #f9f8f7;
+  background: #fff;
+  cursor: pointer;
+}
+
+mat-card:hover {
+  background-color: rgba(240, 240, 240, 0.57);
 }
 
 .bold-caption {

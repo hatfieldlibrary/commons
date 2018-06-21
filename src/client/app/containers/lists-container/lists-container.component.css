@@ -9,8 +9,16 @@ mat-card-content.list-container {
   padding: 0;
 }
 
+.main-content-area {
+
+}
+
 .info-card .mat-card-header {
 
+}
+
+.app-area-info {
+  background: #000;
 }
 
 .area-info-container  {
