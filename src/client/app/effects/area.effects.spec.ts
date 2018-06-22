@@ -53,6 +53,7 @@ describe('Area Effect', () => {
     linkLabel: '',
     url: '',
     searchUrl: '',
+    image: '',
     description: '',
     position: 2
   };
@@ -109,7 +110,7 @@ describe('Area Effect', () => {
     const startAction = new AreaInformation('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new AreaInformationSuccess([mockAreaInfo]);
+    const successAction = new AreaInformationSuccess(mockAreaInfo);
     const expectedResults = cold('--b', {b: successAction});
     expect(areaEffects.areaInfoEffect$).toBeObservable(expectedResults);
 

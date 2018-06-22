@@ -23,7 +23,7 @@ import {DeselectedFilter} from '../area-filters/area-filters.component';
 export class AreaBannerComponent implements OnChanges, OnDestroy {
 
   @Input()
-  areaInfo: AreaType[];
+  areaInfo: AreaType;
   @Output()
   removeFilter: EventEmitter<any> = new EventEmitter<any>();
   @Input()
@@ -52,32 +52,19 @@ export class AreaBannerComponent implements OnChanges, OnDestroy {
    * @param id the id of the filter to be removed
    */
   deselect(deselected: DeselectedFilter): void {
-      this.removeFilter.emit(deselected);
+    this.removeFilter.emit(deselected);
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (typeof changes.areaInfo === 'undefined') {
       return;
     }
     if (changes.areaInfo.currentValue) {
-      if (changes.areaInfo.currentValue.length > 1) {
-        const areaList = changes.areaInfo.currentValue;
-        let areaTitles = '';
-        areaList.forEach((area) => areaTitles += area.title + ', ');
-        areaTitles = areaTitles.slice(0, -2);
-        this.description = '<div>Search in collection groups: </div><div class="mat-title areas-color">' + areaTitles + '</div>';
-        this.url = '';
-        this.linkLabel = '';
-        this.title = '';
-        this.areaId = 20;
-      } else if (changes.areaInfo.currentValue[0]) {
-        this.title = changes.areaInfo.currentValue[0].title;
-        this.description = changes.areaInfo.currentValue[0].description;
-        this.url = changes.areaInfo.currentValue[0].url;
-        this.linkLabel = changes.areaInfo.currentValue[0].linkLabel;
-        this.areaId = changes.areaInfo.currentValue[0].id;
-      }
+      this.title = changes.areaInfo.currentValue.title;
+      this.description = changes.areaInfo.currentValue.description;
+      this.url = changes.areaInfo.currentValue.url;
+      this.linkLabel = changes.areaInfo.currentValue.linkLabel;
+      this.areaId = changes.areaInfo.currentValue.id;
     }
   }
 

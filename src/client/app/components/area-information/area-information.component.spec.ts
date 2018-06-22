@@ -18,8 +18,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AreaInformationComponent} from './area-information.component';
-import {MatButtonModule, MatCardModule, MatChipsModule} from "@angular/material";
-import {EventEmitter, SimpleChange} from "@angular/core";
+import {MatButtonModule, MatCardModule, MatChipsModule} from '@angular/material';
+import {EventEmitter, SimpleChange} from '@angular/core';
 
 describe('AreaInformationComponent', () => {
   let component: AreaInformationComponent;
@@ -31,6 +31,7 @@ describe('AreaInformationComponent', () => {
     linkLabel: '',
     url: '',
     searchUrl: '',
+    image: '',
     description: '',
     position: 1
 

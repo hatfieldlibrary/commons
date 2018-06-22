@@ -26,23 +26,22 @@
   [filter]="areasFilter$ | async">>
 </app-area-options>
 
+
 <div fxLayout="row"
-     fxLayoutWrap
-     fxFlexFill
      fxLayoutGap="20px"
      fxLayoutAlign="center start"
      class="app-area-info">
-  <div fxLayout="row"
-  fxFlex="65" fxLayoutAlign="center start"fxLayoutAlign="center start" style="background: rgb(23, 23, 23);">
+  <div fxFlex fxFlex="65" fxFlex.lg="85" fxFlex.md="100" fxFlex.sm="100"  fxFlex.xs="100" style="height: 340px;">
+    <div style="position:relative; height: 100%; width:100%;background-color: #090905;">
 
+      <div class="area-background" *ngIf="areaInfo$ | async; let areaInfo$;"
+           [ngStyle]="{'background-image': 'url(' + (areaInfo$.image) + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"></div>
 
-    <app-area-banner fxFlex="60" [areaInfo]="areaInfo$ | async"
-                     [filters]="filters$ | async"
-                     (removeFilter)="removeFilter($event)"></app-area-banner>
+      <app-area-banner [areaInfo]="areaInfo$ | async"
+                       [filters]="filters$ | async"
+                       (removeFilter)="removeFilter($event)"></app-area-banner>
+    </div>
   </div>
-
-
-
 </div>
 
 <mat-card class="main-content-area" style="padding:0;">
@@ -91,7 +90,7 @@
              fxFlex.xs="1 1 100"
              fxFlex.sm="1 1 75"
              fxFlex.md="1 1 54"
-             fxFlex.lg="1 1 45"
+             fxFlex.lg="1 1 55"
              fxFlex.gt-lg="1 1 40">
           <!--<div class="mat-card info-card">-->
           <!--<div class="mat-card-header">-->
@@ -116,7 +115,7 @@
         </div>
         <div fxLayout="column"
              fxFlex.md="1 1 20"
-             fxFlex.lg="1 1 10"
+             fxFlex.lg="1 1 15"
              fxFlex.gt-lg="1 1 12"
              class="side-container"
              *ngIf="media.isActive('gt-sm')">

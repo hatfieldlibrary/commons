@@ -117,15 +117,16 @@ describe('Reducers ', () => {
 
   const expectedCollections = [expectedCollection];
 
-  const expectedArea = [{
+  const expectedArea = {
     id: 1,
     title: 'Area One',
     linkLabel: '',
     url: '',
     searchUrl: '',
+    image: '',
     description: '',
     position: 0
-  }];
+  };
 
   beforeEach(() => {
     subjectState = reducers.subjects(undefined, new SubjectActionSuccess(expectedSubjects));

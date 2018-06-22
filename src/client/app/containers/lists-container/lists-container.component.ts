@@ -68,7 +68,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   collections$: Observable<CollectionType[]>;
   areas$: Observable<AreaFilterType[]>;
-  areaInfo$: Observable<AreaType[]>;
+  areaInfo$: Observable<AreaType>;
   types$: Observable<TypesFilterType[]>;
   groups$: Observable<CollectionGroupType[]>;
   filters$: Observable<fromFilter.State>;
@@ -80,6 +80,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   selectedTypes: TypesFilterType[];
   selectedSubjects: SubjectType[];
   selectedGroups: CollectionGroupType[];
+
   /**
    * These member variables contain the route parameters.
    */

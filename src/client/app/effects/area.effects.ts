@@ -59,15 +59,16 @@ export class AreaEffects {
     .ofType(areas.AreaActionTypes.AREA_LIST_TYPE_SUBJECT)
     .map((action: areas.AreaListByTypeSubject) => action.payload)
     .switchMap((payload) => this.svc.getAreaListByTypeSubject(payload.typeId, payload.subjectId))
-    .map(res =>   new areas.AreaListTypeSubjectSuccess(res))
+    .map(res =>  new areas.AreaListTypeSubjectSuccess(res))
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
+  // TODO: Tagger is built to return an array of areas.  This version of the Commons assumes one. Should Tagger change?
   @Effect()
   areaInfoEffect$: Observable<Action> = this.actions$
     .ofType(areas.AreaActionTypes.AREA_INFORMATION)
     .map((action: areas.AreaInformation) => action.payload)
     .switchMap(id => this.svc.getAreaInfo(id))
-    .map(res => new areas.AreaInformationSuccess(res) )
+    .map(res => new areas.AreaInformationSuccess(res[0]) )
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
 }

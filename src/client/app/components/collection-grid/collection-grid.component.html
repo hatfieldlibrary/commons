@@ -8,11 +8,14 @@
 <!--</mat-grid-tile>-->
 <!--</mat-grid-list>-->
 
+<div>
+  <span class="mat-title">Select from the list to learn more about an item or collection.</span>
+</div>
 <div class="grid-result-info">
   <span class="mat-caption bold-caption">ITEM COUNT:&nbsp;</span> {{totalResults()}}
 </div>
 
-<mat-grid-list cols="3" rowHeight="410" gutterSize="6">
+<mat-grid-list cols="3" rowHeight="410" gutterSize="6" style="margin-top: 20px;">
 
   <mat-grid-tile class="collection-list-item result-item"
                  [ngClass]="{'mobile-list-item-padding': isMobile}"
@@ -25,22 +28,23 @@
         <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
 
         <!--<div>-->
-          <!--<span class="mat-caption">{{setAssetType(collection.ctype)}}</span>-->
+        <!--<span class="mat-caption">{{setAssetType(collection.ctype)}}</span>-->
         <!--</div>-->
 
-        <div style="position: absolute;left: 0px; top: 245px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
-          <div class="mat-body-2" style="color: #999;">Content</div>
+        <div
+          style="position: absolute;left: 0px; top: 236px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+          <div class="mat-body-2" style="color: #999;">Types</div>
           <!--<span class="mat-caption bold-caption ">Content:</span>-->
           <span class="mat-caption" *ngFor="let type of collection.types ; let i = index">
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
         </div>
 
-        <div style="position: absolute; left: 0px; top: 310px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+        <div
+          style="position: absolute; left: 0px; top: 300px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
 
-          <div class="mat-body-2" style="color: #999;">Contains</div>
-             <span class="mat-caption" *ngFor="let parent of collection.parent ; let i = index">
+          <div class="mat-body-2" style="color: #999;">Contents</div>
+          <span class="mat-caption" *ngFor="let parent of collection.parent ; let i = index">
             {{parent.title}}<span *ngIf="collection.parent.length !== i + 1">,</span></span>
-
 
 
         </div>

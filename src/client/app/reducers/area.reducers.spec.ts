@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2017.
  *
@@ -22,6 +21,7 @@ import {
 } from '../actions/area.actions';
 import {Action} from '@ngrx/store';
 import {AreaType} from '../shared/data-types/area.type';
+
 /**
  * Created by mspalti on 3/24/17.
  */
@@ -39,26 +39,28 @@ const areaListTypeMock = [
   }
 ];
 
-const areaMock = [{
+const areaMock = {
   id: 1,
-  title:  'Archival Collections',
-  linkLabel:  'Area Button Label',
-  url:  'Area URL',
-  searchUrl:  'Area Search URL',
-  description:  'Description Two.',
+  title: 'Archival Collections',
+  linkLabel: 'Area Button Label',
+  url: 'Area URL',
+  searchUrl: 'Area Search URL',
+  image: '',
+  description: 'Description Two.',
   position: 2
 
-}];
+};
 
-const initialState = [{
-    id: 0,
-    title: '',
-    linkLabel: '',
-    url: '',
-    searchUrl: '',
-    description: '',
-    position: 0
-}];
+const initialState = {
+  id: 0,
+  title: '',
+  linkLabel: '',
+  url: '',
+  searchUrl: '',
+  image: '',
+  description: '',
+  position: 0
+};
 
 class MockAction implements Action {
   type: string;
@@ -127,8 +129,6 @@ describe('Area Reducer', () => {
     let result = getAreaInfo(state);
     expect(result).toEqual(initialState);
   });
-
-
 
 
 });

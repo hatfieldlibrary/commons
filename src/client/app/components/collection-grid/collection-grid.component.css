@@ -1,5 +1,12 @@
 .thumb-image {
   height: 135px;
+  border: 3px solid transparent;
+}
+.mat-card-image {
+  width: calc(100% + 42px);
+}
+.mat-caption {
+  line-height: 12px;
 }
 mat-card {
   width: calc(100% - 70px);
@@ -18,7 +25,7 @@ mat-card:hover {
 }
 
 .grid-result-info {
-  padding-top: 6px;
+  padding-top: 24px;
   padding-bottom: 6px;
 }
 .collection-item {
