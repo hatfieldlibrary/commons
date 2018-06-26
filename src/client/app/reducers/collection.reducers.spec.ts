@@ -23,6 +23,7 @@ import {
   CollectionsAreaAction, CollectionActionFailed, CollectionsAreaActionSuccess, CollectionReset, CollectionsSubjectAction,
   CollectionsSubjectActionSuccess
 } from '../actions/collection.actions';
+import {AreaType} from '../shared/data-types/area.type';
 /**
  * Created by mspalti on 3/24/17.
  */
@@ -40,7 +41,8 @@ const collectionListMock = [
     searchOptions: '',
     assetType: '',
     restricted: false,
-    published: false
+    published: false,
+    parent: []
   }
 ];
 

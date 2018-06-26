@@ -64,6 +64,30 @@
           </h4>
         </div>
       </mat-list-item>
+      <mat-list-item *ngIf="item?.collection.parent.length > 0">
+        <div fxLayout="row">
+          <h4>Collection Areas: </h4>
+          <h4 *ngFor="let parent of item.collection.parent" style="color: #666;margin-left: 12px;">
+            {{parent.title}}
+          </h4>
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngIf="item?.itemTypes.length > 0">
+        <div fxLayout="row">
+          <h4>Content Types: </h4>
+          <h4 *ngFor="let type of item?.itemTypes" style="color: #666;margin-left: 12px;">
+            {{type.name}}
+          </h4>
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngIf="item?.subjects.length > 0">
+        <div fxLayout="row">
+          <h4>Subjects: </h4>
+          <h4 *ngFor="let sub of item?.subjects" style="color: #666;margin-left: 12px;">
+            {{sub.name}}
+          </h4>
+        </div>
+      </mat-list-item>
     </mat-list>
 
   </div>

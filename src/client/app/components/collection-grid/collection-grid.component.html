@@ -30,24 +30,22 @@
         <!--<div>-->
         <!--<span class="mat-caption">{{setAssetType(collection.ctype)}}</span>-->
         <!--</div>-->
+        <div
+          style="position: absolute; left: 0px; top: 226px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+          <div class="mat-body-2" style="color: #999;">Collection Areas</div>
+          <span class="mat-caption" *ngFor="let parent of collection.parent ; let i = index">
+            {{parent.title}}<span *ngIf="collection.parent.length !== i + 1">,</span></span>
+        </div>
 
         <div
-          style="position: absolute;left: 0px; top: 236px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
-          <div class="mat-body-2" style="color: #999;">Types</div>
+          style="position: absolute;left: 0px; top: 290px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+          <div class="mat-body-2" style="color: #999;">Content Types</div>
           <!--<span class="mat-caption bold-caption ">Content:</span>-->
           <span class="mat-caption" *ngFor="let type of collection.types ; let i = index">
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
         </div>
 
-        <div
-          style="position: absolute; left: 0px; top: 300px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
 
-          <div class="mat-body-2" style="color: #999;">Contents</div>
-          <span class="mat-caption" *ngFor="let parent of collection.parent ; let i = index">
-            {{parent.title}}<span *ngIf="collection.parent.length !== i + 1">,</span></span>
-
-
-        </div>
 
         <app-lock-svg *ngIf="collection.restricted" style="position: absolute; right: 4px; bottom: 4px;"></app-lock-svg>
 

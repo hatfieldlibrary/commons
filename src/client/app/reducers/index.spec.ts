@@ -76,7 +76,8 @@ describe('Reducers ', () => {
     searchOptions: '',
     assetType: '',
     restricted: false,
-    published: false
+    published: false,
+    parent: []
   };
 
   const expectedCategory = {
@@ -112,7 +113,7 @@ describe('Reducers ', () => {
     collection: expectedCollection,
     category: expectedCategory,
     itemTypes: expectedItemTypes,
-    subjects: [1]
+    subjects: [{id: 1, name: 'test'}]
   };
 
   const expectedCollections = [expectedCollection];

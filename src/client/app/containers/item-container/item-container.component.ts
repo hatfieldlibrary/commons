@@ -122,12 +122,13 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * @param data the item object
    */
   getRelatedItems(data: ItemType) {
+    console.log(data.subjects)
     if (typeof data.subjects !== 'undefined' &&
       typeof this.id !== 'undefined') {
 
       let subjectString = '';
       for (const subject of data.subjects) {
-        subjectString += subject + ',';
+        subjectString += subject.id + ',';
       }
       // dispatch if we have subjects
       if (subjectString.length > 0) {

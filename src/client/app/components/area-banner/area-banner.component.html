@@ -1,6 +1,6 @@
-<div class="area-info mat-body-2" fxLayout="column" fxLayoutAlign="center start">
+<div class="area-info mat-body-2" fxLayout="column" fxLayoutGap="40px" fxLayoutAlign="center start">
   <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
-    <div fxFlex="60" fxFlex.lg="65" fxFlex.md="70" fxFlex.sm="80" fxFlex.xs="95" style="min-height: 160px; opacity:1">
+    <div fxFlex="60" fxFlex.lg="65" fxFlex.md="70" fxFlex.sm="80" fxFlex.xs="95" style="height: 100%; opacity:1">
       <div [ngClass]="{'mobile': isMobile}">
         <h2 class="mat-title">{{title}}</h2>
         <div class="text-padding">
@@ -13,7 +13,7 @@
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="center center" fxFill >
-    <div fxFlex="60" fxFlex.lg="65" fxFlex.md="70" fxFlex.sm="80" fxFlex.xs="95" style="margin-top: 40px;">
+    <div fxFlex="60" fxFlex.lg="65" fxFlex.md="70" fxFlex.sm="80" fxFlex.xs="95">
       <app-area-filters
         [filters]="filters"
         (removeFilter)="deselect($event)"></app-area-filters>

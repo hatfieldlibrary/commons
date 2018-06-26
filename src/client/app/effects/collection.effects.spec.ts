@@ -49,7 +49,8 @@ describe('Collections Effect', () => {
       assetType: '',
       searchOptions: '',
       restricted: true,
-      published: false
+      published: false,
+      parent: []
     }
   ];
 
