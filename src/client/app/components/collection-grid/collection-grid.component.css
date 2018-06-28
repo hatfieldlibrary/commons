@@ -21,13 +21,18 @@ mat-card:hover {
 
 .bold-caption {
   font-weight: 800;
-  color: #666;
+  color: #111111;
 }
 
 .grid-result-info {
-  padding-top: 24px;
-  padding-bottom: 6px;
+  padding-top: 20px;
+  padding-left: 12px;
+  padding-bottom: 8px;
 }
 .collection-item {
   color: #0F959F;
+}
+
+.mat-h3 {
+  font: 400 16px/18px Roboto, "Helvetica Neue", sans-serif;
 }

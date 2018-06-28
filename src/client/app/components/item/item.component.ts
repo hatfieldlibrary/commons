@@ -52,4 +52,19 @@ export class ItemComponent  {
 
   }
 
+  hasItems(): boolean {
+    return this.item.collection.items !== null;
+  }
+
+  hasDates(): boolean {
+    return this.item.collection.date !== null;
+  }
+
+  hasSubjects(): boolean {
+    return this.item.subjects !== null && this.item.subjects.length > 0;
+  }
+
+  hasTypes(): boolean {
+    return this.item.itemTypes !== null && this.item.itemTypes.length > 0;
+  }
 }

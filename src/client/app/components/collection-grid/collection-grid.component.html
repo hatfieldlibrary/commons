@@ -8,14 +8,11 @@
 <!--</mat-grid-tile>-->
 <!--</mat-grid-list>-->
 
-<div>
-  <span class="mat-title">Select from the list to learn more about an item or collection.</span>
-</div>
-<div class="grid-result-info">
-  <span class="mat-caption bold-caption">ITEM COUNT:&nbsp;</span> {{totalResults()}}
+<div class="grid-result-info mat-caption">
+  <span class="bold-caption">{{totalResults()}}</span><span>&nbsp;items to choose from&hellip;</span>
 </div>
 
-<mat-grid-list cols="3" rowHeight="410" gutterSize="6" style="margin-top: 20px;">
+<mat-grid-list cols="3" rowHeight="410" gutterSize="6" style="margin-top: 0px;">
 
   <mat-grid-tile class="collection-list-item result-item"
                  [ngClass]="{'mobile-list-item-padding': isMobile}"

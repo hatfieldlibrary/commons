@@ -4,64 +4,69 @@
 
     <div fxLayout="column"
          fxFlex="100"
-         fxLayoutAlign="center center"
+         fxLayoutAlign="start start"
          *ngIf="restricted === true && !isAuthenticated">
-      <a mat-raised-button color="primary" href="{{authenticationPath}}">WU Login</a>
-      <div mat-subheader><br>Login required for access.</div>
+      <div *ngIf="assetType === 'dig'" class="mat-title">Access Collection</div>
+      <div *ngIf="assetType === 'itm'" class="mat-title">Access Item</div>
+      <p>You can access <em>{{title}}</em> after you login with your Willamette University account.</p>
+      <a mat-raised-button color="primary" href="{{authenticationPath}}">Login for Access</a>
+
     </div>
 
     <div
-      style="min-height: 200px"
       fxFlex="100"
       fxLayout="column"
-      fxLayoutGap="20px"
-      fxLayoutAlign="center start"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start start"
       *ngIf="isAuthenticated || !restricted">
+      <div *ngIf="assetType === 'dig'" class="mat-title">Access Collection</div>
+      <div *ngIf="assetType === 'dig'" class="scope-note">There are {{count}} items in <em>{{title}}</em>.</div>
+      <div *ngIf="assetType === 'itm'" class="mat-title">Access Item</div>
+      <div *ngIf="assetType === 'itm'" class="scope-note"><em>{{title}}</em> is a single item. View it by clicking the
+        button below.
+      </div>
 
-      <div style="padding-left: 30px"
-           *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig' && linkOptions !== 'opts'">
-
+      <div
+        *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig' && linkOptions !== 'opts'">
         <a mat-raised-button color="primary" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
       </div>
 
-      <div style="padding-left: 30px"
-           *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'itm'">
-
+      <div *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'itm'">
         <a mat-raised-button color="primary" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
       </div>
 
       <div *ngIf="linkOptions === 'opts'" style="width:100%;">
-        <app-item-select-component [isAuthenticated]="isAuthenticated" [restricted]="restricted"  [url]="url"
+        <app-item-select-component [isAuthenticated]="isAuthenticated" [restricted]="restricted" [url]="url"
                                    [url]="url"></app-item-select-component>
       </div>
 
       <div
-           style="width:100%;"
-           *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'">
-
+        style="width:100%;"
+        *ngIf="searchOptions==='DEFAULT' || searchOptions ==='SEARCH'">
+        <div class="mat-divider options-divider"></div>
         <form fxLayout="row"
               class="app-links" #searchForm="ngForm" (ngSubmit)="simpleSearch();searchForm.reset();" novalidate>
           <div fxFlex fxLayout="row" fxLayoutAlign="start start">
-            <div style="width: 33px;padding-top: 6px;">
-              <!--<button mat-button (click)="simpleSearch();" class="btn" color="default"-->
-              <!--[disabled]="!isAuthenticated && restricted">-->
-              <a (click)="simpleSearch();">
-                <app-search-svg></app-search-svg>
-              </a>
-              <!--</button>-->
-            </div>
             <div fxFlex>
-              <mat-input-container
+              <mat-form-field
                 fxFlex="100"
                 fxFlex.gt-xs="70">
-                <input matInput id="terms" [(ngModel)]="model.terms" name="search"
-                       placeholder="Enter Search Terms">
-              </mat-input-container>
+                <input matInput id="terms" [(ngModel)]="model.terms" name="search">
+                <mat-placeholder class="placeholder">Or enter search terms here</mat-placeholder>
+              </mat-form-field>
+              <div style="width: 33px;padding-top: 6px;">
+                <!--<button mat-button (click)="simpleSearch();" class="btn" color="default"-->
+                <!--[disabled]="!isAuthenticated && restricted">-->
+                <a (click)="simpleSearch();">
+                  <app-search-svg></app-search-svg>
+                </a>
+                <!--</button>-->
+              </div>
             </div>
           </div>
 
         </form>
-
+        <p class="search-note">You can further refine your search once at the collection.</p>
       </div>
 
     </div>

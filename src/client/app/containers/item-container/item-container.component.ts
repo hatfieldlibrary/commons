@@ -34,6 +34,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
+import {NavigationService} from '../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-item-container',
@@ -56,11 +57,14 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   selectedArea: string;
   watchers: Subscription;
   related: RelatedType[];
+  private selectedSubjects: SubjectType[];
+  private selectedTypes: TypesFilterType[];
 
   constructor(private store: Store<fromRoot.State>,
               private media: ObservableMedia,
               private route: ActivatedRoute,
               private router: Router,
+              private navigationService: NavigationService,
               @Inject(DOCUMENT) private document) {
 
     this.watchers = new Subscription();
@@ -165,6 +169,17 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     }
   }
 
+  getBackLink(): string {
+
+    const typeIds = this.navigationService.getIds(this.selectedTypes);
+    const subjectIds = this.navigationService.getIds(this.selectedSubjects)
+
+    const path =
+      this.navigationService.getBackLink(this.selectedArea, subjectIds, typeIds);
+    return path;
+
+  }
+
   ngOnInit() {
 
     this.item$ = this.store.select(fromRoot.getItem);
@@ -173,6 +188,15 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
     this.setAreasAvailable();
 
+    const subjectsWatcher = this.selectedSubjects$.subscribe((data) => {
+      this.selectedSubjects = data;
+    });
+
+    this.watchers.add(subjectsWatcher);
+    const typesWatcher = this.selectedTypes$.subscribe((data) => {
+      this.selectedTypes = data;
+    });
+    this.watchers.add(typesWatcher);
     // Once we have item information, request related items.
     const itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
       this.getRelatedItems(data);

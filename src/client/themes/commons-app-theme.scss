@@ -19,7 +19,7 @@
 @import '../../../node_modules/@angular/material/_theming.scss';
 // Plus imports for other components in your app.
 
-$md-accentpallette: (
+$md-primarypalette: (
   50 : #e3f1f2,
   100 : #b9dcdf,
   200 : #8bc5ca,
@@ -52,26 +52,26 @@ $md-accentpallette: (
   )
 );
 
-$md-primarypalette: (
-  50 : #efe3e3,
-  100 : #d7b9b9,
-  200 : #bc8b8b,
-  300 : #a15d5c,
-  400 : #8d3a39,
-  500 : #791716,
-  600 : #711413,
-  700 : #661110,
-  800 : #5c0d0c,
-  900 : #490706,
-  A100 : #ff817e,
-  A200 : #ff4f4b,
-  A400 : #ff1d18,
-  A700 : #fd0500,
+$md-accentpalette: (
+  50 : #e3f1f2,
+  100 : #b9dcdf,
+  200 : #8bc5ca,
+  300 : #5caeb4,
+  400 : #399ca4,
+  500 : #0b8a94,
+  600 : #13838c,
+  700 : #107881,
+  800 : #0c6e77,
+  900 : #065b65,
+  A100 : #96f2ff,
+  A200 : #63ecff,
+  A400 : #30e6ff,
+  A700 : #16e3ff,
   contrast: (
     50 : #000000,
     100 : #000000,
     200 : #000000,
-    300 : #ffffff,
+    300 : #000000,
     400 : #ffffff,
     500 : #ffffff,
     600 : #ffffff,
@@ -80,10 +80,42 @@ $md-primarypalette: (
     900 : #ffffff,
     A100 : #000000,
     A200 : #000000,
-    A400 : #ffffff,
-    A700 : #ffffff,
+    A400 : #000000,
+    A700 : #000000,
   )
 );
+//$md-accentpalette: (
+//  50 : #efe3e3,
+//  100 : #d7b9b9,
+//  200 : #bc8b8b,
+//  300 : #a15d5c,
+//  400 : #8d3a39,
+//  500 : #791716,
+//  600 : #711413,
+//  700 : #661110,
+//  800 : #5c0d0c,
+//  900 : #490706,
+//  A100 : #ff817e,
+//  A200 : #ff4f4b,
+//  A400 : #ff1d18,
+//  A700 : #fd0500,
+//  contrast: (
+//    50 : #000000,
+//    100 : #000000,
+//    200 : #000000,
+//    300 : #ffffff,
+//    400 : #ffffff,
+//    500 : #ffffff,
+//    600 : #ffffff,
+//    700 : #ffffff,
+//    800 : #ffffff,
+//    900 : #ffffff,
+//    A100 : #000000,
+//    A200 : #000000,
+//    A400 : #ffffff,
+//    A700 : #ffffff,
+//  )
+//);
 
 
 
@@ -97,7 +129,7 @@ $md-primarypalette: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $commons-app-primary: mat-palette($md-primarypalette);
-$commons-app-accent:  mat-palette($md-accentpallette, 500, 600, 700);
+$commons-app-accent:  mat-palette($md-accentpalette, 500, 600, 700);
 
 // The warn palette is optional (defaults to red).
 $commons-app-warn:    mat-palette($mat-red);

@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center center" style="height: 60px;background:#791716;">
   <mat-nav-list #areaSelectionList class="area-selection">
-    <a mat-list-item style="color:#f7eda0;font-size: 1.2em;">All Collections</a>
+    <!--<a mat-list-item style="color:#f7eda0;font-size: 1.2em;">All Collections</a>-->
     <a style="color:#f7eda0;font-size: 1.2em;" mat-list-item *ngFor="let area of filter.areas"
                      class="local-navigation"
                      (click)="onAreaListControlChanged(areaSelectionList, area.id)">

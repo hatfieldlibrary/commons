@@ -16,10 +16,10 @@
   -->
 
 
-<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="0">
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="20">
 
   <div fxFlex="80"
-      *ngIf="!media.isActive('gt-sm')">
+       *ngIf="!media.isActive('gt-sm')">
 
     <app-item-links
       [restricted]="item?.collection.restricted"
@@ -27,95 +27,85 @@
       [assetType]="item?.collection.assetType"
       [searchOptions]="item?.collection.searchOptions"
       [url]="item?.collection.url"
-      [searchUrl]="item?.collection.searchUrl">
+      [searchUrl]="item?.collection.searchUrl"
+      [title]="item?.collection.title">
     </app-item-links>
 
   </div>
 
   <div fxFlex="100"
        fxFlex.md="60"
-       fxFlex.lg="60"
+       fxFlex.lg="55"
        fxFlex.gt-lg="50">
-    <div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" >
-      <a mat-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">
-        <mat-icon><app-back-black-svg></app-back-black-svg></mat-icon>&nbsp;Back to List
-      </a>
-    </div>
-    <mat-card-title fxHide="true" fxShow.gt-sm="true" style="margin-top: 20px;">
+
+    <!--<div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" style="margin-bottom: 20px;">-->
+      <!--<a mat-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">-->
+        <!--<mat-icon>-->
+          <!--<app-back-black-svg></app-back-black-svg>-->
+        <!--</mat-icon>&nbsp;Back to List-->
+      <!--</a>-->
+    <!--</div>-->
+
+    <mat-card-title fxHide="true" fxShow.gt-sm="true">
       {{item?.collection.title}}
     </mat-card-title>
 
     <p [innerHTML]="item?.collection.description" style="font-size: 1.2em"></p>
 
-    <mat-list>
-      <mat-list-item *ngIf="item?.collection.date">
-        <div fxLayout="row" fxFlexAlign="center">
-          <h4>Dates: </h4>
-          <h4 style="color: #666;margin-left: 12px;">
-            {{item?.collection.date}}
-          </h4>
-        </div>
-      </mat-list-item>
-      <mat-list-item *ngIf="item?.collection.items">
-        <div fxLayout="row">
-          <h4>Collection size: </h4>
-          <h4 style="color: #666;margin-left: 12px;">
-            {{item?.collection.items}}
-          </h4>
-        </div>
-      </mat-list-item>
-      <mat-list-item *ngIf="item?.collection.parent.length > 0">
-        <div fxLayout="row">
-          <h4>Collection Areas: </h4>
-          <h4 *ngFor="let parent of item.collection.parent" style="color: #666;margin-left: 12px;">
-            {{parent.title}}
-          </h4>
-        </div>
-      </mat-list-item>
-      <mat-list-item *ngIf="item?.itemTypes.length > 0">
-        <div fxLayout="row">
-          <h4>Content Types: </h4>
-          <h4 *ngFor="let type of item?.itemTypes" style="color: #666;margin-left: 12px;">
-            {{type.name}}
-          </h4>
-        </div>
-      </mat-list-item>
-      <mat-list-item *ngIf="item?.subjects.length > 0">
-        <div fxLayout="row">
-          <h4>Subjects: </h4>
-          <h4 *ngFor="let sub of item?.subjects" style="color: #666;margin-left: 12px;">
-            {{sub.name}}
-          </h4>
-        </div>
-      </mat-list-item>
-    </mat-list>
+    <mat-card-subtitle class="section-spacer">More information about this item.</mat-card-subtitle>
+
+    <div fxLayout="column" fxLayoutGap="20" role="list" class="meta-container">
+      <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill>
+        <div class="meta-label mat-body-2">Collection Areas</div>
+        <div class="meta-text"><span *ngFor="let parent of item.collection.parent">
+          {{parent.title}},
+        </span></div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill *ngIf="hasTypes()">
+        <div class="meta-label mat-body-2">Content Types</div>
+        <div class="meta-text"> <span *ngFor="let type of item?.itemTypes">
+          {{type.name}}, </span></div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill *ngIf="hasSubjects()">
+        <div class="meta-label mat-body-2">Subjects</div>
+        <div class="meta-text"> <span *ngFor="let sub of item?.subjects">
+          {{sub.name}}, </span></div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20" class="meta-row" *ngIf="hasDates()">
+        <div class="meta-label mat-body-2">Dates</div>
+        <div class="meta-text">{{item?.collection.date}}</div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill fxFill *ngIf="hasItems()">
+        <div class="meta-label mat-body-2">Collection Size</div>
+        <div class="meta-text">{{item?.collection.items}}</div>
+      </div>
+    </div>
+
 
   </div>
-
   <div class="fill-remaining-space"></div>
-
   <div
-       fxFlex
-       fxFlex.sm="35"
-       fxFlex.md="35"
-       fxFlex.gt-md="30"
-       *ngIf="media.isActive('gt-sm')">
+    fxFlex
+    fxFlex.sm="35"
+    fxFlex.md="35"
+    fxFlex.gt-md="40"
+    *ngIf="media.isActive('gt-sm')"
+    class="item-links-container">
 
-    <app-item-links
-      [restricted]="item?.collection.restricted"
-      [linkOptions]="item?.collection.linkOptions"
-      [assetType]="item?.collection.assetType"
-      [searchOptions]="item?.collection.searchOptions"
-      [url]="item?.collection.url"
-      [searchUrl]="item?.collection.searchUrl">
-
+    <app-item-links style="height: 100%"
+                    [restricted]="item?.collection.restricted"
+                    [linkOptions]="item?.collection.linkOptions"
+                    [assetType]="item?.collection.assetType"
+                    [searchOptions]="item?.collection.searchOptions"
+                    [url]="item?.collection.url"
+                    [searchUrl]="item?.collection.searchUrl"
+                    [title]="item?.collection.title"
+                    [count]="item?.collection.items">
     </app-item-links>
   </div>
 </div>
 
-<mat-divider class="item-divider"></mat-divider>
-
-<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-sm="40" style="margin-top: 50px;">
+<div class="section-spacer" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-sm="40">
 
   <div fxFlex="100"
        fxFlex.md="60"
@@ -125,9 +115,10 @@
     <mat-card-subtitle>This collection is part of</mat-card-subtitle>
     <mat-card-title>{{item?.category?.title}}</mat-card-title>
 
+
     <p [innerHTML]="item?.category?.description" style="font-size: 1.2em"></p>
 
-    <a mat-raised-button color="accent" class="accent-button" href="{{item?.category?.url}}"
+    <a mat-raised-button color="primary" class="accent-button" href="{{item?.category?.url}}"
        target="_blank">{{item?.category?.linkLabel}}</a>
 
   </div>
@@ -143,7 +134,8 @@
 
     <mat-list>
       <mat-list-item>
-        <a mat-button style="width:100%" href="http://libmedia.willamette.edu/academiccommons/student/index.php" target="_blank">
+        <a mat-button style="width:100%" href="http://libmedia.willamette.edu/academiccommons/student/index.php"
+           target="_blank">
           <div fxLayout="row" fxLayoutAlign="start center">
             <app-info-svg></app-info-svg>
             Submission Instructions

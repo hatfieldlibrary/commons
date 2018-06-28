@@ -1,22 +1,58 @@
-<div class="area-info mat-body-2" fxLayout="column" fxLayoutGap="40px" fxLayoutAlign="center start">
-  <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
-    <div fxFlex="60" fxFlex.lg="65" fxFlex.md="70" fxFlex.sm="80" fxFlex.xs="95" style="height: 100%; opacity:1">
-      <div [ngClass]="{'mobile': isMobile}">
-        <h2 class="mat-title">{{title}}</h2>
-        <div class="text-padding">
-          <p class="mat-subheading-2" [innerHTML]="description"></p>
-          <!--<p *ngIf="url" class="mat-body-1 area-button">-->
-          <!--<a mat-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>-->
-          <!--</p>-->
+<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="40px" fxFlex class="area-info">
+
+  <div fxLayout="column"
+       fxFlex.md="1 1 20"
+       fxFlex.lg="1 1 15"
+       fxFlex.gt-lg="1 1 12"
+       *ngIf="media.isActive('gt-sm')"></div>
+
+  <div class="mat-body-2" fxFlex
+       fxLayout="column"
+       fxLayoutGap="30px"
+       fxLayoutAlign="center start"
+       fxFlex.xs="1 1 100"
+       fxFlex.sm="1 1 75"
+       fxFlex.md="1 1 54"
+       fxFlex.lg="1 1 55"
+       fxFlex.gt-lg="1 1 40">
+
+    <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center start" fxFlex="55">
+      <div style="height: 100%; opacity:1">
+        <div [ngClass]="{'mobile': isMobile}">
+          <h2 class="mat-title">{{title}}</h2>
+          <div class="text-padding">
+            <p class="mat-subheading-2" [innerHTML]="description"></p>
+            <!--<p *ngIf="url" class="mat-body-1 area-button">-->
+            <!--<a mat-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>-->
+            <!--</p>-->
+          </div>
         </div>
       </div>
     </div>
+    <div fxLayout="row" fxFlex="30" fxLayoutAlign="start center" fxFill>
+      <div>
+        <app-area-filters
+          [filters]="filters"
+          (removeFilter)="deselect($event)"></app-area-filters>
+      </div>
+    </div>
+    <!--<div>-->
+      <!--<span class="mat-card-subtitle" style="color:#eee;">Select from the list to learn more about an item or collection.</span>-->
+    <!--</div>-->
   </div>
-  <div fxLayout="row" fxLayoutAlign="center center" fxFill >
-    <div fxFlex="60" fxFlex.lg="65" fxFlex.md="70" fxFlex.sm="80" fxFlex.xs="95">
-      <app-area-filters
-        [filters]="filters"
-        (removeFilter)="deselect($event)"></app-area-filters>
+
+  <div fxLayout="column"
+       fxFlexAlign="start start"
+       fxFlex.md="1 1 20"
+       fxFlex.lg="1 1 15"
+       fxFlex.gt-lg="1 1 12"
+       *ngIf="media.isActive('gt-sm')">
+    <div *ngIf="url" style="padding-left: 60px;">
+      <span class="mat-caption">Related info:</span>
+      <div class="mat-body-1 area-button">
+        <a mat-raised-button href="{{url}}" target="_top" color="accent">{{linkLabel}}</a></div>
     </div>
   </div>
 </div>
+
+

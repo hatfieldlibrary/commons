@@ -34,8 +34,10 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   @Input() searchOptions: string;
   @Input() url: string;
   @Input() searchUrl: string;
+  @Input() title: string;
+  @Input() count: string;
   model: SearchTerms;
-  COLLECTION_BUTTON_LABEL = 'Browse the Collection';
+  COLLECTION_BUTTON_LABEL = 'Go to the Collection';
   ITEM_BUTTON_LABEL = 'View this Item';
   SEARCH_OPTIONS_LABEL = 'Select to Browse';
   isAuthenticated = false;
