@@ -21,9 +21,9 @@
 
   <mat-grid-list cols="{{columns}}" rowHeight="270" gutterSize="6">
     <mat-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1"
-                   (click)="scrollToTop()"[routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">
+                  [routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">
       <mat-card>
-        <img mat-card-image class="thumb-image" src="{{imagePath}}/resources/img/thumb/{{collection.image}}">
+        <img mat-card-image class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{imagePath}}/resources/img/thumb/{{collection.image}}">
         <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
         <!--<mat-card-header>-->
           <!--<mat-card-title style="margin-left: -20px;">-->

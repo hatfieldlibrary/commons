@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component, EventEmitter,
   Input, OnChanges,
-  OnDestroy,
+  OnDestroy, OnInit,
   Output,
   SimpleChanges,
   ViewEncapsulation
@@ -17,10 +17,9 @@ import {DeselectedFilter} from '../area-filters/area-filters.component';
   selector: 'app-area-banner',
   templateUrl: './area-banner.component.html',
   styleUrls: ['./area-banner.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
-export class AreaBannerComponent implements OnChanges, OnDestroy {
+export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
 
   @Input()
   areaInfo: AreaType;
@@ -34,16 +33,10 @@ export class AreaBannerComponent implements OnChanges, OnDestroy {
   title: string;
   areaId: any; // initialize with out of range value.
   private watcher: Subscription;
-  isMobile: boolean;
+  isMobile = true;
 
-  constructor(private media: ObservableMedia) {
-    this.watcher = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs') {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
-    });
+  constructor(public media: ObservableMedia) {
+
   }
 
   /**
@@ -53,6 +46,19 @@ export class AreaBannerComponent implements OnChanges, OnDestroy {
    */
   deselect(deselected: DeselectedFilter): void {
     this.removeFilter.emit(deselected);
+  }
+
+  ngOnInit() {
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      console.log(change.mqAlias)
+      if (change.mqAlias === 'xs' || change.mqAlias === 'sm' ) {
+        this.isMobile = true;
+        console.log('setting mobile to true')
+      } else {
+        console.log('setting mobile to false')
+        this.isMobile = false;
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

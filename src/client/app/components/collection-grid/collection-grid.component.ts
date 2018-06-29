@@ -20,6 +20,7 @@ export class CollectionGridComponent implements OnDestroy {
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   filterTerm: string;
   isMobile = false;
+  cols = 3;
   watcher: Subscription;
   emptySubject: SubjectType = {id: 0, name: ''};
 
@@ -29,7 +30,12 @@ export class CollectionGridComponent implements OnDestroy {
     this.watcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
+        this.cols = 1;
+      } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
+        this.cols = 2;
+        this.isMobile = false;
       } else {
+        this.cols = 3;
         this.isMobile = false;
       }
     });
@@ -42,15 +48,9 @@ export class CollectionGridComponent implements OnDestroy {
   deselect() {
     this.filterService.removeSelectedAreaFilter();
     const emptySubject: SelectedSubjectEvent = {selected: this.emptySubject};
-   // this.subjectNavigation.emit(emptySubject);
+    // this.subjectNavigation.emit(emptySubject);
   }
 
-  setAccessStatus(restricted: boolean): string {
-    if (restricted) {
-      return 'Restricted to Willamette University';
-    }
-    return '';
-  }
 
   totalResults(): string {
     return this.collectionList.length.toString();
@@ -60,29 +60,14 @@ export class CollectionGridComponent implements OnDestroy {
     this.collectionNavigation.emit(id);
   }
 
-  setAssetType(type) {
-    if (type === 'dig') {
-      return 'Collection';
-    } else {
-      return 'Single Item';
-    }
-  }
-
   getImage(image: string) {
-      return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
+    return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
 
   }
 
-  getListLength() {
-    if (this.collectionList) {
-      return this.collectionList.length;
-    } else {
-      return 0;
-    }
-  }
 
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
-  //  this.subjectNavigation.unsubscribe();
+    //  this.subjectNavigation.unsubscribe();
   }
 }

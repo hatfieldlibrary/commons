@@ -8,7 +8,7 @@
          *ngIf="restricted === true && !isAuthenticated">
       <div *ngIf="assetType === 'dig'" class="mat-title">Access Collection</div>
       <div *ngIf="assetType === 'itm'" class="mat-title">Access Item</div>
-      <p>You can access <em>{{title}}</em> after you login with your Willamette University account.</p>
+      <div class="scope-note">You can access <em>{{title}}</em> after you login with your Willamette University account.</div>
       <a mat-raised-button color="primary" href="{{authenticationPath}}">Login for Access</a>
 
     </div>
@@ -52,7 +52,7 @@
                 fxFlex="100"
                 fxFlex.gt-xs="70">
                 <input matInput id="terms" [(ngModel)]="model.terms" name="search">
-                <mat-placeholder class="placeholder">Or enter search terms here</mat-placeholder>
+                <mat-placeholder class="placeholder">{{SEARCH_LABEL}}</mat-placeholder>
               </mat-form-field>
               <div style="width: 33px;padding-top: 6px;">
                 <!--<button mat-button (click)="simpleSearch();" class="btn" color="default"-->

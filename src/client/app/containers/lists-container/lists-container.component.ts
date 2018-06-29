@@ -97,6 +97,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * component or the default home information.
    */
   areaScreen: boolean;
+  notMobile = false;
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
@@ -210,7 +211,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   private setMediaWatcher(): void {
     const mediaWatcher = this.media.asObservable()
       .subscribe((change: MediaChange) => {
-        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : ''
+        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
+        this.notMobile = change.mqAlias !== 'xs';
       });
     this.watchers.add(mediaWatcher);
   }

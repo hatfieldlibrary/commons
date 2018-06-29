@@ -22,7 +22,8 @@
                      [showBack]="true"></app-menus-component>
 
 <app-item-header [item]="item$ | async"></app-item-header>
-<div style="background:#000; height: 38px;padding: 3px;">
+
+<div style="background:#000; height: 38px;padding: 6px;" fxShow.xs="false" fxShow.sm="false">
   <div fxLayout="row" fxLayoutAlign="center center">
     <div fxLayout="row"
          fxLayoutAlign="start center"
@@ -33,17 +34,16 @@
          fxFlex.gt-lg="50"
          fxLayoutGap="40px">
       <div style="padding-left: 18px;">
-
         <a mat-button [routerLink]="getBackLink()" style="padding: 0;background: #cccac4;border: 1px solid #999;width: 140px;">
           <mat-icon>
             <app-back-black-svg></app-back-black-svg>
           </mat-icon>&nbsp;Back to List
         </a>
-
       </div>
     </div>
   </div>
 </div>
+
 <div>
   <mat-card class="main-content-area">
     <mat-card-content>

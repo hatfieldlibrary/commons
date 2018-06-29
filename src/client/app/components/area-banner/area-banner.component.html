@@ -1,25 +1,25 @@
-<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="40px" fxFlex class="area-info">
+<div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign.sm="center start"fxLayoutGap="40px" fxFlex class="area-info">
 
   <div fxLayout="column"
        fxFlex.md="1 1 20"
-       fxFlex.lg="1 1 15"
-       fxFlex.gt-lg="1 1 12"
+       fxFlex.lg="1 1 18"
+       fxFlex.gt-lg="1 1 20"
        *ngIf="media.isActive('gt-sm')"></div>
 
-  <div class="mat-body-2" fxFlex
+  <div class="mat-body-2"
        fxLayout="column"
        fxLayoutGap="30px"
        fxLayoutAlign="center start"
-       fxFlex.xs="1 1 100"
-       fxFlex.sm="1 1 75"
-       fxFlex.md="1 1 54"
-       fxFlex.lg="1 1 55"
+       fxFlex.xs="1 1 90"
+       fxFlex.sm="1 1 90"
+       fxFlex.md="1 1 50"
+       fxFlex.lg="1 1 45"
        fxFlex.gt-lg="1 1 40">
 
-    <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center start" fxFlex="55">
+    <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center start" fxFlex="55" fxFlex.xs="90">
       <div style="height: 100%; opacity:1">
         <div [ngClass]="{'mobile': isMobile}">
-          <h2 class="mat-title">{{title}}</h2>
+          <h2 class="mat-h1">{{title}}</h2>
           <div class="text-padding">
             <p class="mat-subheading-2" [innerHTML]="description"></p>
             <!--<p *ngIf="url" class="mat-body-1 area-button">-->
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div fxLayout="row" fxFlex="30" fxLayoutAlign="start center" fxFill>
+    <div fxLayout="row" fxFlex="30" fxLayoutAlign="start center" fxFill *ngIf="!isMobile">
       <div>
         <app-area-filters
           [filters]="filters"
@@ -43,7 +43,7 @@
 
   <div fxLayout="column"
        fxFlexAlign="start start"
-       fxFlex.md="1 1 20"
+       fxFlex.md="1 1 25"
        fxFlex.lg="1 1 15"
        fxFlex.gt-lg="1 1 12"
        *ngIf="media.isActive('gt-sm')">

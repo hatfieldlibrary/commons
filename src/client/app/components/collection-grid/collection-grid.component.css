@@ -5,6 +5,9 @@
 .mat-card-image {
   width: calc(100% + 42px);
 }
+.mat-card-image-xs {
+  width: calc(100% + 26px) !important;
+}
 .mat-caption {
   line-height: 12px;
 }

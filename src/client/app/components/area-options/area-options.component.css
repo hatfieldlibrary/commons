@@ -1,3 +1,37 @@
+.area-selector-container {
+  height: 60px;
+  background:#791716;
+  overflow: hidden;
+  padding-left: 0px;
+  padding-right: 10px;
+}
 .mat-list-item {
-  float: left ;
+  /*float: left ;*/
+}
+.overflow-x-scroll-no-scrollbar {
+  overflow: hidden;
+  position: relative;
+  width: auto;
+}
+.overflow-x-scroll-no-scrollbar > mat-nav-list {
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: inline-flex !important;
+  margin-bottom: 0px;
+}
+.overflow-x-scroll-no-scrollbar > mat-nav-ist > mat-list-item * {
+  overflow-x: auto;
+  width: 100%;
+  padding-bottom: 17px;
+  white-space: nowrap;
+  cursor: pointer
+}
+.nav-link {
+  color:#f7eda0;
+  font-size: 1.2em;
+  margin-right: 35px;
+}
+.highlight  {
+  color: #e6b726;
+  font-weight: 800;
 }

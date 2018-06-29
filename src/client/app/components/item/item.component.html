@@ -52,24 +52,28 @@
 
     <p [innerHTML]="item?.collection.description" style="font-size: 1.2em"></p>
 
-    <mat-card-subtitle class="section-spacer">More information about this item.</mat-card-subtitle>
+    <mat-card-subtitle class="section-spacer">More information about this {{getItemType()}}.</mat-card-subtitle>
 
     <div fxLayout="column" fxLayoutGap="20" role="list" class="meta-container">
       <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill>
         <div class="meta-label mat-body-2">Collection Areas</div>
-        <div class="meta-text"><span *ngFor="let parent of item.collection.parent">
-          {{parent.title}},
-        </span></div>
+        <div class="meta-text">
+          <span *ngFor="let parent of item.collection.parent; let i = index">
+          {{parent.title}}<span *ngIf="item.collection.parent.length !== i + 1">, </span></span>
+        </div>
       </div>
       <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill *ngIf="hasTypes()">
         <div class="meta-label mat-body-2">Content Types</div>
-        <div class="meta-text"> <span *ngFor="let type of item?.itemTypes">
-          {{type.name}}, </span></div>
+        <div class="meta-text">
+          <span *ngFor="let type of item?.itemTypes; let i = index">
+          {{type.name}}<span *ngIf="item.itemTypes.length !== i + 1">, </span></span>
+        </div>
       </div>
       <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill *ngIf="hasSubjects()">
         <div class="meta-label mat-body-2">Subjects</div>
-        <div class="meta-text"> <span *ngFor="let sub of item?.subjects">
-          {{sub.name}}, </span></div>
+        <div class="meta-text">
+          <span *ngFor="let sub of item?.subjects; let i = index;">
+          {{sub.name}}<span *ngIf="item.subjects.length !== i + 1">, </span></span></div>
       </div>
       <div fxLayout="row" fxLayoutGap="20" class="meta-row" *ngIf="hasDates()">
         <div class="meta-label mat-body-2">Dates</div>

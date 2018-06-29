@@ -16,7 +16,8 @@
  */
 
 import {
-  Component, Input, ChangeDetectionStrategy} from '@angular/core';
+  Component, Input, ChangeDetectionStrategy
+} from '@angular/core';
 import {ItemType} from '../../shared/data-types/item.type';
 import {ObservableMedia} from '@angular/flex-layout';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
@@ -32,20 +33,20 @@ import {NavigationService} from '../../services/navigation/navigation.service';
   styleUrls: ['./item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemComponent  {
+export class ItemComponent {
 
   @Input() item: ItemType;
   @Input() selectedArea: string;
   @Input() selectedSubjects: SubjectType[];
   @Input() selectedTypes: TypesFilterType[];
-  state = '';
 
   constructor(private navigationService: NavigationService,
-              public media: ObservableMedia) {}
+              public media: ObservableMedia) {
+  }
 
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
-    const subjectIds = this.navigationService.getIds(this.selectedSubjects)
+    const subjectIds = this.navigationService.getIds(this.selectedSubjects);
     const path =
       this.navigationService.getBackLink(this.selectedArea, subjectIds, typeIds);
     return path;
@@ -67,4 +68,16 @@ export class ItemComponent  {
   hasTypes(): boolean {
     return this.item.itemTypes !== null && this.item.itemTypes.length > 0;
   }
+
+  getItemType(): string {
+    let itemType: string;
+    if (this.item.collection.assetType === 'itm') {
+
+      itemType = 'item';
+    } else {
+      itemType = 'collection';
+    }
+    return itemType;
+  }
+
 }

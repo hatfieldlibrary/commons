@@ -12,7 +12,7 @@ import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
-import {SetAuthStatus} from "../../actions/auth.action";
+import {SetAuthStatus} from '../../actions/auth.action';
 
 /**
  * This component is for the content access options presented to the user.
@@ -39,7 +39,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   model: SearchTerms;
   COLLECTION_BUTTON_LABEL = 'Go to the Collection';
   ITEM_BUTTON_LABEL = 'View this Item';
-  SEARCH_OPTIONS_LABEL = 'Select to Browse';
+  SEARCH_LABEL = 'Or start your search here';
   isAuthenticated = false;
   watchers: Subscription;
 
