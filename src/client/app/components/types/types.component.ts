@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {MatSelectionList} from '@angular/material';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {TypesFilter} from '../../shared/data-types/types-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
 
@@ -28,7 +28,7 @@ export class TypesComponent implements OnInit {
   @Output() typeNavigation: EventEmitter <any> = new EventEmitter<any>();
   position = 'before';
 
-  constructor(private filterService: FilterUpdateService) {
+  constructor(private filterService: FilterUpdateServiceB) {
   }
 
   /**

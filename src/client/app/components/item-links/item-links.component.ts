@@ -38,7 +38,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   @Input() count: string;
   model: SearchTerms;
   COLLECTION_BUTTON_LABEL = 'Go to the Collection';
-  ITEM_BUTTON_LABEL = 'View this Item';
+  ITEM_BUTTON_LABEL = 'Go to the Item';
   SEARCH_LABEL = 'Or start your search here';
   isAuthenticated = false;
   watchers: Subscription;

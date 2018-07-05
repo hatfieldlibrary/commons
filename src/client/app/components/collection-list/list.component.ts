@@ -20,7 +20,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnIn
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {animate, query, stagger, state, style, transition, trigger} from '@angular/animations';
@@ -56,7 +56,7 @@ export class ListComponent implements OnDestroy, OnInit {
   watcher: Subscription;
   emptySubject: SubjectType = {id: 0, name: ''};
 
-  constructor(private filterService: FilterUpdateService,
+  constructor(private filterService: FilterUpdateServiceB,
               private media: ObservableMedia) {
     this.filterTerm = '';
     this.watcher = this.media.subscribe((change: MediaChange) => {

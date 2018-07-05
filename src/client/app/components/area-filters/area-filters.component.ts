@@ -88,21 +88,37 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    * @param areas the currently selected areas
    * @param types the currently selected types
    */
-  createNormalizedFilter(areas, types) {
-    if (areas.length < this.filters.previousAreas.length) {
-      this.setFilteredAreaState(areas);
-    } else {
-      areas.forEach(area => {
-        if (area.id !== 0) {
-          this.normalizedFilter.push({type: 'area', name: area.title, id: area.id, active: true})
-        }
-      });
-    }
+  createNormalizedFilter(subjects, types, groups) {
+    subjects.forEach(subject => {
+      if (subject.id !== 0) {
+        this.normalizedFilter.push({type: 'subject', name: subject.name, id: subject.id, active: true})
+      }
+    });
     types.forEach(type => {
       if (type.id !== 0) {
         this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: true})
       }
     });
+    groups.forEach(group => {
+      if (group.id !== 0) {
+        this.normalizedFilter.push({type: 'group', name: group.name, id: group.id, active: true})
+      }
+    });
+
+    // if (areas.length < this.filters.previousAreas.length) {
+    //   this.setFilteredAreaState(areas);
+    // } else {
+    //   areas.forEach(area => {
+    //     if (area.id !== 0) {
+    //       this.normalizedFilter.push({type: 'area', name: area.title, id: area.id, active: true})
+    //     }
+    //   });
+    // }
+    // types.forEach(type => {
+    //   if (type.id !== 0) {
+    //     this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: true})
+    //   }
+    // });
   }
 
   /**
@@ -111,10 +127,10 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    * @param id the id of the filter to be removed
    */
   deselect(type, id, active): void {
-    if (active) {
+ //   if (active) {
       const deselected: DeselectedFilter = {type: type, id: id};
       this.removeFilter.emit(deselected);
-    }
+ //   }
   }
 
   /**
@@ -125,7 +141,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    */
   ngOnChanges(changes: SimpleChanges): void {
     this.normalizedFilter = [];
-    this.createNormalizedFilter(this.filters.selectedAreas, this.filters.selectedTypes);
+    this.createNormalizedFilter(this.filters.selectedSubjects, this.filters.selectedTypes, this.filters.selectedGroups);
   }
 
   ngOnDestroy(): void {

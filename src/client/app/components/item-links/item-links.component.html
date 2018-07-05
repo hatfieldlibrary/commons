@@ -7,7 +7,7 @@
          fxLayoutAlign="start start"
          *ngIf="restricted === true && !isAuthenticated">
       <div *ngIf="assetType === 'dig'" class="mat-title">Access Collection</div>
-      <div *ngIf="assetType === 'itm'" class="mat-title">Access Item</div>
+      <div *ngIf="assetType === 'itm'" class="mat-title">Access Options</div>
       <div class="scope-note">You can access <em>{{title}}</em> after you login with your Willamette University account.</div>
       <a mat-raised-button color="primary" href="{{authenticationPath}}">Login for Access</a>
 
@@ -21,7 +21,7 @@
       *ngIf="isAuthenticated || !restricted">
       <div *ngIf="assetType === 'dig'" class="mat-title">Access Collection</div>
       <div *ngIf="assetType === 'dig'" class="scope-note">There are {{count}} items in <em>{{title}}</em>.</div>
-      <div *ngIf="assetType === 'itm'" class="mat-title">Access Item</div>
+      <div *ngIf="assetType === 'itm'" class="mat-title">Access Options</div>
       <div *ngIf="assetType === 'itm'" class="scope-note"><em>{{title}}</em> is a single item. View it by clicking the
         button below.
       </div>

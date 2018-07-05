@@ -8,6 +8,8 @@ import {Observable} from 'rxjs/Observable';
 import {SubjectType} from '../shared/data-types/subject.type';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
+import {CollectionGroupFilter} from '../shared/data-types/collection-group-filter.type';
+import {CollectionGroupType} from '../shared/data-types/collection-group-type';
 
 @Injectable()
 export class SetSelectedService {
@@ -15,12 +17,14 @@ export class SetSelectedService {
   subjects$: Observable<SubjectType[]>;
   areas$: Observable<AreaFilterType[]>;
   types$: Observable<TypesFilterType[]>;
+  groups$: Observable<CollectionGroupType[]>
   watchers: Subscription;
 
   constructor(private store: Store<fromRoot.State>) {
     this.subjects$ = this.store.select(fromRoot.getSubject);
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.types$ = this.store.select(fromRoot.getTypes);
+    this.groups$ = this.store.select(fromRoot.getCollectionGroups);
     this.watchers = new Subscription();
   }
 
@@ -38,19 +42,37 @@ export class SetSelectedService {
    * @private
    */
   setSelectedSubject(subjectId: string): void {
+    // if (subjectId) {
+    //   const subjectWatcher = this.subjects$.subscribe((subjects) => {
+    //     const subjectsArr: SubjectType[] = [];
+    //     subjects.forEach((subject) => {
+    //       if (subject.id === +subjectId) {
+    //         subjectsArr.push(subject);
+    //       }
+    //       this.store.dispatch(new SetSubjectFilter(subjectsArr));
+    //     })
+    //   });
+    //   this.watchers.add(subjectWatcher);
+    // } else {
+    //   this.store.dispatch(new RemoveSubjectFilter());
+    // }
     if (subjectId) {
-      const subjectWatcher = this.subjects$.subscribe((subjects) => {
-        const subjectsArr: SubjectType[] = [];
-        subjects.forEach((subject) => {
-          if (subject.id === +subjectId) {
-            subjectsArr.push(subject);
+      const subsWatcher = this.subjects$.subscribe((subs) => {
+        const filtersArr = subjectId.split(',');
+        const selectedSubs: SubjectType[] = [];
+        filtersArr.forEach(function (singleSubId) {
+          const selected = subs.find((sub) => sub.id === +singleSubId);
+          if (selected) {
+            selectedSubs.push(selected);
           }
-          this.store.dispatch(new SetSubjectFilter(subjectsArr));
-        })
+        });
+        if (selectedSubs.length > 0) {
+          this.store.dispatch(new filterActions.SetSubjectFilter(selectedSubs));
+        }
+        this.watchers.add(subsWatcher);
       });
-      this.watchers.add(subjectWatcher);
     } else {
-      this.store.dispatch(new RemoveSubjectFilter());
+      this.store.dispatch(new filterActions.SetSubjectFilter([{id: 0, name: ''}]))
     }
   }
 
@@ -111,6 +133,40 @@ export class SetSelectedService {
       this.store.dispatch(new filterActions.SetTypeFilter([{id: 0, name: ''}]))
     }
   }
+
+  /**
+   * Adds a watcher for the area list. The callback function uses the provided groupId
+   * to create an array of selected areas from the current list of areas. The selected
+   * areas are dispatched to the store. This initializes the selected areas on page load.
+   *
+   * @param {string} groupId comma separated string of area ids.
+   */
+  setSelectedGroups(groupId: string): void {
+    console.log(groupId)
+    if (groupId) {
+      const groupsWatcher = this.groups$.subscribe((groups) => {
+        console.log(groups)
+        const groupArr = groupId.split(',');
+        const selectedGroups: CollectionGroupType[] = [];
+        groupArr.forEach(function (singleGroupId) {
+          console.log(singleGroupId)
+          const selected = groups.find((grp) => grp.id === +singleGroupId);
+          if (selected) {
+            selectedGroups.push(selected);
+          }
+        });
+        if (selectedGroups.length > 0) {
+          this.store.dispatch(new filterActions.SetGroupFilter(selectedGroups));
+        } else {
+          this.store.dispatch(new filterActions.SetGroupFilter([{id: 0, name: ''}]));
+        }
+        this.watchers.add(groupsWatcher);
+      });
+    } else {
+      this.store.dispatch(new filterActions.SetGroupFilter([{id: 0, name: ''}]))
+    }
+  }
+
 
   unsubscribe(): void {
     this.watchers.unsubscribe();

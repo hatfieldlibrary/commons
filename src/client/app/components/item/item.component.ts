@@ -22,7 +22,7 @@ import {ItemType} from '../../shared/data-types/item.type';
 import {ObservableMedia} from '@angular/flex-layout';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
-import {NavigationService} from '../../services/navigation/navigation.service';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 
 /**
  * This is the parent component for presenting all item data.
@@ -40,7 +40,7 @@ export class ItemComponent {
   @Input() selectedSubjects: SubjectType[];
   @Input() selectedTypes: TypesFilterType[];
 
-  constructor(private navigationService: NavigationService,
+  constructor(private navigationService: NavigationServiceB,
               public media: ObservableMedia) {
   }
 

@@ -20,7 +20,7 @@ import {
   AllSubjectActionSuccess, CurrentSubject, RemoveCurrentSubject, SubjectAction, SubjectActionFailed, SubjectActions,
   SubjectActionSuccess
 } from '../actions/subject-actions';
-import {getSelectedSubject, getSubjectList, reducer} from './subject.reducers';
+import {getSubjectList, reducer} from './subject.reducers';
 import {Action} from '@ngrx/store';
 
 /**
@@ -119,17 +119,17 @@ describe('Subject Reducers', () => {
     expect(result).toEqual([]);
   });
 
-  it('should find the current subject', () => {
-    const state = reducer(mockState, new CurrentSubject('1'));
-    const result = getSelectedSubject(state);
-    expect(result).toEqual({id: 1, name: 'test subject'});
-  });
-
-  it('should return the default selected subject with id zero', () => {
-    const state = reducer(mockState, new CurrentSubject('-1'));
-    const result = getSelectedSubject(state);
-    expect(result).toEqual({id: 0, name: ''});
-  });
+  // it('should find the current subject', () => {
+  //   const state = reducer(mockState, new CurrentSubject('1'));
+  //   const result = getSelectedSubject(state);
+  //   expect(result).toEqual({id: 1, name: 'test subject'});
+  // });
+  //
+  // it('should return the default selected subject with id zero', () => {
+  //   const state = reducer(mockState, new CurrentSubject('-1'));
+  //   const result = getSelectedSubject(state);
+  //   expect(result).toEqual({id: 0, name: ''});
+  // });
 
   it('should remove the selected subject', () => {
     expect(

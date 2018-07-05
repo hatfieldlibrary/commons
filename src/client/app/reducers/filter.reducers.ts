@@ -2,6 +2,8 @@ import {FilterActions, FilterActionTypes} from '../actions/filter.actions';
 import {SubjectType} from '../shared/data-types/subject.type';
 import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {CollectionGroupFilter} from '../shared/data-types/collection-group-filter.type';
+import {CollectionGroupType} from '../shared/data-types/collection-group-type';
 
 export interface State {
   filterTerm: '';
@@ -63,14 +65,14 @@ export function reducer(state = initialState, action: FilterActions): State {
 
       const filter: SubjectType[] = <SubjectType[]>action.payload;
       return Object.assign({}, state, {
-        selectedSubject: filter
+        selectedSubjects: filter
       });
     }
 
     case FilterActionTypes.REMOVE_SUBJECT_FILTER: {
 
       return Object.assign({}, state, {
-        selectedSubject: initialState.selectedSubjects
+        selectedSubjects: initialState.selectedSubjects
       });
     }
 
@@ -118,10 +120,9 @@ export function reducer(state = initialState, action: FilterActions): State {
     }
 
     case FilterActionTypes.SET_GROUP_FILTER: {
-      const filter: AreaFilterType[] = <AreaFilterType[]>action.payload;
+      const filter: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
       return Object.assign({}, state, {
-        previousAreas: state.selectedAreas,
-        selectedAreas: filter
+        selectedGroups: filter
       });
     }
 

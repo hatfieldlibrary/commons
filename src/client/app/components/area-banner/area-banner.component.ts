@@ -50,7 +50,6 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
 
   ngOnInit() {
     this.watcher = this.media.subscribe((change: MediaChange) => {
-      console.log(change.mqAlias)
       if (change.mqAlias === 'xs' || change.mqAlias === 'sm' ) {
         this.isMobile = true;
         console.log('setting mobile to true')

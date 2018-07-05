@@ -1,6 +1,6 @@
 
 import {TypesFilterType} from '../shared/data-types/types-filter.type';
-import {ContentTypeActions, ContentTypeActionTypes} from '../actions/type.actions';
+import {ContentTypeActions, ContentTypeActionTypes, ContentTypesActionSuccess} from '../actions/type.actions';
 
 export interface State {
   types: TypesFilterType[];
@@ -36,15 +36,15 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
     }
 
-    case ContentTypeActionTypes.TYPE_LIST_SUCCESS: {
-
-      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
-      return Object.assign({}, state, {
-        types: result,
-        loading: false
-      });
-
-    }
+    // case ContentTypeActionTypes.TYPE_LIST_SUCCESS: {
+    //
+    //   const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     types: result,
+    //     loading: false
+    //   });
+    //
+    // }
 
     case ContentTypeActionTypes.TYPE_AREA_LIST: {
       return Object.assign({}, state, {
@@ -52,16 +52,16 @@ export function reducer(state = initialState, action: ContentTypeActions): State
       });
 
     }
-
-    case ContentTypeActionTypes.TYPE_AREA_LIST_SUCCESS: {
-
-      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
-      return Object.assign({}, state, {
-        types: result,
-        loading: false
-      });
-
-    }
+    //
+    // case ContentTypeActionTypes.TYPE_AREA_LIST_SUCCESS: {
+    //
+    //   const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     types: result,
+    //     loading: false
+    //   });
+    //
+    // }
 
     case ContentTypeActionTypes.TYPE_SUBJECT_LIST: {
       return Object.assign({}, state, {
@@ -69,16 +69,16 @@ export function reducer(state = initialState, action: ContentTypeActions): State
       });
 
     }
-
-    case ContentTypeActionTypes.TYPE_SUBJECT_LIST_SUCCESS: {
-
-      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
-      return Object.assign({}, state, {
-        types: result,
-        loading: false
-      });
-
-    }
+    //
+    // case ContentTypeActionTypes.TYPE_SUBJECT_LIST_SUCCESS: {
+    //
+    //   const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     types: result,
+    //     loading: false
+    //   });
+    //
+    // }
 
     case ContentTypeActionTypes.TYPE_SUBJECT_AREA_LIST: {
       return Object.assign({}, state, {
@@ -87,14 +87,23 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
     }
 
-    case ContentTypeActionTypes.TYPE_SUBJECT_AREA_LIST_SUCCESS: {
+    // case ContentTypeActionTypes.TYPE_SUBJECT_AREA_LIST_SUCCESS: {
+    //
+    //   const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     types: result,
+    //     loading: false
+    //   });
+    //
+    // }
 
+
+    case ContentTypeActionTypes.TYPES_REQUEST_SUCCESS: {
       const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
-      return Object.assign({}, state, {
-        types: result,
-        loading: false
-      });
-
+        return Object.assign({}, state, {
+          types: result,
+          loading: false
+        });
     }
 
     case ContentTypeActionTypes.REQUEST_FAILED: {

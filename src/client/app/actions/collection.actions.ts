@@ -23,44 +23,67 @@ import {Action} from '../actions/action.interface';
 import {type} from '../shared/ngrx/type';
 import {CollectionType} from '../shared/data-types/collection.type';
 import {TypeAreaSubjectParams} from './type-area-subject-parameters.interface';
-import {CategoryAreaTypeParams} from './category-area-type.interface';
-import {CategoryTypeParams} from './category-type.interface';
 
 export interface IdentifersPayload {
   subjectId: string,
-  areaId: string
+  areaId: string,
+  typeId: string,
+  categoryId: string
 }
 
 export const CollectionActionTypes = {
   SET_FILTER: type('[Collections] Set Collection Filter'),
   CLEAR_FILTER: type('[Collections] Clear Collection Filter'),
   LIST_ALL_ACTION: type('[Collections] List all Collections'),
-  LIST_ALL_SUCCESS_ACTION: type('[Collections] List all Collections Success'),
+//  LIST_ALL_SUCCESS_ACTION: type('[Collections] List all Collections Success'),
   LIST_BY_AREA: type('[Collections] Search by AreaType'),
-  LIST_BY_AREA_SUCCESS: type('[Collections] AreaType Collections'),
-  LIST_BY_AREA_SUBJECT: type('[Collections] Search by SubjectType'),
-  LIST_BY_AREA_SUBJECT_SUCCESS: type('[Collections] SubjectType Collections'),
+//  LIST_BY_AREA_SUCCESS: type('[Collections] AreaType Collections'),
+  LIST_BY_SUBJECT: type('[Collections] All Collections by Subject'),
+//  LIST_BY_SUBJECT_SUCCESS: type('[Collections] All Collections by Subject Success'),
+  LIST_BY_SUBJECT_AREA: type('[Collections] Search by SubjectType'),
+//  LIST_BY_SUBJECT_AREA_SUCCESS: type('[Collections] SubjectType Collections'),
   LIST_BY_TYPE: type('[Collections] Collections by Type'),
   LIST_BY_TYPE_AREA: type('[Collections] Collections by Type Area'),
   LIST_BY_TYPE_AREA_SUBJECT: type('[Collections] Collection by Type Area Subject'),
-  LIST_BY_CATEGORY_TYPE: type('[Collections] Search by Catgory Type'),
-  LIST_BY_CATEGORY_AREA_TYPE: type('[Collections] Category Area Type'),
-  LIST_BY_TYPE_SUCCESS: type('[Collections] Collections by Type Success'),
-  LIST_BY_TYPE_AREA_SUCCESS: type('[Collections] Collections by Type Area Success'),
+//  LIST_BY_TYPE_SUCCESS: type('[Collections] Collections by Type Success'),
+//  LIST_BY_TYPE_AREA_SUCCESS: type('[Collections] Collections by Type Area Success'),
   LIST_BY_TYPE_SUBJECT: type('[Collections] Collections by Type Subject'),
-  LIST_BY_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Type Subject Success'),
-  LIST_BY_TYPE_AREA_SUBJECT_SUCCESS: type('[Collections] Collections by Type Area Subject Success'),
-  LIST_ALL_BY_SUBJECT: type('[Collections] All Collections by Subject'),
-  LIST_ALL_BY_SUBJECT_SUCCESS: type('[Collections] All Collections by Subject Success'),
-  LIST_BY_CATEGORY_TYPE_SUCCESS: type('[Collections] Collections by Catgetory Type Success'),
-  LIST_BY_CATEGORY_AREA_TYPE_SUCCESS: type('[Collections] Collections by Category Area Type Success'),
+//  LIST_BY_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Type Subject Success'),
+ // LIST_BY_TYPE_AREA_SUBJECT_SUCCESS: type('[Collections] Collections by Type Area Subject Success'),
+  LIST_BY_CATEGORY: type('[Collections] Collections by Category'),
+//  LIST_BY_CATEGORY_SUCCESS: type('[Collections] Collections by Category Success'),
+  LIST_BY_CATEGORY_TYPE: type('[Collections] Search by Category Type'),
+//  LIST_BY_CATEGORY_TYPE_SUCCESS: type('[Collections] Collections by Category Type Success'),
+  LIST_BY_CATEGORY_SUBJECT: type('[Collections] Search by Category Subject'),
+//  LIST_BY_CATEGORY_SUBJECT_SUCCESS: type('[Collections] Collections by Category Subject Success'),
+  LIST_BY_CATEGORY_AREA: type('[Collections] Search by Category Area'),
+ // LIST_BY_CATEGORY_AREA_SUCCESS: type('[Collections] Search by Category Area Success'),
+  LIST_BY_CATEGORY_AREA_TYPE: type('[Collections] Category Area Type'),
+ // LIST_BY_CATEGORY_AREA_TYPE_SUCCESS: type('[Collections] Collections by Category Area Type Success'),
+  LIST_BY_CATEGORY_AREA_SUBJECT: type('[Collections] Category Area Subject'),
+//  LIST_BY_CATEGORY_AREA_SUBJECT_SUCCESS: type('[Collections] Collections by Category Area Subject Success'),
+  LIST_BY_CATEGORY_TYPE_SUBJECT: type('[Collections] Category Type Subject'),
+//  LIST_BY_CATEGORY_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Category Type Subject Success'),
+  LIST_BY_CATEGORY_AREA_TYPE_SUBJECT: type('[Collections] Category Area Type Subject'),
+//  LIST_BY_CATEGORY_AREA_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Area Category Type Subject Success'),
   LIST_RESET: type('[Collections] Reset the Collection List to Empty'),
-  REQUEST_FAILED: type('[Collections] Search Failed')
+  REQUEST_FAILED: type('[Collections] Search Failed'),
+  COLLECTION_ACTION_SUCCESS: type('[Collections] Request successfult')
 
 };
 
+export class CollectionsActionSuccess implements Action {
+  type = CollectionActionTypes.COLLECTION_ACTION_SUCCESS;
+  payload: CollectionType[];
+
+  constructor(searchResult: CollectionType[]) {
+    this.payload = searchResult;
+  }
+}
+
 export class SetCollectionsFilter implements Action {
   type = CollectionActionTypes.SET_FILTER;
+
   constructor(public payload: string) {
   }
 }
@@ -68,6 +91,7 @@ export class SetCollectionsFilter implements Action {
 export class ClearCollectionsFilter implements Action {
   type = CollectionActionTypes.CLEAR_FILTER;
   payload: void;
+
   constructor() {
   }
 }
@@ -75,181 +99,353 @@ export class ClearCollectionsFilter implements Action {
 export class CollectionReset implements Action {
   type = CollectionActionTypes.LIST_RESET;
   payload: void;
-  constructor() {}
+
+  constructor() {
+  }
 }
 
 export class AllCollectionsAction implements Action {
   type = CollectionActionTypes.LIST_ALL_ACTION;
   payload: void;
-  constructor() {}
 
-}
-export class AllCollectionsActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_ALL_SUCCESS_ACTION;
-  constructor(public payload: CollectionType[]) {
+  constructor() {
   }
 
 }
+
+// export class AllCollectionsActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_ALL_SUCCESS_ACTION;
+//
+//   constructor(public payload: CollectionType[]) {
+//   }
+//
+// }
 
 export class CollectionsAreaAction implements Action {
   type = CollectionActionTypes.LIST_BY_AREA;
+
   constructor(public payload: string) {
   }
 
 }
 
-export class CollectionsAreaActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_AREA_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
-
-}
+// export class CollectionsAreaActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_AREA_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
 export class CollectionsSubjectAction implements Action {
-  type = CollectionActionTypes.LIST_ALL_BY_SUBJECT;
+  type = CollectionActionTypes.LIST_BY_SUBJECT;
+
   constructor(public payload: string) {
   }
 }
 
-export class CollectionsSubjectActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_ALL_BY_SUBJECT_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
+// export class CollectionsSubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_SUBJECT_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
-}
 
-
-export class CollectionsAreaSubjectActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
-
-}
+// export class CollectionsAreaSubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_SUBJECT_AREA_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
 export class CollectionsAreaSubjectAction implements Action {
-  type = CollectionActionTypes.LIST_BY_AREA_SUBJECT;
+  type = CollectionActionTypes.LIST_BY_SUBJECT_AREA;
   payload: IdentifersPayload;
+
   constructor(public id: string, public areaId: string) {
     this.payload = {
       subjectId: id,
-      areaId: areaId
+      areaId: areaId,
+      categoryId: '',
+      typeId: ''
     }
   }
 }
+
+export class CollectionsCategoryAction implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY;
+  payload: IdentifersPayload;
+
+  constructor(categoryId: string) {
+    this.payload = {
+      subjectId: '',
+      areaId: '',
+      categoryId: categoryId,
+      typeId: ''
+    }
+  }
+}
+
+// export class CollectionsCategoryActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+// }
+
+export class CollectionsCategoryAreaAction implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_AREA;
+  payload: IdentifersPayload;
+
+  constructor(categoryId: string, areaId: string) {
+    this.payload = {
+      categoryId: categoryId,
+      typeId: '',
+      areaId: areaId,
+      subjectId: ''
+    }
+  }
+}
+
+// export class CollectionsCategoryAreaActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+// }
+
 export class CollectionsCategoryTypeAction implements Action {
-  type = CollectionActionTypes.LIST_BY_AREA_SUBJECT;
-  payload: CategoryTypeParams;
+  type = CollectionActionTypes.LIST_BY_SUBJECT_AREA;
+  payload: IdentifersPayload;
+
   constructor(categoryId: string, typeId: string) {
-    this. payload = {
-      categories: categoryId,
-      types: typeId
+    this.payload = {
+      categoryId: categoryId,
+      typeId: typeId,
+      areaId: '',
+      subjectId: ''
     }
   }
 }
 
-export class CollectionsCategoryTypeActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
-
-}
+// export class CollectionsCategoryTypeActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+// }
 
 export class CollectionsCategoryAreaTypeAction implements Action {
   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE;
-  payload: CategoryAreaTypeParams;
-  constructor(categoryId: string, areaId: string, typeId: string ) {
+  payload: IdentifersPayload;
+
+  constructor(categoryId: string, areaId: string, typeId: string) {
     this.payload = {
-      categories: categoryId,
-      areas: areaId,
-      types: typeId
+      categoryId: categoryId,
+      areaId: areaId,
+      typeId: typeId,
+      subjectId: ''
     }
   }
 }
 
-export class CollectionsCategoryAreaTypeActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
+// export class CollectionsCategoryAreaTypeActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
+export class CollectionsCategoryAreaSubjectAction implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_SUBJECT;
+  payload: IdentifersPayload;
+
+  constructor(categoryId: string, areaId: string, subjectId: string) {
+    this.payload = {
+      categoryId: categoryId,
+      areaId: areaId,
+      subjectId: subjectId,
+      typeId: ''
+    }
+  }
 }
+
+// export class CollectionsCategoryAreaSubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_SUBJECT_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
+
+export class CollectionsCategorySubjectAction implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_SUBJECT;
+  payload: IdentifersPayload;
+
+  constructor(categoryId: string, subjectId: string) {
+    this.payload = {
+      categoryId: categoryId,
+      subjectId: subjectId,
+      areaId: '',
+      typeId: ''
+    }
+  }
+}
+
+// export class CollectionsCategorySubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_SUBJECT_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
+
+export class CollectionsCategoryTypeSubjectAction implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUBJECT;
+  payload: IdentifersPayload;
+
+  constructor(categoryId: string, typeId: string, subjectId: string) {
+    this.payload = {
+      categoryId: categoryId,
+      areaId: '',
+      subjectId: subjectId,
+      typeId: typeId
+    }
+  }
+}
+
+// export class CollectionsCategoryTypeSubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUBJECT_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
+
+export class CollectionsCategoryAreaTypeSubjectAction implements Action {
+  type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUBJECT;
+  payload: IdentifersPayload;
+
+  constructor(categoryId: string, areaId: string, typeId: string, subjectId: string) {
+    this.payload = {
+      categoryId: categoryId,
+      areaId: areaId,
+      typeId: typeId,
+      subjectId: subjectId
+    }
+  }
+}
+
+// export class CollectionsCategoryAreaTypeSubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUBJECT_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
 export class CollectionsTypeAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE;
+
   constructor(public payload: string) {
 
   }
 }
 
-export class CollectionsTypeActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_TYPE_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
-
-}
+// export class CollectionsTypeActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_TYPE_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
 export class CollectionsTypeAreaAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_AREA;
+
   constructor(public payload: TypeAreaSubjectParams) {
 
   }
 }
 
-export class CollectionsTypeAreaActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
-
-}
+// export class CollectionsTypeAreaActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
 export class CollectionsTypeSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT;
+
   constructor(public payload: TypeAreaSubjectParams) {
 
   }
 }
 
-export class CollectionsTypeSubjectActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
-
-}
+// export class CollectionsTypeSubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
 export class CollectionsTypeAreaSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT;
+
   constructor(public payload: TypeAreaSubjectParams) {
 
   }
 }
 
-export class CollectionsTypeAreaSubjectActionSuccess implements Action {
-  type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT_SUCCESS;
-  payload: CollectionType[];
-  constructor(searchResult: CollectionType[]) {
-    this.payload = searchResult;
-  }
-
-}
+// export class CollectionsTypeAreaSubjectActionSuccess implements Action {
+//   type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT_SUCCESS;
+//   payload: CollectionType[];
+//
+//   constructor(searchResult: CollectionType[]) {
+//     this.payload = searchResult;
+//   }
+//
+// }
 
 export class CollectionActionFailed implements Action {
   type = CollectionActionTypes.REQUEST_FAILED;
   payload: void;
+
   constructor(err: string) {
     console.log(err)
   }
@@ -257,21 +453,26 @@ export class CollectionActionFailed implements Action {
 }
 
 export type CollectionActions =
+  CollectionsActionSuccess |
   CollectionsAreaAction |
-  CollectionsAreaActionSuccess |
+//  CollectionsAreaActionSuccess |
   CollectionReset |
   AllCollectionsAction |
-  AllCollectionsActionSuccess |
+//  AllCollectionsActionSuccess |
   CollectionsSubjectAction |
-  CollectionsSubjectActionSuccess |
+//  CollectionsSubjectActionSuccess |
   CollectionsAreaSubjectAction |
-  CollectionsAreaSubjectActionSuccess |
+//  CollectionsAreaSubjectActionSuccess |
   CollectionsTypeAction |
-  CollectionsTypeActionSuccess |
+//  CollectionsTypeActionSuccess |
   CollectionsTypeAreaAction |
-  CollectionsTypeAreaActionSuccess |
+//  CollectionsTypeAreaActionSuccess |
   CollectionsTypeSubjectAction |
-  CollectionsTypeSubjectActionSuccess |
+//  CollectionsTypeSubjectActionSuccess |
   CollectionsTypeAreaSubjectAction |
-  CollectionsTypeAreaSubjectActionSuccess |
+//  CollectionsTypeAreaSubjectActionSuccess |
+  CollectionsCategoryAreaTypeAction |
+//  CollectionsCategoryTypeActionSuccess |
+  CollectionsCategoryAreaAction |
+ // CollectionsCategoryAreaActionSuccess |
   CollectionActionFailed;

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, SecurityContext} from '@angular/core';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
@@ -24,7 +24,7 @@ export class CollectionGridComponent implements OnDestroy {
   watcher: Subscription;
   emptySubject: SubjectType = {id: 0, name: ''};
 
-  constructor(private filterService: FilterUpdateService,
+  constructor(private filterService: FilterUpdateServiceB,
               private media: ObservableMedia) {
     this.filterTerm = '';
     this.watcher = this.media.subscribe((change: MediaChange) => {

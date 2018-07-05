@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MatSelectionList} from '@angular/material';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {animate, style, transition, trigger} from '@angular/animations';
@@ -32,7 +32,7 @@ export class SubjectOptionsComponent {
    * the view after changes made in the ngAfterViewInit hook method.
    * @param changeDetector
    */
-  constructor(private filterService: FilterUpdateService) {}
+  constructor(private filterService: FilterUpdateServiceB) {}
 
   /**
    * Gets the position index in typeId for the type that

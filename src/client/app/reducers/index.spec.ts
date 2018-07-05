@@ -28,7 +28,7 @@ import {
 } from './index';
 import {ItemSuccess} from '../actions/item.actions';
 import {AreaListActionSuccess, AreaInformationSuccess} from '../actions/area.actions';
-import {CollectionsAreaActionSuccess} from '../actions/collection.actions';
+import {CollectionsActionSuccess} from '../actions/collection.actions';
 import {ItemActionRelatedSuccess} from '../actions/related.actions';
 import {SetAuthStatus} from '../actions/auth.action';
 
@@ -134,7 +134,7 @@ describe('Reducers ', () => {
     itemState = reducers.item(undefined, new ItemSuccess(expectedItem));
     areaState = reducers.area(undefined, new AreaInformationSuccess(expectedArea));
     areaListState = reducers.areaList(undefined, new AreaListActionSuccess(expectedAreas));
-    collectionState = reducers.collections(undefined, new CollectionsAreaActionSuccess(expectedCollections));
+    collectionState = reducers.collections(undefined, new CollectionsActionSuccess(expectedCollections));
     relatedItemsState = reducers.related(undefined, new ItemActionRelatedSuccess(expectedRelatedItems));
     authState = reducers.auth(undefined, new SetAuthStatus({auth: true}));
   });

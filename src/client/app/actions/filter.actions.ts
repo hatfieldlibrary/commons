@@ -94,7 +94,7 @@ export class SetDefaultTypeFilter implements Action {
  */
 export class SetGroupFilter implements Action {
   public type = FilterActionTypes.SET_GROUP_FILTER;
-  constructor(public payload: CollectionGroupType[]) {}
+  constructor(public payload: CollectionGroupType[]) {console.log(payload)}
 }
 
 

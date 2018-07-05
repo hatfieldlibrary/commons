@@ -23,7 +23,8 @@
 
 <app-area-options
   (areaNavigation)="areaNavigation($event)"
-  [filter]="areasFilter$ | async">>
+  (removeFilter)="removeFilter($event)"
+  [filter]="areasFilter$ | async">
 </app-area-options>
 
 <div fxLayout="row"
@@ -70,6 +71,11 @@
              fxFlex.gt-lg="1 1 12"
              class="side-container"
              *ngIf="media.isActive('gt-sm')">
+          <app-subject-options (subjectNavigation)="subjectNavigation($event)"
+                               [filter]="subjectsFilter$ | async"></app-subject-options>
+
+          <app-group-options (groupNavigation)="groupNavigation($event)"
+                             [filter]="groupsFilter$ | async"></app-group-options>
           <!--<div fxLayout="row" fxLayoutAlign="start center">-->
           <!--<div class="side-nav-header mat-title">FILTERS</div>-->
           <!--<app-help-svg-->
@@ -81,8 +87,7 @@
           <!--<app-navigation-selector-->
           <!--(areaNavigation)="areaNavigation($event)"-->
           <!--[filter]="areasFilter$ | async"></app-navigation-selector>-->
-          <app-types (typeNavigation)="typeNavigation($event)"
-                     [filter]="typesFilter$ | async"></app-types>
+
         </div>
         <div fxLayout="column"
              fxFlex.xs="1 1 100"
@@ -117,11 +122,9 @@
              fxFlex.gt-lg="1 1 12"
              class="side-container"
              *ngIf="media.isActive('gt-sm')">
-          <app-subject-options (subjectNavigation)="subjectNavigation($event)"
-                               [filter]="subjectsFilter$ | async"></app-subject-options>
 
-          <app-group-options (groupNavigation)="groupNavigation($event)"
-                             [filter]="groupsFilter$ | async"></app-group-options>
+          <app-types (typeNavigation)="typeNavigation($event)"
+                     [filter]="typesFilter$ | async"></app-types>
 
           <!--<app-navigation-selector-->
           <!--(areaNavigation)="areaNavigation($event)"-->

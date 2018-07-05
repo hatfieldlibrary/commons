@@ -34,7 +34,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {SubjectType} from '../../shared/data-types/subject.type';
-import {NavigationService} from '../../services/navigation/navigation.service';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 
 @Component({
   selector: 'app-item-container',
@@ -64,7 +64,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
               private media: ObservableMedia,
               private route: ActivatedRoute,
               private router: Router,
-              private navigationService: NavigationService,
+              private navigationService: NavigationServiceB,
               @Inject(DOCUMENT) private document) {
 
     this.watchers = new Subscription();

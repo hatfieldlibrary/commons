@@ -110,6 +110,8 @@ import {SubjectOptionsComponent} from './components/subject-options/subject-opti
 import {GroupOptionsComponent} from './components/group-options/group-options.component';
 import {CollectionGroupEffects} from './effects/collection-group.effects';
 import {CollectionGroupServices} from './services/collection-group.services';
+import {FilterUpdateServiceB} from './services/filters-2/filter-update.service';
+import {NavigationServiceB} from './services/navigation-2/navigation.service';
 
 export const appRoutes = [
 
@@ -132,6 +134,10 @@ export const appRoutes = [
   {path: environment.appRoot + '/collection/category/:categoryId/type/:typeId', component: ListsContainerComponent},
   {
     path: environment.appRoot + '/collection/category/:categoryId/subject/:subjectId',
+    component: ListsContainerComponent
+  },
+  {
+    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId',
     component: ListsContainerComponent
   },
   {
@@ -281,11 +287,11 @@ export const appRoutes = [
     AuthCheckService,
     MenuInteractionService,
     MatIconRegistry,
-    NavigationService,
+    NavigationServiceB,
     SetIntervalService,
     SetTimeoutService,
     MenuInteractionService,
-    FilterUpdateService
+    FilterUpdateServiceB
     // {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 

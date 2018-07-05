@@ -37,23 +37,21 @@ export const SubjectActionTypes = {
   REQUEST_FAILED: type('[SubjectType] Search Failed')
 };
 
-export interface TypesPayload {
+export interface SubjectsPayload {
   areaId: string,
-  typeId: string
+  typeId: string,
+  groupId: string
 }
 
 export class SubjectAction implements Action {
   type = SubjectActionTypes.SUBJECT_LIST;
-
   constructor(public payload: string) {
   }
-
 }
 
 export class SubjectActionSuccess implements Action {
   type = SubjectActionTypes.SUBJECT_LIST_SUCCESS;
   payload: SubjectType[];
-
   constructor(subjects: SubjectType[]) {
     this.payload = subjects;
   }
@@ -62,9 +60,7 @@ export class SubjectActionSuccess implements Action {
 export class AllSubjectAction implements Action {
   type = SubjectActionTypes.ALL_SUBJECT_LIST;
   payload: void;
-  constructor() {
-  }
-
+  constructor() {}
 }
 
 export class AllSubjectActionSuccess implements Action {
@@ -80,18 +76,12 @@ export class SubjectsForTypes implements Action {
 
 export class SubjectsForTypesSuccess implements  Action {
   type = SubjectActionTypes.SUBJECT_LIST_FOR_TYPE_SUCCESS;
-
   constructor(public payload: SubjectType[]) {}
 }
 
 export class SubjectsForAreaTypes implements Action {
   type = SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE;
-  payload: TypesPayload;
-  constructor (public areaId: string, typeId: string) {
-    this.payload = {
-      areaId: areaId,
-      typeId: typeId
-    }
+  constructor (public payload: SubjectsPayload) {
   }
 }
 
@@ -102,7 +92,6 @@ export class SubjectsForAreaTypesSuccess implements  Action {
 
 export class CurrentSubject implements Action {
   type = SubjectActionTypes.CURRENT_SELECTED_SUBJECT;
-
   constructor(public payload: string) {
   }
 }
@@ -110,20 +99,18 @@ export class CurrentSubject implements Action {
 export class RemoveCurrentSubject implements Action {
   type = SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT;
   payload: void;
-
   constructor() {
   }
-
 }
 
 export class SubjectActionFailed implements Action {
   type = SubjectActionTypes.REQUEST_FAILED;
   payload: void;
   constructor(err: string) {
-    console.log(err)
+    console.log(err);
   }
-
 }
+
 export type SubjectActions =
   SubjectAction |
   SubjectActionSuccess |

@@ -137,4 +137,4 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
 export const getSubjectList = (state: State) => state.subjects;
 
-export const getSelectedSubject = (state: State) => state.selectedSubject;
+// export const getSelectedSubject = (state: State) => state.selectedSubject;

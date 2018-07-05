@@ -3,3 +3,8 @@ export interface CategoryAreaTypeParams {
   categories: string,
   types: string
 }
+
+export interface CategoryAreaParams {
+  categories: string,
+  areas: string
+}

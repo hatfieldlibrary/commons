@@ -32,7 +32,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {NavigationService} from '../../services/navigation/navigation.service';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {DeselectedFilter} from 'app/components/area-filters/area-filters.component';
 import {SelectedAreaEvent} from '../../components/area-selector/area.component';
 import {SelectedTypeEvent} from '../../components/types/types.component';
@@ -102,7 +102,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
               public media: ObservableMedia,
-              private navigation: NavigationService,
+              private navigation: NavigationServiceB,
               private setSelected: SetSelectedService,
               private dispatchService: DispatchService) {
 
@@ -110,21 +110,22 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   /**
    * Dispatches action for areas list if not currently available in the store.
-   * TODO: Review...this assume dynamic areas. If so, need to add collection group support.
+   * TODO: Review...this assumes dynamic areas. If so, need to add collection group support.
    * @param id
    */
   private initializeAreas(params: any) {
-    if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
-      this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
-    } else if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
-      this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
-    } else if (this.navigation.isSubjectSelected(params['subjectId'])) {
-      this.dispatchService.getAreasBySubject(params['subjectId']);
-    } else if (this.navigation.isTypeSelected(params['typeId'])) {
-      this.dispatchService.getAreasByType(params['typeId']);
-    } else {
-      this.dispatchService.getAllAreas();
-    }
+    // if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
+    //   this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
+    // } else if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
+    //   this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
+    // } else if (this.navigation.isSubjectSelected(params['subjectId'])) {
+    //   this.dispatchService.getAreasBySubject(params['subjectId']);
+    // } else if (this.navigation.isTypeSelected(params['typeId'])) {
+    //   this.dispatchService.getAreasByType(params['typeId']);
+    // } else {
+    //   this.dispatchService.getAllAreas();
+    // }
+    this.dispatchService.getAllAreas();
   }
 
   /**
@@ -141,26 +142,33 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param {DeselectedFilter} deselected
    */
   removeFilter(deselected: DeselectedFilter): void {
+
     const test = deselected.id + '[^0-9]*';
     const regex = new RegExp(test);
     if (deselected.type === 'area') {
       // Get url query parameter for current areas.
       const areaIds = this.navigation.getIds(this.selectedAreas);
       this.areaId = areaIds.replace(regex, '');
-      this.typeId = this.navigation.getIds(this.selectedTypes);
-      this.groupId = this.navigation.getIds(this.selectedGroups);
+      this.typeId = '';
+      this.groupId = '';
     } else if (deselected.type === 'type') {
       // Get url query parameter for current types.
       const typeIds = this.navigation.getIds(this.selectedTypes);
       this.typeId = typeIds.replace(regex, '');
       this.areaId = this.navigation.getIds(this.selectedAreas);
       this.groupId = this.navigation.getIds(this.selectedGroups);
-    } else {
+    } else if (deselected.type === 'subject') {
       // Get url query parameter for current subjects.
       const subjectIds = this.navigation.getIds(this.selectedSubjects);
       this.subjectId = subjectIds.replace(regex, '');
       this.areaId = this.navigation.getIds(this.selectedAreas);
       this.groupId = this.navigation.getIds(this.selectedGroups);
+    } else if (deselected.type === 'group') {
+      // Get url query parameter for current subjects.
+      const groupIds = this.navigation.getIds(this.selectedGroups);
+      this.groupId = groupIds.replace(regex, '');
+      this.areaId = this.navigation.getIds(this.selectedAreas);
+      this.subjectId = this.navigation.getIds(this.selectedSubjects);
     }
     this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
   }
@@ -178,6 +186,9 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     }
     if (params['typeId']) {
       this.typeId = params['typeId'];
+    }
+    if (params['groupId']) {
+      this.groupId = params['groupId'];
     }
   }
 
@@ -201,10 +212,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     } else {
       this.setSelected.setSelectedTypes(null);
     }
-    if (params['groupId']) {
-      this.setSelected.setSelectedTypes(params['groupId']);
+    if (params['categoryId']) {
+      this.setSelected.setSelectedGroups(params['categoryId']);
     } else {
-      this.setSelected.setSelectedTypes(null);
+      this.setSelected.setSelectedGroups(null);
     }
   }
 
@@ -231,6 +242,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param {SelectedAreaEvent} updatedAreaList the updated area list
    */
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
+
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
     this.navigation.navigateFilterRoute(areaIds, this.typeId, this.subjectId, this.groupId);
   }
@@ -264,6 +276,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('init')
     // All local subscriptions are added to this Subscription
     // and removed in ngOnDestroy.
     this.watchers = new Subscription();
@@ -325,7 +338,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           groups: groups,
           selectedGroups: selected
         }
-      });
+      }
+    );
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.setQueryParams(params);
