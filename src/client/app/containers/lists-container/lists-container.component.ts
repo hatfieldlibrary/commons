@@ -321,10 +321,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.subjectsFilter$ = Observable.combineLatest(
       this.store.select(fromRoot.getSubject),
       this.store.select(fromRoot.getSubjectsFilter),
-      (types, selected) => {
+      (subjects, selected) => {
         this.selectedSubjects = selected;
         return {
-          subjects: types,
+          subjects: subjects,
           selectedSubjects: selected
         }
       }

@@ -17,7 +17,7 @@
 
 import {
   AllSubjectAction,
-  AllSubjectActionSuccess, CurrentSubject, RemoveCurrentSubject, SubjectAction, SubjectActionFailed, SubjectActions,
+   CurrentSubject, RemoveCurrentSubject, SubjectAction, SubjectActionFailed, SubjectActions,
   SubjectActionSuccess
 } from '../actions/subject-actions';
 import {getSubjectList, reducer} from './subject.reducers';
@@ -85,7 +85,7 @@ describe('Subject Reducers', () => {
   it('should return subject list', () => {
 
     expect(
-      reducer(undefined, new AllSubjectActionSuccess(expectedSubjects))
+      reducer(undefined, new SubjectActionSuccess(expectedSubjects))
     ).toEqual({
         subjects: expectedSubjects,
         selectedSubject: {id: 0, name: ''},

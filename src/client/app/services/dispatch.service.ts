@@ -25,90 +25,207 @@ export class DispatchService {
 
   dispatchActions(areaId: string, typeId: string, subjectId: string, groupId: string): void {
     this.getAreaInformation(areaId);
-    if (groupId) {
-      // Category lookups are provided with types and areas. This provides and
-      // option for lookups by administrative units (e.g. HFMA or Archives).
-      if (typeId) {
-        if (areaId) {
+
+    console.log(areaId)
+    console.log(typeId)
+    console.log(subjectId)
+    console.log(groupId)
+
+    if (areaId) {
+      if (groupId) {
+        if (subjectId) {
+          if (typeId) {
+            console.log('area, grp, subject, type')
+            // area, grp, subject, type
+          } else {
+            console.log('area, grp, subject')
+            // area, grp, subject
+            this.getCollectionsForCategoryAreaSubject(groupId, areaId, subjectId);
+
+          }
+        } else if (typeId) {
+          console.log('area, grp, type')
+          // area, grp, type
           this.getCollectionsForCategoryAreaType(groupId, areaId, typeId);
-          this.getSubjectsForAreaType(areaId, typeId);
-          this.getTypesForArea(areaId);
+          this.getSubjectsForAreaGroupType(areaId, groupId, typeId);
+          this.getTypesForAreaGroup(areaId, groupId);
         } else {
-          this.getCollectionsForCategoryType(groupId, typeId);
-          this.getSubjectsForType(typeId);
-          this.getAllTypes();
+          console.log('area, grp')
+          // area, grp
+          this.getCollectionsForCategoryArea(groupId, areaId);
+          this.getSubjectsForAreaGroup(areaId, groupId);
+          this.getTypesForAreaGroup(areaId, groupId);
         }
-      } else if (areaId) {
-        this.getCollectionsForCategoryArea(groupId, areaId);
-        this.getSubjectsForAreaGroup(areaId, groupId);
-        this.getTypesForAreaGroup(areaId, groupId);
-      }
-    } else if (areaId) {
-      // Area lookups can be by subject, type, or all collections in an area.
-      if (subjectId) {
+      } else if (subjectId) {
         if (typeId) {
+          console.log('area, subject type')
+          // area, subject type
           this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
           this.getCollectionGroupsBySubjectType(subjectId, typeId);
           this.getSubjectsForAreaType(areaId, typeId);
         } else {
+          console.log('area, subject')
+          // area, subject
           this.getCollectionsForAreaSubject(areaId, subjectId);
           this.getCollectionGroupsBySubject(subjectId);
           this.getSubjectsForArea(areaId);
         }
         this.getTypesForAreaSubject(areaId, subjectId);
+      } else if (typeId) {
+        console.log('area  type')
+        // area  type
+        this.getCollectionsForAreaType(areaId, typeId);
+        this.getSubjectsForAreaType(areaId, typeId);
+        this.getCollectionGroupsByAreaType(areaId, typeId);
+
       } else {
-        if (typeId) {
-          this.getCollectionsForAreaType(areaId, typeId);
-          this.getSubjectsForAreaType(areaId, typeId);
-          this.getCollectionGroupsByType(typeId);
-        } else {
-          this.getCollectionsForArea(areaId);
-          this.getSubjectsForArea(areaId);
-          this.getCollectionGroupsByArea(areaId);
-        }
+        console.log('area')
+        // area
+        this.getCollectionsForArea(areaId);
+        this.getSubjectsForArea(areaId);
+        this.getCollectionGroupsByArea(areaId);
         this.getTypesForArea(areaId);
       }
+    } else if (groupId) {
+      if (subjectId) {
+        if (typeId) {
+          console.log('grp , sub, type')
+          // grp , sub, type
+        } else {
+          console.log('grp, sub')
+          // grp, sub
+        }
+      } else if (typeId) {
+        console.log('grp, type')
+        // grp type
+        this.getCollectionsForCategoryType(groupId, typeId);
+        this.getSubjectsForType(typeId);
+        this.getAllTypes();
+      }
     } else if (subjectId) {
-      // Subject lookups can be by type or all collections.
       if (typeId) {
+        console.log('subject , type')
+        // subject , type
         this.getCollectionsForTypeSubject(typeId, subjectId);
         this.getSubjectsForType(typeId);
         this.getCollectionGroupsBySubjectType(subjectId, typeId);
       } else {
+        console.log('subject')
         this.getCollectionsForSubject(subjectId);
         this.getAllSubjects();
         this.getCollectionGroupsBySubject(subjectId);
       }
       this.getTypesForSubject(subjectId);
+    } else if (typeId) {
+      console.log('type')
+      // type
+      this.getCollectionsForType(typeId);
+      this.getSubjectsForType(typeId);
+      this.getCollectionGroupsByType(typeId);
+      this.getAllTypes();
     } else {
-      // Type lookup (with fallback to all collections if type is missing.)
-      if (typeId) {
-        this.getCollectionsForType(typeId);
-        this.getSubjectsForType(typeId);
-        this.getCollectionGroupsByType(typeId);
-        this.getAllTypes();
-      } else {
-        this.getAllCollections();
-        this.getAllSubjects();
-        this.getAllCollectionGroups();
-        this.getAllTypes();
-      }
+      console.log('all')
+      // all
+      this.getAllCollections();
+      this.getAllSubjects();
+      this.getAllCollectionGroups();
+      this.getAllTypes();
     }
   }
 
-  getAllAreas(): void {
+  //   if (groupId) {
+  //     // Category lookups are provided with types and areas. This provides and
+  //     // option for lookups by administrative units (e.g. HFMA or Archives).
+  //     if (typeId) {
+  //       if (areaId) {
+  //         this.getCollectionsForCategoryAreaType(groupId, areaId, typeId);
+  //         this.getSubjectsForAreaType(areaId, typeId);
+  //         this.getTypesForArea(areaId);
+  //       } else {
+  //         this.getCollectionsForCategoryType(groupId, typeId);
+  //         this.getSubjectsForType(typeId);
+  //         this.getAllTypes();
+  //       }
+  //     } else if (subjectId) {
+  //       this.
+  //     } else if (areaId) {
+  //       this.getCollectionsForCategoryArea(groupId, areaId);
+  //       this.getSubjectsForAreaGroup(areaId, groupId);
+  //       this.getTypesForAreaGroup(areaId, groupId);
+  //     }
+  //   } else if (areaId) {
+  //     // Area lookups can be by subject, type, or all collections in an area.
+  //     if (subjectId) {
+  //       if (typeId) {
+  //         this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
+  //         this.getCollectionGroupsBySubjectType(subjectId, typeId);
+  //         this.getSubjectsForAreaType(areaId, typeId);
+  //       } else {
+  //         this.getCollectionsForAreaSubject(areaId, subjectId);
+  //         this.getCollectionGroupsBySubject(subjectId);
+  //         this.getSubjectsForArea(areaId);
+  //       }
+  //       this.getTypesForAreaSubject(areaId, subjectId);
+  //     } else {
+  //       if (typeId) {
+  //         this.getCollectionsForAreaType(areaId, typeId);
+  //         this.getSubjectsForAreaType(areaId, typeId);
+  //         this.getCollectionGroupsByType(typeId);
+  //       } else {
+  //         this.getCollectionsForArea(areaId);
+  //         this.getSubjectsForArea(areaId);
+  //         this.getCollectionGroupsByArea(areaId);
+  //       }
+  //       this.getTypesForArea(areaId);
+  //     }
+  //   } else if (subjectId) {
+  //     // Subject lookups can be by type or all collections.
+  //     if (typeId) {
+  //       this.getCollectionsForTypeSubject(typeId, subjectId);
+  //       this.getSubjectsForType(typeId);
+  //       this.getCollectionGroupsBySubjectType(subjectId, typeId);
+  //     } else {
+  //       this.getCollectionsForSubject(subjectId);
+  //       this.getAllSubjects();
+  //       this.getCollectionGroupsBySubject(subjectId);
+  //     }
+  //     this.getTypesForSubject(subjectId);
+  //   } else {
+  //     // Type lookup (with fallback to all collections if type is missing.)
+  //     if (typeId) {
+  //       this.getCollectionsForType(typeId);
+  //       this.getSubjectsForType(typeId);
+  //       this.getCollectionGroupsByType(typeId);
+  //       this.getAllTypes();
+  //     } else {
+  //       this
+  //         .getAllCollections();
+  //
+  //       this
+  //         .getAllSubjects();
+  //
+  //       this
+  //         .getAllCollectionGroups();
+  //
+  //       this
+  //         .getAllTypes();
+  //     }
+  //   }
+  // }
+
+  public getAllAreas(): void {
     this.store.dispatch(new areaActions.AreaListAction());
   }
 
-  getAreasByType(typeId: string): void {
+  public getAreasByType(typeId: string): void {
     this.store.dispatch(new areaActions.AreaListByType(typeId))
   }
 
-  getAreasBySubject(subjectId: string): void {
+  public getAreasBySubject(subjectId: string): void {
     this.store.dispatch(new areaActions.AreaListBySubject(subjectId));
   }
 
-  getAreasByTypeAndSubject(typeId: string, subjectId: string): void {
+  public  getAreasByTypeAndSubject(typeId: string, subjectId: string): void {
     const parameters: AreaParams = {typeId: typeId, subjectId: subjectId};
     this.store.dispatch(new areaActions.AreaListByTypeSubject(parameters));
   }
@@ -125,11 +242,21 @@ export class DispatchService {
     this.store.dispatch(new subjectAction.SubjectsForTypes(typeId));
   }
 
+  private getSubjectsForAreaGroupType(areaId, groupId, typeId): void {
+    const params = {
+      areaId: areaId,
+      groupId: groupId,
+      subjectId: null,
+      typeId: typeId
+    };
+    this.store.dispatch(new subjectAction.SubjectsForAreaGroupType(params))
+  }
+
   private getSubjectsForAreaType(areaId: string, typeId: string): void {
     const params = {
       areaId: areaId,
       typeId: typeId,
-      groupId: ''
+      groupId: null
     };
     this.store.dispatch(new subjectAction.SubjectsForAreaTypes(params));
   }
@@ -138,9 +265,10 @@ export class DispatchService {
     const params = {
       areaId: areaId,
       groupId: groupId,
-      subjectId: ''
+      subjectId: null,
+      typeId: null
     };
-    this.store.dispatch(new typeActions.ContentTypesSubjectGroupAction(params))
+    this.store.dispatch(new subjectAction.SubjectsForAreaGroup(params))
   }
 
   private getAllTypes() {
@@ -159,9 +287,8 @@ export class DispatchService {
     const params = {
       areaId: areaId,
       groupId: groupId,
-      subjectId: ''
+      subjectId: null
     };
-    console.log(params)
     this.store.dispatch(new typeActions.ContentTypesAreaGroupAction(params))
   }
 
@@ -217,7 +344,9 @@ export class DispatchService {
   }
 
   private getCollectionsForTypeSubject(typeId: string, subjectId: string): void { // TS
-    const params: TypeAreaSubjectParams = {
+    const params
+      :
+      TypeAreaSubjectParams = {
       areas: [],
       types: typeId.split(','),
       subjects: subjectId
@@ -226,7 +355,9 @@ export class DispatchService {
   }
 
   private getCollectionsForAreaType(areaId: string, typeId: string): void { // AT
-    const params: TypeAreaSubjectParams = {
+    const params
+      :
+      TypeAreaSubjectParams = {
       areas: areaId.split(','),
       types: typeId.split(','),
       subjects: ''
@@ -254,7 +385,9 @@ export class DispatchService {
   }
 
   private getCollectionsForTypeAreaSubject(areaId: string, typeId: string, subjectId: string): void { // AST
-    const params: TypeAreaSubjectParams = {
+    const params
+      :
+      TypeAreaSubjectParams = {
       areas: areaId.split(','),
       types: typeId.split(','),
       subjects: subjectId
@@ -269,11 +402,11 @@ export class DispatchService {
     this.store.dispatch(new listActions.CollectionsCategoryAreaTypeAction(categoryId, areaId, typeId))
   }
 
-  private getCollectionsForCategoryAreaSubject(categoryId: string, areaId: string, typeId: string) { // ASG
+  private getCollectionsForCategoryAreaSubject(categoryId: string, areaId: string, subjectId: string) { // ASG
     if (!this.navigation.isAreaSelected(areaId)) {
       areaId = '0';
     }
-    this.store.dispatch(new listActions.CollectionsCategoryAreaSubjectAction(categoryId, areaId, typeId))
+    this.store.dispatch(new listActions.CollectionsCategoryAreaSubjectAction(categoryId, areaId, subjectId))
   }
 
   private getCollectionsForCategoryTypeSubject(categoryId: string, areaId: string, typeId: string) { // TSG
@@ -333,7 +466,9 @@ export class DispatchService {
    * @param areaId
    */
   private getAreaInformation(areaId: string): void {
-    if (!this.navigation.isAreaSelected(areaId)) {
+    if (!
+      this.navigation.isAreaSelected(areaId)
+    ) {
       areaId = '0';
     }
     this.store.dispatch(new areaActions.AreaInformation(areaId));

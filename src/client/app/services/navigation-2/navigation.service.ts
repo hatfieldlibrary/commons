@@ -81,8 +81,33 @@ export class NavigationServiceB {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
+        'category', groupId,
         'area', areaId,
         'type', typeId,
+        'subject', subjectId
+      ]);
+    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(subjectId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'category', groupId,
+        'type', typeId,
+        'subject', subjectId
+      ]);
+    } else if (this.isFieldSelected(areaId) && this.isFieldSelected(typeId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'category', groupId,
+        'area', areaId,
+        'type', typeId
+      ]);
+    } else if (this.isFieldSelected(areaId) && this.isFieldSelected(subjectId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'category', groupId,
+        'area', areaId,
         'subject', subjectId
       ]);
     } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId)) {
@@ -93,15 +118,7 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ]);
-    } else if (this.isFieldSelected(groupId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
-        'collection',
-        'area', areaId,
-        'type', typeId,
-        'subject', subjectId
-      ]);
-    } else if (this.isFieldSelected(groupId) && this.isFieldSelected(areaId)) {
+    }  else if (this.isFieldSelected(groupId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',

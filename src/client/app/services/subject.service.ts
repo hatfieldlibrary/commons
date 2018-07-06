@@ -46,4 +46,13 @@ export class SubjectService {
       + '/subject/area/' + areaId + '/type/' + typeId);
   }
 
+  getSubjectsForAreaGroupAndType(areaId: string, groupId: string, typeId: string): Observable<SubjectType[]> {
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot
+      + '/subject/area/' + areaId + '/category/' + groupId + '/type/' + typeId);
+  }
+
+  getSubjectsForAreaAndGroup(areaId: string, groupId: string): Observable<SubjectType[]> {
+    return this.http.get<SubjectType[]>(environment.apiHost + environment.apiRoot
+      + '/subject/area/' + areaId + '/category/' + groupId);
+  }
 }

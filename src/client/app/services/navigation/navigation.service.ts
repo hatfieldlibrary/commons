@@ -80,16 +80,54 @@ export class NavigationService {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
+        'category', groupId,
         'area', areaId,
         'type', typeId,
+        'subject', subjectId
+      ]);
+    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(subjectId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'category', groupId,
+        'type', typeId,
+        'subject', subjectId
+      ]);
+    } else if (this.isFieldSelected(areaId) && this.isFieldSelected(typeId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'category', groupId,
+        'area', areaId,
+        'type', typeId
+      ]);
+    } else if (this.isFieldSelected(areaId) && this.isFieldSelected(subjectId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'category', groupId,
+        'area', areaId,
         'subject', subjectId
       ]);
     } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
+        'category', groupId,
+        'subject', subjectId
+      ]);
+    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
+        'category', groupId,
+        'type', typeId
+      ]);
+    } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(groupId)) {
+      this.router.navigate(['/',
+        this.urlRootPath,
+        'collection',
         'area', areaId,
-        'type', typeId,
         'subject', subjectId
       ]);
     } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(areaId)) {

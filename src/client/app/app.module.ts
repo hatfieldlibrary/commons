@@ -131,6 +131,14 @@ export const appRoutes = [
     path: environment.appRoot + '/collection/area/:areaId/type/:typeId/subject/:subjectId',
     component: ListsContainerComponent
   },
+  {
+    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/type/:typeId/subject/:subjectId',
+    component: ListsContainerComponent
+  },
+  {
+    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/subject/:subjectId',
+    component: ListsContainerComponent
+  },
   {path: environment.appRoot + '/collection/category/:categoryId/type/:typeId', component: ListsContainerComponent},
   {
     path: environment.appRoot + '/collection/category/:categoryId/subject/:subjectId',

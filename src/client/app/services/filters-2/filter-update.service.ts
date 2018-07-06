@@ -107,18 +107,14 @@ export class FilterUpdateServiceB {
                             groupId: number): CollectionGroupType[] {
     this.selectedGroups = selectedGroups;
     this.groupList = groupList;
-    console.log(groupList)
-    console.log(selectedGroups)
     // Get area filter information for the selected areaId.
     const selectedGroup: CollectionGroupType = this.getSelectedGroupObject(groupId);
     if (selectedGroup) {
-      console.log(selectedGroup)
       // Update selectedAreas.
       this.updateSelectedGroups(selectedGroup, groupId);
       // Make sure the default id: '0' does not creep in!
       this.removeDefaultCollections(this.GROUP_KEY);
       // Update the store.
-      console.log(this.selectedGroups)
       this.store.dispatch(new SetGroupFilter(this.selectedGroups));
       return this.selectedGroups;
     }
