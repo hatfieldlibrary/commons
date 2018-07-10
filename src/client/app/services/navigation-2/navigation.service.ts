@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
+import {s} from '@angular/core/src/render3';
 
 @Injectable()
 export class NavigationServiceB {
@@ -161,31 +162,47 @@ export class NavigationServiceB {
     return (typeof areaId !== 'undefined') && (areaId.length > 0) && (areaId !== '0');
   }
 
+  // TODO Review conditions for next 3 methods... can we get by with less?
+
   public isSubjectSelected(subjectId: string): boolean {
-    return (typeof subjectId !== 'undefined') && (subjectId.length) !== 0 && (subjectId !== '0');
+    return (typeof subjectId !== 'undefined') && (subjectId !== null) && (subjectId.length) !== 0 && (subjectId !== '0');
   }
 
   public isTypeSelected(typeId: string): boolean {
-    return (typeof typeId !== 'undefined') && (typeId.length) !== 0 && (typeId !== '0');
+    return (typeof typeId !== 'undefined') && (typeId !== null) && (typeId.length) !== 0 && (typeId !== '0');
   }
 
   public isFieldSelected(id: string): boolean {
-    return (typeof id !== 'undefined') && (id.length) !== 0 && (id !== '0');
+    return (typeof id !== 'undefined') && (id !== null) && (id.length) !== 0 && (id !== '0');
   }
 
-  private _handleAreaBackLinks(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
-    if (this.isSubjectSelected(selectedSubject) && selectedTypes) {
+  private _handleAreaBackLinks(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
+    if (this.isSubjectSelected(selectedSubject) && selectedTypes && selectedGroup) {
+
+      return this._areaGroupSubjectTypeLink(selectedArea, selectedGroup, selectedSubject, selectedTypes);
+    } else if (selectedGroup && selectedTypes) {
+
+      return this._areaGroupTypeLink(selectedArea, selectedGroup, selectedTypes);
+    } else if (this.isSubjectSelected(selectedSubject) && selectedGroup) {
+
+      return this._areaGroupSubjectLink(selectedArea, selectedGroup, selectedSubject);
+    } else if (this.isSubjectSelected(selectedSubject) && this.isTypeSelected(selectedTypes)) {
+
       return this._areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
-    } else if (this.isSubjectSelected(selectedSubject)) {
-      return this._areaSubjectLink(selectedArea, selectedSubject);
-    } else if (this.isTypeSelected(selectedTypes)) {
+    }  else if (this.isTypeSelected(selectedTypes)) {
+
       return this._areaTypeLink(selectedArea, selectedTypes);
+    } else if (this.isSubjectSelected(selectedSubject)) {
+      return this._areaSubjectLink(selectedArea, selectedSubject)
+    } else if (selectedGroup) {
+      return this._areaGroupLink(selectedArea, selectedGroup)
     } else {
       return this._areaLink(selectedArea);
     }
   }
 
-  private _handleGlobalBackLinks(selectedSubject: string, selectedTypes: string): string {
+  // currently unused.
+  private _handleGlobalBackLinks(selectedSubject: string, selectedGroup: string, selectedTypes: string): string {
     if (this.isSubjectSelected(selectedSubject) && selectedTypes) {
       return this._globalSubjectTypeLink(selectedSubject, selectedTypes);
     } else if (this.isSubjectSelected(selectedSubject)) {
@@ -195,6 +212,41 @@ export class NavigationServiceB {
     } else {
       return this._globalLink();
     }
+  }
+
+  private _areaGroupSubjectTypeLink(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
+    return '/' + this.urlRootPath +
+      `/collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
+  }
+
+  private _areaGroupSubjectLink(selectedArea: string, selectedGroup: string, selectedSubject: string): string {
+    return '/' + this.urlRootPath +
+      `/collection/category/${selectedGroup}/area/${selectedArea}/subject/${selectedSubject}`;
+  }
+
+  private _areaGroupTypeLink(selectedArea: string, selectedGroup: string, selectedTypes: string): string {
+    return '/' + this.urlRootPath +
+      `/collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}`;
+  }
+
+  private _areaGroupLink(selectedArea: string, selectedGroup: string): string {
+    return '/' + this.urlRootPath +
+      `/collection/category/${selectedGroup}/area/${selectedArea}`;
+  }
+
+  private _groupTypeLink(selectedGroup: string, selectedTypes: string): string {
+    return '/' + this.urlRootPath +
+      `/collection/category/${selectedGroup}/type/${selectedTypes}`;
+  }
+
+  private _groupSubjectLink(selectedGroup: string, selectedSubject: string): string {
+    return '/' + this.urlRootPath +
+      `/collection/category/${selectedGroup}/subject/${selectedSubject}`;
+  }
+
+  private _groupLink(selectedGroup: string): string {
+    return '/' + this.urlRootPath +
+      `/collection/category/${selectedGroup}`;
   }
 
   private _areaSubjectTypeLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
@@ -229,11 +281,12 @@ export class NavigationServiceB {
     return '/' +  this.urlRootPath + `/collection}/subject/${selectedSubject}/type/${selectedTypes}`;
   }
 
-  getBackLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
+  // the zero area (global search) is handled here.  However, global search currently not implemented in app.
+  getBackLink(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
     if (selectedArea && selectedArea !== '0') {
-      return this._handleAreaBackLinks(selectedArea, selectedSubject, selectedTypes);
+      return this._handleAreaBackLinks(selectedArea, selectedGroup, selectedSubject, selectedTypes);
     } else if (selectedArea === '0') {
-      return this._handleGlobalBackLinks(selectedSubject, selectedTypes);
+      return this._handleGlobalBackLinks(selectedSubject, selectedGroup, selectedTypes);
     }
   }
 

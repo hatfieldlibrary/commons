@@ -82,7 +82,9 @@ app-area-banner {
   text-decoration: none;
 }
 .side-container {
-  margin-top: 0px;
+  margin-top: 8px;
+  background: #ffffff75;
+  padding-top: 16px;
 }
 .side-nav-header {
   margin: 0 6px 0 16px;

@@ -76,7 +76,7 @@ export class RemoveSubjectFilter implements Action {
  */
 export class SetTypeFilter implements Action {
   public type = FilterActionTypes.SET_TYPE_FILTER;
-  constructor(public payload: TypesFilterType[]) {}
+  constructor(public payload: TypesFilterType[]) {console.log(payload)}
 }
 
 /**

@@ -73,8 +73,8 @@ export class SubjectEffects {
 
   @Effect()
   subjectsForAreaTypeGroupEffect$: Observable<Action> = this.actions$
-    .ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE)
-    .map((action: subjects.SubjectsForAreaTypes) => action.payload)
+    .ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA_TYPE)
+    .map((action: subjects.SubjectsForAreaGroupType) => action.payload)
     .switchMap(payload => this.svc.getSubjectsForAreaGroupAndType(payload.areaId, payload.groupId, payload.typeId))
     .map(res => new subjects.SubjectActionSuccess(res))
     .catch(err => Observable.of(new subjects.SubjectActionFailed(err)));

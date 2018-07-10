@@ -11,21 +11,22 @@ import {AreaSubjectInterface} from './area-subject.interface';
 export const GroupActionTypes = {
 
   ALL_GROUP_REQUEST: type('[Group] Request Group.'),
-  ALL_GROUP_REQUEST_SUCCESS: type('[Group] Request Group Success.'),
+//  ALL_GROUP_REQUEST_SUCCESS: type('[Group] Request Group Success.'),
   GROUPS_BY_AREA: type('[Group] Group by Area'),
-  GROUPS_BY_AREA_SUCCESS: type('[Group] Group by Area Success'),
+//  GROUPS_BY_AREA_SUCCESS: type('[Group] Group by Area Success'),
   GROUPS_BY_TYPE: type('[Group] Group by Type'),
-  GROUPS_BY_TYPE_SUCCESS: type('[Group] Group by Type Success'),
+//  GROUPS_BY_TYPE_SUCCESS: type('[Group] Group by Type Success'),
   GROUPS_BY_SUBJECT: type('[Group] Group by Subject'),
-  GROUPS_BY_SUBJECT_SUCCESS: type('[Group] Group by Subject Success'),
+//  GROUPS_BY_SUBJECT_SUCCESS: type('[Group] Group by Subject Success'),
   GROUPS_BY_SUBJECT_TYPE: type('[Group] Group by Subject Type'),
-  GROUPS_BY_SUBJECT_TYPE_SUCCESS: type('[Group] Group by Subject Type Success'),
+//  GROUPS_BY_SUBJECT_TYPE_SUCCESS: type('[Group] Group by Subject Type Success'),
   GROUPS_BY_AREA_TYPE: type('[Group] Group by Area Type'),
-  GROUPS_BY_AREA_TYPE_SUCCESS: type('[Group] Group by Area Type Success'),
+//  GROUPS_BY_AREA_TYPE_SUCCESS: type('[Group] Group by Area Type Success'),
   GROUPS_BY_AREA_SUBJECT: type('[Group] Group by Area Subject'),
-  GROUPS_BY_AREA_SUBJECT_SUCCESS: type('[Group] Group by Area Subject Success'),
+//  GROUPS_BY_AREA_SUBJECT_SUCCESS: type('[Group] Group by Area Subject Success'),
   GROUPS_BY_AREA_SUBJECT_TYPE: type('[Group] Group by Area Subject Type'),
-  GROUPS_BY_AREA_SUBJECT_TYPE_SUCCESS: type('[Group] Group by Area Subject Type Success'),
+//  GROUPS_BY_AREA_SUBJECT_TYPE_SUCCESS: type('[Group] Group by Area Subject Type Success'),
+  GROUPS_ACTION_SUCCESS: type('[Group] Group Action Success'),
   REQUEST_FAILED: type('[Group] Request Failed'),
   GROUP_LIST_RESET: type('[Group] Reset the Group List to Empty'),
 
@@ -44,41 +45,40 @@ export class AllGroupsAction implements Action {
   constructor() {}
 }
 
-export class AllGroupsActionSuccess implements Action {
-  type = GroupActionTypes.ALL_GROUP_REQUEST_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {
-  }
-}
+// export class AllGroupsActionSuccess implements Action {
+//   type = GroupActionTypes.ALL_GROUP_REQUEST_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {
+//   }
+// }
 
 export class GroupsByArea implements Action {
   type = GroupActionTypes.GROUPS_BY_AREA;
   constructor(public payload: string) {}
 }
 
-export class GroupsByAreaSuccess implements Action {
-  type = GroupActionTypes.GROUPS_BY_AREA_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {}
-}
+// export class GroupsByAreaSuccess implements Action {
+//   type = GroupActionTypes.GROUPS_BY_AREA_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {}
+// }
 
 export class GroupsByType implements Action {
   type = GroupActionTypes.GROUPS_BY_TYPE;
   constructor(public payload: string) {}
 }
 
-export class GroupsByTypeSuccess implements Action {
-  type = GroupActionTypes.GROUPS_BY_TYPE_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {}
-}
+// export class GroupsByTypeSuccess implements Action {
+//   type = GroupActionTypes.GROUPS_BY_TYPE_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {}
+// }
 
 export class GroupsBySubject implements Action {
   type = GroupActionTypes.GROUPS_BY_SUBJECT;
   constructor(public payload: string) {}
 }
-
-export class GroupsBySubjectSuccess implements Action {
-  type = GroupActionTypes.GROUPS_BY_SUBJECT_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {}
-}
+// export class GroupsBySubjectSuccess implements Action {
+//   type = GroupActionTypes.GROUPS_BY_SUBJECT_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {}
+// }
 
 export class GroupsBySubjectType implements Action {
   type = GroupActionTypes.GROUPS_BY_SUBJECT_TYPE;
@@ -91,10 +91,10 @@ export class GroupsBySubjectType implements Action {
   }
 }
 
-export class GroupsBySubjectTypeSuccess implements Action {
-  type = GroupActionTypes.GROUPS_BY_SUBJECT_TYPE_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {}
-}
+// export class GroupsBySubjectTypeSuccess implements Action {
+//   type = GroupActionTypes.GROUPS_BY_SUBJECT_TYPE_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {}
+// }
 
 export class GroupsByAreaType implements Action {
   type = GroupActionTypes.GROUPS_BY_AREA_TYPE;
@@ -107,10 +107,10 @@ export class GroupsByAreaType implements Action {
   }
 }
 
-export class GroupsByAreaTypeSuccess implements Action {
-  type = GroupActionTypes.GROUPS_BY_AREA_TYPE_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {}
-}
+// export class GroupsByAreaTypeSuccess implements Action {
+//   type = GroupActionTypes.GROUPS_BY_AREA_TYPE_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {}
+// }
 
 export class GroupsByAreaSubject implements Action {
   type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT;
@@ -123,10 +123,10 @@ export class GroupsByAreaSubject implements Action {
   }
 }
 
-export class GroupsByAreaSubjectSuccess implements Action {
-  type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {}
-}
+// export class GroupsByAreaSubjectSuccess implements Action {
+//   type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {}
+// }
 
 export class GroupsByAreaSubjectType implements Action {
   type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE;
@@ -140,10 +140,15 @@ export class GroupsByAreaSubjectType implements Action {
   }
 }
 
-export class GroupsByAreaSubjectTypeSuccess implements Action {
-  type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE_SUCCESS;
+export class GroupActionSuccess implements Action {
+  type = GroupActionTypes.GROUPS_ACTION_SUCCESS;
   constructor(public payload: CollectionGroupType[]) {}
 }
+
+// export class GroupsByAreaSubjectTypeSuccess implements Action {
+//   type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE_SUCCESS;
+//   constructor(public payload: CollectionGroupType[]) {}
+// }
 
 export class GroupActionFailed implements Action {
   type = GroupActionTypes.REQUEST_FAILED;
@@ -156,21 +161,22 @@ export class GroupActionFailed implements Action {
 export type CollectionGroupActions =
   GroupsReset |
   AllGroupsAction |
-  AllGroupsActionSuccess |
+  // AllGroupsActionSuccess |
   GroupsByArea |
-  GroupsByAreaSuccess |
+  // GroupsByAreaSuccess |
   GroupsByType |
-  GroupsByTypeSuccess |
+ // GroupsByTypeSuccess |
   GroupsBySubject |
-  GroupsBySubjectSuccess |
+ // GroupsBySubjectSuccess |
   GroupsBySubjectType |
-  GroupsBySubjectTypeSuccess |
+ // GroupsBySubjectTypeSuccess |
   GroupsByAreaSubjectType |
-  GroupsByAreaSubjectTypeSuccess |
+//  GroupsByAreaSubjectTypeSuccess |
   GroupsByAreaType |
-  GroupsByAreaTypeSuccess |
+ // GroupsByAreaTypeSuccess |
   GroupsByAreaSubject |
-  GroupsByAreaSubjectSuccess |
+ // GroupsByAreaSubjectSuccess |
+  GroupActionSuccess |
   GroupActionFailed;
 
 

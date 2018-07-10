@@ -69,8 +69,8 @@ export class SetSelectedService {
         if (selectedSubs.length > 0) {
           this.store.dispatch(new filterActions.SetSubjectFilter(selectedSubs));
         }
-        this.watchers.add(subsWatcher);
       });
+      this.watchers.add(subsWatcher);
     } else {
       this.store.dispatch(new filterActions.SetSubjectFilter([{id: 0, name: ''}]))
     }
@@ -99,8 +99,8 @@ export class SetSelectedService {
         } else {
           this.store.dispatch(new filterActions.SetAreaFilter([{id: 0, title: '', count: 0}]));
         }
-        this.watchers.add(areasWatcher);
       });
+      this.watchers.add(areasWatcher);
     } else {
       this.store.dispatch(new filterActions.SetAreaFilter([{id: 0, title: '', count: 0}]))
     }
@@ -114,22 +114,27 @@ export class SetSelectedService {
    * @param {string} typeId comma separated string of area ids.
    */
   setSelectedTypes(typeId: string): void {
+
     if (typeId) {
       const typesWatcher = this.types$.subscribe((types) => {
         const filtersArr = typeId.split(',');
         const selectedTypes: TypesFilterType[] = [];
         filtersArr.forEach(function (singleTypeId) {
+          console.log(typeId)
+          console.log(singleTypeId )
           const selected = types.find((type) => type.id === +singleTypeId);
           if (selected) {
             selectedTypes.push(selected);
           }
         });
+        console.log(selectedTypes)
         if (selectedTypes.length > 0) {
           this.store.dispatch(new filterActions.SetTypeFilter(selectedTypes));
         }
-        this.watchers.add(typesWatcher);
       });
+      this.watchers.add(typesWatcher);
     } else {
+      console.log('setting selected type to 0')
       this.store.dispatch(new filterActions.SetTypeFilter([{id: 0, name: ''}]))
     }
   }
@@ -142,14 +147,11 @@ export class SetSelectedService {
    * @param {string} groupId comma separated string of area ids.
    */
   setSelectedGroups(groupId: string): void {
-    console.log(groupId)
     if (groupId) {
       const groupsWatcher = this.groups$.subscribe((groups) => {
-        console.log(groups)
         const groupArr = groupId.split(',');
         const selectedGroups: CollectionGroupType[] = [];
         groupArr.forEach(function (singleGroupId) {
-          console.log(singleGroupId)
           const selected = groups.find((grp) => grp.id === +singleGroupId);
           if (selected) {
             selectedGroups.push(selected);
@@ -160,8 +162,8 @@ export class SetSelectedService {
         } else {
           this.store.dispatch(new filterActions.SetGroupFilter([{id: 0, name: ''}]));
         }
-        this.watchers.add(groupsWatcher);
       });
+      this.watchers.add(groupsWatcher);
     } else {
       this.store.dispatch(new filterActions.SetGroupFilter([{id: 0, name: ''}]))
     }
@@ -169,6 +171,7 @@ export class SetSelectedService {
 
 
   unsubscribe(): void {
+    console.log('UNSUBSCRIBE')
     this.watchers.unsubscribe();
   }
 }

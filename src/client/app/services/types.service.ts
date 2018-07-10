@@ -39,4 +39,12 @@ export class TypesService {
       + params.groupId);
 
   }
+
+  getTypesAreaGroupSubject(params: TypesFilterInterface): Observable<TypesFilterType[]> {
+    return this.http.get<TypesFilterType[]>(environment.apiHost
+      + environment.apiRoot + '/type/area/'
+      + params.areaId + '/category/'
+      + params.groupId + '/subject/' + params.subjectId);
+
+  }
 }

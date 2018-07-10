@@ -30,6 +30,7 @@
   color:#f7eda0;
   font-size: 1.2em;
   margin-right: 35px;
+  white-space: nowrap;
 }
 .highlight  {
   color: #e6b726;

@@ -38,6 +38,7 @@
 
       <app-area-banner [areaInfo]="areaInfo$ | async"
                        [filters]="filters$ | async"
+                       [areas]="areasFilter$ | async"
                        (removeFilter)="removeFilter($event)"></app-area-banner>
     </div>
   </div>

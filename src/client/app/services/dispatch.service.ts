@@ -12,6 +12,8 @@ import {TypeAreaSubjectParams} from '../actions/type-area-subject-parameters.int
 import {NavigationService} from './navigation/navigation.service';
 import {NavigationServiceB} from './navigation-2/navigation.service';
 import {TypesFilterInterface} from '../actions/type.actions';
+import {ContentTypesAreaSubjectGroupAction} from '../actions/type.actions';
+import {CollectionReset} from '../actions/collection.actions';
 
 /**
  * This class handles all store dispatch requests for the application.
@@ -26,10 +28,8 @@ export class DispatchService {
   dispatchActions(areaId: string, typeId: string, subjectId: string, groupId: string): void {
     this.getAreaInformation(areaId);
 
-    console.log(areaId)
-    console.log(typeId)
-    console.log(subjectId)
-    console.log(groupId)
+    // Empty collection reducer; prevents animation flicker.
+    this.store.dispatch(new listActions.CollectionReset());
 
     if (areaId) {
       if (groupId) {
@@ -37,11 +37,17 @@ export class DispatchService {
           if (typeId) {
             console.log('area, grp, subject, type')
             // area, grp, subject, type
+            this.getCollectionsForCategoryAreaTypeSubject(groupId, areaId, typeId, subjectId);
+            this.getSubjectsForAreaGroupType(areaId, groupId, typeId);
+            this.getTypesForAreaGroupSubject(areaId, groupId, subjectId);
+            this.getCollectionGroupsByAreaSubjectType(areaId, subjectId, typeId);
           } else {
             console.log('area, grp, subject')
             // area, grp, subject
             this.getCollectionsForCategoryAreaSubject(groupId, areaId, subjectId);
-
+            this.getSubjectsForAreaGroup(areaId, groupId);
+            this.getTypesForAreaGroupSubject(areaId, groupId, subjectId);
+            this.getCollectionGroupsByAreaSubject(areaId, subjectId);
           }
         } else if (typeId) {
           console.log('area, grp, type')
@@ -49,19 +55,21 @@ export class DispatchService {
           this.getCollectionsForCategoryAreaType(groupId, areaId, typeId);
           this.getSubjectsForAreaGroupType(areaId, groupId, typeId);
           this.getTypesForAreaGroup(areaId, groupId);
+          this.getCollectionGroupsByAreaType(areaId, typeId);
         } else {
           console.log('area, grp')
           // area, grp
           this.getCollectionsForCategoryArea(groupId, areaId);
           this.getSubjectsForAreaGroup(areaId, groupId);
           this.getTypesForAreaGroup(areaId, groupId);
+          this.getCollectionGroupsByArea(areaId);
         }
       } else if (subjectId) {
         if (typeId) {
           console.log('area, subject type')
           // area, subject type
           this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
-          this.getCollectionGroupsBySubjectType(subjectId, typeId);
+          this.getCollectionGroupsByAreaSubjectType(areaId, subjectId, typeId);
           this.getSubjectsForAreaType(areaId, typeId);
         } else {
           console.log('area, subject')
@@ -427,10 +435,6 @@ export class DispatchService {
     this.store.dispatch(new groupActions.AllGroupsAction());
   }
 
-  private getCollectionGroupsByAreaSubject(areaId: string, subjectId: string) {
-    this.store.dispatch(new groupActions.GroupsByAreaSubject(areaId, subjectId));
-  }
-
   private getCollectionGroupsByAreaType(areaId: string, typeId: string) {
     this.store.dispatch(new groupActions.GroupsByAreaType(areaId, typeId));
   }
@@ -447,6 +451,10 @@ export class DispatchService {
     this.store.dispatch(new groupActions.GroupsBySubject(id));
   }
 
+  private getCollectionGroupsByAreaSubject(areaId: string, subjectId) { // GS
+    this.store.dispatch(new groupActions.GroupsByAreaSubject(areaId, subjectId));
+  }
+
   private getCollectionGroupsByAreaSubjectType(areaId: string, subjectId: string, typeId: string) {
     this.store.dispatch(new groupActions.GroupsByAreaSubjectType(areaId, subjectId, typeId));
   }
@@ -455,9 +463,18 @@ export class DispatchService {
     this.store.dispatch(new groupActions.GroupsByArea(id));
   }
 
+  // private getCollectionGroupsForAreaTypeSubject(areaId: string, typeId: string, subjectId: string) {
+  //   this.store.dispatch(new groupActions.GroupsByAreaSubjectType(areaId, typeId, subjectId));
+  // }
+
   private getTypesForAreaSubject(areaId: string, subjectId: string) {
     const requestParams: TypesFilterInterface = {areaId: areaId, subjectId: subjectId, groupId: ''};
     this.store.dispatch(new typeActions.ContentTypesAreaSubjectAction(requestParams));
+  }
+
+  private getTypesForAreaGroupSubject(areaId: string, groupId, subjectId: string) {
+    const requestParams: TypesFilterInterface = {areaId: areaId, subjectId: subjectId, groupId: groupId};
+    this.store.dispatch(new typeActions.ContentTypesAreaSubjectGroupAction(requestParams));
   }
 
   /**

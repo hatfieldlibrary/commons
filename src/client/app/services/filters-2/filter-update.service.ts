@@ -77,7 +77,8 @@ export class FilterUpdateServiceB {
       // Make sure the default id: '0' does not creep in!
       this.removeDefaultCollections(this.TYPE_KEY);
       // Update the store.
-      this.store.dispatch(new SetTypeFilter(this.selectedTypes));
+      console.log(selectedTypes)
+      this.store.dispatch(new SetTypeFilter(selectedTypes));
       return this.selectedTypes;
     }
   }

@@ -11,6 +11,7 @@ import 'rxjs/add/operator/filter';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {SubjectType} from '../../shared/data-types/subject.type';
 import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
 
 @Component({
   selector: 'app-menus-component',
@@ -24,6 +25,7 @@ export class AppMenusComponent implements OnDestroy {
   @Input() selectedArea: string;
   @Input() selectedSubjects: SubjectType[];
   @Input() selectedTypes: TypesFilterType[];
+  @Input() selectedGroups: CollectionGroupFilter[];
   @Input() showBack: boolean;
   @Input() title: string;
   public previousUrl = '';
@@ -59,7 +61,8 @@ export class AppMenusComponent implements OnDestroy {
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
     const subjectIds = this.navigationService.getIds(this.selectedSubjects);
-    const path = this.navigationService.getBackLink(this.selectedArea, subjectIds, typeIds);
+    const groupIds = this.navigationService.getIds(this.selectedGroups);
+    const path = this.navigationService.getBackLink(this.selectedArea, groupIds, subjectIds, typeIds);
     return path;
   }
 

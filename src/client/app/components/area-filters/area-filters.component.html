@@ -1,6 +1,6 @@
 <div  flex class="chips filter-container" [ngClass]="{'mobile-padding': isMobile}">
   <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="mat-body-2 filter-label" >FILTERS:&nbsp;&nbsp;<span class="mat-caption" style="color: #ccc;" *ngIf="normalizedFilter.length === 0">No filters selected. (Suggestion: filter list by subject or content type.)</span></div>
+    <div class="mat-body-2 filter-label" >FILTERS:&nbsp;&nbsp;<span class="mat-caption" style="color: #ccc;" *ngIf="normalizedFilter.length === 0">No filters selected. (Try filtering by SUBJECTS or CONTENT TYPES).</span></div>
     <mat-chip-list>
       <mat-chip fxLayoutAlign="center center" class="filter-chip"
                 [ngClass]="{'disable-chip': !filter.active}"

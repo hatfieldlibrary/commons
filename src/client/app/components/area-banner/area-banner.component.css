@@ -11,3 +11,21 @@
   padding-left: 16px;
   margin-top: -16px;
 }
+.down-pointer {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid #791716;
+}
+.pointer-container {
+  color: transparent;
+  font-size: 1.2em;
+  margin-right: 35px;
+  white-space: nowrap;
+  padding: 0 16px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.pointer-container span {
+  opacity: 0;
+}

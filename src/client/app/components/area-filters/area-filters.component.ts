@@ -127,10 +127,8 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    * @param id the id of the filter to be removed
    */
   deselect(type, id, active): void {
- //   if (active) {
       const deselected: DeselectedFilter = {type: type, id: id};
       this.removeFilter.emit(deselected);
- //   }
   }
 
   /**

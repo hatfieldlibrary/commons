@@ -6,11 +6,22 @@ import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {Subscription} from 'rxjs/Subscription';
 import {environment} from '../../environments/environment';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-collection-grid',
   templateUrl: './collection-grid.component.html',
-  styleUrls: ['./collection-grid.component.css']
+  styleUrls: ['./collection-grid.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({opacity: '0.5'}),
+        animate('400ms ease-in', style({opacity: '1'})),
+      ]),
+      transition(':leave', [
+        animate(200, style({ opacity: 0 }))
+      ])
+    ])]
 })
 export class CollectionGridComponent implements OnDestroy {
 

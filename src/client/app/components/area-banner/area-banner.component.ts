@@ -12,6 +12,8 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import * as fromFilter from '../../reducers/filter.reducers';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
+import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {AreasFilter} from '../../shared/data-types/areas-filter';
 
 @Component({
   selector: 'app-area-banner',
@@ -27,17 +29,17 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   removeFilter: EventEmitter<any> = new EventEmitter<any>();
   @Input()
   filters: fromFilter.State;
+  @Input()
+  areas: AreasFilter;
   description: string;
   url: string;
   linkLabel: string;
   title: string;
   areaId: any; // initialize with out of range value.
   private watcher: Subscription;
-  isMobile = true;
+  isMobile = false;
 
-  constructor(public media: ObservableMedia) {
-
-  }
+  constructor(public media: ObservableMedia) {}
 
   /**
    * Deselects the filter
@@ -46,6 +48,28 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
    */
   deselect(deselected: DeselectedFilter): void {
     this.removeFilter.emit(deselected);
+  }
+
+  /**
+   * Used by the area form options.
+   * @param {number} id
+   * @returns {boolean}
+   */
+  isSelected(id: number): boolean {
+    if (this.areas.selectedAreas) {
+      return this.getPositionInSelectedList(id) > -1;
+    }
+    return false;
+  }
+
+  /**
+   * Gets the position index in selectedAreas for the area that
+   * matches the provided id.
+   * @param {number} areaId the id of the area
+   * @returns {number}
+   */
+  private getPositionInSelectedList(areaId: number): number {
+    return this.areas.selectedAreas.findIndex((current) => current.id === areaId);
   }
 
   ngOnInit() {

@@ -18,7 +18,9 @@
 
 <app-menus-component [selectedArea]="selectedArea"
                      [selectedTypes]="selectedTypes$ | async"
-                     [selectedSubjects]="selectedSubjects$ | async" [areaList]="areas"
+                     [selectedSubjects]="selectedSubjects$ | async"
+                     [selectedGroups]="selectedGroups$ | async"
+                     [areaList]="areas"
                      [showBack]="true"></app-menus-component>
 
 <app-item-header [item]="item$ | async"></app-item-header>
@@ -60,6 +62,7 @@
             [selectedArea]="selectedArea"
             [selectedTypes]="selectedTypes$ | async"
             [selectedSubjects]="selectedSubjects$ | async"
+            [selectedGroups]="selectedGroups$ | async"
             class="app-item"></app-item>
           <app-related-items [columns]="columns" [related]="related$ | async"
                              [selectedArea]="selectedArea"></app-related-items>

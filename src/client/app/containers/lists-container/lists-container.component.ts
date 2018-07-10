@@ -97,7 +97,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * component or the default home information.
    */
   areaScreen: boolean;
-  notMobile = false;
+  notMobile = true;
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
@@ -210,6 +210,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     if (params['typeId']) {
       this.setSelected.setSelectedTypes(params['typeId']);
     } else {
+      console.log('init: set selected type sto null')
       this.setSelected.setSelectedTypes(null);
     }
     if (params['categoryId']) {
@@ -244,7 +245,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
 
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
-    this.navigation.navigateFilterRoute(areaIds, this.typeId, this.subjectId, this.groupId);
+    this.navigation.navigateFilterRoute(areaIds, null, null, null);
   }
 
   /**

@@ -24,7 +24,7 @@ export function reducer(state = initialState, action: CollectionGroupActions): S
       });
     }
 
-    case GroupActionTypes.ALL_GROUP_REQUEST_SUCCESS: {
+    case GroupActionTypes.GROUPS_ACTION_SUCCESS: {
       const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
       return Object.assign({}, state, {
         groups: result,
@@ -39,26 +39,11 @@ export function reducer(state = initialState, action: CollectionGroupActions): S
       });
     }
 
-    case GroupActionTypes.GROUPS_BY_AREA_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
-      return Object.assign({}, state, {
-        groups: result,
-        loading: false
-      });
-    }
 
     case GroupActionTypes.GROUPS_BY_TYPE: {
       return Object.assign({}, state, {
         groups: [],
         loading: true
-      });
-    }
-
-    case GroupActionTypes.GROUPS_BY_TYPE_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
-      return Object.assign({}, state, {
-        groups: result,
-        loading: false
       });
     }
 
@@ -69,26 +54,10 @@ export function reducer(state = initialState, action: CollectionGroupActions): S
     });
   }
 
-    case GroupActionTypes.GROUPS_BY_SUBJECT_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
-      return Object.assign({}, state, {
-        groups: result,
-        loading: false
-      });
-    }
-
     case GroupActionTypes.GROUPS_BY_SUBJECT_TYPE: {
       return Object.assign({}, state, {
         groups: [],
         loading: true
-      });
-    }
-
-    case GroupActionTypes.GROUPS_BY_SUBJECT_TYPE_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
-      return Object.assign({}, state, {
-        groups: result,
-        loading: false
       });
     }
 
@@ -99,26 +68,10 @@ export function reducer(state = initialState, action: CollectionGroupActions): S
       });
     }
 
-    case GroupActionTypes.GROUPS_BY_AREA_TYPE_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
-      return Object.assign({}, state, {
-        groups: result,
-        loading: false
-      });
-    }
-
     case GroupActionTypes.GROUPS_BY_AREA_SUBJECT: {
       return Object.assign({}, state, {
         groups: [],
         loading: true
-      });
-    }
-
-    case GroupActionTypes.GROUPS_BY_AREA_SUBJECT_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
-      return Object.assign({}, state, {
-        groups: result,
-        loading: false
       });
     }
 
@@ -129,13 +82,6 @@ export function reducer(state = initialState, action: CollectionGroupActions): S
       });
     }
 
-    case GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
-      return Object.assign({}, state, {
-        groups: result,
-        loading: false
-      });
-    }
 
     default:
       return state;

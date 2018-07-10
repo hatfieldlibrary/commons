@@ -1,7 +1,17 @@
-<div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign.sm="center start"fxLayoutGap="40px" fxFlex class="area-info">
+<div style="position: absolute;left: 0; right: 0;" *ngIf="!isMobile">
+  <div fxLayout="row" fxFlex fxLayoutAlign="center start">
+      <div *ngFor="let area of areas.areas" style="color:#fff;" class="pointer-container">
+        <div *ngIf="isSelected(area.id)" class="down-pointer"></div>
+        <span>{{area.title}}</span>
+      </div>
+
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="start start" fxLayoutAlign.sm="center start" fxLayoutGap="40px" fxFlex
+     class="area-info">
 
   <div fxLayout="column"
-       fxFlex.md="1 1 20"
+       fxFlex.md="1 1 5"
        fxFlex.lg="1 1 18"
        fxFlex.gt-lg="1 1 20"
        *ngIf="media.isActive('gt-sm')"></div>
@@ -36,9 +46,6 @@
           (removeFilter)="deselect($event)"></app-area-filters>
       </div>
     </div>
-    <!--<div>-->
-      <!--<span class="mat-card-subtitle" style="color:#eee;">Select from the list to learn more about an item or collection.</span>-->
-    <!--</div>-->
   </div>
 
   <div fxLayout="column"
@@ -53,6 +60,7 @@
         <a mat-raised-button href="{{url}}" target="_top" color="accent">{{linkLabel}}</a></div>
     </div>
   </div>
+
 </div>
 
 
