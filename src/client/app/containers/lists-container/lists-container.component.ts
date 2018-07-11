@@ -22,7 +22,7 @@
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import {Component, OnInit, OnDestroy, ChangeDetectionStrategy, AfterViewInit} from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
 import * as fromRoot from '../../reducers';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
@@ -62,7 +62,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   title: string;
   subtitle: string;
   state = '';
-  toolTipPosition = 'below';
   /**
    * Redux selectors.
    */
@@ -114,17 +113,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param id
    */
   private initializeAreas(params: any) {
-    // if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
-    //   this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
-    // } else if (this.navigation.isTypeSelected(params['typeId']) && this.navigation.isSubjectSelected(params['subjectId'])) {
-    //   this.dispatchService.getAreasByTypeAndSubject(params['typeId'], params['subjectId']);
-    // } else if (this.navigation.isSubjectSelected(params['subjectId'])) {
-    //   this.dispatchService.getAreasBySubject(params['subjectId']);
-    // } else if (this.navigation.isTypeSelected(params['typeId'])) {
-    //   this.dispatchService.getAreasByType(params['typeId']);
-    // } else {
-    //   this.dispatchService.getAllAreas();
-    // }
     this.dispatchService.getAllAreas();
   }
 
@@ -210,7 +198,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     if (params['typeId']) {
       this.setSelected.setSelectedTypes(params['typeId']);
     } else {
-      console.log('init: set selected type sto null')
       this.setSelected.setSelectedTypes(null);
     }
     if (params['categoryId']) {
@@ -277,7 +264,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('init')
     // All local subscriptions are added to this Subscription
     // and removed in ngOnDestroy.
     this.watchers = new Subscription();

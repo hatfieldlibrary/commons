@@ -6,6 +6,7 @@ import {SubjectType} from '../shared/data-types/subject.type';
 import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {CollectionGroupFilter} from '../shared/data-types/collection-group-filter.type';
 import {CollectionGroupType} from '../shared/data-types/collection-group-type';
+import {SubjectActionTypes} from './subject-actions';
 
 export const FilterActionTypes = {
   SET_SEARCH_FILTER: type('[Filters] Set Search Filter'),
@@ -16,8 +17,16 @@ export const FilterActionTypes = {
   SET_DEFAULT_TYPE_FILTER: type('[Filters] Set default type filter'),
   SET_SUBJECT_FILTER: type('[Filters] Set Subject Filter'),
   REMOVE_SUBJECT_FILTER: type('[Filter] Remove Subject Filter'),
-  SET_GROUP_FILTER: type('[Filters] Set filter for collection groups')
+  SET_GROUP_FILTER: type('[Filters] Set filter for collection groups'),
+  REMOVE_SELECTED_SUBJECT: type('[SubjectType] Remove selected subject'),
 };
+
+export class RemoveSelectedSubjects implements Action {
+  type = FilterActionTypes.REMOVE_SELECTED_SUBJECT;
+  constructor(public payload: SubjectType[]) {
+    console.log(payload)
+  }
+}
 
 /**
  * Redux action for setting the current search filter term.
@@ -102,10 +111,11 @@ export class SetGroupFilter implements Action {
  * Union type.
  */
 export type FilterActions =
-  SetSearchFilter
-  | ClearSearchFilter
-  | SetAreaFilter
-  | SetSubjectFilter
-  | RemoveSubjectFilter
-  | SetTypeFilter
-  | SetGroupFilter;
+  SetSearchFilter |
+  RemoveSelectedSubjects |
+  ClearSearchFilter |
+  SetAreaFilter |
+  SetSubjectFilter |
+  RemoveSubjectFilter |
+  SetTypeFilter |
+  SetGroupFilter;

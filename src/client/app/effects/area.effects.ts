@@ -35,7 +35,7 @@ export class AreaEffects {
   areaListEffect$: Observable<Action> = this.actions$
     .ofType(areas.AreaActionTypes.AREA_LIST)
     .switchMap(() => this.svc.getAreaList())
-    .map(res =>   new areas.AreaListActionSuccess(res))
+    .map(res =>   new areas.AreaListSuccess(res))
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
   @Effect()
@@ -43,7 +43,7 @@ export class AreaEffects {
     .ofType(areas.AreaActionTypes.AREA_LIST_SUBJECT)
     .map((action: areas.AreaListByType) => action.payload)
     .switchMap((id) => this.svc.getAreaListBySubject(id))
-    .map(res =>   new areas.AreaListSubjectSuccess(res))
+    .map(res =>   new areas.AreaListSuccess(res))
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
   @Effect()
@@ -51,7 +51,7 @@ export class AreaEffects {
     .ofType(areas.AreaActionTypes.AREA_LIST_TYPE)
     .map((action: areas.AreaListBySubject) => action.payload)
     .switchMap((id) => this.svc.getAreaListByType(id))
-    .map(res =>   new areas.AreaListTypeSuccess(res))
+    .map(res =>   new areas.AreaListSuccess(res))
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
   @Effect()
@@ -59,7 +59,7 @@ export class AreaEffects {
     .ofType(areas.AreaActionTypes.AREA_LIST_TYPE_SUBJECT)
     .map((action: areas.AreaListByTypeSubject) => action.payload)
     .switchMap((payload) => this.svc.getAreaListByTypeSubject(payload.typeId, payload.subjectId))
-    .map(res =>  new areas.AreaListTypeSubjectSuccess(res))
+    .map(res =>  new areas.AreaListSuccess(res))
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
   // TODO: Tagger is built to return an array of areas.  This version of the Commons assumes one. Should Tagger change?

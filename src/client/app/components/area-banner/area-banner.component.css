@@ -14,9 +14,9 @@
 .down-pointer {
   width: 0;
   height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-top: 12px solid #791716;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 14px solid #791716;
 }
 .pointer-container {
   color: transparent;

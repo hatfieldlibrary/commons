@@ -21,8 +21,8 @@ import {AreaService} from '../services/area.service';
 import {TestBed} from '@angular/core/testing';
 import {Observable, } from 'rxjs/Observable';
 import {
-  AreaListAction, AreaListActionFailed, AreaListActionSuccess, AreaInformation,
-  AreaInformationSuccess
+  AreaListAction, AreaListActionFailed, AreaInformation,
+  AreaInformationSuccess, AreaListSuccess
 } from '../actions/area.actions';
 import {AreaType} from '../shared/data-types/area.type';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
@@ -86,7 +86,7 @@ describe('Area Effect', () => {
     const startAction = new AreaListAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new AreaListActionSuccess(mockAreasList);
+    const successAction = new AreaListSuccess(mockAreasList);
     const expectedResults = cold('--b', {b: successAction});
     expect(areaEffects.areaListEffect$).toBeObservable(expectedResults);
 

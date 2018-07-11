@@ -41,6 +41,10 @@ export class TypesComponent implements OnInit {
     return this.filter.selectedTypes.findIndex((current) => current.id === typeId);
   }
 
+  hasTypes(): boolean {
+    return this.filter.types.length > 0;
+  }
+
   onTypeListControlChanged(list: MatSelectionList, typeId: number) {
     const updatedSelectedTypes = this.filterService
       .updateSelectedTypeStore(this.filter.selectedTypes, this.filter.types, typeId);
@@ -56,6 +60,7 @@ export class TypesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.filter)
   }
 
 }

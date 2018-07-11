@@ -2,13 +2,24 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
 import {s} from '@angular/core/src/render3';
+import * as fromRoot from '../../reducers';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {SubjectType} from '../../shared/data-types/subject.type';
+import {Subscription} from 'rxjs/Subscription';
+import {RemoveSelectedSubjects} from '../../actions/filter.actions';
 
 @Injectable()
 export class NavigationServiceB {
 
   urlRootPath = environment.appRoot;
+  removedSubjects$: Subscription;
+  private removedSubs: SubjectType[];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private store: Store<fromRoot.State>) {
+    this.removedSubjects$ = store.select(fromRoot.getRemovedSubject).subscribe(sub => {
+      this.removedSubs = sub;
+    })
   }
 
   /**
@@ -39,7 +50,7 @@ export class NavigationServiceB {
    * @returns {string}
    */
   getIds(list: any[]): string {
-    console.log(list)
+
     // do runtime check of the list shape.
     if (this.isIllegalType(list)) {
       throw new Error('Illegal type: The Array must contain objects that have an id field.');
@@ -67,6 +78,30 @@ export class NavigationServiceB {
   }
 
   /**
+   * This function uses the removedSubs field value provided by the store
+   * to update the subject id string (removing ids in necessary).  Once done,
+   * it dispatches to reset the reducer.
+   * @param {string} id the comma separated list of subject ids
+   * @returns {string}
+   */
+  private removeIds(id: string) {
+    let updatedId = '';
+    if (id !== null && typeof id !== 'undefined') {
+      const idList = id.split(',');
+      idList.forEach((singleId) => {
+        const test = this.removedSubs.findIndex((sub) => sub.id === +singleId);
+        if (test === -1) {
+          updatedId += singleId + ',';
+        }
+      });
+      updatedId = updatedId.slice(0, -1);
+    }
+    // Done with removed subjects...update the store.
+    this.store.dispatch(new RemoveSelectedSubjects([{id: 0, name: ''}]));
+    return updatedId;
+  }
+
+  /**
    * Uses router to navigate a route based on the provided query values.
    * @param {string} areaId area id (can be comma-separated list).
    * @param {string} typeId the type id (can be comma-separated list).
@@ -76,6 +111,8 @@ export class NavigationServiceB {
    * TODO: this builds in a 4-way permutation that includes area.  Area could be omitted if the design doesn't require.
    */
   public navigateFilterRoute(areaId: string, typeId: string, subjectId: string, groupId: string): void {
+
+    subjectId = this.removeIds(subjectId);
 
     if (this.isFieldSelected(subjectId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId) && this.isFieldSelected(groupId)) {
 

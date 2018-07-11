@@ -39,6 +39,9 @@
       <app-area-banner [areaInfo]="areaInfo$ | async"
                        [filters]="filters$ | async"
                        [areas]="areasFilter$ | async"
+                       [subjects]="subjectsFilter$ | async"
+                       [types]="typesFilter$ | async"
+                       [groups]="groupsFilter$ | async"
                        (removeFilter)="removeFilter($event)"></app-area-banner>
     </div>
   </div>
@@ -51,15 +54,6 @@
            fxLayoutAlign="center start"
            fxFlexFill>
 
-        <!--<app-subject-selector-->
-        <!--fxFlex="1 1 100"-->
-        <!--fxFlex.md="1 1 85"-->
-        <!--fxFlex.lg="1 1 76"-->
-        <!--fxFlex.gt-lg="1 1 61"-->
-        <!--(subjectNavigation)="subjectNavigation($event)"-->
-        <!--[subjectList]="subjects$ | async"-->
-        <!--[selectedSubjects]="selectedSubjects$ | async">-->
-        <!--</app-subject-selector>-->
       </div>
       <div fxLayout="row"
            fxLayoutWrap
@@ -72,22 +66,12 @@
              fxFlex.gt-lg="1 1 12"
              class="side-container"
              *ngIf="media.isActive('gt-sm')">
+
           <app-subject-options (subjectNavigation)="subjectNavigation($event)"
                                [filter]="subjectsFilter$ | async"></app-subject-options>
 
           <app-group-options (groupNavigation)="groupNavigation($event)"
                              [filter]="groupsFilter$ | async"></app-group-options>
-          <!--<div fxLayout="row" fxLayoutAlign="start center">-->
-          <!--<div class="side-nav-header mat-title">FILTERS</div>-->
-          <!--<app-help-svg-->
-          <!--matTooltip="Use these options to explore collections and items in the Academic Commons. Search by keyword-->
-          <!--or apply filters by selecting from the lists below."-->
-          <!--[matTooltipPosition]="toolTipPosition"></app-help-svg>-->
-          <!--</div>-->
-          <!--<app-search-filter class="filters-margin" [collectionList]="collections$ | async"></app-search-filter>-->
-          <!--<app-navigation-selector-->
-          <!--(areaNavigation)="areaNavigation($event)"-->
-          <!--[filter]="areasFilter$ | async"></app-navigation-selector>-->
 
         </div>
         <div fxLayout="column"
@@ -96,26 +80,10 @@
              fxFlex.md="1 1 54"
              fxFlex.lg="1 1 55"
              fxFlex.gt-lg="1 1 40">
-          <!--<div class="mat-card info-card">-->
-          <!--<div class="mat-card-header">-->
-          <!--<mat-card-subtitle class="area-info-container" *ngIf="areaScreen"-->
-          <!--[ngClass]="{'large-device-info': media.isActive('gt-sm')}">-->
-          <!--<app-area-information-->
-          <!--[areaInfo]="areaInfo$ | async"></app-area-information>-->
-          <!--</mat-card-subtitle>-->
 
-          <!--<app-home-screen *ngIf="!areaScreen"-->
-          <!--(subjectNavigation)="subjectNavigation($event)"></app-home-screen>-->
-
-          <!--</div>-->
-          <!--<app-current-filters [filters]="filters$ | async"-->
-          <!--(removeFilter)="removeFilter($event)"></app-current-filters>-->
-          <!--<div class="mat-card-content">-->
           <app-collection-grid (subjectNavigation)="subjectNavigation($event)"
                                (collectionNavigation)="collectionNavigation($event)"
                                [collectionList]="collections$ | async "></app-collection-grid>
-          <!--</div>-->
-          <!--</div>-->
         </div>
         <div fxLayout="column"
              fxFlex.md="1 1 20"
@@ -127,9 +95,6 @@
           <app-types (typeNavigation)="typeNavigation($event)"
                      [filter]="typesFilter$ | async"></app-types>
 
-          <!--<app-navigation-selector-->
-          <!--(areaNavigation)="areaNavigation($event)"-->
-          <!--[filter]="areasFilter$ | async"></app-navigation-selector>-->
         </div>
       </div>
     </div>

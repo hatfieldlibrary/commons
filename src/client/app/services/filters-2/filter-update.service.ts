@@ -77,7 +77,6 @@ export class FilterUpdateServiceB {
       // Make sure the default id: '0' does not creep in!
       this.removeDefaultCollections(this.TYPE_KEY);
       // Update the store.
-      console.log(selectedTypes)
       this.store.dispatch(new SetTypeFilter(selectedTypes));
       return this.selectedTypes;
     }
@@ -90,6 +89,8 @@ export class FilterUpdateServiceB {
   updateSelectedSubjectsStore(selectedSubjects: SubjectType[], subjectList: SubjectType[], subjectId: number): SubjectType[] {
     this.selectedSubjects = selectedSubjects;
     this.subjectList = subjectList;
+    console.log(subjectList)
+    console.log(selectedSubjects)
     // Get area filter information for the selected areaId.
     const selectedSubject: SubjectType = this.getSelectedSubjectObject(subjectId);
     if (selectedSubject) {
@@ -98,6 +99,7 @@ export class FilterUpdateServiceB {
       // Make sure the default id: '0' does not creep in!
       this.removeDefaultCollections(this.SUBJECT_KEY);
       // Update the store.
+      console.log(this.selectedSubjects)
       this.store.dispatch(new SetSubjectFilter(this.selectedSubjects));
       return this.selectedSubjects;
     }

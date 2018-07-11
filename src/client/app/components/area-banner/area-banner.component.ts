@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component, EventEmitter,
   Input, OnChanges,
   OnDestroy, OnInit,
@@ -12,8 +11,10 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import * as fromFilter from '../../reducers/filter.reducers';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
-import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {AreasFilter} from '../../shared/data-types/areas-filter';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
+import {TypesFilter} from '../../shared/data-types/types-filter';
+import {SubjectFilter} from '../../shared/data-types/subject-filter';
 
 @Component({
   selector: 'app-area-banner',
@@ -31,6 +32,12 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   filters: fromFilter.State;
   @Input()
   areas: AreasFilter;
+  @Input()
+  subjects: SubjectFilter;
+  @Input()
+  types: TypesFilter;
+  @Input()
+  groups: CollectionGroupFilter;
   description: string;
   url: string;
   linkLabel: string;
@@ -39,7 +46,8 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   private watcher: Subscription;
   isMobile = false;
 
-  constructor(public media: ObservableMedia) {}
+  constructor(public media: ObservableMedia) {
+  }
 
   /**
    * Deselects the filter
@@ -56,7 +64,7 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
    * @returns {boolean}
    */
   isSelected(id: number): boolean {
-    if (this.areas.selectedAreas) {
+    if (this.filters.selectedAreas) {
       return this.getPositionInSelectedList(id) > -1;
     }
     return false;
@@ -69,12 +77,12 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
    * @returns {number}
    */
   private getPositionInSelectedList(areaId: number): number {
-    return this.areas.selectedAreas.findIndex((current) => current.id === areaId);
+    return this.filters.selectedAreas.findIndex((current) => current.id === areaId);
   }
 
   ngOnInit() {
     this.watcher = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs' || change.mqAlias === 'sm' ) {
+      if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
         this.isMobile = true;
         console.log('setting mobile to true')
       } else {

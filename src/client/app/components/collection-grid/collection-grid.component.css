@@ -26,7 +26,12 @@ mat-card:hover {
   font-weight: 800;
   color: #111111;
 }
-
+.card-text {
+  color: #999;
+}
+.card-label {
+  color: #666;
+}
 .grid-result-info {
   padding-top: 20px;
   padding-left: 12px;

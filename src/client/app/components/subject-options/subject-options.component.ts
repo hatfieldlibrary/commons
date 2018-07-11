@@ -47,8 +47,12 @@ export class SubjectOptionsComponent {
   onSubjectListControlChanged(list: MatSelectionList, id: number) {
     const selectedSubjects = this.filterService
       .updateSelectedSubjectsStore(this.filter.selectedSubjects, this.filter.subjects, id);
-    const updatedTypeEvent: SelectedSubjectEvent = {selected: selectedSubjects};
-    this.subjectNavigation.emit(updatedTypeEvent);
+    const updatedSubjectEvent: SelectedSubjectEvent = {selected: selectedSubjects};
+    this.subjectNavigation.emit(updatedSubjectEvent);
+  }
+
+  hasSubjects(): boolean {
+    return this.filter.subjects.length > 0;
   }
 
   /**

@@ -18,8 +18,6 @@
 
   <div class="mat-body-2"
        fxLayout="column"
-       fxLayoutGap="30px"
-       fxLayoutAlign="center start"
        fxFlex.xs="1 1 90"
        fxFlex.sm="1 1 90"
        fxFlex.md="1 1 50"
@@ -32,19 +30,17 @@
           <h2 class="mat-h1">{{title}}</h2>
           <div class="text-padding">
             <p class="mat-subheading-2" [innerHTML]="description"></p>
-            <!--<p *ngIf="url" class="mat-body-1 area-button">-->
-            <!--<a mat-raised-button class="accent-button" href="{{url}}" target="_top" color="accent">{{linkLabel}}</a>-->
-            <!--</p>-->
           </div>
         </div>
       </div>
     </div>
-    <div fxLayout="row" fxFlex="30" fxLayoutAlign="start center" fxFill *ngIf="!isMobile">
-      <div>
+      <div *ngIf="!isMobile" style="position: absolute; bottom: 60px;">
         <app-area-filters
           [filters]="filters"
+          [subjects]="subjects"
+          [types]="types"
+          [groups]="groups"
           (removeFilter)="deselect($event)"></app-area-filters>
-      </div>
     </div>
   </div>
 

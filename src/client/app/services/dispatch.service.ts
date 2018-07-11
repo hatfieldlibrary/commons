@@ -85,7 +85,7 @@ export class DispatchService {
         this.getCollectionsForAreaType(areaId, typeId);
         this.getSubjectsForAreaType(areaId, typeId);
         this.getCollectionGroupsByAreaType(areaId, typeId);
-
+        this.getTypesForArea(areaId);
       } else {
         console.log('area')
         // area
@@ -243,7 +243,7 @@ export class DispatchService {
   }
 
   private getSubjectsForArea(areaId: string): void {
-    this.store.dispatch((new subjectAction.SubjectAction((areaId))));
+    this.store.dispatch(new subjectAction.SubjectAction(areaId));
   }
 
   private getSubjectsForType(typeId: string): void {
