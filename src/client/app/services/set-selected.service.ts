@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
-import {RemoveSubjectFilter, SetSubjectFilter} from '../actions/filter.actions';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import * as filterActions from '../actions/filter.actions';
 import * as fromRoot from '../reducers';
 import {Observable} from 'rxjs/Observable';
-import {SubjectType} from '../shared/data-types/subject.type';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
-import {CollectionGroupFilter} from '../shared/data-types/collection-group-filter.type';
-import {CollectionGroupType} from '../shared/data-types/collection-group-type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 @Injectable()
 export class SetSelectedService {
 
-  subjects$: Observable<SubjectType[]>;
+  subjects$: Observable<FieldFilterType[]>;
   areas$: Observable<AreaFilterType[]>;
-  types$: Observable<TypesFilterType[]>;
-  groups$: Observable<CollectionGroupType[]>
+  types$: Observable<FieldFilterType[]>;
+  groups$: Observable<FieldFilterType[]>
   watchers: Subscription;
 
   constructor(private store: Store<fromRoot.State>) {
@@ -42,24 +38,11 @@ export class SetSelectedService {
    * @private
    */
   setSelectedSubject(subjectId: string): void {
-    // if (subjectId) {
-    //   const subjectWatcher = this.subjects$.subscribe((subjects) => {
-    //     const subjectsArr: SubjectType[] = [];
-    //     subjects.forEach((subject) => {
-    //       if (subject.id === +subjectId) {
-    //         subjectsArr.push(subject);
-    //       }
-    //       this.store.dispatch(new SetSubjectFilter(subjectsArr));
-    //     })
-    //   });
-    //   this.watchers.add(subjectWatcher);
-    // } else {
-    //   this.store.dispatch(new RemoveSubjectFilter());
-    // }
+
     if (subjectId) {
       const subsWatcher = this.subjects$.subscribe((subs) => {
         const filtersArr = subjectId.split(',');
-        const selectedSubs: SubjectType[] = [];
+        const selectedSubs: FieldFilterType[] = [];
         filtersArr.forEach(function (singleSubId) {
           const selected = subs.find((sub) => sub.id === +singleSubId);
           if (selected) {
@@ -118,23 +101,19 @@ export class SetSelectedService {
     if (typeId) {
       const typesWatcher = this.types$.subscribe((types) => {
         const filtersArr = typeId.split(',');
-        const selectedTypes: TypesFilterType[] = [];
+        const selectedTypes: FieldFilterType[] = [];
         filtersArr.forEach(function (singleTypeId) {
-          console.log(typeId)
-          console.log(singleTypeId )
           const selected = types.find((type) => type.id === +singleTypeId);
           if (selected) {
             selectedTypes.push(selected);
           }
         });
-        console.log(selectedTypes)
         if (selectedTypes.length > 0) {
           this.store.dispatch(new filterActions.SetTypeFilter(selectedTypes));
         }
       });
       this.watchers.add(typesWatcher);
     } else {
-      console.log('setting selected type to 0')
       this.store.dispatch(new filterActions.SetTypeFilter([{id: 0, name: ''}]))
     }
   }
@@ -150,7 +129,7 @@ export class SetSelectedService {
     if (groupId) {
       const groupsWatcher = this.groups$.subscribe((groups) => {
         const groupArr = groupId.split(',');
-        const selectedGroups: CollectionGroupType[] = [];
+        const selectedGroups: FieldFilterType[] = [];
         groupArr.forEach(function (singleGroupId) {
           const selected = groups.find((grp) => grp.id === +singleGroupId);
           if (selected) {
@@ -171,7 +150,6 @@ export class SetSelectedService {
 
 
   unsubscribe(): void {
-    console.log('UNSUBSCRIBE')
     this.watchers.unsubscribe();
   }
 }

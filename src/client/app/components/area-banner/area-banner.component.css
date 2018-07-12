@@ -29,3 +29,9 @@
 .pointer-container span {
   opacity: 0;
 }
+.low-contrast-text {
+  color: #ccc;
+}
+.text-color {
+  color: #ccc;
+}

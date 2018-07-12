@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {MatSelectionList} from '@angular/material';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {TypesFilter} from '../../shared/data-types/types-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 export interface SelectedTypeEvent {
-  selected: TypesFilterType[];
+  selected: FieldFilterType[];
 }
 
 @Component({
@@ -60,7 +60,6 @@ export class TypesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.filter)
   }
 
 }

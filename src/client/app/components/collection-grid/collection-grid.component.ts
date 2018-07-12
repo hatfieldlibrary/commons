@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, SecurityContext} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {SelectedSubjectEvent} from '../subject-selector/subjects.component';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {Subscription} from 'rxjs/Subscription';
 import {environment} from '../../environments/environment';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'app-collection-grid',
@@ -33,7 +33,7 @@ export class CollectionGridComponent implements OnDestroy {
   isMobile = false;
   cols = 3;
   watcher: Subscription;
-  emptySubject: SubjectType = {id: 0, name: ''};
+  emptySubject: FieldFilterType = {id: 0, name: ''};
 
   constructor(private filterService: FilterUpdateServiceB,
               private media: ObservableMedia) {

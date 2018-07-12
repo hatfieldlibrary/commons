@@ -19,12 +19,12 @@
  * Created by mspalti on 2/24/17.
  */
 import {SubjectActions, SubjectActionTypes} from '../actions/subject-actions';
-import {SubjectType} from '../shared/data-types/subject.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
-  subjects: SubjectType[];
-  selectedSubject: SubjectType[];
-  removedSubjects: SubjectType[];
+  subjects: FieldFilterType[];
+  selectedSubject: FieldFilterType[];
+  removedSubjects: FieldFilterType[];
   loading: boolean;
 
 }
@@ -48,7 +48,7 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     case SubjectActionTypes.SUBJECT_REQUEST_SUCCESS: {
 
-      const result: SubjectType[] = <SubjectType[]>action.payload;
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         subjects: result,
         loading: false
@@ -159,6 +159,6 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
 export const getSubjectList = (state: State) => state.subjects;
 
-export const getRemovedSubjects = (state: State) => state.removedSubjects;
+// export const getRemovedSubjects = (state: State) => state.removedSubjects;
 
 // export const getSelectedSubject = (state: State) => state.selectedSubject;

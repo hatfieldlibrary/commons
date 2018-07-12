@@ -2,7 +2,7 @@
 
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface TypesFilterInterface {
   areaId: string;
@@ -114,7 +114,7 @@ export class ContentTypesAreaSubjectGroupAction implements Action {
 
 export class ContentTypesActionSuccess implements Action {
   type = ContentTypeActionTypes.TYPES_REQUEST_SUCCESS;
-  constructor(public payload: TypesFilterType[]) {
+  constructor(public payload: FieldFilterType[]) {
   }
 }
 

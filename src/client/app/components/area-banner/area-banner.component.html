@@ -29,7 +29,7 @@
         <div [ngClass]="{'mobile': isMobile}">
           <h2 class="mat-h1">{{title}}</h2>
           <div class="text-padding">
-            <p class="mat-subheading-2" [innerHTML]="description"></p>
+            <p class="mat-subheading-2 text-color" [innerHTML]="description"></p>
           </div>
         </div>
       </div>
@@ -49,9 +49,10 @@
        fxFlex.md="1 1 25"
        fxFlex.lg="1 1 15"
        fxFlex.gt-lg="1 1 12"
+       class="low-contrast-text"
        *ngIf="media.isActive('gt-sm')">
     <div *ngIf="url" style="padding-left: 60px;">
-      <span class="mat-caption">Related info:</span>
+      <span class="mat-caption">Related information</span>
       <div class="mat-body-1 area-button">
         <a mat-raised-button href="{{url}}" target="_top" color="accent">{{linkLabel}}</a></div>
     </div>

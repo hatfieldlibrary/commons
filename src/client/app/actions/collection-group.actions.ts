@@ -2,11 +2,11 @@
 
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
-import {CollectionGroupType} from '../shared/data-types/collection-group-type';
 import {TypeSubjectInterface} from './type-subject.interface';
 import {AreaTypeSubjectInterface} from './area-type-subject.interface';
 import {AreaTypeInterface} from './area-type.interface';
 import {AreaSubjectInterface} from './area-subject.interface';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export const GroupActionTypes = {
 
@@ -142,7 +142,7 @@ export class GroupsByAreaSubjectType implements Action {
 
 export class GroupActionSuccess implements Action {
   type = GroupActionTypes.GROUPS_ACTION_SUCCESS;
-  constructor(public payload: CollectionGroupType[]) {}
+  constructor(public payload: FieldFilterType[]) {}
 }
 
 // export class GroupsByAreaSubjectTypeSuccess implements Action {

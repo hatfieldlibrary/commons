@@ -21,7 +21,7 @@
 
 import {Action} from '../actions/action.interface';
 import {type} from '../shared/ngrx/type';
-import {SubjectType} from '../shared/data-types/subject.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export const SubjectActionTypes = {
   //  ALL_SUBJECT_LIST_SUCCESS: type('[SubjectType] List All Subjects Response'),
@@ -34,7 +34,7 @@ export const SubjectActionTypes = {
   SUBJECT_LIST_FOR_AREA_TYPE: type('[SubjectType] List of Subjects for Area and Types'),
   SUBJECT_LIST_FOR_GROUP_AREA: type('SubjectType] For Group Area'),
   SUBJECT_LIST_FOR_GROUP_AREA_TYPE: type('SubjectType] For Group Area Type'),
-  REMOVE_CURRENT_SELECTED_SUBJECT: type('[SubjectType] Remove thee currently Selected Subject'),
+  REMOVE_CURRENT_SELECTED_SUBJECT: type('[SubjectType] Remove currently Selected Subjects'),
   CURRENT_SELECTED_SUBJECT: type('[SubjectType] Currently Selected Subject'),
   SUBJECT_REQUEST_SUCCESS: type('{SubjectType] Subject Request Success'),
   REQUEST_FAILED: type('[SubjectType] Search Failed')
@@ -142,7 +142,7 @@ export class SubjectActionFailed implements Action {
 export class SubjectActionSuccess implements Action {
   type = SubjectActionTypes.SUBJECT_REQUEST_SUCCESS;
 
-  constructor(public payload: SubjectType[]) {
+  constructor(public payload: FieldFilterType[]) {
   }
 }
 

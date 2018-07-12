@@ -1,9 +1,6 @@
 import {FilterActions, FilterActionTypes} from '../actions/filter.actions';
-import {SubjectType} from '../shared/data-types/subject.type';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
-import {CollectionGroupType} from '../shared/data-types/collection-group-type';
-import {SubjectActionTypes} from '../actions/subject-actions';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
   filterTerm: '';
@@ -86,16 +83,29 @@ export function reducer(state = initialState, action: FilterActions): State {
   switch (action.type) {
 
     case FilterActionTypes.REMOVE_SELECTED_SUBJECT: {
-      const result: SubjectType[] = <SubjectType[]>action.payload;
-      console.log(result)
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         removedSubjects: result
       });
     }
 
+    case FilterActionTypes.REMOVE_SELECTED_TYPE: {
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
+      return Object.assign({}, state, {
+        removedTypes: result
+      });
+    }
+
+    case FilterActionTypes.REMOVE_SELECTED_GROUP: {
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
+      return Object.assign({}, state, {
+        removedGroups: result
+      });
+    }
+
     case FilterActionTypes.SET_SUBJECT_FILTER: {
 
-      const filter: SubjectType[] = <SubjectType[]>action.payload;
+      const filter: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         selectedSubjects: filter
       });
@@ -123,14 +133,14 @@ export function reducer(state = initialState, action: FilterActions): State {
     }
 
     case FilterActionTypes.SET_TYPE_FILTER: {
-      const filter: TypesFilterType[] = <TypesFilterType[]>action.payload;
+      const filter: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         selectedTypes: filter
       });
     }
 
     case FilterActionTypes.SET_DEFAULT_TYPE_FILTER: {
-      const filter: TypesFilterType[] = [{id: 0, name: ''}];
+      const filter: FieldFilterType[] = [{id: 0, name: ''}];
       return Object.assign({}, state, {
         selectedTypes: filter
       });
@@ -151,7 +161,7 @@ export function reducer(state = initialState, action: FilterActions): State {
     }
 
     case FilterActionTypes.SET_GROUP_FILTER: {
-      const filter: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
+      const filter: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         selectedGroups: filter
       });
@@ -166,6 +176,10 @@ export function reducer(state = initialState, action: FilterActions): State {
 export const getSubjectsFilter = (state: State) => state.selectedSubjects;
 
 export const getRemovedSubjectsFilter = (state: State) => state.removedSubjects;
+
+export const getRemovedTypesFilter = (state: State) => state.removedTypes;
+
+export const getRemovedGroupsFilter = (state: State) => state.removedGroups;
 
 export const getTypesFilter = (state: State) => state.selectedTypes;
 

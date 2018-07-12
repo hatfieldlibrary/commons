@@ -1,8 +1,8 @@
 
-import {SubjectType} from './subject.type';
+import {FieldFilterType} from './field-filter.type';
 
 export interface SubjectFilter {
-  subjects: SubjectType[];
-  selectedSubjects: SubjectType[];
-  removedSubjects?: SubjectType[];
+  subjects: FieldFilterType[];
+  selectedSubjects: FieldFilterType[];
+  removedSubjects?: FieldFilterType[];
 }

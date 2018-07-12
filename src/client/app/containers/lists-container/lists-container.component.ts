@@ -26,11 +26,9 @@ import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/co
 import * as fromRoot from '../../reducers';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {fadeIn} from '../../animation/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {DeselectedFilter} from 'app/components/area-filters/area-filters.component';
@@ -47,8 +45,8 @@ import {AreasFilter} from '../../shared/data-types/areas-filter';
 import {CollectionReset} from '../../actions/collection.actions';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
 import {SelectedGroupEvent} from '../../components/group-options/group-options.component';
-import {CollectionGroupType} from '../../shared/data-types/collection-group-type';
-import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'app-lists-container',
@@ -68,17 +66,17 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   collections$: Observable<CollectionType[]>;
   areas$: Observable<AreaFilterType[]>;
   areaInfo$: Observable<AreaType>;
-  types$: Observable<TypesFilterType[]>;
-  groups$: Observable<CollectionGroupType[]>;
+  types$: Observable<FieldFilterType[]>;
+  groups$: Observable<FieldFilterType[]>;
   filters$: Observable<fromFilter.State>;
   typesFilter$: Observable<TypesFilter>;
   areasFilter$: Observable<AreasFilter>;
   subjectsFilter$: Observable<SubjectFilter>;
   groupsFilter$: Observable<CollectionGroupFilter>;
   selectedAreas: AreaFilterType[];
-  selectedTypes: TypesFilterType[];
-  selectedSubjects: SubjectType[];
-  selectedGroups: CollectionGroupType[];
+  selectedTypes: FieldFilterType[];
+  selectedSubjects: FieldFilterType[];
+  selectedGroups: FieldFilterType[];
 
   /**
    * These member variables contain the route parameters.

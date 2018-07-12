@@ -36,9 +36,6 @@ import {Observable} from 'rxjs/Observable';
 import {AreasFilter} from '../shared/data-types/areas-filter';
 import {NavigationServiceB} from '../services/navigation-2/navigation.service';
 import {SelectedAreaEvent} from './area-selector/area.component';
-import {TypesFilter} from '../shared/data-types/types-filter';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {LoggerService} from '../shared/logger/logger.service';
 
 /**

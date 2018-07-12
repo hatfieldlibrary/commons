@@ -1,9 +1,9 @@
 
-import {CollectionGroupType} from '../shared/data-types/collection-group-type';
 import {CollectionGroupActions, GroupActionTypes} from '../actions/collection-group.actions';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
-  groups: CollectionGroupType[];
+  groups: FieldFilterType[];
   loading: boolean;
 
 }
@@ -25,7 +25,7 @@ export function reducer(state = initialState, action: CollectionGroupActions): S
     }
 
     case GroupActionTypes.GROUPS_ACTION_SUCCESS: {
-      const result: CollectionGroupType[] = <CollectionGroupType[]>action.payload;
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         groups: result,
         loading: false

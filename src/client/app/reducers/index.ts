@@ -153,6 +153,10 @@ export const getAreasFilter = createSelector(getFilterState, fromFilter.getAreas
 
 export const getRemovedSubject = createSelector(getFilterState, fromFilter.getRemovedSubjectsFilter);
 
+export const getRemovedGroup = createSelector(getFilterState, fromFilter.getRemovedGroupsFilter);
+
+export const getRemovedType = createSelector(getFilterState, fromFilter.getRemovedTypesFilter);
+
 export const getCollectionsGroupFilter = createSelector(getFilterState, fromFilter.getCollectionGroupFilter);
 
 export const getCollectionFilterTerm = createSelector(getFilterState, fromFilter.getFilterTerm);

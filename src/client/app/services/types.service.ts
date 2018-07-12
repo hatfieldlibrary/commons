@@ -2,46 +2,45 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../environments/environment';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
-import {AreaSubjectParams} from '../actions/area-subject-parameters.interface';
 import {HttpClient} from '@angular/common/http';
 import {TypesFilterInterface} from '../actions/type.actions';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 @Injectable()
 export class TypesService {
 
   constructor(private http: HttpClient) {}
 
-  getTypesAll(): Observable<TypesFilterType[]> {
-    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type');
+  getTypesAll(): Observable<FieldFilterType[]> {
+    return this.http.get<FieldFilterType[]>(environment.apiHost + environment.apiRoot + '/type');
   }
 
-  getTypesSubject(subjectId: string): Observable<TypesFilterType[]> {
-    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type/subject/' + subjectId);
+  getTypesSubject(subjectId: string): Observable<FieldFilterType[]> {
+    return this.http.get<FieldFilterType[]>(environment.apiHost + environment.apiRoot + '/type/subject/' + subjectId);
   }
 
-  getTypesArea(areaIds: string): Observable<TypesFilterType[]> {
-    return this.http.get<TypesFilterType[]>(environment.apiHost + environment.apiRoot + '/type/area/' + areaIds);
+  getTypesArea(areaIds: string): Observable<FieldFilterType[]> {
+    return this.http.get<FieldFilterType[]>(environment.apiHost + environment.apiRoot + '/type/area/' + areaIds);
   }
 
-  getTypesAreaSubject(params: TypesFilterInterface): Observable<TypesFilterType[]> {
-    return this.http.get<TypesFilterType[]>(environment.apiHost
+  getTypesAreaSubject(params: TypesFilterInterface): Observable<FieldFilterType[]> {
+    return this.http.get<FieldFilterType[]>(environment.apiHost
       + environment.apiRoot + '/type/area/'
       + params.areaId + '/subject/'
       + params.subjectId);
 
   }
 
-  getTypesAreaGroup(params: TypesFilterInterface): Observable<TypesFilterType[]> {
-    return this.http.get<TypesFilterType[]>(environment.apiHost
+  getTypesAreaGroup(params: TypesFilterInterface): Observable<FieldFilterType[]> {
+    return this.http.get<FieldFilterType[]>(environment.apiHost
       + environment.apiRoot + '/type/area/'
       + params.areaId + '/category/'
       + params.groupId);
 
   }
 
-  getTypesAreaGroupSubject(params: TypesFilterInterface): Observable<TypesFilterType[]> {
-    return this.http.get<TypesFilterType[]>(environment.apiHost
+  getTypesAreaGroupSubject(params: TypesFilterInterface): Observable<FieldFilterType[]> {
+    return this.http.get<FieldFilterType[]>(environment.apiHost
       + environment.apiRoot + '/type/area/'
       + params.areaId + '/category/'
       + params.groupId + '/subject/' + params.subjectId);

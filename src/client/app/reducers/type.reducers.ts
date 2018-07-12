@@ -1,16 +1,16 @@
 
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
-import {ContentTypeActions, ContentTypeActionTypes, ContentTypesActionSuccess} from '../actions/type.actions';
+import {ContentTypeActions, ContentTypeActionTypes} from '../actions/type.actions';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
-  types: TypesFilterType[];
+  types: FieldFilterType[];
   selected: string;
   loading: boolean;
 
 }
 
 const initialState: State = {
-  types: [<TypesFilterType>{
+  types: [<FieldFilterType>{
     id: 0,
     name: ''
   }],
@@ -99,7 +99,7 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
 
     case ContentTypeActionTypes.TYPES_REQUEST_SUCCESS: {
-      const result: TypesFilterType[] = <TypesFilterType[]>action.payload;
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
         return Object.assign({}, state, {
           types: result,
           loading: false

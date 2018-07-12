@@ -20,10 +20,8 @@ import {
 } from '@angular/core';
 import {ItemType} from '../../shared/data-types/item.type';
 import {ObservableMedia} from '@angular/flex-layout';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
-import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 /**
  * This is the parent component for presenting all item data.
@@ -38,9 +36,9 @@ export class ItemComponent {
 
   @Input() item: ItemType;
   @Input() selectedArea: string;
-  @Input() selectedSubjects: SubjectType[];
-  @Input() selectedGroups: CollectionGroupFilter[];
-  @Input() selectedTypes: TypesFilterType[];
+  @Input() selectedSubjects: FieldFilterType[];
+  @Input() selectedGroups: FieldFilterType[];
+  @Input() selectedTypes: FieldFilterType[];
 
   constructor(private navigationService: NavigationServiceB,
               public media: ObservableMedia) {
@@ -49,7 +47,6 @@ export class ItemComponent {
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
     const subjectIds = this.navigationService.getIds(this.selectedSubjects);
-    console.log(this.selectedGroups)
     const groupIds = this.navigationService.getIds(this.selectedGroups);
     const path =
       this.navigationService.getBackLink(this.selectedArea, groupIds, subjectIds, typeIds);

@@ -5,21 +5,19 @@ import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {SetAreaFilter, SetGroupFilter, SetSubjectFilter, SetTypeFilter} from '../../actions/filter.actions';
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {SubjectType} from '../../shared/data-types/subject.type';
-import {CollectionGroupType} from '../../shared/data-types/collection-group-type';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Injectable()
 export class FilterUpdateServiceB {
 
   private selectedAreas: AreaFilterType[];
   private areaList: AreaFilterType[];
-  private selectedTypes: TypesFilterType[];
-  private typeList: TypesFilterType[];
-  private subjectList: SubjectType[];
-  private selectedSubjects: SubjectType[];
-  private groupList: CollectionGroupType[];
-  private selectedGroups: CollectionGroupType[];
+  private selectedTypes: FieldFilterType[];
+  private typeList: FieldFilterType[];
+  private subjectList: FieldFilterType[];
+  private selectedSubjects: FieldFilterType[];
+  private groupList: FieldFilterType[];
+  private selectedGroups: FieldFilterType[];
   private AREA_KEY = 'areas';
   private TYPE_KEY = 'types';
   private SUBJECT_KEY = 'subjects';
@@ -66,11 +64,13 @@ export class FilterUpdateServiceB {
    * This function updates the selected types store.
    * @param {number} areaId
    */
-  updateSelectedTypeStore(selectedTypes: TypesFilterType[], typeList: TypesFilterType[], typeId: number): TypesFilterType[] {
+  updateSelectedTypeStore(selectedTypes: FieldFilterType[],
+                          typeList: FieldFilterType[],
+                          typeId: number): FieldFilterType[] {
     this.selectedTypes = selectedTypes;
     this.typeList = typeList;
     // Get area filter information for the selected areaId.
-    const selectedType: TypesFilterType = this.getSelectedTypeObject(typeId);
+    const selectedType: FieldFilterType = this.getSelectedTypeObject(typeId);
     if (selectedType) {
       // Update selectedAreas.
       this.updateSelectedTypes(selectedType, typeId);
@@ -86,32 +86,31 @@ export class FilterUpdateServiceB {
    * This function updates the selected subject store.
    * @param {number} areaId
    */
-  updateSelectedSubjectsStore(selectedSubjects: SubjectType[], subjectList: SubjectType[], subjectId: number): SubjectType[] {
+  updateSelectedSubjectsStore(selectedSubjects: FieldFilterType[],
+                              subjectList: FieldFilterType[],
+                              subjectId: number): FieldFilterType[] {
     this.selectedSubjects = selectedSubjects;
     this.subjectList = subjectList;
-    console.log(subjectList)
-    console.log(selectedSubjects)
     // Get area filter information for the selected areaId.
-    const selectedSubject: SubjectType = this.getSelectedSubjectObject(subjectId);
+    const selectedSubject: FieldFilterType = this.getSelectedSubjectObject(subjectId);
     if (selectedSubject) {
       // Update selectedAreas.
       this.updateSelectedSubjects(selectedSubject, subjectId);
       // Make sure the default id: '0' does not creep in!
       this.removeDefaultCollections(this.SUBJECT_KEY);
       // Update the store.
-      console.log(this.selectedSubjects)
       this.store.dispatch(new SetSubjectFilter(this.selectedSubjects));
       return this.selectedSubjects;
     }
   }
 
-  updateSelectedGroupsStore(selectedGroups: CollectionGroupType[],
-                            groupList: CollectionGroupType[],
-                            groupId: number): CollectionGroupType[] {
+  updateSelectedGroupsStore(selectedGroups: FieldFilterType[],
+                            groupList: FieldFilterType[],
+                            groupId: number): FieldFilterType[] {
     this.selectedGroups = selectedGroups;
     this.groupList = groupList;
     // Get area filter information for the selected areaId.
-    const selectedGroup: CollectionGroupType = this.getSelectedGroupObject(groupId);
+    const selectedGroup: FieldFilterType = this.getSelectedGroupObject(groupId);
     if (selectedGroup) {
       // Update selectedAreas.
       this.updateSelectedGroups(selectedGroup, groupId);
@@ -166,7 +165,7 @@ export class FilterUpdateServiceB {
    * @param {TypesFilterType} selectedType
    * @param {number} areaId
    */
-  private updateSelectedTypes(selectedType: TypesFilterType, typeId: number): void {
+  private updateSelectedTypes(selectedType: FieldFilterType, typeId: number): void {
     const currentIndex = this.getPositionInSelectedList(typeId, this.TYPE_KEY);
     if (currentIndex >= 0) {
       // If the currently selected index is in the list, remove.
@@ -181,7 +180,7 @@ export class FilterUpdateServiceB {
     }
   }
 
-  private updateSelectedSubjects(selectedSubject: SubjectType, subjectId: number): void {
+  private updateSelectedSubjects(selectedSubject: FieldFilterType, subjectId: number): void {
     const currentIndex = this.getPositionInSelectedList(subjectId, this.SUBJECT_KEY);
     if (currentIndex >= 0) {
       // If the currently selected index is in the list, remove.
@@ -196,7 +195,7 @@ export class FilterUpdateServiceB {
     }
   }
 
-  private updateSelectedGroups(selectedGroup: CollectionGroupType, groupId: number): void {
+  private updateSelectedGroups(selectedGroup: FieldFilterType, groupId: number): void {
     const currentIndex = this.getPositionInSelectedList(groupId, this.GROUP_KEY);
     if (currentIndex >= 0) {
       // If the currently selected index is in the list, remove.
@@ -220,15 +219,15 @@ export class FilterUpdateServiceB {
     return this.areaList.find((current) => current.id === areaId);
   }
 
-  private getSelectedTypeObject(typeId: number): TypesFilterType {
+  private getSelectedTypeObject(typeId: number): FieldFilterType {
     return this.typeList.find((current) => current.id === typeId);
   }
 
-  private getSelectedSubjectObject(subjectId: number): SubjectType {
+  private getSelectedSubjectObject(subjectId: number): FieldFilterType {
     return this.subjectList.find((current) => current.id === subjectId);
   }
 
-  private getSelectedGroupObject(groupId: number): CollectionGroupType {
+  private getSelectedGroupObject(groupId: number): FieldFilterType {
     return this.groupList.find((current) => current.id === groupId);
   }
 

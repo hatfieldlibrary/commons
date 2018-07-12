@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CollectionGroupType} from '../../shared/data-types/collection-group-type';
 import {MatSelectionList} from '@angular/material';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
-import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 export interface SelectedGroupEvent {
-  selected: CollectionGroupType[];
+  selected: FieldFilterType[];
 }
 
 @Component({

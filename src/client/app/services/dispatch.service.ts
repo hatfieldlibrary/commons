@@ -35,14 +35,12 @@ export class DispatchService {
       if (groupId) {
         if (subjectId) {
           if (typeId) {
-            console.log('area, grp, subject, type')
             // area, grp, subject, type
             this.getCollectionsForCategoryAreaTypeSubject(groupId, areaId, typeId, subjectId);
             this.getSubjectsForAreaGroupType(areaId, groupId, typeId);
             this.getTypesForAreaGroupSubject(areaId, groupId, subjectId);
             this.getCollectionGroupsByAreaSubjectType(areaId, subjectId, typeId);
           } else {
-            console.log('area, grp, subject')
             // area, grp, subject
             this.getCollectionsForCategoryAreaSubject(groupId, areaId, subjectId);
             this.getSubjectsForAreaGroup(areaId, groupId);
@@ -50,14 +48,12 @@ export class DispatchService {
             this.getCollectionGroupsByAreaSubject(areaId, subjectId);
           }
         } else if (typeId) {
-          console.log('area, grp, type')
           // area, grp, type
           this.getCollectionsForCategoryAreaType(groupId, areaId, typeId);
           this.getSubjectsForAreaGroupType(areaId, groupId, typeId);
           this.getTypesForAreaGroup(areaId, groupId);
           this.getCollectionGroupsByAreaType(areaId, typeId);
         } else {
-          console.log('area, grp')
           // area, grp
           this.getCollectionsForCategoryArea(groupId, areaId);
           this.getSubjectsForAreaGroup(areaId, groupId);
@@ -66,13 +62,11 @@ export class DispatchService {
         }
       } else if (subjectId) {
         if (typeId) {
-          console.log('area, subject type')
           // area, subject type
           this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
           this.getCollectionGroupsByAreaSubjectType(areaId, subjectId, typeId);
           this.getSubjectsForAreaType(areaId, typeId);
         } else {
-          console.log('area, subject')
           // area, subject
           this.getCollectionsForAreaSubject(areaId, subjectId);
           this.getCollectionGroupsBySubject(subjectId);
@@ -80,14 +74,12 @@ export class DispatchService {
         }
         this.getTypesForAreaSubject(areaId, subjectId);
       } else if (typeId) {
-        console.log('area  type')
         // area  type
         this.getCollectionsForAreaType(areaId, typeId);
         this.getSubjectsForAreaType(areaId, typeId);
         this.getCollectionGroupsByAreaType(areaId, typeId);
         this.getTypesForArea(areaId);
       } else {
-        console.log('area')
         // area
         this.getCollectionsForArea(areaId);
         this.getSubjectsForArea(areaId);
@@ -97,14 +89,11 @@ export class DispatchService {
     } else if (groupId) {
       if (subjectId) {
         if (typeId) {
-          console.log('grp , sub, type')
           // grp , sub, type
         } else {
-          console.log('grp, sub')
           // grp, sub
         }
       } else if (typeId) {
-        console.log('grp, type')
         // grp type
         this.getCollectionsForCategoryType(groupId, typeId);
         this.getSubjectsForType(typeId);
@@ -112,27 +101,23 @@ export class DispatchService {
       }
     } else if (subjectId) {
       if (typeId) {
-        console.log('subject , type')
         // subject , type
         this.getCollectionsForTypeSubject(typeId, subjectId);
         this.getSubjectsForType(typeId);
         this.getCollectionGroupsBySubjectType(subjectId, typeId);
       } else {
-        console.log('subject')
         this.getCollectionsForSubject(subjectId);
         this.getAllSubjects();
         this.getCollectionGroupsBySubject(subjectId);
       }
       this.getTypesForSubject(subjectId);
     } else if (typeId) {
-      console.log('type')
       // type
       this.getCollectionsForType(typeId);
       this.getSubjectsForType(typeId);
       this.getCollectionGroupsByType(typeId);
       this.getAllTypes();
     } else {
-      console.log('all')
       // all
       this.getAllCollections();
       this.getAllSubjects();

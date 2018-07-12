@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MatSelectionList} from '@angular/material';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 export interface SelectedSubjectEvent {
-  selected: SubjectType[];
+  selected: FieldFilterType[];
 }
 
 @Component({

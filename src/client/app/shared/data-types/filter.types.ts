@@ -1,9 +1,8 @@
 import {AreaFilterType} from './area-filter.type';
-import {TypesFilterType} from './types-filter.type';
-import {SubjectType} from './subject.type';
+import {FieldFilterType} from './field-filter.type';
 
 export class FilterTypes {
   areas: AreaFilterType[];
-  types: TypesFilterType[];
-  subject: SubjectType[];
+  types: FieldFilterType[];
+  subject: FieldFilterType[];
 }

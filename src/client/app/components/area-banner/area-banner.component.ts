@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs/Subscription';
 import * as fromFilter from '../../reducers/filter.reducers';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
 import {AreasFilter} from '../../shared/data-types/areas-filter';
-import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {TypesFilter} from '../../shared/data-types/types-filter';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
 
@@ -84,9 +84,7 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
     this.watcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
         this.isMobile = true;
-        console.log('setting mobile to true')
       } else {
-        console.log('setting mobile to false')
         this.isMobile = false;
       }
     });

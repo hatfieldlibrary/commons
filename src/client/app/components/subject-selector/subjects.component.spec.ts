@@ -19,22 +19,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SubjectsComponent} from './subjects.component';
 import {MatButtonModule, MatIconModule, MatListItem, MatListModule} from '@angular/material';
-import {RouterModule} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {KeyboardArrowForwardSvgComponent} from '../svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component';
 import {KeyboardArrowBackSvgComponent} from '../svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import {ElementRef} from '@angular/core';
 import {SetIntervalService} from '../../services/timers/interval.service';
 import {By} from '@angular/platform-browser';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/of';
 import {HttpClientModule} from '@angular/common/http';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
-const mockSubjectList: SubjectType[] = [
+const mockSubjectList: FieldFilterType[] = [
   {
     id: 1,
     name: 'sub one'

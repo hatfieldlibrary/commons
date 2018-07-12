@@ -1,7 +1,8 @@
-import {TypesFilterType} from './types-filter.type';
+
+import {FieldFilterType} from './field-filter.type';
 
 export interface TypesFilter {
-  types: TypesFilterType[];
-  selectedTypes: TypesFilterType[];
-  previousTypes?: TypesFilterType[];
+  types: FieldFilterType[];
+  selectedTypes: FieldFilterType[];
+  previousTypes?: FieldFilterType[];
 }

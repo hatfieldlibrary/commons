@@ -28,11 +28,11 @@ import * as fromRoot from '../../reducers';
 
 import {SetIntervalService} from '../../services/timers/interval.service';
 import {MatListItem} from '@angular/material';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {SetSubjectFilter} from '../../actions/filter.actions';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 export interface SelectedSubjectEvent {
-  selected: SubjectType;
+  selected: FieldFilterType;
 }
 
 @Component({
@@ -43,8 +43,8 @@ export interface SelectedSubjectEvent {
 })
 export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @Input() subjectList: SubjectType[];
-  @Input() selectedSubject: SubjectType;
+  @Input() subjectList: FieldFilterType[];
+  @Input() selectedSubject: FieldFilterType;
   @Output() subjectNavigation: any = new EventEmitter<any>();
   @ViewChild('container') container: ElementRef;
   @ViewChild('list', {read: ElementRef}) subjects: ElementRef;
@@ -96,7 +96,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  private getSelectedSubjectInfo(subjectId: number): SubjectType {
+  private getSelectedSubjectInfo(subjectId: number): FieldFilterType {
     return this.subjectList.find((current) => current.id === subjectId);
   }
 
@@ -104,7 +104,7 @@ export class SubjectsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Resets the collection list in store.
    */
   addSubject(subjectId): void {
-    const selectedSubject: SubjectType = this.getSelectedSubjectInfo(+subjectId);
+    const selectedSubject: FieldFilterType = this.getSelectedSubjectInfo(+subjectId);
     this.store.dispatch(new SetSubjectFilter([selectedSubject]));
     const subjectEventPayload: SelectedSubjectEvent = {selected: selectedSubject};
     this.subjectNavigation.emit(subjectEventPayload);

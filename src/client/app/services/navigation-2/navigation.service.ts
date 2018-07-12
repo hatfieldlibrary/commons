@@ -1,25 +1,41 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
-import {s} from '@angular/core/src/render3';
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {Subscription} from 'rxjs/Subscription';
-import {RemoveSelectedSubjects} from '../../actions/filter.actions';
+import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../actions/filter.actions';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import {FieldValues} from '../../shared/enum/field-names';
+
+interface RouterIds {
+  subjectId: string;
+  typeId: string;
+  groupId: string;
+}
 
 @Injectable()
 export class NavigationServiceB {
 
   urlRootPath = environment.appRoot;
   removedSubjects$: Subscription;
-  private removedSubs: SubjectType[];
+  removedGroups$: Subscription;
+  removedTypes$: Subscription;
+  removedSubs: FieldFilterType[];
+  removedGroups: FieldFilterType[];
+  removedTypes: FieldFilterType[];
 
   constructor(private router: Router, private store: Store<fromRoot.State>) {
-    this.removedSubjects$ = store.select(fromRoot.getRemovedSubject).subscribe(sub => {
-      this.removedSubs = sub;
-    })
+    // No need to unsubscribe. We're in a singleton.
+    this.removedSubjects$ = store.select(fromRoot.getRemovedSubject).subscribe(rem => {
+      this.removedSubs = rem;
+    });
+    this.removedTypes$ = store.select(fromRoot.getRemovedType).subscribe(rem => {
+      this.removedTypes = rem;
+    });
+    this.removedGroups$ = store.select(fromRoot.getRemovedGroup).subscribe(rem => {
+      this.removedGroups = rem;
+    });
   }
 
   /**
@@ -50,7 +66,6 @@ export class NavigationServiceB {
    * @returns {string}
    */
   getIds(list: any[]): string {
-
     // do runtime check of the list shape.
     if (this.isIllegalType(list)) {
       throw new Error('Illegal type: The Array must contain objects that have an id field.');
@@ -74,31 +89,97 @@ export class NavigationServiceB {
       'id', itemId,
       areaId
     ]);
-
   }
 
   /**
-   * This function uses the removedSubs field value provided by the store
-   * to update the subject id string (removing ids in necessary).  Once done,
-   * it dispatches to reset the reducer.
+   * Sets the field ids used for routing. Checks the removed field
+   * status and alters the route if fields have been removed by
+   * the filter component.
+   * @param {string} subjectId
+   * @param {string} typeId
+   * @param {string} groupId
+   * @returns {RouterIds}
+   */
+  private setIdFields(subjectId: string, typeId: string, groupId: string): RouterIds {
+    const ids = {
+      subjectId: subjectId,
+      typeId: typeId,
+      groupId: groupId
+    };
+    if (this.removedSubs[0].id !== 0) {
+      ids.subjectId = this.removeIds(subjectId, this.removedSubs, FieldValues.SUBJECT);
+    }
+    if (this.removedTypes[0].id !== 0) {
+      ids.typeId = this.removeIds(typeId, this.removedTypes, FieldValues.TYPE);
+    }
+    if (this.removedGroups[0].id !== 0) {
+      ids.groupId = this.removeIds(groupId, this.removedGroups, FieldValues.GROUP);
+    }
+    return ids;
+  }
+
+  /**
+   * This function removes ids if the appear in the provided array of removed fields.
    * @param {string} id the comma separated list of subject ids
+   * @param removedFields fields obtained from the store
+   * @param type the field type
    * @returns {string}
    */
-  private removeIds(id: string) {
+  private removeIds(id: string, removedFields: FieldFilterType[], type: string) {
     let updatedId = '';
     if (id !== null && typeof id !== 'undefined') {
       const idList = id.split(',');
-      idList.forEach((singleId) => {
-        const test = this.removedSubs.findIndex((sub) => sub.id === +singleId);
-        if (test === -1) {
-          updatedId += singleId + ',';
+      removedFields.forEach(sub => {
+        const checkedId = this.checkId(String(sub.id), idList);
+        if (checkedId !== null) {
+          updatedId += checkedId + ',';
         }
       });
+      // remove comma at end of the string.
       updatedId = updatedId.slice(0, -1);
     }
-    // Done with removed subjects...update the store.
-    this.store.dispatch(new RemoveSelectedSubjects([{id: 0, name: ''}]));
+    // Finished removing fields...update store to the default state.
+    this.updateStore(type);
     return updatedId;
+  }
+
+  /**
+   * Once fields have been removed from the route, the corresponding
+   * store must be returned to the default state.
+   * @param {string} type
+   */
+  private updateStore(type: string): void {
+
+    switch (type) {
+      case FieldValues.SUBJECT: {
+        this.store.dispatch(new RemoveSelectedSubjects([{id: 0, name: ''}]));
+        break;
+      }
+      case FieldValues.TYPE: {
+        this.store.dispatch(new RemoveSelectedTypes([{id: 0, name: ''}]));
+        break;
+      }
+      case FieldValues.GROUP: {
+        this.store.dispatch(new RemoveSelectedGroups([{id: 0, name: ''}]));
+        break;
+      }
+      default: {
+        console.log('value not allowed.');
+      }
+    }
+  }
+  /**
+   * Checks whether the provided field id has been removed.
+   * @param {string} fieldId
+   * @param {string[]} removedFields
+   * @returns {any}
+   */
+  private checkId(fieldId: string, removedFields: string[]) {
+    const test = removedFields.indexOf(fieldId)
+    if (test !== -1) {
+      return fieldId;
+    }
+    return null;
   }
 
   /**
@@ -108,13 +189,17 @@ export class NavigationServiceB {
    * @param {string} subjectId the subject id.
    */
   /*
-   * TODO: this builds in a 4-way permutation that includes area.  Area could be omitted if the design doesn't require.
+   * TODO: this builds in a 4-way permutation that includes global search (and potentially multiple
+   * selected areas). Current design excludes global and allows only single area.
    */
   public navigateFilterRoute(areaId: string, typeId: string, subjectId: string, groupId: string): void {
 
-    subjectId = this.removeIds(subjectId);
+    const fields: RouterIds = this.setIdFields(subjectId, typeId, groupId);
 
-    if (this.isFieldSelected(subjectId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId) && this.isFieldSelected(groupId)) {
+    if (this.isFieldSelected(fields.subjectId)
+      && this.isFieldSelected(fields.typeId)
+      && this.isFieldSelected(areaId)
+      && this.isFieldSelected(fields.groupId)) {
 
       this.router.navigate(['/',
         this.urlRootPath,
@@ -124,7 +209,9 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ]);
-    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(subjectId) && this.isFieldSelected(groupId)) {
+    } else if (this.isFieldSelected(fields.typeId)
+      && this.isFieldSelected(fields.subjectId)
+      && this.isFieldSelected(fields.groupId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
@@ -132,7 +219,9 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ]);
-    } else if (this.isFieldSelected(areaId) && this.isFieldSelected(typeId) && this.isFieldSelected(groupId)) {
+    } else if (this.isFieldSelected(areaId)
+      && this.isFieldSelected(fields.typeId)
+      && this.isFieldSelected(fields.groupId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
@@ -140,7 +229,9 @@ export class NavigationServiceB {
         'area', areaId,
         'type', typeId
       ]);
-    } else if (this.isFieldSelected(areaId) && this.isFieldSelected(subjectId) && this.isFieldSelected(groupId)) {
+    } else if (this.isFieldSelected(areaId)
+      && this.isFieldSelected(fields.subjectId)
+      && this.isFieldSelected(fields.groupId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
@@ -148,7 +239,9 @@ export class NavigationServiceB {
         'area', areaId,
         'subject', subjectId
       ]);
-    } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(typeId) && this.isFieldSelected(areaId)) {
+    } else if (this.isFieldSelected(fields.subjectId)
+      && this.isFieldSelected(fields.typeId)
+      && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
@@ -156,39 +249,39 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ]);
-    }  else if (this.isFieldSelected(groupId) && this.isFieldSelected(areaId)) {
+    } else if (this.isFieldSelected(fields.groupId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'category', groupId,
         'area', areaId
       ]);
-    } else if (this.isFieldSelected(subjectId) && this.isFieldSelected(areaId)) {
+    } else if (this.isFieldSelected(fields.subjectId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'area', areaId,
         'subject', subjectId
       ]);
-    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(areaId)) {
+    } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'area', areaId,
         'type', typeId
       ]);
-    } else if (this.isFieldSelected(typeId) && this.isFieldSelected(subjectId)) {
+    } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(fields.subjectId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'type', typeId,
         'subject', subjectId
       ]);
-    } else if (this.isTypeSelected(typeId)) {
+    } else if (this.isTypeSelected(fields.typeId)) {
       this.router.navigate(['/', this.urlRootPath, 'collection', 'type', typeId]);
     } else if (this.isAreaSelected(areaId)) {
       this.router.navigate(['/', this.urlRootPath, 'collection', 'area', areaId]);
-    } else if (this.isSubjectSelected(subjectId)) {
+    } else if (this.isSubjectSelected(fields.subjectId)) {
       this.router.navigate(['/', this.urlRootPath, 'collection', 'subject', subjectId]);
     } else {
       this.router.navigate(['/', this.urlRootPath, 'collection']);
@@ -213,7 +306,10 @@ export class NavigationServiceB {
     return (typeof id !== 'undefined') && (id !== null) && (id.length) !== 0 && (id !== '0');
   }
 
-  private _handleAreaBackLinks(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
+  private _handleAreaBackLinks(selectedArea: string,
+                               selectedGroup: string,
+                               selectedSubject: string,
+                               selectedTypes: string): string {
     if (this.isSubjectSelected(selectedSubject) && selectedTypes && selectedGroup) {
 
       return this._areaGroupSubjectTypeLink(selectedArea, selectedGroup, selectedSubject, selectedTypes);
@@ -226,7 +322,7 @@ export class NavigationServiceB {
     } else if (this.isSubjectSelected(selectedSubject) && this.isTypeSelected(selectedTypes)) {
 
       return this._areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
-    }  else if (this.isTypeSelected(selectedTypes)) {
+    } else if (this.isTypeSelected(selectedTypes)) {
 
       return this._areaTypeLink(selectedArea, selectedTypes);
     } else if (this.isSubjectSelected(selectedSubject)) {
@@ -251,7 +347,10 @@ export class NavigationServiceB {
     }
   }
 
-  private _areaGroupSubjectTypeLink(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
+  private _areaGroupSubjectTypeLink(selectedArea: string,
+                                    selectedGroup: string,
+                                    selectedSubject: string,
+                                    selectedTypes: string): string {
     return '/' + this.urlRootPath +
       `/collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
   }
@@ -291,31 +390,31 @@ export class NavigationServiceB {
   }
 
   private _areaSubjectLink(selectedArea: string, selectedSubject: string): string {
-    return '/' +  this.urlRootPath + `/collection/area/${selectedArea}/subject/${selectedSubject}`;
+    return '/' + this.urlRootPath + `/collection/area/${selectedArea}/subject/${selectedSubject}`;
   }
 
   private _areaTypeLink(selectedArea: string, selectedTypes: string): string {
-    return '/' +  this.urlRootPath + `/collection/area/${selectedArea}/type/${selectedTypes}`;
+    return '/' + this.urlRootPath + `/collection/area/${selectedArea}/type/${selectedTypes}`;
   }
 
   private _areaLink(selectedArea: string): string {
-    return '/' +  this.urlRootPath + `/collection/area/${selectedArea}`;
+    return '/' + this.urlRootPath + `/collection/area/${selectedArea}`;
   }
 
   private _globalLink(): string {
-    return '/' +  this.urlRootPath + '/collection'
+    return '/' + this.urlRootPath + '/collection'
   }
 
   private _globalTypeLink(selectedTypes: string): string {
-    return '/' +  this.urlRootPath + `/collection/type/${selectedTypes}`;
+    return '/' + this.urlRootPath + `/collection/type/${selectedTypes}`;
   }
 
   private _globalSubjectLink(selectedSubject: string): string {
-    return '/' +  this.urlRootPath + `/collection/subject/${selectedSubject}`;
+    return '/' + this.urlRootPath + `/collection/subject/${selectedSubject}`;
   }
 
   private _globalSubjectTypeLink(selectedSubject: string, selectedTypes: string): string {
-    return '/' +  this.urlRootPath + `/collection}/subject/${selectedSubject}/type/${selectedTypes}`;
+    return '/' + this.urlRootPath + `/collection}/subject/${selectedSubject}/type/${selectedTypes}`;
   }
 
   // the zero area (global search) is handled here.  However, global search currently not implemented in app.

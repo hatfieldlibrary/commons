@@ -1,6 +1,6 @@
-export class CollectionGroupType {
-
-  id: number;
-  name: string;
-
-}
+// export class CollectionGroupType {
+//
+//   id: number;
+//   name: string;
+//
+// }

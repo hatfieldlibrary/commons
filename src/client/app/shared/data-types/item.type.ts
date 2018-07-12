@@ -16,7 +16,7 @@
  */
 
 import {ParentAreaType} from './parent-area.type';
-import {SubjectType} from './subject.type';
+import {FieldFilterType} from './field-filter.type';
 
 /**
  * Created by mspalti on 3/23/17.
@@ -56,6 +56,6 @@ export class ItemType {
     areaId: string;
   };
   itemTypes: ItemTypesInterface[];
-  subjects: SubjectType[];
+  subjects: FieldFilterType[];
 
 }

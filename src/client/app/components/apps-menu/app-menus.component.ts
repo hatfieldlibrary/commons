@@ -9,9 +9,7 @@ import {DOCUMENT} from '@angular/common';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import 'rxjs/add/operator/filter';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
-import {SubjectType} from '../../shared/data-types/subject.type';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'app-menus-component',
@@ -23,9 +21,9 @@ export class AppMenusComponent implements OnDestroy {
 
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
-  @Input() selectedSubjects: SubjectType[];
-  @Input() selectedTypes: TypesFilterType[];
-  @Input() selectedGroups: CollectionGroupFilter[];
+  @Input() selectedSubjects: FieldFilterType[];
+  @Input() selectedTypes: FieldFilterType[];
+  @Input() selectedGroups: FieldFilterType[];
   @Input() showBack: boolean;
   @Input() title: string;
   public previousUrl = '';

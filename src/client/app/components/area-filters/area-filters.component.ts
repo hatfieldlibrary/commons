@@ -13,11 +13,14 @@ import * as fromFilter from '../../reducers/filter.reducers';
 import {Subscription} from 'rxjs/Subscription';
 import {NormalizedFilter} from '../../shared/data-types/normalized-filter';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
-import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter.type';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {TypesFilter} from '../../shared/data-types/types-filter';
+
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
-import {RemoveSelectedSubjects} from '../../actions/filter.actions';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import {FieldValues} from '../../shared/enum/field-names';
+import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../actions/filter.actions';
 
 
 export interface DeselectedFilter {
@@ -33,8 +36,10 @@ export interface DeselectedFilter {
 })
 export class AreaFiltersComponent implements OnChanges, OnDestroy {
 
-  @Output() removeFilter: EventEmitter<any> = new EventEmitter<any>();
-  @Input() filters: fromFilter.State;
+  @Output()
+  removeFilter: EventEmitter<any> = new EventEmitter<any>();
+  @Input()
+  filters: fromFilter.State;
   @Input()
   subjects: SubjectFilter;
   @Input()
@@ -77,54 +82,97 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   }
 
   private updateGroupFilter(): void {
-    this.filters.selectedGroups.forEach(grp => {
-      if (grp.id !== 0) {
-        const activeIndex = this.groups.groups.findIndex(a => a.id === grp.id);
-        if (activeIndex >= 0) {
-          this.normalizedFilter.push({type: 'group', name: grp.name, id: grp.id, active: true});
-        } else {
-          this.normalizedFilter.push({type: 'group', name: grp.name, id: grp.id, active: false})
+    const updatedGroups = [];
+    if (this.groups.groups.length > 0) {
+      this.filters.selectedGroups.forEach(grp => {
+        if (grp.id !== 0) {
+          const activeIndex = this.groups.groups.findIndex(g => g.id === grp.id);
+          if (activeIndex >= 0) {
+            this.normalizedFilter.push({type: 'group', name: grp.name, id: grp.id, active: true});
+          } else {
+            updatedGroups.push({id: grp.id, name: grp.name});
+            this.normalizedFilter.push({type: 'group', name: grp.name, id: grp.id, active: false})
+          }
         }
+      });
+      if (updatedGroups.length > 0) {
+        this.initialized = true;
+        this.updateRouterNavigation(FieldValues.GROUP, updatedGroups);
       }
-    });
+    }
   }
 
   private updateTypeFilter(): void {
     const updatedTypes = [];
-    this.filters.selectedTypes.forEach(type => {
-      if (type.id !== 0) {
-        const activeIndex = this.types.types.findIndex(a => a.id === type.id);
-        if (activeIndex >= 0) {
-          updatedTypes.push({id: type.id, name: type.name});
-          this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: true});
-        } else {
-          this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: false})
+    if (this.types.types.length > 0) {
+      this.filters.selectedTypes.forEach(type => {
+        if (type.id !== 0) {
+          const activeIndex = this.types.types.findIndex(a => a.id === type.id);
+          if (activeIndex >= 0) {
+            this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: true});
+          } else {
+            updatedTypes.push({id: type.id, name: type.name});
+            this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: false})
+          }
         }
+      });
+      if (updatedTypes.length > 0) {
+        this.initialized = true;
+        this.updateRouterNavigation(FieldValues.TYPE, updatedTypes);
       }
-    });
-
+    }
   }
 
   private updateSubjectFilter(): void {
+
     const updatedSubjects = [];
-    this.filters.selectedSubjects.forEach(sub => {
-      if (sub.id !== 0) {
-        const activeIndex = this.subjects.subjects.findIndex(a => a.id === sub.id);
-        if (activeIndex >= 0) {
-          this.normalizedFilter.push({type: 'subject', name: sub.name, id: sub.id, active: true});
-        } else {
-          updatedSubjects.push({id: sub.id, name: sub.name});
-          this.normalizedFilter.push({type: 'subject', name: sub.name, id: sub.id, active: false})
+    if (this.subjects.subjects.length > 0) {
+      this.filters.selectedSubjects.forEach(sub => {
+        if (sub.id !== 0) {
+          const activeIndex = this.subjects.subjects.findIndex(a => a.id === sub.id);
+          if (activeIndex >= 0) {
+            this.normalizedFilter.push({type: 'subject', name: sub.name, id: sub.id, active: true});
+          } else {
+            updatedSubjects.push({id: sub.id, name: sub.name});
+            this.normalizedFilter.push({type: 'subject', name: sub.name, id: sub.id, active: false})
+          }
+        }
+      });
+      if (updatedSubjects.length > 0) {
+        this.initialized = true;
+        this.updateRouterNavigation(FieldValues.SUBJECT, updatedSubjects);
+      }
+    }
+  }
+
+  /**
+   * This function adds removed fields to the corresponding state. The updated state
+   * is used to adjust the url for the subsequent router call.
+   * @param {string} fieldType
+   * @param {FieldFilterType[]} data
+   */
+  private updateRouterNavigation(fieldType: string, data: FieldFilterType[]) {
+    // If fields were removed, update the store. The next time the corresponding field option is
+    // chosen, the navigation service will use the revised store to modify the route.
+    if (data.length > 0) {
+      switch (fieldType) {
+        case FieldValues.SUBJECT: {
+          this.store.dispatch(new RemoveSelectedSubjects(data));
+          break;
+        }
+        case FieldValues.TYPE: {
+          this.store.dispatch(new RemoveSelectedTypes(data));
+          break;
+        }
+        case FieldValues.GROUP: {
+          this.store.dispatch(new RemoveSelectedGroups(data));
+          break;
+        }
+        default: {
+          console.log('Invalid choice');
+          break;
         }
       }
-    });
-    // If subjects were removed, then also update the store. The next time a subject option is
-    // chosen, the navigation service will use the store to modify the route.
-    if (updatedSubjects.length > 0) {
-      // Set initialized to true so ngChanges will not call again. Otherwise, the store dispatch
-      // creates a loop.
-      this.initialized = true;
-      this.store.dispatch(new RemoveSelectedSubjects(updatedSubjects));
     }
   }
 

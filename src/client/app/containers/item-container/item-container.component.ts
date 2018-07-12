@@ -32,9 +32,8 @@ import {fadeIn} from '../../animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {SubjectType} from '../../shared/data-types/subject.type';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'app-item-container',
@@ -46,9 +45,9 @@ import {NavigationServiceB} from '../../services/navigation-2/navigation.service
 export class ItemContainerComponent implements OnInit, OnDestroy {
 
   related$: Observable<RelatedType[]>;
-  selectedSubjects$: Observable<SubjectType[]>;
-  selectedTypes$: Observable<TypesFilterType[]>;
-  selectedGroups$: Observable<TypesFilterType[]>;
+  selectedSubjects$: Observable<FieldFilterType[]>;
+  selectedTypes$: Observable<FieldFilterType[]>;
+  selectedGroups$: Observable<FieldFilterType[]>;
   item$: Observable<ItemType>;
   areas: AreaFilterType[];
   id: string;
@@ -58,9 +57,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   selectedArea: string;
   watchers: Subscription;
   related: RelatedType[];
-  private selectedSubjects: SubjectType[];
-  private selectedTypes: TypesFilterType[];
-  private selectedGroups: TypesFilterType[];
+  private selectedSubjects: FieldFilterType[];
+  private selectedTypes: FieldFilterType[];
+  private selectedGroups: FieldFilterType[];
 
   constructor(private store: Store<fromRoot.State>,
               private media: ObservableMedia,
@@ -128,7 +127,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * @param data the item object
    */
   getRelatedItems(data: ItemType) {
-    console.log(data.subjects)
     if (typeof data.subjects !== 'undefined' &&
       typeof this.id !== 'undefined') {
 
@@ -175,8 +173,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
     const subjectIds = this.navigationService.getIds(this.selectedSubjects);
     const groupIds = this.navigationService.getIds(this.selectedGroups);
-    console.log(groupIds)
-    console.log(typeIds)
     const path =
       this.navigationService.getBackLink(this.selectedArea, groupIds, subjectIds, typeIds);
     return path;
@@ -201,7 +197,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     });
     this.watchers.add(typesWatcher);
     const groupsWatcher = this.selectedGroups$.subscribe((data) => {
-      console.log(data)
       this.selectedGroups = data;
     });
     this.watchers.add(groupsWatcher);

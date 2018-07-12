@@ -177,7 +177,6 @@ export function reducer(state = initialState, action: CollectionActions): State 
     // }
 
     case CollectionActionTypes.LIST_BY_CATEGORY_AREA: {
-      console.log('category action')
       return Object.assign({}, state, {
         collections: [],
         loading: true
