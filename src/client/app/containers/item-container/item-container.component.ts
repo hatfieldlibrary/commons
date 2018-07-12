@@ -28,14 +28,12 @@ import * as areaActions from '../../actions/area.actions';
 import * as fromRelated from '../../actions/related.actions';
 import {RelatedType} from '../../shared/data-types/related-collection';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-
 import {fadeIn} from '../../animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
-import {SubjectType} from '../../shared/data-types/subject.type';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'app-item-container',
@@ -47,8 +45,9 @@ import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
 export class ItemContainerComponent implements OnInit, OnDestroy {
 
   related$: Observable<RelatedType[]>;
-  selectedSubject$: Observable<SubjectFilterType>;
-  selectedTypes$: Observable<TypesFilterType[]>;
+  selectedSubjects$: Observable<FieldFilterType[]>;
+  selectedTypes$: Observable<FieldFilterType[]>;
+  selectedGroups$: Observable<FieldFilterType[]>;
   item$: Observable<ItemType>;
   areas: AreaFilterType[];
   id: string;
@@ -58,43 +57,47 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   selectedArea: string;
   watchers: Subscription;
   related: RelatedType[];
+  private selectedSubjects: FieldFilterType[];
+  private selectedTypes: FieldFilterType[];
+  private selectedGroups: FieldFilterType[];
 
   constructor(private store: Store<fromRoot.State>,
               private media: ObservableMedia,
               private route: ActivatedRoute,
               private router: Router,
+              private navigationService: NavigationServiceB,
               @Inject(DOCUMENT) private document) {
 
     this.watchers = new Subscription();
 
     /** Assures that the page scrolls to top if user chooses related item. */
-   // const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
+      // const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
       // Chrome canary supports the new standard usage with documentElement, but
       // Chrome and presumably other browsers still expect body.
-       //this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-       //this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
+      // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
+      // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
 
-    // });
-    // if (routeEventWatcher) {
-    //   this.watchers.add(routeEventWatcher);
-    // }
+      // });
+      // if (routeEventWatcher) {
+      //   this.watchers.add(routeEventWatcher);
+      // }
 
-    // Set the media observable subscription for assigning the related items column count.
+      // Set the media observable subscription for assigning the related items column count.
     const mediaWatcher = this.media.subscribe((change: MediaChange) => {
-      this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
-      if (change.mqAlias === 'xs') {
-        this.columns = 1;
-      } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
-        this.columns = 2;
-      } else if (change.mqAlias === 'lg') {
-        this.columns = 3;
-      } else {
-        this.columns = 4;
-      }
-    });
-  if (mediaWatcher) {
-    this.watchers.add(mediaWatcher);
-  }
+        this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
+        if (change.mqAlias === 'xs') {
+          this.columns = 1;
+        } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
+          this.columns = 2;
+        } else if (change.mqAlias === 'lg') {
+          this.columns = 3;
+        } else {
+          this.columns = 4;
+        }
+      });
+    if (mediaWatcher) {
+      this.watchers.add(mediaWatcher);
+    }
 
   }
 
@@ -129,7 +132,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
       let subjectString = '';
       for (const subject of data.subjects) {
-        subjectString += subject + ',';
+        subjectString += subject.id + ',';
       }
       // dispatch if we have subjects
       if (subjectString.length > 0) {
@@ -147,7 +150,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     if (!this.areasAvailable) {
       this.store.dispatch(new areaActions.AreaListAction());
     }
-
   }
 
   /**
@@ -166,19 +168,43 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     }
   }
 
+  getBackLink(): string {
+
+    const typeIds = this.navigationService.getIds(this.selectedTypes);
+    const subjectIds = this.navigationService.getIds(this.selectedSubjects);
+    const groupIds = this.navigationService.getIds(this.selectedGroups);
+    const path =
+      this.navigationService.getBackLink(this.selectedArea, groupIds, subjectIds, typeIds);
+    return path;
+  }
+
   ngOnInit() {
 
     this.item$ = this.store.select(fromRoot.getItem);
     this.related$ = this.store.select(fromRoot.getRelated);
-    this.selectedSubject$ = this.store.select(fromRoot.getSubjectsFilter);
+    this.selectedSubjects$ = this.store.select(fromRoot.getSubjectsFilter);
     this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
+    this.selectedGroups$ = this.store.select(fromRoot.getCollectionsGroupFilter);
     this.setAreasAvailable();
 
+    const subjectsWatcher = this.selectedSubjects$.subscribe((data) => {
+      this.selectedSubjects = data;
+    });
+
+    this.watchers.add(subjectsWatcher);
+    const typesWatcher = this.selectedTypes$.subscribe((data) => {
+      this.selectedTypes = data;
+    });
+    this.watchers.add(typesWatcher);
+    const groupsWatcher = this.selectedGroups$.subscribe((data) => {
+      this.selectedGroups = data;
+    });
+    this.watchers.add(groupsWatcher);
     // Once we have item information, request related items.
     const itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
       this.getRelatedItems(data);
     });
-    if(itemWatcher) {
+    if (itemWatcher) {
       this.watchers.add(itemWatcher);
     }
 
@@ -197,10 +223,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
         this.initializeAreas();
         this.initializeColumnCount();
       });
-    if(routeWatcher) {
+    if (routeWatcher) {
       this.watchers.add(routeWatcher);
     }
-
   }
 
   ngOnDestroy(): void {

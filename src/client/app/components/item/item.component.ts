@@ -16,12 +16,12 @@
  */
 
 import {
-  Component, Input, ChangeDetectionStrategy} from '@angular/core';
+  Component, Input, ChangeDetectionStrategy
+} from '@angular/core';
 import {ItemType} from '../../shared/data-types/item.type';
 import {ObservableMedia} from '@angular/flex-layout';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
-import {NavigationService} from '../../services/navigation/navigation.service';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 /**
  * This is the parent component for presenting all item data.
@@ -32,23 +32,53 @@ import {NavigationService} from '../../services/navigation/navigation.service';
   styleUrls: ['./item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemComponent  {
+export class ItemComponent {
 
   @Input() item: ItemType;
   @Input() selectedArea: string;
-  @Input() selectedSubject: SubjectFilterType;
-  @Input() selectedTypes: TypesFilterType[];
-  state = '';
+  @Input() selectedSubjects: FieldFilterType[];
+  @Input() selectedGroups: FieldFilterType[];
+  @Input() selectedTypes: FieldFilterType[];
 
-  constructor(private navigationService: NavigationService,
-              public media: ObservableMedia) {}
+  constructor(private navigationService: NavigationServiceB,
+              public media: ObservableMedia) {
+  }
 
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
+    const subjectIds = this.navigationService.getIds(this.selectedSubjects);
+    const groupIds = this.navigationService.getIds(this.selectedGroups);
     const path =
-      this.navigationService.getBackLink(this.selectedArea, this.selectedSubject.id.toString(), typeIds);
+      this.navigationService.getBackLink(this.selectedArea, groupIds, subjectIds, typeIds);
     return path;
 
+  }
+
+  hasItems(): boolean {
+    return this.item.collection.items !== null;
+  }
+
+  hasDates(): boolean {
+    return this.item.collection.date !== null;
+  }
+
+  hasSubjects(): boolean {
+    return this.item.subjects !== null && this.item.subjects.length > 0;
+  }
+
+  hasTypes(): boolean {
+    return this.item.itemTypes !== null && this.item.itemTypes.length > 0;
+  }
+
+  getItemType(): string {
+    let itemType: string;
+    if (this.item.collection.assetType === 'itm') {
+
+      itemType = 'item';
+    } else {
+      itemType = 'collection';
+    }
+    return itemType;
   }
 
 }

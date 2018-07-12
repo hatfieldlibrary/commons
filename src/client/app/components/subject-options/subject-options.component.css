@@ -1,0 +1,11 @@
+.local-navigation  {
+  font-size: 14px;
+  white-space: nowrap;
+}
+.list-caption {
+  padding: 0 16px 12px;
+  margin: 0;
+}
+.side-nav-section {
+  margin-top: 0;
+}

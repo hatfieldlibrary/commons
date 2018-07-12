@@ -21,12 +21,12 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular/cli/plugins/karma'),
+      require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-scss-preprocessor'),
     //  require('karma-phantomjs-launcher'),
       require('karma-teamcity-reporter'),
@@ -37,14 +37,14 @@ module.exports = function (config) {
       { pattern: './src/client/themes/commons-app-theme.scss', included: true, watched: true},
     ],
     preprocessors: {
-      './src/client/test.ts': ['@angular/cli'],
+      './src/client/test.ts': ['@angular-devkit/build-angular'],
       './src/client/themes/commons-app-theme.scss': ['scss']
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
     },
     coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly' ],
+      dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
     angularCli: {

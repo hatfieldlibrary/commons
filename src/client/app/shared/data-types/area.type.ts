@@ -25,6 +25,7 @@ export class AreaType {
   linkLabel: string;
   url: string;
   searchUrl: string;
+  image: string;
   description: string;
   position: number;
 }

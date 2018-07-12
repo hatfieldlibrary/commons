@@ -19,18 +19,20 @@
  * Created by mspalti on 2/24/17.
  */
 import {SubjectActions, SubjectActionTypes} from '../actions/subject-actions';
-import {SubjectType} from '../shared/data-types/subject.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
-  subjects: SubjectType[];
-  selectedSubject: SubjectType;
+  subjects: FieldFilterType[];
+  selectedSubject: FieldFilterType[];
+  removedSubjects: FieldFilterType[];
   loading: boolean;
 
 }
 
 const initialState: State = {
   subjects: [],
-  selectedSubject: {id: 0, name: '', url: ''},
+  selectedSubject: [{id: 0, name: ''}],
+  removedSubjects: [{id: 0, name: ''}],
   loading: false
 };
 
@@ -44,15 +46,35 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
-    case SubjectActionTypes.SUBJECT_LIST_SUCCESS: {
+    case SubjectActionTypes.SUBJECT_REQUEST_SUCCESS: {
 
-      const result: SubjectType[] = <SubjectType[]>action.payload;
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         subjects: result,
         loading: false
       });
 
     }
+
+    case SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA_TYPE: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+
+    }
+
+    case SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
     case SubjectActionTypes.ALL_SUBJECT_LIST: {
       return Object.assign({}, state, {
         loading: true
@@ -60,15 +82,15 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
-    case SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS: {
-
-      const result: SubjectType[] = <SubjectType[]>action.payload;
-      return Object.assign({}, state, {
-        subjects: result,
-        loading: false
-      });
-
-    }
+    // case SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS: {
+    //
+    //   const result: SubjectType[] = <SubjectType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     subjects: result,
+    //     loading: false
+    //   });
+    //
+    // }
 
 
     case SubjectActionTypes.SUBJECT_LIST_FOR_TYPE: {
@@ -78,15 +100,15 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
-    case SubjectActionTypes.SUBJECT_LIST_FOR_TYPE_SUCCESS: {
-
-      const result: SubjectType[] = <SubjectType[]>action.payload;
-      return Object.assign({}, state, {
-        subjects: result,
-        loading: false
-      });
-
-    }
+    // case SubjectActionTypes.SUBJECT_LIST_FOR_TYPE_SUCCESS: {
+    //
+    //   const result: SubjectType[] = <SubjectType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     subjects: result,
+    //     loading: false
+    //   });
+    //
+    // }
 
     case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE: {
       return Object.assign({}, state, {
@@ -95,15 +117,15 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
-    case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS: {
-
-      const result: SubjectType[] = <SubjectType[]>action.payload;
-      return Object.assign({}, state, {
-        subjects: result,
-        loading: false
-      });
-
-    }
+    // case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS: {
+    //
+    //   const result: SubjectType[] = <SubjectType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     subjects: result,
+    //     loading: false
+    //   });
+    //
+    // }
 
 
     case SubjectActionTypes.CURRENT_SELECTED_SUBJECT: {
@@ -113,7 +135,7 @@ export function reducer(state = initialState, action: SubjectActions): State {
         return subject.id === +selectedId;
       });
       if (!selected) {
-        selected = initialState.selectedSubject;
+        [selected] = initialState.selectedSubject;
       }
       return Object.assign({}, state, {
         selectedSubject: selected
@@ -123,7 +145,7 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     case SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT: {
       return Object.assign({}, state, {
-        selectedSubject: {id: 0, name: '', url: ''}
+        selectedSubject: {id: 0, name: ''}
       });
     }
 
@@ -137,4 +159,6 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
 export const getSubjectList = (state: State) => state.subjects;
 
-export const getSelectedSubject = (state: State) => state.selectedSubject;
+// export const getRemovedSubjects = (state: State) => state.removedSubjects;
+
+// export const getSelectedSubject = (state: State) => state.selectedSubject;

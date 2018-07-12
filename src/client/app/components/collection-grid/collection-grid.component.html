@@ -1,0 +1,52 @@
+<!--<mat-grid-list cols="4" rowHeight="100px">-->
+<!--<mat-grid-tile-->
+<!--*ngFor="let tile of tiles"-->
+<!--[colspan]="tile.cols"-->
+<!--[rowspan]="tile.rows"-->
+<!--[style.background]="tile.color">-->
+<!--{{tile.text}}-->
+<!--</mat-grid-tile>-->
+<!--</mat-grid-list>-->
+
+<div class="grid-result-info mat-caption">
+  <span class="bold-caption">{{totalResults()}}</span><span>&nbsp;item<span *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
+</div>
+
+<mat-grid-list cols="{{cols}}" rowHeight="410" gutterSize="2" style="margin-top: 0px;" >
+
+  <mat-grid-tile class="collection-list-item result-item"
+                 [ngClass]="{'mobile-list-item-padding': isMobile}"
+                 (click)="navigateToItem(collection.id)"
+                 [@fadeIn]
+                 *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
+    <mat-card>
+      <img mat-card-image class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
+      <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
+        <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
+
+        <!--<div>-->
+        <!--<span class="mat-caption">{{setAssetType(collection.ctype)}}</span>-->
+        <!--</div>-->
+        <div
+          style="position: absolute; left: 0px; top: 230px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+          <div>
+          <span class="mat-caption card-label">Part of:&nbsp;&nbsp;</span>
+          <span class="mat-body-1 card-text" *ngFor="let parent of collection.parent; let i = index">
+            {{parent.title}}<span *ngIf="collection.parent.length !== i + 1">,</span></span>
+        </div>
+        <div style="margin-top: 10px">
+          <span class="mat-caption card-label">Content: </span>
+          <!--<span class="mat-caption bold-caption ">Content:</span>-->
+          <span class="mat-body-1 card-text" *ngFor="let type of collection.types ; let i = index">
+            {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
+        </div>
+        </div>
+
+
+        <app-lock-svg *ngIf="collection.restricted" style="position: absolute; left: 18px; bottom: 4px;"></app-lock-svg>
+
+      </div>
+    </mat-card>
+
+  </mat-grid-tile>
+</mat-grid-list>

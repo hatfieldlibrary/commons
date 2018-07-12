@@ -15,9 +15,11 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
 import {RelatedType} from '../../shared/data-types/related-collection';
 import {environment} from '../../environments/environment';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-related-items',
@@ -25,18 +27,28 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./related-items.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RelatedItemsComponent {
+export class RelatedItemsComponent implements OnDestroy {
 
   @Input() related: RelatedType[];
   @Input() selectedArea: string;
   @Input() columns: number;
+  isMobile = false;
+  watcher: Subscription;
   appRoot = environment.appRoot;
   imagePath = environment.apiHost +  environment.imagePath;
 
-  constructor() {}
+  constructor(private media: ObservableMedia) {
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+  }
 
-  scrollToTop() {
-
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
   }
 
 }

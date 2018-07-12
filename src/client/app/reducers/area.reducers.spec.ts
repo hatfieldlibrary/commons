@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2017.
  *
@@ -18,10 +17,11 @@
 
 import {getAreaInfo, reducer, State} from './area.reducers';
 import {
-  AreaListAction, AreaListActionFailed, AreaListActionSuccess, AreaDefaultList, AreaInformation, AreaInformationSuccess
+  AreaListAction, AreaListActionFailed, AreaListSuccess, AreaDefaultList, AreaInformation, AreaInformationSuccess
 } from '../actions/area.actions';
 import {Action} from '@ngrx/store';
 import {AreaType} from '../shared/data-types/area.type';
+
 /**
  * Created by mspalti on 3/24/17.
  */
@@ -39,26 +39,28 @@ const areaListTypeMock = [
   }
 ];
 
-const areaMock = [{
+const areaMock = {
   id: 1,
-  title:  'Archival Collections',
-  linkLabel:  'Area Button Label',
-  url:  'Area URL',
-  searchUrl:  'Area Search URL',
-  description:  'Description Two.',
+  title: 'Archival Collections',
+  linkLabel: 'Area Button Label',
+  url: 'Area URL',
+  searchUrl: 'Area Search URL',
+  image: '',
+  description: 'Description Two.',
   position: 2
 
-}];
+};
 
-const initialState = [{
-    id: 0,
-    title: '',
-    linkLabel: '',
-    url: '',
-    searchUrl: '',
-    description: '',
-    position: 0
-}];
+const initialState = {
+  id: 0,
+  title: '',
+  linkLabel: '',
+  url: '',
+  searchUrl: '',
+  image: '',
+  description: '',
+  position: 0
+};
 
 class MockAction implements Action {
   type: string;
@@ -117,18 +119,16 @@ describe('Area Reducer', () => {
   });
 
   it('should return default state', () => {
-    let state = reducer(undefined, {type: undefined, payload: ''});
-    let result = getAreaInfo(state);
+    const state = reducer(undefined, {type: undefined, payload: ''});
+    const result = getAreaInfo(state);
     expect(result).toEqual(initialState);
   });
 
   it('should return default state after reset request', () => {
-    let state = reducer(undefined, new AreaDefaultList());
-    let result = getAreaInfo(state);
+    const state = reducer(undefined, new AreaDefaultList());
+    const result = getAreaInfo(state);
     expect(result).toEqual(initialState);
   });
-
-
 
 
 });

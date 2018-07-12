@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import {SearchService} from '../../services/search.service';
 import {DOCUMENT} from '@angular/common';
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Observable';
 
 /**
  * This component creates an options list from date
@@ -37,9 +37,9 @@ export class ItemSelectComponent implements OnInit  {
 
   @Input() url: string;
   @Input() restricted: boolean;
-  @Input() isAuthenticated: boolean = false;
+  @Input() isAuthenticated = false;
   @ViewChild('selector', {read: ElementRef}) select: ElementRef;
-  SEARCH_OPTIONS_LABEL: string = 'Browse by Date';
+  SEARCH_OPTIONS_LABEL = 'Browse by Date';
   href: string;
   optionList: Observable<any[]>;
 

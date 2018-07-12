@@ -19,10 +19,10 @@ import {Action} from '@ngrx/store';
 import {getCollectionList, reducer, State} from './collection.reducers';
 import {
   AllCollectionsAction,
-  AllCollectionsActionSuccess,
-  CollectionsAreaAction, CollectionActionFailed, CollectionsAreaActionSuccess, CollectionReset, CollectionsSubjectAction,
-  CollectionsSubjectActionSuccess
+  CollectionsActionSuccess,
+  CollectionsAreaAction, CollectionActionFailed, CollectionReset, CollectionsSubjectAction
 } from '../actions/collection.actions';
+import {AreaType} from '../shared/data-types/area.type';
 /**
  * Created by mspalti on 3/24/17.
  */
@@ -40,7 +40,8 @@ const collectionListMock = [
     searchOptions: '',
     assetType: '',
     restricted: false,
-    published: false
+    published: false,
+    parent: []
   }
 ];
 
@@ -79,7 +80,7 @@ describe('Collection Reducer', () => {
 
   it('should return the collection list for areas.', () => {
     expect(
-      reducer(undefined, new CollectionsAreaActionSuccess(collectionListMock))
+      reducer(undefined, new CollectionsActionSuccess(collectionListMock))
     ).toEqual(
       {
         collections: collectionListMock,
@@ -99,7 +100,7 @@ describe('Collection Reducer', () => {
 
   it('should return the collection list for areas and subject.', () => {
     expect(
-      reducer(undefined, new CollectionsSubjectActionSuccess(collectionListMock))
+      reducer(undefined, new CollectionsActionSuccess(collectionListMock))
     ).toEqual(
       {
         collections: collectionListMock,
@@ -142,7 +143,7 @@ describe('Collection Reducer', () => {
 
   it('should return collection for areas list.', () => {
 
-    const state = reducer(undefined, new CollectionsAreaActionSuccess(collectionListMock));
+    const state = reducer(undefined, new CollectionsActionSuccess(collectionListMock));
     const result = getCollectionList(state);
     expect(result).toEqual(collectionListMock);
 
@@ -151,7 +152,7 @@ describe('Collection Reducer', () => {
   it('should return list of all collections by subject (all areas).', () => {
     const collectionState: State = {collections: [], loading: true};
     expect(
-      reducer(collectionState, new CollectionsSubjectActionSuccess(collectionListMock))
+      reducer(collectionState, new CollectionsActionSuccess(collectionListMock))
     ).toEqual(
       {
         collections: collectionListMock,
@@ -173,7 +174,7 @@ describe('Collection Reducer', () => {
   it('should return list of all collections .', () => {
     const collectionState: State = {collections: [], loading: true};
     expect(
-      reducer(collectionState, new AllCollectionsActionSuccess(collectionListMock))
+      reducer(collectionState, new CollectionsActionSuccess(collectionListMock))
     ).toEqual(
       {
         collections: collectionListMock,

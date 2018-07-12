@@ -48,7 +48,8 @@ describe('Item Effect', () => {
       assetType: '',
       searchOptions: '',
       restricted: true,
-      published: false
+      published: false,
+      parent: []
     },
     category: {
       id: 1,
