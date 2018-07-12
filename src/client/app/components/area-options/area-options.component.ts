@@ -3,7 +3,6 @@ import {AreasFilter} from '../../shared/data-types/areas-filter';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MatNavList} from '@angular/material';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
 
 export interface SelectedAreaEvent {
   selected: AreaFilterType[];

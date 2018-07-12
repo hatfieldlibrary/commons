@@ -60,7 +60,7 @@ import {AppMenusComponent} from '../../components/apps-menu/app-menus.component'
 import {HomeSvgComponent} from '../../components/svg/home-svg/home-svg.component';
 import {CollectionsSvgComponent} from '../../components/svg/collections-svg/collections-svg.component';
 import {CloseWhiteSvgComponent} from '../../components/svg/close-white-svg/close-white-svg.component';
-import {CollectionsFilterPipe} from '../../services/filters/collections-filter.pipe';
+import {CollectionsFilterPipe} from '../../services/filters-2/collections-filter.pipe';
 import {TitleHeaderComponent} from '../../components/title-header/title-header.component';
 import {KeyboardArrowForwardSvgComponent} from '../../components/svg/keyboard-arrow-forward-svg/keyboard-arrow-forward-svg.component';
 import {KeyboardArrowBackSvgComponent} from '../../components/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component';

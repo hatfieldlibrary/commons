@@ -2,18 +2,14 @@ import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../reducers';
 import * as typeActions from '../actions/type.actions';
-import {AreaSubjectParams} from '../actions/area-subject-parameters.interface';
 import * as subjectAction from '../actions/subject-actions';
 import * as areaActions from '../actions/area.actions';
 import * as groupActions from '../actions/collection-group.actions';
 import {AreaParams} from '../actions/area.actions';
 import * as listActions from '../actions/collection.actions';
 import {TypeAreaSubjectParams} from '../actions/type-area-subject-parameters.interface';
-import {NavigationService} from './navigation/navigation.service';
 import {NavigationServiceB} from './navigation-2/navigation.service';
 import {TypesFilterInterface} from '../actions/type.actions';
-import {ContentTypesAreaSubjectGroupAction} from '../actions/type.actions';
-import {CollectionReset} from '../actions/collection.actions';
 
 /**
  * This class handles all store dispatch requests for the application.

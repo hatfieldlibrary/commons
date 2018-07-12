@@ -22,7 +22,7 @@ import {ListComponent} from './list.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {CloseWhiteSvgComponent} from '../svg/close-white-svg/close-white-svg.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CollectionsFilterPipe} from '../../services/filters/collections-filter.pipe';
+import {CollectionsFilterPipe} from '../../services/filters-2/collections-filter.pipe';
 import {Store} from '@ngrx/store';
 
 describe('ListComponent', () => {

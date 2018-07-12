@@ -21,7 +21,7 @@
   </div>
   <div fxFlex>
 
-    <mat-select #selector [ngClass]="options-container" placeholder="{{SEARCH_OPTIONS_LABEL}}" floatPlaceholder="never">
+    <mat-select #selector placeholder="{{SEARCH_OPTIONS_LABEL}}" floatPlaceholder="never">
       <mat-option *ngFor="let option of optionList | async" [disabled]="!isAuthenticated && restricted"
                  (click)="optionSearch(option.item.title)" ng-value="option.title">
         {{option.item.title}}

@@ -1,6 +1,6 @@
 {
   "name": "commons",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "license": "GPL-3.0",
   "angular-cli": {},
   "author": {
@@ -113,6 +113,6 @@
     "ts-helpers": "^1.1.2",
     "ts-node": "^6.1.1",
     "tslint": "^5.10.0",
-    "typescript": "^2.7.2"
+    "typescript": "2.7.2"
   }
 }
