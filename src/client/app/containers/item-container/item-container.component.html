@@ -18,35 +18,60 @@
 
 <app-menus-component [selectedArea]="selectedArea"
                      [selectedTypes]="selectedTypes$ | async"
-                     [selectedSubject]="selectedSubject$ | async" [areaList]="areas"
+                     [selectedSubjects]="selectedSubjects$ | async"
+                     [selectedGroups]="selectedGroups$ | async"
+                     [areaList]="areas"
                      [showBack]="true"></app-menus-component>
 
 <app-item-header [item]="item$ | async"></app-item-header>
 
-<mat-card class="main-content-area">
-  <mat-card-content>
-    <div fxLayout="row" fxLayoutAlign="center start">
-      <div fxLayout="column"
-           fxFlex="100"
-           fxFlex.sm="90"
-           fxFlex.md="90"
-           fxFlex.lg="70"
-           fxFlex.gt-lg="50"
-           fxLayoutGap="20px">
-        <app-item
-          [item]="item$ | async"
-          [selectedArea]="selectedArea"
-          [selectedTypes]="selectedTypes$ | async"
-          [selectedSubject]="selectedSubject$ | async"
-          class="app-item"></app-item>
-        <app-related-items [columns]="columns" [related]="related$ | async"
-                           [selectedArea]="selectedArea"></app-related-items>
-
+<div style="background:#000; height: 38px;padding: 6px;" fxShow.xs="false" fxShow.sm="false">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="row"
+         fxLayoutAlign="start center"
+         fxFlex="100"
+         fxFlex.sm="90"
+         fxFlex.md="90"
+         fxFlex.lg="70"
+         fxFlex.gt-lg="50"
+         fxLayoutGap="40px">
+      <div style="padding-left: 18px;">
+        <a mat-button [routerLink]="getBackLink()" style="padding: 0;background: #cccac4;border: 1px solid #999;width: 140px;">
+          <mat-icon>
+            <app-back-black-svg></app-back-black-svg>
+          </mat-icon>&nbsp;Back to List
+        </a>
       </div>
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>
 
+<div>
+  <mat-card class="main-content-area">
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <div fxLayout="column"
+             fxFlex="100"
+             fxFlex.sm="90"
+             fxFlex.md="90"
+             fxFlex.lg="70"
+             fxFlex.gt-lg="50"
+             fxLayoutGap="20px">
+          <app-item
+            [item]="item$ | async"
+            [selectedArea]="selectedArea"
+            [selectedTypes]="selectedTypes$ | async"
+            [selectedSubjects]="selectedSubjects$ | async"
+            [selectedGroups]="selectedGroups$ | async"
+            class="app-item"></app-item>
+          <app-related-items [columns]="columns" [related]="related$ | async"
+                             [selectedArea]="selectedArea"></app-related-items>
+
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
 <app-footer></app-footer>
 
 

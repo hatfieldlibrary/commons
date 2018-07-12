@@ -1,4 +1,4 @@
-import {FilterUpdateService} from './filter-update.service';
+import {FilterUpdateServiceB} from './filter-update.service';
 
 // describe('CollectionsFilterPipe', () => {
 //   it('create an instance', () => {

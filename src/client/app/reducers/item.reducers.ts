@@ -39,7 +39,8 @@ const initialCollection = {
   searchOptions: '',
   assetType: '',
   restricted: false,
-  published: false
+  published: false,
+  parent: []
 };
 
 const initialCategory = {

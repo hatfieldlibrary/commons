@@ -42,6 +42,7 @@ describe('Area Service', () => {
     linkLabel: '',
     url: '',
     searchUrl: '',
+    image: '',
     description: '',
     position: 2
   };

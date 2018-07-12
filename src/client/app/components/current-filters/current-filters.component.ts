@@ -4,10 +4,10 @@ import {
 } from '@angular/core';
 import * as fromFilter from '../../reducers/filter.reducers';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {NormalizedFilter} from '../../shared/data-types/normalized-filter';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 export interface DeselectedFilter {
   type: string,
@@ -25,7 +25,7 @@ export class CurrentFiltersComponent implements OnChanges, OnDestroy {
   @Output() removeFilter: EventEmitter<any> = new EventEmitter<any>();
   @Input() filters: fromFilter.State;
   areas: AreaFilterType[];
-  types: TypesFilterType[];
+  types: FieldFilterType[];
   normalizedFilter: NormalizedFilter[];
   watcher: Subscription;
   isMobile = false;

@@ -8,9 +8,8 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {DOCUMENT} from '@angular/common';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import 'rxjs/add/operator/filter';
-import {NavigationService} from '../../services/navigation/navigation.service';
-import {SubjectFilterType} from '../../shared/data-types/subject-filter.type';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'app-menus-component',
@@ -22,8 +21,9 @@ export class AppMenusComponent implements OnDestroy {
 
   @Input() areaList: AreaType[];
   @Input() selectedArea: string;
-  @Input() selectedSubject: SubjectFilterType;
-  @Input() selectedTypes: TypesFilterType[];
+  @Input() selectedSubjects: FieldFilterType[];
+  @Input() selectedTypes: FieldFilterType[];
+  @Input() selectedGroups: FieldFilterType[];
   @Input() showBack: boolean;
   @Input() title: string;
   public previousUrl = '';
@@ -34,7 +34,7 @@ export class AppMenusComponent implements OnDestroy {
   position = 'left';
 
   constructor(private menuService: MenuInteractionService,
-              private navigationService: NavigationService,
+              private navigationService: NavigationServiceB,
               private router: Router,
               public media: ObservableMedia,
               @Inject(DOCUMENT) private document) {
@@ -58,7 +58,9 @@ export class AppMenusComponent implements OnDestroy {
 
   getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
-    const path = this.navigationService.getBackLink(this.selectedArea, this.selectedSubject.id.toString(), typeIds);
+    const subjectIds = this.navigationService.getIds(this.selectedSubjects);
+    const groupIds = this.navigationService.getIds(this.selectedGroups);
+    const path = this.navigationService.getBackLink(this.selectedArea, groupIds, subjectIds, typeIds);
     return path;
   }
 

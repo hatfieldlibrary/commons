@@ -50,7 +50,7 @@ describe('Subject Service', () => {
   //   mockBackend.connections.subscribe(conn => {
   //     conn.mockRespond(new Response(new ResponseOptions({body: subjectsMock})));
   //   });
-  //   const result = subjectService.getSubjects('1');
+  //   const result = subjectService.getSubjectsForArea('1');
   //   result.subscribe(res => {
   //     expect(res).toEqual(
   //       subjectsMock

@@ -34,11 +34,8 @@ import {SetTimeoutService} from '../services/timers/timeout.service';
 import {SetSelectedService} from '../services/set-selected.service';
 import {Observable} from 'rxjs/Observable';
 import {AreasFilter} from '../shared/data-types/areas-filter';
-import {NavigationService} from '../services/navigation/navigation.service';
+import {NavigationServiceB} from '../services/navigation-2/navigation.service';
 import {SelectedAreaEvent} from './area-selector/area.component';
-import {TypesFilter} from '../shared/data-types/types-filter';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {LoggerService} from '../shared/logger/logger.service';
 
 /**
@@ -65,6 +62,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedAreas: string;
   selectedTypes: string;
   selectedSubject: string;
+  selectedGroup: string;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -91,7 +89,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               @Inject(DOCUMENT) private document,
               private timeoutService: SetTimeoutService,
               private setSelected: SetSelectedService,
-              private navigation: NavigationService,
+              private navigation: NavigationServiceB,
               private logger: LoggerService ) {
 
     this.watcher = new Subscription();
@@ -125,7 +123,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   areaNavigation(updatedAreaList: SelectedAreaEvent): void {
     this.sideNavigate.close();
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
-    this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject);
+    this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject, this.selectedGroup);
   }
 
   ngOnInit() {
@@ -147,10 +145,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       types => this.selectedTypes = this.navigation.getIds(types),
       err => console.log(err));
     this.watcher.add(typeQuery);
-    const subjectQuery: Subscription = this.store.select(fromRoot.getSubjectsFilter).subscribe(
-      subject => this.selectedSubject = subject.id.toString(),
-      err => console.log(err));
-    this.watcher.add(subjectQuery);
+
+// Remove temporarily...subjects is now an array!
+    // const subjectQuery: Subscription = this.store.select(fromRoot.getSubjectsFilter).subscribe(
+    //   subject => this.selectedSubject = subject.id.toString(),
+    //   err => console.log(err));
+    // this.watcher.add(subjectQuery);
 
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {

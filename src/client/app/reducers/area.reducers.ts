@@ -23,21 +23,22 @@ import {AreaType} from '../shared/data-types/area.type';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 export interface State {
-  areas: AreaType[];
+  areas: AreaType;
   loading: boolean;
 
 }
 
 const initialState: State = {
-  areas: [<AreaType>{
+  areas: <AreaType>{
     id: 0,
     title: '',
     linkLabel: '',
     url: '',
     searchUrl: '',
+    image: '',
     description: '',
     position: 0
-  }],
+  },
   loading: false
 };
 
@@ -52,7 +53,7 @@ export function reducer(state = initialState, action: AreaActions): State {
     }
 
     case AreaActionTypes.AREA_INFORMATION_SUCCESS: {
-      const payload = <AreaType[]>action.payload;
+      const payload = <AreaType>action.payload;
 
       return Object.assign({}, state,
         {

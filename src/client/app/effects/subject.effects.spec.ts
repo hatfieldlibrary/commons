@@ -20,13 +20,12 @@
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
-import {Observable,} from 'rxjs/Observable';
-import {SubjectService} from "../services/subject.service";
-import {SubjectEffects} from "./subject.effects";
+import {Observable, } from 'rxjs/Observable';
+import {SubjectService} from '../services/subject.service';
+import {SubjectEffects} from './subject.effects';
 import {
-  AllSubjectAction, SubjectAction, SubjectActionSuccess, SubjectActionFailed,
-  AllSubjectActionSuccess
-} from "../actions/subject-actions";
+  AllSubjectAction, SubjectAction, SubjectActionSuccess, SubjectActionFailed
+} from '../actions/subject-actions';
 
 describe('Subject Effect', () => {
   let subjectEffects: SubjectEffects;
@@ -81,7 +80,7 @@ describe('Subject Effect', () => {
 
   it('should return error for subjects', () => {
 
-    spyOn(subjectService, 'getSubjects').and.callFake(() => { return Observable.throw('error') });
+    spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return Observable.throw('error') });
     const startAction = new SubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -97,7 +96,7 @@ describe('Subject Effect', () => {
     const startAction = new AllSubjectAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new AllSubjectActionSuccess(subjectsMock);
+    const successAction = new SubjectActionSuccess(subjectsMock);
     const expectedResults = cold('--b', {b: successAction});
     expect(subjectEffects.allSubjectEffect$).toBeObservable(expectedResults);
 

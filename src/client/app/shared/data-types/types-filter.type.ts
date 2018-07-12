@@ -1,5 +1,5 @@
 
-export class TypesFilterType {
-  id: number;
-  name: string;
-}
+// export class TypesFilterType {
+//   id: number;
+//   name: string;
+// }

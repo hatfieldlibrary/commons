@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {MatSelectionList} from '@angular/material';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {TypesFilter} from '../../shared/data-types/types-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 export interface SelectedTypeEvent {
-  selected: TypesFilterType[];
+  selected: FieldFilterType[];
 }
 
 @Component({
@@ -26,8 +26,9 @@ export class TypesComponent implements OnInit {
 
   @Input() filter: TypesFilter;
   @Output() typeNavigation: EventEmitter <any> = new EventEmitter<any>();
+  position = 'before';
 
-  constructor(private filterService: FilterUpdateService) {
+  constructor(private filterService: FilterUpdateServiceB) {
   }
 
   /**
@@ -38,6 +39,10 @@ export class TypesComponent implements OnInit {
    */
   private getPositionInSelectedTypeList(typeId: number): number {
     return this.filter.selectedTypes.findIndex((current) => current.id === typeId);
+  }
+
+  hasTypes(): boolean {
+    return this.filter.types.length > 0;
   }
 
   onTypeListControlChanged(list: MatSelectionList, typeId: number) {

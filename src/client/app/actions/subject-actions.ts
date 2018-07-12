@@ -20,87 +20,100 @@
  */
 
 import {Action} from '../actions/action.interface';
-import { type } from '../shared/ngrx/type';
-import {SubjectType} from '../shared/data-types/subject.type';
+import {type} from '../shared/ngrx/type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export const SubjectActionTypes = {
+  //  ALL_SUBJECT_LIST_SUCCESS: type('[SubjectType] List All Subjects Response'),
+  //  SUBJECT_LIST_SUCCESS: type('[SubjectType] List Subjects for Area Response'),
+  //  SUBJECT_LIST_FOR_TYPE_SUCCESS: type('[SubjectType] List of Subjects for Types Response'),
+  //  SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS: type('[SubjectType] List of Subjects for Area and Types Response'),
   SUBJECT_LIST: type('[SubjectType] List Subjects for Area Request'),
-  SUBJECT_LIST_SUCCESS: type('[SubjectType] List Subjects for Area Response'),
   ALL_SUBJECT_LIST: type('[SubjectType] List All Subjects Request'),
-  ALL_SUBJECT_LIST_SUCCESS: type('[SubjectType] List All Subjects Response'),
   SUBJECT_LIST_FOR_TYPE: type('[SubjectType] List of Subjects for Types'),
-  SUBJECT_LIST_FOR_TYPE_SUCCESS: type('[SubjectType] List of Subjects for Types Response'),
   SUBJECT_LIST_FOR_AREA_TYPE: type('[SubjectType] List of Subjects for Area and Types'),
-  SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS: type('[SubjectType] List of Subjects for Area and Types Response'),
+  SUBJECT_LIST_FOR_GROUP_AREA: type('SubjectType] For Group Area'),
+  SUBJECT_LIST_FOR_GROUP_AREA_TYPE: type('SubjectType] For Group Area Type'),
+  REMOVE_CURRENT_SELECTED_SUBJECT: type('[SubjectType] Remove currently Selected Subjects'),
   CURRENT_SELECTED_SUBJECT: type('[SubjectType] Currently Selected Subject'),
-  REMOVE_CURRENT_SELECTED_SUBJECT: type('[SubjectType] Remove thee currently Selected Subject'),
+  SUBJECT_REQUEST_SUCCESS: type('{SubjectType] Subject Request Success'),
   REQUEST_FAILED: type('[SubjectType] Search Failed')
 };
 
-export interface TypesPayload {
+export interface SubjectsPayload {
   areaId: string,
-  typeId: string
+  typeId: string,
+  groupId: string
 }
+
+
 
 export class SubjectAction implements Action {
   type = SubjectActionTypes.SUBJECT_LIST;
 
   constructor(public payload: string) {
   }
-
 }
 
-export class SubjectActionSuccess implements Action {
-  type = SubjectActionTypes.SUBJECT_LIST_SUCCESS;
-  payload: SubjectType[];
-
-  constructor(subjects: SubjectType[]) {
-    this.payload = subjects;
-  }
-}
+// export class SubjectListActionSuccess implements Action {
+//   type = SubjectActionTypes.SUBJECT_LIST_SUCCESS;
+//   payload: SubjectType[];
+//   constructor(subjects: SubjectType[]) {
+//     this.payload = subjects;
+//   }
+// }
 
 export class AllSubjectAction implements Action {
   type = SubjectActionTypes.ALL_SUBJECT_LIST;
   payload: void;
+
   constructor() {
   }
-
 }
 
-export class AllSubjectActionSuccess implements Action {
-  type = SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS;
-
-  constructor(public payload: SubjectType[]) {
-
-  }
-}
+// export class AllSubjectActionSuccess implements Action {
+//   type = SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS;
+//   constructor(public payload: SubjectType[]) {
+//   }
+// }
 
 export class SubjectsForTypes implements Action {
   type = SubjectActionTypes.SUBJECT_LIST_FOR_TYPE;
-  constructor (public payload: string) {}
-}
 
-export class SubjectsForTypesSuccess implements  Action {
-  type = SubjectActionTypes.SUBJECT_LIST_FOR_TYPE_SUCCESS;
-
-  constructor(public payload: SubjectType[]) {}
-}
-
-export class SubjectsForAreaTypes implements Action {
-  type = SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE;
-  payload: TypesPayload;
-  constructor (public areaId: string, typeId: string) {
-    this.payload = {
-      areaId: areaId,
-      typeId: typeId
-    }
+  constructor(public payload: string) {
   }
 }
 
-export class SubjectsForAreaTypesSuccess implements  Action {
-  type = SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS;
-  constructor(public payload: SubjectType[]) {}
+// export class SubjectsForTypesSuccess implements  Action {
+//   type = SubjectActionTypes.SUBJECT_LIST_FOR_TYPE_SUCCESS;
+//   constructor(public payload: SubjectType[]) {}
+// }
+
+export class SubjectsForAreaTypes implements Action {
+  type = SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE;
+
+  constructor(public payload: SubjectsPayload) {
+  }
 }
+
+export class SubjectsForAreaGroup implements Action {
+  type = SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA;
+
+  constructor(public payload: SubjectsPayload) {
+  }
+}
+
+export class SubjectsForAreaGroupType implements Action {
+  type = SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA_TYPE;
+
+  constructor(public payload: SubjectsPayload) {
+  }
+}
+
+// export class SubjectsForAreaTypesSuccess implements  Action {
+//   type = SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS;
+//   constructor(public payload: SubjectType[]) {}
+// }
 
 export class CurrentSubject implements Action {
   type = SubjectActionTypes.CURRENT_SELECTED_SUBJECT;
@@ -115,25 +128,34 @@ export class RemoveCurrentSubject implements Action {
 
   constructor() {
   }
-
 }
 
 export class SubjectActionFailed implements Action {
   type = SubjectActionTypes.REQUEST_FAILED;
   payload: void;
-  constructor(err: string) {
-    console.log(err)
-  }
 
+  constructor(err: string) {
+    console.log(err);
+  }
 }
+
+export class SubjectActionSuccess implements Action {
+  type = SubjectActionTypes.SUBJECT_REQUEST_SUCCESS;
+
+  constructor(public payload: FieldFilterType[]) {
+  }
+}
+
 export type SubjectActions =
   SubjectAction |
   SubjectActionSuccess |
   AllSubjectAction |
-  AllSubjectActionSuccess |
+  // AllSubjectActionSuccess |
   SubjectsForTypes |
-  SubjectsForTypesSuccess |
+//  SubjectsForTypesSuccess |
   SubjectsForAreaTypes |
-  SubjectsForAreaTypesSuccess |
+  SubjectsForAreaGroup |
+  SubjectsForAreaGroupType |
+//  SubjectsForAreaTypesSuccess |
   CurrentSubject |
   SubjectActionFailed;

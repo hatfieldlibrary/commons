@@ -15,6 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import {AreaType} from './area.type';
+
 /**
  * Created by mspalti on 2/21/17.
  */
@@ -34,7 +36,7 @@ export class CollectionType {
   assetType: string;
   restricted: boolean;
   published: boolean;
-
+  parent: AreaType[];
 }
 
 

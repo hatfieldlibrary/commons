@@ -1,0 +1,37 @@
+.area-info {
+  padding-bottom: 16px;
+  padding-top: 54px;
+  color: rgba(255, 255, 255, 0.88);
+  opacity: 1;
+}
+.area-button {
+  margin: 32px 0 0;
+}
+.mobile {
+  padding-left: 16px;
+  margin-top: -16px;
+}
+.down-pointer {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 14px solid #791716;
+}
+.pointer-container {
+  color: transparent;
+  font-size: 1.2em;
+  margin-right: 35px;
+  white-space: nowrap;
+  padding: 0 16px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.pointer-container span {
+  opacity: 0;
+}
+.low-contrast-text {
+  color: #ccc;
+}
+.text-color {
+  color: #ccc;
+}

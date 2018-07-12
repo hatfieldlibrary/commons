@@ -2,8 +2,8 @@
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
-import {SubjectFilterType} from '../shared/data-types/subject-filter.type';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
+
 
 export const FilterActionTypes = {
   SET_SEARCH_FILTER: type('[Filters] Set Search Filter'),
@@ -13,8 +13,27 @@ export const FilterActionTypes = {
   SET_TYPE_FILTER: type('[Filters] Set Types Filter'),
   SET_DEFAULT_TYPE_FILTER: type('[Filters] Set default type filter'),
   SET_SUBJECT_FILTER: type('[Filters] Set Subject Filter'),
-  REMOVE_SUBJECT_FILTER: type('[Filter] Remove Subject Filter')
+  REMOVE_SUBJECT_FILTER: type('[Filter] Remove Subject Filter'),
+  SET_GROUP_FILTER: type('[Filters] Set filter for collection groups'),
+  REMOVE_SELECTED_SUBJECT: type('[Filters] Adding removed  subjects'),
+  REMOVE_SELECTED_TYPE: type('[Filters] Adding removed types'),
+  REMOVE_SELECTED_GROUP: type('[Filters] Adding removed groups'),
 };
+
+export class RemoveSelectedSubjects implements Action {
+  type = FilterActionTypes.REMOVE_SELECTED_SUBJECT;
+  constructor(public payload: FieldFilterType[]) {}
+}
+
+export class RemoveSelectedTypes implements Action {
+  type = FilterActionTypes.REMOVE_SELECTED_TYPE;
+  constructor(public payload: FieldFilterType[]) {}
+}
+
+export class RemoveSelectedGroups implements Action {
+  type = FilterActionTypes.REMOVE_SELECTED_GROUP;
+  constructor(public payload: FieldFilterType[]) {}
+}
 
 /**
  * Redux action for setting the current search filter term.
@@ -56,7 +75,7 @@ export class SetDefaultAreaFilter implements Action {
  */
 export class SetSubjectFilter implements Action {
   public type = FilterActionTypes.SET_SUBJECT_FILTER;
-  constructor(public payload: SubjectFilterType) {}
+  constructor(public payload: FieldFilterType[]) {}
 }
 
 /**
@@ -73,7 +92,7 @@ export class RemoveSubjectFilter implements Action {
  */
 export class SetTypeFilter implements Action {
   public type = FilterActionTypes.SET_TYPE_FILTER;
-  constructor(public payload: TypesFilterType[]) {}
+  constructor(public payload: FieldFilterType[]) {}
 }
 
 /**
@@ -87,12 +106,23 @@ export class SetDefaultTypeFilter implements Action {
 }
 
 /**
+ * Redux action for setting the selected collection group filter value.
+ */
+export class SetGroupFilter implements Action {
+  public type = FilterActionTypes.SET_GROUP_FILTER;
+  constructor(public payload: FieldFilterType[]) {}
+}
+
+
+/**
  * Union type.
  */
 export type FilterActions =
-  SetSearchFilter
-  | ClearSearchFilter
-  | SetAreaFilter
-  | SetSubjectFilter
-  | RemoveSubjectFilter
-  | SetTypeFilter;
+  SetSearchFilter |
+  RemoveSelectedSubjects |
+  ClearSearchFilter |
+  SetAreaFilter |
+  SetSubjectFilter |
+  RemoveSubjectFilter |
+  SetTypeFilter |
+  SetGroupFilter;
