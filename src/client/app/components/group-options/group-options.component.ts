@@ -4,6 +4,7 @@ import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.servi
 import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 
 export interface SelectedGroupEvent {
   selected: FieldFilterType[];
@@ -32,7 +33,8 @@ export class GroupOptionsComponent {
    * the view after changes made in the ngAfterViewInit hook method.
    * @param changeDetector
    */
-  constructor(private filterService: FilterUpdateServiceB) {}
+  constructor(private filterService: FilterUpdateServiceB,
+              private scrollReadyService: ScrollReadyService ) {}
 
   /**
    * Gets the position index in typeId for the type that
@@ -48,6 +50,8 @@ export class GroupOptionsComponent {
     const selectedGroups = this.filterService
       .updateSelectedGroupsStore(this.filter.selectedGroups, this.filter.groups, id);
     const updatedGroupEvent: SelectedGroupEvent = {selected: selectedGroups};
+    // Reset the scroll position.
+    this.scrollReadyService.setPosition(0);
     this.groupNavigation.emit(updatedGroupEvent);
   }
 

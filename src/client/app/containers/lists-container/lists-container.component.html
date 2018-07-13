@@ -14,92 +14,93 @@
   ~   You should have received a copy of the GNU General Public License
   ~    along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<div #listcomponent>
+  <app-menus-component
+    [selectedArea]="areaId"
+    [areaList]="areas$ | async"
+    [showBack]="false">
+  </app-menus-component>
 
-<app-menus-component
-  [selectedArea]="areaId"
-  [areaList]="areas$ | async"
-  [showBack]="false">
-</app-menus-component>
+  <app-area-options
+    (areaNavigation)="areaNavigation($event)"
+    (removeFilter)="removeFilter($event)"
+    [filter]="areasFilter$ | async">
+  </app-area-options>
 
-<app-area-options
-  (areaNavigation)="areaNavigation($event)"
-  (removeFilter)="removeFilter($event)"
-  [filter]="areasFilter$ | async">
-</app-area-options>
+  <div fxLayout="row"
+       fxLayoutGap="20px"
+       fxLayoutAlign="center start"
+       class="app-area-info">
+    <div fxFlex fxFlex="70" fxFlex.lg="90" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" style="height: 340px;">
+      <div style="position:relative; height: 100%; width:100%;background-color: #090905;">
+        <div class="area-background" *ngIf="notMobile && areaInfo$ | async; let areaInfo$;"
+             [ngStyle]="{'background-image': 'url(' + (areaInfo$.image) + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"></div>
 
-<div fxLayout="row"
-     fxLayoutGap="20px"
-     fxLayoutAlign="center start"
-     class="app-area-info">
-  <div fxFlex fxFlex="70" fxFlex.lg="90" fxFlex.md="100" fxFlex.sm="100"  fxFlex.xs="100" style="height: 340px;">
-    <div style="position:relative; height: 100%; width:100%;background-color: #090905;">
-      <div class="area-background" *ngIf="notMobile && areaInfo$ | async; let areaInfo$;"
-           [ngStyle]="{'background-image': 'url(' + (areaInfo$.image) + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"></div>
-
-      <app-area-banner [areaInfo]="areaInfo$ | async"
-                       [filters]="filters$ | async"
-                       [areas]="areasFilter$ | async"
-                       [subjects]="subjectsFilter$ | async"
-                       [types]="typesFilter$ | async"
-                       [groups]="groupsFilter$ | async"
-                       (removeFilter)="removeFilter($event)"></app-area-banner>
+        <app-area-banner [areaInfo]="areaInfo$ | async"
+                         [filters]="filters$ | async"
+                         [areas]="areasFilter$ | async"
+                         [subjects]="subjectsFilter$ | async"
+                         [types]="typesFilter$ | async"
+                         [groups]="groupsFilter$ | async"
+                         (removeFilter)="removeFilter($event)"></app-area-banner>
+      </div>
     </div>
   </div>
+
+  <mat-card class="main-content-area" style="padding:0;">
+    <mat-card-content class="list-container">
+      <div fxLayout="column" fxLayoutGap.xs="0" fxLayoutGap="64px" fxLayoutAlign="center center">
+        <div fxLayout="row"
+             fxLayoutAlign="center start"
+             fxFlexFill>
+
+        </div>
+        <div fxLayout="row"
+             fxLayoutWrap
+             fxFlexFill
+             fxLayoutGap="20px"
+             fxLayoutAlign="center start" style="margin-top: 40px;">
+          <div fxLayout="column"
+               fxFlex.md="1 1 20"
+               fxFlex.lg="1 1 15"
+               fxFlex.gt-lg="1 1 12"
+               class="side-container"
+               *ngIf="media.isActive('gt-sm')">
+
+            <app-subject-options (subjectNavigation)="subjectNavigation($event)"
+                                 [filter]="subjectsFilter$ | async"></app-subject-options>
+
+            <app-group-options (groupNavigation)="groupNavigation($event)"
+                               [filter]="groupsFilter$ | async"></app-group-options>
+
+          </div>
+          <div fxLayout="column"
+               fxFlex.xs="1 1 100"
+               fxFlex.sm="1 1 90"
+               fxFlex.md="1 1 54"
+               fxFlex.lg="1 1 55"
+               fxFlex.gt-lg="1 1 40">
+
+            <app-collection-grid (subjectNavigation)="subjectNavigation($event)"
+                                 (collectionNavigation)="collectionNavigation($event)"
+                                 [collectionList]="collections$ | async "></app-collection-grid>
+          </div>
+          <div fxLayout="column"
+               fxFlex.md="1 1 20"
+               fxFlex.lg="1 1 15"
+               fxFlex.gt-lg="1 1 12"
+               class="side-container"
+               *ngIf="media.isActive('gt-sm')">
+
+            <app-types (typeNavigation)="typeNavigation($event)"
+                       [filter]="typesFilter$ | async"></app-types>
+
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <app-footer></app-footer>
+
 </div>
-
-<mat-card class="main-content-area" style="padding:0;">
-  <mat-card-content class="list-container">
-    <div fxLayout="column" fxLayoutGap.xs="0" fxLayoutGap="64px" fxLayoutAlign="center center">
-      <div fxLayout="row"
-           fxLayoutAlign="center start"
-           fxFlexFill>
-
-      </div>
-      <div fxLayout="row"
-           fxLayoutWrap
-           fxFlexFill
-           fxLayoutGap="20px"
-           fxLayoutAlign="center start" style="margin-top: 40px;">
-        <div fxLayout="column"
-             fxFlex.md="1 1 20"
-             fxFlex.lg="1 1 15"
-             fxFlex.gt-lg="1 1 12"
-             class="side-container"
-             *ngIf="media.isActive('gt-sm')">
-
-          <app-subject-options (subjectNavigation)="subjectNavigation($event)"
-                               [filter]="subjectsFilter$ | async"></app-subject-options>
-
-          <app-group-options (groupNavigation)="groupNavigation($event)"
-                             [filter]="groupsFilter$ | async"></app-group-options>
-
-        </div>
-        <div fxLayout="column"
-             fxFlex.xs="1 1 100"
-             fxFlex.sm="1 1 90"
-             fxFlex.md="1 1 54"
-             fxFlex.lg="1 1 55"
-             fxFlex.gt-lg="1 1 40">
-
-          <app-collection-grid (subjectNavigation)="subjectNavigation($event)"
-                               (collectionNavigation)="collectionNavigation($event)"
-                               [collectionList]="collections$ | async "></app-collection-grid>
-        </div>
-        <div fxLayout="column"
-             fxFlex.md="1 1 20"
-             fxFlex.lg="1 1 15"
-             fxFlex.gt-lg="1 1 12"
-             class="side-container"
-             *ngIf="media.isActive('gt-sm')">
-
-          <app-types (typeNavigation)="typeNavigation($event)"
-                     [filter]="typesFilter$ | async"></app-types>
-
-        </div>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
-
-<app-footer></app-footer>
-
