@@ -4,6 +4,7 @@ import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.servi
 import {TypesFilter} from '../../shared/data-types/types-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 
 export interface SelectedTypeEvent {
   selected: FieldFilterType[];
@@ -28,7 +29,8 @@ export class TypesComponent implements OnInit {
   @Output() typeNavigation: EventEmitter <any> = new EventEmitter<any>();
   position = 'before';
 
-  constructor(private filterService: FilterUpdateServiceB) {
+  constructor(private filterService: FilterUpdateServiceB,
+              private scrollReadyService: ScrollReadyService ) {
   }
 
   /**
@@ -49,6 +51,8 @@ export class TypesComponent implements OnInit {
     const updatedSelectedTypes = this.filterService
       .updateSelectedTypeStore(this.filter.selectedTypes, this.filter.types, typeId);
     const updatedTypeEvent: SelectedTypeEvent = {selected: updatedSelectedTypes};
+    // Reset the scroll position.
+    this.scrollReadyService.setPosition(0);
     this.typeNavigation.emit(updatedTypeEvent);
   }
 

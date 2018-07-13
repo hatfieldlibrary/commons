@@ -37,6 +37,7 @@ import {AreasFilter} from '../shared/data-types/areas-filter';
 import {NavigationServiceB} from '../services/navigation-2/navigation.service';
 import {SelectedAreaEvent} from './area-selector/area.component';
 import {LoggerService} from '../shared/logger/logger.service';
+import {ScrollReadyService} from '../services/observable/scroll-ready.service';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -90,7 +91,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               private timeoutService: SetTimeoutService,
               private setSelected: SetSelectedService,
               private navigation: NavigationServiceB,
-              private logger: LoggerService ) {
+              private logger: LoggerService,
+              private scrollReady: ScrollReadyService) {
 
     this.watcher = new Subscription();
     const mediaWatcher = media.asObservable()
@@ -128,6 +130,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit() {
 
+
     const areaList = this.store.select(fromRoot.getAreas);
     const areaFilters = this.store.select(fromRoot.getAreasFilter);
     this.areaFilter$ = Observable.combineLatest(
@@ -146,12 +149,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       err => console.log(err));
     this.watcher.add(typeQuery);
 
-// Remove temporarily...subjects is now an array!
-    // const subjectQuery: Subscription = this.store.select(fromRoot.getSubjectsFilter).subscribe(
-    //   subject => this.selectedSubject = subject.id.toString(),
-    //   err => console.log(err));
-    // this.watcher.add(subjectQuery);
-
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {
         console.log(err);
@@ -162,46 +159,31 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
 
+    this.scrollable = this.document.querySelector('.mat-drawer-content');
+
     // Anticipating angular universal.
     if (isPlatformBrowser) {
-      /**
-       * This sets the scrollTop position for navigation between views.
-       */
-      this.router.events.subscribe((event: any) => {
-        // Get the scrollable element (created by MdSidenavContainer)
-        this.scrollable = this.document.querySelector('.mat-drawer-content');
-        if (event instanceof NavigationStart) {
-          // Get absolute value fo the bounding rectangle for #app-content.
-          const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
+      // The scrollReady service knows when ListContainer has received data.
+      // We subscribe to it here, and use the position to set the scrollTop value.
+      this.scrollReady.subscribe((pos) => {
+        this.timeoutService.setTimeout(0, () => {
+          if (this.router.url.match(/\/commons\/collection/) ) {
+            this.scrollable.scrollTop = pos;
+          }
+        });
+      });
 
-          // Push the value onto the y stack if the url is for an item view and the previous
-          // route transition was not also to an item view. This effectively limits
-          // y scroll value tracking to the collection view.
-          if (event.url.match(/\/commons\/item/) && this.yScrollStack.length === 0) {
-            // Push the top
-            this.yScrollStack.unshift(top);
+      // This gets the current scroll position when leaving the collection component
+      // and sets the value in the scrollReady service. (see above)
+      this.router.events.subscribe((event: any) => {
+        if (event instanceof NavigationStart) {
+          if (!event.url.match(/\/commons\/collection/)) {
+            // Get absolute value fo the bounding rectangle for #app-content.
+            const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
             this.logger.info('Bounding rectangle: ' + top);
+            this.scrollReady.setPosition(top);
             this.scrollable.scrollTop = 0;
           }
-        } else if (event instanceof NavigationEnd) {
-          // Use time out to push this work onto the browser's callback queue.
-          // This allows rendering to complete before setting scrollTop.
-          // If set to a value greater than the maximum available for the element,
-          // scrollTop settles itself to the maximum value and we don't see the
-          // desired result.
-          this.timeoutService.setTimeout(500, () => {
-            if (event.url.match(/\/commons\/collection/) && this.yScrollStack.length > 0) {
-              const top = this.yScrollStack.pop();
-              this.logger.info('setting scrollTop to: ' + top);
-              // Pop the top
-              this.scrollable.scrollTop = top;
-            } else {
-              // Currently the only other view is for items. This
-              // view should always initialize with scrollTop equal
-              // to zero.
-              this.scrollable.scrollTop = 0;
-            }
-          });
         }
       });
     }

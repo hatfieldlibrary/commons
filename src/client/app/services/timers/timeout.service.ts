@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
 /**
  * Injectable wrapper around the global setTimeout function.  Use this to allow for test mocks.

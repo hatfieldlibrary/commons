@@ -4,6 +4,7 @@ import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.servi
 import {MatSelectionList} from '@angular/material';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 
 export interface SelectedSubjectEvent {
   selected: FieldFilterType[];
@@ -32,7 +33,8 @@ export class SubjectOptionsComponent {
    * the view after changes made in the ngAfterViewInit hook method.
    * @param changeDetector
    */
-  constructor(private filterService: FilterUpdateServiceB) {}
+  constructor(private filterService: FilterUpdateServiceB,
+              private scrollReadyService: ScrollReadyService) {}
 
   /**
    * Gets the position index in typeId for the type that
@@ -48,6 +50,8 @@ export class SubjectOptionsComponent {
     const selectedSubjects = this.filterService
       .updateSelectedSubjectsStore(this.filter.selectedSubjects, this.filter.subjects, id);
     const updatedSubjectEvent: SelectedSubjectEvent = {selected: selectedSubjects};
+    // Reset the scroll position.
+    this.scrollReadyService.setPosition(0);
     this.subjectNavigation.emit(updatedSubjectEvent);
   }
 
