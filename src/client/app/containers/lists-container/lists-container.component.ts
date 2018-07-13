@@ -19,17 +19,14 @@
  * The main container component for subject selector, areas/types selectors and collection
  * list components
  */
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {
   Component,
   OnInit,
   OnDestroy,
-  ChangeDetectionStrategy,
-  Inject,
-  ViewChild,
-  ElementRef
+  ChangeDetectionStrategy
 } from '@angular/core';
 import * as fromRoot from '../../reducers';
 import {AreaType} from '../../shared/data-types/area.type';
@@ -56,7 +53,6 @@ import {SelectedGroupEvent} from '../../components/group-options/group-options.c
 import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
-import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-lists-container',
@@ -83,28 +79,30 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   areasFilter$: Observable<AreasFilter>;
   subjectsFilter$: Observable<SubjectFilter>;
   groupsFilter$: Observable<CollectionGroupFilter>;
+
   selectedAreas: AreaFilterType[];
   selectedTypes: FieldFilterType[];
   selectedSubjects: FieldFilterType[];
   selectedGroups: FieldFilterType[];
-  @ViewChild('listcomponent') listComponentEl: ElementRef;
 
   /**
-   * These member variables contain the route parameters.
+   * These member variables contain route parameters.
    */
   areaId: string;
   typeId: string;
   subjectId: string;
   groupId: string;
   /**
-   * Used to clean up subscriptions OnDestroy.
+   * Used to clean up subscriptions in OnDestroy.
    */
   watchers: Subscription;
   /**
    * Boolean value determines whether to show the area information
-   * component or the default home information.
+   * component or the default home information. (Currently not relevant,
+   * since we do not have a global view).
    */
   areaScreen: boolean;
+
   notMobile = true;
 
   constructor(private store: Store<fromRoot.State>,
@@ -117,11 +115,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
 
   }
 
-  /**
-   * Dispatches action for areas list if not currently available in the store.
-   * TODO: Review...this assumes dynamic areas. If so, need to add collection group support.
-   * @param id
-   */
   private initializeAreas() {
     this.dispatchService.getAllAreas();
   }
