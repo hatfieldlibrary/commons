@@ -110,6 +110,7 @@ import {CollectionGroupEffects} from './effects/collection-group.effects';
 import {CollectionGroupServices} from './services/collection-group.services';
 import {FilterUpdateServiceB} from './services/filters-2/filter-update.service';
 import {NavigationServiceB} from './services/navigation-2/navigation.service';
+import {ScrollReadyService} from './services/observable/scroll-ready.service'
 
 export const appRoutes = [
 
@@ -297,7 +298,8 @@ export const appRoutes = [
     SetIntervalService,
     SetTimeoutService,
     MenuInteractionService,
-    FilterUpdateServiceB
+    FilterUpdateServiceB,
+    ScrollReadyService,
     // {provide: RequestOptions, useClass: GlobalHttpOptions}
   ],
 

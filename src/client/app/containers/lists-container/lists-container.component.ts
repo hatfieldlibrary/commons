@@ -19,10 +19,18 @@
  * The main container component for subject selector, areas/types selectors and collection
  * list components
  */
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import {Component, OnInit, OnDestroy, ChangeDetectionStrategy} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  Inject,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import * as fromRoot from '../../reducers';
 import {AreaType} from '../../shared/data-types/area.type';
 import {CollectionType} from '../../shared/data-types/collection.type';
@@ -47,6 +55,8 @@ import {SubjectFilter} from '../../shared/data-types/subject-filter';
 import {SelectedGroupEvent} from '../../components/group-options/group-options.component';
 import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-lists-container',
@@ -77,6 +87,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   selectedTypes: FieldFilterType[];
   selectedSubjects: FieldFilterType[];
   selectedGroups: FieldFilterType[];
+  @ViewChild('listcomponent') listComponentEl: ElementRef;
 
   /**
    * These member variables contain the route parameters.
@@ -101,7 +112,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
               public media: ObservableMedia,
               private navigation: NavigationServiceB,
               private setSelected: SetSelectedService,
-              private dispatchService: DispatchService) {
+              private dispatchService: DispatchService,
+              private scrollReady: ScrollReadyService) {
 
   }
 
@@ -110,22 +122,14 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * TODO: Review...this assumes dynamic areas. If so, need to add collection group support.
    * @param id
    */
-  private initializeAreas(params: any) {
+  private initializeAreas() {
     this.dispatchService.getAllAreas();
   }
 
   /**
-   * Event binding callback to update the collection list
-   * when a subject is deselected.
-   */
-  // subjectNavigation(subjectEventPayload: SelectedSubjectEvent): void {
-  //   this.navigation.navigateFilterRoute(this.areaId, this.typeId, subjectEventPayload.selected.id.toString());
-  // }
-
-  /**
    * Deselect filter callback for areas, types and subjects. This filter
    * modifies the currently selected ids to assure correct state across filter changes.
-   * @param {DeselectedFilter} deselected
+   * @param {DeselectedFilter} deselecte
    */
   removeFilter(deselected: DeselectedFilter): void {
 
@@ -266,21 +270,20 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // and removed in ngOnDestroy.
     this.watchers = new Subscription();
     this.setMediaWatcher();
-    // this.subjects$ = this.store.select(fromRoot.getSubject);
-    this.collections$ = this.store.select(fromRoot.getFilteredCollections);
+    this.collections$ = Observable.combineLatest(
+      this.store.select(fromRoot.getFilteredCollections),
+      (collections) => {
+        // Let subscribers know that collection data is ready.
+        this.scrollReady.setReady();
+        return collections;
+      }
+    );
     // For now, areas$ is used in app menu.
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
     this.types$ = this.store.select(fromRoot.getTypes);
     this.groups$ = this.store.select(fromRoot.getCollectionGroups);
-    // this.subjectFilter$ = this.store.select(fromRoot.getSubjectsFilter);
     this.filters$ = this.store.select(fromRoot.getFilters);
-    // const areaList = this.store.select(fromRoot.getAreas);
-    // const areaFilters = this.store.select(fromRoot.getAreasFilter);
-    //
-    // areaFilters.subscribe(filter => {
-    //   this.selectedAreas = filter;
-    // });
     this.areasFilter$ = Observable.combineLatest(
       this.store.select(fromRoot.getAreas),
       this.store.select(fromRoot.getAreasFilter),
@@ -329,7 +332,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.setQueryParams(params);
         this.updateSelected(params);
-        this.initializeAreas(params);
+        this.initializeAreas();
         this.areaScreen = this.navigation.isAreaSelected(params['areaId']);
         this.dispatchService.dispatchActions(
           params['areaId'],

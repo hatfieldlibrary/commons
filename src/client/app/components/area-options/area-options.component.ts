@@ -3,6 +3,7 @@ import {AreasFilter} from '../../shared/data-types/areas-filter';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MatNavList} from '@angular/material';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 
 export interface SelectedAreaEvent {
   selected: AreaFilterType[];
@@ -19,7 +20,8 @@ export class AreaOptionsComponent {
   @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
   @Output() removeFilter: EventEmitter <any> = new EventEmitter<any>();
 
-  constructor(private filterService: FilterUpdateServiceB) {}
+  constructor(private filterService: FilterUpdateServiceB,
+              private scrollReadyService: ScrollReadyService) {}
 
   /**
    * Used by the area form options.
@@ -56,6 +58,8 @@ export class AreaOptionsComponent {
     // Used if only single area is permitted.
     const updatedArea = this.filterService.updateSelectSingleAreaStore(this.filter.areas, areaId);
     const selectedEmitted: SelectedAreaEvent = {selected: updatedArea};
+    // Reset the scroll position.
+    this.scrollReadyService.setPosition(0);
     this.areaNavigation.emit(selectedEmitted);
   }
 }
