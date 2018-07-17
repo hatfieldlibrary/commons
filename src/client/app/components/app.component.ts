@@ -103,13 +103,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   }
 
-  // onDeactivate(event) {
-  // Chrome canary supports the new standard usage with documentElement, but
-  // Chrome and presumably other browsers still expect body.
-  // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-  // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
-  // }
-
   goToHome(): void {
     document.location.href = this.homeUrl;
   }
@@ -129,7 +122,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
 
     const areaList = this.store.select(fromRoot.getAreas);
     const areaFilters = this.store.select(fromRoot.getAreasFilter);

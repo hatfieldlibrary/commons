@@ -1,26 +1,24 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {Subscription} from 'rxjs/Subscription';
 import {environment} from '../../environments/environment';
-import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
-  selector: 'app-collection-grid',
-  templateUrl: './collection-grid.component.html',
-  styleUrls: ['./collection-grid.component.css'],
-  animations: [
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({opacity: '0.5'}),
-        animate('400ms ease-in', style({opacity: '1'})),
-      ]),
-      transition(':leave', [
-        animate(200, style({ opacity: 0 }))
-      ])
-    ])]
+  selector: 'app-collection-rows',
+  templateUrl: './collection-rows.component.html',
+  styleUrls: ['./collection-rows.component.css']
 })
-export class CollectionGridComponent implements OnDestroy {
+export class CollectionRowsComponent implements OnDestroy {
 
   @Input() collectionList: CollectionType[];
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
@@ -49,14 +47,13 @@ export class CollectionGridComponent implements OnDestroy {
   totalResults(): string {
     return this.collectionList.length.toString();
   }
-
-  navigateToItem(id: string) {
-    this.collectionNavigation.emit(id);
-  }
-
   getImage(image: string) {
     return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
 
+  }
+
+  navigateToItem(id: string) {
+    this.collectionNavigation.emit(id);
   }
 
   setViewType(type: string): void {
@@ -66,4 +63,5 @@ export class CollectionGridComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
   }
+
 }

@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../actions/filter.actions';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {FieldValues} from '../../shared/enum/field-names';
+import {query} from '@angular/animations';
 
 interface RouterIds {
   subjectId: string;
@@ -182,6 +183,18 @@ export class NavigationServiceB {
     return null;
   }
 
+  public navigateFilterRoute(areaId: string, typeId: string, subjectId: string, groupId: string): void {
+    this.navigateRoute(areaId, typeId, subjectId, groupId);
+  }
+
+  public navigateFilterRouteWithView(areaId: string,
+                                     typeId: string,
+                                     subjectId: string,
+                                     groupId: string,
+                                     view: string): void {
+    this.navigateRoute(areaId, typeId, subjectId, groupId, view);
+  }
+
   /**
    * Uses router to navigate a route based on the provided query values.
    * @param {string} areaId area id (can be comma-separated list).
@@ -192,7 +205,12 @@ export class NavigationServiceB {
    * TODO: this builds in a 4-way permutation that includes global search (and potentially multiple
    * selected areas). Current design excludes global and allows only single area.
    */
-  public navigateFilterRoute(areaId: string, typeId: string, subjectId: string, groupId: string): void {
+  private navigateRoute(areaId: string, typeId: string, subjectId: string, groupId: string, view?: string): void {
+
+    const queryParams = {queryParams: {}};
+    if (view) {
+        queryParams.queryParams = { view: view }
+    }
 
     const fields: RouterIds = this.setIdFields(subjectId, typeId, groupId);
 
@@ -208,7 +226,7 @@ export class NavigationServiceB {
         'area', areaId,
         'type', typeId,
         'subject', subjectId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
@@ -218,7 +236,7 @@ export class NavigationServiceB {
         'category', groupId,
         'type', typeId,
         'subject', subjectId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(areaId)
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(fields.groupId)) {
@@ -228,7 +246,7 @@ export class NavigationServiceB {
         'category', groupId,
         'area', areaId,
         'type', typeId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(areaId)
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
@@ -238,7 +256,7 @@ export class NavigationServiceB {
         'category', groupId,
         'area', areaId,
         'subject', subjectId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(areaId)) {
@@ -248,43 +266,43 @@ export class NavigationServiceB {
         'area', areaId,
         'type', typeId,
         'subject', subjectId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(fields.groupId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'category', groupId,
         'area', areaId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(fields.subjectId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'area', areaId,
         'subject', subjectId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(areaId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'area', areaId,
         'type', typeId
-      ]);
+      ], queryParams);
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(fields.subjectId)) {
       this.router.navigate(['/',
         this.urlRootPath,
         'collection',
         'type', typeId,
         'subject', subjectId
-      ]);
+      ], queryParams);
     } else if (this.isTypeSelected(fields.typeId)) {
-      this.router.navigate(['/', this.urlRootPath, 'collection', 'type', typeId]);
+      this.router.navigate(['/', this.urlRootPath, 'collection', 'type', typeId], queryParams);
     } else if (this.isAreaSelected(areaId)) {
-      this.router.navigate(['/', this.urlRootPath, 'collection', 'area', areaId]);
+      this.router.navigate(['/', this.urlRootPath, 'collection', 'area', areaId], queryParams);
     } else if (this.isSubjectSelected(fields.subjectId)) {
-      this.router.navigate(['/', this.urlRootPath, 'collection', 'subject', subjectId]);
+      this.router.navigate(['/', this.urlRootPath, 'collection', 'subject', subjectId], queryParams);
     } else {
-      this.router.navigate(['/', this.urlRootPath, 'collection']);
+      this.router.navigate(['/', this.urlRootPath, 'collection'], queryParams);
     }
   }
 

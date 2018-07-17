@@ -1,0 +1,39 @@
+<div class="grid-result-info mat-caption">
+  <span class="bold-caption">{{totalResults()}}</span><span>&nbsp;item<span *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
+  <div style="position: absolute; top: 18px; right: 12px;">
+    <app-view-grid (click)="setViewType('grid')" class="icon-color"></app-view-grid>
+    <app-view-list (click)="setViewType('list')" class="icon-color"></app-view-list>
+  </div>
+</div>
+
+<div class="list-container">
+  <mat-list>
+    <mat-list-item class="collection-list-item result-item"
+
+                   (click)="navigateToItem(collection.id)"
+                   *ngFor="let collection of collectionList | collectionsFilter:filterTerm; let isFirstRow=first"
+                   [ngClass]="{'first-row': isFirstRow, 'mobile-list-item-padding': isMobile}">
+      <div fxLayout="row" fxLayoutAlign="start start">
+        <img class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
+        <div fxLayout="column" fxFlex [ngClass]="{'mobile-list-container': isMobile}">
+          <div>
+            <span class="collection-item mat-h3">{{collection.title}}</span>
+          </div>
+          <div>
+            <span class="mat-caption card-label">Part of:&nbsp;&nbsp;</span>
+            <span class="mat-body-1 card-text" *ngFor="let parent of collection.parent; let i = index">
+            {{parent.title}}<span *ngIf="collection.parent.length !== i + 1">,</span></span>
+          </div>
+          <div>
+            <span class="mat-caption card-label">Content: </span>
+            <span class="mat-body-1 card-text" *ngFor="let type of collection.types ; let i = index">
+            {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
+          </div>
+          <div>
+            <app-lock-svg *ngIf="collection.restricted" class="restricted-icon"></app-lock-svg>
+          </div>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>
