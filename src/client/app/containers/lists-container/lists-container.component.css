@@ -101,6 +101,7 @@ mat-card-subtitle.large-device-info {
 .filters-margin {
   margin-top: 16px;
 }
-app-collection-grid {
+.collection-results {
   margin-top: -44px;
 }
+

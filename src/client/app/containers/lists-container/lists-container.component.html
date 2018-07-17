@@ -81,9 +81,16 @@
                fxFlex.lg="1 1 55"
                fxFlex.gt-lg="1 1 40">
 
-            <app-collection-grid (subjectNavigation)="subjectNavigation($event)"
-                                 (collectionNavigation)="collectionNavigation($event)"
-                                 [collectionList]="collections$ | async "></app-collection-grid>
+            <div class="collection-results" *ngIf="viewType$ | async as view">
+              <app-collection-rows *ngIf="view === 'list'" (subjectNavigation)="subjectNavigation($event)"
+                                   (collectionNavigation)="collectionNavigation($event)"
+                                   (setView)="setViewType($event)"
+                                   [collectionList]="collections$ | async "></app-collection-rows>
+              <app-collection-grid *ngIf="view === 'grid'" (subjectNavigation)="subjectNavigation($event)"
+                                   (collectionNavigation)="collectionNavigation($event)"
+                                   (setView)="setViewType($event)"
+                                   [collectionList]="collections$ | async "></app-collection-grid>
+            </div>
           </div>
           <div fxLayout="column"
                fxFlex.md="1 1 20"

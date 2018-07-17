@@ -10,9 +10,13 @@
 
 <div class="grid-result-info mat-caption">
   <span class="bold-caption">{{totalResults()}}</span><span>&nbsp;item<span *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
+  <div style="position: absolute; top: 18px; right: 12px;">
+    <app-view-grid (click)="setViewType('grid')" class="icon-color"></app-view-grid>
+    <app-view-list (click)="setViewType('list')" class="icon-color"></app-view-list>
+  </div>
 </div>
 
-<mat-grid-list cols="{{cols}}" rowHeight="410" gutterSize="2" style="margin-top: 0px;" >
+<mat-grid-list cols="{{cols}}" rowHeight="380" gutterSize="2" style="margin-top: 0px;" >
 
   <mat-grid-tile class="collection-list-item result-item"
                  [ngClass]="{'mobile-list-item-padding': isMobile}"
@@ -23,12 +27,8 @@
       <img mat-card-image class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
       <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
         <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
-
-        <!--<div>-->
-        <!--<span class="mat-caption">{{setAssetType(collection.ctype)}}</span>-->
-        <!--</div>-->
         <div
-          style="position: absolute; left: 0px; top: 230px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
+          style="position: absolute; left: 0px; top: 224px; right: 0px; padding-left: 24px; padding-right: 12px; padding-top: 3px;">
           <div>
           <span class="mat-caption card-label">Part of:&nbsp;&nbsp;</span>
           <span class="mat-body-1 card-text" *ngFor="let parent of collection.parent; let i = index">
@@ -41,7 +41,6 @@
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
         </div>
         </div>
-
 
         <app-lock-svg *ngIf="collection.restricted" style="position: absolute; left: 18px; bottom: 4px;"></app-lock-svg>
 
