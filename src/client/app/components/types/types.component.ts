@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
 import {MatSelectionList} from '@angular/material';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {TypesFilter} from '../../shared/data-types/types-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 
 export interface SelectedTypeEvent {
-  selected: TypesFilterType[];
+  selected: FieldFilterType[];
 }
 
 @Component({
@@ -26,8 +27,10 @@ export class TypesComponent implements OnInit {
 
   @Input() filter: TypesFilter;
   @Output() typeNavigation: EventEmitter <any> = new EventEmitter<any>();
+  position = 'before';
 
-  constructor(private filterService: FilterUpdateService) {
+  constructor(private filterService: FilterUpdateServiceB,
+              private scrollReadyService: ScrollReadyService ) {
   }
 
   /**
@@ -40,10 +43,16 @@ export class TypesComponent implements OnInit {
     return this.filter.selectedTypes.findIndex((current) => current.id === typeId);
   }
 
+  hasTypes(): boolean {
+    return this.filter.types.length > 0;
+  }
+
   onTypeListControlChanged(list: MatSelectionList, typeId: number) {
     const updatedSelectedTypes = this.filterService
       .updateSelectedTypeStore(this.filter.selectedTypes, this.filter.types, typeId);
     const updatedTypeEvent: SelectedTypeEvent = {selected: updatedSelectedTypes};
+    // Reset the scroll position.
+    this.scrollReadyService.setPosition(0);
     this.typeNavigation.emit(updatedTypeEvent);
   }
 

@@ -1,11 +1,11 @@
-<div class="side-nav-section">
+<div class="side-nav-section" *ngIf="hasTypes()">
   <mat-selection-list dense #typeSelectionList>
     <h4 class="mat-body-2 list-caption">CONTENT TYPES</h4>
     <mat-list-option *ngFor="let type of filter.types"
                      class="local-navigation"
                      [selected]="isSelected(type.id)"
                      [@fadeIn]
-                     [checkboxPosition]="before"
+                     [checkboxPosition]="position"
                      (click)="onTypeListControlChanged(typeSelectionList, type.id)"
                      [value]="type.id">
       {{type.name}}

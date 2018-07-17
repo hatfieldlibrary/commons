@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 import {MatSelectionList} from '@angular/material';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {FilterUpdateService} from '../../services/filters/filter-update.service';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {AreasFilter} from '../../shared/data-types/areas-filter';
 
 export interface SelectedAreaEvent {
@@ -39,7 +39,7 @@ export class AreaSelectorMobileComponent {
   @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
   position = 'before';
 
-  constructor(private filterService: FilterUpdateService) {
+  constructor(private filterService: FilterUpdateServiceB) {
   }
 
   /**

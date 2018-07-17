@@ -15,8 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AreaListAction, AreaListActionSuccess} from "../actions/area.actions";
-import {getAreaList, reducer, State} from "./area-list.reducers";
+import {AreaListAction, AreaListSuccess} from '../actions/area.actions';
+import {getAreaList, reducer, State} from './area-list.reducers';
 /**
  * Created by mspalti on 4/15/17.
  */

@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import {NavigationService} from '../../services/navigation/navigation.service';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {ActivatedRoute} from '@angular/router';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {DispatchService} from '../../services/dispatch.service';
@@ -29,7 +29,7 @@ export class SubmitDspaceComponent implements OnInit, OnDestroy {
   watchers: Subscription;
 
   constructor(private store: Store<fromRoot.State>,
-              private navigation: NavigationService,
+              private navigation: NavigationServiceB,
               private route: ActivatedRoute,
               private dispatchService: DispatchService
               ) { }
@@ -51,7 +51,7 @@ export class SubmitDspaceComponent implements OnInit, OnDestroy {
 
     const routeWatcher = this.route.params
       .subscribe((params) => {
-        this.dispatchService.dispatchActions(undefined, params['typeId'], undefined);
+        this.dispatchService.dispatchActions(undefined, params['typeId'], undefined, undefined);
       });
     this.watchers.add(routeWatcher);
 

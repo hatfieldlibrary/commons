@@ -1,6 +1,6 @@
 mat-toolbar {
-  background-color: rgba(0,0,0, 0.9);
   color:#fff;
+  background-color: rgba(0,0,0);
 }
 mat-toolbar {
   z-index: 700;
@@ -11,6 +11,9 @@ mat-toolbar button {
 }
 .md-tooltip {
   background-color: red;
+}
+.menu {
+  background-color: rgba(0,0,0);
 }
 
 

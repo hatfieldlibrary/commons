@@ -17,20 +17,23 @@
 
 <div fxLayout="column">
 
-  <h2 *ngIf="related.length > 0">Similar Items</h2>
+  <mat-card-title *ngIf="related.length > 0">Similar Items</mat-card-title>
 
-  <mat-grid-list cols="{{columns}}" rowHeight="320" gutterSize="6">
-    <mat-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1">
+  <mat-grid-list cols="{{columns}}" rowHeight="270" gutterSize="6">
+    <mat-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1"
+                  [routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">
       <mat-card>
-        <mat-card-header>
-          <mat-card-title style="margin-left: -20px;">
-            {{collection.title}}
-          </mat-card-title>
-        </mat-card-header>
-        <img mat-card-image src="{{imagePath}}/resources/img/thumb/{{collection.image}}">
-        <mat-card-actions align="end">
-          <button mat-button (click)="scrollToTop()"[routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">VIEW</button>
-        </mat-card-actions>
+        <img mat-card-image class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{imagePath}}/resources/img/thumb/{{collection.image}}">
+        <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
+        <!--<mat-card-header>-->
+          <!--<mat-card-title style="margin-left: -20px;">-->
+            <!--{{collection.title}}-->
+          <!--</mat-card-title>-->
+        <!--</mat-card-header>-->
+        <!--<img mat-card-image src="{{imagePath}}/resources/img/thumb/{{collection.image}}">-->
+        <!--<mat-card-actions align="end">-->
+          <!--<button mat-button (click)="scrollToTop()"[routerLink]="['/',appRoot,'item','id', collection.id, selectedArea]">VIEW</button>-->
+        <!--</mat-card-actions>-->
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>

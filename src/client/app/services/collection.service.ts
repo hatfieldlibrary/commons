@@ -35,7 +35,9 @@ export class CollectionService {
   }
 
   getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/area/' + areaId + '/subject/' + subjectId);
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot +
+      '/collection/area/' +
+      areaId + '/subject/' + subjectId);
   }
 
   getCollectionsBySubject(id: string): Observable<CollectionType[]> {
@@ -59,6 +61,61 @@ export class CollectionService {
   getCollectionsByTypeAreaSubject(typeId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/area/' + areaId
+      + '/type/' + typeId
+      + '/subject/' + subjectId );
+  }
+
+  getCollectionsByCategory(categoryId: string): Observable<CollectionType[]> {
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId);
+  }
+
+  getCollectionsByCategoryArea(categoryId: string, areaId: string): Observable<CollectionType[]> {
+    console.log(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/area/' + areaId)
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/area/' + areaId );
+  }
+
+  getCollectionsByCategoryType(categoryId: string, typeId: string): Observable<CollectionType[]> {
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/type/' + typeId );
+  }
+  getCollectionsByCategorySubject(categoryId: string, subjectId: string): Observable<CollectionType[]> {
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/subject/' + subjectId );
+  }
+  getCollectionsByCategoryAreaType(categoryId: string, areaId: string, typeId: string): Observable<CollectionType[]> {
+
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/area/' + areaId
+      + '/type/' + typeId );
+  }
+  getCollectionsByCategoryAreaSubject(categoryId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
+
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/area/' + areaId
+      + '/subject/' + subjectId );
+  }
+
+  getCollectionsByCategoryTypeSubject(categoryId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
+
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/type/' + typeId
+      + '/subject/' + subjectId );
+  }
+  getCollectionsByCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
+
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/category/' + categoryId
+      + '/area/' + areaId
       + '/type/' + typeId
       + '/subject/' + subjectId );
   }

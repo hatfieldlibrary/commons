@@ -2,25 +2,31 @@
 
 import {Injectable} from '@angular/core';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
-import {SetAreaFilter, SetSubjectFilter, SetTypeFilter} from '../../actions/filter.actions';
+import {SetAreaFilter, SetGroupFilter, SetSubjectFilter, SetTypeFilter} from '../../actions/filter.actions';
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
-import {TypesFilterType} from '../../shared/data-types/types-filter.type';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Injectable()
-export class FilterUpdateService {
+export class FilterUpdateServiceB {
 
-  selectedAreas: AreaFilterType[];
-  areaList: AreaFilterType[];
-  selectedTypes: TypesFilterType[];
-  typeList: TypesFilterType[];
+  private selectedAreas: AreaFilterType[];
+  private areaList: AreaFilterType[];
+  private selectedTypes: FieldFilterType[];
+  private typeList: FieldFilterType[];
+  private subjectList: FieldFilterType[];
+  private selectedSubjects: FieldFilterType[];
+  private groupList: FieldFilterType[];
+  private selectedGroups: FieldFilterType[];
   private AREA_KEY = 'areas';
   private TYPE_KEY = 'types';
+  private SUBJECT_KEY = 'subjects';
+  private GROUP_KEY = 'groups';
 
   constructor(private store: Store<fromRoot.State>) {}
 
   removeSelectedAreaFilter(): void {
-    this.store.dispatch(new SetSubjectFilter({id: 0, name: ''}));
+    this.store.dispatch(new SetSubjectFilter([{id: 0, name: ''}]));
   }
 
   /**
@@ -45,23 +51,74 @@ export class FilterUpdateService {
     }
   }
 
+  updateSelectSingleAreaStore( areaList: AreaFilterType[], areaId: number): AreaFilterType[]  {
+     this.areaList = areaList;
+    const selectedArea: AreaFilterType = this.getSelectedAreaObject(areaId);
+    if (selectedArea) {
+      this.store.dispatch(new SetAreaFilter([selectedArea]));
+      return [selectedArea];
+    }
+  }
+
   /**
    * This function updates the selected types store.
    * @param {number} areaId
    */
-  updateSelectedTypeStore(selectedTypes: TypesFilterType[], typeList: TypesFilterType[], typeId: number): TypesFilterType[] {
+  updateSelectedTypeStore(selectedTypes: FieldFilterType[],
+                          typeList: FieldFilterType[],
+                          typeId: number): FieldFilterType[] {
     this.selectedTypes = selectedTypes;
     this.typeList = typeList;
     // Get area filter information for the selected areaId.
-    const selectedType: TypesFilterType = this.getSelectedTypeObject(typeId);
+    const selectedType: FieldFilterType = this.getSelectedTypeObject(typeId);
     if (selectedType) {
       // Update selectedAreas.
       this.updateSelectedTypes(selectedType, typeId);
       // Make sure the default id: '0' does not creep in!
       this.removeDefaultCollections(this.TYPE_KEY);
       // Update the store.
-      this.store.dispatch(new SetTypeFilter(this.selectedTypes));
+      this.store.dispatch(new SetTypeFilter(selectedTypes));
       return this.selectedTypes;
+    }
+  }
+
+  /**
+   * This function updates the selected subject store.
+   * @param {number} areaId
+   */
+  updateSelectedSubjectsStore(selectedSubjects: FieldFilterType[],
+                              subjectList: FieldFilterType[],
+                              subjectId: number): FieldFilterType[] {
+    this.selectedSubjects = selectedSubjects;
+    this.subjectList = subjectList;
+    // Get area filter information for the selected areaId.
+    const selectedSubject: FieldFilterType = this.getSelectedSubjectObject(subjectId);
+    if (selectedSubject) {
+      // Update selectedAreas.
+      this.updateSelectedSubjects(selectedSubject, subjectId);
+      // Make sure the default id: '0' does not creep in!
+      this.removeDefaultCollections(this.SUBJECT_KEY);
+      // Update the store.
+      this.store.dispatch(new SetSubjectFilter(this.selectedSubjects));
+      return this.selectedSubjects;
+    }
+  }
+
+  updateSelectedGroupsStore(selectedGroups: FieldFilterType[],
+                            groupList: FieldFilterType[],
+                            groupId: number): FieldFilterType[] {
+    this.selectedGroups = selectedGroups;
+    this.groupList = groupList;
+    // Get area filter information for the selected areaId.
+    const selectedGroup: FieldFilterType = this.getSelectedGroupObject(groupId);
+    if (selectedGroup) {
+      // Update selectedAreas.
+      this.updateSelectedGroups(selectedGroup, groupId);
+      // Make sure the default id: '0' does not creep in!
+      this.removeDefaultCollections(this.GROUP_KEY);
+      // Update the store.
+      this.store.dispatch(new SetGroupFilter(this.selectedGroups));
+      return this.selectedGroups;
     }
   }
 
@@ -108,7 +165,7 @@ export class FilterUpdateService {
    * @param {TypesFilterType} selectedType
    * @param {number} areaId
    */
-  private updateSelectedTypes(selectedType: TypesFilterType, typeId: number): void {
+  private updateSelectedTypes(selectedType: FieldFilterType, typeId: number): void {
     const currentIndex = this.getPositionInSelectedList(typeId, this.TYPE_KEY);
     if (currentIndex >= 0) {
       // If the currently selected index is in the list, remove.
@@ -118,8 +175,38 @@ export class FilterUpdateService {
         this.selectedTypes.push({id: 0, name: ''});
       }
     } else {
-      // Otherwise, just add the new area.
+      // Otherwise, just add the new type.
       this.selectedTypes.push(selectedType);
+    }
+  }
+
+  private updateSelectedSubjects(selectedSubject: FieldFilterType, subjectId: number): void {
+    const currentIndex = this.getPositionInSelectedList(subjectId, this.SUBJECT_KEY);
+    if (currentIndex >= 0) {
+      // If the currently selected index is in the list, remove.
+      this.selectedSubjects.splice(currentIndex, 1);
+      // If the selected list is empty, set to default (all collections).
+      if (this.selectedSubjects.length === 0) {
+        this.selectedSubjects.push({id: 0, name: ''});
+      }
+    } else {
+      // Otherwise, just add the new subject.
+      this.selectedSubjects.push(selectedSubject);
+    }
+  }
+
+  private updateSelectedGroups(selectedGroup: FieldFilterType, groupId: number): void {
+    const currentIndex = this.getPositionInSelectedList(groupId, this.GROUP_KEY);
+    if (currentIndex >= 0) {
+      // If the currently selected index is in the list, remove.
+      this.selectedGroups.splice(currentIndex, 1);
+      // If the selected list is empty, set to default (all collections).
+      if (this.selectedGroups.length === 0) {
+        this.selectedGroups.push({id: 0, name: ''});
+      }
+    } else {
+      // Otherwise, just add the new group.
+      this.selectedGroups.push(selectedGroup);
     }
   }
 
@@ -132,22 +219,33 @@ export class FilterUpdateService {
     return this.areaList.find((current) => current.id === areaId);
   }
 
-  private getSelectedTypeObject(typeId: number): TypesFilterType {
+  private getSelectedTypeObject(typeId: number): FieldFilterType {
     return this.typeList.find((current) => current.id === typeId);
   }
 
+  private getSelectedSubjectObject(subjectId: number): FieldFilterType {
+    return this.subjectList.find((current) => current.id === subjectId);
+  }
+
+  private getSelectedGroupObject(groupId: number): FieldFilterType {
+    return this.groupList.find((current) => current.id === groupId);
+  }
+
   /**
-   * Gets the position index in selectedAreas for the area that
-   * matches the provided id.
-   * @param {number} areaId the id of the area
-   * @param {string} type the type of filter
+   * Gets the position index in id string that matches the provided id.
+   * @param {number} id the id of the resource
+   * @param {string} type the type constant for the resource
    * @returns {number}
    */
   private getPositionInSelectedList(id: number, type: string): number {
     if (type === this.AREA_KEY) {
       return this.selectedAreas.findIndex((current) => current.id === id);
-    } else if (type === this.TYPE_KEY) {
+    } else if (type === this.SUBJECT_KEY) {
+      return this.selectedSubjects.findIndex((current) => current.id === id);
+    }  else if (type === this.TYPE_KEY) {
       return this.selectedTypes.findIndex((current) => current.id === id);
+    } else if (type === this.GROUP_KEY) {
+      return this.selectedGroups.findIndex((current) => current.id === id);
     } else {
       return 0;
     }
@@ -163,7 +261,11 @@ export class FilterUpdateService {
     if (zeroIndex === 0) {
       if (type === this.AREA_KEY) {
         this.selectedAreas.shift();
-      } else {
+      } else if (type === this.SUBJECT_KEY) {
+        this.selectedSubjects.shift();
+      } else if (type === this.GROUP_KEY) {
+        this.selectedGroups.shift();
+      }  else {
         this.selectedTypes.shift();
       }
     }

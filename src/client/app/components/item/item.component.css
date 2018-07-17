@@ -15,7 +15,30 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+.meta-container {
+  border-top: 1px solid #e2dfd9;
+  border-right: 1px solid #e2dfd9;
+}
 .item-divider {
   position: relative;
   margin: 40px 0;
+}
+.meta-label {
+  background: #bdbab2;
+  width: 145px;
+  min-width: 145px;
+  padding: 12px;
+  color: #333;
+}
+.meta-text {
+  padding: 12px;
+}
+.meta-row {
+  border-bottom: 1px solid #e2dfd9;
+}
+.item-links-container {
+  margin-top: 0px;
+}
+.section-spacer {
+  margin-top: 30px;
 }

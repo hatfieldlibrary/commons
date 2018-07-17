@@ -53,15 +53,15 @@ export function reducer(state = initialState, action: CollectionActions): State 
       return initialState;
     }
 
-    case CollectionActionTypes.LIST_BY_AREA_SUCCESS: {
-      const result: CollectionType[] = <CollectionType[]>action.payload;
-      return Object.assign({}, state, {
-        collections: result,
-        loading: false
-      });
-    }
+    // case CollectionActionTypes.LIST_BY_AREA_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
-    case CollectionActionTypes.LIST_BY_AREA_SUBJECT: {
+    case CollectionActionTypes.LIST_BY_SUBJECT_AREA: {
       const payload = <IdentifersPayload>action.payload;
       const subjectId = payload.subjectId;
       const areaId = payload.areaId;
@@ -76,30 +76,30 @@ export function reducer(state = initialState, action: CollectionActions): State 
         loading: true
       });
     }
+    //
+    // case CollectionActionTypes.LIST_BY_SUBJECT_AREA_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
-    case CollectionActionTypes.LIST_BY_AREA_SUBJECT_SUCCESS: {
-      const result: CollectionType[] = <CollectionType[]>action.payload;
-      return Object.assign({}, state, {
-        collections: result,
-        loading: false
-      });
-    }
-
-    case CollectionActionTypes.LIST_ALL_BY_SUBJECT: {
+    case CollectionActionTypes.LIST_BY_SUBJECT: {
       return Object.assign({}, state, {
         collections: [],
         loading: true
       });
     }
-
-
-    case CollectionActionTypes.LIST_ALL_BY_SUBJECT_SUCCESS: {
-      const result: CollectionType[] = <CollectionType[]>action.payload;
-      return Object.assign({}, state, {
-        collections: result,
-        loading: false
-      });
-    }
+    //
+    //
+    // case CollectionActionTypes.LIST_BY_SUBJECT_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
     case CollectionActionTypes.LIST_ALL_ACTION: {
       return Object.assign({}, state, {
@@ -108,13 +108,13 @@ export function reducer(state = initialState, action: CollectionActions): State 
       });
     }
 
-    case CollectionActionTypes.LIST_ALL_SUCCESS_ACTION: {
-      const result: CollectionType[] = <CollectionType[]>action.payload;
-      return Object.assign({}, state, {
-        collections: result,
-        loading: false
-      });
-    }
+    // case CollectionActionTypes.LIST_ALL_SUCCESS_ACTION: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
     case CollectionActionTypes.LIST_BY_TYPE: {
       return Object.assign({}, state, {
@@ -123,13 +123,13 @@ export function reducer(state = initialState, action: CollectionActions): State 
       });
     }
 
-    case CollectionActionTypes.LIST_BY_TYPE_SUCCESS: {
-      const result: CollectionType[] = <CollectionType[]>action.payload;
-      return Object.assign({}, state, {
-        collections: result,
-        loading: false
-      });
-    }
+    // case CollectionActionTypes.LIST_BY_TYPE_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
     case CollectionActionTypes.LIST_BY_TYPE_AREA: {
       return Object.assign({}, state, {
@@ -138,13 +138,13 @@ export function reducer(state = initialState, action: CollectionActions): State 
       });
     }
 
-    case CollectionActionTypes.LIST_BY_TYPE_AREA_SUCCESS: {
-      const result: CollectionType[] = <CollectionType[]>action.payload;
-      return Object.assign({}, state, {
-        collections: result,
-        loading: false
-      });
-    }
+    // case CollectionActionTypes.LIST_BY_TYPE_AREA_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
     case CollectionActionTypes.LIST_BY_TYPE_SUBJECT: {
       return Object.assign({}, state, {
@@ -152,14 +152,14 @@ export function reducer(state = initialState, action: CollectionActions): State 
         loading: true
       });
     }
-
-    case CollectionActionTypes.LIST_BY_TYPE_SUBJECT_SUCCESS: {
-      const result: CollectionType[] = <CollectionType[]>action.payload;
-      return Object.assign({}, state, {
-        collections: result,
-        loading: false
-      });
-    }
+    //
+    // case CollectionActionTypes.LIST_BY_TYPE_SUBJECT_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
     case CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT: {
       return Object.assign({}, state, {
@@ -167,8 +167,54 @@ export function reducer(state = initialState, action: CollectionActions): State 
         loading: true
       });
     }
+    //
+    // case CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
 
-    case CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT_SUCCESS: {
+    case CollectionActionTypes.LIST_BY_CATEGORY_AREA: {
+      return Object.assign({}, state, {
+        collections: [],
+        loading: true
+      });
+    }
+
+    // case CollectionActionTypes.LIST_BY_CATEGORY_AREA_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   console.log('category action success')
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
+
+    case CollectionActionTypes.LIST_BY_CATEGORY_TYPE: {
+    return Object.assign({}, state, {
+      collections: [],
+      loading: true
+    });
+  }
+    //
+    // case CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUCCESS: {
+    //   const result: CollectionType[] = <CollectionType[]>action.payload;
+    //   return Object.assign({}, state, {
+    //     collections: result,
+    //     loading: false
+    //   });
+    // }
+
+    case CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE: {
+      return Object.assign({}, state, {
+        collections: [],
+        loading: true
+      });
+    }
+
+    case CollectionActionTypes.COLLECTION_ACTION_SUCCESS: {
       const result: CollectionType[] = <CollectionType[]>action.payload;
       return Object.assign({}, state, {
         collections: result,

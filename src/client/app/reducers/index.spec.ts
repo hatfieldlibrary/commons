@@ -27,8 +27,8 @@ import {
   getCollectionsState
 } from './index';
 import {ItemSuccess} from '../actions/item.actions';
-import {AreaListActionSuccess, AreaInformationSuccess} from '../actions/area.actions';
-import {CollectionsAreaActionSuccess} from '../actions/collection.actions';
+import {AreaListSuccess, AreaInformationSuccess} from '../actions/area.actions';
+import {CollectionsActionSuccess} from '../actions/collection.actions';
 import {ItemActionRelatedSuccess} from '../actions/related.actions';
 import {SetAuthStatus} from '../actions/auth.action';
 
@@ -76,7 +76,8 @@ describe('Reducers ', () => {
     searchOptions: '',
     assetType: '',
     restricted: false,
-    published: false
+    published: false,
+    parent: []
   };
 
   const expectedCategory = {
@@ -112,27 +113,28 @@ describe('Reducers ', () => {
     collection: expectedCollection,
     category: expectedCategory,
     itemTypes: expectedItemTypes,
-    subjects: [1]
+    subjects: [{id: 1, name: 'test'}]
   };
 
   const expectedCollections = [expectedCollection];
 
-  const expectedArea = [{
+  const expectedArea = {
     id: 1,
     title: 'Area One',
     linkLabel: '',
     url: '',
     searchUrl: '',
+    image: '',
     description: '',
     position: 0
-  }];
+  };
 
   beforeEach(() => {
     subjectState = reducers.subjects(undefined, new SubjectActionSuccess(expectedSubjects));
     itemState = reducers.item(undefined, new ItemSuccess(expectedItem));
     areaState = reducers.area(undefined, new AreaInformationSuccess(expectedArea));
-    areaListState = reducers.areaList(undefined, new AreaListActionSuccess(expectedAreas));
-    collectionState = reducers.collections(undefined, new CollectionsAreaActionSuccess(expectedCollections));
+    areaListState = reducers.areaList(undefined, new AreaListSuccess(expectedAreas));
+    collectionState = reducers.collections(undefined, new CollectionsActionSuccess(expectedCollections));
     relatedItemsState = reducers.related(undefined, new ItemActionRelatedSuccess(expectedRelatedItems));
     authState = reducers.auth(undefined, new SetAuthStatus({auth: true}));
   });

@@ -1,15 +1,13 @@
 import {FilterActions, FilterActionTypes} from '../actions/filter.actions';
-import {SubjectFilterType} from '../shared/data-types/subject-filter.type';
-import {TypesFilterType} from '../shared/data-types/types-filter.type';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
   filterTerm: '';
-  selectedSubject: {
+  selectedSubjects: [{
     id: 0,
-    name: '',
-    url: ''
-  };
+    name: ''
+  }];
   selectedTypes: [{
     id: 0,
     name: ''
@@ -19,20 +17,35 @@ export interface State {
     title: '',
     count: 0
   }];
+  selectedGroups: [{
+    id: 0,
+    name: ''
+  }];
   previousAreas: [{
     id: 0,
     title: '',
     count: 0
-  }]
+  }];
+  removedSubjects: [{
+    id: 0,
+    name: ''
+  }];
+  removedTypes: [{
+    id: 0,
+    name: ''
+  }];
+  removedGroups: [{
+    id: 0,
+    name: ''
+  }];
 }
 
 const initialState: State = {
   filterTerm: '',
-  selectedSubject: {
+  selectedSubjects: [{
     id: 0,
-    name: '',
-    url: ''
-  },
+    name: ''
+  }],
   selectedTypes: [{
     id: 0,
     name: ''
@@ -42,10 +55,26 @@ const initialState: State = {
     title: '',
     count: 0
   }],
+  selectedGroups: [{
+    id: 0,
+    name: ''
+  }],
   previousAreas: [{
     id: 0,
     title: '',
     count: 0
+  }],
+  removedSubjects: [{
+    id: 0,
+    name: ''
+  }],
+  removedTypes: [{
+    id: 0,
+    name: ''
+  }],
+  removedGroups: [{
+    id: 0,
+    name: ''
   }]
 };
 
@@ -53,18 +82,39 @@ export function reducer(state = initialState, action: FilterActions): State {
 
   switch (action.type) {
 
+    case FilterActionTypes.REMOVE_SELECTED_SUBJECT: {
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
+      return Object.assign({}, state, {
+        removedSubjects: result
+      });
+    }
+
+    case FilterActionTypes.REMOVE_SELECTED_TYPE: {
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
+      return Object.assign({}, state, {
+        removedTypes: result
+      });
+    }
+
+    case FilterActionTypes.REMOVE_SELECTED_GROUP: {
+      const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
+      return Object.assign({}, state, {
+        removedGroups: result
+      });
+    }
+
     case FilterActionTypes.SET_SUBJECT_FILTER: {
 
-      const filter: SubjectFilterType = <SubjectFilterType>action.payload;
+      const filter: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
-        selectedSubject: filter
+        selectedSubjects: filter
       });
     }
 
     case FilterActionTypes.REMOVE_SUBJECT_FILTER: {
 
       return Object.assign({}, state, {
-        selectedSubject: initialState.selectedSubject
+        selectedSubjects: initialState.selectedSubjects
       });
     }
 
@@ -83,14 +133,14 @@ export function reducer(state = initialState, action: FilterActions): State {
     }
 
     case FilterActionTypes.SET_TYPE_FILTER: {
-      const filter: TypesFilterType[] = <TypesFilterType[]>action.payload;
+      const filter: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         selectedTypes: filter
       });
     }
 
     case FilterActionTypes.SET_DEFAULT_TYPE_FILTER: {
-      const filter: TypesFilterType[] = [{id: 0, name: ''}];
+      const filter: FieldFilterType[] = [{id: 0, name: ''}];
       return Object.assign({}, state, {
         selectedTypes: filter
       });
@@ -99,7 +149,6 @@ export function reducer(state = initialState, action: FilterActions): State {
     case FilterActionTypes.SET_AREA_FILTER: {
       const filter: AreaFilterType[] = <AreaFilterType[]>action.payload;
       return Object.assign({}, state, {
-        previousAreas: state.selectedAreas,
         selectedAreas: filter
       });
     }
@@ -111,17 +160,32 @@ export function reducer(state = initialState, action: FilterActions): State {
       });
     }
 
+    case FilterActionTypes.SET_GROUP_FILTER: {
+      const filter: FieldFilterType[] = <FieldFilterType[]>action.payload;
+      return Object.assign({}, state, {
+        selectedGroups: filter
+      });
+    }
+
     default:
       return state;
   }
 
 }
 
-export const getSubjectsFilter = (state: State) => state.selectedSubject;
+export const getSubjectsFilter = (state: State) => state.selectedSubjects;
+
+export const getRemovedSubjectsFilter = (state: State) => state.removedSubjects;
+
+export const getRemovedTypesFilter = (state: State) => state.removedTypes;
+
+export const getRemovedGroupsFilter = (state: State) => state.removedGroups;
 
 export const getTypesFilter = (state: State) => state.selectedTypes;
 
 export const getAreasFilter = (state: State) => state.selectedAreas;
+
+export const getCollectionGroupFilter = (state: State) => state.selectedGroups;
 
 export const getFilterTerm = (state: State) => state.filterTerm;
 

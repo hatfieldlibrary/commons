@@ -23,9 +23,8 @@ import {Observable,} from 'rxjs/Observable';
 import {CollectionService} from '../services/collection.service';
 import {CollectionEffects} from './collection.effects';
 import {
-  AllCollectionsAction, CollectionsAreaAction, CollectionsAreaActionSuccess,
-  CollectionsSubjectActionSuccess, CollectionActionFailed,
-  CollectionsSubjectAction, CollectionsAreaSubjectAction, AllCollectionsActionSuccess
+  AllCollectionsAction, CollectionsAreaAction, CollectionActionFailed,
+  CollectionsSubjectAction, CollectionsAreaSubjectAction, CollectionsActionSuccess
 } from '../actions/collection.actions';
 
 describe('Collections Effect', () => {
@@ -49,7 +48,8 @@ describe('Collections Effect', () => {
       assetType: '',
       searchOptions: '',
       restricted: true,
-      published: false
+      published: false,
+      parent: []
     }
   ];
 
@@ -88,7 +88,7 @@ describe('Collections Effect', () => {
     const startAction = new CollectionsAreaAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new CollectionsAreaActionSuccess(mockCollections);
+    const successAction = new CollectionsActionSuccess(mockCollections);
     const expectedResults = cold('--b', {b: successAction});
     expect(collectionEffects.collectionsByArea$).toBeObservable(expectedResults);
 
@@ -112,7 +112,7 @@ describe('Collections Effect', () => {
     const startAction = new CollectionsAreaSubjectAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a', hotMarble);
-    const successAction = new CollectionsSubjectActionSuccess(mockCollections);
+    const successAction = new CollectionsActionSuccess(mockCollections);
     const expectedResults = cold('--b', {b: successAction});
     expect(collectionEffects.collectionsBySubjectArea$).toBeObservable(expectedResults);
 
@@ -136,7 +136,7 @@ describe('Collections Effect', () => {
     const startAction = new CollectionsSubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new CollectionsSubjectActionSuccess(mockCollections);
+    const successAction = new CollectionsActionSuccess(mockCollections);
     const expectedResults = cold('--b', {b: successAction});
     expect(collectionEffects.collectionsBySubject$).toBeObservable(expectedResults);
 
@@ -160,7 +160,7 @@ describe('Collections Effect', () => {
     const startAction = new AllCollectionsAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
-    const successAction = new AllCollectionsActionSuccess(mockCollections);
+    const successAction = new CollectionsActionSuccess(mockCollections);
     const expectedResults = cold('--b', {b: successAction});
     expect(collectionEffects.collectionsAll$).toBeObservable(expectedResults);
 

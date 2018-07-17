@@ -44,7 +44,8 @@ import * as fromRelated from './related.reducers';
 import * as fromAuth from './auth.reducers';
 import * as fromTypes from './type.reducers';
 import * as fromFilter from './filter.reducers';
-import {Observable} from 'rxjs/Observable';
+import * as fromCollectionGroups from './collection-group.reducers';
+import * as fromViewType from './view.reducers';
 import {getAllFilters} from './filter.reducers';
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -52,6 +53,7 @@ import {getAllFilters} from './filter.reducers';
  */
 export interface State {
   collections: fromCollection.State;
+  collectionGroups: fromCollectionGroups.State;
   area: fromArea.State;
   areaList: fromAreaList.State
   subjects: fromSubject.State;
@@ -60,10 +62,12 @@ export interface State {
   related: fromRelated.State;
   auth: fromAuth.State;
   filter: fromFilter.State;
+  viewType: fromViewType.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
   collections: fromCollection.reducer,
+  collectionGroups: fromCollectionGroups.reducer,
   area: fromArea.reducer,
   areaList: fromAreaList.reducer,
   subjects: fromSubject.reducer,
@@ -71,7 +75,8 @@ export const reducers: ActionReducerMap<State> = {
   item: fromItem.reducer,
   related: fromRelated.reducer,
   auth: fromAuth.reducer,
-  filter: fromFilter.reducer
+  filter: fromFilter.reducer,
+  viewType: fromViewType.reducer
 };
 
 /**
@@ -102,6 +107,10 @@ export const getCollectionsState = (state: State) => state.collections;
  */
 export const getCollections = createSelector(getCollectionsState, fromCollection.getCollectionList);
 
+export const getCollectionGroupState = (state: State) => state.collectionGroups;
+
+export const getCollectionGroups = createSelector(getCollectionGroupState, fromCollectionGroups.getCollectionGroupList);
+
 export const getAreasState = (state: State) => state.area;
 
 export const getTypesState = (state: State) => state.types;
@@ -121,7 +130,7 @@ export const getSubjectsState = (state: State) => state.subjects;
 export const getSubject = createSelector(getSubjectsState, fromSubject.getSubjectList);
 
 // This is probably unused. If not, it should be. See getSubjectsFilter.
-export const getSelectedSubject = createSelector(getSubjectsState, fromSubject.getSelectedSubject);
+// export const getSelectedSubject = createSelector(getSubjectsState, fromSubject.getSelectedSubject);
 
 export const getItemState = (state: State) => state.item;
 
@@ -145,9 +154,21 @@ export const getTypesFilter = createSelector(getFilterState, fromFilter.getTypes
 
 export const getAreasFilter = createSelector(getFilterState, fromFilter.getAreasFilter);
 
+export const getRemovedSubject = createSelector(getFilterState, fromFilter.getRemovedSubjectsFilter);
+
+export const getRemovedGroup = createSelector(getFilterState, fromFilter.getRemovedGroupsFilter);
+
+export const getRemovedType = createSelector(getFilterState, fromFilter.getRemovedTypesFilter);
+
+export const getCollectionsGroupFilter = createSelector(getFilterState, fromFilter.getCollectionGroupFilter);
+
 export const getCollectionFilterTerm = createSelector(getFilterState, fromFilter.getFilterTerm);
 
 export const getFilteredCollections = createSelector(getCollections, getFilterState, filterFunction);
+
+export const getViewTypeState = (state: State) => state.viewType;
+
+export const getViewState = createSelector(getViewTypeState, fromViewType.getViewType);
 
 function filterFunction(collections, filter) {
   if (typeof filter.filterTerm !== 'undefined' && filter.filterTerm.length > 2 && collections.length > 1) {

@@ -15,9 +15,9 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {getItem, reducer, State} from "./item.reducers";
-import {ItemRequest, ItemRequestFailed, ItemSuccess, ItemReset} from "../actions/item.actions";
-import {Action} from "@ngrx/store";
+import {getItem, reducer, State} from './item.reducers';
+import {ItemRequest, ItemRequestFailed, ItemSuccess, ItemReset} from '../actions/item.actions';
+import {Action} from '@ngrx/store';
 
 /**
  * Created by mspalti on 3/24/17.
@@ -37,7 +37,8 @@ const initializeItem = {
     searchOptions: '',
     assetType: '',
     restricted: false,
-    published: false
+    published: false,
+    parent: []
   },
   category: {
     id: 0,
@@ -70,7 +71,8 @@ const itemMock = {
     searchOptions: '',
     assetType: '',
     restricted: false,
-    published: false
+    published: false,
+    parent: []
   },
   category: {
     id: 1,
@@ -86,12 +88,12 @@ const itemMock = {
     name: 'test item type',
     icon: ''
   }],
-  subjects: [1]
+  subjects: [{id: 1, name: 'test'}]
 };
 
 
 class MockAction implements Action {
-  type: string = '';
+  type = '';
   payload: any;
 
 }
@@ -130,7 +132,7 @@ describe('Item Reducers', () => {
   });
 
   it('should return current state and fail.', () => {
-      let itemState: State = {item: itemMock, loading: false};
+      const itemState: State = {item: itemMock, loading: false};
       expect(
         reducer(itemState, new ItemRequestFailed('error'))
       ).toEqual(
@@ -142,8 +144,8 @@ describe('Item Reducers', () => {
   });
 
   it('should return item  information', () => {
-    let state = reducer(undefined, new ItemSuccess(itemMock));
-    let result = getItem(state);
+    const state = reducer(undefined, new ItemSuccess(itemMock));
+    const result = getItem(state);
     expect(result).toEqual(itemMock);
   });
 

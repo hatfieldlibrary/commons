@@ -16,11 +16,10 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {inject, TestBed} from "@angular/core/testing";
+import {inject, TestBed} from '@angular/core/testing';
 // import {HttpModule, ResponseOptions, XHRBackend } from "@angular/http";
 // import {MockBackend } from "@angular/http/testing";
-import {ItemService} from "./item.service";
-import {ItemType} from "../shared/data-types/item.type";
+import {ItemType} from '../shared/data-types/item.type';
 
 describe('Item Service', () => {
 
@@ -39,7 +38,8 @@ describe('Item Service', () => {
         searchOptions: '',
         assetType: '',
         restricted: false,
-        published: false
+        published: false,
+        parent: []
       },
       category: {
         id: 1,

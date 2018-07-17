@@ -1,0 +1,53 @@
+.thumb-image {
+  height: 135px;
+  border: 3px solid transparent;
+}
+.mat-card-image {
+  width: calc(100% + 42px);
+}
+.mat-card-image-xs {
+  width: calc(100% + 26px) !important;
+}
+.mat-caption {
+  line-height: 12px;
+}
+mat-card {
+  width: calc(100% - 70px);
+  height: calc(100% - 70px);
+  background: #fff;
+  cursor: pointer;
+}
+
+mat-card:hover {
+  background-color: rgba(240, 240, 240, 0.57);
+}
+
+.bold-caption {
+  font-weight: 800;
+  color: #111111;
+}
+.card-text {
+  color: #999;
+}
+.card-label {
+  color: #333;
+}
+.grid-result-info {
+  position: relative;
+  padding-top: 20px;
+  padding-left: 12px;
+  padding-bottom: 8px;
+}
+.collection-item {
+  color: #0F959F;
+}
+
+.mat-h3 {
+  font: 400 16px/18px Roboto, "Helvetica Neue", sans-serif;
+}
+.icon-color {
+  color: #8C836B;
+}
+app-lock-svg {
+  color: #4BA5AC;
+}

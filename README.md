@@ -1,9 +1,6 @@
 # Commons
 [![Build Status](https://travis-ci.org/hatfieldlibrary/commons.svg?branch=master)](https://travis-ci.org/hatfieldlibrary/commons)
 [![Coverage Status](https://coveralls.io/repos/github/hatfieldlibrary/commons/badge.svg?branch=master)](https://coveralls.io/github/hatfieldlibrary/commons?branch=master)
-[![bitHound Overall Score](https://www.bithound.io/github/hatfieldlibrary/commons/badges/score.svg)](https://www.bithound.io/github/hatfieldlibrary/commons)
-[![bitHound Dependencies](https://www.bithound.io/github/hatfieldlibrary/commons/badges/dependencies.svg)](https://www.bithound.io/github/hatfieldlibrary/commons/master/dependencies/npm)
-[![bitHound Code](https://www.bithound.io/github/hatfieldlibrary/commons/badges/code.svg)](https://www.bithound.io/github/hatfieldlibrary/commons)
 
 The Commons is designed for publishing information about digital projects and collections that are maintained within institutional repositories like DSpace, Contentdm, and Hydra or
  that exist independently as unique, standalone projects like Omeka exhibits and public websites. The goals of the Commons project include deep integration with 

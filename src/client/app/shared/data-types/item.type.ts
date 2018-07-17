@@ -15,6 +15,9 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import {ParentAreaType} from './parent-area.type';
+import {FieldFilterType} from './field-filter.type';
+
 /**
  * Created by mspalti on 3/23/17.
  */
@@ -41,6 +44,7 @@ export class ItemType {
     assetType: string;
     restricted: boolean;
     published: boolean;
+    parent: ParentAreaType[];
   };
   category: {
     id: number;
@@ -52,6 +56,6 @@ export class ItemType {
     areaId: string;
   };
   itemTypes: ItemTypesInterface[];
-  subjects: number[];
+  subjects: FieldFilterType[];
 
 }
