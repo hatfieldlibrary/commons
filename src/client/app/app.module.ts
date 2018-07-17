@@ -110,7 +110,10 @@ import {CollectionGroupEffects} from './effects/collection-group.effects';
 import {CollectionGroupServices} from './services/collection-group.services';
 import {FilterUpdateServiceB} from './services/filters-2/filter-update.service';
 import {NavigationServiceB} from './services/navigation-2/navigation.service';
-import {ScrollReadyService} from './services/observable/scroll-ready.service'
+import {ScrollReadyService} from './services/observable/scroll-ready.service';
+import { CollectionRowsComponent } from './components/collection-rows/collection-rows.component';
+import { ViewListComponent } from './components/svg/view-list/view-list.component';
+import { ViewGridComponent } from './components/svg/view-grid/view-grid.component'
 
 export const appRoutes = [
 
@@ -214,7 +217,10 @@ export const appRoutes = [
     AreaFiltersComponent,
     CollectionGridComponent,
     SubjectOptionsComponent,
-    GroupOptionsComponent
+    GroupOptionsComponent,
+    CollectionRowsComponent,
+    ViewListComponent,
+    ViewGridComponent
 
   ],
   imports: [

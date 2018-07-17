@@ -53,6 +53,7 @@ import {SelectedGroupEvent} from '../../components/group-options/group-options.c
 import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
+import {SetViewAction} from '../../actions/view.actions';
 
 @Component({
   selector: 'app-lists-container',
@@ -66,6 +67,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   title: string;
   subtitle: string;
   state = '';
+  view = 'list';
+
   /**
    * Redux selectors.
    */
@@ -79,6 +82,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   areasFilter$: Observable<AreasFilter>;
   subjectsFilter$: Observable<SubjectFilter>;
   groupsFilter$: Observable<CollectionGroupFilter>;
+  viewType$: Observable<string>;
 
   selectedAreas: AreaFilterType[];
   selectedTypes: FieldFilterType[];
@@ -258,6 +262,31 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.navigation.navigateFilterRoute(areaIds, typeIds, subjectIds, groupIds);
   }
 
+  /**
+   * This function handles the set view event, setting the store and
+   * navigating to the selected view.
+   * @param {string} type
+   */
+  setViewType(type: string): void {
+    this.scrollReady.setPosition(0);
+    const areaIds = this.navigation.getIds(this.selectedAreas);
+    const typeIds = this.navigation.getIds(this.selectedTypes);
+    const subjectIds = this.navigation.getIds(this.selectedSubjects);
+    const groupIds = this.navigation.getIds(this.selectedGroups);
+    this.navigation.navigateFilterRouteWithView(areaIds, typeIds, subjectIds, groupIds, type);
+  }
+
+  /**
+   * This function uses queryParams to set the state of the view (list or grid).
+   * The purpose is to allow deep linking by using the route to update store.
+   * @param queryParams
+   */
+  setView(queryParams: any): void {
+    if (queryParams.view) {
+      this.store.dispatch(new SetViewAction(queryParams.view));
+    }
+  }
+
   ngOnInit() {
     // All local subscriptions are added to this Subscription
     // and removed in ngOnDestroy.
@@ -277,6 +306,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.types$ = this.store.select(fromRoot.getTypes);
     this.groups$ = this.store.select(fromRoot.getCollectionGroups);
     this.filters$ = this.store.select(fromRoot.getFilters);
+    this.viewType$ = this.store.select(fromRoot.getViewState);
     this.areasFilter$ = Observable.combineLatest(
       this.store.select(fromRoot.getAreas),
       this.store.select(fromRoot.getAreasFilter),
@@ -334,6 +364,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
           params['categoryId']);
       });
     this.watchers.add(routeWatcher);
+    const paramsWatcher = this.route.queryParams
+      .subscribe(params => {
+        this.setView(params);
+      });
+    this.watchers.add(paramsWatcher);
   }
 
   ngOnDestroy(): void {

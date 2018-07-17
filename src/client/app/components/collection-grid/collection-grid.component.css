@@ -33,6 +33,7 @@ mat-card:hover {
   color: #333;
 }
 .grid-result-info {
+  position: relative;
   padding-top: 20px;
   padding-left: 12px;
   padding-bottom: 8px;
@@ -43,4 +44,10 @@ mat-card:hover {
 
 .mat-h3 {
   font: 400 16px/18px Roboto, "Helvetica Neue", sans-serif;
+}
+.icon-color {
+  color: #8C836B;
+}
+app-lock-svg {
+  color: #4BA5AC;
 }
