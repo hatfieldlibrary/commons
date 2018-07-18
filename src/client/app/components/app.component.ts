@@ -17,10 +17,10 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnDestroy, OnInit,
+  ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
-import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
 } from '@angular/common';

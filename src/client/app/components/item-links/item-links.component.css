@@ -4,7 +4,7 @@ mat-card {
   color: #cccccc;
   min-height: 120px;
 }
-mat-input-container div.mat-input-underline {
+mat-form-field div.mat-input-underline {
   height: 2px !important;
   background-color: rgba(251, 251, 251, 0.68) !important;
 }
