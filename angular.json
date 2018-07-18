@@ -74,6 +74,7 @@
               "src/client/styles.css",
               "src/client/themes/commons-app-theme.scss"
             ],
+            "tsConfig": "src/client/tsconfig.json",
             "assets": [
               "src/client/assets",
               "src/client/favicon.ico"

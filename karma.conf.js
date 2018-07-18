@@ -32,14 +32,15 @@ module.exports = function (config) {
       require('karma-teamcity-reporter'),
       require('karma-spec-reporter')
     ],
-    files: [
-      { pattern: './src/client/test.ts', watched: false },
-      { pattern: './src/client/themes/commons-app-theme.scss', included: true, watched: true},
-    ],
-    preprocessors: {
-      './src/client/test.ts': ['@angular-devkit/build-angular'],
-      './src/client/themes/commons-app-theme.scss': ['scss']
-    },
+    // Use the files and preprocessor settings in angular.json
+  //  files: [
+    //   { pattern: './src/client/test.ts', watched: false },
+    //   { pattern: './src/client/themes/commons-app-theme.scss', included: true, watched: true},
+    // ],
+    // preprocessors: {
+    //   './src/client/test.ts': ['@angular-devkit/build-angular'],
+    //   './src/client/themes/commons-app-theme.scss': ['scss']
+    // },
     mime: {
       'text/x-typescript': ['ts','tsx']
     },
