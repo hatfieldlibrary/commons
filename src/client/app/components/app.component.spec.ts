@@ -33,13 +33,14 @@ import {CloseSvgComponent} from './svg/close-svg/close-svg.component';
 import {BackSvgComponent} from './svg/back-svg/back-svg.component';
 import {HomeBlackSvgComponent} from './svg/home-black-svg/home-black-svg.component';
 import {MenuSvgComponent} from './svg/menu-svg/menu-svg.component';
-import {MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {MatCheckboxModule, MatDivider, MatIconModule, MatListItem, MatSidenavModule, MatToolbarModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Subject} from 'rxjs/Subject';
 import {Router} from '@angular/router';
 import {Component} from '@angular/core';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {AreaSelectorMobileComponent} from './area-selector-mobile/area-selector-mobile.component';
 
 @Component({
   selector: 'dummy-component',
@@ -95,6 +96,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
+        AreaSelectorMobileComponent,
         MenuSvgComponent,
         HomeBlackSvgComponent,
         BackSvgComponent,
@@ -110,6 +112,8 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
+        MatDivider,
+        MatListItem,
         MatCheckboxModule,
         MatIconModule,
         RouterTestingModule.withRoutes([

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CollectionRowsComponent } from './collection-rows.component';
+import {ViewGridComponent} from '../svg/view-grid/view-grid.component';
 
 describe('CollectionRowsComponent', () => {
   let component: CollectionRowsComponent;
@@ -8,7 +9,7 @@ describe('CollectionRowsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CollectionRowsComponent ]
+      declarations: [ CollectionRowsComponent, ViewGridComponent ]
     })
     .compileComponents();
   }));
