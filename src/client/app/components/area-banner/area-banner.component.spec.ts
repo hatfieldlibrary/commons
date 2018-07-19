@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AreaBannerComponent } from './area-banner.component';
+import {AreaFiltersComponent} from '../area-filters/area-filters.component';
 
 describe('AreaBannerComponent', () => {
   let component: AreaBannerComponent;
@@ -8,7 +9,8 @@ describe('AreaBannerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AreaBannerComponent ]
+      declarations: [ AreaBannerComponent, AreaFiltersComponent ],
+      imports: []
     })
     .compileComponents();
   }));

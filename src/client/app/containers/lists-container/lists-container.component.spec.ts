@@ -23,8 +23,8 @@ import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/t
 import {RouterTestingModule} from '@angular/router/testing';
 import {Store, Action} from '@ngrx/store';
 import {
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatIconModule, MatInputModule,
-  MatListModule, MatProgressSpinnerModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatGridListModule, MatIconModule, MatInputModule, MatListItem,
+  MatListModule, MatListOption, MatNavList, MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
   MatToolbarModule
@@ -72,6 +72,13 @@ import {SetTimeoutService} from '../../services/timers/timeout.service';
 import {SearchFilterComponent} from '../../components/search-filter/search-filter.component';
 import {TypesComponent} from '../../components/types/types.component';
 import {HttpClientModule} from '@angular/common/http';
+import {AreaBannerComponent} from '../../components/area-banner/area-banner.component';
+import {SubjectOptionsComponent} from '../../components/subject-options/subject-options.component';
+import {CollectionRowsComponent} from '../../components/collection-rows/collection-rows.component';
+import {CollectionGridComponent} from '../../components/collection-grid/collection-grid.component';
+import {GroupOptionsComponent} from '../../components/group-options/group-options.component';
+import {AreaFiltersComponent} from '../../components/area-filters/area-filters.component';
+import {AreaSelectorMobileComponent} from '../../components/area-selector-mobile/area-selector-mobile.component';
 
 const areaSubscriptionMock = {
     id: 1,
@@ -146,6 +153,8 @@ describe('ListsContainerComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
+        AreaFiltersComponent,
+        AreaSelectorMobileComponent,
         BackSvgComponent,
         LockSvgComponent,
         MenuSvgComponent,
@@ -153,11 +162,12 @@ describe('ListsContainerComponent', () => {
         CloseWhiteSvgComponent,
         AppComponent,
         NavigationComponent,
-        ListComponent,
+        CollectionRowsComponent,
+        CollectionGridComponent,
         ListsContainerComponent,
-        SubjectsComponent,
-        AreaInformationComponent,
-        HomeScreenComponent,
+        SubjectOptionsComponent,
+        GroupOptionsComponent,
+        AreaBannerComponent,
         FooterComponent,
         SearchSvgComponent,
         TitleHeaderComponent,
@@ -181,6 +191,9 @@ describe('ListsContainerComponent', () => {
         MatInputModule,
         MatIconModule,
         MatSelectModule,
+        MatListItem,
+        MatNavList,
+        MatListOption,
         MatProgressSpinnerModule,
         MatChipsModule,
         BrowserModule,
