@@ -104,7 +104,9 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.watcher.unsubscribe();
+    if (this.watcher) {
+      this.watcher.unsubscribe();
+    }
   }
 
 }

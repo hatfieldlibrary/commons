@@ -1,8 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SearchSvgComponent} from './search-svg.component';
-import {MatIconModule, MatIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MatIconModule, MatIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('SearchSvgComponent', () => {
   let component: SearchSvgComponent;
@@ -14,15 +15,15 @@ describe('SearchSvgComponent', () => {
         SearchSvgComponent,
       ],
       imports: [
-        MatIconModule
+        MatIconModule, HttpClientModule
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    let iconRegistry = TestBed.get(MatIconRegistry);
-    let sanitizer = TestBed.get(DomSanitizer);
+    const iconRegistry = TestBed.get(MatIconRegistry);
+    const sanitizer = TestBed.get(DomSanitizer);
     iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_black_24px.svg'));
     fixture = TestBed.createComponent(SearchSvgComponent);
     component = fixture.componentInstance;

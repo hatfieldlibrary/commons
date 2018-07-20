@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloseSvgDisabledComponent } from './close-svg-disabled.component';
-import {DomSanitizer} from "@angular/platform-browser";
-import { MatIconModule, MatIconRegistry} from "@angular/material";
+import {DomSanitizer} from '@angular/platform-browser';
+import { MatIconModule, MatIconRegistry} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('CloseSvgDiabledComponent', () => {
   let component: CloseSvgDisabledComponent;
@@ -12,7 +13,7 @@ describe('CloseSvgDiabledComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CloseSvgDisabledComponent ],
       imports: [
-        MatIconModule
+        MatIconModule, HttpClientModule
       ]
     })
     .compileComponents();

@@ -2,6 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CollectionRowsComponent } from './collection-rows.component';
 import {ViewGridComponent} from '../svg/view-grid/view-grid.component';
+import {ViewListComponent} from '../svg/view-list/view-list.component';
+import {LockSvgComponent} from '../svg/lock-svg/lock-svg.component';
+import {MatIconModule, MatList, MatListModule} from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 describe('CollectionRowsComponent', () => {
   let component: CollectionRowsComponent;
@@ -9,9 +13,14 @@ describe('CollectionRowsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CollectionRowsComponent, ViewGridComponent ]
-    })
-    .compileComponents();
+      declarations: [ CollectionRowsComponent, ViewGridComponent, ViewListComponent, LockSvgComponent ],
+      imports: [
+        MatListModule,
+        MatIconModule,
+        // needed to test ObservableMedia
+        FlexLayoutModule
+      ]
+    });
   }));
 
   beforeEach(() => {
@@ -20,7 +29,7 @@ describe('CollectionRowsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', async () => {
     expect(component).toBeTruthy();
   });
 });

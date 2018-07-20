@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TypesComponent } from './types.component';
 import {MatListModule, MatSelectionList} from '@angular/material';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {StoreModule} from '@ngrx/store';
 
 describe('TypesComponent', () => {
   let component: TypesComponent;
@@ -9,8 +11,10 @@ describe('TypesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TypesComponent, MatSelectionList],
-      imports: [MatListModule]
+      declarations: [ TypesComponent],
+      imports: [MatListModule, StoreModule.forRoot({})],
+      providers: [FilterUpdateServiceB
+      ]
     })
     .compileComponents();
   }));

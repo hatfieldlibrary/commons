@@ -28,19 +28,31 @@ import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {CollectionsSvgComponent} from 'app/components/svg/collections-svg/collections-svg.component';
 import {HomeSvgComponent} from './svg/home-svg/home-svg.component';
-import {NavigationComponent} from './area-selector/area.component';
 import {CloseSvgComponent} from './svg/close-svg/close-svg.component';
 import {BackSvgComponent} from './svg/back-svg/back-svg.component';
 import {HomeBlackSvgComponent} from './svg/home-black-svg/home-black-svg.component';
 import {MenuSvgComponent} from './svg/menu-svg/menu-svg.component';
-import {MatCheckboxModule, MatDivider, MatIconModule, MatListItem, MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {
+  MatCheckboxModule,
+  MatDivider,
+  MatDividerModule,
+  MatListModule,
+  MatIconModule,
+  MatListItem,
+  MatSidenavModule,
+  MatToolbarModule
+} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Subject} from 'rxjs/Subject';
 import {Router} from '@angular/router';
 import {Component} from '@angular/core';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
-import {AreaSelectorMobileComponent} from './area-selector-mobile/area-selector-mobile.component';
+import {SetSelectedService} from '../services/set-selected.service';
+import {NavigationServiceB} from '../services/navigation-2/navigation.service';
+import {ScrollReadyService} from '../services/observable/scroll-ready.service';
+import {LoggerService} from '../shared/logger/logger.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @Component({
   selector: 'dummy-component',
@@ -96,12 +108,10 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        AreaSelectorMobileComponent,
         MenuSvgComponent,
         HomeBlackSvgComponent,
         BackSvgComponent,
         CloseSvgComponent,
-        NavigationComponent,
         HomeSvgComponent,
         CollectionsSvgComponent,
         MockComponent
@@ -112,10 +122,12 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        MatDivider,
-        MatListItem,
+        MatDividerModule,
+        MatListModule,
         MatCheckboxModule,
         MatIconModule,
+        MatDividerModule,
+        HttpClientModule,
         RouterTestingModule.withRoutes([
           {path: 'commons/item', component: MockComponent},
           {path: 'commons/collection', component: MockComponent}
@@ -125,6 +137,10 @@ describe('AppComponent', () => {
 
       ],
       providers: [
+        SetSelectedService,
+        NavigationServiceB,
+        ScrollReadyService,
+        LoggerService,
         {
           provide: SetTimeoutService,
           useClass: MockTimeoutService

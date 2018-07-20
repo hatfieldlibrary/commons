@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AreaOptionsComponent } from './area-options.component';
+import {MatListItem, MatListModule, MatNavList} from '@angular/material';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
+import {Store, StoreModule} from '@ngrx/store';
 
 describe('AreaOptionsComponent', () => {
   let component: AreaOptionsComponent;
@@ -8,9 +12,10 @@ describe('AreaOptionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AreaOptionsComponent ]
-    })
-    .compileComponents();
+      declarations: [ AreaOptionsComponent],
+      imports: [MatListModule, StoreModule.forRoot({})],
+      providers: [FilterUpdateServiceB, ScrollReadyService]
+    });
   }));
 
   beforeEach(() => {
@@ -19,7 +24,7 @@ describe('AreaOptionsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', async () => {
     expect(component).toBeTruthy();
   });
 });

@@ -20,7 +20,7 @@ import {getCollectionList, reducer, State} from './collection.reducers';
 import {
   AllCollectionsAction,
   CollectionsActionSuccess,
-  CollectionsAreaAction, CollectionActionFailed, CollectionReset, CollectionsSubjectAction
+  CollectionsAreaAction, CollectionActionFailed, CollectionReset, CollectionsSubjectAction, CollectionsAreaSubjectAction
 } from '../actions/collection.actions';
 import {AreaType} from '../shared/data-types/area.type';
 /**
@@ -41,7 +41,8 @@ const collectionListMock = [
     assetType: '',
     restricted: false,
     published: false,
-    parent: []
+    parent: [],
+    types: []
   }
 ];
 
@@ -133,7 +134,7 @@ describe('Collection Reducer', () => {
   it('should return empty state if either areas or subject id is missing in CollectionSubjectAction.', () => {
     const collectionState: State = {collections: collectionListMock, loading: false};
     expect(
-      reducer(collectionState, new CollectionsSubjectAction(''))
+      reducer(collectionState, new CollectionsAreaSubjectAction('', ''))
     ).toEqual(
       {
         collections: [],

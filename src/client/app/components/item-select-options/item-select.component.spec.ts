@@ -18,13 +18,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ItemSelectComponent} from './item-select.component';
-import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
-import {MatIconModule, MatSelectModule} from "@angular/material";
-import {SearchService} from "../../services/search.service";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-// import {MockBackend} from "@angular/http/testing";
-// import {XHRBackend} from "@angular/http";
-import {Observable} from "rxjs/Observable";
+import {DatePickerSvgComponent} from '../svg/date-picker-svg/date-picker-svg.component';
+import {MatIconModule, MatSelectModule} from '@angular/material';
+import {SearchService} from '../../services/search.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+ import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 describe('ItemSelectComponent', () => {
@@ -32,39 +31,38 @@ describe('ItemSelectComponent', () => {
   let fixture: ComponentFixture<ItemSelectComponent>;
   let svc;
 
-  // beforeEach(async(() => {
-  //   TestBed.configureTestingModule({
-  //     declarations: [
-  //       ItemSelectComponent,
-  //       DatePickerSvgComponent
-  //     ],
-  //     imports: [
-  //       MatSelectModule,
-  //       MatIconModule,
-  //       BrowserAnimationsModule
-  //     ],
-  //     providers: [
-  //       MockBackend,
-  //       {provide: XHRBackend, useClass: MockBackend},
-  //       {
-  //         provide: SearchService,
-  //         useValue: {
-  //           getOptionsQuery: (url, term) => {
-  //             return term;
-  //           },
-  //           getOptionsList: (url) => {
-  //             return Observable.of([{
-  //                 item: {
-  //                   title: 'test'
-  //                 }
-  //               }])
-  //           }
-  //         }
-  //       }
-  //     ]
-  //   })
-  //     .compileComponents();
-  // }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ItemSelectComponent,
+        DatePickerSvgComponent
+      ],
+      imports: [
+        HttpClientTestingModule,
+        MatSelectModule,
+        MatIconModule,
+        BrowserAnimationsModule
+      ],
+      providers: [
+        {
+          provide: SearchService,
+          useValue: {
+            getOptionsQuery: (url, term) => {
+              return term;
+            },
+            getOptionsList: (url) => {
+              return Observable.of([{
+                  item: {
+                    title: 'test'
+                  }
+                }])
+            }
+          }
+        }
+      ]
+    })
+      .compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemSelectComponent);

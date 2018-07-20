@@ -24,19 +24,25 @@ import {Observable, } from 'rxjs/Observable';
 import {SubjectService} from '../services/subject.service';
 import {SubjectEffects} from './subject.effects';
 import {
-  AllSubjectAction, SubjectAction, SubjectActionSuccess, SubjectActionFailed
+  AllSubjectAction, SubjectAction, SubjectActionSuccess, SubjectActionFailed, SubjectsForAreaTypes
 } from '../actions/subject-actions';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 describe('Subject Effect', () => {
   let subjectEffects: SubjectEffects;
   let subjectService: SubjectService;
   let actions: Observable<any>;
 
+  const mockPayload = {
+    areaId: '1',
+    typeId: '1',
+    groupId: '1'
+  };
+
   const subjectsMock = [
     {
       id: 1,
-      name: 'test subject',
-      url: ''
+      name: 'test subject'
     }
   ];
 
@@ -49,6 +55,12 @@ describe('Subject Effect', () => {
           provide: SubjectService,
           useClass: class {
             getSubjects = () => {
+              return Observable.of(subjectsMock);
+            };
+            getSubjectsForArea = () => {
+              return Observable.of(subjectsMock);
+            };
+            getSubjectsForAreaAndType = () => {
               return Observable.of(subjectsMock);
             };
             getAllSubjects = () => {
@@ -80,7 +92,7 @@ describe('Subject Effect', () => {
 
   it('should return error for subjects', () => {
 
-    spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return Observable.throw('error') });
+    spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return ErrorObservable.create('error') });
     const startAction = new SubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -91,21 +103,21 @@ describe('Subject Effect', () => {
 
   });
 
-  it('should return all subjects success action', () => {
+  it('should return subjects for area and type success action', () => {
 
-    const startAction = new AllSubjectAction();
+    const startAction = new SubjectsForAreaTypes(mockPayload);
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
     const successAction = new SubjectActionSuccess(subjectsMock);
     const expectedResults = cold('--b', {b: successAction});
-    expect(subjectEffects.allSubjectEffect$).toBeObservable(expectedResults);
+    expect(subjectEffects.subjectsForAreaTypeEffect$).toBeObservable(expectedResults);
 
   });
 
 
   it('should return error for all subjects', () => {
 
-    spyOn(subjectService, 'getAllSubjects').and.callFake(() => { return Observable.throw('error') });
+    spyOn(subjectService, 'getAllSubjects').and.callFake(() => { return ErrorObservable.create('error') });
     const startAction = new AllSubjectAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

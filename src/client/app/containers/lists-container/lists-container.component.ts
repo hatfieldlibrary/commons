@@ -37,7 +37,6 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {DeselectedFilter} from 'app/components/area-filters/area-filters.component';
-import {SelectedAreaEvent} from '../../components/area-selector/area.component';
 import {SelectedTypeEvent} from '../../components/types/types.component';
 import {SelectedSubjectEvent} from '../../components/subject-options/subject-options.component';
 import {DispatchService} from '../../services/dispatch.service';
@@ -54,6 +53,7 @@ import {CollectionGroupFilter} from '../../shared/data-types/collection-group-fi
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 import {SetViewAction} from '../../actions/view.actions';
+import {SelectedAreaEvent} from '../../components/area-options/area-options.component';
 
 @Component({
   selector: 'app-lists-container',
@@ -64,8 +64,6 @@ import {SetViewAction} from '../../actions/view.actions';
 })
 export class ListsContainerComponent implements OnInit, OnDestroy {
 
-  title: string;
-  subtitle: string;
   state = '';
   view = 'list';
 
@@ -225,7 +223,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigates to new location when area NavigationComponent is updated.
+   * Navigates to new location when area area is updated.
    * @param {SelectedAreaEvent} updatedAreaList the updated area list
    */
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
@@ -379,7 +377,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // Unsubscribe all watchers in the service. Each component
     // instance will resubscribe. The prevents the multiple
     // subscriptions within the service.
-    this.setSelected.unsubscribe();
+    // this.setSelected.unsubscribe();
   }
 
 }

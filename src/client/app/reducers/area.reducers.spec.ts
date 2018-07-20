@@ -76,43 +76,43 @@ describe('Area Reducer', () => {
       reducer(undefined, new AreaInformation('1'))
     ).toEqual(
       {
-        areas: initialState,
+        area: initialState,
         loading: true
       });
   });
 
   it('should return the current state', () => {
-    const areaState: State = {areas: areaMock, loading: false};
+    const areaState: State = {area: areaMock, loading: false};
 
     expect(
       reducer(areaState, new MockAction())
     ).toEqual(
       {
-        areas: areaMock,
+        area: areaMock,
         loading: false
       });
   });
 
   it('should return state with updated areas information', () => {
 
-    const areaState: State = {areas: areaMock, loading: true};
+    const areaState: State = {area: areaMock, loading: true};
     expect(
       reducer(areaState, new AreaInformationSuccess(areaMock))
     ).toEqual(
       {
-        areas: areaMock,
+        area: areaMock,
         loading: false
       });
   });
 
 
   it('should return current state and fail.', () => {
-    const areaState: State = {areas: areaMock, loading: false};
+    const areaState: State = {area: areaMock, loading: false};
     expect(
       reducer(areaState, new AreaListActionFailed('error'))
     ).toEqual(
       {
-        areas: areaMock,
+        area: areaMock,
         loading: false
       });
 

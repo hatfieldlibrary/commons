@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeSvgComponent } from './home-svg.component';
-import {DomSanitizer} from "@angular/platform-browser";
-import {MatIconModule, MatIconRegistry} from "@angular/material";
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconModule, MatIconRegistry} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('HomeSvgComponent', () => {
   let component: HomeSvgComponent;
@@ -12,15 +13,15 @@ describe('HomeSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeSvgComponent ],
       imports: [
-        MatIconModule
+        MatIconModule, HttpClientModule
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    let iconRegistry = TestBed.get(MatIconRegistry);
-    let sanitizer = TestBed.get(DomSanitizer);
+    const iconRegistry = TestBed.get(MatIconRegistry);
+    const sanitizer = TestBed.get(DomSanitizer);
     iconRegistry.addSvgIcon('home', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_white_24px.svg'));
     fixture = TestBed.createComponent(HomeSvgComponent);
     component = fixture.componentInstance;

@@ -9,9 +9,8 @@
 <div class="list-container">
   <mat-list>
     <mat-list-item class="collection-list-item result-item"
-
+                   *ngFor="let collection of collectionList; let isFirstRow=first"
                    (click)="navigateToItem(collection.id)"
-                   *ngFor="let collection of collectionList | collectionsFilter:filterTerm; let isFirstRow=first"
                    [ngClass]="{'first-row': isFirstRow, 'mobile-list-item-padding': isMobile}">
       <div fxLayout="row" fxLayoutAlign="start start">
         <img class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">

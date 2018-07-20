@@ -35,9 +35,9 @@ import {SetSelectedService} from '../services/set-selected.service';
 import {Observable} from 'rxjs/Observable';
 import {AreasFilter} from '../shared/data-types/areas-filter';
 import {NavigationServiceB} from '../services/navigation-2/navigation.service';
-import {SelectedAreaEvent} from './area-selector/area.component';
 import {LoggerService} from '../shared/logger/logger.service';
 import {ScrollReadyService} from '../services/observable/scroll-ready.service';
+import {SelectedAreaEvent} from './area-options/area-options.component';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -59,11 +59,11 @@ import {ScrollReadyService} from '../services/observable/scroll-ready.service';
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   watcher: Subscription;
-  areaFilter$: Observable<AreasFilter>;
-  selectedAreas: string;
-  selectedTypes: string;
-  selectedSubject: string;
-  selectedGroup: string;
+  // areaFilter$: Observable<AreasFilter>;
+  // selectedAreas: string;
+  // selectedTypes: string;
+  // selectedSubject: string;
+  // selectedGroup: string;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -115,31 +115,31 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     document.location.href = this.tertiaryUrl;
   }
 
-  areaNavigation(updatedAreaList: SelectedAreaEvent): void {
-    this.sideNavigate.close();
-    const areaIds = this.navigation.getIds(updatedAreaList.selected);
-    this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject, this.selectedGroup);
-  }
+  // areaNavigation(updatedAreaList: SelectedAreaEvent): void {
+  //   this.sideNavigate.close();
+  //   const areaIds = this.navigation.getIds(updatedAreaList.selected);
+  //   this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject, this.selectedGroup);
+  // }
 
   ngOnInit() {
 
-    const areaList = this.store.select(fromRoot.getAreas);
-    const areaFilters = this.store.select(fromRoot.getAreasFilter);
-    this.areaFilter$ = Observable.combineLatest(
-      areaList,
-      areaFilters,
-      (areas, selected) => {
-        this.selectedAreas = this.navigation.getIds(areas);
-        return {
-          areas: areas,
-          selectedAreas: selected
-        }
-      }
-    );
-    const typeQuery: Subscription = this.store.select(fromRoot.getTypesFilter).subscribe(
-      types => this.selectedTypes = this.navigation.getIds(types),
-      err => console.log(err));
-    this.watcher.add(typeQuery);
+    // const areaList = this.store.select(fromRoot.getAreas);
+    // const areaFilters = this.store.select(fromRoot.getAreasFilter);
+    // this.areaFilter$ = Observable.combineLatest(
+    //   areaList,
+    //   areaFilters,
+    //   (areas, selected) => {
+    //     this.selectedAreas = this.navigation.getIds(areas);
+    //     return {
+    //       areas: areas,
+    //       selectedAreas: selected
+    //     }
+    //   }
+    // );
+    // const typeQuery: Subscription = this.store.select(fromRoot.getTypesFilter).subscribe(
+    //   types => this.selectedTypes = this.navigation.getIds(types),
+    //   err => console.log(err));
+    // this.watcher.add(typeQuery);
 
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {

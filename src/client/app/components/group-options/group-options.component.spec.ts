@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupOptionsComponent } from './group-options.component';
+import {MatListModule, MatListOption} from '@angular/material';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {StoreModule} from '@ngrx/store';
 
 describe('GroupOptionsComponent', () => {
   let component: GroupOptionsComponent;
@@ -8,9 +11,10 @@ describe('GroupOptionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupOptionsComponent ]
-    })
-    .compileComponents();
+      declarations: [ GroupOptionsComponent ],
+      imports: [MatListModule, StoreModule.forRoot({})],
+      providers: [FilterUpdateServiceB]
+    });
   }));
 
   beforeEach(() => {
@@ -19,7 +23,7 @@ describe('GroupOptionsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', async () => {
     expect(component).toBeTruthy();
   });
 });

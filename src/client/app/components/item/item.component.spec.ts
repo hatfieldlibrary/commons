@@ -18,7 +18,14 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {ItemComponent} from './item.component';
-import {MatButtonModule, MatGridListModule, MatInputModule, MatListModule, MatSelectModule} from '@angular/material';
+import {
+  MatButtonModule, MatCardModule, MatCardSubtitle,
+  MatCardTitle,
+  MatGridListModule, MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule
+} from '@angular/material';
 import {LockSvgComponent} from '../svg/lock-svg/lock-svg.component';
 import {SearchSvgComponent} from '../svg/search-svg/search-svg.component';
 import {FormsModule} from '@angular/forms';
@@ -38,6 +45,7 @@ import {DatePickerSvgComponent} from '../svg/date-picker-svg/date-picker-svg.com
 import {FlexLayoutModule} from '@angular/flex-layout';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 
 const mockItem = {
   collection: {
@@ -97,6 +105,7 @@ describe('ItemComponent', () => {
         MenuSvgComponent
       ],
       imports: [
+        MatCardModule,
         MatListModule,
         MatButtonModule,
         MatInputModule,
@@ -104,6 +113,7 @@ describe('ItemComponent', () => {
         MatGridListModule,
         FormsModule,
         RouterTestingModule,
+        MatIconModule,
         // needed to test ObservableMedia
         FlexLayoutModule
       ],
@@ -116,9 +126,11 @@ describe('ItemComponent', () => {
             };
           }
         },
-        AuthCheckService,
         {
-         // provide: UtilitiesService,
+          provide: AuthCheckService,
+          useClass: AuthCheckService
+        },
+        {provide: NavigationServiceB,
           useValue: {
             getBackLink: () => {
               return 'test link'

@@ -1,17 +1,10 @@
 <div class="overflow-x-scroll-no-scrollbar area-selector-container" fxLayoutAlign="center center">
 
   <mat-nav-list #areaSelectionList class="area-selection">
-    <!--<a mat-list-item style="color:#f7eda0;font-size: 1.2em;">All Collections</a>-->
     <mat-list-item *ngFor="let area of filter.areas;" [ngClass]="{'highlight': isSelected(area.id)}" class="nav-link local-navigation"
          (click)="onAreaListControlChanged(areaSelectionList, area.id)">
         {{area.title}}
     </mat-list-item>
-
-    <!--<a style="color:#f7eda0;font-size: 1.2em;" mat-list-item *ngFor="let area of filter.areas"-->
-    <!--class="local-navigation"-->
-    <!--(click)="onAreaListControlChanged(areaSelectionList, area.id)">-->
-    <!--{{area.title}}-->
-    <!--</a>-->
   </mat-nav-list>
 
 </div>

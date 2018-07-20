@@ -25,7 +25,8 @@ describe ('ngrx action type checking', () => {
 
   });
 
-  it('should throw error for duplicate label', () =>{
+  it('should throw error for duplicate label', () => {
+    type(testLabel);
     expect(() => { type(testLabel) }).toThrowError('Action type "[test label] one" is not unique');
   });
 

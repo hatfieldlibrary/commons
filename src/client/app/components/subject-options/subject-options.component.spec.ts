@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubjectOptionsComponent } from './subject-options.component';
+import {MatListModule} from '@angular/material';
+import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {StoreModule} from '@ngrx/store';
+
 
 describe('SubjectOptionsComponent', () => {
   let component: SubjectOptionsComponent;
@@ -8,9 +12,10 @@ describe('SubjectOptionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubjectOptionsComponent ]
-    })
-    .compileComponents();
+      declarations: [ SubjectOptionsComponent ],
+      imports: [MatListModule, StoreModule.forRoot({})],
+      providers: [FilterUpdateServiceB]
+    });
   }));
 
   beforeEach(() => {
