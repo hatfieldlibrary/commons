@@ -20,7 +20,6 @@
  */
 import {AreaActions, AreaActionTypes} from '../actions/area.actions';
 import {AreaType} from '../shared/data-types/area.type';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 export interface State {
   area: AreaType;

@@ -21,7 +21,8 @@ describe('AreaOptionsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AreaOptionsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    component.filter = {areas: [{id: 1, title: '', count: 1}], selectedAreas: [{id: 1, title: '', count: 1}]};
+//    fixture.detectChanges();
   });
 
   it('should create', async () => {

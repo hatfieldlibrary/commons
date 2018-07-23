@@ -364,6 +364,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.watchers.add(routeWatcher);
     const paramsWatcher = this.route.queryParams
       .subscribe(params => {
+        console.log(params)
         this.setView(params);
       });
     this.watchers.add(paramsWatcher);

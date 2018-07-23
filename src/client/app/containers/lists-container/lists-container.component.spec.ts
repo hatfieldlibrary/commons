@@ -19,9 +19,9 @@
  * Created by mspalti on 3/8/17.
  */
 /* tslint:disable:no-unused-variable */
-import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, tick, ComponentFixture, TestBed, fakeAsync} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Store, Action, StoreModule} from '@ngrx/store';
+import {Store, StoreModule} from '@ngrx/store';
 import {
   MatButtonModule,
   MatCardModule,
@@ -30,17 +30,14 @@ import {
   MatGridListModule,
   MatIconModule,
   MatInputModule,
-  MatListItem,
   MatListModule,
-  MatListOption,
-  MatNavList,
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSidenavModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {Observable} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, Data, Params, Route, Router, UrlSegment} from '@angular/router';
 
 import {ListsContainerComponent} from './lists-container.component';
 import {SubjectsComponent} from '../../components/subject-selector/subjects.component';
@@ -53,7 +50,7 @@ import * as subjectActions from '../../actions/subject-actions';
 import {AppComponent} from '../../components/app.component';
 import {FooterComponent} from '../../components/footer/footer.component';
 import {SearchSvgComponent} from '../../components/svg/search-svg/search-svg.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -91,6 +88,16 @@ import {SetSelectedService} from '../../services/set-selected.service';
 import {DispatchService} from '../../services/dispatch.service';
 import {LoggerService} from '../../shared/logger/logger.service';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
+import {Component, EventEmitter, Input, NO_ERRORS_SCHEMA, Output, Type} from '@angular/core';
+import {SetAreaFilter} from '../../actions/filter.actions';
+import {AreasFilter} from '../../shared/data-types/areas-filter';
+import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
+import {AreaType} from '../../shared/data-types/area.type';
+import * as fromFilter from '../../reducers/filter.reducers';
+import {SubjectFilter} from '../../shared/data-types/subject-filter';
+import {TypesFilter} from '../../shared/data-types/types-filter';
+
 
 const areaSubscriptionMock = {
   id: 1,
@@ -108,7 +115,7 @@ const areaSubscriptionMock = {
 
 };
 
-let areaListMock = [
+const areaListMock = [
   {
     id: 1,
     title: 'areas one',
@@ -131,7 +138,7 @@ const mulitpleAreaListMock = [
 
 let areaList = areaListMock;
 
-let areasMock = areaSubscriptionMock;
+const areasMock = areaSubscriptionMock;
 
 const setAllRoute = (route: any) => {
   route.params = Observable.of({});
@@ -153,6 +160,68 @@ const setSubjectRoute = (route: any, subject: string) => {
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
+@Component({
+  selector: 'app-area-banner',
+  template: '<p>Mock Product Editor Component</p>'
+})
+class MockAreaBannerComponent {
+  @Input()
+  areaInfo: AreaType;
+  @Output()
+  removeFilter: EventEmitter<any> = new EventEmitter<any>();
+  @Input()
+  filters: fromFilter.State;
+  @Input()
+  areas: AreasFilter;
+  @Input()
+  subjects: SubjectFilter;
+  @Input()
+  types: TypesFilter;
+  @Input()
+  groups: CollectionGroupFilter;
+}
+
+@Component({
+  selector: 'app-area-options',
+  template: '<p>Mock Product Editor Component</p>'
+})
+class MockAreaOptionsComponent {
+  @Input()
+  filter: AreasFilter;
+  @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
+  @Output() removeFilter: EventEmitter <any> = new EventEmitter<any>();
+
+}
+
+// class FakeActivatedRoute extends ActivatedRoute {
+//   snapshot: ActivatedRouteSnapshot;
+//   url: Observable<UrlSegment[]>;
+//   params: Observable<Params>;
+//   queryParams: Observable<Params>;
+//   fragment: Observable<string>;
+//   data: Observable<Data>;
+//   outlet: string;
+//   component: Type<any> | string;
+//   routeConfig: Route;
+//   root: ActivatedRoute;
+//   parent: ActivatedRoute;
+//   firstChild: ActivatedRoute;
+//   children: ActivatedRoute[];
+//   pathFromRoot: ActivatedRoute[];
+//
+//   toString(): string {
+//     return '';
+//   }
+// }
+
+
+const fakeObservableMedia = {
+  asObservable: () => {
+    return Observable.of({})
+  }
+} as ObservableMedia;
+
+
 fdescribe('ListsContainerComponent', () => {
 
   let component: ListsContainerComponent;
@@ -165,7 +234,8 @@ fdescribe('ListsContainerComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        AreaFiltersComponent,
+        MockAreaBannerComponent,
+        MockAreaOptionsComponent,
         BackSvgComponent,
         LockSvgComponent,
         MenuSvgComponent,
@@ -176,7 +246,6 @@ fdescribe('ListsContainerComponent', () => {
         ListsContainerComponent,
         SubjectOptionsComponent,
         GroupOptionsComponent,
-        AreaBannerComponent,
         FooterComponent,
         SearchSvgComponent,
         AppMenusComponent,
@@ -190,8 +259,7 @@ fdescribe('ListsContainerComponent', () => {
         CloseSvgDisabledComponent,
         CloseWhiteSvgComponent,
         ViewGridComponent,
-        ViewListComponent,
-        AreaOptionsComponent
+        ViewListComponent
       ],
       imports: [
         FlexLayoutModule,
@@ -226,6 +294,7 @@ fdescribe('ListsContainerComponent', () => {
         MenuInteractionService,
         SetIntervalService,
         FilterUpdateServiceB,
+        ScrollReadyService,
         // {
         //   provide: Store,
         //   useClass: class {
@@ -235,37 +304,70 @@ fdescribe('ListsContainerComponent', () => {
         //     };
         //   }
         // },
-        // {
-        //   provide: ActivatedRoute,
-        //   useValue: {params: new Observable<any>()}
-        // }
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: new Observable<any>(),
+            queryParams: new Observable<any>()
+          }
+        },
+        {
+          provide: ObservableMedia,
+          useValue: {
+            asObservable: () => { return new Observable<any>(); },
+            isActive: () => {}
+          }
+        }
       ]
+    }).overrideComponent(AreaOptionsComponent, {
+      set: {
+        selector: 'app-area-options',
+        template: `<h6>Area Options</h6>`
+      }
+    }).overrideComponent(AreaFiltersComponent, {
+      set: {
+        selector: 'app-area-filters',
+        template: `<h6>Area Filters</h6>`
+      }
     });
 
   }));
 
 
   beforeEach(() => {
-    areaList = areaListMock;
+    // route = new FakeActivatedRoute();
+    // route.queryParams = Observable.of({});
+   // areaList = areaListMock;
     fixture = TestBed.createComponent(ListsContainerComponent);
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
-
+    route = fixture.debugElement.injector.get(ActivatedRoute);
+    store.dispatch(new SetAreaFilter([{id: 1, title: '', count: 1}]));
+    fixture.detectChanges();
     spyOn(store, 'select').and.callThrough();
 
   });
 
 
-  it('should create',  () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should dispatch data request', fakeAsync( () => {
+    spyOn(component, 'setView');
+    setAreaRoute(route, '1');
+ //   areasMock = areaSubscriptionMock;
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
+    tick();
+    expect(component.setView).toHaveBeenCalled();
+  }));
 
-  it('should remove listeners when component is destroyed',  () => {
-   // fixture.detectChanges();
+  it('should remove listeners when component is destroyed', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
     // watchers is undefined...?
     watcher = component.watchers;
-    console.log(watcher)
     spyOn(watcher, 'unsubscribe');
     fixture.destroy();
     expect(watcher.unsubscribe).toHaveBeenCalled();

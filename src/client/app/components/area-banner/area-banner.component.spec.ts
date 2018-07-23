@@ -6,8 +6,9 @@ import {CloseSvgDisabledComponent} from '../svg/close-svg-disabled/close-svg-dis
 import {CloseSvgComponent} from '../svg/close-svg/close-svg.component';
 import {MatChipsModule, MatIconModule} from '@angular/material';
 import {CloseWhiteSvgComponent} from '../svg/close-white-svg/close-white-svg.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {Store, StoreModule} from '@ngrx/store';
+import {Observable} from 'rxjs/index';
 
 describe('AreaBannerComponent', () => {
   let component: AreaBannerComponent;
@@ -28,7 +29,14 @@ describe('AreaBannerComponent', () => {
         // needed to test ObservableMedia
         FlexLayoutModule
       ],
-      providers: []
+      providers: [
+        {
+          provide: ObservableMedia,
+          useValue: {
+            asObservable: () => { return new Observable<any>(); }
+          }
+        }
+      ]
     });
   }));
 
