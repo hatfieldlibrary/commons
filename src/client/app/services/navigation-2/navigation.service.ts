@@ -4,10 +4,15 @@ import {Router} from '@angular/router';
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
-import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../actions/filter.actions';
+import {
+  RemoveSelectedGroups,
+  RemoveSelectedSubjects,
+  RemoveSelectedTypes, SetGroupFilter,
+  SetSubjectFilter,
+  SetTypeFilter
+} from '../../actions/filter.actions';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {FieldValues} from '../../shared/enum/field-names';
-import {query} from '@angular/animations';
 
 interface RouterIds {
   subjectId: string;
@@ -109,18 +114,22 @@ export class NavigationServiceB {
     };
     if (this.removedSubs[0].id !== 0) {
       ids.subjectId = this.removeIds(subjectId, this.removedSubs, FieldValues.SUBJECT);
+      // Finished removing fields...update store to the default state.
+      this.updateStoreWithRemovedFilter(FieldValues.SUBJECT);
     }
     if (this.removedTypes[0].id !== 0) {
       ids.typeId = this.removeIds(typeId, this.removedTypes, FieldValues.TYPE);
+      this.updateStoreWithRemovedFilter(FieldValues.TYPE);
     }
     if (this.removedGroups[0].id !== 0) {
       ids.groupId = this.removeIds(groupId, this.removedGroups, FieldValues.GROUP);
+      this.updateStoreWithRemovedFilter(FieldValues.GROUP);
     }
     return ids;
   }
 
   /**
-   * This function removes ids if the appear in the provided array of removed fields.
+   * This function removes ids if they appear in the provided array of removed fields.
    * @param {string} id the comma separated list of subject ids
    * @param removedFields fields obtained from the store
    * @param type the field type
@@ -139,8 +148,6 @@ export class NavigationServiceB {
       // remove comma at end of the string.
       updatedId = updatedId.slice(0, -1);
     }
-    // Finished removing fields...update store to the default state.
-    this.updateStore(type);
     return updatedId;
   }
 
@@ -149,7 +156,7 @@ export class NavigationServiceB {
    * store must be returned to the default state.
    * @param {string} type
    */
-  private updateStore(type: string): void {
+  private updateStoreWithRemovedFilter(type: string): void {
 
     switch (type) {
       case FieldValues.SUBJECT: {
@@ -169,6 +176,7 @@ export class NavigationServiceB {
       }
     }
   }
+
   /**
    * Checks whether the provided field id has been removed.
    * @param {string} fieldId

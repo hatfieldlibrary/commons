@@ -11,7 +11,7 @@ import {FieldFilterType} from '../shared/data-types/field-filter.type';
 export class SetSelectedService {
 
   subjects$: Observable<FieldFilterType[]>;
-  areas$: Observable<AreaFilterType[]>;
+  areas$: Observable<FieldFilterType[]>;
   types$: Observable<FieldFilterType[]>;
   groups$: Observable<FieldFilterType[]>
   watchers: Subscription;
@@ -70,7 +70,7 @@ export class SetSelectedService {
     if (areaId) {
       const areasWatcher = this.areas$.subscribe((areas) => {
         const areaArr = areaId.split(',');
-        const selectedAreas: AreaFilterType[] = [];
+        const selectedAreas: FieldFilterType[] = [];
         areaArr.forEach(function (singleAreaId) {
           const selected = areas.find((area) => area.id === +singleAreaId);
           if (selected) {
@@ -80,12 +80,12 @@ export class SetSelectedService {
         if (selectedAreas.length > 0) {
           this.store.dispatch(new filterActions.SetAreaFilter(selectedAreas));
         } else {
-          this.store.dispatch(new filterActions.SetAreaFilter([{id: 0, title: '', count: 0}]));
+          this.store.dispatch(new filterActions.SetAreaFilter([{id: 0, name: ''}]));
         }
       });
       this.watchers.add(areasWatcher);
     } else {
-      this.store.dispatch(new filterActions.SetAreaFilter([{id: 0, title: '', count: 0}]))
+      this.store.dispatch(new filterActions.SetAreaFilter([{id: 0, name: ''}]))
     }
   }
 

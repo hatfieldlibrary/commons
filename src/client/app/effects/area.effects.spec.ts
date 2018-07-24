@@ -29,6 +29,7 @@ import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 describe('Area Effect', () => {
 
@@ -40,7 +41,7 @@ describe('Area Effect', () => {
     {
       id: 1,
       title: 'test areas one',
-      count: 2
+      count: 1
     }, {
       id: 2,
       title: 'test areas two',

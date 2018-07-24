@@ -97,6 +97,7 @@ import {AreaType} from '../../shared/data-types/area.type';
 import * as fromFilter from '../../reducers/filter.reducers';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
 import {TypesFilter} from '../../shared/data-types/types-filter';
+import set = Reflect.set;
 
 
 const areaSubscriptionMock = {
@@ -118,25 +119,22 @@ const areaSubscriptionMock = {
 const areaListMock = [
   {
     id: 1,
-    title: 'areas one',
-    count: 1
+    name: 'areas one'
   }
 ];
 
 const mulitpleAreaListMock = [
   {
     id: 1,
-    title: 'areas one',
-    count: 1
+    name: 'areas one'
   },
   {
     id: 1,
-    title: 'areas two',
-    count: 1
+    name: 'areas two'
   }
 ];
 
-let areaList = areaListMock;
+const areaList = areaListMock;
 
 const areasMock = areaSubscriptionMock;
 
@@ -148,6 +146,12 @@ const setAllRoute = (route: any) => {
 const setAreaRoute = (route: any, mock: string) => {
   route.params = Observable.of({areaId: mock});
   spyOn(route.params, 'subscribe').and.callThrough();
+};
+
+const setAreaRouteWithQueryParam = (route: any, path: string, query: string) => {
+  route.params = Observable.of({areaId: path});
+  route.queryParams = Observable.of({view: query});
+  spyOn(route.queryParams, 'subscribe').and.callThrough();
 };
 
 const setSubjectAreaRoute = (route: any, area: string, subject: string) => {
@@ -188,32 +192,10 @@ class MockAreaBannerComponent {
 class MockAreaOptionsComponent {
   @Input()
   filter: AreasFilter;
-  @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
-  @Output() removeFilter: EventEmitter <any> = new EventEmitter<any>();
+  @Output() areaNavigation: EventEmitter<any> = new EventEmitter<any>();
+  @Output() removeFilter: EventEmitter<any> = new EventEmitter<any>();
 
 }
-
-// class FakeActivatedRoute extends ActivatedRoute {
-//   snapshot: ActivatedRouteSnapshot;
-//   url: Observable<UrlSegment[]>;
-//   params: Observable<Params>;
-//   queryParams: Observable<Params>;
-//   fragment: Observable<string>;
-//   data: Observable<Data>;
-//   outlet: string;
-//   component: Type<any> | string;
-//   routeConfig: Route;
-//   root: ActivatedRoute;
-//   parent: ActivatedRoute;
-//   firstChild: ActivatedRoute;
-//   children: ActivatedRoute[];
-//   pathFromRoot: ActivatedRoute[];
-//
-//   toString(): string {
-//     return '';
-//   }
-// }
-
 
 const fakeObservableMedia = {
   asObservable: () => {
@@ -228,6 +210,10 @@ fdescribe('ListsContainerComponent', () => {
   let fixture: ComponentFixture<ListsContainerComponent>;
   let store;
   let route;
+  let setSelectedService;
+  let selectedSubscriptionSpy;
+  let dispatchService;
+  let navigationService;
   let watcher: Subscription;
 
   beforeEach(async(() => {
@@ -282,28 +268,35 @@ fdescribe('ListsContainerComponent', () => {
         FormsModule,
         RouterTestingModule,
         HttpClientModule,
-        MatTooltipModule,
-        StoreModule.forRoot({})
+        MatTooltipModule
       ],
       providers: [
         LoggerService,
-        DispatchService,
-        SetSelectedService,
         SetTimeoutService,
         NavigationServiceB,
         MenuInteractionService,
         SetIntervalService,
         FilterUpdateServiceB,
         ScrollReadyService,
-        // {
-        //   provide: Store,
-        //   useClass: class {
-        //     dispatch = jasmine.createSpy('dispatch');
-        //     select = () => {
-        //       return Observable.of(areaList);
-        //     };
-        //   }
-        // },
+        SetSelectedService,
+        {
+          provide: DispatchService,
+          useClass: class {
+            dispatchActions = jasmine.createSpy('dispatchActions');
+            getAllAreas = () => {
+              return areaListMock;
+            };
+          }
+        },
+        {
+          provide: Store,
+          useClass: class {
+            dispatch = jasmine.createSpy('dispatch');
+            select = () => {
+              return Observable.of(areaList);
+            };
+          }
+        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -314,8 +307,11 @@ fdescribe('ListsContainerComponent', () => {
         {
           provide: ObservableMedia,
           useValue: {
-            asObservable: () => { return new Observable<any>(); },
-            isActive: () => {}
+            asObservable: () => {
+              return new Observable<any>();
+            },
+            isActive: () => {
+            }
           }
         }
       ]
@@ -335,14 +331,15 @@ fdescribe('ListsContainerComponent', () => {
 
 
   beforeEach(() => {
-    // route = new FakeActivatedRoute();
-    // route.queryParams = Observable.of({});
-   // areaList = areaListMock;
     fixture = TestBed.createComponent(ListsContainerComponent);
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    store.dispatch(new SetAreaFilter([{id: 1, title: '', count: 1}]));
+    dispatchService = fixture.debugElement.injector.get(DispatchService);
+    navigationService = fixture.debugElement.injector.get(NavigationServiceB);
+    setSelectedService = fixture.debugElement.injector.get(SetSelectedService);
+    selectedSubscriptionSpy = spyOn(setSelectedService, 'unsubscribe');
+    store.dispatch(new SetAreaFilter([{id: 1, name: ''}]));
     fixture.detectChanges();
     spyOn(store, 'select').and.callThrough();
 
@@ -353,25 +350,54 @@ fdescribe('ListsContainerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch data request', fakeAsync( () => {
-    spyOn(component, 'setView');
+  it('should call navigation service for area', fakeAsync(() => {
     setAreaRoute(route, '1');
- //   areasMock = areaSubscriptionMock;
+    component.ngOnInit();
+    spyOn(navigationService, 'navigateFilterRoute');
+    component.areaNavigation({selected: [{id: 1, name: 'test'}]})
+
+  }));
+
+  it('should dispatch data request for area information', fakeAsync(() => {
+    setAreaRoute(route, '1');
     component.ngOnInit();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
     tick();
-    expect(component.setView).toHaveBeenCalled();
+    expect(dispatchService.dispatchActions).toHaveBeenCalledWith('1', undefined, undefined, undefined);
   }));
 
   it('should remove listeners when component is destroyed', () => {
     component.ngOnInit();
     fixture.detectChanges();
-    // watchers is undefined...?
     watcher = component.watchers;
     spyOn(watcher, 'unsubscribe');
     fixture.destroy();
+    expect(selectedSubscriptionSpy).toHaveBeenCalled();
     expect(watcher.unsubscribe).toHaveBeenCalled();
   });
 
+  it ('should act on view query parameter if present in the route', fakeAsync(() => {
+    setAreaRouteWithQueryParam(route, '1', 'grid');
+    const setView = spyOn(component, 'setView');
+    component.ngOnInit();
+    expect(route.queryParams.subscribe).toHaveBeenCalled();
+    tick();
+    expect(setView).toHaveBeenCalledWith({view: 'grid'});
+  }));
+
+  it ('should remove the current area filter and all additional filters', fakeAsync(() => {
+    setAreaRoute(route, '1');
+    spyOn(navigationService, 'navigateFilterRoute');
+    component.ngOnInit();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
+    tick();
+    component.removeFilter({type: 'area', id: 1});
+    // expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('', '', '', '');
+    expect(navigationService.navigateFilterRoute).not.toHaveBeenCalled();
+    expect(component.areaId).toEqual('');
+    expect(component.groupId).toEqual('');
+    expect(component.subjectId).toEqual('');
+    expect(component.typeId).toEqual('');
+  }));
 
 });

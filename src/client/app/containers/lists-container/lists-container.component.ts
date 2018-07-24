@@ -71,7 +71,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * Redux selectors.
    */
   collections$: Observable<CollectionType[]>;
-  areas$: Observable<AreaFilterType[]>;
+  areas$: Observable<FieldFilterType[]>;
   areaInfo$: Observable<AreaType>;
   types$: Observable<FieldFilterType[]>;
   groups$: Observable<FieldFilterType[]>;
@@ -82,7 +82,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   groupsFilter$: Observable<CollectionGroupFilter>;
   viewType$: Observable<string>;
 
-  selectedAreas: AreaFilterType[];
+  selectedAreas: FieldFilterType[];
   selectedTypes: FieldFilterType[];
   selectedSubjects: FieldFilterType[];
   selectedGroups: FieldFilterType[];
@@ -136,6 +136,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       this.areaId = areaIds.replace(regex, '');
       this.typeId = '';
       this.groupId = '';
+      this.subjectId = '';
     } else if (deselected.type === 'type') {
       // Get url query parameter for current types.
       const typeIds = this.navigation.getIds(this.selectedTypes);
@@ -155,7 +156,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       this.areaId = this.navigation.getIds(this.selectedAreas);
       this.subjectId = this.navigation.getIds(this.selectedSubjects);
     }
-    this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
+    // If area id was deselected, no action required.  Otherwise, invoke navigation.
+    // TODO: the reasons for deselection are not the same; area should be handled separately to make this clear.
+    if (this.areaId.length > 0) {
+      this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
+    }
   }
 
   /**
@@ -364,7 +369,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.watchers.add(routeWatcher);
     const paramsWatcher = this.route.queryParams
       .subscribe(params => {
-        console.log(params)
         this.setView(params);
       });
     this.watchers.add(paramsWatcher);
@@ -375,10 +379,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       // Unsubscribe local watchers.
       this.watchers.unsubscribe();
     }
-    // Unsubscribe all watchers in the service. Each component
-    // instance will resubscribe. The prevents the multiple
-    // subscriptions within the service.
-    // this.setSelected.unsubscribe();
+    // Unsubscribe watchers in the setSelected service.
+    this.setSelected.unsubscribe();
   }
 
 }

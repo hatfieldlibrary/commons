@@ -53,6 +53,7 @@ import {NavigationServiceB} from '../services/navigation-2/navigation.service';
 import {ScrollReadyService} from '../services/observable/scroll-ready.service';
 import {LoggerService} from '../shared/logger/logger.service';
 import {HttpClientModule} from '@angular/common/http';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'dummy-component',
@@ -84,11 +85,10 @@ describe('AppComponent', () => {
   let store;
 
 
-  const mockAreaList: AreaFilterType[] =  [
+  const mockAreaList: FieldFilterType[] =  [
     {
       id: 1,
-      title: 'areas one',
-      count: 1
+      name: 'areas one'
     }
   ];
 
@@ -153,7 +153,7 @@ describe('AppComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select(): Observable<AreaFilterType[]> {
+            select(): Observable<FieldFilterType[]> {
               return Observable.of(mockAreaList);
             };
           }

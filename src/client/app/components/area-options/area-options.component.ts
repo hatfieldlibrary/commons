@@ -4,9 +4,10 @@ import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.servi
 import {MatNavList} from '@angular/material';
 import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 export interface SelectedAreaEvent {
-  selected: AreaFilterType[];
+  selected: FieldFilterType[];
 }
 
 @Component({

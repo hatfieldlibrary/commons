@@ -1,7 +1,6 @@
 
 
 import {Injectable} from '@angular/core';
-import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {SetAreaFilter, SetGroupFilter, SetSubjectFilter, SetTypeFilter} from '../../actions/filter.actions';
 import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
@@ -10,8 +9,8 @@ import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 @Injectable()
 export class FilterUpdateServiceB {
 
-  private selectedAreas: AreaFilterType[];
-  private areaList: AreaFilterType[];
+  private selectedAreas: FieldFilterType[];
+  private areaList: FieldFilterType[];
   private selectedTypes: FieldFilterType[];
   private typeList: FieldFilterType[];
   private subjectList: FieldFilterType[];
@@ -36,11 +35,11 @@ export class FilterUpdateServiceB {
    * @param {number} areaId the selected area
    * @returns {AreaFilterType[]} the updated list of selected areas.
    */
-   updateSelectedAreaStore(selectedAreas: AreaFilterType[], areaList: AreaFilterType[], areaId: number): AreaFilterType[] {
+   updateSelectedAreaStore(selectedAreas: FieldFilterType[], areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
      this.selectedAreas = selectedAreas;
      this.areaList = areaList;
     // Get area filter information for the selected areaId.
-    const selectedArea: AreaFilterType = this.getSelectedAreaObject(areaId);
+    const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
     if (selectedArea) {
       this.removeDefaultCollections(this.AREA_KEY);
       // Update selectedAreas.
@@ -51,9 +50,9 @@ export class FilterUpdateServiceB {
     }
   }
 
-  updateSelectSingleAreaStore( areaList: AreaFilterType[], areaId: number): AreaFilterType[]  {
+  updateSelectSingleAreaStore( areaList: FieldFilterType[], areaId: number): FieldFilterType[]  {
      this.areaList = areaList;
-    const selectedArea: AreaFilterType = this.getSelectedAreaObject(areaId);
+    const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
     if (selectedArea) {
       this.store.dispatch(new SetAreaFilter([selectedArea]));
       return [selectedArea];
@@ -215,7 +214,7 @@ export class FilterUpdateServiceB {
    * @param {number} areaId the id of the area to retrieve
    * @returns {AreaFilterType}
    */
-  private getSelectedAreaObject(areaId: number): AreaFilterType {
+  private getSelectedAreaObject(areaId: number): FieldFilterType {
     return this.areaList.find((current) => current.id === areaId);
   }
 
@@ -276,14 +275,14 @@ export class FilterUpdateServiceB {
    * @param {AreaFilterType} selectedArea
    * @param {number} areaId
    */
-  private updateSelectedAreas(selectedArea: AreaFilterType, areaId: number) {
+  private updateSelectedAreas(selectedArea: FieldFilterType, areaId: number) {
     const currentIndex = this.getPositionInSelectedList(areaId, this.AREA_KEY);
     if (currentIndex >= 0) {
       // If the currently selected index is in the list, remove.
       this.selectedAreas.splice(currentIndex, 1);
       // If the selected list is empty, set to default (all collections).
       if (this.selectedAreas.length === 0) {
-        this.selectedAreas.push({id: 0, title: '', count: 0});
+        this.selectedAreas.push({id: 0, name: ''});
       }
     } else {
       // Otherwise, just add the new area.

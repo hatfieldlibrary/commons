@@ -14,8 +14,7 @@ export interface State {
   }];
   selectedAreas: [{
     id: 0,
-    title: '',
-    count: 0
+    name: ''
   }];
   selectedGroups: [{
     id: 0,
@@ -23,8 +22,7 @@ export interface State {
   }];
   previousAreas: [{
     id: 0,
-    title: '',
-    count: 0
+    name: ''
   }];
   removedSubjects: [{
     id: 0,
@@ -52,8 +50,7 @@ const initialState: State = {
   }],
   selectedAreas: [{
     id: 0,
-    title: '',
-    count: 0
+    name: ''
   }],
   selectedGroups: [{
     id: 0,
@@ -61,8 +58,7 @@ const initialState: State = {
   }],
   previousAreas: [{
     id: 0,
-    title: '',
-    count: 0
+    name: ''
   }],
   removedSubjects: [{
     id: 0,
@@ -91,6 +87,7 @@ export function reducer(state = initialState, action: FilterActions): State {
 
     case FilterActionTypes.REMOVE_SELECTED_TYPE: {
       const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
+      console.log(action.payload)
       return Object.assign({}, state, {
         removedTypes: result
       });
@@ -147,7 +144,7 @@ export function reducer(state = initialState, action: FilterActions): State {
     }
 
     case FilterActionTypes.SET_AREA_FILTER: {
-      const filter: AreaFilterType[] = <AreaFilterType[]>action.payload;
+      const filter: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
         selectedAreas: filter
       });

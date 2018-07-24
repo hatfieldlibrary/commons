@@ -57,7 +57,7 @@ export class ClearSearchFilter implements Action {
  */
 export class SetAreaFilter implements Action {
   public type = FilterActionTypes.SET_AREA_FILTER;
-  constructor(public payload: AreaFilterType[]) {}
+  constructor(public payload: FieldFilterType[]) {}
 }
 
 /**
