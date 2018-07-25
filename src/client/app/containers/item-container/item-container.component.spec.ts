@@ -99,7 +99,7 @@ let mockItem = {
     icon: ''
 
   }],
-  subjects: ['1', '2']
+  subjects: [{id: 1, name: 's1'}, {id: 2, name: 's2'}]
 
 };
 

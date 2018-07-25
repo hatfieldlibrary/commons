@@ -21,7 +21,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, tick, ComponentFixture, TestBed, fakeAsync} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Store, StoreModule} from '@ngrx/store';
+import {Action, Store} from '@ngrx/store';
 import {
   MatButtonModule,
   MatCardModule,
@@ -40,12 +40,9 @@ import {Observable} from 'rxjs';
 import {ActivatedRoute, ActivatedRouteSnapshot, Data, Params, Route, Router, UrlSegment} from '@angular/router';
 
 import {ListsContainerComponent} from './lists-container.component';
-import {SubjectsComponent} from '../../components/subject-selector/subjects.component';
+
 
 import * as fromRoot from '../../reducers';
-import * as listActions from '../../actions/collection.actions';
-import * as areaActions from '../../actions/area.actions';
-import * as subjectActions from '../../actions/subject-actions';
 
 import {AppComponent} from '../../components/app.component';
 import {FooterComponent} from '../../components/footer/footer.component';
@@ -54,7 +51,7 @@ import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-// import {HttpModule} from "@angular/http";
+
 import {MenuSvgComponent} from '../../components/svg/menu-svg/menu-svg.component';
 import {CloseSvgComponent} from '../../components/svg/close-svg/close-svg.component';
 import {LockSvgComponent} from '../../components/svg/lock-svg/lock-svg.component';
@@ -73,7 +70,6 @@ import {MenuInteractionService} from '../../services/menu/menu-interaction.servi
 import {SetTimeoutService} from '../../services/timers/timeout.service';
 import {TypesComponent} from '../../components/types/types.component';
 import {HttpClientModule} from '@angular/common/http';
-import {AreaBannerComponent} from '../../components/area-banner/area-banner.component';
 import {SubjectOptionsComponent} from '../../components/subject-options/subject-options.component';
 import {CollectionRowsComponent} from '../../components/collection-rows/collection-rows.component';
 import {CollectionGridComponent} from '../../components/collection-grid/collection-grid.component';
@@ -89,15 +85,15 @@ import {DispatchService} from '../../services/dispatch.service';
 import {LoggerService} from '../../shared/logger/logger.service';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
-import {Component, EventEmitter, Input, NO_ERRORS_SCHEMA, Output, Type} from '@angular/core';
-import {SetAreaFilter} from '../../actions/filter.actions';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AreasFilter} from '../../shared/data-types/areas-filter';
 import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {AreaType} from '../../shared/data-types/area.type';
 import * as fromFilter from '../../reducers/filter.reducers';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
 import {TypesFilter} from '../../shared/data-types/types-filter';
-import set = Reflect.set;
+import {Subject} from 'rxjs/Subject';
+import {CollectionReset} from '../../actions/collection.actions';
 
 
 const areaSubscriptionMock = {
@@ -134,9 +130,9 @@ const mulitpleAreaListMock = [
   }
 ];
 
-const areaList = areaListMock;
+// const areaList = areaListMock;
 
-const areasMock = areaSubscriptionMock;
+// const areasMock = areaSubscriptionMock;
 
 const setAllRoute = (route: any) => {
   route.params = Observable.of({});
@@ -156,6 +152,11 @@ const setAreaRouteWithQueryParam = (route: any, path: string, query: string) => 
 
 const setSubjectAreaRoute = (route: any, area: string, subject: string) => {
   route.params = Observable.of({areaId: area, subjectId: subject});
+  spyOn(route.params, 'subscribe').and.callThrough();
+};
+
+const setAllRoutes = (route: any, area: string, subject: string, group: string, type: string) => {
+  route.params = Observable.of({areaId: area, subjectId: subject, categoryId: group, typeId: type});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -203,18 +204,34 @@ const fakeObservableMedia = {
   }
 } as ObservableMedia;
 
+export function mockStore<T>(
+  {
+    actions = new Subject<Action>(),
+    states = new Subject<T>()
+  }: {
+    actions?: Subject<Action>,
+    states?: Subject<T>
+  }): Store<T> {
+  const result = states as any;
+  result.dispatch = (action: Action) => actions.next(action);
+  result.select = () => {return states};
+  return result;
+}
 
-fdescribe('ListsContainerComponent', () => {
+describe('ListsContainerComponent', () => {
 
   let component: ListsContainerComponent;
   let fixture: ComponentFixture<ListsContainerComponent>;
-  let store;
   let route;
   let setSelectedService;
   let selectedSubscriptionSpy;
   let dispatchService;
   let navigationService;
   let watcher: Subscription;
+  let store;
+  const actions = new Subject<Action>();
+  const states = new Subject<any>();
+  const appStore = mockStore<any>({ actions, states });
 
   beforeEach(async(() => {
 
@@ -290,13 +307,15 @@ fdescribe('ListsContainerComponent', () => {
         },
         {
           provide: Store,
-          useClass: class {
-            dispatch = jasmine.createSpy('dispatch');
-            select = () => {
-              return Observable.of(areaList);
-            };
-          }
+          useValue: appStore
         },
+        // {
+        //   provide: Store,
+        //   useClass: class {
+        //     dispatch = jasmine.createSpy('dispatch');
+        //     select = jasmine.createSpy('select');
+        //   }
+        // },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -339,7 +358,6 @@ fdescribe('ListsContainerComponent', () => {
     navigationService = fixture.debugElement.injector.get(NavigationServiceB);
     setSelectedService = fixture.debugElement.injector.get(SetSelectedService);
     selectedSubscriptionSpy = spyOn(setSelectedService, 'unsubscribe');
-    store.dispatch(new SetAreaFilter([{id: 1, name: ''}]));
     fixture.detectChanges();
     spyOn(store, 'select').and.callThrough();
 
@@ -376,7 +394,7 @@ fdescribe('ListsContainerComponent', () => {
     expect(watcher.unsubscribe).toHaveBeenCalled();
   });
 
-  it ('should act on view query parameter if present in the route', fakeAsync(() => {
+  it('should act on view query parameter if present in the route', fakeAsync(() => {
     setAreaRouteWithQueryParam(route, '1', 'grid');
     const setView = spyOn(component, 'setView');
     component.ngOnInit();
@@ -385,19 +403,115 @@ fdescribe('ListsContainerComponent', () => {
     expect(setView).toHaveBeenCalledWith({view: 'grid'});
   }));
 
-  it ('should remove the current area filter and all additional filters', fakeAsync(() => {
-    setAreaRoute(route, '1');
+  it('should remove the subject filter and call updated route', () => {
     spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'getIds').and.returnValue('1,2');
+    component.areaId = '1';
+    component.selectedSubjects = [{id: 1, name: 'sub1'}, {id: 2, name: 'sub2'}];
+    component.removeFilter({type: 'subject', id: 1});
+    expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 'sub1'}, {id: 2, name: 'sub2'}]);
+    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '', '2', '');
+  });
+
+  it('should update component fields with route parameter data', fakeAsync(() => {
+    setAllRoutes(route, '1', '2', '3', '4');
     component.ngOnInit();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
+    expect(route.params.subscribe).toHaveBeenCalled();
     tick();
-    component.removeFilter({type: 'area', id: 1});
-    // expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('', '', '', '');
-    expect(navigationService.navigateFilterRoute).not.toHaveBeenCalled();
-    expect(component.areaId).toEqual('');
-    expect(component.groupId).toEqual('');
-    expect(component.subjectId).toEqual('');
-    expect(component.typeId).toEqual('');
+    expect(component.areaId).toEqual('1');
+    expect(component.subjectId).toEqual('2');
+    expect(component.groupId).toEqual('3');
+    expect(component.typeId).toEqual('4');
   }));
 
+  it('should update selected filter fields with route parameter data', fakeAsync(() => {
+    spyOn(setSelectedService, 'setSelectedArea');
+    spyOn(setSelectedService, 'setSelectedSubject');
+    spyOn(setSelectedService, 'setSelectedTypes');
+    spyOn(setSelectedService, 'setSelectedGroups');
+    setAllRoutes(route, '1', '2', '3', '4');
+    component.ngOnInit();
+    expect(route.params.subscribe).toHaveBeenCalled();
+    tick();
+    expect(setSelectedService.setSelectedArea).toHaveBeenCalledWith('1');
+    expect(setSelectedService.setSelectedSubject).toHaveBeenCalledWith('2');
+    expect(setSelectedService.setSelectedGroups).toHaveBeenCalledWith('3');
+    expect(setSelectedService.setSelectedTypes).toHaveBeenCalledWith('4');
+  }));
+
+  it('should call selected service with null values', fakeAsync(() => {
+    spyOn(setSelectedService, 'setSelectedArea');
+    spyOn(setSelectedService, 'setSelectedSubject');
+    spyOn(setSelectedService, 'setSelectedTypes');
+    spyOn(setSelectedService, 'setSelectedGroups');
+    setAreaRoute(route, '1');
+    component.ngOnInit();
+    tick();
+    expect(setSelectedService.setSelectedArea).toHaveBeenCalledWith('1');
+    expect(setSelectedService.setSelectedSubject).toHaveBeenCalledWith(null);
+    expect(setSelectedService.setSelectedGroups).toHaveBeenCalledWith(null);
+    expect(setSelectedService.setSelectedTypes).toHaveBeenCalledWith(null);
+  }));
+
+  it('should remove the type filter and call updated route', () => {
+    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'getIds').and.returnValue('1,2');
+    component.areaId = '1';
+    component.selectedTypes = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
+    component.removeFilter({type: 'type', id: 1});
+    expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 't1'}, {id: 2, name: 't2'}]);
+    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '2', '', '');
+  });
+
+  it('should remove the group filter and call updated route', () => {
+    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'getIds').and.returnValue('1,2');
+    component.areaId = '1';
+    component.selectedGroups = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
+    component.removeFilter({type: 'group', id: 1});
+    expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 'g1'}, {id: 2, name: 'g2'}]);
+    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '', '', '2');
+  });
+
+  it('should execute type navigation.', () => {
+    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'getIds').and.returnValue('1');
+    component.selectedAreas = [{id: 1, name: 'a1'}];
+    component.selectedSubjects = [{id: 1, name: 's1'}];
+    component.selectedGroups = [{id: 1, name: 'g1'}];
+    component.typeNavigation({selected: [{id: 1, name: 't1'}]});
+    expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 't1'}]);
+    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '1', '1', '1');
+  });
+
+  it('should execute subject navigation.', () => {
+    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'getIds').and.returnValue('1');
+    component.selectedAreas = [{id: 1, name: 'a1'}];
+    component.selectedTypes = [{id: 1, name: 's1'}];
+    component.selectedGroups = [{id: 1, name: 'g1'}];
+    component.subjectNavigation({selected: [{id: 1, name: 's1'}]});
+    expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 's1'}]);
+    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '1', '1', '1');
+  });
+
+  it('should execute group navigation.', () => {
+    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'getIds').and.returnValue('1');
+    component.selectedAreas = [{id: 1, name: 'a1'}];
+    component.selectedSubjects = [{id: 1, name: 's1'}];
+    component.selectedTypes = [{id: 1, name: 't1'}];
+    component.typeNavigation({selected: [{id: 1, name: 'g1'}]});
+    expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 'g1'}]);
+    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '1', '1', '1');
+  });
+
+  it('should navigate to item.', () => {
+    spyOn(navigationService, 'navigateItemRoute');
+    spyOn(store, 'dispatch');
+    component.areaId = '1';
+    component.collectionNavigation('1');
+    expect(navigationService.navigateItemRoute).toHaveBeenCalledWith('1', '1');
+    expect(store.dispatch).toHaveBeenCalledWith(new CollectionReset());
+  });
 });

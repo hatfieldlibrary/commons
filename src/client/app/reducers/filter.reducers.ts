@@ -1,5 +1,4 @@
 import {FilterActions, FilterActionTypes} from '../actions/filter.actions';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
@@ -24,7 +23,7 @@ export interface State {
     id: 0,
     name: ''
   }];
-  removedSubjects: [{
+  previousSubjects: [{
     id: 0,
     name: ''
   }];
@@ -32,7 +31,7 @@ export interface State {
     id: 0,
     name: ''
   }];
-  removedGroups: [{
+  previousGroups: [{
     id: 0,
     name: ''
   }];
@@ -60,7 +59,7 @@ const initialState: State = {
     id: 0,
     name: ''
   }],
-  removedSubjects: [{
+  previousSubjects: [{
     id: 0,
     name: ''
   }],
@@ -68,7 +67,7 @@ const initialState: State = {
     id: 0,
     name: ''
   }],
-  removedGroups: [{
+  previousGroups: [{
     id: 0,
     name: ''
   }]
@@ -151,7 +150,7 @@ export function reducer(state = initialState, action: FilterActions): State {
     }
 
     case FilterActionTypes.SET_DEFAULT_AREA_FILTER: {
-      const filter: AreaFilterType[] = [{id: 0, title: '', count: 0}];
+      const filter: FieldFilterType[] = [{id: 0, name: ''}];
       return Object.assign({}, state, {
         selectedAreas: filter
       });
@@ -172,11 +171,11 @@ export function reducer(state = initialState, action: FilterActions): State {
 
 export const getSubjectsFilter = (state: State) => state.selectedSubjects;
 
-export const getRemovedSubjectsFilter = (state: State) => state.removedSubjects;
+export const getRemovedSubjectsFilter = (state: State) => state.previousSubjects;
 
 export const getRemovedTypesFilter = (state: State) => state.removedTypes;
 
-export const getRemovedGroupsFilter = (state: State) => state.removedGroups;
+export const getRemovedGroupsFilter = (state: State) => state.previousGroups;
 
 export const getTypesFilter = (state: State) => state.selectedTypes;
 

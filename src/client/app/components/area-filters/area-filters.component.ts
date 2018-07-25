@@ -60,6 +60,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
         this.isMobile = false;
       }
     });
+    console.log(this.watcher)
   }
 
   /**
@@ -83,7 +84,8 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
 
   private updateGroupFilter(): void {
     const updatedGroups = [];
-    if (this.groups.groups.length > 0) {
+    console.log(this.groups)
+    if (this.groups.groups && this.groups.groups.length > 0) {
       this.filters.selectedGroups.forEach(grp => {
         if (grp.id !== 0) {
           const activeIndex = this.groups.groups.findIndex(g => g.id === grp.id);
@@ -104,7 +106,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
 
   private updateTypeFilter(): void {
     const updatedTypes = [];
-    if (this.types.types.length > 0) {
+    if (this.types.types && this.types.types.length > 0) {
       this.filters.selectedTypes.forEach(type => {
         if (type.id !== 0) {
           const activeIndex = this.types.types.findIndex(a => a.id === type.id);
@@ -126,7 +128,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   private updateSubjectFilter(): void {
 
     const updatedSubjects = [];
-    if (this.subjects.subjects.length > 0) {
+    if (this.subjects.subjects && this.subjects.subjects.length > 0) {
       this.filters.selectedSubjects.forEach(sub => {
         if (sub.id !== 0) {
           const activeIndex = this.subjects.subjects.findIndex(a => a.id === sub.id);
@@ -154,7 +156,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   private updateRouterNavigation(fieldType: string, data: FieldFilterType[]) {
     // If fields were removed, update the store. The next time the corresponding field option is
     // chosen, the navigation service will use the revised store to modify the route.
-    if (data.length > 0) {
+    if (data && data.length > 0) {
       switch (fieldType) {
         case FieldValues.SUBJECT: {
           this.store.dispatch(new RemoveSelectedSubjects(data));

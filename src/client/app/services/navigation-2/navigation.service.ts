@@ -7,9 +7,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {
   RemoveSelectedGroups,
   RemoveSelectedSubjects,
-  RemoveSelectedTypes, SetGroupFilter,
-  SetSubjectFilter,
-  SetTypeFilter
+  RemoveSelectedTypes
 } from '../../actions/filter.actions';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {FieldValues} from '../../shared/enum/field-names';
