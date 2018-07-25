@@ -75,7 +75,7 @@ describe('Related Items Effect', () => {
 
   it('should return error action action for item request', () => {
 
-    spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return ErrorObservable.create('error') });
+    spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new ItemActionRelated('1', '1,2');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

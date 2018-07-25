@@ -257,9 +257,6 @@ describe('ItemContainerComponent', () => {
     spyOn(component, 'getRelatedItems').and.callThrough();
     component.ngOnInit();
     tick();
-
-    tick();
-
     expect(store.select).toHaveBeenCalledWith(fromRoot.getItem);
     expect(component.getRelatedItems).toHaveBeenCalledWith(mockItem);
     expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ItemActionRelated('1', '1,2'));
@@ -280,14 +277,16 @@ describe('ItemContainerComponent', () => {
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemReset());
   }));
 
-  it('should remove listeners when component is destroyed', () => {
+  it('should remove listeners when component is destroyed', fakeAsync(() => {
     setMockAreaRoute(route, '1');
     component.ngOnInit();
+    tick();
     watcher = component.watchers;
     spyOn(watcher, 'unsubscribe');
     fixture.destroy();
+    tick();
     expect(watcher.unsubscribe).toHaveBeenCalled();
-  });
+  }));
 
 
 });

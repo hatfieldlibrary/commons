@@ -13,8 +13,7 @@ describe('DatePickerSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DatePickerSvgComponent ],
       imports: [MatIconModule, HttpClientModule]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
@@ -23,7 +22,6 @@ describe('DatePickerSvgComponent', () => {
     iconRegistry.addSvgIcon('date-picker', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_date_range_black_24px.svg'));
     fixture = TestBed.createComponent(DatePickerSvgComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should be created', () => {

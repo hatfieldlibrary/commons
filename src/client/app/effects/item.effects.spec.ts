@@ -105,7 +105,7 @@ describe('Item Effect', () => {
 
   it('should return error action action for item request', () => {
 
-    spyOn(itemService, 'getItem').and.callFake(() => { return ErrorObservable.create('error') });
+    spyOn(itemService, 'getItem').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new ItemRequest('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

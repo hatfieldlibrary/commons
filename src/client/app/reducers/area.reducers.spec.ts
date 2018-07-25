@@ -109,7 +109,7 @@ describe('Area Reducer', () => {
   it('should return current state and fail.', () => {
     const areaState: State = {area: areaMock, loading: false};
     expect(
-      reducer(areaState, new AreaListActionFailed('error'))
+      reducer(areaState, new AreaListActionFailed('test'))
     ).toEqual(
       {
         area: areaMock,

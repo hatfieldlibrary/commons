@@ -112,7 +112,7 @@ describe('Collection Reducer', () => {
   it('should return current state on request failure', () => {
     const collectionState: State = {collections: collectionListMock, loading: false};
     expect(
-      reducer(collectionState, new CollectionActionFailed('error'))
+      reducer(collectionState, new CollectionActionFailed('test'))
     ).toEqual(
       {
         collections: collectionListMock,

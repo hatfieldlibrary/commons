@@ -309,13 +309,6 @@ describe('ListsContainerComponent', () => {
           provide: Store,
           useValue: appStore
         },
-        // {
-        //   provide: Store,
-        //   useClass: class {
-        //     dispatch = jasmine.createSpy('dispatch');
-        //     select = jasmine.createSpy('select');
-        //   }
-        // },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -384,22 +377,23 @@ describe('ListsContainerComponent', () => {
     expect(dispatchService.dispatchActions).toHaveBeenCalledWith('1', undefined, undefined, undefined);
   }));
 
-  it('should remove listeners when component is destroyed', () => {
+  it('should remove listeners when component is destroyed', fakeAsync(() => {
     component.ngOnInit();
     fixture.detectChanges();
+    tick();
     watcher = component.watchers;
     spyOn(watcher, 'unsubscribe');
     fixture.destroy();
     expect(selectedSubscriptionSpy).toHaveBeenCalled();
     expect(watcher.unsubscribe).toHaveBeenCalled();
-  });
+  }));
 
   it('should act on view query parameter if present in the route', fakeAsync(() => {
     setAreaRouteWithQueryParam(route, '1', 'grid');
     const setView = spyOn(component, 'setView');
     component.ngOnInit();
-    expect(route.queryParams.subscribe).toHaveBeenCalled();
     tick();
+    expect(route.queryParams.subscribe).toHaveBeenCalled();
     expect(setView).toHaveBeenCalledWith({view: 'grid'});
   }));
 
@@ -416,8 +410,8 @@ describe('ListsContainerComponent', () => {
   it('should update component fields with route parameter data', fakeAsync(() => {
     setAllRoutes(route, '1', '2', '3', '4');
     component.ngOnInit();
-    expect(route.params.subscribe).toHaveBeenCalled();
     tick();
+    expect(route.params.subscribe).toHaveBeenCalled();
     expect(component.areaId).toEqual('1');
     expect(component.subjectId).toEqual('2');
     expect(component.groupId).toEqual('3');
@@ -431,8 +425,8 @@ describe('ListsContainerComponent', () => {
     spyOn(setSelectedService, 'setSelectedGroups');
     setAllRoutes(route, '1', '2', '3', '4');
     component.ngOnInit();
-    expect(route.params.subscribe).toHaveBeenCalled();
     tick();
+    expect(route.params.subscribe).toHaveBeenCalled();
     expect(setSelectedService.setSelectedArea).toHaveBeenCalledWith('1');
     expect(setSelectedService.setSelectedSubject).toHaveBeenCalledWith('2');
     expect(setSelectedService.setSelectedGroups).toHaveBeenCalledWith('3');

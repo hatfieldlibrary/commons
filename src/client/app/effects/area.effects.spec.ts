@@ -96,7 +96,7 @@ describe('Area Effect', () => {
 
   it('should return error response action for all collections request', () => {
 
-    spyOn(areaService, 'getAreaList').and.callFake(() => { return ErrorObservable.create('error')});
+    spyOn(areaService, 'getAreaList').and.callFake(() => { return ErrorObservable.create('test')});
     const startAction =  new AreaListAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -118,9 +118,9 @@ describe('Area Effect', () => {
 
   });
 
-  it('should return error response action for all collections request', () => {
+  it('should return error response for area information request', () => {
 
-    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return ErrorObservable.create('error') });
+    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction =  new AreaInformation('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

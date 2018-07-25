@@ -13,8 +13,7 @@ describe('CloseWhiteSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CloseWhiteSvgComponent ],
       imports: [MatIconModule, HttpClientModule]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
@@ -23,7 +22,6 @@ describe('CloseWhiteSvgComponent', () => {
     iconRegistry.addSvgIcon('back-black', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_close_white_16px.svg'));
     fixture = TestBed.createComponent(CloseWhiteSvgComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should be created', () => {

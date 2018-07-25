@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {ItemSelectComponent} from './item-select.component';
 import {DatePickerSvgComponent} from '../svg/date-picker-svg/date-picker-svg.component';
@@ -84,11 +84,12 @@ describe('ItemSelectComponent', () => {
     expect(component.href).toContain('test');
   });
 
-  it('should fetch options list onInit', () => {
+  it('should fetch options list onInit', fakeAsync(() => {
     spyOn(svc, 'getOptionsList').and.callThrough();
     component.ngOnInit();
+    tick();
     fixture.detectChanges();
     expect(svc.getOptionsList).toHaveBeenCalled();
-  });
+  }));
 
 });

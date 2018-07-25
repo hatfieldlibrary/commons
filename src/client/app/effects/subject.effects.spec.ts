@@ -92,7 +92,7 @@ describe('Subject Effect', () => {
 
   it('should return error for subjects', () => {
 
-    spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return ErrorObservable.create('error') });
+    spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new SubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -117,7 +117,7 @@ describe('Subject Effect', () => {
 
   it('should return error for all subjects', () => {
 
-    spyOn(subjectService, 'getAllSubjects').and.callFake(() => { return ErrorObservable.create('error') });
+    spyOn(subjectService, 'getAllSubjects').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new AllSubjectAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

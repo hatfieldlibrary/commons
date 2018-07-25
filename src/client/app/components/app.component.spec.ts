@@ -184,20 +184,22 @@ describe('AppComponent', () => {
 
   });
 
-  it('should get openMenu observable and subscribe', () => {
+  it('should get openMenu observable and subscribe', fakeAsync(() => {
     const menuService = fixture.debugElement.injector.get(MenuInteractionService);
     spyOn(menuService.openMenu$, 'subscribe');
     spyOn(component.watcher, 'add');
     component.ngOnInit();
+    tick();
     expect(menuService.openMenu$.subscribe).toHaveBeenCalled();
     expect(component.watcher.add).toHaveBeenCalled();
-  });
+  }));
 
 
-  it('should open the navigation menu via the menu interaction service', async(() => {
+  it('should open the navigation menu via the menu interaction service', fakeAsync(() => {
     const menuService = fixture.debugElement.injector.get(MenuInteractionService);
     spyOn(menuService.openMenu$, 'subscribe').and.callThrough();
     component.ngOnInit();
+    tick();
     expect(menuService.openMenu$.subscribe).toHaveBeenCalled();
     menuService.openMenu();
     expect(component.sideNavigate).toBeDefined();
