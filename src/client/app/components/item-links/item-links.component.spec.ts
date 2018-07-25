@@ -1,17 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemLinksComponent } from './item-links.component';
-import {MatButtonModule, MatInputModule, MatListModule, MatSelectModule} from "@angular/material";
-import {FormsModule} from "@angular/forms";
-import {LockSvgComponent} from "../svg/lock-svg/lock-svg.component";
-import {SearchSvgComponent} from "../svg/search-svg/search-svg.component";
-import {SearchService} from "../../services/search.service";
-import {ActivatedRoute} from "@angular/router";
-import {AuthCheckService} from "../../services/auth-check.service";
-import {Store} from "@ngrx/store";
-import {Observable} from "rxjs/Observable";
-import {ItemSelectComponent} from "../item-select-options/item-select.component";
-import {DatePickerSvgComponent} from "../svg/date-picker-svg/date-picker-svg.component";
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule
+} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {LockSvgComponent} from '../svg/lock-svg/lock-svg.component';
+import {SearchSvgComponent} from '../svg/search-svg/search-svg.component';
+import {SearchService} from '../../services/search.service';
+import {ActivatedRoute} from '@angular/router';
+import {AuthCheckService} from '../../services/auth-check.service';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {ItemSelectComponent} from '../item-select-options/item-select.component';
+import {DatePickerSvgComponent} from '../svg/date-picker-svg/date-picker-svg.component';
+import {HttpClientModule} from '@angular/common/http';
 // import {MockBackend} from "@angular/http/testing";
 
 describe('ItemLinksComponent', () => {
@@ -32,8 +40,9 @@ describe('ItemLinksComponent', () => {
         MatButtonModule,
         MatInputModule,
         MatSelectModule,
-        FormsModule
-
+        FormsModule,
+        MatCardModule,
+        MatIconModule, HttpClientModule
       ],
       providers: [
         SearchService,

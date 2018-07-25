@@ -25,13 +25,11 @@ export class CollectionGridComponent implements OnDestroy {
   @Input() collectionList: CollectionType[];
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
-  filterTerm: string;
   isMobile = false;
   cols = 3;
   watcher: Subscription;
 
   constructor(private media: ObservableMedia) {
-    this.filterTerm = '';
     this.watcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
@@ -50,7 +48,7 @@ export class CollectionGridComponent implements OnDestroy {
     return this.collectionList.length.toString();
   }
 
-  navigateToItem(id: string) {
+  navigateToItem(id: number) {
     this.collectionNavigation.emit(id);
   }
 

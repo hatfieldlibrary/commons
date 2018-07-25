@@ -4,10 +4,9 @@ import {AppMenusComponent} from './app-menus.component';
 import {MenuSvgComponent} from '../svg/menu-svg/menu-svg.component';
 import {BackSvgComponent} from '../svg/back-svg/back-svg.component';
 import {
-   MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule
+  MatCheckboxModule, MatDividerModule, MatIconModule, MatSidenavModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {CloseSvgComponent} from '../svg/close-svg/close-svg.component';
-import {NavigationComponent} from '../area-selector/area.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HomeSvgComponent} from '../svg/home-svg/home-svg.component';
 import {CollectionsSvgComponent} from '../svg/collections-svg/collections-svg.component';
@@ -21,6 +20,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import {SetTimeoutService} from '../../services/timers/timeout.service';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
+import {HttpClientModule} from '@angular/common/http';
 
 class MockRouter {
   public navEnd = new NavigationEnd(0, 'http://localhost:3000', 'http://localhost:3000');
@@ -47,7 +48,6 @@ describe('AppMenusComponent', () => {
         HomeBlackSvgComponent,
         BackSvgComponent,
         CloseSvgComponent,
-        NavigationComponent,
         HomeSvgComponent,
         CollectionsSvgComponent
       ],
@@ -60,19 +60,29 @@ describe('AppMenusComponent', () => {
         MatCheckboxModule,
         MatIconModule,
         RouterTestingModule,
+        MatTooltipModule,
+        MatDividerModule,
+        HttpClientModule,
         // needed to test ObservableMedia
         FlexLayoutModule
 
       ],
       providers: [
-        SetTimeoutService,
-        MenuInteractionService,
         {
-      //    provide: UtilitiesService,
+          provide: SetTimeoutService,
+          useClass: SetTimeoutService
+        },
+        {
+          provide: MenuInteractionService,
+          useClass: MenuInteractionService
+        },
+        {
+          provide: NavigationServiceB,
           useValue: {
             getBackLink: () => {
               return 'test link'
-            }
+            },
+            getIds: () => {}
           }
         },
         {
@@ -98,7 +108,7 @@ describe('AppMenusComponent', () => {
     fixture = TestBed.createComponent(AppMenusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-   // utilSvc = fixture.debugElement.injector.get(UtilitiesService);
+    utilSvc = fixture.debugElement.injector.get(NavigationServiceB);
     spyOn(utilSvc, 'getBackLink').and.callThrough();
 
   });

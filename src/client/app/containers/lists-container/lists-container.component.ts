@@ -34,10 +34,8 @@ import {CollectionType} from '../../shared/data-types/collection.type';
 import {fadeIn} from '../../animation/animations';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {AreaFilterType} from '../../shared/data-types/area-filter.type';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {DeselectedFilter} from 'app/components/area-filters/area-filters.component';
-import {SelectedAreaEvent} from '../../components/area-selector/area.component';
 import {SelectedTypeEvent} from '../../components/types/types.component';
 import {SelectedSubjectEvent} from '../../components/subject-options/subject-options.component';
 import {DispatchService} from '../../services/dispatch.service';
@@ -54,6 +52,7 @@ import {CollectionGroupFilter} from '../../shared/data-types/collection-group-fi
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 import {SetViewAction} from '../../actions/view.actions';
+import {SelectedAreaEvent} from '../../components/area-options/area-options.component';
 
 @Component({
   selector: 'app-lists-container',
@@ -64,8 +63,6 @@ import {SetViewAction} from '../../actions/view.actions';
 })
 export class ListsContainerComponent implements OnInit, OnDestroy {
 
-  title: string;
-  subtitle: string;
   state = '';
   view = 'list';
 
@@ -73,7 +70,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * Redux selectors.
    */
   collections$: Observable<CollectionType[]>;
-  areas$: Observable<AreaFilterType[]>;
+  areas$: Observable<FieldFilterType[]>;
   areaInfo$: Observable<AreaType>;
   types$: Observable<FieldFilterType[]>;
   groups$: Observable<FieldFilterType[]>;
@@ -84,7 +81,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   groupsFilter$: Observable<CollectionGroupFilter>;
   viewType$: Observable<string>;
 
-  selectedAreas: AreaFilterType[];
+  selectedAreas: FieldFilterType[];
   selectedTypes: FieldFilterType[];
   selectedSubjects: FieldFilterType[];
   selectedGroups: FieldFilterType[];
@@ -92,10 +89,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   /**
    * These member variables contain route parameters.
    */
-  areaId: string;
-  typeId: string;
-  subjectId: string;
-  groupId: string;
+  areaId = '';
+  typeId = '';
+  subjectId = '';
+  groupId = '';
   /**
    * Used to clean up subscriptions in OnDestroy.
    */
@@ -124,38 +121,34 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Deselect filter callback for areas, types and subjects. This filter
-   * modifies the currently selected ids to assure correct state across filter changes.
-   * @param {DeselectedFilter} deselecte
+   * Deselect filter callback for group, types and subjects. This filter
+   * modifies the currently selected ids and calls router navigation.
+   * @param {DeselectedFilter} deselected field
    */
   removeFilter(deselected: DeselectedFilter): void {
 
     const test = deselected.id + '[^0-9]*';
     const regex = new RegExp(test);
-    if (deselected.type === 'area') {
-      // Get url query parameter for current areas.
-      const areaIds = this.navigation.getIds(this.selectedAreas);
-      this.areaId = areaIds.replace(regex, '');
-      this.typeId = '';
-      this.groupId = '';
-    } else if (deselected.type === 'type') {
-      // Get url query parameter for current types.
-      const typeIds = this.navigation.getIds(this.selectedTypes);
-      this.typeId = typeIds.replace(regex, '');
-      this.areaId = this.navigation.getIds(this.selectedAreas);
-      this.groupId = this.navigation.getIds(this.selectedGroups);
-    } else if (deselected.type === 'subject') {
-      // Get url query parameter for current subjects.
-      const subjectIds = this.navigation.getIds(this.selectedSubjects);
-      this.subjectId = subjectIds.replace(regex, '');
-      this.areaId = this.navigation.getIds(this.selectedAreas);
-      this.groupId = this.navigation.getIds(this.selectedGroups);
-    } else if (deselected.type === 'group') {
-      // Get url query parameter for current subjects.
-      const groupIds = this.navigation.getIds(this.selectedGroups);
-      this.groupId = groupIds.replace(regex, '');
-      this.areaId = this.navigation.getIds(this.selectedAreas);
-      this.subjectId = this.navigation.getIds(this.selectedSubjects);
+
+    switch (deselected.type) {
+      case 'type': {
+        const typeIds = this.navigation.getIds(this.selectedTypes);
+        this.typeId = typeIds.replace(regex, '');
+        break;
+      }
+      case 'subject': {
+        const subjectIds = this.navigation.getIds(this.selectedSubjects);
+        this.subjectId = subjectIds.replace(regex, '');
+        break;
+      }
+      case 'group': {
+        const groupIds = this.navigation.getIds(this.selectedGroups);
+        this.groupId = groupIds.replace(regex, '');
+        break;
+      }
+      default: {
+        console.log('type not recognized.');
+      }
     }
     this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
   }
@@ -174,8 +167,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     if (params['typeId']) {
       this.typeId = params['typeId'];
     }
-    if (params['groupId']) {
-      this.groupId = params['groupId'];
+    if (params['categoryId']) {
+      this.groupId = params['categoryId'];
     }
   }
 
@@ -225,7 +218,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigates to new location when area NavigationComponent is updated.
+   * Navigates to new location when area area is updated.
    * @param {SelectedAreaEvent} updatedAreaList the updated area list
    */
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
@@ -296,6 +289,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       this.store.select(fromRoot.getFilteredCollections),
       (collections) => {
         // Let subscribers know that collection data is ready.
+        // TODO: may be possible to instead use AfterViewInit inside CollectionRowsComponent and CollectionGridComponent.
         this.scrollReady.setReady();
         return collections;
       }
@@ -376,9 +370,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       // Unsubscribe local watchers.
       this.watchers.unsubscribe();
     }
-    // Unsubscribe all watchers in the service. Each component
-    // instance will resubscribe. The prevents the multiple
-    // subscriptions within the service.
+    // Unsubscribe watchers in the setSelected service.
     this.setSelected.unsubscribe();
   }
 

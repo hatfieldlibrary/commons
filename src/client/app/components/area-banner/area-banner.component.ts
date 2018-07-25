@@ -81,7 +81,7 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.watcher = this.media.subscribe((change: MediaChange) => {
+    this.watcher = this.media.asObservable().subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
         this.isMobile = true;
       } else {
@@ -104,7 +104,9 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.watcher.unsubscribe();
+    if (this.watcher) {
+      this.watcher.unsubscribe();
+    }
   }
 
 }

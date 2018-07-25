@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewListComponent } from './view-list.component';
+import {MatIconModule} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('ViewListComponent', () => {
   let component: ViewListComponent;
@@ -8,7 +10,8 @@ describe('ViewListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewListComponent ]
+      declarations: [ ViewListComponent ],
+      imports: [MatIconModule, HttpClientModule]
     })
     .compileComponents();
   }));

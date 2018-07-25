@@ -71,9 +71,6 @@ export class CollectionService {
   }
 
   getCollectionsByCategoryArea(categoryId: string, areaId: string): Observable<CollectionType[]> {
-    console.log(environment.apiHost + environment.apiRoot
-      + '/collection/category/' + categoryId
-      + '/area/' + areaId)
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId );
