@@ -23,7 +23,7 @@ import {
   MatListModule,
   MatSelectModule,
   MatSidenavModule,
-  MatToolbarModule
+  MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {Store, StoreModule} from '@ngrx/store';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -31,7 +31,6 @@ import {ActivatedRoute, NavigationEnd, Router, RouterModule} from '@angular/rout
 import {Observable} from 'rxjs';
 import * as fromRoot from '../../reducers';
 import {AppComponent} from '../../components/app.component';
-import {NavigationComponent} from '../../components/area-selector/area.component';
 import {RelatedItemsComponent} from '../../components/related-items/related-items.component';
 import * as fromItem from '../../actions/item.actions';
 import * as fromRelated from '../../actions/related.actions';
@@ -64,6 +63,10 @@ import {Subscription} from 'rxjs/Subscription';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import {SetTimeoutService} from '../../services/timers/timeout.service';
 import {HttpClientModule} from '@angular/common/http';
+import {AreaOptionsComponent} from '../../components/area-options/area-options.component';
+import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
+import {SetSelectedService} from '../../services/set-selected.service';
+import {LoggerService} from '../../shared/logger/logger.service';
 
 let mockItem = {
   collection: {
@@ -96,7 +99,7 @@ let mockItem = {
     icon: ''
 
   }],
-  subjects: ['1', '2']
+  subjects: [{id: 1, name: 's1'}, {id: 2, name: 's2'}]
 
 };
 
@@ -130,7 +133,6 @@ describe('ItemContainerComponent', () => {
         ItemHeaderComponent,
         ItemHeaderImageComponent,
         RelatedItemsComponent,
-        NavigationComponent,
         ItemComponent,
         ItemLinksComponent,
         LockSvgComponent,
@@ -147,7 +149,8 @@ describe('ItemContainerComponent', () => {
         ItemSelectComponent,
         InfoSvgComponent,
         RunSvgComponent,
-        CollectionsSvgComponent
+        CollectionsSvgComponent,
+        AreaOptionsComponent
       ],
       imports: [
         FlexLayoutModule,
@@ -168,13 +171,16 @@ describe('ItemContainerComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        MatTooltipModule,
         StoreModule.forRoot({}),
         RouterTestingModule
       ],
       providers: [
+        LoggerService,
         SetTimeoutService,
         MenuInteractionService,
-      //  UtilitiesService,
+        SetSelectedService,
+        NavigationServiceB,
         {
           provide: Store,
           useClass: class {
@@ -200,15 +206,14 @@ describe('ItemContainerComponent', () => {
         SearchService,
         AuthCheckService
       ]
-    })
-      .compileComponents();
+    });
   }));
 
   beforeEach(async(() => {
 
     TestBed.createComponent(AppComponent);
     fixture = TestBed.createComponent(ItemContainerComponent);
-    component = fixture.componentInstance;
+    component = fixture.debugElement.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     media = fixture.debugElement.injector.get(ObservableMedia);
@@ -252,9 +257,6 @@ describe('ItemContainerComponent', () => {
     spyOn(component, 'getRelatedItems').and.callThrough();
     component.ngOnInit();
     tick();
-
-    tick();
-
     expect(store.select).toHaveBeenCalledWith(fromRoot.getItem);
     expect(component.getRelatedItems).toHaveBeenCalledWith(mockItem);
     expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ItemActionRelated('1', '1,2'));
@@ -275,14 +277,16 @@ describe('ItemContainerComponent', () => {
     expect(store.dispatch).toHaveBeenCalledWith(new fromItem.ItemReset());
   }));
 
-  it('should remove listeners when component is destroyed', () => {
+  it('should remove listeners when component is destroyed', fakeAsync(() => {
     setMockAreaRoute(route, '1');
     component.ngOnInit();
+    tick();
     watcher = component.watchers;
     spyOn(watcher, 'unsubscribe');
     fixture.destroy();
+    tick();
     expect(watcher.unsubscribe).toHaveBeenCalled();
-  });
+  }));
 
 
 });

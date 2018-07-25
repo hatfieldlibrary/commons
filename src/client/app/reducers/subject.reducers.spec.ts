@@ -116,7 +116,7 @@ describe('Subject Reducers', () => {
 
   it('should return error message', () => {
 
-    const state = reducer(undefined, new SubjectActionFailed('I am a failure.'));
+    const state = reducer(undefined, new SubjectActionFailed('test'));
     const result = getSubjectList(state);
     expect(result).toEqual([]);
   });

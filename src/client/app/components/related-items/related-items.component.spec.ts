@@ -20,6 +20,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RelatedItemsComponent} from './related-items.component';
 import {MatButtonModule, MatCardModule, MatGridListModule} from "@angular/material";
 import {RouterTestingModule} from "@angular/router/testing";
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 describe('RelatedItemsComponent', () => {
@@ -35,10 +36,11 @@ describe('RelatedItemsComponent', () => {
         MatCardModule,
         MatButtonModule,
         MatGridListModule,
-        RouterTestingModule
+        RouterTestingModule,
+        // needed to test ObservableMedia
+        FlexLayoutModule
       ]
-    })
-      .compileComponents();
+    });
   }));
 
 

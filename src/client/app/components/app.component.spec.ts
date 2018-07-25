@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-unused-variable */
 
-import {TestBed, async, ComponentFixture} from '@angular/core/testing';
+import {TestBed, async, ComponentFixture, fakeAsync, tick} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {} from 'jasmine';
@@ -28,18 +28,32 @@ import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {CollectionsSvgComponent} from 'app/components/svg/collections-svg/collections-svg.component';
 import {HomeSvgComponent} from './svg/home-svg/home-svg.component';
-import {NavigationComponent} from './area-selector/area.component';
 import {CloseSvgComponent} from './svg/close-svg/close-svg.component';
 import {BackSvgComponent} from './svg/back-svg/back-svg.component';
 import {HomeBlackSvgComponent} from './svg/home-black-svg/home-black-svg.component';
 import {MenuSvgComponent} from './svg/menu-svg/menu-svg.component';
-import {MatCheckboxModule, MatIconModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {
+  MatCheckboxModule,
+  MatDivider,
+  MatDividerModule,
+  MatListModule,
+  MatIconModule,
+  MatListItem,
+  MatSidenavModule,
+  MatToolbarModule
+} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Subject} from 'rxjs/Subject';
 import {Router} from '@angular/router';
 import {Component} from '@angular/core';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {SetSelectedService} from '../services/set-selected.service';
+import {NavigationServiceB} from '../services/navigation-2/navigation.service';
+import {ScrollReadyService} from '../services/observable/scroll-ready.service';
+import {LoggerService} from '../shared/logger/logger.service';
+import {HttpClientModule} from '@angular/common/http';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'dummy-component',
@@ -71,11 +85,10 @@ describe('AppComponent', () => {
   let store;
 
 
-  const mockAreaList: AreaFilterType[] =  [
+  const mockAreaList: FieldFilterType[] =  [
     {
       id: 1,
-      title: 'areas one',
-      count: 1
+      name: 'areas one'
     }
   ];
 
@@ -99,7 +112,6 @@ describe('AppComponent', () => {
         HomeBlackSvgComponent,
         BackSvgComponent,
         CloseSvgComponent,
-        NavigationComponent,
         HomeSvgComponent,
         CollectionsSvgComponent,
         MockComponent
@@ -110,8 +122,12 @@ describe('AppComponent', () => {
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
+        MatDividerModule,
+        MatListModule,
         MatCheckboxModule,
         MatIconModule,
+        MatDividerModule,
+        HttpClientModule,
         RouterTestingModule.withRoutes([
           {path: 'commons/item', component: MockComponent},
           {path: 'commons/collection', component: MockComponent}
@@ -121,6 +137,10 @@ describe('AppComponent', () => {
 
       ],
       providers: [
+        SetSelectedService,
+        NavigationServiceB,
+        ScrollReadyService,
+        LoggerService,
         {
           provide: SetTimeoutService,
           useClass: MockTimeoutService
@@ -133,11 +153,18 @@ describe('AppComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select(): Observable<AreaFilterType[]> {
+            select(): Observable<FieldFilterType[]> {
               return Observable.of(mockAreaList);
             };
           }
         },
+        {
+          provide: ScrollReadyService,
+          useClass: class {
+            subscribe = jasmine.createSpy('subscribe');
+            setPosition = jasmine.createSpy('setPosition');
+          }
+        }
       ]
     });
     TestBed.compileComponents();
@@ -157,20 +184,22 @@ describe('AppComponent', () => {
 
   });
 
-  it('should get openMenu observable and subscribe', () => {
+  it('should get openMenu observable and subscribe', fakeAsync(() => {
     const menuService = fixture.debugElement.injector.get(MenuInteractionService);
     spyOn(menuService.openMenu$, 'subscribe');
     spyOn(component.watcher, 'add');
     component.ngOnInit();
+    tick();
     expect(menuService.openMenu$.subscribe).toHaveBeenCalled();
     expect(component.watcher.add).toHaveBeenCalled();
-  });
+  }));
 
 
-  it('should open the navigation menu via the menu interaction service', async(() => {
+  it('should open the navigation menu via the menu interaction service', fakeAsync(() => {
     const menuService = fixture.debugElement.injector.get(MenuInteractionService);
     spyOn(menuService.openMenu$, 'subscribe').and.callThrough();
     component.ngOnInit();
+    tick();
     expect(menuService.openMenu$.subscribe).toHaveBeenCalled();
     menuService.openMenu();
     expect(component.sideNavigate).toBeDefined();
@@ -179,46 +208,18 @@ describe('AppComponent', () => {
     });
   }));
 
-  it('should pop value onto the scroll position stack', async(() => {
-    router = fixture.debugElement.injector.get(Router);
-    fixture.detectChanges();
-    spyOn(component.yScrollStack, 'push').and.callThrough();
-    router.navigate(['commons/item']).then(() => {
-      expect(component.yScrollStack.push).toHaveBeenCalled();
-    });
-  }));
-
-
-  it('should not pop value onto the scroll position stack', async(() => {
-    router = fixture.debugElement.injector.get(Router);
-    fixture.detectChanges();
-    spyOn(component.yScrollStack, 'push').and.callThrough();
-    router.navigate(['commons/collection']).then(() => {
-      expect(component.yScrollStack.push).not.toHaveBeenCalled();
-    });
-  }));
-
-  it('should pop value off of the position stack to apply to collection list',  async(() => {
-    const timeoutService = fixture.debugElement.injector.get(SetTimeoutService);
-    router = fixture.debugElement.injector.get(Router);
-    fixture.detectChanges();
-    spyOn(timeoutService, 'setTimeout').and.callThrough();
-    spyOn(component.yScrollStack, 'pop').and.callThrough();
-    router.navigate(['commons/collection']).then(() => {
-      expect(timeoutService.setTimeout).toHaveBeenCalled();
-      expect(component.yScrollStack.pop).toHaveBeenCalled();
-    });
-  }));
-
-  it('should set the cdk-scrollable element scrollTop to zero',  async(() => {
+  it('should set the cdk-scrollable element scrollTop to zero',  fakeAsync(() => {
     const timeoutService = fixture.debugElement.injector.get(SetTimeoutService);
     router = fixture.debugElement.injector.get(Router);
     fixture.detectChanges();
     spyOn(timeoutService, 'setTimeout').and.callThrough();
     router.navigate(['commons/item']).then(() => {
-      expect(timeoutService.setTimeout).toHaveBeenCalled();
-      expect(component.scrollable.scrollTop).toEqual(0);
+      // expect(timeoutService.setTimeout).toHaveBeenCalled();
+      // expect(component.scrollable.scrollTop).toEqual(0);
     });
+    tick();
+   // expect(timeoutService.setTimeout).toHaveBeenCalled();
+    expect(component.scrollable.scrollTop).toEqual(0);
   }));
 
 

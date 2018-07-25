@@ -17,23 +17,23 @@
 
 import {AreaActions, AreaActionTypes} from '../actions/area.actions';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 /**
  * Created by mspalti on 4/11/17.
  */
 
 
 export interface State {
-  areaList: AreaFilterType[];
+  areaList: FieldFilterType[];
   loading: boolean;
 
 }
 
 const initialState: State = {
-  areaList: <AreaFilterType[]>[
+  areaList: <FieldFilterType[]>[
     {
       id: -1,
-      title: '',
-      count: 0
+      name: ''
     }
   ],
   loading: false
@@ -52,8 +52,7 @@ export function reducer(state = initialState, action: AreaActions): State {
     }
 
     case AreaActionTypes.AREA_LIST_SUCCESS: {
-      const payload = <AreaFilterType[]>action.payload;
-
+      const payload = <FieldFilterType[]>action.payload;
       return Object.assign({}, state,
         {
           areaList: payload,

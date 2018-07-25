@@ -154,7 +154,9 @@ export class GroupActionFailed implements Action {
   type = GroupActionTypes.REQUEST_FAILED;
   payload: void;
   constructor(err: string) {
-    console.log(err)
+    if (err !== 'test') {
+      console.log(err);
+    }
   }
 }
 

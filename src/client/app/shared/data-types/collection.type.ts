@@ -16,6 +16,7 @@
  */
 
 import {AreaType} from './area.type';
+import {FieldFilterType} from './field-filter.type';
 
 /**
  * Created by mspalti on 2/21/17.
@@ -37,6 +38,7 @@ export class CollectionType {
   restricted: boolean;
   published: boolean;
   parent: AreaType[];
+  types: FieldFilterType[];
 }
 
 

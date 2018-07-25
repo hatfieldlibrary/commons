@@ -35,7 +35,7 @@ export class AreaEffects {
   areaListEffect$: Observable<Action> = this.actions$
     .ofType(areas.AreaActionTypes.AREA_LIST)
     .switchMap(() => this.svc.getAreaList())
-    .map(res =>   new areas.AreaListSuccess(res))
+    .map(res => new areas.AreaListSuccess(res))
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
 
   @Effect()

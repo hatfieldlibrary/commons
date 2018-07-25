@@ -1,11 +1,8 @@
 import {
-  AfterContentInit,
-  AfterViewInit,
   Component,
   EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
   Output
 } from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
@@ -23,13 +20,11 @@ export class CollectionRowsComponent implements OnDestroy {
   @Input() collectionList: CollectionType[];
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
-  filterTerm: string;
   isMobile = false;
   cols = 3;
   watcher: Subscription;
 
   constructor(private media: ObservableMedia) {
-    this.filterTerm = '';
     this.watcher = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
@@ -45,14 +40,16 @@ export class CollectionRowsComponent implements OnDestroy {
   }
 
   totalResults(): string {
-    return this.collectionList.length.toString();
+    if (this.collectionList) {
+      return this.collectionList.length.toString();
+    }
   }
   getImage(image: string) {
     return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
 
   }
 
-  navigateToItem(id: string) {
+  navigateToItem(id: number) {
     this.collectionNavigation.emit(id);
   }
 
