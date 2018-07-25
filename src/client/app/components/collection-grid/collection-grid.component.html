@@ -22,7 +22,7 @@
                  [ngClass]="{'mobile-list-item-padding': isMobile}"
                  (click)="navigateToItem(collection.id)"
                  [@fadeIn]
-                 *ngFor="let collection of collectionList | collectionsFilter:filterTerm">
+                 *ngFor="let collection of collectionList">
     <mat-card>
       <img mat-card-image class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
       <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">

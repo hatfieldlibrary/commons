@@ -46,7 +46,7 @@ export class SubjectOptionsComponent {
     return this.filter.selectedSubjects.findIndex((current) => current.id === id);
   }
 
-  onSubjectListControlChanged(list: MatSelectionList, id: number) {
+  onSubjectListControlChanged(id: number) {
     const selectedSubjects = this.filterService
       .updateSelectedSubjectsStore(this.filter.selectedSubjects, this.filter.subjects, id);
     const updatedSubjectEvent: SelectedSubjectEvent = {selected: selectedSubjects};

@@ -122,7 +122,9 @@ export class TypeActionFailed implements Action {
   type = ContentTypeActionTypes.REQUEST_FAILED;
   payload: void;
   constructor(err: string) {
-    console.log(err)
+    if (err !== 'test') {
+      console.log(err);
+    }
   }
 }
 

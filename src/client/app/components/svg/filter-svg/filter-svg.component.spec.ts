@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterSvgComponent } from './filter-svg.component';
-import {MatIconModule, MatIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MatIconModule, MatIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('FilterSvgComponent', () => {
   let component: FilterSvgComponent;
@@ -11,14 +12,14 @@ describe('FilterSvgComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FilterSvgComponent ],
-      imports: [MatIconModule]
+      imports: [MatIconModule, HttpClientModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    let iconRegistry = TestBed.get(MatIconRegistry);
-    let sanitizer = TestBed.get(DomSanitizer);
+    const iconRegistry = TestBed.get(MatIconRegistry);
+    const sanitizer = TestBed.get(DomSanitizer);
     iconRegistry.addSvgIcon('filter-icon', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_filter_list_black_24px.svg'));
     fixture = TestBed.createComponent(FilterSvgComponent);
     component = fixture.componentInstance;

@@ -20,11 +20,12 @@
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
-import {Observable,} from 'rxjs/Observable';
+import {Observable, } from 'rxjs/Observable';
 
-import {ItemEffects} from "./item.effects";
-import {ItemService} from "../services/item.service";
-import {ItemRequest, ItemSuccess, ItemRequestFailed, ItemReset} from "../actions/item.actions";
+import {ItemEffects} from './item.effects';
+import {ItemService} from '../services/item.service';
+import {ItemRequest, ItemSuccess, ItemRequestFailed, ItemReset} from '../actions/item.actions';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 
 describe('Item Effect', () => {
@@ -104,7 +105,7 @@ describe('Item Effect', () => {
 
   it('should return error action action for item request', () => {
 
-    spyOn(itemService, 'getItem').and.callFake(() => { return Observable.throw('error') });
+    spyOn(itemService, 'getItem').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new ItemRequest('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

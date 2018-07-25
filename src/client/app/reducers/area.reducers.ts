@@ -20,16 +20,15 @@
  */
 import {AreaActions, AreaActionTypes} from '../actions/area.actions';
 import {AreaType} from '../shared/data-types/area.type';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
 
 export interface State {
-  areas: AreaType;
+  area: AreaType;
   loading: boolean;
 
 }
 
 const initialState: State = {
-  areas: <AreaType>{
+  area: <AreaType>{
     id: 0,
     title: '',
     linkLabel: '',
@@ -57,7 +56,7 @@ export function reducer(state = initialState, action: AreaActions): State {
 
       return Object.assign({}, state,
         {
-          areas: payload,
+          area: payload,
           loading: false
         });
     }
@@ -69,4 +68,4 @@ export function reducer(state = initialState, action: AreaActions): State {
 
 }
 
-export const getAreaInfo = (state: State) => state.areas;
+export const getAreaInfo = (state: State) => state.area;

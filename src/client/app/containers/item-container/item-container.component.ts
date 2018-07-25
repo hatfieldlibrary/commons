@@ -49,7 +49,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   selectedTypes$: Observable<FieldFilterType[]>;
   selectedGroups$: Observable<FieldFilterType[]>;
   item$: Observable<ItemType>;
-  areas: AreaFilterType[];
+  areas: FieldFilterType[];
   id: string;
   areasAvailable = false;
   activeMediaQuery = 'xs';

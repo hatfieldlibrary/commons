@@ -8,6 +8,7 @@ import {NavigationServiceB} from '../../services/navigation-2/navigation.service
 import {ActivatedRoute} from '@angular/router';
 import {CollectionType} from '../../shared/data-types/collection.type';
 import {DispatchService} from '../../services/dispatch.service';
+import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
 @Component({
   selector: 'app-submit-dspace',
@@ -16,8 +17,8 @@ import {DispatchService} from '../../services/dispatch.service';
 })
 export class SubmitDspaceComponent implements OnInit, OnDestroy {
 
-  areas$: Observable<AreaFilterType[]>;
-  selectedAreas: AreaFilterType[];
+  areas$: Observable<FieldFilterType[]>;
+  selectedAreas: FieldFilterType[];
   collections$:  Observable<CollectionType[]>;
 
   areaId = '0';

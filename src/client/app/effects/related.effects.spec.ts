@@ -18,11 +18,12 @@
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
-import {Observable,} from 'rxjs/Observable';
+import {Observable, } from 'rxjs/Observable';
 
-import {RelatedService} from "../services/related.service";
-import {ItemActionRelated, ItemActionRelatedSuccess, ClearRelatedItems, RelatedItemRequestFailed} from "app/actions/related.actions";
-import {RelatedEffects} from "./related.effects";
+import {RelatedService} from '../services/related.service';
+import {ItemActionRelated, ItemActionRelatedSuccess, ClearRelatedItems, RelatedItemRequestFailed} from 'app/actions/related.actions';
+import {RelatedEffects} from './related.effects';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 
 describe('Related Items Effect', () => {
@@ -60,9 +61,9 @@ describe('Related Items Effect', () => {
 
   });
 
-  it('should returen related item success action', () => {
+  it('should return related item success action', () => {
 
-    const startAction = new ItemActionRelated('1','1,2');
+    const startAction = new ItemActionRelated('1', '1,2');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
     const successAction = new ItemActionRelatedSuccess(relatedMock);
@@ -74,7 +75,7 @@ describe('Related Items Effect', () => {
 
   it('should return error action action for item request', () => {
 
-    spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return Observable.throw('error') });
+    spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new ItemActionRelated('1', '1,2');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

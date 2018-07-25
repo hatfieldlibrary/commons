@@ -29,8 +29,8 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-scss-preprocessor'),
     //  require('karma-phantomjs-launcher'),
-      require('karma-teamcity-reporter'),
-      require('karma-spec-reporter')
+      require('jasmine-console-reporter'),
+    //  require('karma-spec-reporter')
     ],
     // Use the files and preprocessor settings in angular.json
   //  files: [
@@ -49,12 +49,10 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
     angularCli: {
-      config: './angular-cli.json',
+      config: './angular.json',
       environment: 'dev'
     },
-    reporters: config.angularCli && config.angularCli.codeCoverage
-              ? ['progress', 'coverage-istanbul']
-              : ['progress'],
+    reporters: ['dots', 'coverage-istanbul'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

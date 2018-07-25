@@ -6,7 +6,7 @@
                      [selected]="isSelected(subject.id)"
                      [@fadeIn]
                      [checkboxPosition]="position"
-                     (click)="onSubjectListControlChanged(subjectSelectionList, subject.id)"
+                     (click)="onSubjectListControlChanged(subject.id)"
                      [value]="subject.id">
       {{subject.name}}
     </mat-list-option>
