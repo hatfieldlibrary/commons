@@ -134,7 +134,7 @@ describe('Item Reducers', () => {
   it('should return current state and fail.', () => {
       const itemState: State = {item: itemMock, loading: false};
       expect(
-        reducer(itemState, new ItemRequestFailed('error'))
+        reducer(itemState, new ItemRequestFailed('test'))
       ).toEqual(
         {
           item: itemMock,

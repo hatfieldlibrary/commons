@@ -28,6 +28,8 @@ import {AreaType} from '../shared/data-types/area.type';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
+import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 describe('Area Effect', () => {
 
@@ -39,7 +41,7 @@ describe('Area Effect', () => {
     {
       id: 1,
       title: 'test areas one',
-      count: 2
+      count: 1
     }, {
       id: 2,
       title: 'test areas two',
@@ -94,7 +96,7 @@ describe('Area Effect', () => {
 
   it('should return error response action for all collections request', () => {
 
-    spyOn(areaService, 'getAreaList').and.callFake(() => { return Observable.throw('error') });
+    spyOn(areaService, 'getAreaList').and.callFake(() => { return ErrorObservable.create('test')});
     const startAction =  new AreaListAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -116,9 +118,9 @@ describe('Area Effect', () => {
 
   });
 
-  it('should return error response action for all collections request', () => {
+  it('should return error response for area information request', () => {
 
-    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return Observable.throw('error') });
+    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction =  new AreaInformation('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

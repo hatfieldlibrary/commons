@@ -1,6 +1,7 @@
-import {AreaFilterType} from './area-filter.type';
+
+import {FieldFilterType} from './field-filter.type';
 
 export interface AreasFilter {
-  areas: AreaFilterType[];
-  selectedAreas: AreaFilterType[]
+  areas: FieldFilterType[];
+  selectedAreas: FieldFilterType[]
 }

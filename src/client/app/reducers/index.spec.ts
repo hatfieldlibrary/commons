@@ -77,7 +77,8 @@ describe('Reducers ', () => {
     assetType: '',
     restricted: false,
     published: false,
-    parent: []
+    parent: [],
+    types: []
   };
 
   const expectedCategory = {

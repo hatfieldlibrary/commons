@@ -19,7 +19,8 @@
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
-import {Observable,} from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import {CollectionService} from '../services/collection.service';
 import {CollectionEffects} from './collection.effects';
 import {
@@ -49,7 +50,8 @@ describe('Collections Effect', () => {
       searchOptions: '',
       restricted: true,
       published: false,
-      parent: []
+      parent: [],
+      types: []
     }
   ];
 
@@ -96,7 +98,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for collections by areas', () => {
 
-    spyOn(collectionService, 'getCollectionsByAreaId').and.callFake(() => { return Observable.throw('error') });
+    spyOn(collectionService, 'getCollectionsByAreaId').and.callFake(() => { return ErrorObservable.create('test')});
     const startAction = new CollectionsAreaAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -120,7 +122,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for collections by subject and areas', () => {
 
-    spyOn(collectionService, 'getCollectionsByAreaSubject').and.callFake(() => { return Observable.throw('error') });
+    spyOn(collectionService, 'getCollectionsByAreaSubject').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new CollectionsAreaSubjectAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -144,7 +146,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for all collections for a given subject', () => {
 
-    spyOn(collectionService, 'getCollectionsForSubject').and.callFake(() => { return Observable.throw('error') });
+    spyOn(collectionService, 'getCollectionsBySubject').and.callFake(() => {  return ErrorObservable.create('test') });
     const startAction = new CollectionsSubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -168,7 +170,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for all collections request', () => {
 
-    spyOn(collectionService, 'getAllCollections').and.callFake(() => { return Observable.throw('error') });
+    spyOn(collectionService, 'getAllCollections').and.callFake(() => {  return ErrorObservable.create('test') });
     const startAction =  new AllCollectionsAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

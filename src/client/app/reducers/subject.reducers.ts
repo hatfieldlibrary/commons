@@ -24,7 +24,7 @@ import {FieldFilterType} from '../shared/data-types/field-filter.type';
 export interface State {
   subjects: FieldFilterType[];
   selectedSubject: FieldFilterType[];
-  removedSubjects: FieldFilterType[];
+  previousSubjects: FieldFilterType[];
   loading: boolean;
 
 }
@@ -32,7 +32,7 @@ export interface State {
 const initialState: State = {
   subjects: [],
   selectedSubject: [{id: 0, name: ''}],
-  removedSubjects: [{id: 0, name: ''}],
+  previousSubjects: [{id: 0, name: ''}],
   loading: false
 };
 

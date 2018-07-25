@@ -11,7 +11,6 @@ export class CollectionGroupServices {
   constructor(private http: HttpClient) {}
 
   getAllGroups(): Observable<FieldFilterType[]> {
-    console.log(environment.apiHost + environment.apiRoot + '/category')
     return this.http.get<FieldFilterType[]>(environment.apiHost + environment.apiRoot + '/category');
   }
 

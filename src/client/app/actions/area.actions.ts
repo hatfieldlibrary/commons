@@ -26,6 +26,7 @@ import {Action} from '../actions/action.interface';
 import {type} from '../shared/ngrx/type';
 import {AreaType} from '../shared/data-types/area.type';
 import {AreaFilterType} from 'app/shared/data-types/area-filter.type';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export const AreaActionTypes = {
   REQUEST_FAILED: type('[Areas] Search Failed'),
@@ -86,11 +87,17 @@ export class AreaListAction implements Action {
 }
 
 /**
- * Factory for the areas list received action.
+ * Factory for the areas list received action. Convert payload from legacy area type to field type.
  */
 export class AreaListSuccess implements Action {
   type = AreaActionTypes.AREA_LIST_SUCCESS;
-  constructor(public payload: AreaFilterType[]) {
+  payload: FieldFilterType[] = [];
+  constructor(private areas: AreaFilterType[]) {
+    if (areas) {
+      areas.forEach((area) => {
+        this.payload.push({id: area.id, name: area.title});
+      })
+    }
   }
 }
 
@@ -101,7 +108,9 @@ export class AreaListActionFailed implements Action {
   type = AreaActionTypes.REQUEST_FAILED;
   payload: void;
   constructor(err: string) {
-    console.log(err)
+    if (err !== 'test') {
+      console.log(err);
+    }
   }
 
 }

@@ -20,6 +20,7 @@ import {TestBed} from '@angular/core/testing';
 import {AreaType} from '../shared/data-types/area.type';
 import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 
 describe('Area Service', () => {
@@ -28,7 +29,7 @@ describe('Area Service', () => {
     {
       id: 1,
       title: 'test areas one',
-      count: 2
+      count: 1
     }, {
       id: 2,
       title: 'test areas two',

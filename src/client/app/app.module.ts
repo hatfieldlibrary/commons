@@ -35,10 +35,7 @@ import 'hammerjs';
 
 import {AppComponent} from './components/app.component';
 import {ListsContainerComponent} from './containers/lists-container/lists-container.component';
-import {NavigationComponent} from './components/area-selector/area.component';
-import {ListComponent} from './components/collection-list/list.component';
 import {ItemComponent} from './components/item/item.component';
-import {AreaInformationComponent} from './components/area-information/area-information.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
 import {SubjectsComponent} from './components/subject-selector/subjects.component';
 import {CollectionService} from './services/collection.service';
@@ -57,7 +54,6 @@ import {RelatedService} from './services/related.service';
 import {TypesComponent} from './components/types/types.component';
 import {MenuSvgComponent} from './components/svg/menu-svg/menu-svg.component';
 import {CloseSvgComponent} from './components/svg/close-svg/close-svg.component';
-import {HomeScreenComponent} from './components/home-screen/home-screen.component';
 import {ItemHeaderComponent} from './components/item-header/item-header.component';
 import {BackSvgComponent} from './components/svg/back-svg/back-svg.component';
 import {LockSvgComponent} from './components/svg/lock-svg/lock-svg.component';
@@ -70,7 +66,6 @@ import {AppMenusComponent} from './components/apps-menu/app-menus.component';
 import {HomeSvgComponent} from './components/svg/home-svg/home-svg.component';
 import {CollectionsSvgComponent} from './components/svg/collections-svg/collections-svg.component';
 import {AreasSvgComponent} from './components/svg/areas-svg/areas-svg.component';
-import {TitleHeaderComponent} from './components/title-header/title-header.component';
 import {ItemHeaderImageComponent} from './components/item-header-image/item-header-image.component';
 import {CloseWhiteSvgComponent} from './components/svg/close-white-svg/close-white-svg.component';
 import {KeyboardArrowBackSvgComponent} from './components/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component';
@@ -90,13 +85,10 @@ import {SetIntervalService} from './services/timers/interval.service';
 import {MenuInteractionService} from './services/menu/menu-interaction.service';
 import {TypeEffects} from './effects/types.effects';
 import {TypesService} from './services/types.service';
-import {SearchFilterComponent} from './components/search-filter/search-filter.component';
-import {CurrentFiltersComponent} from './components/current-filters/current-filters.component';
 import {DispatchService} from './services/dispatch.service';
 import {SetSelectedService} from './services/set-selected.service';
 import {CloseSvgDisabledComponent} from './components/svg/close-svg-disabled/close-svg-disabled.component';
 import {HelpSvgComponent} from './components/svg/help-svg/help-svg.component';
-import {AreaSelectorMobileComponent} from './components/area-selector-mobile/area-selector-mobile.component';
 import {ConsoleLoggerService} from './shared/logger/console-logger.service';
 import {LoggerService} from './shared/logger/logger.service';
 import {SubmitDspaceComponent} from './components/submit-dspace/submit-dspace.component';
@@ -173,16 +165,12 @@ export const appRoutes = [
     HelpSvgComponent,
     CloseSvgComponent,
     AppComponent,
-    NavigationComponent,
-    ListComponent,
     ListsContainerComponent,
     SubjectsComponent,
     PageNotFoundComponent,
-    AreaInformationComponent,
     ItemComponent,
     ItemContainerComponent,
     RelatedItemsComponent,
-    HomeScreenComponent,
     ItemHeaderComponent,
     FooterComponent,
     ItemLinksComponent,
@@ -194,7 +182,6 @@ export const appRoutes = [
     CloseSvgDisabledComponent,
     AreasSvgComponent,
     BackBlackSvgComponent,
-    TitleHeaderComponent,
     ItemHeaderImageComponent,
     CloseWhiteSvgComponent,
     KeyboardArrowBackSvgComponent,
@@ -208,9 +195,6 @@ export const appRoutes = [
     ItemSelectComponent,
     DatePickerSvgComponent,
     TypesComponent,
-    SearchFilterComponent,
-    CurrentFiltersComponent,
-    AreaSelectorMobileComponent,
     SubmitDspaceComponent,
     AreaOptionsComponent,
     AreaBannerComponent,
