@@ -2,7 +2,7 @@
 
   <mat-nav-list #areaSelectionList class="area-selection">
     <mat-list-item *ngFor="let area of filter.areas;" [ngClass]="{'highlight': isSelected(area.id)}" class="nav-link local-navigation"
-         (click)="onAreaListControlChanged(areaSelectionList, area.id)">
+         (click)="onAreaListControlChanged(area.id)">
         {{area.name}}
     </mat-list-item>
   </mat-nav-list>

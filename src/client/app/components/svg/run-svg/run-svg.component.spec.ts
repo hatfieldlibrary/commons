@@ -14,8 +14,7 @@ describe('RunSvgComponent', () => {
       declarations: [RunSvgComponent],
       imports: [MatIconModule, HttpClientModule],
       providers: []
-    })
-      .compileComponents();
+    });
   }));
 
   beforeEach(() => {
@@ -24,7 +23,7 @@ describe('RunSvgComponent', () => {
     iconRegistry.addSvgIcon('run', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_directions_run_black_24px.svg'));
     fixture = TestBed.createComponent(RunSvgComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should be created', () => {

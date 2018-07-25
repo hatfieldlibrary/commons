@@ -46,10 +46,9 @@ export class AreaOptionsComponent {
 
   /**
    * Handles area selection event.
-   * @param {MatSelectionList} list
    * @param {number} areaId
    */
-  onAreaListControlChanged(list: MatNavList, areaId: number) {
+  onAreaListControlChanged(areaId: number) {
     const updatedArea = this.filterService.updateSelectSingleAreaStore(this.filter.areas, areaId);
     const selectedEmitted: SelectedAreaEvent = {selected: updatedArea};
     // Reset the scroll position.

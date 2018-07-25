@@ -11,23 +11,18 @@ describe('SearchSvgComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        SearchSvgComponent,
-      ],
-      imports: [
-        MatIconModule, HttpClientModule
-      ]
-    })
-      .compileComponents();
+      declarations: [SearchSvgComponent],
+      imports: [MatIconModule, HttpClientModule]
+    });
   }));
 
   beforeEach(() => {
     const iconRegistry = TestBed.get(MatIconRegistry);
     const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_black_24px.svg'));
+    iconRegistry.addSvgIcon('search', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_search_white_24px.svg'));
     fixture = TestBed.createComponent(SearchSvgComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

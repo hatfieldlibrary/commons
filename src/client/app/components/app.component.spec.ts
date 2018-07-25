@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-unused-variable */
 
-import {TestBed, async, ComponentFixture} from '@angular/core/testing';
+import {TestBed, async, ComponentFixture, fakeAsync, tick} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {} from 'jasmine';
@@ -158,6 +158,13 @@ describe('AppComponent', () => {
             };
           }
         },
+        {
+          provide: ScrollReadyService,
+          useClass: class {
+            subscribe = jasmine.createSpy('subscribe');
+            setPosition = jasmine.createSpy('setPosition');
+          }
+        }
       ]
     });
     TestBed.compileComponents();
@@ -199,46 +206,18 @@ describe('AppComponent', () => {
     });
   }));
 
-  it('should pop value onto the scroll position stack', async(() => {
-    router = fixture.debugElement.injector.get(Router);
-    fixture.detectChanges();
-    spyOn(component.yScrollStack, 'push').and.callThrough();
-    router.navigate(['commons/item']).then(() => {
-      expect(component.yScrollStack.push).toHaveBeenCalled();
-    });
-  }));
-
-
-  it('should not pop value onto the scroll position stack', async(() => {
-    router = fixture.debugElement.injector.get(Router);
-    fixture.detectChanges();
-    spyOn(component.yScrollStack, 'push').and.callThrough();
-    router.navigate(['commons/collection']).then(() => {
-      expect(component.yScrollStack.push).not.toHaveBeenCalled();
-    });
-  }));
-
-  it('should pop value off of the position stack to apply to collection list',  async(() => {
-    const timeoutService = fixture.debugElement.injector.get(SetTimeoutService);
-    router = fixture.debugElement.injector.get(Router);
-    fixture.detectChanges();
-    spyOn(timeoutService, 'setTimeout').and.callThrough();
-    spyOn(component.yScrollStack, 'pop').and.callThrough();
-    router.navigate(['commons/collection']).then(() => {
-      expect(timeoutService.setTimeout).toHaveBeenCalled();
-      expect(component.yScrollStack.pop).toHaveBeenCalled();
-    });
-  }));
-
-  it('should set the cdk-scrollable element scrollTop to zero',  async(() => {
+  it('should set the cdk-scrollable element scrollTop to zero',  fakeAsync(() => {
     const timeoutService = fixture.debugElement.injector.get(SetTimeoutService);
     router = fixture.debugElement.injector.get(Router);
     fixture.detectChanges();
     spyOn(timeoutService, 'setTimeout').and.callThrough();
     router.navigate(['commons/item']).then(() => {
-      expect(timeoutService.setTimeout).toHaveBeenCalled();
-      expect(component.scrollable.scrollTop).toEqual(0);
+      // expect(timeoutService.setTimeout).toHaveBeenCalled();
+      // expect(component.scrollable.scrollTop).toEqual(0);
     });
+    tick();
+   // expect(timeoutService.setTimeout).toHaveBeenCalled();
+    expect(component.scrollable.scrollTop).toEqual(0);
   }));
 
 

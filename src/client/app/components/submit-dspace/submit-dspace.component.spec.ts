@@ -19,6 +19,9 @@ import {StoreModule} from '@ngrx/store';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {DispatchService} from '../../services/dispatch.service';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
+import {Observable} from 'rxjs/index';
+import {ObservableMedia} from '@angular/flex-layout';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('SubmitDspaceComponent', () => {
   let component: SubmitDspaceComponent;
@@ -34,6 +37,7 @@ describe('SubmitDspaceComponent', () => {
         HomeSvgComponent,
         MenuSvgComponent],
       imports: [
+        HttpClientModule,
         MatListModule,
         MatTooltipModule,
         MatCardModule,
@@ -45,7 +49,17 @@ describe('SubmitDspaceComponent', () => {
       providers: [
         NavigationServiceB,
         DispatchService,
-        MenuInteractionService
+        MenuInteractionService,
+        {
+          provide: ObservableMedia,
+          useValue: {
+            asObservable: () => {
+              return new Observable<any>();
+            },
+            isActive: () => {
+            }
+          }
+        },
       ]
     });
   }));

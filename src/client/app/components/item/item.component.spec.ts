@@ -134,7 +134,8 @@ describe('ItemComponent', () => {
           useValue: {
             getBackLink: () => {
               return 'test link'
-            }
+            },
+            getIds: () => {}
           }
         },
         {
@@ -157,15 +158,14 @@ describe('ItemComponent', () => {
         },
 
       ]
-    })
-      .compileComponents();
+    });
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemComponent);
     component = fixture.componentInstance;
     searchSvc = fixture.debugElement.injector.get(SearchService);
-  //  utilSvc = fixture.debugElement.injector.get(UtilitiesService);
+    utilSvc = fixture.debugElement.injector.get(NavigationServiceB);
     spyOn(searchSvc, 'getOptionsList').and.callThrough();
     spyOn(utilSvc, 'getBackLink').and.callThrough();
   });

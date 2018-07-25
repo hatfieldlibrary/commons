@@ -1,5 +1,3 @@
-
-
 import {Injectable} from '@angular/core';
 import {SetAreaFilter, SetGroupFilter, SetSubjectFilter, SetTypeFilter} from '../../actions/filter.actions';
 import * as fromRoot from '../../reducers';
@@ -22,7 +20,8 @@ export class FilterUpdateServiceB {
   private SUBJECT_KEY = 'subjects';
   private GROUP_KEY = 'groups';
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>) {
+  }
 
   removeSelectedAreaFilter(): void {
     this.store.dispatch(new SetSubjectFilter([{id: 0, name: ''}]));
@@ -35,9 +34,9 @@ export class FilterUpdateServiceB {
    * @param {number} areaId the selected area
    * @returns {AreaFilterType[]} the updated list of selected areas.
    */
-   updateSelectedAreaStore(selectedAreas: FieldFilterType[], areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
-     this.selectedAreas = selectedAreas;
-     this.areaList = areaList;
+  updateSelectedAreaStore(selectedAreas: FieldFilterType[], areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
+    this.selectedAreas = selectedAreas;
+    this.areaList = areaList;
     // Get area filter information for the selected areaId.
     const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
     if (selectedArea) {
@@ -50,8 +49,15 @@ export class FilterUpdateServiceB {
     }
   }
 
-  updateSelectSingleAreaStore( areaList: FieldFilterType[], areaId: number): FieldFilterType[]  {
-     this.areaList = areaList;
+  /**
+   * First retrieve the selected area from the field list then update store. Returns
+   * the selected area array (always an array containing a single FieldFilterType object.)
+   * @param {FieldFilterType[]} areaList
+   * @param {number} areaId
+   * @returns {FieldFilterType[]}
+   */
+  updateSelectSingleAreaStore(areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
+    this.areaList = areaList;
     const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
     if (selectedArea) {
       this.store.dispatch(new SetAreaFilter([selectedArea]));
@@ -241,7 +247,7 @@ export class FilterUpdateServiceB {
       return this.selectedAreas.findIndex((current) => current.id === id);
     } else if (type === this.SUBJECT_KEY) {
       return this.selectedSubjects.findIndex((current) => current.id === id);
-    }  else if (type === this.TYPE_KEY) {
+    } else if (type === this.TYPE_KEY) {
       return this.selectedTypes.findIndex((current) => current.id === id);
     } else if (type === this.GROUP_KEY) {
       return this.selectedGroups.findIndex((current) => current.id === id);
@@ -264,7 +270,7 @@ export class FilterUpdateServiceB {
         this.selectedSubjects.shift();
       } else if (type === this.GROUP_KEY) {
         this.selectedGroups.shift();
-      }  else {
+      } else {
         this.selectedTypes.shift();
       }
     }

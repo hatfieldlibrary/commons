@@ -59,11 +59,6 @@ import {SelectedAreaEvent} from './area-options/area-options.component';
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   watcher: Subscription;
-  // areaFilter$: Observable<AreasFilter>;
-  // selectedAreas: string;
-  // selectedTypes: string;
-  // selectedSubject: string;
-  // selectedGroup: string;
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
   tertiaryUrl = 'http://www.willamette.edu';
@@ -72,15 +67,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   scrollable: Element;
   state = '';
-  /**
-   * The y scroll stack tracks the top of the collection view
-   * element.  The measurement is obtained from the bounding
-   * client rectangle of the #appContent child view and is used
-   * to set the scrollTop for the scrollable div (cdk-scrollable)
-   * created by the mdSidenavContainer directive (Angular Material).
-   * @type {Array}
-   */
-  yScrollStack: number[] = [];
 
   constructor(private store: Store<fromRoot.State>,
               private menuService: MenuInteractionService,
@@ -115,31 +101,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     document.location.href = this.tertiaryUrl;
   }
 
-  // areaNavigation(updatedAreaList: SelectedAreaEvent): void {
-  //   this.sideNavigate.close();
-  //   const areaIds = this.navigation.getIds(updatedAreaList.selected);
-  //   this.navigation.navigateFilterRoute(areaIds, this.selectedTypes, this.selectedSubject, this.selectedGroup);
-  // }
-
   ngOnInit() {
-
-    // const areaList = this.store.select(fromRoot.getAreas);
-    // const areaFilters = this.store.select(fromRoot.getAreasFilter);
-    // this.areaFilter$ = Observable.combineLatest(
-    //   areaList,
-    //   areaFilters,
-    //   (areas, selected) => {
-    //     this.selectedAreas = this.navigation.getIds(areas);
-    //     return {
-    //       areas: areas,
-    //       selectedAreas: selected
-    //     }
-    //   }
-    // );
-    // const typeQuery: Subscription = this.store.select(fromRoot.getTypesFilter).subscribe(
-    //   types => this.selectedTypes = this.navigation.getIds(types),
-    //   err => console.log(err));
-    // this.watcher.add(typeQuery);
 
     const openWatcher = this.menuService.openMenu$.subscribe(open => {
       this.sideNavigate.open().catch((err) => {
@@ -172,7 +134,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           if (!event.url.match(/\/commons\/collection/)) {
             // Get absolute value fo the bounding rectangle for #app-content.
             const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
-            this.logger.info('Bounding rectangle: ' + top);
+            // this.logger.info('Bounding rectangle: ' + top);
             this.scrollReady.setPosition(top);
             this.scrollable.scrollTop = 0;
           }

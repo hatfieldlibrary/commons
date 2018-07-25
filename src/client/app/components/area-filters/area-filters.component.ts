@@ -60,7 +60,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
         this.isMobile = false;
       }
     });
-    console.log(this.watcher)
   }
 
   /**
@@ -84,7 +83,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
 
   private updateGroupFilter(): void {
     const updatedGroups = [];
-    console.log(this.groups)
     if (this.groups.groups && this.groups.groups.length > 0) {
       this.filters.selectedGroups.forEach(grp => {
         if (grp.id !== 0) {

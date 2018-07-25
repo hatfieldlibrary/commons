@@ -86,7 +86,6 @@ export function reducer(state = initialState, action: FilterActions): State {
 
     case FilterActionTypes.REMOVE_SELECTED_TYPE: {
       const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
-      console.log(action.payload)
       return Object.assign({}, state, {
         removedTypes: result
       });
