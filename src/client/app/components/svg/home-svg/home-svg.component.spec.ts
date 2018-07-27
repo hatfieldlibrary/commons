@@ -15,14 +15,10 @@ describe('HomeSvgComponent', () => {
       imports: [
         MatIconModule, HttpClientModule
       ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('home', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_white_24px.svg'));
     fixture = TestBed.createComponent(HomeSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

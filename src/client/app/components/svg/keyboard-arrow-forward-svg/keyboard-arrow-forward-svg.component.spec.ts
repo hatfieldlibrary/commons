@@ -18,9 +18,6 @@ describe('KeyboardArrowForwardSvgComponent', () => {
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('keyboard-forward', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_keyboard_arrow_right_black_48px.svg'));
     fixture = TestBed.createComponent(KeyboardArrowForwardSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

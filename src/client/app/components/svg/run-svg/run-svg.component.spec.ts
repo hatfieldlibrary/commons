@@ -18,12 +18,9 @@ describe('RunSvgComponent', () => {
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('run', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_directions_run_black_24px.svg'));
     fixture = TestBed.createComponent(RunSvgComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
   it('should be created', () => {

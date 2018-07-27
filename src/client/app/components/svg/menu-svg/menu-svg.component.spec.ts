@@ -15,14 +15,10 @@ describe('MenuSvgComponent', () => {
       imports: [
         MatIconModule, HttpClientModule
     ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('menu', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_menu_white_24px.svg'));
     fixture = TestBed.createComponent(MenuSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

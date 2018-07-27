@@ -18,14 +18,10 @@ describe('AreasSvgComponent', () => {
       ],
       providers: [
       ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('areas', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_subject_white_24px.svg'));
     fixture = TestBed.createComponent(AreasSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

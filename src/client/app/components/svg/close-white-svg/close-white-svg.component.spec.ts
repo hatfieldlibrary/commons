@@ -17,11 +17,9 @@ describe('CloseWhiteSvgComponent', () => {
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('back-black', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_close_white_16px.svg'));
     fixture = TestBed.createComponent(CloseWhiteSvgComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should be created', () => {

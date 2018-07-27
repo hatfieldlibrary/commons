@@ -12,8 +12,7 @@ describe('ViewListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ViewListComponent ],
       imports: [MatIconModule, HttpClientModule]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {

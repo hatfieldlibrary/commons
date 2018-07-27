@@ -12,8 +12,7 @@ describe('ViewGridComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ViewGridComponent ],
       imports: [MatIconModule, HttpClientModule]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
@@ -22,7 +21,7 @@ describe('ViewGridComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 });

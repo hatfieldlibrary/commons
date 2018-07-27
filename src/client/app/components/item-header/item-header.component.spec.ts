@@ -7,14 +7,12 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatDividerModule,
-  MatIcon,
   MatIconModule,
   MatSidenavModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {BackSvgComponent} from '../svg/back-svg/back-svg.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {AppMenusComponent} from '../apps-menu/app-menus.component';
 import {HomeSvgComponent} from '../svg/home-svg/home-svg.component';
 import {CollectionsSvgComponent} from '../svg/collections-svg/collections-svg.component';
 import {ItemHeaderImageComponent} from '../item-header-image/item-header-image.component';
@@ -22,7 +20,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HomeBlackSvgComponent} from '../svg/home-black-svg/home-black-svg.component';
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Observable} from 'rxjs/Observable';
 
 describe('ItemHeaderComponent', () => {
   let component: ItemHeaderComponent;
@@ -40,7 +37,6 @@ describe('ItemHeaderComponent', () => {
         CollectionsSvgComponent,
         CloseSvgComponent,
         BackSvgComponent,
-        AppMenusComponent,
         BackSvgComponent,
         MenuSvgComponent
       ],
@@ -59,14 +55,13 @@ describe('ItemHeaderComponent', () => {
         FlexLayoutModule
       ],
       providers: []
-    })
-      .compileComponents();
+    });
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemHeaderComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
     media = fixture.debugElement.injector.get(ObservableMedia);
 
   });
