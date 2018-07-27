@@ -50,7 +50,7 @@ describe('RelatedItemsComponent', () => {
     component = fixture.componentInstance;
     component.related = [];
     component.columns = 2;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

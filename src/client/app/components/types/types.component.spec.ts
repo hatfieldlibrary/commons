@@ -3,8 +3,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TypesComponent } from './types.component';
 import {MatListModule, MatSelectionList} from '@angular/material';
 import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
-import {StoreModule} from '@ngrx/store';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Action, Store} from '@ngrx/store';
+import {Subject} from 'rxjs/Subject';
+import {mockStore} from '../../shared/test/mock-store';
+
 
 describe('TypesComponent', () => {
   let component: TypesComponent;
@@ -16,20 +19,25 @@ describe('TypesComponent', () => {
   };
 
   beforeEach(async(() => {
+    const actions = new Subject<Action>();
+    const states = new Subject<any>();
+    const appStore = mockStore<any>({ actions, states });
     TestBed.configureTestingModule({
       declarations: [ TypesComponent],
-      imports: [MatListModule, BrowserAnimationsModule, StoreModule.forRoot({})],
-      providers: [FilterUpdateServiceB
-      ]
-    })
-    .compileComponents();
+      imports: [MatListModule, BrowserAnimationsModule],
+      providers: [FilterUpdateServiceB,
+        {
+          provide: Store,
+          useValue: appStore
+        }]
+    });
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TypesComponent);
     component = fixture.componentInstance;
     component.filter = mockTypesFilter;
-    fixture.detectChanges();
+   // fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -99,15 +99,14 @@ describe('AppMenusComponent', () => {
           useClass: MockRouter
         }
       ]
-    })
-      .compileComponents();
+    });
   }));
 
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppMenusComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
     utilSvc = fixture.debugElement.injector.get(NavigationServiceB);
     spyOn(utilSvc, 'getBackLink').and.callThrough();
 

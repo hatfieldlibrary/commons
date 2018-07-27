@@ -13,14 +13,10 @@ describe('FilterSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ FilterSvgComponent ],
       imports: [MatIconModule, HttpClientModule]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('filter-icon', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_filter_list_black_24px.svg'));
     fixture = TestBed.createComponent(FilterSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

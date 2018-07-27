@@ -20,9 +20,9 @@ import {
   Component, Input, OnDestroy, OnInit
 } from '@angular/core';
 
-import {ItemType} from "../../shared/data-types/item.type";
-import {MediaChange, ObservableMedia} from "@angular/flex-layout";
-import {Subscription} from "rxjs/Subscription";
+import {ItemType} from '../../shared/data-types/item.type';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-item-header',
@@ -31,7 +31,6 @@ import {Subscription} from "rxjs/Subscription";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemHeaderComponent implements OnInit, OnDestroy {
-
 
   @Input() item: ItemType;
   watcher: Subscription;

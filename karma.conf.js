@@ -25,11 +25,12 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-firefox-launcher'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-scss-preprocessor'),
-    //  require('karma-phantomjs-launcher'),
-      require('jasmine-console-reporter'),
+      //require('karma-scss-preprocessor'),
+     // require('karma-phantomjs-launcher'),
+    //  require('jasmine-console-reporter'),
     //  require('karma-spec-reporter')
     ],
     // Use the files and preprocessor settings in angular.json
@@ -56,8 +57,8 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
+    autoWatch: false,
     browsers: ['Chrome'],
-    singleRun: false
+    singleRun: true
   });
 };

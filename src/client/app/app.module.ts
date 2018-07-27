@@ -37,7 +37,6 @@ import {AppComponent} from './components/app.component';
 import {ListsContainerComponent} from './containers/lists-container/lists-container.component';
 import {ItemComponent} from './components/item/item.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
-import {SubjectsComponent} from './components/subject-selector/subjects.component';
 import {CollectionService} from './services/collection.service';
 import {AreaService} from './services/area.service';
 import {AreaEffects} from './effects/area.effects';
@@ -166,7 +165,6 @@ export const appRoutes = [
     CloseSvgComponent,
     AppComponent,
     ListsContainerComponent,
-    SubjectsComponent,
     PageNotFoundComponent,
     ItemComponent,
     ItemContainerComponent,

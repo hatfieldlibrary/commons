@@ -15,14 +15,10 @@ describe('LockSvgComponent', () => {
       imports: [
         MatIconModule, HttpClientModule
       ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('lock', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_https_black_24px.svg'));
     fixture = TestBed.createComponent(LockSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
