@@ -35,37 +35,21 @@ export const CollectionActionTypes = {
   SET_FILTER: type('[Collections] Set Collection Filter'),
   CLEAR_FILTER: type('[Collections] Clear Collection Filter'),
   LIST_ALL_ACTION: type('[Collections] List all Collections'),
-//  LIST_ALL_SUCCESS_ACTION: type('[Collections] List all Collections Success'),
   LIST_BY_AREA: type('[Collections] Search by AreaType'),
-//  LIST_BY_AREA_SUCCESS: type('[Collections] AreaType Collections'),
   LIST_BY_SUBJECT: type('[Collections] All Collections by Subject'),
-//  LIST_BY_SUBJECT_SUCCESS: type('[Collections] All Collections by Subject Success'),
   LIST_BY_SUBJECT_AREA: type('[Collections] Search by SubjectType'),
-//  LIST_BY_SUBJECT_AREA_SUCCESS: type('[Collections] SubjectType Collections'),
   LIST_BY_TYPE: type('[Collections] Collections by Type'),
   LIST_BY_TYPE_AREA: type('[Collections] Collections by Type Area'),
   LIST_BY_TYPE_AREA_SUBJECT: type('[Collections] Collection by Type Area Subject'),
-//  LIST_BY_TYPE_SUCCESS: type('[Collections] Collections by Type Success'),
-//  LIST_BY_TYPE_AREA_SUCCESS: type('[Collections] Collections by Type Area Success'),
   LIST_BY_TYPE_SUBJECT: type('[Collections] Collections by Type Subject'),
-//  LIST_BY_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Type Subject Success'),
- // LIST_BY_TYPE_AREA_SUBJECT_SUCCESS: type('[Collections] Collections by Type Area Subject Success'),
   LIST_BY_CATEGORY: type('[Collections] Collections by Category'),
-//  LIST_BY_CATEGORY_SUCCESS: type('[Collections] Collections by Category Success'),
   LIST_BY_CATEGORY_TYPE: type('[Collections] Search by Category Type'),
-//  LIST_BY_CATEGORY_TYPE_SUCCESS: type('[Collections] Collections by Category Type Success'),
   LIST_BY_CATEGORY_SUBJECT: type('[Collections] Search by Category Subject'),
-//  LIST_BY_CATEGORY_SUBJECT_SUCCESS: type('[Collections] Collections by Category Subject Success'),
   LIST_BY_CATEGORY_AREA: type('[Collections] Search by Category Area'),
- // LIST_BY_CATEGORY_AREA_SUCCESS: type('[Collections] Search by Category Area Success'),
   LIST_BY_CATEGORY_AREA_TYPE: type('[Collections] Category Area Type'),
- // LIST_BY_CATEGORY_AREA_TYPE_SUCCESS: type('[Collections] Collections by Category Area Type Success'),
   LIST_BY_CATEGORY_AREA_SUBJECT: type('[Collections] Category Area Subject'),
-//  LIST_BY_CATEGORY_AREA_SUBJECT_SUCCESS: type('[Collections] Collections by Category Area Subject Success'),
   LIST_BY_CATEGORY_TYPE_SUBJECT: type('[Collections] Category Type Subject'),
-//  LIST_BY_CATEGORY_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Category Type Subject Success'),
   LIST_BY_CATEGORY_AREA_TYPE_SUBJECT: type('[Collections] Category Area Type Subject'),
-//  LIST_BY_CATEGORY_AREA_TYPE_SUBJECT_SUCCESS: type('[Collections] Collections by Area Category Type Subject Success'),
   LIST_RESET: type('[Collections] Reset the Collection List to Empty'),
   REQUEST_FAILED: type('[Collections] Search Failed'),
   COLLECTION_ACTION_SUCCESS: type('[Collections] Request successfult')
@@ -113,14 +97,6 @@ export class AllCollectionsAction implements Action {
 
 }
 
-// export class AllCollectionsActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_ALL_SUCCESS_ACTION;
-//
-//   constructor(public payload: CollectionType[]) {
-//   }
-//
-// }
-
 export class CollectionsAreaAction implements Action {
   type = CollectionActionTypes.LIST_BY_AREA;
 
@@ -129,43 +105,12 @@ export class CollectionsAreaAction implements Action {
 
 }
 
-// export class CollectionsAreaActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_AREA_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
-
 export class CollectionsSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_SUBJECT;
 
   constructor(public payload: string) {
   }
 }
-
-// export class CollectionsSubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_SUBJECT_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
-
-
-// export class CollectionsAreaSubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_SUBJECT_AREA_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
 
 export class CollectionsAreaSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_SUBJECT_AREA;
@@ -195,15 +140,6 @@ export class CollectionsCategoryAction implements Action {
   }
 }
 
-// export class CollectionsCategoryActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-// }
-
 export class CollectionsCategoryAreaAction implements Action {
   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA;
   payload: IdentifersPayload;
@@ -217,15 +153,6 @@ export class CollectionsCategoryAreaAction implements Action {
     }
   }
 }
-
-// export class CollectionsCategoryAreaActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-// }
 
 export class CollectionsCategoryTypeAction implements Action {
   type = CollectionActionTypes.LIST_BY_SUBJECT_AREA;
@@ -241,15 +168,6 @@ export class CollectionsCategoryTypeAction implements Action {
   }
 }
 
-// export class CollectionsCategoryTypeActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-// }
-
 export class CollectionsCategoryAreaTypeAction implements Action {
   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE;
   payload: IdentifersPayload;
@@ -263,16 +181,6 @@ export class CollectionsCategoryAreaTypeAction implements Action {
     }
   }
 }
-
-// export class CollectionsCategoryAreaTypeActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
 
 export class CollectionsCategoryAreaSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_SUBJECT;
@@ -288,16 +196,6 @@ export class CollectionsCategoryAreaSubjectAction implements Action {
   }
 }
 
-// export class CollectionsCategoryAreaSubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_SUBJECT_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
-
 export class CollectionsCategorySubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_CATEGORY_SUBJECT;
   payload: IdentifersPayload;
@@ -311,16 +209,6 @@ export class CollectionsCategorySubjectAction implements Action {
     }
   }
 }
-
-// export class CollectionsCategorySubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_SUBJECT_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
 
 export class CollectionsCategoryTypeSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUBJECT;
@@ -336,16 +224,6 @@ export class CollectionsCategoryTypeSubjectAction implements Action {
   }
 }
 
-// export class CollectionsCategoryTypeSubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE_SUBJECT_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
-
 export class CollectionsCategoryAreaTypeSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUBJECT;
   payload: IdentifersPayload;
@@ -360,16 +238,6 @@ export class CollectionsCategoryAreaTypeSubjectAction implements Action {
   }
 }
 
-// export class CollectionsCategoryAreaTypeSubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_CATEGORY_AREA_TYPE_SUBJECT_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
-
 export class CollectionsTypeAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE;
 
@@ -377,17 +245,6 @@ export class CollectionsTypeAction implements Action {
 
   }
 }
-
-// export class CollectionsTypeActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_TYPE_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
-
 export class CollectionsTypeAreaAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_AREA;
 
@@ -395,16 +252,6 @@ export class CollectionsTypeAreaAction implements Action {
 
   }
 }
-
-// export class CollectionsTypeAreaActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
 
 export class CollectionsTypeSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT;
@@ -414,16 +261,6 @@ export class CollectionsTypeSubjectAction implements Action {
   }
 }
 
-// export class CollectionsTypeSubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
-
 export class CollectionsTypeAreaSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT;
 
@@ -431,16 +268,6 @@ export class CollectionsTypeAreaSubjectAction implements Action {
 
   }
 }
-
-// export class CollectionsTypeAreaSubjectActionSuccess implements Action {
-//   type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT_SUCCESS;
-//   payload: CollectionType[];
-//
-//   constructor(searchResult: CollectionType[]) {
-//     this.payload = searchResult;
-//   }
-//
-// }
 
 export class CollectionActionFailed implements Action {
   type = CollectionActionTypes.REQUEST_FAILED;
@@ -457,24 +284,14 @@ export class CollectionActionFailed implements Action {
 export type CollectionActions =
   CollectionsActionSuccess |
   CollectionsAreaAction |
-//  CollectionsAreaActionSuccess |
   CollectionReset |
   AllCollectionsAction |
-//  AllCollectionsActionSuccess |
   CollectionsSubjectAction |
-//  CollectionsSubjectActionSuccess |
   CollectionsAreaSubjectAction |
-//  CollectionsAreaSubjectActionSuccess |
   CollectionsTypeAction |
-//  CollectionsTypeActionSuccess |
   CollectionsTypeAreaAction |
-//  CollectionsTypeAreaActionSuccess |
   CollectionsTypeSubjectAction |
-//  CollectionsTypeSubjectActionSuccess |
   CollectionsTypeAreaSubjectAction |
-//  CollectionsTypeAreaSubjectActionSuccess |
   CollectionsCategoryAreaTypeAction |
-//  CollectionsCategoryTypeActionSuccess |
   CollectionsCategoryAreaAction |
- // CollectionsCategoryAreaActionSuccess |
   CollectionActionFailed;

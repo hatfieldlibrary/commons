@@ -1,9 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ItemHeaderImageComponent} from './item-header-image.component';
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {DomSanitizer} from "@angular/platform-browser";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {DomSanitizer} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ItemHeaderImageComponent', () => {
   let component: ItemHeaderImageComponent;
@@ -33,6 +33,10 @@ describe('ItemHeaderImageComponent', () => {
     })
       .compileComponents();
   }));
+
+  beforeAll(() => {
+    window.onbeforeunload = () => 'Oh no!';
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemHeaderImageComponent);
@@ -68,7 +72,7 @@ describe('ItemHeaderImageComponent', () => {
   });
 
   it('should use current image', () => {
-    spyOn(sanitizer,'sanitize').and.callThrough();
+    spyOn(sanitizer, 'sanitize').and.callThrough();
     component.isMobile = false;
     component.image = 'imageone';
     component.currentImage = 'imageone';

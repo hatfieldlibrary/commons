@@ -350,7 +350,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.setQueryParams(params);
         this.updateSelected(params);
         this.initializeAreas();
-        this.areaScreen = this.navigation.isAreaSelected(params['areaId']);
+        this.areaScreen = this.navigation.isFieldSelected(params['areaId']);
         this.dispatchService.dispatchActions(
           params['areaId'],
           params['typeId'],

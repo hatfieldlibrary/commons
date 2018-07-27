@@ -69,7 +69,7 @@ export class NavigationServiceB {
    * @param {any[]} list list of filters
    * @returns {string}
    */
-  getIds(list: any[]): string {
+  getIds(list: FieldFilterType[]): string {
     // do runtime check of the list shape.
     if (this.isIllegalType(list)) {
       throw new Error('Illegal type: The Array must contain objects that have an id field.');
@@ -301,30 +301,29 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ], queryParams);
-    } else if (this.isTypeSelected(fields.typeId)) {
+    } else if (this.isFieldSelected(fields.typeId)) {
       this.router.navigate(['/', this.urlRootPath, 'collection', 'type', typeId], queryParams);
-    } else if (this.isAreaSelected(areaId)) {
+    } else if (this.isFieldSelected(areaId)) {
       this.router.navigate(['/', this.urlRootPath, 'collection', 'area', areaId], queryParams);
-    } else if (this.isSubjectSelected(fields.subjectId)) {
+    } else if (this.isFieldSelected(fields.subjectId)) {
       this.router.navigate(['/', this.urlRootPath, 'collection', 'subject', subjectId], queryParams);
     } else {
       this.router.navigate(['/', this.urlRootPath, 'collection'], queryParams);
     }
   }
 
-  public isAreaSelected(areaId: string): boolean {
-    return (typeof areaId !== 'undefined') && (areaId.length > 0) && (areaId !== '0');
-  }
-
-  // TODO Review conditions for next 3 methods... can we get by with less?
-
-  public isSubjectSelected(subjectId: string): boolean {
-    return (typeof subjectId !== 'undefined') && (subjectId !== null) && (subjectId.length) !== 0 && (subjectId !== '0');
-  }
-
-  public isTypeSelected(typeId: string): boolean {
-    return (typeof typeId !== 'undefined') && (typeId !== null) && (typeId.length) !== 0 && (typeId !== '0');
-  }
+  // public isAreaSelected(areaId: string): boolean {
+  //   return (typeof areaId !== 'undefined') && (areaId.length > 0) && (areaId !== '0');
+  // }
+  //
+  //
+  // public isSubjectSelected(subjectId: string): boolean {
+  //   return (typeof subjectId !== 'undefined') && (subjectId !== null) && (subjectId.length) !== 0 && (subjectId !== '0');
+  // }
+  //
+  // public isTypeSelected(typeId: string): boolean {
+  //   return (typeof typeId !== 'undefined') && (typeId !== null) && (typeId.length) !== 0 && (typeId !== '0');
+  // }
 
   public isFieldSelected(id: string): boolean {
     return (typeof id !== 'undefined') && (id !== null) && (id.length) !== 0 && (id !== '0');
@@ -334,22 +333,22 @@ export class NavigationServiceB {
                                selectedGroup: string,
                                selectedSubject: string,
                                selectedTypes: string): string {
-    if (this.isSubjectSelected(selectedSubject) && selectedTypes && selectedGroup) {
+    if (this.isFieldSelected(selectedSubject) && selectedTypes && selectedGroup) {
 
       return this._areaGroupSubjectTypeLink(selectedArea, selectedGroup, selectedSubject, selectedTypes);
     } else if (selectedGroup && selectedTypes) {
 
       return this._areaGroupTypeLink(selectedArea, selectedGroup, selectedTypes);
-    } else if (this.isSubjectSelected(selectedSubject) && selectedGroup) {
+    } else if (this.isFieldSelected(selectedSubject) && selectedGroup) {
 
       return this._areaGroupSubjectLink(selectedArea, selectedGroup, selectedSubject);
-    } else if (this.isSubjectSelected(selectedSubject) && this.isTypeSelected(selectedTypes)) {
+    } else if (this.isFieldSelected(selectedSubject) && this.isFieldSelected(selectedTypes)) {
 
       return this._areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
-    } else if (this.isTypeSelected(selectedTypes)) {
+    } else if (this.isFieldSelected(selectedTypes)) {
 
       return this._areaTypeLink(selectedArea, selectedTypes);
-    } else if (this.isSubjectSelected(selectedSubject)) {
+    } else if (this.isFieldSelected(selectedSubject)) {
       return this._areaSubjectLink(selectedArea, selectedSubject)
     } else if (selectedGroup) {
       return this._areaGroupLink(selectedArea, selectedGroup)
@@ -360,11 +359,11 @@ export class NavigationServiceB {
 
   // currently unused.
   private _handleGlobalBackLinks(selectedSubject: string, selectedGroup: string, selectedTypes: string): string {
-    if (this.isSubjectSelected(selectedSubject) && selectedTypes) {
+    if (this.isFieldSelected(selectedSubject) && selectedTypes) {
       return this._globalSubjectTypeLink(selectedSubject, selectedTypes);
-    } else if (this.isSubjectSelected(selectedSubject)) {
+    } else if (this.isFieldSelected(selectedSubject)) {
       return this._globalSubjectLink(selectedSubject);
-    } else if (this.isTypeSelected(selectedTypes)) {
+    } else if (this.isFieldSelected(selectedTypes)) {
       return this._globalTypeLink(selectedTypes);
     } else {
       return this._globalLink();

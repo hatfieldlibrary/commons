@@ -15,14 +15,10 @@ describe('CloseSvgComponent', () => {
       imports: [
         MatIconModule, HttpClientModule
       ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('close', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_black_24px.svg'));
     fixture = TestBed.createComponent(CloseSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

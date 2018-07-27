@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
@@ -9,12 +9,8 @@ import {MatIconRegistry} from '@angular/material';
   templateUrl: './close-svg.component.html',
   viewProviders: [MatIconRegistry]
 })
-export class CloseSvgComponent implements OnDestroy{
+export class CloseSvgComponent {
 
-  ngOnDestroy(): void {
-    this.iconRegistry = null;
-    this.sanitizer = null;
-  }
   constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'close',

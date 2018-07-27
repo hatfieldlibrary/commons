@@ -64,10 +64,14 @@ describe('ItemSelectComponent', () => {
       .compileComponents();
   }));
 
+  beforeAll(() => {
+    window.onbeforeunload = () => 'Oh no!';
+  });
+
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemSelectComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
     svc = fixture.debugElement.injector.get(SearchService);
 
   });
@@ -88,7 +92,7 @@ describe('ItemSelectComponent', () => {
     spyOn(svc, 'getOptionsList').and.callThrough();
     component.ngOnInit();
     tick();
-    fixture.detectChanges();
+    // fixture.detectChanges();
     expect(svc.getOptionsList).toHaveBeenCalled();
   }));
 

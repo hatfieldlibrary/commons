@@ -98,7 +98,7 @@ describe('AreaBannerComponent', () => {
         id: 0,
         name: ''
       }],
-      removedTypes: [{
+      previousTypes: [{
         id: 0,
         name: ''
       }],

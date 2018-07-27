@@ -206,6 +206,11 @@ describe('ItemContainerComponent', () => {
         SearchService,
         AuthCheckService
       ]
+    }).overrideComponent(AppMenusComponent, {
+      set: {
+        selector: 'app-menus-component',
+        template: `<h6>Area Menu</h6>`
+      }
     });
   }));
 

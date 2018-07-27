@@ -4,6 +4,8 @@ import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
+// TODO: This class can probably be refactored to reduce repetition.
+
 @Injectable()
 export class FilterUpdateServiceB {
 
@@ -34,20 +36,20 @@ export class FilterUpdateServiceB {
    * @param {number} areaId the selected area
    * @returns {AreaFilterType[]} the updated list of selected areas.
    */
-  updateSelectedAreaStore(selectedAreas: FieldFilterType[], areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
-    this.selectedAreas = selectedAreas;
-    this.areaList = areaList;
-    // Get area filter information for the selected areaId.
-    const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
-    if (selectedArea) {
-      this.removeDefaultCollections(this.AREA_KEY);
-      // Update selectedAreas.
-      this.updateSelectedAreas(selectedArea, areaId);
-      // Update the store.
-      this.store.dispatch(new SetAreaFilter(this.selectedAreas));
-      return this.selectedAreas;
-    }
-  }
+  // updateSelectedAreaStore(selectedAreas: FieldFilterType[], areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
+  //   this.selectedAreas = selectedAreas;
+  //   this.areaList = areaList;
+  //   // Get area filter information for the selected areaId.
+  //   const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
+  //   if (selectedArea) {
+  //     this.removeDefaultCollections(this.AREA_KEY);
+  //     // Update selectedAreas.
+  //     this.updateSelectedAreas(selectedArea, areaId);
+  //     // Update the store.
+  //     this.store.dispatch(new SetAreaFilter(this.selectedAreas));
+  //     return this.selectedAreas;
+  //   }
+  // }
 
   /**
    * First retrieve the selected area from the field list then update store. Returns
@@ -127,44 +129,6 @@ export class FilterUpdateServiceB {
     }
   }
 
-  // /**
-  //  * Generates the comma-separated list of ids. The string returned can
-  //  * be empty. This function accepts an array of objects that include
-  //  * an id field. If the id field is missing, an empty string is returned
-  //  * and an illegal type message is logged to console.
-  //  * @param {any[]} list list of filters
-  //  * @returns {string}
-  //  */
-  // getIds(list: any[]): string {
-  //   // do runtime check of the list shape.
-  //   if (this.isIllegalType(list)) {
-  //     throw new Error('Illegal type: The Array must contain objects that have an id field.');
-  //   }
-  //   let ids = '';
-  //   if (typeof list !== 'undefined' && typeof list[0] !== 'undefined') {
-  //     list.forEach(item => {
-  //       ids = ids + item.id + ','
-  //     });
-  //   }
-  //   return ids.slice(0, -1);
-  // }
-  //
-  // /**
-  //  * Verifies that the request is an array of objects that
-  //  * include and id field. All filter types must include an
-  //  * id (AreaFilterTypes, TypesFilterType, SubjectFilterType).
-  //  * These objects to not have an identical shape, to all do
-  //  * include the id field.
-  //  * @param list the list of objects
-  //  * @returns {boolean}
-  //  */
-  // private isIllegalType(list) {
-  //   if (list.length > 0) {
-  //     return typeof list[0].id === 'undefined';
-  //   }
-  //   return false;
-  // }
-
   /**
    * Update selected types.
    * @param {TypesFilterType} selectedType
@@ -218,7 +182,7 @@ export class FilterUpdateServiceB {
   /**
    * Gets the area list item with the provided id from the list of all areas.
    * @param {number} areaId the id of the area to retrieve
-   * @returns {AreaFilterType}
+   * @returns {FieldFilterType}
    */
   private getSelectedAreaObject(areaId: number): FieldFilterType {
     return this.areaList.find((current) => current.id === areaId);
@@ -257,9 +221,8 @@ export class FilterUpdateServiceB {
   }
 
   /**
-   * Removes the all collections area (id: 0) from selectedAreas
-   * (if it is present). The collection with 0 id will always be
-   * present when no collection filter is currently selected.
+   * The removes any Fields with id of zero.
+   * TODO: Review whether this function still has a purpose.
    */
   private removeDefaultCollections(type: string): void {
     const zeroIndex = this.getPositionInSelectedList(0, type);

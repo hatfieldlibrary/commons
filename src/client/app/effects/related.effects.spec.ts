@@ -73,7 +73,7 @@ describe('Related Items Effect', () => {
   });
 
 
-  it('should return error action action for item request', () => {
+  it('should return error action action for related request', () => {
 
     spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return ErrorObservable.create('test') });
     const startAction = new ItemActionRelated('1', '1,2');

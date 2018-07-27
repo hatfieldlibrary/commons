@@ -69,7 +69,7 @@ export class Configuration implements AppConfig {
       ssoBaseURL: credentials.ssoBaseURL,
       validateURL: credentials.validateURL,
       authPath: '/auth',
-      authCheck: '/check',
+      authCheck: '/',
       nodeEnv: env
     },
 

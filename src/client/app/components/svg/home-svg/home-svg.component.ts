@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -7,12 +7,7 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './home-svg.component.html',
   styleUrls: ['./home-svg.component.css']
 })
-export class HomeSvgComponent implements OnDestroy{
-
-  ngOnDestroy(): void {
-    this.iconRegistry = null;
-    this.sanitizer = null;
-  }
+export class HomeSvgComponent {
 
   constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
