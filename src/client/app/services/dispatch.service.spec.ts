@@ -1,30 +1,17 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { DispatchService } from './dispatch.service';
-import {Action, StateObservable, Store} from '@ngrx/store';
+import {Action, Store} from '@ngrx/store';
 import {NavigationServiceB} from './navigation-2/navigation.service';
-import * as fromRoot from '../reducers';
 import {Subject} from 'rxjs/Subject';
 import {Router} from '@angular/router';
-
-export function mockStore<T>(
-  {
-    actions = new Subject<Action>(),
-    states = new Subject<T>()
-  }: {
-    actions?: Subject<Action>,
-    states?: Subject<T>
-  }): Store<T> {
-  const result = states as any;
-  result.dispatch = (action: Action) => actions.next(action);
-  result.select = () => {return states};
-  return result;
-}
+import {mockStore} from '../shared/test/mock-store';
 
 describe('DispatchService', () => {
 
   let router: Router;
   let store;
+  let navService;
   let service;
   const actions = new Subject<Action>();
   const states = new Subject<any>();
@@ -33,7 +20,7 @@ describe('DispatchService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NavigationServiceB,
+        DispatchService, NavigationServiceB,
         {
           provide: Router,
           useClass: class { navigate = jasmine.createSpy('navigate'); }
@@ -44,14 +31,133 @@ describe('DispatchService', () => {
         }
       ]
     });
-
-    service = TestBed.get(NavigationServiceB)
+    service = TestBed.get(DispatchService);
+    navService = TestBed.get(NavigationServiceB);
     router = TestBed.get(Router);
     store = TestBed.get(Store);
 
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('should dispatch request for type data.', () => {
+    spyOn(service, 'getCollectionsForType');
+    spyOn(service, 'getSubjectsForType');
+    spyOn(service, 'getCollectionGroupsByType');
+    spyOn(service, 'getAllTypes');
+    service.dispatchActions(undefined, '1', undefined, undefined);
+    expect(service.getCollectionsForType).toHaveBeenCalled();
+    expect(service.getSubjectsForType).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByType).toHaveBeenCalled();
+    expect(service.getAllTypes).toHaveBeenCalled();
   });
+
+  it('should dispatch request for subject data.', () => {
+    spyOn(service, 'getCollectionsForSubject');
+    spyOn(service, 'getTypesForSubject');
+    spyOn(service, 'getCollectionGroupsBySubject');
+    spyOn(service, 'getAllSubjects');
+    service.dispatchActions(undefined, undefined, '1', undefined);
+    expect(service.getCollectionsForSubject).toHaveBeenCalled();
+    expect(service.getTypesForSubject).toHaveBeenCalled();
+    expect(service.getCollectionGroupsBySubject).toHaveBeenCalled();
+    expect(service.getAllSubjects).toHaveBeenCalled();
+  });
+
+  it('should dispatch request for area data.', () => {
+    spyOn(service, 'getCollectionsForArea');
+    spyOn(service, 'getTypesForArea');
+    spyOn(service, 'getCollectionGroupsByArea');
+    spyOn(service, 'getSubjectsForArea');
+    service.dispatchActions('1', undefined, undefined, undefined);
+    expect(service.getCollectionsForArea).toHaveBeenCalled();
+    expect(service.getTypesForArea).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByArea).toHaveBeenCalled();
+    expect(service.getSubjectsForArea).toHaveBeenCalled();
+  });
+
+  it('should dispatch request for area and group data.', () => {
+    spyOn(service, 'getCollectionsForCategoryArea');
+    spyOn(service, 'getTypesForAreaGroup');
+    spyOn(service, 'getCollectionGroupsByArea');
+    spyOn(service, 'getSubjectsForAreaGroup');
+    service.dispatchActions('1', undefined, undefined, '1');
+    expect(service.getCollectionsForCategoryArea).toHaveBeenCalled();
+    expect(service.getTypesForAreaGroup).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByArea).toHaveBeenCalled();
+    expect(service.getSubjectsForAreaGroup).toHaveBeenCalled();
+  });
+
+  it('should dispatch request for area and subject data.', () => {
+    spyOn(service, 'getCollectionsForAreaSubject');
+    spyOn(service, 'getTypesForAreaSubject');
+    spyOn(service, 'getCollectionGroupsByAreaSubject');
+    spyOn(service, 'getSubjectsForArea');
+    service.dispatchActions('1', undefined, '1', undefined);
+    expect(service.getCollectionsForAreaSubject).toHaveBeenCalled();
+    expect(service.getTypesForAreaSubject).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByAreaSubject).toHaveBeenCalled();
+    expect(service.getSubjectsForArea).toHaveBeenCalled();
+  });
+
+  it('should dispatch request for area and type data.', () => {
+    spyOn(service, 'getCollectionsForAreaType');
+    spyOn(service, 'getTypesForArea');
+    spyOn(service, 'getCollectionGroupsByAreaType');
+    spyOn(service, 'getSubjectsForAreaType');
+    service.dispatchActions('1', '1', undefined, undefined);
+    expect(service.getCollectionsForAreaType).toHaveBeenCalled();
+    expect(service.getTypesForArea).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByAreaType).toHaveBeenCalled();
+    expect(service.getSubjectsForAreaType).toHaveBeenCalled();
+  });
+
+  it('should dispatch request for area, group, and type data.', () => {
+    spyOn(service, 'getCollectionsForCategoryAreaType');
+    spyOn(service, 'getSubjectsForAreaGroupType');
+    spyOn(service, 'getCollectionGroupsByAreaType');
+    spyOn(service, 'getTypesForAreaGroup');
+    service.dispatchActions('1', '1', undefined, '1');
+    expect(service.getCollectionsForCategoryAreaType).toHaveBeenCalled();
+    expect(service.getSubjectsForAreaGroupType).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByAreaType).toHaveBeenCalled();
+    expect(service.getTypesForAreaGroup).toHaveBeenCalled();
+  });
+
+  it('should dispatch request for area, group, and subject data.', () => {
+    spyOn(service, 'getCollectionsForCategoryAreaSubject');
+    spyOn(service, 'getSubjectsForAreaGroup');
+    spyOn(service, 'getTypesForAreaGroupSubject');
+    spyOn(service, 'getCollectionGroupsByAreaSubject');
+    service.dispatchActions('1', undefined, '1', '1');
+    expect(service.getCollectionsForCategoryAreaSubject).toHaveBeenCalled();
+    expect(service.getSubjectsForAreaGroup).toHaveBeenCalled();
+    expect(service.getTypesForAreaGroupSubject).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByAreaSubject).toHaveBeenCalled();
+  });
+
+
+
+  it('should dispatch request for area, subject, and type data.', () => {
+    spyOn(service, 'getCollectionsForTypeAreaSubject');
+    spyOn(service, 'getCollectionGroupsByAreaSubjectType');
+    spyOn(service, 'getSubjectsForAreaType');
+    spyOn(service, 'getTypesForAreaSubject');
+    service.dispatchActions('1', '1', '1', undefined);
+    expect(service.getCollectionsForTypeAreaSubject).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByAreaSubjectType).toHaveBeenCalled();
+    expect(service.getSubjectsForAreaType).toHaveBeenCalled();
+    expect(service.getTypesForAreaSubject).toHaveBeenCalled();
+  });
+
+  it('should dispatch request for area, group, type, and subject data.', () => {
+    spyOn(service, 'getCollectionsForCategoryAreaTypeSubject');
+    spyOn(service, 'getSubjectsForAreaGroupType');
+    spyOn(service, 'getTypesForAreaGroupSubject');
+    spyOn(service, 'getCollectionGroupsByAreaSubjectType');
+    service.dispatchActions('1', '1', '1', '1');
+    expect(service.getCollectionsForCategoryAreaTypeSubject).toHaveBeenCalled();
+    expect(service.getSubjectsForAreaGroupType).toHaveBeenCalled();
+    expect(service.getTypesForAreaGroupSubject).toHaveBeenCalled();
+    expect(service.getCollectionGroupsByAreaSubjectType).toHaveBeenCalled();
+  });
+
 });

@@ -13,14 +13,10 @@ describe('HelpSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HelpSvgComponent ],
       imports: [MatIconModule, HttpClientModule]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('filter-icon', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_help_outline_black_24px.svg'));
     fixture = TestBed.createComponent(HelpSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

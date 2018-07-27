@@ -32,12 +32,9 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
 import {SetTimeoutService} from '../services/timers/timeout.service';
 import {SetSelectedService} from '../services/set-selected.service';
-import {Observable} from 'rxjs/Observable';
-import {AreasFilter} from '../shared/data-types/areas-filter';
 import {NavigationServiceB} from '../services/navigation-2/navigation.service';
 import {LoggerService} from '../shared/logger/logger.service';
 import {ScrollReadyService} from '../services/observable/scroll-ready.service';
-import {SelectedAreaEvent} from './area-options/area-options.component';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav

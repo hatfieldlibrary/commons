@@ -43,6 +43,14 @@
                   "with": "src/client/app/environments/environment.prod.ts"
                 }
               ]
+            },
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "src/client/app/environments/environment.ts",
+                  "with": "src/client/app/environments/environment.test.ts"
+                }
+              ]
             }
           }
         },
@@ -70,6 +78,12 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/client/polyfills.ts",
             "scripts": [],
+            "fileReplacements": [
+              {
+                "replace": "src/client/app/environments/environment.ts",
+                "with": "src/client/app/environments/environment.test.ts"
+              }
+            ],
             "styles": [
               "src/client/styles.css",
               "src/client/themes/commons-app-theme.scss"

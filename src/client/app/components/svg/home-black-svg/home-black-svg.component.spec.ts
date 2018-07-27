@@ -31,20 +31,16 @@ describe('HomeBlackSvgComponent', () => {
       declarations: [ HomeBlackSvgComponent ],
       imports: [MatIconModule, HttpClientModule
       ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('home-black', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_black_24px.svg'));
     fixture = TestBed.createComponent(HomeBlackSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should be created', async() => {
     expect(component).toBeTruthy();
   });
 });

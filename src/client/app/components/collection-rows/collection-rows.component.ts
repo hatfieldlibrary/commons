@@ -45,7 +45,7 @@ export class CollectionRowsComponent implements OnDestroy {
     }
   }
   getImage(image: string) {
-    return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
+     return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
 
   }
 

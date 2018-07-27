@@ -69,7 +69,7 @@ describe('CollectionGridComponent', () => {
     fixture = TestBed.createComponent(CollectionGridComponent);
     component = fixture.componentInstance;
     component.collectionList = mockCollectionList;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', async () => {
