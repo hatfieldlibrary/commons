@@ -35,11 +35,8 @@ export const AreaActionTypes = {
   AREA_LIST: type('[Areas] List Areas Request'),
   AREA_LIST_SUCCESS: type('[Areas] Areas Response'),
   AREA_LIST_SUBJECT: type('[Areas] List of areas by subject'),
-//  AREA_LIST_SUBJECT_SUCCESS: type('[Areas] Updating list of areas by subject'),
   AREA_LIST_TYPE: type('[Areas] List of areas by type'),
-//  AREA_LIST_TYPE_SUCCESS: type('[Areas] Updating list of areas by type'),
   AREA_LIST_TYPE_SUBJECT: type('[Areas] List of areas by type/subject'),
- // AREA_LIST_TYPE_SUBJECT_SUCCESS: type('[Areas] Updating list of areas by type/subject'),
   AREA_DEFAULT_LIST: type('[Areas] Default area list information')
 };
 
@@ -145,33 +142,6 @@ export class AreaListByTypeSubject implements Action {
 
 }
 
-// /**
-//  * Factory for the action used to update the area list by subject.
-//  */
-// export class AreaListSubjectSuccess implements Action {
-//   type = AreaActionTypes.AREA_LIST_SUBJECT_SUCCESS;
-//   constructor(public payload: AreaFilterType[]) {
-//   }
-// }
-
-// /**
-//  * Factory for the action used to update the area list by type.
-//  */
-// export class AreaListTypeSuccess implements Action {
-//   type = AreaActionTypes.AREA_LIST_TYPE_SUCCESS;
-//   constructor(public payload: AreaFilterType[]) {
-//   }
-// }
-
-// /**
-//  * Factory for the action used to update the area list by type and subject.
-//  */
-// export class AreaListTypeSubjectSuccess implements Action {
-//   type = AreaActionTypes.AREA_LIST_TYPE_SUBJECT_SUCCESS;
-//   constructor(public payload: AreaFilterType[]) {
-//   }
-// }
-
 /**
  * Union type.
  */
@@ -182,9 +152,6 @@ export type AreaActions =
   | AreaInformation
   | AreaInformationSuccess
   | AreaListBySubject
-//  | AreaListSubjectSuccess
   | AreaListByType
-//  | AreaListTypeSuccess
   | AreaListByTypeSubject
-//  | AreaListTypeSubjectSuccess
   | AreaDefaultList;

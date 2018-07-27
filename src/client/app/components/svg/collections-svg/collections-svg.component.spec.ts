@@ -19,11 +19,9 @@ describe('CollectionsSvgComponent', () => {
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('collections', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_collections_white_24px.svg'));
     fixture = TestBed.createComponent(CollectionsSvgComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should be created', () => {

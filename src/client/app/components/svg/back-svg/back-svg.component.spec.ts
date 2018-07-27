@@ -15,14 +15,10 @@ describe('BackSvgComponent', () => {
       imports: [
         MatIconModule, HttpClientModule
       ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeEach(() => {
-    const iconRegistry = TestBed.get(MatIconRegistry);
-    const sanitizer = TestBed.get(DomSanitizer);
-    iconRegistry.addSvgIcon('back', sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_arrow_back_white_24px.svg'));
     fixture = TestBed.createComponent(BackSvgComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

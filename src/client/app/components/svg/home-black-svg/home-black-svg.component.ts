@@ -15,7 +15,7 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, OnDestroy} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
@@ -27,12 +27,7 @@ import {MatIconRegistry} from '@angular/material';
   styleUrls: ['./home-black-svg.component.css'],
   viewProviders: [MatIconRegistry]
 })
-export class HomeBlackSvgComponent implements  OnDestroy{
-
-  ngOnDestroy(): void {
-    this.iconRegistry = null;
-    this.sanitizer = null;
-  }
+export class HomeBlackSvgComponent {
 
   constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(

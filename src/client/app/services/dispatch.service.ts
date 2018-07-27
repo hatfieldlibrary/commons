@@ -65,7 +65,7 @@ export class DispatchService {
         } else {
           // area, subject
           this.getCollectionsForAreaSubject(areaId, subjectId);
-          this.getCollectionGroupsBySubject(subjectId);
+          this.getCollectionGroupsByAreaSubject(areaId, subjectId);
           this.getSubjectsForArea(areaId);
         }
         this.getTypesForAreaSubject(areaId, subjectId);
@@ -121,86 +121,6 @@ export class DispatchService {
       this.getAllTypes();
     }
   }
-
-  //   if (groupId) {
-  //     // Category lookups are provided with types and areas. This provides and
-  //     // option for lookups by administrative units (e.g. HFMA or Archives).
-  //     if (typeId) {
-  //       if (areaId) {
-  //         this.getCollectionsForCategoryAreaType(groupId, areaId, typeId);
-  //         this.getSubjectsForAreaType(areaId, typeId);
-  //         this.getTypesForArea(areaId);
-  //       } else {
-  //         this.getCollectionsForCategoryType(groupId, typeId);
-  //         this.getSubjectsForType(typeId);
-  //         this.getAllTypes();
-  //       }
-  //     } else if (subjectId) {
-  //       this.
-  //     } else if (areaId) {
-  //       this.getCollectionsForCategoryArea(groupId, areaId);
-  //       this.getSubjectsForAreaGroup(areaId, groupId);
-  //       this.getTypesForAreaGroup(areaId, groupId);
-  //     }
-  //   } else if (areaId) {
-  //     // Area lookups can be by subject, type, or all collections in an area.
-  //     if (subjectId) {
-  //       if (typeId) {
-  //         this.getCollectionsForTypeAreaSubject(areaId, typeId, subjectId);
-  //         this.getCollectionGroupsBySubjectType(subjectId, typeId);
-  //         this.getSubjectsForAreaType(areaId, typeId);
-  //       } else {
-  //         this.getCollectionsForAreaSubject(areaId, subjectId);
-  //         this.getCollectionGroupsBySubject(subjectId);
-  //         this.getSubjectsForArea(areaId);
-  //       }
-  //       this.getTypesForAreaSubject(areaId, subjectId);
-  //     } else {
-  //       if (typeId) {
-  //         this.getCollectionsForAreaType(areaId, typeId);
-  //         this.getSubjectsForAreaType(areaId, typeId);
-  //         this.getCollectionGroupsByType(typeId);
-  //       } else {
-  //         this.getCollectionsForArea(areaId);
-  //         this.getSubjectsForArea(areaId);
-  //         this.getCollectionGroupsByArea(areaId);
-  //       }
-  //       this.getTypesForArea(areaId);
-  //     }
-  //   } else if (subjectId) {
-  //     // Subject lookups can be by type or all collections.
-  //     if (typeId) {
-  //       this.getCollectionsForTypeSubject(typeId, subjectId);
-  //       this.getSubjectsForType(typeId);
-  //       this.getCollectionGroupsBySubjectType(subjectId, typeId);
-  //     } else {
-  //       this.getCollectionsForSubject(subjectId);
-  //       this.getAllSubjects();
-  //       this.getCollectionGroupsBySubject(subjectId);
-  //     }
-  //     this.getTypesForSubject(subjectId);
-  //   } else {
-  //     // Type lookup (with fallback to all collections if type is missing.)
-  //     if (typeId) {
-  //       this.getCollectionsForType(typeId);
-  //       this.getSubjectsForType(typeId);
-  //       this.getCollectionGroupsByType(typeId);
-  //       this.getAllTypes();
-  //     } else {
-  //       this
-  //         .getAllCollections();
-  //
-  //       this
-  //         .getAllSubjects();
-  //
-  //       this
-  //         .getAllCollectionGroups();
-  //
-  //       this
-  //         .getAllTypes();
-  //     }
-  //   }
-  // }
 
   public getAllAreas(): void {
     this.store.dispatch(new areaActions.AreaListAction());
@@ -332,7 +252,7 @@ export class DispatchService {
 
   }
 
-  private getCollectionsForTypeSubject(typeId: string, subjectId: string): void { // TS
+   getCollectionsForTypeSubject(typeId: string, subjectId: string): void { // TS
     const params
       :
       TypeAreaSubjectParams = {
@@ -355,7 +275,7 @@ export class DispatchService {
   }
 
   private getCollectionsForCategoryArea(categoryId: string, areaId: string) { // AG
-    if (!this.navigation.isAreaSelected(areaId)) {
+    if (!this.navigation.isFieldSelected(areaId)) {
       areaId = '0';
     }
     this.store.dispatch(new listActions.CollectionsCategoryAreaAction(categoryId, areaId))
@@ -385,28 +305,28 @@ export class DispatchService {
   }
 
   private getCollectionsForCategoryAreaType(categoryId: string, areaId: string, typeId: string) { // ATG
-    if (!this.navigation.isAreaSelected(areaId)) {
+    if (!this.navigation.isFieldSelected(areaId)) {
       areaId = '0';
     }
     this.store.dispatch(new listActions.CollectionsCategoryAreaTypeAction(categoryId, areaId, typeId))
   }
 
   private getCollectionsForCategoryAreaSubject(categoryId: string, areaId: string, subjectId: string) { // ASG
-    if (!this.navigation.isAreaSelected(areaId)) {
+    if (!this.navigation.isFieldSelected(areaId)) {
       areaId = '0';
     }
     this.store.dispatch(new listActions.CollectionsCategoryAreaSubjectAction(categoryId, areaId, subjectId))
   }
 
   private getCollectionsForCategoryTypeSubject(categoryId: string, areaId: string, typeId: string) { // TSG
-    if (!this.navigation.isAreaSelected(areaId)) {
+    if (!this.navigation.isFieldSelected(areaId)) {
       areaId = '0';
     }
     this.store.dispatch(new listActions.CollectionsCategoryTypeAction(categoryId, typeId))
   }
 
   private getCollectionsForCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string) { // AGTS
-    if (!this.navigation.isAreaSelected(areaId)) {
+    if (!this.navigation.isFieldSelected(areaId)) {
       areaId = '0';
     }
     this.store.dispatch(new listActions.CollectionsCategoryAreaTypeSubjectAction(categoryId, areaId, typeId, subjectId))
@@ -465,7 +385,7 @@ export class DispatchService {
    */
   private getAreaInformation(areaId: string): void {
     if (!
-      this.navigation.isAreaSelected(areaId)
+      this.navigation.isFieldSelected(areaId)
     ) {
       areaId = '0';
     }

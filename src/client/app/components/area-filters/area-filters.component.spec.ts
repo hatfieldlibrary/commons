@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {AreaFiltersComponent} from './area-filters.component';
 import {CloseSvgDisabledComponent} from '../svg/close-svg-disabled/close-svg-disabled.component';
@@ -7,11 +7,11 @@ import {MatChipsModule, MatIconModule} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs/index';
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
+import {FieldValues} from '../../shared/enum/field-names';
 
 describe('AreaFiltersComponent', () => {
   let component: AreaFiltersComponent;
   let fixture: ComponentFixture<AreaFiltersComponent>;
-  let watcher: Subscription;
   const areaListMock = [
     {
       id: 1,
@@ -103,7 +103,7 @@ describe('AreaFiltersComponent', () => {
         id: 0,
         name: ''
       }],
-      removedTypes: [{
+      previousTypes: [{
         id: 0,
         name: ''
       }],
@@ -112,19 +112,41 @@ describe('AreaFiltersComponent', () => {
         name: ''
       }]
     };
-    watcher = component.watcher;
-    spyOn(watcher, 'unsubscribe');
-    // fixture.detectChanges();
+
   });
 
   it('should create', async () => {
     expect(component).toBeTruthy();
   });
 
-  it('should unsubscribe with component tear down', fakeAsync(() => {
-    component.ngOnDestroy();
-    expect(watcher.unsubscribe).toHaveBeenCalled();
-
+  it('should update the store with removed groups.', fakeAsync(() => {
+    spyOn(component, 'updateStore');
+    component.filters.selectedGroups = [{id: 3, name: 'g3'}];
+    component.groups.groups = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
+    component.ngOnChanges(null);
+    expect(component.updateStore).toHaveBeenCalledWith(FieldValues.GROUP, [{id: 3, name: 'g3'}]);
   }));
+
+  it('should update the store with removed types.', fakeAsync(() => {
+    spyOn(component, 'updateStore');
+    component.filters.selectedTypes = [{id: 3, name: 't3'}];
+    component.types.types = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
+    component.ngOnChanges(null);
+    expect(component.updateStore).toHaveBeenCalledWith(FieldValues.TYPE, [{id: 3, name: 't3'}]);
+  }));
+
+  it('should update the store with removed subjects.', fakeAsync(() => {
+    spyOn(component, 'updateStore');
+    component.filters.selectedSubjects = [{id: 3, name: 's3'}];
+    component.subjects.subjects = [{id: 1, name: 's1'}, {id: 2, name: 's2'}];
+    component.ngOnChanges(null);
+    expect(component.updateStore).toHaveBeenCalledWith(FieldValues.SUBJECT, [{id: 3, name: 's3'}]);
+  }));
+
+  it('should unsubscribe watcher', () => {
+    spyOn(component.watcher, 'unsubscribe');
+    component.ngOnDestroy();
+    expect(component.watcher.unsubscribe).toHaveBeenCalled();
+  })
 
 });

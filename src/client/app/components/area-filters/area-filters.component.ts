@@ -97,7 +97,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
       });
       if (updatedGroups.length > 0) {
         this.initialized = true;
-        this.updateRouterNavigation(FieldValues.GROUP, updatedGroups);
+        this.updateStore(FieldValues.GROUP, updatedGroups);
       }
     }
   }
@@ -118,7 +118,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
       });
       if (updatedTypes.length > 0) {
         this.initialized = true;
-        this.updateRouterNavigation(FieldValues.TYPE, updatedTypes);
+        this.updateStore(FieldValues.TYPE, updatedTypes);
       }
     }
   }
@@ -140,7 +140,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
       });
       if (updatedSubjects.length > 0) {
         this.initialized = true;
-        this.updateRouterNavigation(FieldValues.SUBJECT, updatedSubjects);
+        this.updateStore(FieldValues.SUBJECT, updatedSubjects);
       }
     }
   }
@@ -151,9 +151,10 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    * @param {string} fieldType
    * @param {FieldFilterType[]} data
    */
-  private updateRouterNavigation(fieldType: string, data: FieldFilterType[]) {
+   updateStore(fieldType: string, data: FieldFilterType[]) {
     // If fields were removed, update the store. The next time the corresponding field option is
     // chosen, the navigation service will use the revised store to modify the route.
+    console.log(data)
     if (data && data.length > 0) {
       switch (fieldType) {
         case FieldValues.SUBJECT: {
@@ -204,7 +205,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.watcher.unsubscribe();
+     this.watcher.unsubscribe();
   }
 
 }

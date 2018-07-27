@@ -15,12 +15,16 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {inject, TestBed} from "@angular/core/testing";
-// import {HttpModule, ResponseOptions, XHRBackend } from "@angular/http";
-// import {MockBackend } from "@angular/http/testing";
-import {CollectionService} from "./collection.service";
+import {getTestBed, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {CollectionService} from './collection.service';
+import {environment} from '../environments/environment';
+
 
 describe('Collection Service', () => {
+
+  let httpMock: HttpTestingController;
+  let collectionService;
 
   const mockCollections = [
     {
@@ -64,74 +68,177 @@ describe('Collection Service', () => {
     }
   ];
 
-  //
-  // beforeEach(() => {
-  //   TestBed.configureTestingModule({
-  //     imports: [
-  //       HttpModule
-  //     ],
-  //     providers: [
-  //       CollectionService,
-  //       MockBackend,
-  //    //   {provide: XHRBackend, useClass: MockBackend}
-  //     ]
-  //   })
-  //     .compileComponents();
-  // });
 
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ],
+      providers: [
+        CollectionService
+      ]
+    });
+    httpMock = TestBed.get(HttpTestingController);
+    collectionService = getTestBed().get(CollectionService);
+  });
 
-//   it('get collections by areas', inject([CollectionService, MockBackend], (collectionService, mockBackend) => {
-//     mockBackend.connections.subscribe(conn => {
-//       conn.mockRespond(new Response(new ResponseOptions({body: JSON.stringify(mockCollections)})));
-//     });
-//     const result = collectionService.getCollectionsByAreaId('1');
-//     result.subscribe(res => {
-//       expect(res).toEqual({
-//         mockCollections
-//       });
-//     });
-//
-//   }));
-//
-//   it('get collections by subject', inject([CollectionService, MockBackend], (collectionService, mockBackend) => {
-//     mockBackend.connections.subscribe(conn => {
-//       conn.mockRespond(new Response(new ResponseOptions({body: mockCollectionsForSubject})));
-//     });
-//     const result = collectionService.getCollectionsByAreaSubject('1','1');
-//     result.subscribe(res => {
-//       expect(res).toEqual({
-//         mockCollectionsForSubject
-//       });
-//     });
-//
-//   }));
-//
-//   it('get all collections', inject([CollectionService, MockBackend], (collectionService, mockBackend) => {
-//     const testResponse = mockCollectionsForSubject.concat(mockCollections);
-//     mockBackend.connections.subscribe(conn => {
-//       conn.mockRespond(new Response(new ResponseOptions({body: testResponse})));
-//     });
-//     const result = collectionService.getAllCollections();
-//     result.subscribe(res => {
-//       expect(res).toEqual({
-//          testResponse
-//       });
-//     });
-//
-//   }));
-//
-//   it('get collections by subject', inject([CollectionService, MockBackend], (collectionService, mockBackend) => {
-//     mockBackend.connections.subscribe(conn => {
-//       conn.mockRespond(new Response(new ResponseOptions({body: mockCollectionsForSubject})));
-//     });
-//     const result = collectionService.getCollectionsBySubject('1');
-//     result.subscribe(res => {
-//       expect(res).toEqual({
-//         mockCollectionsForSubject
-//       });
-//     });
-//
-//   }));
-//
- });
+  it('should get collections by areas', () => {
+
+    const result = collectionService.getCollectionsByAreaId('1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/area/' + 1);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+
+  });
+
+  it('should get collections by area and subject', () => {
+    const result = collectionService.getCollectionsByAreaSubject('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/area/1/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+
+  });
+
+  it('should get collections by subject', () => {
+    const result = collectionService.getCollectionsBySubject('1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+
+  });
+
+  it('should get collections by type', () => {
+    const result = collectionService.getCollectionsByType('1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/type/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by area and type', () => {
+    const result = collectionService.getCollectionsByTypeArea('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/area/1/type/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by type and subject', () => {
+    const result = collectionService.getCollectionsByTypeSubject('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/type/1/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by type, area, and subject', () => {
+    const result = collectionService.getCollectionsByTypeAreaSubject('1', '1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/area/1/type/1/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by area and collection group', () => {
+    const result = collectionService.getCollectionsByCategoryArea('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/category/1/area/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by type and collection group', () => {
+    const result = collectionService.getCollectionsByCategoryType('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/category/1/type/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by subject and collection group', () => {
+    const result = collectionService.getCollectionsByCategorySubject('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/category/1/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by collection group, area, and subject', () => {
+    const result = collectionService.getCollectionsByCategoryAreaType('1', '1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/category/1/area/1/type/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by collection group, area, and subject', () => {
+    const result = collectionService.getCollectionsByCategoryAreaSubject('1', '1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/category/1/area/1/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by collection group, type, and subject', () => {
+    const result = collectionService.getCollectionsByCategoryTypeSubject('1', '1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/category/1/type/1/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+  it('should get collections by collection area, group, type, and subject', () => {
+    const result = collectionService.getCollectionsByCategoryAreaTypeSubject('1', '1', '1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockCollections);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/category/1/area/1/type/1/subject/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockCollections);
+    httpMock.verify();
+  });
+
+});
 

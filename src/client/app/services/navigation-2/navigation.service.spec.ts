@@ -6,20 +6,8 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {Observable} from 'rxjs/index';
 import {Action, Store} from '@ngrx/store';
 import {Subject} from 'rxjs/Subject';
-
-export function mockStore<T>(
-  {
-    actions = new Subject<Action>(),
-    states = new Subject<T>()
-  }: {
-    actions?: Subject<Action>,
-    states?: Subject<T>
-  }): Store<T> {
-  const result = states as any;
-  result.dispatch = (action: Action) => actions.next(action);
-  result.select = () => {return states};
-  return result;
-}
+import {mockStore} from '../../shared/test/mock-store';
+import {FieldValues} from '../../shared/enum/field-names';
 
 describe('NavigationService', () => {
   let router: Router;
@@ -27,18 +15,20 @@ describe('NavigationService', () => {
   let service;
   const actions = new Subject<Action>();
   const states = new Subject<any>();
-  const appStore = mockStore<any>({ actions, states });
+  const appStore = mockStore<any>({actions, states});
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-          RouterTestingModule.withRoutes([])
-          ],
+        RouterTestingModule.withRoutes([])
+      ],
       providers: [
         NavigationServiceB,
         {
           provide: Router,
-          useClass: class { navigate = jasmine.createSpy('navigate'); }
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
         },
         {
           provide: Store,
@@ -48,14 +38,183 @@ describe('NavigationService', () => {
     });
   });
 
-  beforeEach( () => {
-    service = TestBed.get(NavigationServiceB)
-     router = TestBed.get(Router);
+  beforeEach(() => {
+    service = TestBed.get(NavigationServiceB);
+    router = TestBed.get(Router);
     store = TestBed.get(Store);
+    service.removedSubs = [{id: 0, name: ''}];
+    service.removedTypes = [{id: 0, name: ''}];
+    service.removedGroups = [{id: 0, name: ''}];
 
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should get ids for field list', () => {
+    const ids = service.getIds([{id: 1, name: 'test one'}, {id: 2, name: 'test two'}]);
+    expect(ids).toEqual('1,2');
+  });
+
+  it('should navigate to item', () => {
+    service.navigateItemRoute('1', '1');
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'item',
+      'id',
+      '1',
+      '1'
+    ])
+  });
+
+  it('should set the subject ids used for routing within service', () => {
+    spyOn(service, 'updateStoreWithRemovedFilter');
+    service.removedSubs = [{id: 1, name: 's1'}];
+    const id = service.setIdFields('1,2', '', '');
+    expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.SUBJECT);
+    expect(id).toEqual({subjectId: '1', typeId: '', groupId: ''});
+  });
+
+  it('should set the type ids used for routing within service', () => {
+    spyOn(service, 'updateStoreWithRemovedFilter');
+    service.removedTypes = [{id: 1, name: 't1'}];
+    const id = service.setIdFields('', '1,2', '');
+    expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.TYPE);
+    expect(id).toEqual({subjectId: '', typeId: '1', groupId: ''});
+  });
+
+  it('should set the group ids used for routing within service', () => {
+    spyOn(service, 'updateStoreWithRemovedFilter');
+    service.removedGroups = [{id: 1, name: 'g1'}];
+    const id = service.setIdFields('', '', '1,2');
+    expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.GROUP);
+    expect(id).toEqual({subjectId: '', typeId: '', groupId: '1'});
+  });
+
+  it('should navigate using all fields', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '1', '1', '1');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'category', '1',
+      'area', '1',
+      'type', '1',
+      'subject', '1'
+    ], {queryParams: {}})
+  });
+
+
+  it('should navigate using area, type and subject', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '1', '1', '');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'area', '1',
+      'type', '1',
+      'subject', '1'
+    ], {queryParams: {}})
+  });
+
+
+  it('should navigate using area, type and group', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '1', '', '1');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'category', '1',
+      'area', '1',
+      'type', '1',
+    ], {queryParams: {}})
+  });
+
+
+  it('should navigate using area, subject and grouo', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '', '1', '1');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'category', '1',
+      'area', '1',
+      'subject', '1'
+    ], {queryParams: {}})
+  });
+
+  it('should navigate using area and subject', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '', '1', '');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'area', '1',
+      'subject', '1'
+    ], {queryParams: {}})
+  });
+
+  it('should navigate using area and type', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '1', '', '');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'area', '1',
+      'type', '1'
+    ], {queryParams: {}})
+  });
+
+  it('should navigate using area and group', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '', '', '1');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'category', '1',
+      'area', '1'
+    ], {queryParams: {}})
+  });
+
+  it('should navigate using area', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '', '', '');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'area', '1'
+    ], {queryParams: {}})
+  });
+
+  it('should navigate using with query params', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '', '', '', 'list');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'area', '1'
+    ], {queryParams: {view: 'list'}})
+  });
+
+  it('should return field selected false', () => {
+    let selected = service.isFieldSelected('0');
+    expect(selected).toBeFalsy();
+    selected = service.isFieldSelected(undefined)
+    expect(selected).toBeFalsy();
+    selected = service.isFieldSelected(null)
+    expect(selected).toBeFalsy();
+    selected = service.isFieldSelected('')
+    expect(selected).toBeFalsy();
+  });
+
 });
