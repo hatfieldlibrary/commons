@@ -4,7 +4,6 @@ import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
   types: FieldFilterType[];
-  selected: string;
   loading: boolean;
 
 }
@@ -14,7 +13,6 @@ const initialState: State = {
     id: 0,
     name: ''
   }],
-  selected: '',
   loading: false
 };
 
@@ -22,12 +20,12 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
   switch (action.type) {
 
-    case ContentTypeActionTypes.CURRENT_SELECTED_TYPE: {
-      const selected = <string>action.payload;
-      return Object.assign({}, state, {
-        selected: selected
-      });
-    }
+    // case ContentTypeActionTypes.CURRENT_SELECTED_TYPE: {
+    //   const selected = <string>action.payload;
+    //   return Object.assign({}, state, {
+    //     selected: selected
+    //   });
+    // }
 
     case ContentTypeActionTypes.TYPE_LIST: {
       return Object.assign({}, state, {
@@ -120,6 +118,6 @@ export function reducer(state = initialState, action: ContentTypeActions): State
 
 export const getTypesList = (state: State) => state.types;
 
-export const getSelectedTypes = (state: State) => state.selected;
+// export const getSelectedTypes = (state: State) => state.selected;
 
 

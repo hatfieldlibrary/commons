@@ -46,6 +46,9 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   groups: CollectionGroupFilter;
   @Input()
   types: TypesFilter;
+  /**
+   * This array is used to update the view template with chips.
+   */
   normalizedFilter: NormalizedFilter[];
   watcher: Subscription;
   isMobile = false;
@@ -61,15 +64,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
       }
     });
   }
-
-  /**
-   * Returns boolean for *ngIf conditional. If true,
-   * the component will show the element.
-   * @returns {boolean}
-   */
-// isFilterSelected(): boolean {
-//   return (this.areas.length > 0 || this.types.length > 0);
-// }
 
   /**
    * Returns boolean for *ngIf conditional. Returns true if
@@ -124,7 +118,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   }
 
   private updateSubjectFilter(): void {
-
     const updatedSubjects = [];
     if (this.subjects.subjects && this.subjects.subjects.length > 0) {
       this.filters.selectedSubjects.forEach(sub => {
@@ -154,7 +147,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    updateStore(fieldType: string, data: FieldFilterType[]) {
     // If fields were removed, update the store. The next time the corresponding field option is
     // chosen, the navigation service will use the revised store to modify the route.
-    console.log(data)
     if (data && data.length > 0) {
       switch (fieldType) {
         case FieldValues.SUBJECT: {

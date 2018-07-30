@@ -11,6 +11,7 @@ import {
 } from '../../actions/filter.actions';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {FieldValues} from '../../shared/enum/field-names';
+import {AreaFiltersComponent} from '../../components/area-filters/area-filters.component';
 
 interface RouterIds {
   subjectId: string;
@@ -30,6 +31,10 @@ export class NavigationServiceB {
   removedTypes: FieldFilterType[];
 
   constructor(private router: Router, private store: Store<fromRoot.State>) {
+    // The service keeps track of removed fields added to the application state by AreaFiltersComponent.
+    // Before navigation takes place, the current requested field ids are checked to verify that
+    // they have not been previously removed by the component. (These removals are not initiated
+    // directly by the user; they happen when fields are automatically removed by the component.)
     // No need to unsubscribe. We're in a singleton.
     this.removedSubjects$ = store.select(fromRoot.getRemovedSubject).subscribe(rem => {
       this.removedSubs = rem;
@@ -112,6 +117,7 @@ export class NavigationServiceB {
     };
     if (this.removedSubs[0].id !== 0) {
       ids.subjectId = this.removeIds(subjectId, this.removedSubs, FieldValues.SUBJECT);
+      console.log(ids.subjectId)
       // Finished removing fields...update store to the default state.
       this.updateStoreWithRemovedFilter(FieldValues.SUBJECT);
     }
@@ -182,23 +188,12 @@ export class NavigationServiceB {
    * @returns {any}
    */
   private checkId(fieldId: string, removedFields: string[]) {
-    const test = removedFields.indexOf(fieldId)
-    if (test !== -1) {
+    const test = removedFields.indexOf(fieldId);
+    // return field only if not in list of removed fields.
+    if (test === -1) {
       return fieldId;
     }
     return null;
-  }
-
-  public navigateFilterRoute(areaId: string, typeId: string, subjectId: string, groupId: string): void {
-    this.navigateRoute(areaId, typeId, subjectId, groupId);
-  }
-
-  public navigateFilterRouteWithView(areaId: string,
-                                     typeId: string,
-                                     subjectId: string,
-                                     groupId: string,
-                                     view: string): void {
-    this.navigateRoute(areaId, typeId, subjectId, groupId, view);
   }
 
   /**
@@ -211,7 +206,7 @@ export class NavigationServiceB {
    * TODO: this builds in a 4-way permutation that includes global search (and potentially multiple
    * selected areas). Current design excludes global and allows only single area.
    */
-  private navigateRoute(areaId: string, typeId: string, subjectId: string, groupId: string, view?: string): void {
+  navigateRoute(areaId: string, typeId: string, subjectId: string, groupId: string, view?: string): void {
 
     const queryParams = {queryParams: {}};
     if (view) {
@@ -311,19 +306,6 @@ export class NavigationServiceB {
       this.router.navigate(['/', this.urlRootPath, 'collection'], queryParams);
     }
   }
-
-  // public isAreaSelected(areaId: string): boolean {
-  //   return (typeof areaId !== 'undefined') && (areaId.length > 0) && (areaId !== '0');
-  // }
-  //
-  //
-  // public isSubjectSelected(subjectId: string): boolean {
-  //   return (typeof subjectId !== 'undefined') && (subjectId !== null) && (subjectId.length) !== 0 && (subjectId !== '0');
-  // }
-  //
-  // public isTypeSelected(typeId: string): boolean {
-  //   return (typeof typeId !== 'undefined') && (typeId !== null) && (typeId.length) !== 0 && (typeId !== '0');
-  // }
 
   public isFieldSelected(id: string): boolean {
     return (typeof id !== 'undefined') && (id !== null) && (id.length) !== 0 && (id !== '0');
