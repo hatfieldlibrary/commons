@@ -95,19 +95,19 @@ describe('AreaFiltersComponent', () => {
         id: 0,
         name: ''
       }],
-      previousAreas: [{
+      removedAreas: [{
         id: 0,
         name: ''
       }],
-      previousSubjects: [{
+      removedSubjects: [{
         id: 0,
         name: ''
       }],
-      previousTypes: [{
+      removedTypes: [{
         id: 0,
         name: ''
       }],
-      previousGroups: [{
+      removedGroups: [{
         id: 0,
         name: ''
       }]

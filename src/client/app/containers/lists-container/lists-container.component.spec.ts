@@ -358,7 +358,7 @@ describe('ListsContainerComponent', () => {
   it('should call navigation service for area', fakeAsync(() => {
     setAreaRoute(route, '1');
     component.ngOnInit();
-    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'navigateRoute');
     component.areaNavigation({selected: [{id: 1, name: 'test'}]})
 
   }));
@@ -374,13 +374,12 @@ describe('ListsContainerComponent', () => {
 
   it('should remove listeners when component is destroyed', fakeAsync(() => {
     component.ngOnInit();
-    // fixture.detectChanges();
-    // tick();
-    // watcher = component.watchers;
-    // spyOn(watcher, 'unsubscribe');
-    // fixture.destroy();
-    // expect(selectedSubscriptionSpy).toHaveBeenCalled();
-    // expect(watcher.unsubscribe).toHaveBeenCalled();
+    watcher = component.watchers;
+    spyOn(watcher, 'unsubscribe');
+    fixture.destroy();
+    tick();
+    expect(selectedSubscriptionSpy).toHaveBeenCalled();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
   }));
 
   it('should act on view query parameter if present in the route', fakeAsync(() => {
@@ -393,13 +392,13 @@ describe('ListsContainerComponent', () => {
   }));
 
   it('should remove the subject filter and call updated route', () => {
-    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'navigateRoute');
     spyOn(navigationService, 'getIds').and.returnValue('1,2');
     component.areaId = '1';
     component.selectedSubjects = [{id: 1, name: 'sub1'}, {id: 2, name: 'sub2'}];
     component.removeFilter({type: 'subject', id: 1});
     expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 'sub1'}, {id: 2, name: 'sub2'}]);
-    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '', '2', '');
+    expect(navigationService.navigateRoute).toHaveBeenCalledWith('1', '', '2', '');
   });
 
   it('should update component fields with route parameter data', fakeAsync(() => {
@@ -443,56 +442,56 @@ describe('ListsContainerComponent', () => {
   }));
 
   it('should remove the type filter and call updated route', () => {
-    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'navigateRoute');
     spyOn(navigationService, 'getIds').and.returnValue('1,2');
     component.areaId = '1';
     component.selectedTypes = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
     component.removeFilter({type: 'type', id: 1});
     expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 't1'}, {id: 2, name: 't2'}]);
-    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '2', '', '');
+    expect(navigationService.navigateRoute).toHaveBeenCalledWith('1', '2', '', '');
   });
 
   it('should remove the group filter and call updated route', () => {
-    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'navigateRoute');
     spyOn(navigationService, 'getIds').and.returnValue('1,2');
     component.areaId = '1';
     component.selectedGroups = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
     component.removeFilter({type: 'group', id: 1});
     expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 'g1'}, {id: 2, name: 'g2'}]);
-    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '', '', '2');
+    expect(navigationService.navigateRoute).toHaveBeenCalledWith('1', '', '', '2');
   });
 
   it('should execute type navigation.', () => {
-    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'navigateRoute');
     spyOn(navigationService, 'getIds').and.returnValue('1');
     component.selectedAreas = [{id: 1, name: 'a1'}];
     component.selectedSubjects = [{id: 1, name: 's1'}];
     component.selectedGroups = [{id: 1, name: 'g1'}];
     component.typeNavigation({selected: [{id: 1, name: 't1'}]});
     expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 't1'}]);
-    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '1', '1', '1');
+    expect(navigationService.navigateRoute).toHaveBeenCalledWith('1', '1', '1', '1');
   });
 
   it('should execute subject navigation.', () => {
-    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'navigateRoute');
     spyOn(navigationService, 'getIds').and.returnValue('1');
     component.selectedAreas = [{id: 1, name: 'a1'}];
     component.selectedTypes = [{id: 1, name: 's1'}];
     component.selectedGroups = [{id: 1, name: 'g1'}];
     component.subjectNavigation({selected: [{id: 1, name: 's1'}]});
     expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 's1'}]);
-    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '1', '1', '1');
+    expect(navigationService.navigateRoute).toHaveBeenCalledWith('1', '1', '1', '1');
   });
 
   it('should execute group navigation.', () => {
-    spyOn(navigationService, 'navigateFilterRoute');
+    spyOn(navigationService, 'navigateRoute');
     spyOn(navigationService, 'getIds').and.returnValue('1');
     component.selectedAreas = [{id: 1, name: 'a1'}];
     component.selectedSubjects = [{id: 1, name: 's1'}];
     component.selectedTypes = [{id: 1, name: 't1'}];
     component.typeNavigation({selected: [{id: 1, name: 'g1'}]});
     expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 'g1'}]);
-    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '1', '1', '1');
+    expect(navigationService.navigateRoute).toHaveBeenCalledWith('1', '1', '1', '1');
   });
 
   it('should navigate to item.', () => {

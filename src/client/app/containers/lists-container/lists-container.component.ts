@@ -150,7 +150,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         console.log('type not recognized.');
       }
     }
-    this.navigation.navigateFilterRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
+    this.navigation.navigateRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
   }
 
   /**
@@ -224,7 +224,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
 
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
-    this.navigation.navigateFilterRoute(areaIds, null, null, null);
+    this.navigation.navigateRoute(areaIds, null, null, null);
   }
 
   /**
@@ -236,7 +236,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     const typeIds = this.navigation.getIds(updatedTypeList.selected);
     const subjectIds = this.navigation.getIds(this.selectedSubjects);
     const groupIds = this.navigation.getIds(this.selectedGroups);
-    this.navigation.navigateFilterRoute(areaIds, typeIds, subjectIds, groupIds);
+    this.navigation.navigateRoute(areaIds, typeIds, subjectIds, groupIds);
   }
 
   subjectNavigation(updatedSubjectList: SelectedSubjectEvent) {
@@ -244,7 +244,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     const typeIds = this.navigation.getIds(this.selectedTypes);
     const groupIds = this.navigation.getIds(this.selectedGroups);
     const subjectIds = this.navigation.getIds(updatedSubjectList.selected);
-    this.navigation.navigateFilterRoute(areaIds, typeIds, subjectIds, groupIds);
+    this.navigation.navigateRoute(areaIds, typeIds, subjectIds, groupIds);
   }
 
   groupNavigation(updatedGroupList: SelectedGroupEvent) {
@@ -252,7 +252,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     const typeIds = this.navigation.getIds(this.selectedTypes);
     const subjectIds = this.navigation.getIds(this.selectedSubjects);
     const groupIds = this.navigation.getIds(updatedGroupList.selected);
-    this.navigation.navigateFilterRoute(areaIds, typeIds, subjectIds, groupIds);
+    this.navigation.navigateRoute(areaIds, typeIds, subjectIds, groupIds);
   }
 
   /**
@@ -266,7 +266,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     const typeIds = this.navigation.getIds(this.selectedTypes);
     const subjectIds = this.navigation.getIds(this.selectedSubjects);
     const groupIds = this.navigation.getIds(this.selectedGroups);
-    this.navigation.navigateFilterRouteWithView(areaIds, typeIds, subjectIds, groupIds, type);
+    this.navigation.navigateRoute(areaIds, typeIds, subjectIds, groupIds, type);
   }
 
   /**
@@ -297,8 +297,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     // For now, areas$ is used in app menu.
     this.areas$ = this.store.select(fromRoot.getAreas);
     this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
-    this.types$ = this.store.select(fromRoot.getTypes);
-    this.groups$ = this.store.select(fromRoot.getCollectionGroups);
+    // this.types$ = this.store.select(fromRoot.getTypes);
+    // this.groups$ = this.store.select(fromRoot.getCollectionGroups);
     this.filters$ = this.store.select(fromRoot.getFilters);
     this.viewType$ = this.store.select(fromRoot.getViewState);
     this.areasFilter$ = Observable.combineLatest(
