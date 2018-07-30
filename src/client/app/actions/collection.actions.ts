@@ -155,7 +155,7 @@ export class CollectionsCategoryAreaAction implements Action {
 }
 
 export class CollectionsCategoryTypeAction implements Action {
-  type = CollectionActionTypes.LIST_BY_SUBJECT_AREA;
+  type = CollectionActionTypes.LIST_BY_CATEGORY_TYPE;
   payload: IdentifersPayload;
 
   constructor(categoryId: string, typeId: string) {

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {CollectionRowsComponent} from './collection-rows.component';
 import {ViewGridComponent} from '../svg/view-grid/view-grid.component';
@@ -9,6 +9,7 @@ import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {Observable, Subscription} from 'rxjs/index';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {environment} from '../../environments/environment';
 
 describe('CollectionRowsComponent', () => {
   let component: CollectionRowsComponent;
@@ -69,7 +70,34 @@ describe('CollectionRowsComponent', () => {
     // fixture.detectChanges();
   });
 
-  it('should create', async () => {
-    expect(component).toBeTruthy();
+  it('should unsubscribe at destroy', fakeAsync( () => {
+    const watcher = component.watcher;
+    spyOn(watcher, 'unsubscribe');
+    component.ngOnDestroy();
+    tick();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
+  }));
+
+  it('should return results on item', () => {
+    component.collectionList = mockCollectionList;
+    const count = component.getResultCount();
+    expect(count).toEqual('1');
+  });
+
+  it('should call set view event with "list"', () => {
+    spyOn(component.setView, 'emit');
+    component.setViewType('list');
+    expect(component.setView.emit).toHaveBeenCalledWith('list');
+  });
+
+  it('should emit item navigation event"', () => {
+    spyOn(component.collectionNavigation, 'emit');
+    component.navigateToItem(1)
+    expect(component.collectionNavigation.emit).toHaveBeenCalledWith(1);
+  });
+
+  it('should get image path', () => {
+    const imagePath = component.getImage('test');
+    expect(imagePath).toEqual(environment.apiHost + environment.imagePath + '/resources/img/thumb/test')
   });
 });

@@ -374,13 +374,12 @@ describe('ListsContainerComponent', () => {
 
   it('should remove listeners when component is destroyed', fakeAsync(() => {
     component.ngOnInit();
-    // fixture.detectChanges();
-    // tick();
-    // watcher = component.watchers;
-    // spyOn(watcher, 'unsubscribe');
-    // fixture.destroy();
-    // expect(selectedSubscriptionSpy).toHaveBeenCalled();
-    // expect(watcher.unsubscribe).toHaveBeenCalled();
+    watcher = component.watchers;
+    spyOn(watcher, 'unsubscribe');
+    fixture.destroy();
+    tick();
+    expect(selectedSubscriptionSpy).toHaveBeenCalled();
+    expect(watcher.unsubscribe).toHaveBeenCalled();
   }));
 
   it('should act on view query parameter if present in the route', fakeAsync(() => {
@@ -459,7 +458,7 @@ describe('ListsContainerComponent', () => {
     component.selectedGroups = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
     component.removeFilter({type: 'group', id: 1});
     expect(navigationService.getIds).toHaveBeenCalledWith([{id: 1, name: 'g1'}, {id: 2, name: 'g2'}]);
-    expect(navigationService.navigateFilterRoute).toHaveBeenCalledWith('1', '', '', '2');
+    expect(navigationService.navigateRoute).toHaveBeenCalledWith('1', '', '', '2');
   });
 
   it('should execute type navigation.', () => {
