@@ -28,6 +28,17 @@ export interface DeselectedFilter {
   id: number
 }
 
+/**
+ * This component displays currently selected filters and allows the user to deselect a filter.
+ *
+ * An additional behavior is to indicate when a selected field is not available after a navigation
+ * choice (e.g. a selected subject is no longer available after the user has refined the search with a
+ * content type).
+ *
+ * For the later behavior, the component also updates application state directly, adding removed fields
+ * to the filter object. The navigation service (singleton) subscribes to the filter. Before navigation
+ * removes any field in the removed filters list.
+ */
 @Component({
   selector: 'app-area-filters',
   templateUrl: './area-filters.component.html',
@@ -139,7 +150,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * This function adds removed fields to the corresponding state. The updated state
+   * This function adds removed fields to the corresponding field state. The updated state
    * is used to adjust the url for the subsequent router call.
    * @param {string} fieldType
    * @param {FieldFilterType[]} data

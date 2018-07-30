@@ -127,8 +127,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    */
   removeFilter(deselected: DeselectedFilter): void {
 
-    console.log('remove filter')
-
     const test = deselected.id + '[^0-9]*';
     const regex = new RegExp(test);
 
@@ -152,8 +150,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         console.log('type not recognized.');
       }
     }
-    console.log(this.typeId)
-    console.log(this.subjectId)
     this.navigation.navigateRoute(this.areaId, this.typeId, this.subjectId, this.groupId);
   }
 

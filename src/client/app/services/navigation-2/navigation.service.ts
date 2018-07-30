@@ -31,10 +31,11 @@ export class NavigationServiceB {
   removedTypes: FieldFilterType[];
 
   constructor(private router: Router, private store: Store<fromRoot.State>) {
-    // The service keeps track of removed fields added to the application state by AreaFiltersComponent.
-    // Before navigation takes place, the current requested field ids are checked to verify that
-    // they have not been previously removed by the component. (These removals are not initiated
-    // directly by the user; they happen when fields are automatically removed by the component.)
+
+    // Keep track of removed fields in application state (as added by AreaFiltersComponent).
+    // Before navigation takes place, the requested field ids are checked to verify that
+    // they have not been removed. (Field removal is not not initiated directly by the user;
+    // it happens when fields are automatically removed in the AreaFiltersComponent component.)
     // No need to unsubscribe. We're in a singleton.
     this.removedSubjects$ = store.select(fromRoot.getRemovedSubject).subscribe(rem => {
       this.removedSubs = rem;
@@ -157,8 +158,8 @@ export class NavigationServiceB {
   }
 
   /**
-   * Once fields have been removed from the route, the corresponding
-   * store must be returned to the default state.
+   * Once fields have been removed from the route, return the removed filter to
+   * the default state.
    * @param {string} type
    */
   private updateStoreWithRemovedFilter(type: string): void {
@@ -215,6 +216,7 @@ export class NavigationServiceB {
       queryParams.queryParams = {view: view}
     }
 
+    // Important: this call will remove any removed filter ids from the navigation path.
     const fields: RouterIds = this.setIdFields(subjectId, typeId, groupId);
 
     if (this.isFieldSelected(fields.subjectId)
