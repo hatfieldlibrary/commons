@@ -117,7 +117,6 @@ export class NavigationServiceB {
     };
     if (this.removedSubs[0].id !== 0) {
       ids.subjectId = this.removeIds(subjectId, this.removedSubs, FieldValues.SUBJECT);
-      console.log(ids.subjectId)
       // Finished removing fields...update store to the default state.
       this.updateStoreWithRemovedFilter(FieldValues.SUBJECT);
     }
@@ -134,17 +133,19 @@ export class NavigationServiceB {
 
   /**
    * This function removes ids if they appear in the provided array of removed fields.
-   * @param {string} id the comma separated list of subject ids
+   * @param {string} fieldIds the comma separated list of subject ids
    * @param removedFields fields obtained from the store
    * @param type the field type
    * @returns {string}
    */
-  private removeIds(id: string, removedFields: FieldFilterType[], type: string) {
+  private removeIds(fieldIds: string, removedFields: FieldFilterType[], type: string) {
     let updatedId = '';
-    if (id !== null && typeof id !== 'undefined') {
-      const idList = id.split(',');
-      removedFields.forEach(sub => {
-        const checkedId = this.checkId(String(sub.id), idList);
+    if (fieldIds !== null && typeof fieldIds !== 'undefined') {
+      const idList = fieldIds.split(',');
+      const removedList = removedFields.map((field) => String(field.id));
+      idList.forEach(id => {
+        // Add id from field Id list only if it is not one of the removed fields.
+        const checkedId = this.checkId(String(id), removedList);
         if (checkedId !== null) {
           updatedId += checkedId + ',';
         }
@@ -202,6 +203,7 @@ export class NavigationServiceB {
    * @param {string} typeId the type id (can be comma-separated list).
    * @param {string} subjectId the subject id.
    */
+
   /*
    * TODO: this builds in a 4-way permutation that includes global search (and potentially multiple
    * selected areas). Current design excludes global and allows only single area.
@@ -210,7 +212,7 @@ export class NavigationServiceB {
 
     const queryParams = {queryParams: {}};
     if (view) {
-        queryParams.queryParams = { view: view }
+      queryParams.queryParams = {view: view}
     }
 
     const fields: RouterIds = this.setIdFields(subjectId, typeId, groupId);
