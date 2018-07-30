@@ -66,11 +66,8 @@
                class="side-container"
                *ngIf="media.isActive('gt-sm')">
 
-            <app-subject-options (subjectNavigation)="subjectNavigation($event)"
-                                 [filter]="subjectsFilter$ | async"></app-subject-options>
-
-            <app-group-options (groupNavigation)="groupNavigation($event)"
-                               [filter]="groupsFilter$ | async"></app-group-options>
+            <app-types (typeNavigation)="typeNavigation($event)"
+                       [filter]="typesFilter$ | async"></app-types>
 
           </div>
           <div fxLayout="column"
@@ -98,8 +95,12 @@
                class="side-container"
                *ngIf="media.isActive('gt-sm')">
 
-            <app-types (typeNavigation)="typeNavigation($event)"
-                       [filter]="typesFilter$ | async"></app-types>
+            <app-subject-options (subjectNavigation)="subjectNavigation($event)"
+                                 [filter]="subjectsFilter$ | async"></app-subject-options>
+
+            <app-group-options (groupNavigation)="groupNavigation($event)"
+                               [filter]="groupsFilter$ | async"></app-group-options>
+
 
           </div>
         </div>

@@ -29,24 +29,15 @@ module.exports = function (config) {
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       //require('karma-scss-preprocessor'),
-     // require('karma-phantomjs-launcher'),
-    //  require('jasmine-console-reporter'),
-    //  require('karma-spec-reporter')
+      // require('karma-phantomjs-launcher'),
+      //  require('jasmine-console-reporter'),
+      //  require('karma-spec-reporter')
     ],
-    // Use the files and preprocessor settings in angular.json
-  //  files: [
-    //   { pattern: './src/client/test.ts', watched: false },
-    //   { pattern: './src/client/themes/commons-app-theme.scss', included: true, watched: true},
-    // ],
-    // preprocessors: {
-    //   './src/client/test.ts': ['@angular-devkit/build-angular'],
-    //   './src/client/themes/commons-app-theme.scss': ['scss']
-    // },
     mime: {
-      'text/x-typescript': ['ts','tsx']
+      'text/x-typescript': ['ts', 'tsx']
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
+      dir: require('path').join(__dirname, 'coverage'), reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
     angularCli: {
@@ -57,8 +48,7 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: false,
-    browsers: ['Chrome'],
-    singleRun: true
+   // autoWatch: true,
+    browsers: ['Chrome']
   });
 };

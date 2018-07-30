@@ -39,7 +39,7 @@ export class CollectionRowsComponent implements OnDestroy {
     });
   }
 
-  totalResults(): string {
+  getResultCount(): string {
     if (this.collectionList) {
       return this.collectionList.length.toString();
     }

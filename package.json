@@ -24,7 +24,7 @@
   "scripts": {
     "ng": "ng",
     "start:dev": "ng serve --host 0.0.0.0 --port 3006",
-    "test": "ng test --code-coverage --watch=false  --sourceMap=false",
+    "test": "ng test --code-coverage --watch --sourceMap=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "client:prod:build": "ng build --prod --deploy-url=/ --base-href /commons/",

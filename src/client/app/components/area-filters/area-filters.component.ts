@@ -28,6 +28,17 @@ export interface DeselectedFilter {
   id: number
 }
 
+/**
+ * This component displays currently selected filters and allows the user to deselect a filter.
+ *
+ * An additional behavior is to indicate when a selected field is not available after a navigation
+ * choice (e.g. a selected subject is no longer available after the user has refined the search with a
+ * content type).
+ *
+ * For the later behavior, the component also updates application state directly, adding removed fields
+ * to the filter object. The navigation service (singleton) subscribes to the filter. Before navigation
+ * removes any field in the removed filters list.
+ */
 @Component({
   selector: 'app-area-filters',
   templateUrl: './area-filters.component.html',
@@ -46,6 +57,9 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   groups: CollectionGroupFilter;
   @Input()
   types: TypesFilter;
+  /**
+   * This array is used to update the view template with chips.
+   */
   normalizedFilter: NormalizedFilter[];
   watcher: Subscription;
   isMobile = false;
@@ -61,15 +75,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
       }
     });
   }
-
-  /**
-   * Returns boolean for *ngIf conditional. If true,
-   * the component will show the element.
-   * @returns {boolean}
-   */
-// isFilterSelected(): boolean {
-//   return (this.areas.length > 0 || this.types.length > 0);
-// }
 
   /**
    * Returns boolean for *ngIf conditional. Returns true if
@@ -124,7 +129,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   }
 
   private updateSubjectFilter(): void {
-
     const updatedSubjects = [];
     if (this.subjects.subjects && this.subjects.subjects.length > 0) {
       this.filters.selectedSubjects.forEach(sub => {
@@ -146,7 +150,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * This function adds removed fields to the corresponding state. The updated state
+   * This function adds removed fields to the corresponding field state. The updated state
    * is used to adjust the url for the subsequent router call.
    * @param {string} fieldType
    * @param {FieldFilterType[]} data
@@ -154,7 +158,6 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    updateStore(fieldType: string, data: FieldFilterType[]) {
     // If fields were removed, update the store. The next time the corresponding field option is
     // chosen, the navigation service will use the revised store to modify the route.
-    console.log(data)
     if (data && data.length > 0) {
       switch (fieldType) {
         case FieldValues.SUBJECT: {

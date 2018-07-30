@@ -44,7 +44,7 @@ export class CollectionGridComponent implements OnDestroy {
     });
   }
 
-  totalResults(): string {
+  getResultCount(): string {
     return this.collectionList.length.toString();
   }
 
