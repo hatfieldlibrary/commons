@@ -19,19 +19,19 @@ export interface State {
     id: number,
     name: string
   }];
-  previousAreas: [{
+  removedAreas: [{
     id: number,
     name: string
   }];
-  previousSubjects: [{
+  removedSubjects: [{
     id: number,
     name: string
   }];
-  previousTypes: [{
+  removedTypes: [{
     id: number,
     name: string
   }];
-  previousGroups: [{
+  removedGroups: [{
     id: number,
     name: string
   }];
@@ -55,19 +55,19 @@ const initialState: State = {
     id: 0,
     name: ''
   }],
-  previousAreas: [{
+  removedAreas: [{
     id: 0,
     name: ''
   }],
-  previousSubjects: [{
+  removedSubjects: [{
     id: 0,
     name: ''
   }],
-  previousTypes: [{
+  removedTypes: [{
     id: 0,
     name: ''
   }],
-  previousGroups: [{
+  removedGroups: [{
     id: 0,
     name: ''
   }]
@@ -80,21 +80,21 @@ export function reducer(state = initialState, action: FilterActions): State {
     case FilterActionTypes.REMOVE_SELECTED_SUBJECT: {
       const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
-        previousSubjects: result
+        removedSubjects: result
       });
     }
 
     case FilterActionTypes.REMOVE_SELECTED_TYPE: {
       const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
-        previousTypes: result
+        removedTypes: result
       });
     }
 
     case FilterActionTypes.REMOVE_SELECTED_GROUP: {
       const result: FieldFilterType[] = <FieldFilterType[]>action.payload;
       return Object.assign({}, state, {
-        previousGroups: result
+        removedGroups: result
       });
     }
 
@@ -170,11 +170,11 @@ export function reducer(state = initialState, action: FilterActions): State {
 
 export const getSubjectsFilter = (state: State) => state.selectedSubjects;
 
-export const getRemovedSubjectsFilter = (state: State) => state.previousSubjects;
+export const getRemovedSubjectsFilter = (state: State) => state.removedSubjects;
 
-export const getRemovedTypesFilter = (state: State) => state.previousTypes;
+export const getRemovedTypesFilter = (state: State) => state.removedTypes;
 
-export const getRemovedGroupsFilter = (state: State) => state.previousGroups;
+export const getRemovedGroupsFilter = (state: State) => state.removedGroups;
 
 export const getTypesFilter = (state: State) => state.selectedTypes;
 

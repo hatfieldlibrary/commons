@@ -73,7 +73,7 @@ describe('NavigationService', () => {
     service.removedSubs = [{id: 1, name: 's1'}];
     const id = service.setIdFields('1,2', '', '');
     expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.SUBJECT);
-    expect(id).toEqual({subjectId: '1', typeId: '', groupId: ''});
+    expect(id).toEqual({subjectId: '2', typeId: '', groupId: ''});
   });
 
   it('should set the type ids used for routing within service', () => {
@@ -81,7 +81,7 @@ describe('NavigationService', () => {
     service.removedTypes = [{id: 1, name: 't1'}];
     const id = service.setIdFields('', '1,2', '');
     expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.TYPE);
-    expect(id).toEqual({subjectId: '', typeId: '1', groupId: ''});
+    expect(id).toEqual({subjectId: '', typeId: '2', groupId: ''});
   });
 
   it('should set the group ids used for routing within service', () => {
@@ -89,10 +89,10 @@ describe('NavigationService', () => {
     service.removedGroups = [{id: 1, name: 'g1'}];
     const id = service.setIdFields('', '', '1,2');
     expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.GROUP);
-    expect(id).toEqual({subjectId: '', typeId: '', groupId: '1'});
+    expect(id).toEqual({subjectId: '', typeId: '', groupId: '2'});
   });
 
-  it('should navigate using all fields', () => {
+  it('should navigate using all test fields', () => {
     spyOn(service, 'setIdFields').and.callThrough();
     service.navigateRoute('1', '1', '1', '1');
     expect(service.setIdFields).toHaveBeenCalled();
