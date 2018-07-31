@@ -249,7 +249,7 @@ export const appRoutes = [
      */
     StoreDevtoolsModule.instrument(),
     /**
-     * EffectsModule.run() sets up the effects class to be initialized
+     * EffectsModule.run() sets up the effects class to be typeInitialized
      * immediately when the application starts.
      *
      * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run

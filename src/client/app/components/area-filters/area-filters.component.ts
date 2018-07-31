@@ -43,7 +43,7 @@ export interface DeselectedFilter {
   selector: 'app-area-filters',
   templateUrl: './area-filters.component.html',
   styleUrls: ['./area-filters.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AreaFiltersComponent implements OnChanges, OnDestroy {
 
@@ -57,13 +57,18 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   groups: CollectionGroupFilter;
   @Input()
   types: TypesFilter;
-  /**
-   * This array is used to update the view template with chips.
-   */
-  normalizedFilter: NormalizedFilter[];
   watcher: Subscription;
   isMobile = false;
-  initialized = false;
+  /**
+   * This array is bound to the template.
+   */
+  normalizedFilter: NormalizedFilter[] = [];
+  /**
+   * This member variable is used to trigger a reset of the
+   * normalizedFilter array.
+   * @type {number}
+   */
+  resetCount = 0;
 
   constructor(private store: Store<fromRoot.State>,
               private media: ObservableMedia) {
@@ -86,65 +91,26 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
     return !filter.active;
   }
 
-  private updateGroupFilter(): void {
-    const updatedGroups = [];
-    if (this.groups.groups && this.groups.groups.length > 0) {
-      this.filters.selectedGroups.forEach(grp => {
-        if (grp.id !== 0) {
-          const activeIndex = this.groups.groups.findIndex(g => g.id === grp.id);
-          if (activeIndex >= 0) {
-            this.normalizedFilter.push({type: 'group', name: grp.name, id: grp.id, active: true});
-          } else {
-            updatedGroups.push({id: grp.id, name: grp.name});
-            this.normalizedFilter.push({type: 'group', name: grp.name, id: grp.id, active: false})
-          }
-        }
-      });
-      if (updatedGroups.length > 0) {
-        this.initialized = true;
-        this.updateStore(FieldValues.GROUP, updatedGroups);
-      }
-    }
-  }
-
-  private updateTypeFilter(): void {
-    const updatedTypes = [];
-    if (this.types.types && this.types.types.length > 0) {
-      this.filters.selectedTypes.forEach(type => {
-        if (type.id !== 0) {
-          const activeIndex = this.types.types.findIndex(a => a.id === type.id);
-          if (activeIndex >= 0) {
-            this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: true});
-          } else {
-            updatedTypes.push({id: type.id, name: type.name});
-            this.normalizedFilter.push({type: 'type', name: type.name, id: type.id, active: false})
-          }
-        }
-      });
-      if (updatedTypes.length > 0) {
-        this.initialized = true;
-        this.updateStore(FieldValues.TYPE, updatedTypes);
-      }
-    }
-  }
-
-  private updateSubjectFilter(): void {
-    const updatedSubjects = [];
-    if (this.subjects.subjects && this.subjects.subjects.length > 0) {
-      this.filters.selectedSubjects.forEach(sub => {
+  /**
+   * If the selected filter is not in the list of available filters, sets
+   * status to inactive.
+   */
+  private updateFilter(fieldList: FieldFilterType[], selectedFields: FieldFilterType[], type: FieldValues): void {
+    const updatedFields = [];
+    if (fieldList && fieldList.length > 0) {
+      selectedFields.forEach(sub => {
         if (sub.id !== 0) {
-          const activeIndex = this.subjects.subjects.findIndex(a => a.id === sub.id);
+          const activeIndex = fieldList.findIndex(a => a.id === sub.id);
           if (activeIndex >= 0) {
-            this.normalizedFilter.push({type: 'subject', name: sub.name, id: sub.id, active: true});
+            this.normalizedFilter.push({type: type, name: sub.name, id: sub.id, active: true});
           } else {
-            updatedSubjects.push({id: sub.id, name: sub.name});
-            this.normalizedFilter.push({type: 'subject', name: sub.name, id: sub.id, active: false})
+            updatedFields.push({id: sub.id, name: sub.name});
+            this.normalizedFilter.push({type: type, name: sub.name, id: sub.id, active: false})
           }
         }
       });
-      if (updatedSubjects.length > 0) {
-        this.initialized = true;
-        this.updateStore(FieldValues.SUBJECT, updatedSubjects);
+      if (updatedFields.length > 0) {
+        this.updateStore(type, updatedFields);
       }
     }
   }
@@ -155,7 +121,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    * @param {string} fieldType
    * @param {FieldFilterType[]} data
    */
-   updateStore(fieldType: string, data: FieldFilterType[]) {
+  updateStore(fieldType: string, data: FieldFilterType[]) {
     // If fields were removed, update the store. The next time the corresponding field option is
     // chosen, the navigation service will use the revised store to modify the route.
     if (data && data.length > 0) {
@@ -193,22 +159,57 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * Since Angular chooses to reuse this component on subsequent
-   * routing events, use ngOnChanges to trigger creation of the
-   * filters array after an input change.
-   * @param {SimpleChanges} changes
+   * Angular change detection will be invoked for each of
+   * the type, subject and group inputs. So we can anticipate
+   * that this counter function will be called 3 times. Set
+   * the bound filter array to an empty list when the function
+   * is called with the counter member variable at 0.  Reset
+   * the counter member variable to 0 when the count reaches 3.
+   *
+   * It would be nice to find a better way, but this appears to
+   * be the only reliable option for responding to changes.
    */
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!this.initialized) {
+  private resetCounter() {
+    if (this.resetCount === 0) {
       this.normalizedFilter = [];
-      this.updateSubjectFilter();
-      this.updateGroupFilter();
-      this.updateTypeFilter();
+    }
+    this.resetCount++;
+    if (this.resetCount === 3) {
+      this.resetCount = 0;
     }
   }
 
+
+  /**
+   * Since Angular chooses to reuse this component on subsequent
+   * routing events, let's use ngOnChanges to trigger creation of the
+   * filters array.
+   * @param {SimpleChanges} changes
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.types) {
+      this.resetCounter();
+      if (changes.types.previousValue !== changes.types.currentValue) {
+        this.updateFilter(this.types.types, this.filters.selectedTypes, FieldValues.TYPE);
+      }
+    }
+    if (changes.subjects) {
+      this.resetCounter();
+      if (changes.subjects.previousValue !== changes.subjects.currentValue) {
+        this.updateFilter(this.subjects.subjects, this.filters.selectedSubjects, FieldValues.SUBJECT)
+      }
+    }
+    if (changes.groups) {
+      this.resetCounter();
+      if (changes.groups.previousValue !== changes.groups.currentValue) {
+        this.updateFilter(this.groups.groups, this.filters.selectedGroups, FieldValues.GROUP)
+      }
+    }
+
+  }
+
   ngOnDestroy(): void {
-     this.watcher.unsubscribe();
+    this.watcher.unsubscribe();
   }
 
 }

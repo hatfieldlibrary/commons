@@ -31,7 +31,6 @@ export class NavigationServiceB {
   removedTypes: FieldFilterType[];
 
   constructor(private router: Router, private store: Store<fromRoot.State>) {
-
     // Keep track of removed fields in application state (as added by AreaFiltersComponent).
     // Before navigation takes place, the requested field ids are checked to verify that
     // they have not been removed. (Field removal is not not initiated directly by the user;

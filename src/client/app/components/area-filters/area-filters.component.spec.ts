@@ -8,6 +8,7 @@ import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs/index';
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {FieldValues} from '../../shared/enum/field-names';
+import {SimpleChange} from '@angular/core';
 
 describe('AreaFiltersComponent', () => {
   let component: AreaFiltersComponent;
@@ -123,7 +124,7 @@ describe('AreaFiltersComponent', () => {
     spyOn(component, 'updateStore');
     component.filters.selectedGroups = [{id: 3, name: 'g3'}];
     component.groups.groups = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
-    component.ngOnChanges(null);
+    component.ngOnChanges({groups: new SimpleChange({}, {test: 'test'}, true)});
     expect(component.updateStore).toHaveBeenCalledWith(FieldValues.GROUP, [{id: 3, name: 'g3'}]);
   }));
 
@@ -131,7 +132,7 @@ describe('AreaFiltersComponent', () => {
     spyOn(component, 'updateStore');
     component.filters.selectedTypes = [{id: 3, name: 't3'}];
     component.types.types = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
-    component.ngOnChanges(null);
+    component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
     expect(component.updateStore).toHaveBeenCalledWith(FieldValues.TYPE, [{id: 3, name: 't3'}]);
   }));
 
@@ -139,7 +140,7 @@ describe('AreaFiltersComponent', () => {
     spyOn(component, 'updateStore');
     component.filters.selectedSubjects = [{id: 3, name: 's3'}];
     component.subjects.subjects = [{id: 1, name: 's1'}, {id: 2, name: 's2'}];
-    component.ngOnChanges(null);
+    component.ngOnChanges({subjects: new SimpleChange({}, {test: 'test'}, true)});
     expect(component.updateStore).toHaveBeenCalledWith(FieldValues.SUBJECT, [{id: 3, name: 's3'}]);
   }));
 
