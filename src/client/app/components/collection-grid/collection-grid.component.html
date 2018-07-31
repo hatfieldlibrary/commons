@@ -9,7 +9,7 @@
 <!--</mat-grid-list>-->
 
 <div class="grid-result-info mat-caption">
-  <span class="bold-caption">{{totalResults()}}</span><span>&nbsp;item<span *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
+  <span class="bold-caption">{{getResultCount()}}</span><span>&nbsp;item<span *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
   <div style="position: absolute; top: 18px; right: 12px;">
     <app-view-grid (click)="setViewType('grid')" class="icon-color"></app-view-grid>
     <app-view-list (click)="setViewType('list')" class="icon-color"></app-view-list>

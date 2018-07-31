@@ -108,8 +108,8 @@ export class CollectionService {
       + '/type/' + typeId
       + '/subject/' + subjectId );
   }
-
-  getCollectionsByCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
+  getCollectionsByCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string):
+    Observable<CollectionType[]> {
 
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
