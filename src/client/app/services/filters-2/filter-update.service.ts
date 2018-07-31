@@ -4,63 +4,39 @@ import * as fromRoot from '../../reducers';
 import {Store} from '@ngrx/store';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 
-// TODO: This class can probably be refactored to reduce repetition.
+export enum FieldTypeKey {
+  AREA,
+  TYPE,
+  SUBJECT,
+  GROUP
+}
 
+/**
+ * The filter selection components use this service to update the state of the application filters.
+ * After updating the store, the public functions return an updated selected filters list
+ * to the calling component.
+ */
 @Injectable()
 export class FilterUpdateServiceB {
 
   private selectedAreas: FieldFilterType[];
-  private areaList: FieldFilterType[];
   private selectedTypes: FieldFilterType[];
-  private typeList: FieldFilterType[];
-  private subjectList: FieldFilterType[];
   private selectedSubjects: FieldFilterType[];
-  private groupList: FieldFilterType[];
   private selectedGroups: FieldFilterType[];
-  private AREA_KEY = 'areas';
-  private TYPE_KEY = 'types';
-  private SUBJECT_KEY = 'subjects';
-  private GROUP_KEY = 'groups';
 
   constructor(private store: Store<fromRoot.State>) {
   }
 
-  removeSelectedAreaFilter(): void {
-    this.store.dispatch(new SetSubjectFilter([{id: 0, name: ''}]));
-  }
-
   /**
-   * Updates the selected area Store and returns the new selected areas array.
-   * @param {AreaFilterType[]} selectedAreas the current selected areas
-   * @param {AreaFilterType[]} areaList the list of all areas
-   * @param {number} areaId the selected area
-   * @returns {AreaFilterType[]} the updated list of selected areas.
-   */
-  // updateSelectedAreaStore(selectedAreas: FieldFilterType[], areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
-  //   this.selectedAreas = selectedAreas;
-  //   this.areaList = areaList;
-  //   // Get area filter information for the selected areaId.
-  //   const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
-  //   if (selectedArea) {
-  //     this.removeDefaultCollections(this.AREA_KEY);
-  //     // Update selectedAreas.
-  //     this.updateSelectedAreas(selectedArea, areaId);
-  //     // Update the store.
-  //     this.store.dispatch(new SetAreaFilter(this.selectedAreas));
-  //     return this.selectedAreas;
-  //   }
-  // }
-
-  /**
-   * First retrieve the selected area from the field list then update store. Returns
-   * the selected area array (always an array containing a single FieldFilterType object.)
+   * Public method for updating the selected area. The current application permits only a single area
+   * to be selected at any time. If multiple areas are needed, this function will look
+   * like the functions for other filter types.
    * @param {FieldFilterType[]} areaList
    * @param {number} areaId
-   * @returns {FieldFilterType[]}
+   * @returns {FieldFilterType[]} the updated selected area list
    */
   updateSelectSingleAreaStore(areaList: FieldFilterType[], areaId: number): FieldFilterType[] {
-    this.areaList = areaList;
-    const selectedArea: FieldFilterType = this.getSelectedAreaObject(areaId);
+    const selectedArea: FieldFilterType = this.getSelectedFieldObject(areaId, areaList);
     if (selectedArea) {
       this.store.dispatch(new SetAreaFilter([selectedArea]));
       return [selectedArea];
@@ -68,152 +44,166 @@ export class FilterUpdateServiceB {
   }
 
   /**
-   * This function updates the selected types store.
-   * @param {number} areaId
+   * Public method for updating selected types in the application state.
+   * @param {FieldFilterType[]} selectedTypes the currently selected types.
+   * @param {FieldFilterType[]} typeList the list of all available types
+   * @param {number} typeId the id of the newly selected type
+   * @returns {FieldFilterType[]} the updated selected types list
    */
   updateSelectedTypeStore(selectedTypes: FieldFilterType[],
                           typeList: FieldFilterType[],
                           typeId: number): FieldFilterType[] {
     this.selectedTypes = selectedTypes;
-    this.typeList = typeList;
-    // Get area filter information for the selected areaId.
-    const selectedType: FieldFilterType = this.getSelectedTypeObject(typeId);
-    if (selectedType) {
-      // Update selectedAreas.
-      this.updateSelectedTypes(selectedType, typeId);
-      // Make sure the default id: '0' does not creep in!
-      this.removeDefaultCollections(this.TYPE_KEY);
-      // Update the store.
-      this.store.dispatch(new SetTypeFilter(selectedTypes));
-      return this.selectedTypes;
-    }
+    return this.updateSelectedFields(selectedTypes, typeList, typeId, FieldTypeKey.TYPE);
   }
 
   /**
-   * This function updates the selected subject store.
-   * @param {number} areaId
+   * Public method for updating selected subjects in the application state.
+   * @param {FieldFilterType[]} selectedSubjects the currently selected subjects.
+   * @param {FieldFilterType[]} subjectList the list of all available subjects
+   * @param {number} subjectId the id of the newly selected subject
+   * @returns {FieldFilterType[]} the updated selected subjects list
    */
   updateSelectedSubjectsStore(selectedSubjects: FieldFilterType[],
                               subjectList: FieldFilterType[],
                               subjectId: number): FieldFilterType[] {
     this.selectedSubjects = selectedSubjects;
-    this.subjectList = subjectList;
-    // Get area filter information for the selected areaId.
-    const selectedSubject: FieldFilterType = this.getSelectedSubjectObject(subjectId);
-    if (selectedSubject) {
-      // Update selectedAreas.
-      this.updateSelectedSubjects(selectedSubject, subjectId);
-      // Make sure the default id: '0' does not creep in!
-      this.removeDefaultCollections(this.SUBJECT_KEY);
-      // Update the store.
-      this.store.dispatch(new SetSubjectFilter(this.selectedSubjects));
-      return this.selectedSubjects;
-    }
+    return this.updateSelectedFields(selectedSubjects, subjectList, subjectId, FieldTypeKey.SUBJECT);
   }
 
+  /**
+   * Public method for updating selected groups in the application state.
+   * @param {FieldFilterType[]} selectedGroups the currently selected groups.
+   * @param {FieldFilterType[]} groupList this list of all available groups
+   * @param {number} groupId the newly selected group
+   * @returns {FieldFilterType[]} the updated selected groups list
+   */
   updateSelectedGroupsStore(selectedGroups: FieldFilterType[],
                             groupList: FieldFilterType[],
                             groupId: number): FieldFilterType[] {
     this.selectedGroups = selectedGroups;
-    this.groupList = groupList;
-    // Get area filter information for the selected areaId.
-    const selectedGroup: FieldFilterType = this.getSelectedGroupObject(groupId);
-    if (selectedGroup) {
-      // Update selectedAreas.
-      this.updateSelectedGroups(selectedGroup, groupId);
-      // Make sure the default id: '0' does not creep in!
-      this.removeDefaultCollections(this.GROUP_KEY);
-      // Update the store.
-      this.store.dispatch(new SetGroupFilter(this.selectedGroups));
-      return this.selectedGroups;
-    }
+    return this.updateSelectedFields(selectedGroups, groupList, groupId, FieldTypeKey.GROUP);
   }
 
   /**
-   * Update selected types.
-   * @param {TypesFilterType} selectedType
-   * @param {number} areaId
+   * Handles filter updates for all field types.
+   * @param {FieldFilterType[]} selectedFields the current selected fields
+   * @param {FieldFilterType[]} fields all available fields
+   * @param {number} fieldId the field id for the newly selected field
+   * @param {FieldTypeKey} type the field type
+   * @returns {FieldFilterType[]}
    */
-  private updateSelectedTypes(selectedType: FieldFilterType, typeId: number): void {
-    const currentIndex = this.getPositionInSelectedList(typeId, this.TYPE_KEY);
-    if (currentIndex >= 0) {
-      // If the currently selected index is in the list, remove.
-      this.selectedTypes.splice(currentIndex, 1);
-      // If the selected list is empty, set to default (all collections).
-      if (this.selectedTypes.length === 0) {
-        this.selectedTypes.push({id: 0, name: ''});
-      }
-    } else {
-      // Otherwise, just add the new type.
-      this.selectedTypes.push(selectedType);
-    }
-  }
+  private updateSelectedFields(selectedFields: FieldFilterType[],
+                               fields: FieldFilterType[],
+                               fieldId: number,
+                               type: FieldTypeKey) {
 
-  private updateSelectedSubjects(selectedSubject: FieldFilterType, subjectId: number): void {
-    const currentIndex = this.getPositionInSelectedList(subjectId, this.SUBJECT_KEY);
-    if (currentIndex >= 0) {
-      // If the currently selected index is in the list, remove.
-      this.selectedSubjects.splice(currentIndex, 1);
-      // If the selected list is empty, set to default (all collections).
-      if (this.selectedSubjects.length === 0) {
-        this.selectedSubjects.push({id: 0, name: ''});
-      }
-    } else {
-      // Otherwise, just add the new subject.
-      this.selectedSubjects.push(selectedSubject);
-    }
-  }
+    const selectedField: FieldFilterType = this.getSelectedFieldObject(fieldId, fields);
 
-  private updateSelectedGroups(selectedGroup: FieldFilterType, groupId: number): void {
-    const currentIndex = this.getPositionInSelectedList(groupId, this.GROUP_KEY);
-    if (currentIndex >= 0) {
-      // If the currently selected index is in the list, remove.
-      this.selectedGroups.splice(currentIndex, 1);
-      // If the selected list is empty, set to default (all collections).
-      if (this.selectedGroups.length === 0) {
-        this.selectedGroups.push({id: 0, name: ''});
+    switch (type) {
+      case FieldTypeKey.TYPE: {
+        this.updateSelectedTypes(selectedField);
+        // Make sure the default id: '0' does not creep in!
+        this.removeDefaultCollections(FieldTypeKey.TYPE);
+        // Update the store.
+        this.store.dispatch(new SetTypeFilter(selectedFields));
+        return this.selectedTypes;
       }
-    } else {
-      // Otherwise, just add the new group.
-      this.selectedGroups.push(selectedGroup);
+      case FieldTypeKey.SUBJECT: {
+        this.updateSelectedSubjects(selectedField);
+        this.removeDefaultCollections(FieldTypeKey.SUBJECT);
+        this.store.dispatch(new SetSubjectFilter(selectedFields));
+        return this.selectedSubjects;
+      }
+      case FieldTypeKey.GROUP: {
+        this.updateSelectedGroups(selectedField);
+        this.removeDefaultCollections(FieldTypeKey.GROUP);
+        this.store.dispatch(new SetGroupFilter(selectedFields));
+        return this.selectedGroups;
+      }
+      default: {
+        console.log('Error: Unrecognized field type.');
+      }
     }
   }
 
   /**
-   * Gets the area list item with the provided id from the list of all areas.
-   * @param {number} areaId the id of the area to retrieve
+   * Updates the local selected types field.
+   * @param {TypesFilterType} selectedType the newly selected field object.
+   * @param {number} typeId
+   */
+  private updateSelectedTypes(selectedType: FieldFilterType): void {
+    const currentIndex = this.getPositionInSelectedList(selectedType.id, FieldTypeKey.TYPE);
+   this.selectedTypes = this.modifyFieldList(this.selectedTypes, selectedType, currentIndex);
+  }
+
+  /**
+   * Updates the local selected subjects field.
+   * @param {FieldFilterType} selectedSubject the newly selected subject object
+   * @param {number} subjectId  new selected subject id
+   */
+  private updateSelectedSubjects(selectedSubject: FieldFilterType): void {
+    const currentIndex = this.getPositionInSelectedList(selectedSubject.id, FieldTypeKey.SUBJECT);
+    this.selectedSubjects = this.modifyFieldList(this.selectedSubjects, selectedSubject, currentIndex);
+  }
+
+  /**
+   * Updates the local selected groups field.
+   * @param {FieldFilterType} selectedGroup complete list of group
+   * @param {number} groupId  new selected group id
+   */
+  private updateSelectedGroups(selectedGroup: FieldFilterType): void {
+    const currentIndex = this.getPositionInSelectedList(selectedGroup.id, FieldTypeKey.GROUP);
+    this.selectedGroups = this.modifyFieldList(this.selectedGroups, selectedGroup, currentIndex);
+  }
+
+  /**
+   * Supports adding or removing filters from selected list.  Removes the filter if a valid index position
+   * is provided (i.e. the item was previously selected and is now being de-selected). Otherwise returns
+   * list with additional member.
+   * @param {FieldFilterType[]} list field filter list
+   * @param {number} position the array index (or -1)
+   * @returns {FieldFilterType[]}
+   */
+  private modifyFieldList(list: FieldFilterType[], selected: FieldFilterType, position: number) {
+    if (position >= 0) {
+      // If the currently selected index is in the list, remove.
+      list.splice(position, 1);
+      // If the selected list is empty, set to default (all collections).
+      if (list.length === 0) {
+        list.push({id: 0, name: ''});
+      }
+      return list;
+    }
+    list.push(selected);
+    return list;
+  }
+
+  /**
+   * Gets the FieldFilterType object with id value from the provided list.
+   * @param {number} fieldId
+   * @param {FieldFilterType[]} list
    * @returns {FieldFilterType}
    */
-  private getSelectedAreaObject(areaId: number): FieldFilterType {
-    return this.areaList.find((current) => current.id === areaId);
-  }
-
-  private getSelectedTypeObject(typeId: number): FieldFilterType {
-    return this.typeList.find((current) => current.id === typeId);
-  }
-
-  private getSelectedSubjectObject(subjectId: number): FieldFilterType {
-    return this.subjectList.find((current) => current.id === subjectId);
-  }
-
-  private getSelectedGroupObject(groupId: number): FieldFilterType {
-    return this.groupList.find((current) => current.id === groupId);
+  private getSelectedFieldObject(fieldId: number, list: FieldFilterType[]): FieldFilterType {
+    return list.find((current) => current.id === fieldId);
   }
 
   /**
-   * Gets the position index in id string that matches the provided id.
+   * Gets the position index in id string that matches the provided id. Depends on the
+   * local member variable for the corresponding field type.
    * @param {number} id the id of the resource
    * @param {string} type the type constant for the resource
    * @returns {number}
    */
-  private getPositionInSelectedList(id: number, type: string): number {
-    if (type === this.AREA_KEY) {
+  private getPositionInSelectedList(id: number, type: FieldTypeKey): number {
+    if (type === FieldTypeKey.AREA) {
       return this.selectedAreas.findIndex((current) => current.id === id);
-    } else if (type === this.SUBJECT_KEY) {
+    } else if (type === FieldTypeKey.SUBJECT) {
       return this.selectedSubjects.findIndex((current) => current.id === id);
-    } else if (type === this.TYPE_KEY) {
+    } else if (type === FieldTypeKey.TYPE) {
       return this.selectedTypes.findIndex((current) => current.id === id);
-    } else if (type === this.GROUP_KEY) {
+    } else if (type === FieldTypeKey.GROUP) {
       return this.selectedGroups.findIndex((current) => current.id === id);
     } else {
       return 0;
@@ -222,42 +212,20 @@ export class FilterUpdateServiceB {
 
   /**
    * The removes any Fields with id of zero.
-   * TODO: Review whether this function still has a purpose.
    */
-  private removeDefaultCollections(type: string): void {
+  private removeDefaultCollections(type: FieldTypeKey): void {
     const zeroIndex = this.getPositionInSelectedList(0, type);
     if (zeroIndex === 0) {
-      if (type === this.AREA_KEY) {
+      if (type === FieldTypeKey.AREA) {
         this.selectedAreas.shift();
-      } else if (type === this.SUBJECT_KEY) {
+      } else if (type === FieldTypeKey.SUBJECT) {
         this.selectedSubjects.shift();
-      } else if (type === this.GROUP_KEY) {
+      } else if (type === FieldTypeKey.GROUP) {
         this.selectedGroups.shift();
-      } else {
+      } else if (type === FieldTypeKey.TYPE) {
         this.selectedTypes.shift();
       }
     }
   }
-
-  /**
-   * Update selected areas.
-   * @param {AreaFilterType} selectedArea
-   * @param {number} areaId
-   */
-  private updateSelectedAreas(selectedArea: FieldFilterType, areaId: number) {
-    const currentIndex = this.getPositionInSelectedList(areaId, this.AREA_KEY);
-    if (currentIndex >= 0) {
-      // If the currently selected index is in the list, remove.
-      this.selectedAreas.splice(currentIndex, 1);
-      // If the selected list is empty, set to default (all collections).
-      if (this.selectedAreas.length === 0) {
-        this.selectedAreas.push({id: 0, name: ''});
-      }
-    } else {
-      // Otherwise, just add the new area.
-      this.selectedAreas.push(selectedArea);
-    }
-  }
-
 
 }
