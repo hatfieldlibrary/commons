@@ -19,7 +19,6 @@ export enum FieldTypeKey {
 @Injectable()
 export class FilterUpdateServiceB {
 
-  private selectedAreas: FieldFilterType[];
   private selectedTypes: FieldFilterType[];
   private selectedSubjects: FieldFilterType[];
   private selectedGroups: FieldFilterType[];
@@ -98,26 +97,27 @@ export class FilterUpdateServiceB {
                                fieldId: number,
                                type: FieldTypeKey) {
 
+    // Remove the default field from the selected fields list if it exists.
+    selectedFields = this.removeDefaultCollection(selectedFields);
+    // Get the FieldFilerType object for the newly selected field.
     const selectedField: FieldFilterType = this.getSelectedFieldObject(fieldId, fields);
-
+    // Get the index of the selected field from the array of currently selected fields.
+    // The index value will be positive if the field is being de-selected.
+    const currentIndex = this.getPositionInSelectedList(selectedFields, selectedField);
+    // Now update based on type.
     switch (type) {
       case FieldTypeKey.TYPE: {
-        this.updateSelectedTypes(selectedField);
-        // Make sure the default id: '0' does not creep in!
-        this.removeDefaultCollections(FieldTypeKey.TYPE);
-        // Update the store.
+        this.selectedTypes = this.modifyFieldList(this.selectedTypes, selectedField, currentIndex);
         this.store.dispatch(new SetTypeFilter(selectedFields));
         return this.selectedTypes;
       }
       case FieldTypeKey.SUBJECT: {
-        this.updateSelectedSubjects(selectedField);
-        this.removeDefaultCollections(FieldTypeKey.SUBJECT);
+        this.selectedSubjects = this.modifyFieldList(this.selectedSubjects, selectedField, currentIndex);
         this.store.dispatch(new SetSubjectFilter(selectedFields));
         return this.selectedSubjects;
       }
       case FieldTypeKey.GROUP: {
-        this.updateSelectedGroups(selectedField);
-        this.removeDefaultCollections(FieldTypeKey.GROUP);
+        this.selectedGroups = this.modifyFieldList(this.selectedGroups, selectedField, currentIndex);
         this.store.dispatch(new SetGroupFilter(selectedFields));
         return this.selectedGroups;
       }
@@ -128,40 +128,10 @@ export class FilterUpdateServiceB {
   }
 
   /**
-   * Updates the local selected types field.
-   * @param {TypesFilterType} selectedType the newly selected field object.
-   * @param {number} typeId
-   */
-  private updateSelectedTypes(selectedType: FieldFilterType): void {
-    const currentIndex = this.getPositionInSelectedList(selectedType.id, FieldTypeKey.TYPE);
-   this.selectedTypes = this.modifyFieldList(this.selectedTypes, selectedType, currentIndex);
-  }
-
-  /**
-   * Updates the local selected subjects field.
-   * @param {FieldFilterType} selectedSubject the newly selected subject object
-   * @param {number} subjectId  new selected subject id
-   */
-  private updateSelectedSubjects(selectedSubject: FieldFilterType): void {
-    const currentIndex = this.getPositionInSelectedList(selectedSubject.id, FieldTypeKey.SUBJECT);
-    this.selectedSubjects = this.modifyFieldList(this.selectedSubjects, selectedSubject, currentIndex);
-  }
-
-  /**
-   * Updates the local selected groups field.
-   * @param {FieldFilterType} selectedGroup complete list of group
-   * @param {number} groupId  new selected group id
-   */
-  private updateSelectedGroups(selectedGroup: FieldFilterType): void {
-    const currentIndex = this.getPositionInSelectedList(selectedGroup.id, FieldTypeKey.GROUP);
-    this.selectedGroups = this.modifyFieldList(this.selectedGroups, selectedGroup, currentIndex);
-  }
-
-  /**
-   * Supports adding or removing filters from selected list.  Removes the filter if a valid index position
+   * Supports adding or removing filters from selected list.  Removes the filter if a positive index position
    * is provided (i.e. the item was previously selected and is now being de-selected). Otherwise returns
-   * list with additional member.
-   * @param {FieldFilterType[]} list field filter list
+   * list with the additional member.
+   * @param {FieldFilterType[]} list selected filter list
    * @param {number} position the array index (or -1)
    * @returns {FieldFilterType[]}
    */
@@ -190,42 +160,24 @@ export class FilterUpdateServiceB {
   }
 
   /**
-   * Gets the position index in id string that matches the provided id. Depends on the
-   * local member variable for the corresponding field type.
-   * @param {number} id the id of the resource
+   * Gets the position index in id string that matches the provided id.
+   * @param {FieldFilterType} field the id of the resource
    * @param {string} type the type constant for the resource
    * @returns {number}
    */
-  private getPositionInSelectedList(id: number, type: FieldTypeKey): number {
-    if (type === FieldTypeKey.AREA) {
-      return this.selectedAreas.findIndex((current) => current.id === id);
-    } else if (type === FieldTypeKey.SUBJECT) {
-      return this.selectedSubjects.findIndex((current) => current.id === id);
-    } else if (type === FieldTypeKey.TYPE) {
-      return this.selectedTypes.findIndex((current) => current.id === id);
-    } else if (type === FieldTypeKey.GROUP) {
-      return this.selectedGroups.findIndex((current) => current.id === id);
-    } else {
-      return 0;
-    }
+  private getPositionInSelectedList(selectedFields: FieldFilterType[], field: FieldFilterType): number {
+    return (selectedFields.findIndex((current) => current.id === field.id))
   }
 
   /**
-   * The removes any Fields with id of zero.
+   * The removes the default field value (if it exists) from the first position in the array.
    */
-  private removeDefaultCollections(type: FieldTypeKey): void {
-    const zeroIndex = this.getPositionInSelectedList(0, type);
+  private removeDefaultCollection(fieldList: FieldFilterType[]): FieldFilterType[] {
+    const zeroIndex = this.getPositionInSelectedList(fieldList, {id: 0, name: ''});
     if (zeroIndex === 0) {
-      if (type === FieldTypeKey.AREA) {
-        this.selectedAreas.shift();
-      } else if (type === FieldTypeKey.SUBJECT) {
-        this.selectedSubjects.shift();
-      } else if (type === FieldTypeKey.GROUP) {
-        this.selectedGroups.shift();
-      } else if (type === FieldTypeKey.TYPE) {
-        this.selectedTypes.shift();
-      }
+      fieldList.shift();
     }
+    return fieldList;
   }
 
 }
