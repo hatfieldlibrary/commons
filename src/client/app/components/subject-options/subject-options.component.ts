@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubjectFilter} from '../../shared/data-types/subject-filter';
-import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {FieldTypeKey, FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {MatSelectionList} from '@angular/material';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
@@ -48,7 +48,7 @@ export class SubjectOptionsComponent {
 
   onSubjectListControlChanged(id: number) {
     const selectedSubjects = this.filterService
-      .updateSelectedSubjectsStore(this.filter.selectedSubjects, this.filter.subjects, id);
+      .updateSelectedFields(this.filter.selectedSubjects, this.filter.subjects, id, FieldTypeKey.SUBJECT);
     const updatedSubjectEvent: SelectedSubjectEvent = {selected: selectedSubjects};
     // Reset the scroll position.
     this.scrollReadyService.setPosition(0);

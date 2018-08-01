@@ -2,11 +2,8 @@
 
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
-import {TypeSubjectInterface} from './type-subject.interface';
-import {AreaTypeSubjectInterface} from './area-type-subject.interface';
-import {AreaTypeInterface} from './area-type.interface';
-import {AreaSubjectInterface} from './area-subject.interface';
 import {FieldFilterType} from '../shared/data-types/field-filter.type';
+import {IdentifersPayload} from './payload-parameters.interface';
 
 export const GroupActionTypes = {
 
@@ -57,22 +54,26 @@ export class GroupsBySubject implements Action {
 
 export class GroupsBySubjectType implements Action {
   type = GroupActionTypes.GROUPS_BY_SUBJECT_TYPE;
-  payload: TypeSubjectInterface;
+  payload: IdentifersPayload;
   constructor(subjectId: string, typeId: string) {
     this.payload = {
-      subjects: subjectId,
-      types: typeId
+      categoryId: '',
+      subjectId: subjectId,
+      typeId: typeId,
+      areaId: ''
     }
   }
 }
 
 export class GroupsByAreaType implements Action {
   type = GroupActionTypes.GROUPS_BY_AREA_TYPE;
-  payload: AreaTypeInterface;
+  payload: IdentifersPayload;
   constructor(areaId: string, typeId: string) {
     this.payload = {
-      types: typeId,
-      areas: areaId
+      categoryId: '',
+      typeId: typeId,
+      areaId: areaId,
+      subjectId: ''
     }
   }
 }
@@ -80,23 +81,26 @@ export class GroupsByAreaType implements Action {
 
 export class GroupsByAreaSubject implements Action {
   type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT;
-  payload: AreaSubjectInterface;
+  payload: IdentifersPayload;
   constructor(areaId: string, subjectId: string) {
     this.payload = {
-      subjects: subjectId,
-      areas: areaId
+      categoryId: '',
+      subjectId: subjectId,
+      areaId: areaId,
+      typeId: ''
     }
   }
 }
 
 export class GroupsByAreaSubjectType implements Action {
   type = GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE;
-  payload: AreaTypeSubjectInterface;
+  payload: IdentifersPayload;
   constructor(areaId: string, subjectId: string, typeId: string) {
     this.payload = {
-      areas: areaId,
-      subjects: subjectId,
-      types: typeId
+      categoryId: '',
+      subjectId: subjectId,
+      areaId: areaId,
+      typeId: typeId
     }
   }
 }

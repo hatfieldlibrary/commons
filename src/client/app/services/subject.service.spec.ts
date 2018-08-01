@@ -15,62 +15,93 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {inject, TestBed} from '@angular/core/testing';
-// import {ResponseOptions, XHRBackend } from '@angular/http';
-// import {MockBackend } from "@angular/http/testing";
+import {getTestBed, TestBed} from '@angular/core/testing';
 import {SubjectService} from './subject.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {environment} from '../environments/environment';
 
 describe('Subject Service', () => {
 
-  const subjectsMock = [
+  let httpMock;
+  let subjectService;
+
+  const mockSubjectList = [
     {
       id: 1,
-      name: 'test subject',
-      url: ''
+      name: 'test subject'
     }
   ];
 
-  // beforeEach(() => {
-  //   TestBed.configureTestingModule({
-  //     imports: [
-  //       HttpClientModule
-  //     ],
-  //     providers: [
-  //       SubjectService,
-  //       MockBackend,
-  //       {provide: XHRBackend, useClass: MockBackend}
-  //     ]
-  //   })
-  //     .compileComponents();
-  // });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ],
+      providers: [
+        SubjectService
+      ]
+    });
+    httpMock = TestBed.get(HttpTestingController);
+    subjectService = getTestBed().get(SubjectService);
+  });
 
+  it('should get subject by area', () => {
+    const result = subjectService.getSubjectsForArea('1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockSubjectList);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/subject/area/' + '1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockSubjectList);
+    httpMock.verify();
+  });
 
-  // it('get subjects', inject([SubjectService, MockBackend], (subjectService:SubjectService, mockBackend:MockBackend) => {
-  //   mockBackend.connections.subscribe(conn => {
-  //     conn.mockRespond(new Response(new ResponseOptions({body: subjectsMock})));
-  //   });
-  //   const result = subjectService.getSubjectsForArea('1');
-  //   result.subscribe(res => {
-  //     expect(res).toEqual(
-  //       subjectsMock
-  //     );
-  //   });
-  //
-  // }));
-  //
-  // it('get all subjects', inject([SubjectService, MockBackend], (subjectService:SubjectService, mockBackend:MockBackend) => {
-  //   mockBackend.connections.subscribe(conn => {
-  //     conn.mockRespond(new Response(new ResponseOptions({body: subjectsMock})));
-  //   });
-  //   const result = subjectService.getAllSubjects();
-  //   result.subscribe(res => {
-  //     expect(res).toEqual(
-  //       subjectsMock
-  //     );
-  //   });
-  //
-  // }));
+  it('should get subject by type', () => {
+    const result = subjectService.getSubjectsForType('1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockSubjectList);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/subject/type/' + '1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockSubjectList);
+    httpMock.verify();
+  });
+
+  it('should get subject by area and type', () => {
+    const result = subjectService.getSubjectsForAreaAndType('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockSubjectList);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot
+      + '/subject/area/' + '1' + '/type/' + '1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockSubjectList);
+    httpMock.verify();
+  });
+
+  it('should get subject by area, group and type', () => {
+    const result = subjectService.getSubjectsForAreaGroupAndType('1', '1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockSubjectList);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot
+      + '/subject/area/' + '1' + '/category/' + '1' + '/type/' + '1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockSubjectList);
+    httpMock.verify();
+  });
+
+  it('should get subject by area, group and type', () => {
+    const result = subjectService.getSubjectsForAreaAndGroup('1', '1');
+    result.subscribe(res => {
+      expect(res).toEqual(mockSubjectList);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot
+      + '/subject/area/' + '1' + '/category/' + '1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockSubjectList);
+    httpMock.verify();
+  });
 
 });
 

@@ -22,14 +22,7 @@
 import {Action} from '../actions/action.interface';
 import {type} from '../shared/ngrx/type';
 import {CollectionType} from '../shared/data-types/collection.type';
-import {TypeAreaSubjectParams} from './type-area-subject-parameters.interface';
-
-export interface IdentifersPayload {
-  subjectId: string,
-  areaId: string,
-  typeId: string,
-  categoryId: string
-}
+import {IdentifersPayload} from './payload-parameters.interface';
 
 export const CollectionActionTypes = {
   SET_FILTER: type('[Collections] Set Collection Filter'),
@@ -247,25 +240,40 @@ export class CollectionsTypeAction implements Action {
 }
 export class CollectionsTypeAreaAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_AREA;
-
-  constructor(public payload: TypeAreaSubjectParams) {
-
+  payload: IdentifersPayload;
+  constructor(areaId: string, typeId: string) {
+    this.payload = {
+      categoryId: '',
+      areaId: areaId,
+      typeId: typeId,
+      subjectId: ''
+    }
   }
 }
 
 export class CollectionsTypeSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_SUBJECT;
-
-  constructor(public payload: TypeAreaSubjectParams) {
-
+  payload: IdentifersPayload;
+  constructor(typeId: string, subjectId: string) {
+    this.payload = {
+      categoryId: '',
+      areaId: '',
+      typeId: typeId,
+      subjectId: subjectId
+    }
   }
 }
 
 export class CollectionsTypeAreaSubjectAction implements Action {
   type = CollectionActionTypes.LIST_BY_TYPE_AREA_SUBJECT;
-
-  constructor(public payload: TypeAreaSubjectParams) {
-
+  payload: IdentifersPayload;
+  constructor(areaId: string, typeId: string, subjectId: string) {
+    this.payload = {
+      categoryId: '',
+      areaId: areaId,
+      typeId: typeId,
+      subjectId: subjectId
+    }
   }
 }
 

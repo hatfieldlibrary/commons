@@ -22,6 +22,7 @@
 import {Action} from '../actions/action.interface';
 import {type} from '../shared/ngrx/type';
 import {FieldFilterType} from '../shared/data-types/field-filter.type';
+import {IdentifersPayload} from './payload-parameters.interface';
 
 export const SubjectActionTypes = {
   SUBJECT_LIST: type('[SubjectType] List Subjects for Area Request'),
@@ -35,13 +36,6 @@ export const SubjectActionTypes = {
   SUBJECT_REQUEST_SUCCESS: type('{SubjectType] Subject Request Success'),
   REQUEST_FAILED: type('[SubjectType] Search Failed')
 };
-
-export interface SubjectsPayload {
-  areaId: string,
-  typeId: string,
-  groupId: string
-}
-
 
 
 export class SubjectAction implements Action {
@@ -68,22 +62,40 @@ export class SubjectsForTypes implements Action {
 
 export class SubjectsForAreaTypes implements Action {
   type = SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE;
-
-  constructor(public payload: SubjectsPayload) {
+  payload: IdentifersPayload;
+  constructor(areaId: string, typeId: string) {
+    this.payload = {
+      categoryId: '',
+      subjectId: '',
+      typeId: typeId,
+      areaId: areaId
+    }
   }
 }
 
 export class SubjectsForAreaGroup implements Action {
   type = SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA;
-
-  constructor(public payload: SubjectsPayload) {
+  payload: IdentifersPayload;
+  constructor(areaId: string, groupId: string) {
+    this.payload = {
+      categoryId: groupId,
+      subjectId: '',
+      typeId: '',
+      areaId: areaId
+    }
   }
 }
 
 export class SubjectsForAreaGroupType implements Action {
   type = SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA_TYPE;
-
-  constructor(public payload: SubjectsPayload) {
+  payload: IdentifersPayload;
+  constructor(areaId: string, groupId: string, typeId: string) {
+    this.payload = {
+      categoryId: groupId,
+      subjectId: '',
+      typeId: typeId,
+      areaId: areaId
+    }
   }
 }
 
