@@ -49,13 +49,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
               private changeDetector: ChangeDetectorRef,
               private store: Store<fromRoot.State>,
               @Inject(DOCUMENT) private document) {
-
     this.watchers = new Subscription();
-    const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
-    const urlWatcher = url.subscribe((path) => {
-      this.authenticationPath = environment.authPath + '/' + path;
-    });
-    this.watchers.add(urlWatcher);
   }
 
   simpleSearch() {
@@ -64,6 +58,12 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
+    const urlWatcher = url.subscribe((path) => {
+      this.authenticationPath = environment.authPath + '/' + path;
+    });
+    this.watchers.add(urlWatcher);
 
     this.model = new SearchTerms();
     // Using the store to track authentication.

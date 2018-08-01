@@ -53,6 +53,7 @@ describe('AreaBannerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AreaBannerComponent);
     component = fixture.componentInstance;
+
     component.areas = {
       areas: [{id: 1, name: 'a1'}, {id: 2, name: 'a2'}],
       selectedAreas: [{id: 1, name: 'a1'}]

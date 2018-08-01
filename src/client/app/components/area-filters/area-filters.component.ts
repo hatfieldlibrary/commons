@@ -121,7 +121,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    * @param {string} fieldType
    * @param {FieldFilterType[]} data
    */
-  updateStore(fieldType: string, data: FieldFilterType[]) {
+  private updateStore(fieldType: string, data: FieldFilterType[]) {
     // If fields were removed, update the store. The next time the corresponding field option is
     // chosen, the navigation service will use the revised store to modify the route.
     if (data && data.length > 0) {

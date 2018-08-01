@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import * as filterActions from '../actions/filter.actions';
 import * as fromRoot from '../reducers';
 import {Observable} from 'rxjs/Observable';
@@ -7,13 +6,16 @@ import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
 import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
+/**
+ * This service initializes the selected fields on route navigation.
+ */
 @Injectable()
 export class SetSelectedService {
 
   subjects$: Observable<FieldFilterType[]>;
   areas$: Observable<FieldFilterType[]>;
   types$: Observable<FieldFilterType[]>;
-  groups$: Observable<FieldFilterType[]>
+  groups$: Observable<FieldFilterType[]>;
   watchers: Subscription;
 
   constructor(private store: Store<fromRoot.State>) {
@@ -25,16 +27,10 @@ export class SetSelectedService {
   }
 
   /**
-   * Dispatches action to set the selected subject after the subject list subscription
-   * tells us that subjects are available.
+   * Adds a subscription to the subject list. The callback function uses the subjectId
+   * to create the array of selected subject. Updates the store.
    *
-   * TODO: this is no longer correct after move to multiple subject selections.  It is used
-   * only by the original (top of page) subject selector.  That component assumes a single
-   * subject is chosen.  The new (side of page) subject options allows multiple subjects. If
-   * both components are kept, then there needs to be a single subject data type and some
-   * refactoring of other code. Update here so that the app will compile!
-   *
-   * @param {string} subjectId
+   * @param {string} subjectId comma separated string of subject ids.
    * @private
    */
   setSelectedSubject(subjectId: string): void {
@@ -60,9 +56,8 @@ export class SetSelectedService {
   }
 
   /**
-   * Adds a watcher for the area list. The callback function uses the provided areaId
-   * to create an array of selected areas from the current list of areas. The selected
-   * areas are dispatched to the store. This initializes the selected areas on page load.
+   * Adds a subscription to the area list. The callback function uses the areaId
+   * to create the array of selected areas. Updates the store.
    *
    * @param {string} areaId comma separated string of area ids.
    */
@@ -90,11 +85,10 @@ export class SetSelectedService {
   }
 
   /**
-   * Adds a watcher for the type list. The callback function uses the provided typeId
-   * to create an array of selected types from the current list of types. The selected
-   * types are dispatched to the store. This initializes the selected types on page load.
+   * Adds a subscription to the type list. The callback function uses the typeId
+   * to create the array of selected types. Updates the store.
    *
-   * @param {string} typeId comma separated string of area ids.
+   * @param {string} typeId comma separated string of type ids.
    */
   setSelectedTypes(typeId: string): void {
 
@@ -119,11 +113,10 @@ export class SetSelectedService {
   }
 
   /**
-   * Adds a watcher for the area list. The callback function uses the provided groupId
-   * to create an array of selected areas from the current list of areas. The selected
-   * areas are dispatched to the store. This initializes the selected areas on page load.
+   * Adds a subscription to the collection group list. The callback function uses the groupId
+   * to create the array of selected groups. Updates the store.
    *
-   * @param {string} groupId comma separated string of area ids.
+   * @param {string} groupId comma separated string of group ids.
    */
   setSelectedGroups(groupId: string): void {
     if (groupId) {
@@ -147,7 +140,6 @@ export class SetSelectedService {
       this.store.dispatch(new filterActions.SetGroupFilter([{id: 0, name: ''}]))
     }
   }
-
 
   unsubscribe(): void {
     this.watchers.unsubscribe();

@@ -43,48 +43,6 @@ export class FilterUpdateServiceB {
   }
 
   /**
-   * Public method for updating selected types in the application state.
-   * @param {FieldFilterType[]} selectedTypes the currently selected types.
-   * @param {FieldFilterType[]} typeList the list of all available types
-   * @param {number} typeId the id of the newly selected type
-   * @returns {FieldFilterType[]} the updated selected types list
-   */
-  updateSelectedTypeStore(selectedTypes: FieldFilterType[],
-                          typeList: FieldFilterType[],
-                          typeId: number): FieldFilterType[] {
-    this.selectedTypes = selectedTypes;
-    return this.updateSelectedFields(selectedTypes, typeList, typeId, FieldTypeKey.TYPE);
-  }
-
-  /**
-   * Public method for updating selected subjects in the application state.
-   * @param {FieldFilterType[]} selectedSubjects the currently selected subjects.
-   * @param {FieldFilterType[]} subjectList the list of all available subjects
-   * @param {number} subjectId the id of the newly selected subject
-   * @returns {FieldFilterType[]} the updated selected subjects list
-   */
-  updateSelectedSubjectsStore(selectedSubjects: FieldFilterType[],
-                              subjectList: FieldFilterType[],
-                              subjectId: number): FieldFilterType[] {
-    this.selectedSubjects = selectedSubjects;
-    return this.updateSelectedFields(selectedSubjects, subjectList, subjectId, FieldTypeKey.SUBJECT);
-  }
-
-  /**
-   * Public method for updating selected groups in the application state.
-   * @param {FieldFilterType[]} selectedGroups the currently selected groups.
-   * @param {FieldFilterType[]} groupList this list of all available groups
-   * @param {number} groupId the newly selected group
-   * @returns {FieldFilterType[]} the updated selected groups list
-   */
-  updateSelectedGroupsStore(selectedGroups: FieldFilterType[],
-                            groupList: FieldFilterType[],
-                            groupId: number): FieldFilterType[] {
-    this.selectedGroups = selectedGroups;
-    return this.updateSelectedFields(selectedGroups, groupList, groupId, FieldTypeKey.GROUP);
-  }
-
-  /**
    * Handles filter updates for all field types.
    * @param {FieldFilterType[]} selectedFields the current selected fields
    * @param {FieldFilterType[]} fields all available fields
@@ -92,11 +50,10 @@ export class FilterUpdateServiceB {
    * @param {FieldTypeKey} type the field type
    * @returns {FieldFilterType[]}
    */
-  private updateSelectedFields(selectedFields: FieldFilterType[],
+   updateSelectedFields(selectedFields: FieldFilterType[],
                                fields: FieldFilterType[],
                                fieldId: number,
                                type: FieldTypeKey) {
-
     // Remove the default field from the selected fields list if it exists.
     selectedFields = this.removeDefaultCollection(selectedFields);
     // Get the FieldFilerType object for the newly selected field.
@@ -107,17 +64,17 @@ export class FilterUpdateServiceB {
     // Now update based on type.
     switch (type) {
       case FieldTypeKey.TYPE: {
-        this.selectedTypes = this.modifyFieldList(this.selectedTypes, selectedField, currentIndex);
+        this.selectedTypes = this.modifyFieldList(selectedFields, selectedField, currentIndex);
         this.store.dispatch(new SetTypeFilter(selectedFields));
         return this.selectedTypes;
       }
       case FieldTypeKey.SUBJECT: {
-        this.selectedSubjects = this.modifyFieldList(this.selectedSubjects, selectedField, currentIndex);
+        this.selectedSubjects = this.modifyFieldList(selectedFields, selectedField, currentIndex);
         this.store.dispatch(new SetSubjectFilter(selectedFields));
         return this.selectedSubjects;
       }
       case FieldTypeKey.GROUP: {
-        this.selectedGroups = this.modifyFieldList(this.selectedGroups, selectedField, currentIndex);
+        this.selectedGroups = this.modifyFieldList(selectedFields, selectedField, currentIndex);
         this.store.dispatch(new SetGroupFilter(selectedFields));
         return this.selectedGroups;
       }

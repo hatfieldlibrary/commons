@@ -1,7 +1,6 @@
 
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
-import {AreaFilterType} from '../shared/data-types/area-filter.type';
 import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 
