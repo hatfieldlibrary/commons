@@ -342,7 +342,7 @@ export class NavigationServiceB {
     }
   }
 
-  // currently unused.
+  // currently unused and incomplete.
   private _handleGlobalBackLinks(selectedSubject: string, selectedGroup: string, selectedTypes: string): string {
     if (this.isFieldSelected(selectedSubject) && selectedTypes) {
       return this._globalSubjectTypeLink(selectedSubject, selectedTypes);

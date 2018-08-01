@@ -58,8 +58,7 @@ describe('Area Service', () => {
         // MockBackend,
         // {provide: XHRBackend, useClass: MockBackend}
       ]
-    })
-      .compileComponents();
+    });
   });
 
 

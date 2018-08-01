@@ -15,58 +15,103 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AreaListAction, AreaListSuccess} from '../actions/area.actions';
+import {
+  AreaListAction,
+  AreaListBySubject,
+  AreaListByType,
+  AreaListByTypeSubject,
+  AreaListSuccess
+} from '../actions/area.actions';
 import {getAreaList, reducer, State} from './area-list.reducers';
 /**
  * Created by mspalti on 4/15/17.
  */
 
+const mockApiResponse = [
+  {
+    id: 1,
+    title: 'test areas one',
+    count: 1
+  },
+  {
+    id: 2,
+    title: 'test areas two',
+    count: 1
+  },
+];
 
 const areaListTypeMock = [
   {
     id: 1,
-    title: 'test areas one',
-    count: 2
+    name: 'test areas one'
 
   }, {
     id: 2,
-    title: 'test areas two',
-    count: 1
+    name: 'test areas two'
   }
 ];
 const defaultState = [
   {
     id: 0,
-    title: '',
-    count: 0
+    name: ''
   }
 ];
 
 describe('Area List Reducer', () => {
 
-  // it('should return the initial default areas state and loading true.', () => {
-  //     expect(
-  //       reducer(undefined, new AreaListAction('1'))
-  //     ).toEqual(
-  //       {
-  //         areaList: defaultState,
-  //         loading: true
-  //       })
-  //   });
+  it('should return the initial default areas state and loading true.', () => {
+      expect(
+        reducer(undefined, new AreaListAction('1'))
+      ).toEqual(
+        {
+          areaList: defaultState,
+          loading: true
+        })
+    });
 
- // it('should return areas list', () => {
+ it('should return areas list', () => {
 
-   // let areaState: State = {areaList: areaListTypeMock, loading: true};
-   // let state = reducer(areaState, new AreaListActionSuccess(areaListTypeMock));
-   // let result = getAreaList(state);
-   // expect(result).toEqual(areaListTypeMock);
- // });
+   const areaState: State = {areaList: areaListTypeMock, loading: true};
+   const state = reducer(areaState, new AreaListSuccess(mockApiResponse));
+   const result = getAreaList(state);
+   expect(result).toEqual(areaListTypeMock);
 
-// it('should return default state', () => {
-  //  let state = reducer(undefined, {type: undefined, payload: ''});
-  //  let result = getAreaList(state);
-  //  expect(result).toEqual(defaultState);
- // });
+ });
 
+it('should return default state', () => {
+   const state = reducer(undefined, {type: undefined, payload: ''});
+   const result = getAreaList(state);
+   expect(result).toEqual(defaultState);
+ });
+
+it('should return default state and loading true for areas by subject', () => {
+  expect(
+    reducer(undefined, new AreaListBySubject('1'))
+  ).toEqual(
+    {
+      areaList: defaultState,
+      loading: true
+    })
+});
+
+  it('should return default state and loading true for areas by type', () => {
+    expect(
+      reducer(undefined, new AreaListByType('1'))
+    ).toEqual(
+      {
+        areaList: defaultState,
+        loading: true
+      })
+  });
+
+  it('should return default state and loading true for areas by type/subject', () => {
+    expect(
+      reducer(undefined, new AreaListByTypeSubject({typeId: '1', subjectId: '1'}))
+    ).toEqual(
+      {
+        areaList: defaultState,
+        loading: true
+      })
+  });
 
 });

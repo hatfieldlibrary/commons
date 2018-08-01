@@ -32,7 +32,7 @@ export interface State {
 const initialState: State = {
   areaList: <FieldFilterType[]>[
     {
-      id: -1,
+      id: 0,
       name: ''
     }
   ],
@@ -66,31 +66,11 @@ export function reducer(state = initialState, action: AreaActions): State {
       });
     }
 
-    // case AreaActionTypes.AREA_LIST_SUBJECT_SUCCESS: {
-    //   const payload = <AreaFilterType[]>action.payload;
-    //
-    //   return Object.assign({}, state,
-    //     {
-    //       areaList: payload,
-    //       loading: false
-    //     });
-    // }
-
     case AreaActionTypes.AREA_LIST_TYPE: {
       return Object.assign({}, state, {
         loading: true
       });
     }
-
-    // case AreaActionTypes.AREA_LIST_TYPE_SUCCESS: {
-    //   const payload = <AreaFilterType[]>action.payload;
-    //
-    //   return Object.assign({}, state,
-    //     {
-    //       areaList: payload,
-    //       loading: false
-    //     });
-    // }
 
     case AreaActionTypes.AREA_LIST_TYPE_SUBJECT: {
       return Object.assign({}, state, {
@@ -98,15 +78,6 @@ export function reducer(state = initialState, action: AreaActions): State {
       });
     }
 
-    // case AreaActionTypes.AREA_LIST_TYPE_SUBJECT_SUCCESS: {
-    //   const payload = <AreaFilterType[]>action.payload;
-    //
-    //   return Object.assign({}, state,
-    //     {
-    //       areaList: payload,
-    //       loading: false
-    //     });
-    // }
 
     case AreaActionTypes.AREA_DEFAULT_LIST: {
 

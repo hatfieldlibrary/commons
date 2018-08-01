@@ -1,9 +1,8 @@
-import {TestBed, inject} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
 import {NavigationServiceB} from './navigation.service';
-import {Route, Router} from '@angular/router';
+import { Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Observable} from 'rxjs/index';
 import {Action, Store} from '@ngrx/store';
 import {Subject} from 'rxjs/Subject';
 import {mockStore} from '../../shared/test/mock-store';
@@ -55,6 +54,10 @@ describe('NavigationService', () => {
   it('should get ids for field list', () => {
     const ids = service.getIds([{id: 1, name: 'test one'}, {id: 2, name: 'test two'}]);
     expect(ids).toEqual('1,2');
+  });
+
+  it('should throw error invalid id list', () => {
+    expect(() => {service.getIds([{noId: ''}])}).toThrowError()
   });
 
   it('should navigate to item', () => {
@@ -205,6 +208,38 @@ describe('NavigationService', () => {
       'area', '1'
     ], {queryParams: {view: 'list'}})
   });
+
+  it('should return back link area, group, type, subject', () => {
+    const link = service.getBackLink('1', '1', '1', '1');
+    expect(link).toEqual('/commons/collection/category/1/area/1/type/1/subject/1')
+  });
+
+  it('should return back link area, group', () => {
+    const link = service.getBackLink('1', '1', '', '');
+    expect(link).toEqual('/commons/collection/category/1/area/1')
+  });
+
+  it('should return back link area, group, subject', () => {
+    const link = service.getBackLink('1', '1', '1', '');
+    expect(link).toEqual('/commons/collection/category/1/area/1/subject/1')
+  });
+
+  it('should return back link area, group, type', () => {
+    const link = service.getBackLink('1', '1', '', '1');
+    expect(link).toEqual('/commons/collection/category/1/area/1/type/1')
+  });
+
+  it('should return back link area, type', () => {
+    const link = service.getBackLink('1', '', '', '1');
+    expect(link).toEqual('/commons/collection/area/1/type/1')
+  });
+
+  it('should return back link area, subject', () => {
+    const link = service.getBackLink('1', '', '1', '');
+    expect(link).toEqual('/commons/collection/area/1/subject/1')
+  });
+
+
 
   it('should return field selected false', () => {
     let selected = service.isFieldSelected('0');

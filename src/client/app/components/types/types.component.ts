@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatSelectionList} from '@angular/material';
-import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {FieldTypeKey, FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {TypesFilter} from '../../shared/data-types/types-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
@@ -47,9 +47,9 @@ export class TypesComponent implements OnInit {
     return this.filter.types.length > 0;
   }
 
-  onTypeListControlChanged(list: MatSelectionList, typeId: number) {
+  onTypeListControlChanged(typeId: number) {
     const updatedSelectedTypes = this.filterService
-      .updateSelectedTypeStore(this.filter.selectedTypes, this.filter.types, typeId);
+      .updateSelectedFields(this.filter.selectedTypes, this.filter.types, typeId, FieldTypeKey.TYPE);
     const updatedTypeEvent: SelectedTypeEvent = {selected: updatedSelectedTypes};
     // Reset the scroll position.
     this.scrollReadyService.setPosition(0);
