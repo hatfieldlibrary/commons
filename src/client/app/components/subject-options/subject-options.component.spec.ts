@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubjectOptionsComponent } from './subject-options.component';
 import {MatListModule} from '@angular/material';
-import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {FieldTypeKey, FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {StoreModule} from '@ngrx/store';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
@@ -26,7 +26,7 @@ describe('SubjectOptionsComponent', () => {
       providers: [{
         provide: FilterUpdateServiceB,
         useClass: class {
-          updateSelectedSubjectsStore = jasmine.createSpy('updateSelectedSubjectsStore').and.returnValue([{id: 1, name: ''}]);
+          updateSelectedFields = jasmine.createSpy('updateSelectedSubjectsStore').and.returnValue([{id: 1, name: ''}]);
         }
       },
         {
@@ -56,7 +56,7 @@ describe('SubjectOptionsComponent', () => {
     component.onSubjectListControlChanged(1);
     expect(component.subjectNavigation.emit).toHaveBeenCalledWith({selected: [{id: 1, name: ''}]});
     expect(readyService.setPosition).toHaveBeenCalledWith(0);
-    expect(filterService.updateSelectedSubjectsStore)
-      .toHaveBeenCalledWith(mockSubjectsFilter.selectedSubjects, mockSubjectsFilter.subjects,  1);
+    expect(filterService.updateSelectedFields)
+      .toHaveBeenCalledWith(mockSubjectsFilter.selectedSubjects, mockSubjectsFilter.subjects,  1, FieldTypeKey.SUBJECT);
   })
 });

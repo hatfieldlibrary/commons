@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatSelectionList} from '@angular/material';
-import {FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
+import {FieldTypeKey, FilterUpdateServiceB} from '../../services/filters-2/filter-update.service';
 import {CollectionGroupFilter} from '../../shared/data-types/collection-group-filter';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
@@ -48,7 +48,7 @@ export class GroupOptionsComponent {
 
   onGroupListControlChanged(list: MatSelectionList, id: number) {
     const selectedGroups = this.filterService
-      .updateSelectedGroupsStore(this.filter.selectedGroups, this.filter.groups, id);
+      .updateSelectedFields(this.filter.selectedGroups, this.filter.groups, id, FieldTypeKey.GROUP);
     const updatedGroupEvent: SelectedGroupEvent = {selected: selectedGroups};
     // Reset the scroll position.
     this.scrollReadyService.setPosition(0);
