@@ -7,12 +7,14 @@ import {MatChipsModule, MatIconModule} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs/index';
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
-import {FieldValues} from '../../shared/enum/field-names';
 import {SimpleChange} from '@angular/core';
+import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../actions/filter.actions';
+import {FieldValues} from '../../shared/enum/field-names';
 
 describe('AreaFiltersComponent', () => {
   let component: AreaFiltersComponent;
   let fixture: ComponentFixture<AreaFiltersComponent>;
+  let store;
   const areaListMock = [
     {
       id: 1,
@@ -63,6 +65,7 @@ describe('AreaFiltersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AreaFiltersComponent);
     component = fixture.componentInstance;
+    store = fixture.debugElement.injector.get(Store);
     component.groups = {
       groups: [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}],
       selectedGroups: [{id: 1, name: 'g1'}],
@@ -121,28 +124,52 @@ describe('AreaFiltersComponent', () => {
   });
 
   it('should update the store with removed groups.', fakeAsync(() => {
-    spyOn(component, 'updateStore');
     component.filters.selectedGroups = [{id: 3, name: 'g3'}];
     component.groups.groups = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
     component.ngOnChanges({groups: new SimpleChange({}, {test: 'test'}, true)});
-    expect(component.updateStore).toHaveBeenCalledWith(FieldValues.GROUP, [{id: 3, name: 'g3'}]);
+    expect(store.dispatch).toHaveBeenCalledWith(new RemoveSelectedGroups([{id: 3, name: 'g3'}]));
+    expect(component.normalizedFilter).toEqual([{type: FieldValues.GROUP, id: 3, name: 'g3', active: false}])
   }));
 
   it('should update the store with removed types.', fakeAsync(() => {
-    spyOn(component, 'updateStore');
     component.filters.selectedTypes = [{id: 3, name: 't3'}];
     component.types.types = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
     component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
-    expect(component.updateStore).toHaveBeenCalledWith(FieldValues.TYPE, [{id: 3, name: 't3'}]);
+    expect(store.dispatch).toHaveBeenCalledWith(new RemoveSelectedTypes([{id: 3, name: 't3'}]));
+    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 3, name: 't3', active: false}])
   }));
 
   it('should update the store with removed subjects.', fakeAsync(() => {
-    spyOn(component, 'updateStore');
     component.filters.selectedSubjects = [{id: 3, name: 's3'}];
     component.subjects.subjects = [{id: 1, name: 's1'}, {id: 2, name: 's2'}];
     component.ngOnChanges({subjects: new SimpleChange({}, {test: 'test'}, true)});
-    expect(component.updateStore).toHaveBeenCalledWith(FieldValues.SUBJECT, [{id: 3, name: 's3'}]);
+    expect(store.dispatch).toHaveBeenCalledWith(new RemoveSelectedSubjects([{id: 3, name: 's3'}]));
+    expect(component.normalizedFilter).toEqual([{type: FieldValues.SUBJECT, id: 3, name: 's3', active: false}])
   }));
+
+  it('should add group to filter list', () => {
+    component.filters.selectedTypes = [{id: 1, name: 'g1'}];
+    component.types.types = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
+    component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
+    expect(store.dispatch).not.toHaveBeenCalled();
+    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 1, name: 'g1', active: true}])
+  });
+
+  it('should add type to filter list', () => {
+    component.filters.selectedTypes = [{id: 1, name: 't1'}];
+    component.types.types = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
+    component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
+    expect(store.dispatch).not.toHaveBeenCalled();
+    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 1, name: 't1', active: true}])
+  });
+
+  it('should add subject to filter list', () => {
+    component.filters.selectedTypes = [{id: 1, name: 's1'}];
+    component.types.types = [{id: 1, name: 's1'}, {id: 2, name: 's2'}];
+    component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
+    expect(store.dispatch).not.toHaveBeenCalled();
+    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 1, name: 's1', active: true}])
+  });
 
   it('should unsubscribe watcher', () => {
     spyOn(component.watcher, 'unsubscribe');

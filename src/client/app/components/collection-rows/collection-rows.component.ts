@@ -2,7 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
+  OnDestroy, OnInit,
   Output
 } from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
@@ -15,28 +15,16 @@ import {environment} from '../../environments/environment';
   templateUrl: './collection-rows.component.html',
   styleUrls: ['./collection-rows.component.css']
 })
-export class CollectionRowsComponent implements OnDestroy {
+export class CollectionRowsComponent implements OnDestroy, OnInit {
 
   @Input() collectionList: CollectionType[];
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
   isMobile = false;
   cols = 3;
-  watcher: Subscription;
+  watcher = new Subscription();
 
   constructor(private media: ObservableMedia) {
-    this.watcher = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs') {
-        this.isMobile = true;
-        this.cols = 1;
-      } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
-        this.cols = 2;
-        this.isMobile = false;
-      } else {
-        this.cols = 3;
-        this.isMobile = false;
-      }
-    });
   }
 
   getResultCount(): string {
@@ -57,6 +45,21 @@ export class CollectionRowsComponent implements OnDestroy {
     this.setView.emit(type);
   }
 
+  ngOnInit(): void {
+    const media = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+        this.cols = 1;
+      } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
+        this.cols = 2;
+        this.isMobile = false;
+      } else {
+        this.cols = 3;
+        this.isMobile = false;
+      }
+    });
+    this.watcher.add(media);
+  }
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
   }

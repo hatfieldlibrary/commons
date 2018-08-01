@@ -26,7 +26,7 @@ describe('SubjectOptionsComponent', () => {
       providers: [{
         provide: FilterUpdateServiceB,
         useClass: class {
-          updateSelectedFields = jasmine.createSpy('updateSelectedSubjectsStore').and.returnValue([{id: 1, name: ''}]);
+          updateSelectedFields = jasmine.createSpy('updateSelectedFields').and.returnValue([{id: 1, name: ''}]);
         }
       },
         {
@@ -58,5 +58,5 @@ describe('SubjectOptionsComponent', () => {
     expect(readyService.setPosition).toHaveBeenCalledWith(0);
     expect(filterService.updateSelectedFields)
       .toHaveBeenCalledWith(mockSubjectsFilter.selectedSubjects, mockSubjectsFilter.subjects,  1, FieldTypeKey.SUBJECT);
-  })
+  });
 });

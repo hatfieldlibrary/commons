@@ -11,13 +11,12 @@ export class SearchService {
   }
 
   /*
-    TODO This service is hard-coded to current cview queries. Needs to be somehow generalized!
+    TODO This method is hard-coded to current cview queries. Needs to be somehow generalized!
    */
 
   /**
-   * Opens option query target in a new window. The base url is provided here because Tagger currently accepts
-   * only the collection name as parameter.  This allows us to look up the options list from the remote API
-   * service. This is a known issue in Tagger.
+   * Used by component to obtain the href for a browse-by-date option. The base url is provided here because Tagger currently accepts
+   * only the collection name as parameter. This is a known issue in Tagger.
    * @param collection the collection name
    * @param terms user provided search terms
    */

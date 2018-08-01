@@ -3,12 +3,7 @@
 import {type} from '../shared/ngrx/type';
 import {Action} from './action.interface';
 import {FieldFilterType} from '../shared/data-types/field-filter.type';
-
-export interface TypesFilterInterface {
-  areaId: string;
-  subjectId: string;
-  groupId: string;
-}
+import {IdentifersPayload} from './payload-parameters.interface';
 
 export const ContentTypeActionTypes = {
   TYPE_LIST: type('[Types] All Types'),
@@ -45,28 +40,55 @@ export class ContentTypesSubjectAction implements Action {
 
 export class ContentTypesAreaSubjectAction implements Action {
   type = ContentTypeActionTypes.TYPE_SUBJECT_AREA_LIST;
-  constructor(public payload: TypesFilterInterface) {
+  payload: IdentifersPayload;
+  constructor(areaId: string, subjectId: string) {
+    this.payload = {
+      categoryId: '',
+      subjectId: subjectId,
+      typeId: '',
+      areaId: areaId
+    }
   }
-
 }
 
 export class ContentTypesAreaGroupAction implements Action {
   type = ContentTypeActionTypes.TYPE_AREA_GROUP_LIST;
-  constructor(public payload: TypesFilterInterface) {
+  payload: IdentifersPayload;
+  constructor(areaId: string, groupId: string) {
+    this.payload = {
+      categoryId: groupId,
+      subjectId: '',
+      typeId: '',
+      areaId: areaId
+    }
   }
 
 }
 
 export class ContentTypesSubjectGroupAction implements Action {
   type = ContentTypeActionTypes.TYPE_SUBJECT_GROUP_LIST;
-  constructor(public payload: TypesFilterInterface) {
+  payload: IdentifersPayload;
+  constructor(subjectId: string, categoryId: string) {
+    this.payload = {
+      categoryId: categoryId,
+      subjectId: subjectId,
+      typeId: '',
+      areaId: ''
+    }
   }
 
 }
 
 export class ContentTypesAreaSubjectGroupAction implements Action {
   type = ContentTypeActionTypes.TYPE_AREA_SUBJECT_GROUP_LIST;
-  constructor(public payload: TypesFilterInterface) {
+  payload: IdentifersPayload
+  constructor(areaId: string, categoryId: string, subjectId: string) {
+    this.payload = {
+      categoryId: categoryId,
+      subjectId: subjectId,
+      typeId: '',
+      areaId: areaId
+    }
   }
 
 }

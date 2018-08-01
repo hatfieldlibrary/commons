@@ -40,12 +40,7 @@ describe('Types  Reducer', () => {
 
   it('should init request for types by area, subject.', () => {
     expect(
-      reducer(undefined, new ContentTypesAreaSubjectAction(
-        {
-          areaId: '1',
-          subjectId: '1',
-          groupId: ''
-        }))
+      reducer(undefined, new ContentTypesAreaSubjectAction('1', '1'))
     ).toEqual(
       {
         types: [],
@@ -55,12 +50,7 @@ describe('Types  Reducer', () => {
 
   it('should init request for types by group, subject.', () => {
     expect(
-      reducer(undefined, new ContentTypesSubjectGroupAction(
-        {
-          areaId: '',
-          subjectId: '1',
-          groupId: '1'
-        }))
+      reducer(undefined, new ContentTypesSubjectGroupAction('1', '1'))
     ).toEqual(
       {
         types: [],
@@ -70,12 +60,7 @@ describe('Types  Reducer', () => {
 
   it('should init request for types by area, group, subject.', () => {
     expect(
-      reducer(undefined, new ContentTypesAreaSubjectGroupAction(
-        {
-          areaId: '1',
-          subjectId: '1',
-          groupId: '1'
-        }))
+      reducer(undefined, new ContentTypesAreaSubjectGroupAction('1', '1', '1'))
     ).toEqual(
       {
         types: [],

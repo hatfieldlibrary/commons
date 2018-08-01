@@ -105,7 +105,7 @@ describe('Subject Effect', () => {
 
   it('should return subjects for area and type success action', () => {
 
-    const startAction = new SubjectsForAreaTypes(mockPayload);
+    const startAction = new SubjectsForAreaTypes('1','1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
     const successAction = new SubjectActionSuccess(subjectsMock);

@@ -47,7 +47,7 @@ export class TypesComponent implements OnInit {
     return this.filter.types.length > 0;
   }
 
-  onTypeListControlChanged(list: MatSelectionList, typeId: number) {
+  onTypeListControlChanged(typeId: number) {
     const updatedSelectedTypes = this.filterService
       .updateSelectedFields(this.filter.selectedTypes, this.filter.types, typeId, FieldTypeKey.TYPE);
     const updatedTypeEvent: SelectedTypeEvent = {selected: updatedSelectedTypes};
