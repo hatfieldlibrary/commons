@@ -1,47 +1,64 @@
-import {TestBed, inject} from '@angular/core/testing';
+import {TestBed, getTestBed} from '@angular/core/testing';
 
 import {SearchService} from './search.service';
-//import {MockBackend} from '@angular/http/testing';
-//import {ResponseOptions, XHRBackend} from '@angular/http';
-
-const mockList = [
-  { 'item' : { 'title' : '1954', 'count' : '31' } }
-];
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {environment} from '../environments/environment';
 
 describe('SearchService', () => {
 
-  // beforeEach(() => {
-  //   TestBed.configureTestingModule({
-  //     providers: [
-  //       SearchService,
-  //       MockBackend,
-  //       {provide: XHRBackend, useClass: MockBackend}]
-  //   });
-  // });
+  const mockList = [
+    {'item': {'title': '1954', 'count': '31'}}
+  ];
 
-//   it('should create the service', inject([SearchService], (service: SearchService) => {
-//     expect(service).toBeTruthy();
-//   }));
-//
-//   it('should get the query for list of options', inject([SearchService], (service: SearchService) => {
-//     let href = service.getOptionsQuery('bigcollection', '2000');
-//     expect(href).toEqual('https://libmedia.willamette.edu/cview/bigcollection.html#!browse:search:bigcollection/date^2000^all^and!');
-//   }));
-//
-//   it('should get the query for search', inject([SearchService], (service: SearchService) => {
-//     let href = service.executeSimpleSearchQuery('http://go.somewhere/collection/{$query}', 'fish');
-//     expect(href).toEqual('http://go.somewhere/collection/fish');
-//
-//   }));
-//
-//   it('should get list of query options for collection', inject([SearchService, MockBackend], (service, mockBackend) => {
-//     mockBackend.connections.subscribe(conn => {
-//       conn.mockRespond(new Response(new ResponseOptions({body: mockList})));
-//     });
-//     const result = service.getOptionsList('collegian');
-//     result.subscribe((res) => {
-//       expect(res).toEqual(mockList);
-//     });
-//
-//   }));
- });
+  const mockReponse = {
+    result: mockList
+  }
+  const testQuery = 'http://domain/{$query}';
+  const terms = 'testing';
+  const externalMock =  [
+      {
+        title: 'test',
+        count: 1
+      }
+    ];
+  const testCollection = 'collection';
+  let httpMock;
+  let searchService;
+
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ],
+      providers: [
+        SearchService
+      ]
+    });
+    httpMock = TestBed.get(HttpTestingController);
+    searchService = getTestBed().get(SearchService);
+  });
+
+
+  it('should get search href', () => {
+    const result = searchService.executeSimpleSearchQuery(testQuery, terms);
+    expect(result).toEqual('http://domain/testing')
+
+  });
+
+  it('should get options href', () => {
+    const result = searchService.getOptionsQuery(testCollection, terms);
+    expect(result).toEqual('https://libmedia.willamette.edu/cview/collection.html#!browse:search:collection/date^testing^all^and!');
+  });
+
+  it('should get options list', () => {
+    const result = searchService.getOptionsList(testCollection);
+    result.subscribe(res => {
+      expect(res).toEqual(mockList);
+    });
+    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/options/external/' + testCollection);
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockReponse);
+    httpMock.verify();
+  });
+});

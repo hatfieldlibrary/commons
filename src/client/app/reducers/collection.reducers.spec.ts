@@ -20,7 +20,12 @@ import {getCollectionList, reducer, State} from './collection.reducers';
 import {
   AllCollectionsAction,
   CollectionsActionSuccess,
-  CollectionsAreaAction, CollectionActionFailed, CollectionReset, CollectionsSubjectAction, CollectionsAreaSubjectAction
+  CollectionsAreaAction,
+  CollectionActionFailed,
+  CollectionReset,
+  CollectionsSubjectAction,
+  CollectionsAreaSubjectAction,
+  CollectionsCategoryAreaAction, CollectionsTypeAreaSubjectAction
 } from '../actions/collection.actions';
 import {AreaType} from '../shared/data-types/area.type';
 /**
@@ -99,6 +104,26 @@ describe('Collection Reducer', () => {
       })
   });
 
+  it('should set loading state to true for collection by category/area', () => {
+    expect(
+      reducer(undefined, new CollectionsCategoryAreaAction('1', '1'))
+    ).toEqual(
+      {
+        collections: [],
+        loading: true
+      })
+  });
+
+  it('should set loading state to true for collection by category/area/type', () => {
+    expect(
+      reducer(undefined, new CollectionsTypeAreaSubjectAction('1','1', '1'))
+    ).toEqual(
+      {
+        collections: [],
+        loading: true
+      })
+  });
+
   it('should return the collection list for areas and subject.', () => {
     expect(
       reducer(undefined, new CollectionsActionSuccess(collectionListMock))
@@ -131,6 +156,17 @@ describe('Collection Reducer', () => {
       })
   });
 
+  it('should return current empty state if no areas id is provided to CollectionsCategoryAreaAction', () => {
+    const collectionState: State = {collections: collectionListMock, loading: false};
+    expect(
+      reducer(collectionState, new CollectionsCategoryAreaAction('', ''))
+    ).toEqual(
+      {
+        collections: [],
+        loading: false
+      })
+  });
+
   it('should return empty state if either areas or subject id is missing in CollectionSubjectAction.', () => {
     const collectionState: State = {collections: collectionListMock, loading: false};
     expect(
@@ -139,6 +175,17 @@ describe('Collection Reducer', () => {
       {
         collections: [],
         loading: false
+      })
+  });
+
+  it('should set loading state to true for area/subject action.', () => {
+    const collectionState: State = {collections: collectionListMock, loading: false};
+    expect(
+      reducer(collectionState, new CollectionsAreaSubjectAction('1', '1'))
+    ).toEqual(
+      {
+        collections: [],
+        loading: true
       })
   });
 

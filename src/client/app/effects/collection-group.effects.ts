@@ -4,7 +4,6 @@ import {Observable} from 'rxjs/Observable';
 import {Action} from '../actions/action.interface';
 import {Injectable} from '@angular/core';
 import {CollectionGroupServices} from '../services/collection-group.services';
-import {GroupsByAreaSubjectType} from '../actions/collection-group.actions';
 
 @Injectable()
 export class CollectionGroupEffects {
@@ -35,7 +34,6 @@ export class CollectionGroupEffects {
     .map(res => new groups.GroupActionSuccess(res))
     .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
 
-
   @Effect()
   groupsBySubjectEffect$: Observable<Action> = this.actions$
     .ofType(groups.GroupActionTypes.GROUPS_BY_SUBJECT)
@@ -48,7 +46,7 @@ export class CollectionGroupEffects {
   groupsBySubjectTypeEffect$: Observable<Action> = this.actions$
     .ofType(groups.GroupActionTypes.GROUPS_BY_SUBJECT_TYPE)
     .map((action: groups.GroupsBySubjectType) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsBySubjectType(payload.types, payload.subjects))
+    .switchMap((payload) => this.svc.getGroupsBySubjectType(payload.typeId, payload.subjectId))
     .map(res => new groups.GroupActionSuccess(res))
     .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
 
@@ -56,7 +54,7 @@ export class CollectionGroupEffects {
   groupsByAreaTypeEffect$: Observable<Action> = this.actions$
     .ofType(groups.GroupActionTypes.GROUPS_BY_AREA_TYPE)
     .map((action: groups.GroupsByAreaType) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsByAreaType(payload.areas, payload.types))
+    .switchMap((payload) => this.svc.getGroupsByAreaType(payload.areaId, payload.typeId))
     .map(res => new groups.GroupActionSuccess(res))
     .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
 
@@ -64,7 +62,7 @@ export class CollectionGroupEffects {
   groupsByAreaSubjectEffect$: Observable<Action> = this.actions$
     .ofType(groups.GroupActionTypes.GROUPS_BY_AREA_SUBJECT)
     .map((action: groups.GroupsByAreaSubject) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsByAreaSubject(payload.areas, payload.subjects))
+    .switchMap((payload) => this.svc.getGroupsByAreaSubject(payload.areaId, payload.subjectId))
     .map(res => new groups.GroupActionSuccess(res))
     .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
 
@@ -72,7 +70,7 @@ export class CollectionGroupEffects {
   groupsByAreaSubjectTypeEffect$: Observable<Action> = this.actions$
     .ofType(groups.GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE)
     .map((action: groups.GroupsByAreaSubjectType) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsByAreaSubjectType(payload.areas, payload.subjects, payload.types))
+    .switchMap((payload) => this.svc.getGroupsByAreaSubjectType(payload.areaId, payload.subjectId, payload.typeId))
     .map(res => new groups.GroupActionSuccess(res))
     .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
 

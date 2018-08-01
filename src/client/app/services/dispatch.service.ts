@@ -7,9 +7,7 @@ import * as areaActions from '../actions/area.actions';
 import * as groupActions from '../actions/collection-group.actions';
 import {AreaParams} from '../actions/area.actions';
 import * as listActions from '../actions/collection.actions';
-import {TypeAreaSubjectParams} from '../actions/type-area-subject-parameters.interface';
 import {NavigationServiceB} from './navigation-2/navigation.service';
-import {TypesFilterInterface} from '../actions/type.actions';
 
 /**
  * This class handles all store dispatch requests for the application.
@@ -151,33 +149,16 @@ export class DispatchService {
     this.store.dispatch(new subjectAction.SubjectsForTypes(typeId));
   }
 
-  private getSubjectsForAreaGroupType(areaId, groupId, typeId): void {
-    const params = {
-      areaId: areaId,
-      groupId: groupId,
-      subjectId: null,
-      typeId: typeId
-    };
-    this.store.dispatch(new subjectAction.SubjectsForAreaGroupType(params))
+  private getSubjectsForAreaGroupType(areaId: string, groupId: string, typeId: string): void {
+    this.store.dispatch(new subjectAction.SubjectsForAreaGroupType(areaId, groupId, typeId))
   }
 
   private getSubjectsForAreaType(areaId: string, typeId: string): void {
-    const params = {
-      areaId: areaId,
-      typeId: typeId,
-      groupId: null
-    };
-    this.store.dispatch(new subjectAction.SubjectsForAreaTypes(params));
+    this.store.dispatch(new subjectAction.SubjectsForAreaTypes(areaId, typeId));
   }
 
   private getSubjectsForAreaGroup(areaId, groupId) {
-    const params = {
-      areaId: areaId,
-      groupId: groupId,
-      subjectId: null,
-      typeId: null
-    };
-    this.store.dispatch(new subjectAction.SubjectsForAreaGroup(params))
+    this.store.dispatch(new subjectAction.SubjectsForAreaGroup(areaId, groupId))
   }
 
   private getAllTypes() {
@@ -193,30 +174,15 @@ export class DispatchService {
   }
 
   private getTypesForAreaGroup(areaId, groupId) {
-    const params = {
-      areaId: areaId,
-      groupId: groupId,
-      subjectId: null
-    };
-    this.store.dispatch(new typeActions.ContentTypesAreaGroupAction(params))
+    this.store.dispatch(new typeActions.ContentTypesAreaGroupAction(areaId, groupId))
   }
 
   private getTypesForSubjectGroup(subjectId, groupId) {
-    const params = {
-      areaId: '',
-      groupId: groupId,
-      subjectId: subjectId
-    };
-    this.store.dispatch(new typeActions.ContentTypesSubjectGroupAction(params))
+    this.store.dispatch(new typeActions.ContentTypesSubjectGroupAction(subjectId, groupId))
   }
 
   private getTypesForAreaSubjectGroup(areaId, groupId, subjectId) {
-    const params = {
-      areaId: areaId,
-      groupId: groupId,
-      subjectId: subjectId
-    };
-    this.store.dispatch(new typeActions.ContentTypesAreaSubjectGroupAction(params))
+    this.store.dispatch(new typeActions.ContentTypesAreaSubjectGroupAction(areaId, groupId, subjectId))
   }
 
   /**
@@ -253,25 +219,11 @@ export class DispatchService {
   }
 
    getCollectionsForTypeSubject(typeId: string, subjectId: string): void { // TS
-    const params
-      :
-      TypeAreaSubjectParams = {
-      areas: [],
-      types: typeId.split(','),
-      subjects: subjectId
-    };
-    this.store.dispatch(new listActions.CollectionsTypeSubjectAction(params));
+    this.store.dispatch(new listActions.CollectionsTypeSubjectAction(typeId, subjectId));
   }
 
   private getCollectionsForAreaType(areaId: string, typeId: string): void { // AT
-    const params
-      :
-      TypeAreaSubjectParams = {
-      areas: areaId.split(','),
-      types: typeId.split(','),
-      subjects: ''
-    };
-    this.store.dispatch(new listActions.CollectionsTypeAreaAction(params));
+    this.store.dispatch(new listActions.CollectionsTypeAreaAction(areaId, typeId));
   }
 
   private getCollectionsForCategoryArea(categoryId: string, areaId: string) { // AG
@@ -294,14 +246,7 @@ export class DispatchService {
   }
 
   private getCollectionsForTypeAreaSubject(areaId: string, typeId: string, subjectId: string): void { // AST
-    const params
-      :
-      TypeAreaSubjectParams = {
-      areas: areaId.split(','),
-      types: typeId.split(','),
-      subjects: subjectId
-    };
-    this.store.dispatch(new listActions.CollectionsTypeAreaSubjectAction(params));
+    this.store.dispatch(new listActions.CollectionsTypeAreaSubjectAction(areaId, typeId, subjectId));
   }
 
   private getCollectionsForCategoryAreaType(categoryId: string, areaId: string, typeId: string) { // ATG
@@ -369,13 +314,11 @@ export class DispatchService {
   // }
 
   private getTypesForAreaSubject(areaId: string, subjectId: string) {
-    const requestParams: TypesFilterInterface = {areaId: areaId, subjectId: subjectId, groupId: ''};
-    this.store.dispatch(new typeActions.ContentTypesAreaSubjectAction(requestParams));
+    this.store.dispatch(new typeActions.ContentTypesAreaSubjectAction(areaId, subjectId));
   }
 
   private getTypesForAreaGroupSubject(areaId: string, groupId, subjectId: string) {
-    const requestParams: TypesFilterInterface = {areaId: areaId, subjectId: subjectId, groupId: groupId};
-    this.store.dispatch(new typeActions.ContentTypesAreaSubjectGroupAction(requestParams));
+    this.store.dispatch(new typeActions.ContentTypesAreaSubjectGroupAction(areaId, groupId, subjectId));
   }
 
   /**

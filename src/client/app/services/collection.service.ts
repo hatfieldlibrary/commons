@@ -48,7 +48,7 @@ export class CollectionService {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/type/' + id);
   }
 
-  getCollectionsByTypeArea(typeId: string, areaId: string): Observable<CollectionType[]> {
+  getCollectionsByTypeArea(areaId: string, typeId: string): Observable<CollectionType[]> {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/area/' + areaId + '/type/' + typeId);
   }
 

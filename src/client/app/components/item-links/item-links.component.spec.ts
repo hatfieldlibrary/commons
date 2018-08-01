@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { ItemLinksComponent } from './item-links.component';
 import {
@@ -20,12 +20,16 @@ import {Observable} from 'rxjs/Observable';
 import {ItemSelectComponent} from '../item-select-options/item-select.component';
 import {DatePickerSvgComponent} from '../svg/date-picker-svg/date-picker-svg.component';
 import {HttpClientModule} from '@angular/common/http';
-// import {MockBackend} from "@angular/http/testing";
+import {Subscription} from 'rxjs/Subscription';
+import * as fromRoot from '../../reducers';
 
 describe('ItemLinksComponent', () => {
   let component: ItemLinksComponent;
   let fixture: ComponentFixture<ItemLinksComponent>;
-
+  let watcher: Subscription;
+  let store;
+  let auth;
+  let route;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -46,7 +50,12 @@ describe('ItemLinksComponent', () => {
       ],
       providers: [
         SearchService,
-        AuthCheckService,
+        {
+          provide: AuthCheckService,
+          useValue: {
+            getAuthStatus: () => Observable.of({})
+          }
+        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -66,8 +75,7 @@ describe('ItemLinksComponent', () => {
           }
         },
       ]
-    })
-    .compileComponents();
+    });
   }));
 
   beforeAll(() => {
@@ -76,11 +84,31 @@ describe('ItemLinksComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemLinksComponent);
+    store = fixture.debugElement.injector.get(Store);
+    auth = fixture.debugElement.injector.get(AuthCheckService);
+    route = fixture.debugElement.injector.get(ActivatedRoute);
+    spyOn(route.url, 'map').and.callThrough();
+    spyOn(store, 'select').and.callThrough();
+    spyOn(auth, 'getAuthStatus').and.callThrough();
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    watcher = component.watchers;
+    spyOn(watcher, 'add');
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should initialize the component', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    expect(route.url.map).toHaveBeenCalled();
+    expect(component.watchers.add).toHaveBeenCalled();
+    expect(store.select).toHaveBeenCalledWith(fromRoot.getAuthStatus);
+    expect(auth.getAuthStatus).toHaveBeenCalled();
+  }));
+
+  it('should remove subscriptions on destroy', fakeAsync(() => {
+    spyOn(watcher, 'unsubscribe');
+    component.ngOnDestroy();
+    tick();
+    expect(component.watchers.unsubscribe).toHaveBeenCalled();
+
+  }));
 });
