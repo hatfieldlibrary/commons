@@ -1,14 +1,14 @@
 {
   "name": "commons",
   "version": "4.1.0",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "angular-cli": {},
   "author": {
     "name": "Michael Spalti",
     "email": "mspalti@gmail.com"
   },
   "keywords": [
-    "angular2",
+    "angular6",
     "angular-cli",
     "ngrx",
     "typescript"
