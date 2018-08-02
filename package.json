@@ -1,14 +1,14 @@
 {
   "name": "commons",
   "version": "4.1.0",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "angular-cli": {},
   "author": {
     "name": "Michael Spalti",
     "email": "mspalti@gmail.com"
   },
   "keywords": [
-    "angular2",
+    "angular6",
     "angular-cli",
     "ngrx",
     "typescript"
@@ -29,7 +29,7 @@
     "e2e": "ng e2e",
     "client:prod:build": "ng build --prod --deploy-url=/ --base-href /commons/",
     "server:prod:build": "tsc -p ./src/server",
-    "build:prod": "npm run client:prod:build && npm run server:prod:build && exit 0",
+    "build:prod": "ng test --watch=false && npm run client:prod:build && npm run server:prod:build && exit 0",
     "compodoc": "compodoc -p ./src/client/tsconfig.json",
     "build:demon": "nodemon --exec ts-node index.js",
     "client:build:watch": "ng build --watch",

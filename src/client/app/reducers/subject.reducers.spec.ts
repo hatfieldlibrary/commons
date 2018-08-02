@@ -1,24 +1,30 @@
 /*
- * Copyright (c) 2017.
+ * Copyright (c) [2018] [Willamette University]
  *
- *   This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
  *
- *   You should have received a copy of the GNU General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * Author: Michael Spalti
  */
 
 import {
-  AllSubjectAction,
-   CurrentSubject, RemoveCurrentSubject, SubjectAction, SubjectActionFailed, SubjectActions,
-  SubjectActionSuccess
+  SubjectActionFailed,
+  SubjectActionSuccess, SubjectsForAreaGroup, SubjectsForAreaGroupType, SubjectsForAreaTypes
 } from '../actions/subject-actions';
 import {getSubjectList, reducer} from './subject.reducers';
 import {Action} from '@ngrx/store';
@@ -49,64 +55,6 @@ class MockAction implements Action {
 
 describe('Subject Reducers', () => {
 
-  // it('should return the initial state and loading boolean set to true for subject action', () => {
-  //   expect(
-  //     reducer(undefined, new SubjectAction('1'))
-  //   ).toEqual({
-  //       subjects: [],
-  //       selectedSubject: {id: 0, name: ''},
-  //     removedSubjects: {id: 0, name: ''},
-  //       loading: true
-  //     }
-  //   )
-  // });
-  //
-  // it('should return subject list', () => {
-  //
-  //   expect(
-  //     reducer(undefined, new SubjectActionSuccess(expectedSubjects))
-  //   ).toEqual({
-  //       subjects: expectedSubjects,
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     }
-  //   )
-  // });
-  //
-  // it('should return the initial state and loading boolean set to true all subject action', () => {
-  //   expect(
-  //     reducer(undefined, new AllSubjectAction())
-  //   ).toEqual({
-  //       subjects: [],
-  //       selectedSubject: {id: 0, name: '', url: ''},
-  //       loading: true
-  //     }
-  //   )
-  // });
-  //
-  // it('should return subject list', () => {
-  //
-  //   expect(
-  //     reducer(undefined, new SubjectActionSuccess(expectedSubjects))
-  //   ).toEqual({
-  //       subjects: expectedSubjects,
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     }
-  //   )
-  // });
-  //
-  // it('should return the current state if action not found', () => {
-  //   expect(
-  //     reducer(undefined, new MockAction())
-  //   ).toEqual(
-  //     {
-  //       subjects: [],
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     })
-  // });
-
   it('should return subject information', () => {
 
     const state = reducer(undefined, new SubjectActionSuccess(expectedSubjects));
@@ -121,26 +69,27 @@ describe('Subject Reducers', () => {
     expect(result).toEqual([]);
   });
 
-  // it('should find the current subject', () => {
-  //   const state = reducer(mockState, new CurrentSubject('1'));
-  //   const result = getSelectedSubject(state);
-  //   expect(result).toEqual({id: 1, name: 'test subject'});
-  // });
-  //
-  // it('should return the default selected subject with id zero', () => {
-  //   const state = reducer(mockState, new CurrentSubject('-1'));
-  //   const result = getSelectedSubject(state);
-  //   expect(result).toEqual({id: 0, name: ''});
-  // });
+  it('should return loading state for area and group', () => {
 
-  // it('should remove the selected subject', () => {
-  //   expect(
-  //     reducer(mockState, new RemoveCurrentSubject()))
-  //     .toEqual({
-  //       subjects: expectedSubjects,
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     });
-  // });
+    const state = reducer(undefined, new SubjectsForAreaGroup('1', '1'));
+    expect(state.loading).toBeTruthy();
+    const result = getSubjectList(state);
+    expect(result).toEqual([]);
+  });
 
+  it('should return loading state for area and type', () => {
+
+    const state = reducer(undefined, new SubjectsForAreaTypes('1', '1'));
+    expect(state.loading).toBeTruthy();
+    const result = getSubjectList(state);
+    expect(result).toEqual([]);
+  });
+
+  it('should return loading state for area, group and type', () => {
+
+    const state = reducer(undefined, new SubjectsForAreaGroupType('1', '1', '1'));
+    expect(state.loading).toBeTruthy();
+    const result = getSubjectList(state);
+    expect(result).toEqual([]);
+  });
 });
