@@ -1,3 +1,27 @@
+/*
+ * Copyright (c) [2018] [Willamette University]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * Author: Michael Spalti
+ */
+
 import {TestBed} from '@angular/core/testing';
 
 import {NavigationServiceB} from './navigation.service';
@@ -209,6 +233,18 @@ describe('NavigationService', () => {
     ], {queryParams: {view: 'list'}})
   });
 
+  it('should navigate area and type using with query params', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '1', '', '', 'list');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'area', '1',
+      'type', '1'
+    ], {queryParams: {view: 'list'}})
+  });
+
   it('should return back link area, group, type, subject', () => {
     const link = service.getBackLink('1', '1', '1', '1');
     expect(link).toEqual('/commons/collection/category/1/area/1/type/1/subject/1')
@@ -229,6 +265,11 @@ describe('NavigationService', () => {
     expect(link).toEqual('/commons/collection/category/1/area/1/type/1')
   });
 
+  it('should return back link area, subject, type', () => {
+    const link = service.getBackLink('1', '', '1', '1');
+    expect(link).toEqual('/commons/collection/area/1/type/1/subject/1')
+  });
+
   it('should return back link area, type', () => {
     const link = service.getBackLink('1', '', '', '1');
     expect(link).toEqual('/commons/collection/area/1/type/1')
@@ -244,11 +285,11 @@ describe('NavigationService', () => {
   it('should return field selected false', () => {
     let selected = service.isFieldSelected('0');
     expect(selected).toBeFalsy();
-    selected = service.isFieldSelected(undefined)
+    selected = service.isFieldSelected(undefined);
     expect(selected).toBeFalsy();
-    selected = service.isFieldSelected(null)
+    selected = service.isFieldSelected(null);
     expect(selected).toBeFalsy();
-    selected = service.isFieldSelected('')
+    selected = service.isFieldSelected('');
     expect(selected).toBeFalsy();
   });
 

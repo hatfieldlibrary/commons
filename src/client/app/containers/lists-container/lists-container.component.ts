@@ -1,23 +1,29 @@
 /*
- * Copyright (c) 2017.
+ * Copyright (c) [2018] [Willamette University]
  *
- *   This program is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- *    This program is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
  *
- *   You should have received a copy of the GNU General Public License
- *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * Author: Michael Spalti
  */
 
 /**
- * The main container component for subject selector, areas/types selectors and collection
- * list components
+ * The main container for components used in browsing with filters.
  */
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
@@ -53,6 +59,7 @@ import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {ScrollReadyService} from '../../services/observable/scroll-ready.service';
 import {SetViewAction} from '../../actions/view.actions';
 import {SelectedAreaEvent} from '../../components/area-options/area-options.component';
+import {SubscriptionService} from '../../services/subscription.service';
 
 @Component({
   selector: 'app-lists-container',
@@ -67,13 +74,11 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   view = 'list';
 
   /**
-   * Redux selectors.
+   * State fields (Redux)
    */
   collections$: Observable<CollectionType[]>;
   areas$: Observable<FieldFilterType[]>;
   areaInfo$: Observable<AreaType>;
-  types$: Observable<FieldFilterType[]>;
-  groups$: Observable<FieldFilterType[]>;
   filters$: Observable<fromFilter.State>;
   typesFilter$: Observable<TypesFilter>;
   areasFilter$: Observable<AreasFilter>;
@@ -81,6 +86,13 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   groupsFilter$: Observable<CollectionGroupFilter>;
   viewType$: Observable<string>;
 
+  /**
+   * These are used in navigation. The values are
+   * set by subscriptions to Store updates (since it is
+   * necessary to save this information as part of the
+   * application state). But in fact, for present purposes
+   * they could also be obtained from route params.
+   */
   selectedAreas: FieldFilterType[];
   selectedTypes: FieldFilterType[];
   selectedSubjects: FieldFilterType[];
@@ -112,7 +124,8 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
               private navigation: NavigationServiceB,
               private setSelected: SetSelectedService,
               private dispatchService: DispatchService,
-              private scrollReady: ScrollReadyService) {
+              private scrollReady: ScrollReadyService,
+              private subscriptionService: SubscriptionService ) {
 
   }
 
@@ -204,6 +217,12 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
         this.notMobile = change.mqAlias !== 'xs';
+        // Toggle to grid view if mobile.
+        if (change.mqAlias === 'xs') {
+          this.store.dispatch(new SetViewAction('grid'));
+        } else {
+          this.store.dispatch(new SetViewAction('list'));
+        }
       });
     this.watchers.add(mediaWatcher);
   }
@@ -222,7 +241,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
    * @param {SelectedAreaEvent} updatedAreaList the updated area list
    */
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
-
     const areaIds = this.navigation.getIds(updatedAreaList.selected);
     this.navigation.navigateRoute(areaIds, null, null, null);
   }
@@ -280,71 +298,49 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    // All local subscriptions are added to this Subscription
-    // and removed in ngOnDestroy.
-    this.watchers = new Subscription();
-    this.setMediaWatcher();
-    this.collections$ = Observable.combineLatest(
-      this.store.select(fromRoot.getFilteredCollections),
-      (collections) => {
-        // Let subscribers know that collection data is ready.
-        // TODO: may be possible to instead use AfterViewInit inside CollectionRowsComponent and CollectionGridComponent.
-        this.scrollReady.setReady();
-        return collections;
-      }
-    );
+  /**
+   * Gets Store observables from the SubscriptionService and adds
+   * subscriptions to update local, bound fields. Local subscriptions
+   * are added to the watcher for later cleanup.
+   */
+  private getStoreSelectors(): void {
     // For now, areas$ is used in app menu.
-    this.areas$ = this.store.select(fromRoot.getAreas);
-    this.areaInfo$ = this.store.select(fromRoot.getAreaInfo);
-    // this.types$ = this.store.select(fromRoot.getTypes);
-    // this.groups$ = this.store.select(fromRoot.getCollectionGroups);
-    this.filters$ = this.store.select(fromRoot.getFilters);
-    this.viewType$ = this.store.select(fromRoot.getViewState);
-    this.areasFilter$ = Observable.combineLatest(
-      this.store.select(fromRoot.getAreas),
-      this.store.select(fromRoot.getAreasFilter),
-      (areas, selected) => {
-        this.selectedAreas = selected;
-        return {
-          areas: areas,
-          selectedAreas: selected
-        }
-      }
-    );
-    this.typesFilter$ = Observable.combineLatest(
-      this.store.select(fromRoot.getTypes),
-      this.store.select(fromRoot.getTypesFilter),
-      (types, selected) => {
-        this.selectedTypes = selected;
-        return {
-          types: types,
-          selectedTypes: selected
-        }
-      }
-    );
-    this.subjectsFilter$ = Observable.combineLatest(
-      this.store.select(fromRoot.getSubject),
-      this.store.select(fromRoot.getSubjectsFilter),
-      (subjects, selected) => {
-        this.selectedSubjects = selected;
-        return {
-          subjects: subjects,
-          selectedSubjects: selected
-        }
-      }
-    );
-    this.groupsFilter$ = Observable.combineLatest(
-      this.store.select(fromRoot.getCollectionGroups),
-      this.store.select(fromRoot.getCollectionsGroupFilter),
-      (groups, selected) => {
-        this.selectedGroups = selected;
-        return {
-          groups: groups,
-          selectedGroups: selected
-        }
-      }
-    );
+    this.areas$ = this.subscriptionService.getAreasState();
+    this.collections$ = this.subscriptionService.getCollectionState();
+    const readySubscription = this.collections$.subscribe(() => {
+      this.scrollReady.setReady();
+    });
+    this.watchers.add(readySubscription);
+    this.areaInfo$ = this.subscriptionService.getAreaInfoState();
+    this.filters$ = this.subscriptionService.getFilterState();
+    this.viewType$ = this.subscriptionService.getViewTypeState();
+    this.areasFilter$ = this.subscriptionService.getAreasFilterState();
+    const areaFilterSub = this.areasFilter$.subscribe((area) => {
+      this.selectedAreas = area.selectedAreas;
+    });
+    this.watchers.add(areaFilterSub);
+    this.typesFilter$ = this.subscriptionService.getTypesFilterState();
+    const typeFilterSub = this.typesFilter$.subscribe((type) => {
+      this.selectedTypes = type.selectedTypes;
+    });
+    this.watchers.add(typeFilterSub);
+    this.subjectsFilter$ = this.subscriptionService.getSubjectsFilterState();
+    const subjectFilterSub = this.subjectsFilter$.subscribe((subject) => {
+      this.selectedSubjects = subject.selectedSubjects;
+    });
+    this.watchers.add(subjectFilterSub);
+    this.groupsFilter$ = this.subscriptionService.getGroupsFilterState();
+    const groupFilterSub = this.groupsFilter$.subscribe((group) => {
+      this.selectedGroups = group.selectedGroups;
+    });
+    this.watchers.add(groupFilterSub);
+  }
+
+  /**
+   * Subscribe to route changes. Updates the component and calls the
+   * DispatchService to request new API data.
+   */
+  private setRouteWatchers(): void {
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.setQueryParams(params);
@@ -363,6 +359,15 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         this.setView(params);
       });
     this.watchers.add(paramsWatcher);
+  }
+
+  ngOnInit() {
+    // All local subscriptions are added to this Subscription
+    // and removed in ngOnDestroy.
+    this.watchers = new Subscription();
+    this.setMediaWatcher();
+    this.getStoreSelectors();
+    this.setRouteWatchers();
   }
 
   ngOnDestroy(): void {

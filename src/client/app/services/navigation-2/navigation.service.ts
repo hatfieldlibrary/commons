@@ -1,3 +1,27 @@
+/*
+ * Copyright (c) [2018] [Willamette University]
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * Author: Michael Spalti
+ */
+
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Router} from '@angular/router';
@@ -48,6 +72,19 @@ export class NavigationServiceB {
   }
 
   /**
+   * Used by components that need to navigate back to the current list. The condition for the zero
+   * selectedArea value is for global browsing.  Since we currently do not use global browsing,
+   * the implementation is incomplete for now.
+   */
+  getBackLink(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
+    if (selectedArea && selectedArea !== '0') {
+      return this._handleAreaBackLinks(selectedArea, selectedGroup, selectedSubject, selectedTypes);
+    } else if (selectedArea === '0') {
+      return this._handleGlobalBackLinks(selectedSubject, selectedGroup, selectedTypes);
+    }
+  }
+
+  /**
    * Verifies that the request is an array of objects that
    * include and id field. All filter types must include an
    * id (AreaFilterTypes, TypesFilterType, SubjectType).
@@ -88,7 +125,7 @@ export class NavigationServiceB {
     return ids.slice(0, -1);
   }
 
-  public navigateItemRoute(itemId: string, areaId: string) {
+  public navigateItemRoute(itemId: string, areaId: string): void {
     if (!areaId) {
       areaId = '0';
     }
@@ -202,11 +239,8 @@ export class NavigationServiceB {
    * @param {string} areaId area id (can be comma-separated list).
    * @param {string} typeId the type id (can be comma-separated list).
    * @param {string} subjectId the subject id.
-   */
-
-  /*
-   * TODO: this builds in a 4-way permutation that includes global search (and potentially multiple
-   * selected areas). Current design excludes global and allows only single area.
+   * TODO: Incomplete global search routing (area is always using in current application routing).
+   * TODO: Ignoring the promise returned by router.navigate (needs review, it may be ok).
    */
   navigateRoute(areaId: string, typeId: string, subjectId: string, groupId: string, view?: string): void {
 
@@ -322,16 +356,12 @@ export class NavigationServiceB {
 
       return this._areaGroupSubjectTypeLink(selectedArea, selectedGroup, selectedSubject, selectedTypes);
     } else if (selectedGroup && selectedTypes) {
-
       return this._areaGroupTypeLink(selectedArea, selectedGroup, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject) && selectedGroup) {
-
       return this._areaGroupSubjectLink(selectedArea, selectedGroup, selectedSubject);
     } else if (this.isFieldSelected(selectedSubject) && this.isFieldSelected(selectedTypes)) {
-
       return this._areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
     } else if (this.isFieldSelected(selectedTypes)) {
-
       return this._areaTypeLink(selectedArea, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject)) {
       return this._areaSubjectLink(selectedArea, selectedSubject)
@@ -378,20 +408,20 @@ export class NavigationServiceB {
       `/collection/category/${selectedGroup}/area/${selectedArea}`;
   }
 
-  private _groupTypeLink(selectedGroup: string, selectedTypes: string): string {
-    return '/' + this.urlRootPath +
-      `/collection/category/${selectedGroup}/type/${selectedTypes}`;
-  }
-
-  private _groupSubjectLink(selectedGroup: string, selectedSubject: string): string {
-    return '/' + this.urlRootPath +
-      `/collection/category/${selectedGroup}/subject/${selectedSubject}`;
-  }
-
-  private _groupLink(selectedGroup: string): string {
-    return '/' + this.urlRootPath +
-      `/collection/category/${selectedGroup}`;
-  }
+  // private _groupTypeLink(selectedGroup: string, selectedTypes: string): string {
+  //   return '/' + this.urlRootPath +
+  //     `/collection/category/${selectedGroup}/type/${selectedTypes}`;
+  // }
+  //
+  // private _groupSubjectLink(selectedGroup: string, selectedSubject: string): string {
+  //   return '/' + this.urlRootPath +
+  //     `/collection/category/${selectedGroup}/subject/${selectedSubject}`;
+  // }
+  //
+  // private _groupLink(selectedGroup: string): string {
+  //   return '/' + this.urlRootPath +
+  //     `/collection/category/${selectedGroup}`;
+  // }
 
   private _areaSubjectTypeLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
     return '/' + this.urlRootPath + `/collection/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
@@ -425,13 +455,5 @@ export class NavigationServiceB {
     return '/' + this.urlRootPath + `/collection}/subject/${selectedSubject}/type/${selectedTypes}`;
   }
 
-  // the zero area (global search) is handled here.  However, global search currently not implemented in app.
-  getBackLink(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
-    if (selectedArea && selectedArea !== '0') {
-      return this._handleAreaBackLinks(selectedArea, selectedGroup, selectedSubject, selectedTypes);
-    } else if (selectedArea === '0') {
-      return this._handleGlobalBackLinks(selectedSubject, selectedGroup, selectedTypes);
-    }
-  }
 
 }

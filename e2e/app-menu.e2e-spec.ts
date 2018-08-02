@@ -16,7 +16,7 @@
  */
 
 import { CommonsPage } from './app-menu.po';
-import {browser} from "protractor";
+import {browser} from 'protractor';
 
 /**
  * When using protractor flow control, promises are not required. But for this
