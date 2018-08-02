@@ -28,9 +28,6 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class SubjectEffects {
 
-  constructor(private svc: SubjectService, private actions$: Actions) {
-  }
-
   @Effect()
   subjectEffect$: Observable<Action> = this.actions$
     .ofType(subjects.SubjectActionTypes.SUBJECT_LIST)
@@ -78,4 +75,7 @@ export class SubjectEffects {
     .switchMap(payload => this.svc.getSubjectsForAreaGroupAndType(payload.areaId, payload.categoryId, payload.typeId))
     .map(res => new subjects.SubjectActionSuccess(res))
     .catch(err => Observable.of(new subjects.SubjectActionFailed(err)));
+
+  constructor(private svc: SubjectService, private actions$: Actions) {
+  }
 }

@@ -20,7 +20,7 @@
  */
 
 
-import {Action} from '../actions/action.interface';
+import {Action} from './action.interface';
 import { type } from '../shared/ngrx/type';
 import {AuthType} from '../shared/data-types/auth.type';
 

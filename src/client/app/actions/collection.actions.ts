@@ -19,7 +19,7 @@
  * Created by mspalti on 2/22/17.
  */
 
-import {Action} from '../actions/action.interface';
+import {Action} from './action.interface';
 import {type} from '../shared/ngrx/type';
 import {CollectionType} from '../shared/data-types/collection.type';
 import {IdentifersPayload} from './payload-parameters.interface';

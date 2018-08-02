@@ -40,9 +40,10 @@ export class AppMenusComponent implements OnDestroy {
               @Inject(DOCUMENT) private document) {
 
     this.watcher = router.events
-      .filter(event => event instanceof NavigationEnd)
-      .subscribe((event: NavigationEnd) => {
-        this.previousUrl = event.url;
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.previousUrl = event.url;
+        }
       });
 
     const mediaWatcher = media.asObservable()

@@ -32,9 +32,6 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class RelatedEffects {
 
-  constructor(private svc: RelatedService, private actions$: Actions) {
-  }
-
   @Effect()
   relatedEffect$: Observable<Action> = this.actions$
     .ofType(related.RelatedItemActionTypes.RELATED_COLLECTIONS)
@@ -42,5 +39,8 @@ export class RelatedEffects {
     .switchMap((payload) => this.svc.getRelatedCollections(payload.id, payload.subjectIds))
     .map(res => new related.ItemActionRelatedSuccess(res))
     .catch((err) => Observable.of(new related.RelatedItemRequestFailed(err)));
+
+  constructor(private svc: RelatedService, private actions$: Actions) {
+  }
 
 }

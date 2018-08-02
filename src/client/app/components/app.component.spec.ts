@@ -81,7 +81,6 @@ describe('AppComponent', () => {
 
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
-  let router;
   let store;
 
 
