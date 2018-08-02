@@ -20,7 +20,7 @@
  */
 export class SearchTerms {
 
-  constructor(public terms: string = '') {
+  constructor(public terms = '') {
   }
 
 

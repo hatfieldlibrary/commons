@@ -6,7 +6,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 
 // auth status server response.
-//const mockAuthStatus = {auth: true};
+// const mockAuthStatus = {auth: true};
 
 // describe('AuthCheckService', () => {
 //   beforeEach(() => {

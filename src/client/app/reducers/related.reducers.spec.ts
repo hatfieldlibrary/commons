@@ -18,10 +18,10 @@
 /**
  * Created by mspalti on 4/19/17.
  */
-import { reducer} from "./related.reducers";
-import {ClearRelatedItems, ItemActionRelated, ItemActionRelatedSuccess} from "../actions/related.actions";
+import { reducer} from './related.reducers';
+import {ClearRelatedItems, ItemActionRelated, ItemActionRelatedSuccess} from '../actions/related.actions';
 
-import {getRelatedList} from "./related.reducers";
+import {getRelatedList} from './related.reducers';
 
 
 const relatedItemMock = {
@@ -67,8 +67,8 @@ describe('Related Item Reducers', () => {
 
   it('should return item  information', () => {
 
-    let state = reducer(undefined, new ItemActionRelatedSuccess([relatedItemMock]));
-    let result = getRelatedList(state);
+    const state = reducer(undefined, new ItemActionRelatedSuccess([relatedItemMock]));
+    const result = getRelatedList(state);
     expect(result).toEqual([relatedItemMock]);
   });
 

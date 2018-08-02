@@ -10,9 +10,6 @@ import {IdentifersPayload} from '../actions/payload-parameters.interface';
 @Injectable()
 export class TypeEffects {
 
-  constructor(private svc: TypesService, private actions$: Actions) {
-  }
-
   @Effect()
   allTypesEffect$: Observable<Action> = this.actions$
     .ofType(types.ContentTypeActionTypes.TYPE_LIST)
@@ -60,4 +57,7 @@ export class TypeEffects {
     .switchMap((params: IdentifersPayload) => this.svc.getTypesAreaGroupSubject(params.areaId, params.categoryId, params.subjectId))
     .map(res => new types.ContentTypesActionSuccess(res))
     .catch((err) => Observable.of(new types.TypeActionFailed(err)));
+
+  constructor(private svc: TypesService, private actions$: Actions) {
+  }
 }

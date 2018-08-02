@@ -101,7 +101,7 @@ export class NavigationServiceB {
     return ids.slice(0, -1);
   }
 
-  public navigateItemRoute(itemId: string, areaId: string) {
+  public navigateItemRoute(itemId: string, areaId: string): void {
     if (!areaId) {
       areaId = '0';
     }
@@ -215,11 +215,8 @@ export class NavigationServiceB {
    * @param {string} areaId area id (can be comma-separated list).
    * @param {string} typeId the type id (can be comma-separated list).
    * @param {string} subjectId the subject id.
-   */
-
-  /*
-   * TODO: this builds in a 4-way permutation that includes global search (and potentially multiple
-   * selected areas). Current design excludes global and allows only single area.
+   * TODO: Incomplete global search routing (area is always using in current application routing).
+   * TODO: Ignoring the promise returned by router.navigate (needs review, it may be ok).
    */
   navigateRoute(areaId: string, typeId: string, subjectId: string, groupId: string, view?: string): void {
 

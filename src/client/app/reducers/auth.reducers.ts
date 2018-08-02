@@ -15,8 +15,8 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {AuthActions, AuthActionTypes} from "../actions/auth.action";
-import {AuthType} from "../shared/data-types/auth.type";
+import {AuthActions, AuthActionTypes} from '../actions/auth.action';
+import {AuthType} from '../shared/data-types/auth.type';
 /**
  * Created by mspalti on 5/2/17.
  */

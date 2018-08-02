@@ -16,7 +16,7 @@
  */
 
 
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {animate, state, style, transition, trigger} from '@angular/animations';
 /**
  * Created by mspalti on 5/17/17.
  */
@@ -102,11 +102,11 @@ export const fadeIn =
   trigger(
     'openClose',
     [
-      transition(":enter", [
+      transition(':enter', [
         style({opacity: 0}),
         animate('300ms', style({opacity: 1}))
       ]),
-      transition(":leave", [
+      transition(':leave', [
         animate('300ms', style({opacity: 0}))
       ])
     ]);
@@ -117,11 +117,11 @@ export const imageFadeIn =
   trigger(
     'imageShow',
     [
-      transition(":enter", [
+      transition(':enter', [
         style({opacity: 0}),
         animate('1000ms', style({opacity: 1}))
       ]),
-      transition(":leave", [
+      transition(':leave', [
         style({opacity: 0})
       ])
     ]);

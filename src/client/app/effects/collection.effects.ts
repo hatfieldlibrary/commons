@@ -31,9 +31,6 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class CollectionEffects {
 
-  constructor(private svc: CollectionService, private actions$: Actions) {
-  }
-
   @Effect()
   collectionsByArea$: Observable<Action> = this.actions$
     .ofType(collection.CollectionActionTypes.LIST_BY_AREA)
@@ -172,4 +169,7 @@ export class CollectionEffects {
         payload.subjectId))
     .map(res => new collection.CollectionsActionSuccess(res))
     .catch(err => Observable.of(new collection.CollectionActionFailed(err)));
+
+  constructor(private svc: CollectionService, private actions$: Actions) {
+  }
 }

@@ -18,8 +18,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RelatedItemsComponent} from './related-items.component';
-import {MatButtonModule, MatCardModule, MatGridListModule} from "@angular/material";
-import {RouterTestingModule} from "@angular/router/testing";
+import {MatButtonModule, MatCardModule, MatGridListModule} from '@angular/material';
+import {RouterTestingModule} from '@angular/router/testing';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 

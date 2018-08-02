@@ -210,6 +210,12 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
         this.notMobile = change.mqAlias !== 'xs';
+        // Toggle to grid view if mobile.
+        if (change.mqAlias === 'xs') {
+          this.store.dispatch(new SetViewAction('grid'));
+        } else {
+          this.store.dispatch(new SetViewAction('list'));
+        }
       });
     this.watchers.add(mediaWatcher);
   }

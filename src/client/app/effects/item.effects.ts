@@ -29,9 +29,6 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ItemEffects {
 
-  constructor(private svc: ItemService, private actions$: Actions) {
-  }
-
   @Effect()
   itemEffect$: Observable<Action> = this.actions$
     .ofType(item.ItemActionTypes.ITEM_REQUEST)
@@ -39,4 +36,7 @@ export class ItemEffects {
     .switchMap((id: string) => this.svc.getItem(id))
     .map(res => new item.ItemSuccess(res))
     .catch((err) => Observable.of(new item.ItemRequestFailed(err)));
+
+  constructor(private svc: ItemService, private actions$: Actions) {
+  }
 }

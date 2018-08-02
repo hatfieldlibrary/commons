@@ -22,7 +22,7 @@
  * Actions for areas updates. These actions are dispatched from component
  * controllers and effects map functions.
  */
-import {Action} from '../actions/action.interface';
+import {Action} from './action.interface';
 import {type} from '../shared/ngrx/type';
 import {AreaType} from '../shared/data-types/area.type';
 import {AreaFilterType} from 'app/shared/data-types/area-filter.type';

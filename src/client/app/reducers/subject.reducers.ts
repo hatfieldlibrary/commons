@@ -23,16 +23,12 @@ import {FieldFilterType} from '../shared/data-types/field-filter.type';
 
 export interface State {
   subjects: FieldFilterType[];
-  // selectedSubject: FieldFilterType[];
-  // previousSubjects: FieldFilterType[];
   loading: boolean;
 
 }
 
 const initialState: State = {
   subjects: [],
-  // selectedSubject: [{id: 0, name: ''}],
-  // previousSubjects: [{id: 0, name: ''}],
   loading: false
 };
 
@@ -82,17 +78,6 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
-    // case SubjectActionTypes.ALL_SUBJECT_LIST_SUCCESS: {
-    //
-    //   const result: SubjectType[] = <SubjectType[]>action.payload;
-    //   return Object.assign({}, state, {
-    //     subjects: result,
-    //     loading: false
-    //   });
-    //
-    // }
-
-
     case SubjectActionTypes.SUBJECT_LIST_FOR_TYPE: {
       return Object.assign({}, state, {
         loading: true
@@ -100,55 +85,12 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
     }
 
-    // case SubjectActionTypes.SUBJECT_LIST_FOR_TYPE_SUCCESS: {
-    //
-    //   const result: SubjectType[] = <SubjectType[]>action.payload;
-    //   return Object.assign({}, state, {
-    //     subjects: result,
-    //     loading: false
-    //   });
-    //
-    // }
-
     case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE: {
       return Object.assign({}, state, {
         loading: true
       });
 
     }
-
-    // case SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE_SUCCESS: {
-    //
-    //   const result: SubjectType[] = <SubjectType[]>action.payload;
-    //   return Object.assign({}, state, {
-    //     subjects: result,
-    //     loading: false
-    //   });
-    //
-    // }
-
-
-  //   case SubjectActionTypes.CURRENT_SELECTED_SUBJECT: {
-  //
-  //     const selectedId: string = <string>action.payload;
-  //     let selected = state.subjects.find((subject) => {
-  //       return subject.id === +selectedId;
-  //     });
-  //     if (!selected) {
-  //       [selected] = initialState.selectedSubject;
-  //     }
-  //     return Object.assign({}, state, {
-  //       selectedSubject: selected
-  //     });
-  //
-  // }
-  //
-  //   case SubjectActionTypes.REMOVE_CURRENT_SELECTED_SUBJECT: {
-  //     return Object.assign({}, state, {
-  //       selectedSubject: {id: 0, name: ''}
-  //     });
-  //   }
-
 
     default:
       return state;
@@ -159,6 +101,3 @@ export function reducer(state = initialState, action: SubjectActions): State {
 
 export const getSubjectList = (state: State) => state.subjects;
 
-// export const getRemovedSubjects = (state: State) => state.removedSubjects;
-
-// export const getSelectedSubject = (state: State) => state.selectedSubject;

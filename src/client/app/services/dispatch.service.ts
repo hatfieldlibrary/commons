@@ -5,7 +5,6 @@ import * as typeActions from '../actions/type.actions';
 import * as subjectAction from '../actions/subject-actions';
 import * as areaActions from '../actions/area.actions';
 import * as groupActions from '../actions/collection-group.actions';
-import {AreaParams} from '../actions/area.actions';
 import * as listActions from '../actions/collection.actions';
 import {NavigationServiceB} from './navigation-2/navigation.service';
 
@@ -80,19 +79,19 @@ export class DispatchService {
         this.getCollectionGroupsByArea(areaId);
         this.getTypesForArea(areaId);
       }
-    } else if (groupId) {
-      if (subjectId) {
-        if (typeId) {
-          // grp , sub, type
-        } else {
-          // grp, sub
-        }
-      } else if (typeId) {
-        // grp type
-        this.getCollectionsForCategoryType(groupId, typeId);
-        this.getSubjectsForType(typeId);
-        this.getAllTypes();
-      }
+    // } else if (groupId) {
+    //   if (subjectId) {
+    //     if (typeId) {
+    //       // grp , sub, type
+    //     } else {
+    //       // grp, sub
+    //     }
+    //   } else if (typeId) {
+    //     // grp type
+    //     this.getCollectionsForCategoryType(groupId, typeId);
+    //     this.getSubjectsForType(typeId);
+    //     this.getAllTypes();
+    //   }
     } else if (subjectId) {
       if (typeId) {
         // subject , type
@@ -124,18 +123,18 @@ export class DispatchService {
     this.store.dispatch(new areaActions.AreaListAction());
   }
 
-  public getAreasByType(typeId: string): void {
-    this.store.dispatch(new areaActions.AreaListByType(typeId))
-  }
-
-  public getAreasBySubject(subjectId: string): void {
-    this.store.dispatch(new areaActions.AreaListBySubject(subjectId));
-  }
-
-  public  getAreasByTypeAndSubject(typeId: string, subjectId: string): void {
-    const parameters: AreaParams = {typeId: typeId, subjectId: subjectId};
-    this.store.dispatch(new areaActions.AreaListByTypeSubject(parameters));
-  }
+  // public getAreasByType(typeId: string): void {
+  //   this.store.dispatch(new areaActions.AreaListByType(typeId))
+  // }
+  //
+  // public getAreasBySubject(subjectId: string): void {
+  //   this.store.dispatch(new areaActions.AreaListBySubject(subjectId));
+  // }
+  //
+  // public  getAreasByTypeAndSubject(typeId: string, subjectId: string): void {
+  //   const parameters: AreaParams = {typeId: typeId, subjectId: subjectId};
+  //   this.store.dispatch(new areaActions.AreaListByTypeSubject(parameters));
+  // }
 
   private getAllSubjects(): void {
     this.store.dispatch(new subjectAction.AllSubjectAction());
@@ -177,19 +176,18 @@ export class DispatchService {
     this.store.dispatch(new typeActions.ContentTypesAreaGroupAction(areaId, groupId))
   }
 
-  private getTypesForSubjectGroup(subjectId, groupId) {
-    this.store.dispatch(new typeActions.ContentTypesSubjectGroupAction(subjectId, groupId))
-  }
-
-  private getTypesForAreaSubjectGroup(areaId, groupId, subjectId) {
-    this.store.dispatch(new typeActions.ContentTypesAreaSubjectGroupAction(areaId, groupId, subjectId))
-  }
+  // private getTypesForSubjectGroup(subjectId, groupId) {
+  //   this.store.dispatch(new typeActions.ContentTypesSubjectGroupAction(subjectId, groupId))
+  // }
+  //
+  // private getTypesForAreaSubjectGroup(areaId, groupId, subjectId) {
+  //   this.store.dispatch(new typeActions.ContentTypesAreaSubjectGroupAction(areaId, groupId, subjectId))
+  // }
 
   /**
    * Dispatches action to fetch all collections.
    */
   private getAllCollections(): void {
-    // this.title = 'All Collections';
     this.store.dispatch(new listActions.AllCollectionsAction());
   }
 
@@ -214,9 +212,9 @@ export class DispatchService {
     this.store.dispatch(new listActions.CollectionsSubjectAction(subjectId));
   }
 
-  private getCollectionsByGroups(id: string) { // G
-
-  }
+  // private getCollectionsByGroups(id: string) { // G
+  //
+  // }
 
    getCollectionsForTypeSubject(typeId: string, subjectId: string): void { // TS
     this.store.dispatch(new listActions.CollectionsTypeSubjectAction(typeId, subjectId));
@@ -233,17 +231,17 @@ export class DispatchService {
     this.store.dispatch(new listActions.CollectionsCategoryAreaAction(categoryId, areaId))
   }
 
-  private getCollectionsForCategoryType(categoryId: string, typeId: string) { // GT
-    this.store.dispatch(new listActions.CollectionsCategoryTypeAction(categoryId, typeId))
-  }
-
+  // private getCollectionsForCategoryType(categoryId: string, typeId: string) { // GT
+  //   this.store.dispatch(new listActions.CollectionsCategoryTypeAction(categoryId, typeId))
+  // }
+  //
   private getCollectionsForAreaSubject(areaId: string, subjectId: string): void { // AS
     this.store.dispatch(new listActions.CollectionsAreaSubjectAction(areaId, subjectId));
   }
 
-  private getCollectionsForCategorySubject(areaId: string, subjectId: string): void { // SG
-    this.store.dispatch(new listActions.CollectionsCategorySubjectAction(areaId, subjectId));
-  }
+  // private getCollectionsForCategorySubject(areaId: string, subjectId: string): void { // SG
+  //   this.store.dispatch(new listActions.CollectionsCategorySubjectAction(areaId, subjectId));
+  // }
 
   private getCollectionsForTypeAreaSubject(areaId: string, typeId: string, subjectId: string): void { // AST
     this.store.dispatch(new listActions.CollectionsTypeAreaSubjectAction(areaId, typeId, subjectId));
@@ -262,13 +260,13 @@ export class DispatchService {
     }
     this.store.dispatch(new listActions.CollectionsCategoryAreaSubjectAction(categoryId, areaId, subjectId))
   }
-
-  private getCollectionsForCategoryTypeSubject(categoryId: string, areaId: string, typeId: string) { // TSG
-    if (!this.navigation.isFieldSelected(areaId)) {
-      areaId = '0';
-    }
-    this.store.dispatch(new listActions.CollectionsCategoryTypeAction(categoryId, typeId))
-  }
+  //
+  // private getCollectionsForCategoryTypeSubject(categoryId: string, areaId: string, typeId: string) { // TSG
+  //   if (!this.navigation.isFieldSelected(areaId)) {
+  //     areaId = '0';
+  //   }
+  //   this.store.dispatch(new listActions.CollectionsCategoryTypeAction(categoryId, typeId))
+  // }
 
   private getCollectionsForCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string) { // AGTS
     if (!this.navigation.isFieldSelected(areaId)) {
