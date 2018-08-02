@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {AreaBannerComponent} from './area-banner.component';
 import {AreaFiltersComponent} from '../area-filters/area-filters.component';
@@ -114,4 +114,11 @@ describe('AreaBannerComponent', () => {
   it('should create', async () => {
     expect(component).toBeTruthy();
   });
+  it('should return true for area selected', () => {
+    component.isSelected(1);
+  });
+  it('should return false for area selected', () => {
+    component.isSelected(5);
+  });
+
 });

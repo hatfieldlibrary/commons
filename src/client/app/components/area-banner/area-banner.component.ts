@@ -51,8 +51,7 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
 
   /**
    * Deselects the filter
-   * @param type the type of filter to be removed
-   * @param id the id of the filter to be removed
+   * @param deselected the id of the filter to be removed
    */
   deselect(deselected: DeselectedFilter): void {
     this.removeFilter.emit(deselected);

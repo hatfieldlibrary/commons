@@ -116,7 +116,7 @@ describe('Collection Reducer', () => {
 
   it('should set loading state to true for collection by category/area/type', () => {
     expect(
-      reducer(undefined, new CollectionsTypeAreaSubjectAction('1','1', '1'))
+      reducer(undefined, new CollectionsTypeAreaSubjectAction('1', '1', '1'))
     ).toEqual(
       {
         collections: [],

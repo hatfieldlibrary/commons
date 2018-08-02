@@ -16,9 +16,8 @@
  */
 
 import {
-  AllSubjectAction,
-   CurrentSubject, RemoveCurrentSubject, SubjectAction, SubjectActionFailed, SubjectActions,
-  SubjectActionSuccess
+  SubjectActionFailed,
+  SubjectActionSuccess, SubjectsForAreaGroup, SubjectsForAreaGroupType, SubjectsForAreaTypes
 } from '../actions/subject-actions';
 import {getSubjectList, reducer} from './subject.reducers';
 import {Action} from '@ngrx/store';
@@ -49,64 +48,6 @@ class MockAction implements Action {
 
 describe('Subject Reducers', () => {
 
-  // it('should return the initial state and loading boolean set to true for subject action', () => {
-  //   expect(
-  //     reducer(undefined, new SubjectAction('1'))
-  //   ).toEqual({
-  //       subjects: [],
-  //       selectedSubject: {id: 0, name: ''},
-  //     removedSubjects: {id: 0, name: ''},
-  //       loading: true
-  //     }
-  //   )
-  // });
-  //
-  // it('should return subject list', () => {
-  //
-  //   expect(
-  //     reducer(undefined, new SubjectActionSuccess(expectedSubjects))
-  //   ).toEqual({
-  //       subjects: expectedSubjects,
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     }
-  //   )
-  // });
-  //
-  // it('should return the initial state and loading boolean set to true all subject action', () => {
-  //   expect(
-  //     reducer(undefined, new AllSubjectAction())
-  //   ).toEqual({
-  //       subjects: [],
-  //       selectedSubject: {id: 0, name: '', url: ''},
-  //       loading: true
-  //     }
-  //   )
-  // });
-  //
-  // it('should return subject list', () => {
-  //
-  //   expect(
-  //     reducer(undefined, new SubjectActionSuccess(expectedSubjects))
-  //   ).toEqual({
-  //       subjects: expectedSubjects,
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     }
-  //   )
-  // });
-  //
-  // it('should return the current state if action not found', () => {
-  //   expect(
-  //     reducer(undefined, new MockAction())
-  //   ).toEqual(
-  //     {
-  //       subjects: [],
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     })
-  // });
-
   it('should return subject information', () => {
 
     const state = reducer(undefined, new SubjectActionSuccess(expectedSubjects));
@@ -121,26 +62,27 @@ describe('Subject Reducers', () => {
     expect(result).toEqual([]);
   });
 
-  // it('should find the current subject', () => {
-  //   const state = reducer(mockState, new CurrentSubject('1'));
-  //   const result = getSelectedSubject(state);
-  //   expect(result).toEqual({id: 1, name: 'test subject'});
-  // });
-  //
-  // it('should return the default selected subject with id zero', () => {
-  //   const state = reducer(mockState, new CurrentSubject('-1'));
-  //   const result = getSelectedSubject(state);
-  //   expect(result).toEqual({id: 0, name: ''});
-  // });
+  it('should return loading state for area and group', () => {
 
-  // it('should remove the selected subject', () => {
-  //   expect(
-  //     reducer(mockState, new RemoveCurrentSubject()))
-  //     .toEqual({
-  //       subjects: expectedSubjects,
-  //       selectedSubject: {id: 0, name: ''},
-  //       loading: false
-  //     });
-  // });
+    const state = reducer(undefined, new SubjectsForAreaGroup('1', '1'));
+    expect(state.loading).toBeTruthy();
+    const result = getSubjectList(state);
+    expect(result).toEqual([]);
+  });
 
+  it('should return loading state for area and type', () => {
+
+    const state = reducer(undefined, new SubjectsForAreaTypes('1', '1'));
+    expect(state.loading).toBeTruthy();
+    const result = getSubjectList(state);
+    expect(result).toEqual([]);
+  });
+
+  it('should return loading state for area, group and type', () => {
+
+    const state = reducer(undefined, new SubjectsForAreaGroupType('1', '1', '1'));
+    expect(state.loading).toBeTruthy();
+    const result = getSubjectList(state);
+    expect(result).toEqual([]);
+  });
 });

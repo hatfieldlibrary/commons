@@ -28,9 +28,6 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class AreaEffects {
 
-  constructor(private svc: AreaService, private actions$: Actions) {
-  }
-
   @Effect()
   areaListEffect$: Observable<Action> = this.actions$
     .ofType(areas.AreaActionTypes.AREA_LIST)
@@ -70,6 +67,9 @@ export class AreaEffects {
     .switchMap(id => this.svc.getAreaInfo(id))
     .map(res => new areas.AreaInformationSuccess(res[0]) )
     .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+
+  constructor(private svc: AreaService, private actions$: Actions) {
+  }
 
 }
 

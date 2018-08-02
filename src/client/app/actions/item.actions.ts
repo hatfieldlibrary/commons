@@ -16,7 +16,7 @@
  */
 
 import {type} from '../shared/ngrx/type';
-import {Action} from '../actions/action.interface';
+import {Action} from './action.interface';
 import {ItemType} from '../shared/data-types/item.type';
 
 export const ItemActionTypes = {

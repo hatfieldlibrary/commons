@@ -8,9 +8,6 @@ import {CollectionGroupServices} from '../services/collection-group.services';
 @Injectable()
 export class CollectionGroupEffects {
 
-  constructor(private svc: CollectionGroupServices, private actions$: Actions) {
-  }
-
   @Effect()
   allGroupEffect$: Observable<Action> = this.actions$
     .ofType(groups.GroupActionTypes.ALL_GROUP_REQUEST)
@@ -73,5 +70,8 @@ export class CollectionGroupEffects {
     .switchMap((payload) => this.svc.getGroupsByAreaSubjectType(payload.areaId, payload.subjectId, payload.typeId))
     .map(res => new groups.GroupActionSuccess(res))
     .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+
+  constructor(private svc: CollectionGroupServices, private actions$: Actions) {
+  }
 
 }

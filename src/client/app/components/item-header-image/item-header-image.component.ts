@@ -74,7 +74,7 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
         url =  environment.apiHost + environment.imagePath + '/resources/img/full/' + this.image;
       }
 
-      let backgroundImage = this.sanitizer.sanitize(SecurityContext.URL, url).toString();
+      const backgroundImage = this.sanitizer.sanitize(SecurityContext.URL, url).toString();
       this.backgroundImage = this.sanitizer.bypassSecurityTrustUrl(backgroundImage);
 
     }

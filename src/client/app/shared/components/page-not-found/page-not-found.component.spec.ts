@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { PageNotFoundComponent } from './page-not-found.component';
-import {MatCardModule} from "@angular/material";
+import {MatCardModule} from '@angular/material';
 
 describe('PageNotFoundComponent', () => {
   let component: PageNotFoundComponent;
