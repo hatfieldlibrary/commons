@@ -209,6 +209,18 @@ describe('NavigationService', () => {
     ], {queryParams: {view: 'list'}})
   });
 
+  it('should navigate area and type using with query params', () => {
+    spyOn(service, 'setIdFields').and.callThrough();
+    service.navigateRoute('1', '1', '', '', 'list');
+    expect(service.setIdFields).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/',
+      service.urlRootPath,
+      'collection',
+      'area', '1',
+      'type', '1'
+    ], {queryParams: {view: 'list'}})
+  });
+
   it('should return back link area, group, type, subject', () => {
     const link = service.getBackLink('1', '1', '1', '1');
     expect(link).toEqual('/commons/collection/category/1/area/1/type/1/subject/1')
@@ -229,6 +241,11 @@ describe('NavigationService', () => {
     expect(link).toEqual('/commons/collection/category/1/area/1/type/1')
   });
 
+  it('should return back link area, subject, type', () => {
+    const link = service.getBackLink('1', '', '1', '1');
+    expect(link).toEqual('/commons/collection/area/1/type/1/subject/1')
+  });
+
   it('should return back link area, type', () => {
     const link = service.getBackLink('1', '', '', '1');
     expect(link).toEqual('/commons/collection/area/1/type/1')
@@ -244,11 +261,11 @@ describe('NavigationService', () => {
   it('should return field selected false', () => {
     let selected = service.isFieldSelected('0');
     expect(selected).toBeFalsy();
-    selected = service.isFieldSelected(undefined)
+    selected = service.isFieldSelected(undefined);
     expect(selected).toBeFalsy();
-    selected = service.isFieldSelected(null)
+    selected = service.isFieldSelected(null);
     expect(selected).toBeFalsy();
-    selected = service.isFieldSelected('')
+    selected = service.isFieldSelected('');
     expect(selected).toBeFalsy();
   });
 
