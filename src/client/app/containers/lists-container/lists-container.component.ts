@@ -71,7 +71,7 @@ import {SubscriptionService} from '../../services/subscription.service';
 export class ListsContainerComponent implements OnInit, OnDestroy {
 
   state = '';
-  view = 'list';
+  view: string;
 
   /**
    * State fields (Redux)
@@ -220,8 +220,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
         // Toggle to grid view if mobile.
         if (change.mqAlias === 'xs') {
           this.store.dispatch(new SetViewAction('grid'));
-        } else {
-          this.store.dispatch(new SetViewAction('list'));
         }
       });
     this.watchers.add(mediaWatcher);
