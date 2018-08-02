@@ -95,6 +95,7 @@ import {TypesFilter} from '../../shared/data-types/types-filter';
 import {Subject} from 'rxjs/Subject';
 import {CollectionReset} from '../../actions/collection.actions';
 import {mockStore} from '../../shared/test/mock-store';
+import {SubscriptionService} from '../../services/subscription.service';
 
 
 const areaSubscriptionMock = {
@@ -130,10 +131,6 @@ const mulitpleAreaListMock = [
     name: 'areas two'
   }
 ];
-
-// const areaList = areaListMock;
-
-// const areasMock = areaSubscriptionMock;
 
 const setAllRoute = (route: any) => {
   route.params = Observable.of({});
@@ -285,6 +282,7 @@ describe('ListsContainerComponent', () => {
         FilterUpdateServiceB,
         ScrollReadyService,
         SetSelectedService,
+        SubscriptionService,
         {
           provide: DispatchService,
           useClass: class {
@@ -366,7 +364,6 @@ describe('ListsContainerComponent', () => {
   it('should dispatch data request for area information', fakeAsync(() => {
     setAreaRoute(route, '1');
     component.ngOnInit();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getAreas);
     tick();
     fixture.detectChanges();
     expect(dispatchService.dispatchActions).toHaveBeenCalledWith('1', undefined, undefined, undefined);
