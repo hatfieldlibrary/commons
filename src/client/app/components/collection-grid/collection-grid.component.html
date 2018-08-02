@@ -1,12 +1,28 @@
-<!--<mat-grid-list cols="4" rowHeight="100px">-->
-<!--<mat-grid-tile-->
-<!--*ngFor="let tile of tiles"-->
-<!--[colspan]="tile.cols"-->
-<!--[rowspan]="tile.rows"-->
-<!--[style.background]="tile.color">-->
-<!--{{tile.text}}-->
-<!--</mat-grid-tile>-->
-<!--</mat-grid-list>-->
+
+
+<!--
+  ~ Copyright (c) [2018] [Willamette University]
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  ~
+  ~ Author: Michael Spalti
+  -->
 
 <div class="grid-result-info mat-caption">
   <span class="bold-caption">{{getResultCount()}}</span><span>&nbsp;item<span *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
@@ -36,7 +52,6 @@
         </div>
         <div style="margin-top: 10px">
           <span class="mat-caption card-label">Content: </span>
-          <!--<span class="mat-caption bold-caption ">Content:</span>-->
           <span class="mat-body-1 card-text" *ngFor="let type of collection.types ; let i = index">
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
         </div>
