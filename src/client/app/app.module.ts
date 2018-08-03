@@ -117,7 +117,8 @@ export const appRoutes = [
 
   {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection', component: ListsContainerComponent},
+  // This is the former root path (now redirecting to default area)
+  // {path: environment.appRoot + '/collection', component: ListsContainerComponent},
   {path: environment.appRoot + '/collection/area/:areaId/subject/:subjectId', component: ListsContainerComponent},
   {
     path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId/type/:typeId',
@@ -157,8 +158,9 @@ export const appRoutes = [
     component: ListsContainerComponent
   },
   {path: environment.appRoot + '/item/submit/:typeId', component: SubmitDspaceComponent}, // requires type id, e.g. senior theses
-  {path: environment.appRoot, redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
-  {path: '', redirectTo: environment.appRoot + '/collection', pathMatch: 'full'},
+  {path: environment.appRoot + '/collection', redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
+  {path: environment.appRoot, redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
+  {path: '', redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
   {path: '**', component: PageNotFoundComponent}
 
 ];
