@@ -74,7 +74,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   view: string;
 
   /**
-   * State fields (Redux)
+   * State fields
    */
   collections$: Observable<CollectionType[]>;
   areas$: Observable<FieldFilterType[]>;
@@ -85,7 +85,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   subjectsFilter$: Observable<SubjectFilter>;
   groupsFilter$: Observable<CollectionGroupFilter>;
   viewType$: Observable<string>;
-
   /**
    * These are used in navigation. The values are
    * set by subscriptions to Store updates (since it is
@@ -97,7 +96,6 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   selectedTypes: FieldFilterType[];
   selectedSubjects: FieldFilterType[];
   selectedGroups: FieldFilterType[];
-
   /**
    * These member variables contain route parameters.
    */
@@ -226,7 +224,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Event binding callback for navigation to an item.
+   * Navigates to item when the collections component fires the event.
    * @param {string} id
    */
   collectionNavigation(id: string): void {
@@ -235,7 +233,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigates to new location when area area is updated.
+   * Navigates to new location when area selection component fires the event.
    * @param {SelectedAreaEvent} updatedAreaList the updated area list
    */
   areaNavigation(updatedAreaList: SelectedAreaEvent) {
@@ -244,7 +242,7 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Navigates to new location when the TypesComponent is updated.
+   * Navigates to new location when content type selection component fires the event.
    * @param {SelectedTypeEvent} updatedTypeList the updated area list
    */
   typeNavigation(updatedTypeList: SelectedTypeEvent) {
@@ -255,6 +253,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.navigation.navigateRoute(areaIds, typeIds, subjectIds, groupIds);
   }
 
+  /**
+   * Navigates to new location when subject selection component fires the event.
+   * @param {SelectedSubjectEvent} updatedSubjectList
+   */
   subjectNavigation(updatedSubjectList: SelectedSubjectEvent) {
     const areaIds = this.navigation.getIds(this.selectedAreas);
     const typeIds = this.navigation.getIds(this.selectedTypes);
@@ -263,6 +265,10 @@ export class ListsContainerComponent implements OnInit, OnDestroy {
     this.navigation.navigateRoute(areaIds, typeIds, subjectIds, groupIds);
   }
 
+  /**
+   * Navigates to new location when GroupOptionsComponent fires the event.
+   * @param {SelectedGroupEvent} updatedGroupList
+   */
   groupNavigation(updatedGroupList: SelectedGroupEvent) {
     const areaIds = this.navigation.getIds(this.selectedAreas);
     const typeIds = this.navigation.getIds(this.selectedTypes);
