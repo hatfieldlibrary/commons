@@ -112,58 +112,8 @@ import {ScrollReadyService} from './services/observable/scroll-ready.service';
 import { CollectionRowsComponent } from './components/collection-rows/collection-rows.component';
 import { ViewListComponent } from './components/svg/view-list/view-list.component';
 import { ViewGridComponent } from './components/svg/view-grid/view-grid.component'
+import {AppRoutingModule} from './app-routing-module';
 
-export const appRoutes = [
-
-  {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
-  {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
-  // This is the former root path (now redirecting to default area)
-  // {path: environment.appRoot + '/collection', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/area/:areaId/subject/:subjectId', component: ListsContainerComponent},
-  {
-    path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId/type/:typeId',
-    component: ListsContainerComponent
-  },
-  {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/type/:typeId', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/area/:areaId/type/:typeId', component: ListsContainerComponent},
-  {
-    path: environment.appRoot + '/collection/area/:areaId/type/:typeId/subject/:subjectId',
-    component: ListsContainerComponent
-  },
-  {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/type/:typeId/subject/:subjectId',
-    component: ListsContainerComponent
-  },
-  {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/subject/:subjectId',
-    component: ListsContainerComponent
-  },
-  {path: environment.appRoot + '/collection/category/:categoryId/type/:typeId', component: ListsContainerComponent},
-  {
-    path: environment.appRoot + '/collection/category/:categoryId/subject/:subjectId',
-    component: ListsContainerComponent
-  },
-  {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId',
-    component: ListsContainerComponent
-  },
-  {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/type/:typeId',
-    component: ListsContainerComponent
-  },
-  {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/subject/:subjectId/type/:typeId',
-    component: ListsContainerComponent
-  },
-  {path: environment.appRoot + '/item/submit/:typeId', component: SubmitDspaceComponent}, // requires type id, e.g. senior theses
-  {path: environment.appRoot + '/collection', redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
-  {path: environment.appRoot, redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
-  {path: '', redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
-  {path: '**', component: PageNotFoundComponent}
-
-];
 
 @NgModule({
   declarations: [
@@ -236,7 +186,7 @@ export const appRoutes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
 
     /**
      * StoreModule.provideStore is imported once in the root module, accepting a reducer
