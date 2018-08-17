@@ -22,30 +22,44 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {AuthType} from '../../data-types/auth.type';
+import {GetAuthStatus, SetAuthStatus} from '../actions/auth.action';
+import {getAuthStatus, reducer} from './auth.reducers';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+const mockAuthStatus: AuthType = {
+    auth: true
 
-export class AppModule {
-}
+};
+const mockCurrentAuthState: AuthType = {
+    auth: false
+
+};
+
+describe('Authentication Status Reducer', () => {
+
+  it('should return the current auth status.', () => {
+    expect(
+      reducer(undefined, new GetAuthStatus())
+    ).toEqual(
+      {
+        auth: mockCurrentAuthState
+      })
+  });
+
+  it('should set the auth status', () => {
+
+    expect(
+      reducer(undefined, new SetAuthStatus(mockAuthStatus))
+    ).toEqual({
+      auth: mockAuthStatus
+    });
+
+  });
+
+  it('should return default state', () => {
+    const state = reducer(undefined,  {type: undefined, payload: undefined});
+    const result = getAuthStatus(state);
+    expect(result).toEqual(mockCurrentAuthState);
+  });
+
+});

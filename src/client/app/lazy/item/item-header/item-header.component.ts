@@ -22,30 +22,45 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {
+  ChangeDetectionStrategy,
+  Component, Input, OnDestroy, OnInit
+} from '@angular/core';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
+import {ItemType} from '../../../core/data-types/item.type';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
+
+@Component({
+  selector: 'app-item-header',
+  templateUrl: 'item-header.component.html',
+  styleUrls: ['item-header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+export class ItemHeaderComponent implements OnInit, OnDestroy {
 
-export class AppModule {
+  @Input() item: ItemType;
+  watcher: Subscription;
+  isMobile = false;
+
+  constructor(private media: ObservableMedia) {
+  }
+
+  ngOnInit(): void {
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.watcher) {
+      this.watcher.unsubscribe();
+    }
+  }
+
+
 }

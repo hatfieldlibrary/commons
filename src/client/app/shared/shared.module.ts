@@ -23,47 +23,55 @@
  */
 
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {environment} from './environments/environment';
-import {PageNotFoundComponent} from './core/components/page-not-found/page-not-found.component';
-
-// Define a default route to use in redirects.
-const defaultRoutePath = '/collection/area/5';
-
-const appRoutes: Routes = [
-
-  {
-    path: environment.appRoot + '/item/submit/:typeId',
-    loadChildren: './lazy/submit-dspace/submit-dspace.module#SubmitDspaceModule'
-  },
-  {
-    path: environment.appRoot + '/item/id/:id/:areaId',
-    loadChildren: './lazy/item/item.module#ItemModule'
-  },
-  {
-    path: environment.appRoot + '/collection',
-    loadChildren: './lazy/browse/list.module#ListModule'
-  },
-  {
-    path: environment.appRoot, // Go to default collection area (partial path)
-    redirectTo: environment.appRoot + defaultRoutePath,
-    pathMatch: 'full'
-  },
-  {
-    path: '',  // Go to default collection area (empty path)
-    redirectTo: environment.appRoot + defaultRoutePath,
-    pathMatch: 'full'
-  },
-  {
-    path: '**',
-    component: PageNotFoundComponent
-  }
-];
+import {AppMenusComponent} from './apps-menu/app-menus.component';
+import {SvgModule} from './svg/svg.module';
+import {CollectionsFilterPipe} from './collections-filter.pipe';
+import {CommonModule} from '@angular/common';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
+import {RouterModule} from '@angular/router';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, {enableTracing: false})],
-  exports: [RouterModule]
+  declarations: [
+    AppMenusComponent,
+    CollectionsFilterPipe
+  ],
+  imports: [
+    CommonModule,
+    MatListModule,
+    SvgModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    RouterModule
+  ],
+  exports: [
+    CommonModule,
+    AppMenusComponent,
+    CollectionsFilterPipe,
+    SvgModule,
+    MatToolbarModule,
+    MatListModule,
+    MatTooltipModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatButtonModule
+  ]
 })
-export class AppRoutingModule {
+export class SharedModule {
 
 }

@@ -22,30 +22,29 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {Injectable} from '@angular/core';
+import {Store} from '@ngrx/store';
+import * as fromRoot from '../ngrx/reducers';
+import {environment} from '../../environments/environment';
+import {Observable} from 'rxjs/Observable';
+import {HttpClient} from '@angular/common/http';
+import {AuthType} from '../data-types/auth.type';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+/**
+ * This service solves the problem of how to track the current authentication status
+ * in components. You can track the status in the component and call this service only
+ * when the status as needed.
+ */
+@Injectable()
+export class AuthCheckService {
 
-export class AppModule {
+  constructor(private http: HttpClient, public store: Store<fromRoot.State>) {}
+
+  /**
+   * Gets the current authentication status via server request.
+   */
+  getAuthStatus():  Observable<boolean> {
+        return this.http.get<AuthType>(environment.authCheck)
+          .map(res => res.auth);
+      }
 }
