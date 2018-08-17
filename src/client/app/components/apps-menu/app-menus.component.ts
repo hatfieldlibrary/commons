@@ -23,17 +23,21 @@
  */
 
 import {
-  ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, ViewEncapsulation
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation
 } from '@angular/core';
 import {AreaType} from '../../shared/data-types/area.type';
-import {NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {DOCUMENT} from '@angular/common';
+import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import {MenuInteractionService} from '../../services/menu/menu-interaction.service';
 import 'rxjs/add/operator/filter';
 import {NavigationServiceB} from '../../services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
+import * as fromRoot from '../../reducers';
+import * as fromItem from '../../actions/item.actions';
+import * as fromRelated from '../../actions/related.actions';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-menus-component',
@@ -41,15 +45,15 @@ import {FieldFilterType} from '../../shared/data-types/field-filter.type';
   styleUrls: ['./app-menus.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppMenusComponent implements OnDestroy {
+export class AppMenusComponent implements OnInit, OnDestroy {
 
-  @Input() areaList: AreaType[];
-  @Input() selectedArea: string;
-  @Input() selectedSubjects: FieldFilterType[];
-  @Input() selectedTypes: FieldFilterType[];
-  @Input() selectedGroups: FieldFilterType[];
-  @Input() showBack: boolean;
-  @Input() title: string;
+  areaList: AreaType[];
+  selectedSubjects: FieldFilterType[];
+  selectedTypes: FieldFilterType[];
+  selectedGroups: FieldFilterType[];
+  selectedArea: string;
+  showBack: boolean;
+  // @Input() title: string;
   public previousUrl = '';
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
   secondaryUrl = 'http://library.willamette.edu';
@@ -57,9 +61,12 @@ export class AppMenusComponent implements OnDestroy {
   state = '';
   position = 'left';
 
-  constructor(private menuService: MenuInteractionService,
+  constructor(private store: Store<fromRoot.State>,
+              private menuService: MenuInteractionService,
               private navigationService: NavigationServiceB,
               private router: Router,
+              private route: ActivatedRoute,
+              private changeDetector: ChangeDetectorRef,
               public media: ObservableMedia,
               @Inject(DOCUMENT) private document) {
 
@@ -89,6 +96,46 @@ export class AppMenusComponent implements OnDestroy {
     return path;
   }
 
+  ngOnInit(): void {
+    // Set up subscriptions for information needed by the back link.
+    this.watcher = new Subscription();
+    const selectedSubjects$ = this.store.select(fromRoot.getSubjectsFilter);
+    const selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
+    const selectedGroups$ = this.store.select(fromRoot.getCollectionsGroupFilter);
+    const selectedArea$ = this.store.select(fromRoot.getAreasFilter);
+    const subjectsWatcher = selectedSubjects$.subscribe((data) => {
+      this.selectedSubjects = data;
+    });
+    this.watcher.add(subjectsWatcher);
+    const typesWatcher = selectedTypes$.subscribe((data) => {
+      this.selectedTypes = data;
+    });
+    this.watcher.add(typesWatcher);
+    const groupsWatcher = selectedGroups$.subscribe((data) => {
+      this.selectedGroups = data;
+    });
+    this.watcher.add(groupsWatcher);
+
+    const areaWatcher = selectedArea$.subscribe((area) => {
+      this.selectedArea = area[0].id.toString();
+    });
+    this.watcher.add(areaWatcher);
+    // Anticipating angular universal.
+    if (isPlatformBrowser) {
+      this.router.events.subscribe((event: any) => {
+        if (event instanceof NavigationEnd) {
+          // If item route, show back arrow.
+          if (event.url.match(/\/commons\/item/)) {
+            this.showBack = true;
+          } else {
+            this.showBack = false;
+          }
+          // Need to trigger change detection here.
+          this.changeDetector.detectChanges();
+        }
+      });
+    }
+  }
 
   ngOnDestroy(): void {
     if (this.watcher) {

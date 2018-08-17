@@ -32,8 +32,8 @@
     <div fxLayout="row" fxLayoutAlign="start start">
       <mat-toolbar fxFlex="100">
         <div fxLayout="row" fxLayoutAlign="center center">
-          <div style="height: 24px;margin-left: -8px;">
-            <button id="back-button" mat-icon-button *ngIf="showBack" [routerLink]="getBackLink()">
+          <div style="height: 24px;margin-left: -8px;" *ngIf="showBack">
+            <button id="back-button" mat-icon-button [routerLink]="getBackLink()">
               <app-icon-back></app-icon-back>
             </button>
           </div>
@@ -66,7 +66,6 @@
         </button>
 
       </mat-toolbar>
-
       <div class="fill-remaining-space"></div>
 
     </div>

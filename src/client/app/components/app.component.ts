@@ -71,6 +71,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   scrollable: Element;
   state = '';
+  showBack: boolean;
 
   constructor(private store: Store<fromRoot.State>,
               private menuService: MenuInteractionService,

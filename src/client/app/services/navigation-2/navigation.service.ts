@@ -35,7 +35,7 @@ import {
 } from '../../actions/filter.actions';
 import {FieldFilterType} from '../../shared/data-types/field-filter.type';
 import {FieldValues} from '../../shared/enum/field-names';
-import {AreaFiltersComponent} from '../../components/area-filters/area-filters.component';
+import {AreaFiltersComponent} from '../../components/list-components/area-filters/area-filters.component';
 
 interface RouterIds {
   subjectId: string;
@@ -129,7 +129,7 @@ export class NavigationServiceB {
     if (!areaId) {
       areaId = '0';
     }
-    this.router.navigate(['/',
+    this.router.navigate([ '/',
       this.urlRootPath,
       'item',
       'id', itemId,

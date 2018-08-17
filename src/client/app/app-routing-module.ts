@@ -22,71 +22,47 @@
  * Author: Michael Spalti
  */
 
-
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {environment} from './environments/environment';
 import {SubmitDspaceComponent} from './components/submit-dspace/submit-dspace.component';
 import {PageNotFoundComponent} from './shared/components/page-not-found/page-not-found.component';
-import {ItemContainerComponent} from './containers/item-container/item-container.component';
-import {ListsContainerComponent} from './containers/lists-container/lists-container.component';
+
+// Define a default route to use in redirects.
+const defaultRoutePath = '/collection/area/5';
 
 const appRoutes: Routes = [
 
-  {path: environment.appRoot + '/item/id/:id/:areaId', component: ItemContainerComponent},
-  {path: environment.appRoot + '/collection/area/:areaId', component: ListsContainerComponent},
-  // This is the former root path (now redirecting to default area)
-  // {path: environment.appRoot + '/collection', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/area/:areaId/subject/:subjectId', component: ListsContainerComponent},
   {
-    path: environment.appRoot + '/collection/subject/:subjectId/area/:areaId/type/:typeId',
-    component: ListsContainerComponent
-  },
-  {path: environment.appRoot + '/collection/subject/:subjectId', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/type/:typeId', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/type/:typeId/subject/:subjectId', component: ListsContainerComponent},
-  {path: environment.appRoot + '/collection/area/:areaId/type/:typeId', component: ListsContainerComponent},
-  {
-    path: environment.appRoot + '/collection/area/:areaId/type/:typeId/subject/:subjectId',
-    component: ListsContainerComponent
+    path: environment.appRoot + '/item/submit/:typeId',
+    component: SubmitDspaceComponent // requires type id, e.g. senior theses
   },
   {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/type/:typeId/subject/:subjectId',
-    component: ListsContainerComponent
+    path: environment.appRoot + '/item/id/:id/:areaId',
+    loadChildren: './components/item-components/item.module#ItemModule'
   },
   {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/subject/:subjectId',
-    component: ListsContainerComponent
-  },
-  {path: environment.appRoot + '/collection/category/:categoryId/type/:typeId', component: ListsContainerComponent},
-  {
-    path: environment.appRoot + '/collection/category/:categoryId/subject/:subjectId',
-    component: ListsContainerComponent
+    path: environment.appRoot + '/collection',
+    loadChildren: './components/list-components/list.module#ListModule'
   },
   {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId',
-    component: ListsContainerComponent
+    path: environment.appRoot, // Go to default collection area (partial path)
+    redirectTo: environment.appRoot + defaultRoutePath,
+    pathMatch: 'full'
   },
   {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/type/:typeId',
-    component: ListsContainerComponent
+    path: '',  // Go to default collection area (empty path)
+    redirectTo: environment.appRoot + defaultRoutePath,
+    pathMatch: 'full'
   },
   {
-    path: environment.appRoot + '/collection/category/:categoryId/area/:areaId/subject/:subjectId/type/:typeId',
-    component: ListsContainerComponent
-  },
-  {path: environment.appRoot + '/item/submit/:typeId', component: SubmitDspaceComponent}, // requires type id, e.g. senior theses
-  {path: environment.appRoot + '/collection',
-    redirectTo: environment.appRoot + '/collection/area/5',
-    pathMatch: 'full'}, // default collection area
-  {path: environment.appRoot, redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
-  {path: '', redirectTo: environment.appRoot + '/collection/area/5', pathMatch: 'full'}, // default collection area
-  {path: '**', component: PageNotFoundComponent}
-
+    path: '**',
+    component: PageNotFoundComponent
+  }
 ];
 
-@NgModule( {
-  imports: [RouterModule.forRoot(appRoutes)],
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes, {enableTracing: false})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
