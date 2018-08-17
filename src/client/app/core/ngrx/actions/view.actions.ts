@@ -22,30 +22,18 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {type} from '../type';
+import {Action} from './action.interface';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+export const ViewActionType = {
+  VIEW_ACTION: type('[VIEW] Setting view type')
+};
 
-export class AppModule {
+export class SetViewAction implements Action {
+  type = ViewActionType.VIEW_ACTION;
+  constructor(public payload: string) {
+  }
+
 }
+
+export type ViewActions = SetViewAction;

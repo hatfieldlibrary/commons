@@ -22,30 +22,53 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {RelatedType} from '../../data-types/related-collection';
+import {RelatedItemActions, RelatedItemActionTypes} from '../actions/related.actions';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+export interface State {
+  related: RelatedType[];
+  loading: boolean;
 
-export class AppModule {
 }
+
+const initialState: State = {
+  related: [],
+  loading: false
+};
+
+export function reducer(state = initialState, action: RelatedItemActions): State {
+  switch (action.type) {
+
+    case RelatedItemActionTypes.RELATED_COLLECTIONS: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+
+    }
+
+    case RelatedItemActionTypes.RELATED_COLLECTIONS_SUCCESS: {
+
+      const result: RelatedType[] = <RelatedType[]>action.payload;
+      return Object.assign({}, state, {
+        related: result,
+        loading: false
+      });
+
+    }
+
+    case RelatedItemActionTypes.CLEAR_RELATED_COLLECTIONS: {
+
+      return Object.assign({}, state, {
+        related: [],
+        loading: false
+      });
+    }
+
+    default:
+      return state;
+
+  }
+
+}
+
+export const getRelatedList = (state: State) => state.related;
