@@ -22,30 +22,49 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {ItemContainerComponent} from './item-container/item-container.component';
+import {ItemComponent} from './item/item.component';
+import {RelatedItemsComponent} from './related-items/related-items.component';
+import {ItemHeaderComponent} from './item-header/item-header.component';
+import {ItemLinksComponent} from './item-links/item-links.component';
+import {ItemHeaderImageComponent} from './item-header-image/item-header-image.component';
+import {ItemSelectComponent} from './item-select-options/item-select.component';
+import {
+  MatButtonModule,
+  MatGridListModule,
+  MatInputModule,
+  MatSelectModule,
+} from '@angular/material';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {ItemRoutingModule} from './item-routing.module';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    ItemComponent,
+    ItemContainerComponent,
+    RelatedItemsComponent,
+    ItemHeaderComponent,
+    ItemLinksComponent,
+    ItemHeaderImageComponent,
+    ItemSelectComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
+    CommonModule,
+    SharedModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatGridListModule,
+    FormsModule,
+    ItemRoutingModule
   ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
+  exports: [
+    ItemRoutingModule
+  ]
 })
+export class ItemModule {
 
-export class AppModule {
 }

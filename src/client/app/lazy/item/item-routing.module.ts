@@ -22,30 +22,22 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
+
 import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {RouterModule} from '@angular/router';
+import {ItemContainerComponent} from './item-container/item-container.component';
+
+const itemRoutes = [
+  {
+    path: '',
+    component: ItemContainerComponent
+  }
+];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
+  imports: [RouterModule.forChild(itemRoutes)],
+  exports: [RouterModule]
 })
+export class ItemRoutingModule {
 
-export class AppModule {
 }

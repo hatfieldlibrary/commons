@@ -22,30 +22,44 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
-
-export class AppModule {
+import {AuthActions, AuthActionTypes} from '../actions/auth.action';
+import {AuthType} from '../../data-types/auth.type';
+/**
+ * Created by mspalti on 5/2/17.
+ */
+export interface State {
+  auth:  {
+    auth: boolean
+  }
 }
+
+const initialState: State = {
+  auth:  {
+    auth: false
+  }
+
+};
+
+export function reducer(state = initialState, action: AuthActions): State {
+  switch (action.type) {
+
+    case AuthActionTypes.GET_AUTH_STATUS: {
+      return state;
+
+    }
+
+    case AuthActionTypes.SET_AUTH_STATUS: {
+      const result: AuthType = <AuthType>action.payload;
+      return Object.assign({}, state, {auth: result }
+      );
+
+    }
+
+    default:
+      return state;
+
+  }
+
+}
+
+export const getAuthStatus = (state: State) => state.auth;

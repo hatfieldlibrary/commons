@@ -22,30 +22,48 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {RouterModule, Routes} from '@angular/router';
+import {environment} from './environments/environment';
+import {PageNotFoundComponent} from './core/components/page-not-found/page-not-found.component';
+
+// Define a default route to use in redirects.
+const defaultRoutePath = '/collection/area/5';
+
+const appRoutes: Routes = [
+
+  {
+    path: environment.appRoot + '/item/submit/:typeId',
+    loadChildren: './lazy/submit-dspace/submit-dspace.module#SubmitDspaceModule'
+  },
+  {
+    path: environment.appRoot + '/item/id/:id/:areaId',
+    loadChildren: './lazy/item/item.module#ItemModule'
+  },
+  {
+    path: environment.appRoot + '/collection',
+    loadChildren: './lazy/browse/list.module#ListModule'
+  },
+  {
+    path: environment.appRoot, // Go to default collection area (partial path)
+    redirectTo: environment.appRoot + defaultRoutePath,
+    pathMatch: 'full'
+  },
+  {
+    path: '',  // Go to default collection area (empty path)
+    redirectTo: environment.appRoot + defaultRoutePath,
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
+];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
+  imports: [RouterModule.forRoot(appRoutes, {enableTracing: false})],
+  exports: [RouterModule]
 })
+export class AppRoutingModule {
 
-export class AppModule {
 }

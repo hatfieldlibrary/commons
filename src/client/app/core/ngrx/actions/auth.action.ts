@@ -22,30 +22,44 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+/**
+ * Created by mspalti on 5/2/17.
+ */
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
 
-export class AppModule {
+import {Action} from './action.interface';
+import { type } from '../type';
+import {AuthType} from '../../data-types/auth.type';
+
+export const AuthActionTypes = {
+  GET_AUTH_STATUS: type('[Auth] Get Auth Status'),
+  SET_AUTH_STATUS: type('[Auth] Set Auth Status')
+};
+
+
+/**
+ * Factory for authentication check action.
+ */
+export class GetAuthStatus implements Action {
+  type = AuthActionTypes.GET_AUTH_STATUS;
+  payload: void;
+
+  constructor() {
+  }
+
 }
+
+/**
+ * Factory for the authentication response.
+ */
+export class SetAuthStatus implements Action {
+  type = AuthActionTypes.SET_AUTH_STATUS;
+
+  constructor(public payload: AuthType) {
+  }
+}
+
+/**
+ * Union type.
+ */
+export type AuthActions = GetAuthStatus | SetAuthStatus;
