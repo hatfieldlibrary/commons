@@ -1,0 +1,86 @@
+<!--
+  ~ Copyright (c) [2018] [Willamette University]
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  ~
+  ~ Author: Michael Spalti
+  -->
+
+
+<!--<app-menus-component [selectedArea]="selectedArea"-->
+                     <!--[selectedTypes]="selectedTypes$ | async"-->
+                     <!--[selectedSubjects]="selectedSubjects$ | async"-->
+                     <!--[selectedGroups]="selectedGroups$ | async"-->
+                     <!--[areaList]="areas"-->
+                     <!--[showBack]="true"></app-menus-component>-->
+
+<div style="position: absolute; top: 0" fadeIn>
+<app-item-header [item]="item$ | async"></app-item-header>
+
+<div style="background:#000; height: 38px;padding: 6px;" fxShow.xs="false" fxShow.sm="false">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="row"
+         fxLayoutAlign="start center"
+         fxFlex="100"
+         fxFlex.sm="90"
+         fxFlex.md="90"
+         fxFlex.lg="70"
+         fxFlex.gt-lg="50"
+         fxLayoutGap="40px">
+      <div style="padding-left: 18px;">
+        <a mat-button [routerLink]="getBackLink()" style="padding: 0;background: #cccac4;border: 1px solid #999;width: 140px;">
+          <mat-icon>
+            <app-back-black-svg></app-back-black-svg>
+          </mat-icon>&nbsp;Back to List
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <mat-card class="main-content-area">
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <div fxLayout="column"
+             fxFlex="100"
+             fxFlex.sm="90"
+             fxFlex.md="90"
+             fxFlex.lg="70"
+             fxFlex.gt-lg="50"
+             fxLayoutGap="20px">
+          <app-item
+            [item]="item$ | async"
+            [selectedArea]="selectedArea"
+            [selectedTypes]="selectedTypes$ | async"
+            [selectedSubjects]="selectedSubjects$ | async"
+            [selectedGroups]="selectedGroups$ | async"
+            class="app-item"></app-item>
+          <app-related-items [columns]="columns" [related]="related$ | async"
+                             [selectedArea]="selectedArea"></app-related-items>
+
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+</div>
+
+

@@ -22,30 +22,25 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+/**
+ * Created by mspalti on 4/10/17.
+ */
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import {environment} from '../../environments/environment';
+import {RelatedType} from '../data-types/related-collection';
+import {RelatedItems} from '../data-types/related-items';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+@Injectable()
+export class RelatedService {
 
-export class AppModule {
+  constructor(private http: HttpClient) {}
+
+  getRelatedCollections(id: string, subjectIds: string): Observable<RelatedType[]> {
+    return this.http.get<RelatedItems>(environment.apiHost + environment.apiRoot + '/collection/' + id + '/related/' + subjectIds)
+      .map(res => res.related);
+  }
+
 }

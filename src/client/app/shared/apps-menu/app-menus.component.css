@@ -22,30 +22,22 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
-
-export class AppModule {
+mat-toolbar {
+  color:#fff;
+  background-color: rgba(0,0,0);
 }
+mat-toolbar {
+  z-index: 700;
+}
+mat-toolbar button {
+  border-width: 0;
+  min-width: 20px;
+}
+.md-tooltip {
+  background-color: red;
+}
+.menu {
+  background-color: rgb(0,0,0);
+}
+
+

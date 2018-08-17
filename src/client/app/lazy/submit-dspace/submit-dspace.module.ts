@@ -22,30 +22,28 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {SubmitDspaceComponent} from './submit-dspace.component';
+import {RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {MatCardModule, MatListModule, MatTooltipModule} from '@angular/material';
+import {SharedModule} from '../../shared/shared.module';
+
+const dspaceSubmitRoute = [
+  {
+    path: '',
+    component: SubmitDspaceComponent
+  }
+];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [SubmitDspaceComponent],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
+    CommonModule,
+    SharedModule,
+    MatCardModule,
+    MatListModule,
+    MatTooltipModule,
+    RouterModule.forChild(dspaceSubmitRoute)],
 })
-
-export class AppModule {
-}
+export class SubmitDspaceModule {}

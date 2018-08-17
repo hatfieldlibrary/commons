@@ -22,30 +22,24 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+/**
+ * Created by mspalti on 3/23/17.
+ */
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {ItemType} from '../data-types/item.type';
+import { environment } from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
-export class AppModule {
+@Injectable()
+export class ItemService {
+
+  constructor(private http: HttpClient) {}
+
+    getItem(itemId: string): Observable<ItemType> {
+      return this.http.get<ItemType>(environment.apiHost + environment.apiRoot + '/collection/id/' + itemId);
+    }
+
+
 }

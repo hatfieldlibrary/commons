@@ -22,30 +22,28 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {Injectable} from '@angular/core';
+import {ItemService} from '../../services/item.service';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
+import * as item from '../actions/item.actions';
+import {Action} from '../actions/action.interface';
+import {ItemActions} from '../actions/item.actions';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+@Injectable()
+export class ItemEffects {
 
-export class AppModule {
+  @Effect()
+  itemEffect$: Observable<Action> = this.actions$
+    .ofType(item.ItemActionTypes.ITEM_REQUEST)
+    .map((action: ItemActions) => action.payload)
+    .switchMap((id: string) => this.svc.getItem(id))
+    .map(res => new item.ItemSuccess(res))
+    .catch((err) => Observable.of(new item.ItemRequestFailed(err)));
+
+  constructor(private svc: ItemService, private actions$: Actions) {
+  }
 }

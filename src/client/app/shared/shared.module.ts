@@ -22,30 +22,56 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {AppMenusComponent} from './apps-menu/app-menus.component';
+import {SvgModule} from './svg/svg.module';
+import {CollectionsFilterPipe} from './collections-filter.pipe';
+import {CommonModule} from '@angular/common';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from '@angular/material';
+import {RouterModule} from '@angular/router';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppMenusComponent,
+    CollectionsFilterPipe
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
+    CommonModule,
+    MatListModule,
+    SvgModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    RouterModule
   ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
+  exports: [
+    CommonModule,
+    AppMenusComponent,
+    CollectionsFilterPipe,
+    SvgModule,
+    MatToolbarModule,
+    MatListModule,
+    MatTooltipModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatButtonModule
+  ]
 })
+export class SharedModule {
 
-export class AppModule {
 }

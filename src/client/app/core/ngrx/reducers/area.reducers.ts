@@ -22,30 +22,57 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+/**
+ * Created by mspalti on 2/24/17.
+ */
+import {AreaActions, AreaActionTypes} from '../actions/area.actions';
+import {AreaType} from '../../data-types/area.type';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
+export interface State {
+  area: AreaType;
+  loading: boolean;
 
-export class AppModule {
 }
+
+const initialState: State = {
+  area: <AreaType>{
+    id: 0,
+    title: '',
+    linkLabel: '',
+    url: '',
+    searchUrl: '',
+    image: '',
+    description: '',
+    position: 0
+  },
+  loading: false
+};
+
+export function reducer(state = initialState, action: AreaActions): State {
+
+  switch (action.type) {
+
+    case AreaActionTypes.AREA_INFORMATION: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
+
+    case AreaActionTypes.AREA_INFORMATION_SUCCESS: {
+      const payload = <AreaType>action.payload;
+
+      return Object.assign({}, state,
+        {
+          area: payload,
+          loading: false
+        });
+    }
+
+    default:
+      return state;
+
+  }
+
+}
+
+export const getAreaInfo = (state: State) => state.area;
