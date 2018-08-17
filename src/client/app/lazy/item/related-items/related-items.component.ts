@@ -22,30 +22,40 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
+import {RelatedType} from '../../../core/data-types/related-collection';
+import {environment} from '../../../environments/environment';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs/Subscription';
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
+@Component({
+  selector: 'app-related-items',
+  templateUrl: './related-items.component.html',
+  styleUrls: ['./related-items.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+export class RelatedItemsComponent implements OnDestroy {
 
-export class AppModule {
+  @Input() related: RelatedType[];
+  @Input() selectedArea: string;
+  @Input() columns: number;
+  isMobile = false;
+  watcher: Subscription;
+  appRoot = environment.appRoot;
+  imagePath = environment.apiHost +  environment.imagePath;
+
+  constructor(private media: ObservableMedia) {
+    this.watcher = this.media.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
+  }
+
 }

@@ -22,30 +22,32 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
-import 'hammerjs';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing-module';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {Injectable} from '@angular/core';
+import {Actions, Effect} from '@ngrx/effects';
+import {Observable} from 'rxjs/Observable';
+import {Action} from '../actions/action.interface';
+import * as related from '../actions/related.actions';
+import {RelatedService} from '../../services/related.service';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch';
+/**
+ * Created by mspalti on 4/10/17.
+ */
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
-  ],
-  bootstrap: [AppComponent]
-})
 
-export class AppModule {
+@Injectable()
+export class RelatedEffects {
+
+  @Effect()
+  relatedEffect$: Observable<Action> = this.actions$
+    .ofType(related.RelatedItemActionTypes.RELATED_COLLECTIONS)
+    .map((action: related.ItemActionRelated) => action.payload)
+    .switchMap((payload) => this.svc.getRelatedCollections(payload.id, payload.subjectIds))
+    .map(res => new related.ItemActionRelatedSuccess(res))
+    .catch((err) => Observable.of(new related.RelatedItemRequestFailed(err)));
+
+  constructor(private svc: RelatedService, private actions$: Actions) {
+  }
+
 }

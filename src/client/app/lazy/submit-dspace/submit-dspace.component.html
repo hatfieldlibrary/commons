@@ -1,0 +1,82 @@
+<!--
+  ~ Copyright (c) [2018] [Willamette University]
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  ~
+  ~ Author: Michael Spalti
+  -->
+
+<!--<app-menus-component-->
+  <!--[selectedArea]="areaId"-->
+  <!--[areaList]="areas$ | async"-->
+  <!--[showBack]="true">-->
+<!--</app-menus-component>-->
+
+<mat-card class="main-content-area" style="padding:0;">
+
+  <mat-card-content class="list-container">
+
+    <div fxLayout="row"
+         fxLayoutAlign="center start"
+         fxFlexFill>
+
+      <div fxLayout="column"
+           fxFlex.xs="1 1 100"
+           fxFlex.sm="1 1 85"
+           fxFlex.md="1 1 60"
+           fxFlex.lg="1 1 55"
+           fxFlex.gt-lg="1 1 47">
+
+        <div class="mat-card info-card">
+          <div class="mat-card-header area-info ">
+            <div class="area-description">
+              <h1 class="mat-headline"><span style="color: yellow">Next Step:</span> Choose Your Major from the List
+                Below</h1>
+              <!--<div class="text-padding">-->
+              <!--<p><a mat-raised-button class="accent-button area-button" href="https://libguides.willamette.edu/thesis_submission"-->
+              <!--target="_blank" color="accent">Additional Submission Instructions</a></p>-->
+              <!--</div>-->
+            </div>
+          </div>
+          <div class="mat-card-content">
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item class="collection-list-item result-item"
+                               [ngClass]="{'mobile-list-item-padding': isMobile}"
+                               matTooltip="Submit to {{collection.title}}"
+                               [matTooltipPosition]="position"
+                               (click)="navigateToItem(collection.url)"
+                               *ngFor="let collection of collections$ | async">
+                  <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
+                    <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
+                    <!--<div>-->
+                    <!--<span class="mat-caption bold-caption ">Content:</span>-->
+                    <!--<span class="mat-caption" *ngFor="let type of collection.types ; let i = index">-->
+                    <!--{{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>-->
+                    <!--</div>-->
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
