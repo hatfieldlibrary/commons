@@ -31,8 +31,6 @@ import {ItemLinksComponent} from './item-links/item-links.component';
 import {ItemHeaderImageComponent} from './item-header-image/item-header-image.component';
 import {ItemSelectComponent} from './item-select-options/item-select.component';
 import {
-  MatButtonModule,
-  MatGridListModule,
   MatInputModule,
   MatSelectModule,
 } from '@angular/material';
@@ -54,10 +52,8 @@ import {SharedModule} from '../../shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
-    MatButtonModule,
     MatInputModule,
     MatSelectModule,
-    MatGridListModule,
     FormsModule,
     ItemRoutingModule
   ],

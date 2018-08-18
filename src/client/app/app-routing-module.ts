@@ -37,6 +37,10 @@ const appRoutes: Routes = [
     loadChildren: './lazy/submit-dspace/submit-dspace.module#SubmitDspaceModule'
   },
   {
+    // TODO: this route currently requires areaId for back navigation.
+    // The areaId is not part of the resource identifier and varies
+    // with navigation history. Remove from path and create alternate
+    // technique for back navigation (see new app menu navigation).
     path: environment.appRoot + '/item/id/:id/:areaId',
     loadChildren: './lazy/item/item.module#ItemModule'
   },
