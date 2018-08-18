@@ -36,10 +36,7 @@ import {CollectionViewComponent} from './collection-view-component/collection-vi
 import {TypesComponent} from './types/types.component';
 import {CommonModule} from '@angular/common';
 import {
-  MatCardModule,
-  MatChipsModule,
-  MatGridListModule,
-  MatListModule
+  MatChipsModule
 } from '@angular/material';
 import {ListRoutingModule} from './list-routing.module';
 import {SharedModule} from '../../shared/shared.module';
@@ -62,10 +59,7 @@ import {SharedModule} from '../../shared/shared.module';
     CommonModule,
     SharedModule,
     ListRoutingModule,
-     MatCardModule,
-     MatListModule,
-     MatChipsModule,
-     MatGridListModule,
+    MatChipsModule
   ]
 })
 export class ListModule {

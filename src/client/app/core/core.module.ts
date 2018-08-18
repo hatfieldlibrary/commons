@@ -25,14 +25,8 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {
   MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule, MatChipsModule, MatGridListModule, MatIconModule, MatIconRegistry,
-  MatInputModule,
-  MatListModule, MatProgressSpinnerModule, MatSelectModule,
-  MatSidenavModule, MatToolbarModule,
-  MatTooltipModule
+  MatCardModule
 } from '@angular/material';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
@@ -70,7 +64,6 @@ import {CollectionsFilterPipe} from '../shared/collections-filter.pipe';
 import {CommonModule} from '@angular/common';
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -79,9 +72,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
-    MatSidenavModule,
+    MatButtonModule,
     MatCardModule,
     HttpClientModule,
     /**
@@ -111,13 +103,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
      */
 
     EffectsModule.forRoot([
-      CollectionEffects,
-      CollectionGroupEffects,
-      AreaEffects,
-      SubjectEffects,
-      ItemEffects,
-      RelatedEffects,
-      TypeEffects
+        CollectionEffects,
+        CollectionGroupEffects,
+        AreaEffects,
+        SubjectEffects,
+        ItemEffects,
+        RelatedEffects,
+        TypeEffects
     ])
   ],
   providers: [
@@ -134,8 +126,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     RelatedService,
     AuthCheckService,
     MenuInteractionService,
-    MatIconModule,
-    MatIconRegistry,
     NavigationServiceB,
     SetIntervalService,
     SetTimeoutService,
@@ -148,7 +138,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 })
 export class CoreModule {
   // Guards against reimporting the core module.
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 

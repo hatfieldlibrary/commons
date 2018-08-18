@@ -26,7 +26,6 @@ import {NgModule} from '@angular/core';
 import {SubmitDspaceComponent} from './submit-dspace.component';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {MatCardModule, MatListModule, MatTooltipModule} from '@angular/material';
 import {SharedModule} from '../../shared/shared.module';
 
 const dspaceSubmitRoute = [
@@ -41,9 +40,6 @@ const dspaceSubmitRoute = [
   imports: [
     CommonModule,
     SharedModule,
-    MatCardModule,
-    MatListModule,
-    MatTooltipModule,
     RouterModule.forChild(dspaceSubmitRoute)],
 })
 export class SubmitDspaceModule {}
