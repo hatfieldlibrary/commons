@@ -30,6 +30,7 @@ import {CommonModule} from '@angular/common';
 import {
   MatButtonModule,
   MatCardModule,
+  MatGridListModule,
   MatIconModule,
   MatListModule,
   MatSidenavModule,
@@ -38,6 +39,7 @@ import {
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,30 +48,34 @@ import {FlexLayoutModule} from '@angular/flex-layout';
   ],
   imports: [
     CommonModule,
-    MatListModule,
     SvgModule,
+    MatListModule,
     MatTooltipModule,
     MatToolbarModule,
     MatSidenavModule,
     MatCardModule,
     MatIconModule,
     MatButtonModule,
+    MatGridListModule,
     FlexLayoutModule,
+    HttpClientModule,
     RouterModule
   ],
   exports: [
-    CommonModule,
     AppMenusComponent,
     CollectionsFilterPipe,
+    CommonModule,
     SvgModule,
-    MatToolbarModule,
     MatListModule,
     MatTooltipModule,
+    MatToolbarModule,
     MatSidenavModule,
     MatCardModule,
     MatIconModule,
+    MatButtonModule,
+    MatGridListModule,
     FlexLayoutModule,
-    MatButtonModule
+    HttpClientModule
   ]
 })
 export class SharedModule {

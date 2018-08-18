@@ -27,7 +27,7 @@
     "test": "ng test --code-coverage --watch --sourceMap=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "client:prod:build": "ng build --prod --deploy-url=/ --base-href /commons/",
+    "client:prod:build": "ng build --prod --deploy-url=/commons-resource/ --base-href /commons/",
     "server:prod:build": "tsc -p ./src/server",
     "build:prod": "ng test --watch=false && npm run client:prod:build && npm run server:prod:build && exit 0",
     "compodoc": "compodoc -p ./src/client/tsconfig.json",
