@@ -33,7 +33,9 @@ import {environment} from '../../environments/environment';
 import {RelatedType} from '../data-types/related-collection';
 import {RelatedItems} from '../data-types/related-items';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class RelatedService {
 
   constructor(private http: HttpClient) {}

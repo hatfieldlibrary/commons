@@ -32,7 +32,7 @@ import {
   MatSidenavModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
-import {Store, StoreModule} from '@ngrx/store';
+import {Store, StoreModule, select} from '@ngrx/store';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ActivatedRoute, NavigationEnd, Router, RouterModule} from '@angular/router';
 import {Observable} from 'rxjs';
@@ -192,7 +192,7 @@ describe('ItemContainerComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = () => {
+            pipe = () => {
               return Observable.of(mockItem);
             };
           }
@@ -235,7 +235,7 @@ describe('ItemContainerComponent', () => {
   beforeEach(() => {
 
     spyOn(route.params, 'subscribe').and.callThrough();
-    spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'pipe').and.callThrough();
     //  spyOn(store, 'dispatch');
 
   });
@@ -269,7 +269,7 @@ describe('ItemContainerComponent', () => {
     spyOn(component, 'getRelatedItems').and.callThrough();
     component.ngOnInit();
     tick();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getItem);
+    expect(store.pipe).toHaveBeenCalled();
     expect(component.getRelatedItems).toHaveBeenCalledWith(mockItem);
     expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ItemActionRelated('1', '1,2'));
 
@@ -299,6 +299,5 @@ describe('ItemContainerComponent', () => {
     tick();
     expect(watcher.unsubscribe).toHaveBeenCalled();
   }));
-
 
 });

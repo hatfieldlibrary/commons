@@ -51,7 +51,7 @@ describe('SetSelectedService', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = () => {
+            pipe = () => {
               return Observable.of(mockList);
             };
           }

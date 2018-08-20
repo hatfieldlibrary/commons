@@ -26,7 +26,7 @@ import {
   Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject
 } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {Observable} from 'rxjs/Observable';
 import {ItemType} from '../../../core/data-types/item.type';
@@ -98,7 +98,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    const areaWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
+    const areaWatcher = this.store.pipe(select(fromRoot.getAreas)).subscribe((areas) => {
       this.areas = areas;
       // id is 0 in initial state.
       if (areas.length > 0) {
@@ -172,11 +172,11 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.item$ = this.store.select(fromRoot.getItem);
-    this.related$ = this.store.select(fromRoot.getRelated);
-    this.selectedSubjects$ = this.store.select(fromRoot.getSubjectsFilter);
-    this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
-    this.selectedGroups$ = this.store.select(fromRoot.getCollectionsGroupFilter);
+    this.item$ = this.store.pipe(select(fromRoot.getItem));
+    this.related$ = this.store.pipe(select(fromRoot.getRelated));
+    this.selectedSubjects$ = this.store.pipe(select(fromRoot.getSubjectsFilter));
+    this.selectedTypes$ = this.store.pipe(select(fromRoot.getTypesFilter));
+    this.selectedGroups$ = this.store.pipe(select(fromRoot.getCollectionsGroupFilter));
     this.setAreasAvailable();
     const subjectsWatcher = this.selectedSubjects$.subscribe((data) => {
       this.selectedSubjects = data;
@@ -192,7 +192,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     });
     this.watchers.add(groupsWatcher);
     // Once we have item information, request related items.
-    const itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
+    const itemWatcher = this.store.pipe(select(fromRoot.getItem)).subscribe((data) => {
       this.getRelatedItems(data);
     });
     if (itemWatcher) {

@@ -35,7 +35,9 @@ import {AuthType} from '../data-types/auth.type';
  * in components. You can track the status in the component and call this service only
  * when the status as needed.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthCheckService {
 
   constructor(private http: HttpClient, public store: Store<fromRoot.State>) {}

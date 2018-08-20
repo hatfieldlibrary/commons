@@ -28,7 +28,9 @@ import {HttpClient} from '@angular/common/http';
 import {ExternalItems, ExternalLinks} from '../data-types/external-links';
 import {Observable} from 'rxjs/Observable';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SearchService {
 
   constructor(private http: HttpClient) {

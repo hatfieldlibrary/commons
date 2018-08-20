@@ -163,7 +163,7 @@ describe('AppComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select(): Observable<FieldFilterType[]> {
+            pipe(): Observable<FieldFilterType[]> {
               return Observable.of(mockAreaList);
             };
           }

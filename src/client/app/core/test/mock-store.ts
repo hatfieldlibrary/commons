@@ -35,6 +35,6 @@ export function mockStore<T>(
   }): Store<T> {
   const result = states as any;
   result.dispatch = (action: Action) => actions.next(action);
-  result.select = () => { return states};
+  result.pipe = () => { return states};
   return result;
 }

@@ -25,7 +25,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../../core/ngrx/reducers/index';
 import {NavigationServiceB} from '../../core/services/navigation-2/navigation.service';
 import {ActivatedRoute} from '@angular/router';
@@ -68,8 +68,8 @@ export class SubmitDspaceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.areas$ = this.store.select(fromRoot.getAreas);
-    this.collections$ = this.store.select(fromRoot.getFilteredCollections);
+    this.areas$ = this.store.pipe(select(fromRoot.getAreas));
+    this.collections$ = this.store.pipe(select(fromRoot.getFilteredCollections));
 
     this.watchers = new Subscription();
 

@@ -29,7 +29,9 @@ import {Observable} from 'rxjs/Observable';
 import {FieldFilterType} from '../data-types/field-filter.type';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CollectionGroupServices {
 
   constructor(private http: HttpClient) {}

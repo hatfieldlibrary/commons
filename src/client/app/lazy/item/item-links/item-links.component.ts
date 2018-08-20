@@ -33,7 +33,7 @@ import {ActivatedRoute} from '@angular/router';
 import {AuthCheckService} from '../../../core/services/auth-check.service';
 import {AuthType} from '../../../core/data-types/auth.type';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {SetAuthStatus} from '../../../core/ngrx/actions/auth.action';
@@ -90,7 +90,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
 
     this.model = new SearchTerms();
     // Using the store to track authentication.
-    this.auth$ = this.store.select(fromRoot.getAuthStatus);
+    this.auth$ = this.store.pipe(select(fromRoot.getAuthStatus));
     const authWatcher = this.auth$.subscribe((auth) => {
       this.isAuthenticated = auth.auth;
       // Make sure to pick up the change next cycle.

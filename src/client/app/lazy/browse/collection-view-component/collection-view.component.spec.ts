@@ -350,7 +350,7 @@ describe('CollectionViewComponent', () => {
     setSelectedService = fixture.debugElement.injector.get(SetSelectedService);
     selectedSubscriptionSpy = spyOn(setSelectedService, 'unsubscribe');
     // fixture.detectChanges();
-    spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'pipe').and.callThrough();
 
   });
 

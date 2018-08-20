@@ -45,7 +45,6 @@ import {ItemSelectComponent} from '../item-select-options/item-select.component'
 import {DatePickerSvgComponent} from '../../../shared/svg/date-picker-svg/date-picker-svg.component';
 import {HttpClientModule} from '@angular/common/http';
 import {Subscription} from 'rxjs/Subscription';
-import * as fromRoot from '../../../core/ngrx/reducers/index';
 
 describe('ItemLinksComponent', () => {
   let component: ItemLinksComponent;
@@ -95,7 +94,7 @@ describe('ItemLinksComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = () => {
+            pipe = () => {
               return Observable.of({});
             };
           }
@@ -114,7 +113,7 @@ describe('ItemLinksComponent', () => {
     auth = fixture.debugElement.injector.get(AuthCheckService);
     route = fixture.debugElement.injector.get(ActivatedRoute);
     spyOn(route.parent.url, 'map').and.callThrough();
-    spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'pipe').and.callThrough();
     spyOn(auth, 'getAuthStatus').and.callThrough();
     component = fixture.componentInstance;
     watcher = component.watchers;
@@ -126,7 +125,7 @@ describe('ItemLinksComponent', () => {
     tick();
     expect(route.parent.url.map).toHaveBeenCalled();
     expect(component.watchers.add).toHaveBeenCalled();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getAuthStatus);
+    expect(store.pipe).toHaveBeenCalled();
     expect(auth.getAuthStatus).toHaveBeenCalled();
   }));
 

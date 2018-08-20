@@ -39,7 +39,9 @@ export interface AreasResponse {
   response: AreaFilterType[]
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AreaService {
 
   constructor(private http: HttpClient) {}
