@@ -84,8 +84,10 @@ describe('ItemLinksComponent', () => {
           provide: ActivatedRoute,
           useValue: {
             params: new Observable<any>(),
-            url: {
-              map: () =>  Observable.of('')
+            parent: {
+              url: {
+                map: () =>  Observable.of('')
+              }
             }
           }
         },
@@ -111,7 +113,7 @@ describe('ItemLinksComponent', () => {
     store = fixture.debugElement.injector.get(Store);
     auth = fixture.debugElement.injector.get(AuthCheckService);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    spyOn(route.url, 'map').and.callThrough();
+    spyOn(route.parent.url, 'map').and.callThrough();
     spyOn(store, 'select').and.callThrough();
     spyOn(auth, 'getAuthStatus').and.callThrough();
     component = fixture.componentInstance;
@@ -122,7 +124,7 @@ describe('ItemLinksComponent', () => {
   it('should initialize the component', fakeAsync(() => {
     component.ngOnInit();
     tick();
-    expect(route.url.map).toHaveBeenCalled();
+    expect(route.parent.url.map).toHaveBeenCalled();
     expect(component.watchers.add).toHaveBeenCalled();
     expect(store.select).toHaveBeenCalledWith(fromRoot.getAuthStatus);
     expect(auth.getAuthStatus).toHaveBeenCalled();

@@ -49,9 +49,6 @@ import {SetAuthStatus} from '../../../core/ngrx/actions/auth.action';
 })
 export class ItemLinksComponent implements OnInit, OnDestroy {
 
-
-  auth$: Observable<AuthType>;
-  authenticationPath: string;
   @Input() restricted: boolean;
   @Input() linkOptions: string;
   @Input() assetType: string;
@@ -60,6 +57,8 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   @Input() searchUrl: string;
   @Input() title: string;
   @Input() count: string;
+  auth$: Observable<AuthType>;
+  authenticationPath: string;
   model: SearchTerms;
   COLLECTION_BUTTON_LABEL = 'Go to the Collection';
   ITEM_BUTTON_LABEL = 'Go to the Item';
@@ -83,7 +82,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
+    const url: Observable<string> = this.route.parent.url.map(segments => segments.join('/'));
     const urlWatcher = url.subscribe((path) => {
       this.authenticationPath = environment.authPath + '/' + path;
     });

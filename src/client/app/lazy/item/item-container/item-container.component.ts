@@ -25,7 +25,7 @@
 import {
   Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {Observable} from 'rxjs/Observable';
@@ -70,24 +70,10 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromRoot.State>,
               private media: ObservableMedia,
               private route: ActivatedRoute,
-              private router: Router,
               private navigationService: NavigationServiceB,
               @Inject(DOCUMENT) private document) {
 
     this.watchers = new Subscription();
-
-    /** Assures that the page scrolls to top if user chooses related item. */
-      // const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
-      // Chrome canary supports the new standard usage with documentElement, but
-      // Chrome and presumably other browsers still expect body.
-      // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-      // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
-
-      // });
-      // if (routeEventWatcher) {
-      //   this.watchers.add(routeEventWatcher);
-      // }
-
       // Set the media observable subscription for assigning the related items column count.
     const mediaWatcher = this.media.subscribe((change: MediaChange) => {
         this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
@@ -212,7 +198,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     if (itemWatcher) {
       this.watchers.add(itemWatcher);
     }
-    // Request item based on route parameter.
+    // Request item using the route params.
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.store.dispatch(new fromItem.ItemReset());
