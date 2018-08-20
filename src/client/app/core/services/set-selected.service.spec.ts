@@ -22,11 +22,12 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable} from 'rxjs';
 import {TestBed, inject, fakeAsync} from '@angular/core/testing';
 
 import { SetSelectedService } from './set-selected.service';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
 import * as filterActions from '../ngrx/actions/filter.actions';
 
 describe('SetSelectedService', () => {
@@ -52,7 +53,7 @@ describe('SetSelectedService', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             pipe = () => {
-              return Observable.of(mockList);
+              return observableOf(mockList);
             };
           }
         }]

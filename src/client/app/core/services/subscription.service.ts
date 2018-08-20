@@ -22,10 +22,11 @@
  * Author: Michael Spalti
  */
 
+
+import {combineLatest as observableCombineLatest, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../ngrx/reducers';
-import {Observable} from 'rxjs/Observable';
 import {FieldFilterType} from '../data-types/field-filter.type';
 import * as fromFilter from '../ngrx/reducers/filter.reducers';
 import {AreaType} from '../data-types/area.type';
@@ -53,7 +54,7 @@ export class SubscriptionService {
   private viewType: Observable<string> = this.store.pipe(select(fromRoot.getViewState));
 
   private collections: Observable<CollectionType[]> =
-    Observable.combineLatest(
+    observableCombineLatest(
       this.store.pipe(select(fromRoot.getFilteredCollections)),
       (collections) => {
         return collections;
@@ -61,7 +62,7 @@ export class SubscriptionService {
     );
 
   private areasFilter: Observable<AreasFilter> =
-    Observable.combineLatest(
+    observableCombineLatest(
       this.store.pipe(select(fromRoot.getAreas)),
       this.store.pipe(select(fromRoot.getAreasFilter)),
       (areas, selected) => {
@@ -72,7 +73,7 @@ export class SubscriptionService {
       }
     );
 
-  private typesFilter: Observable<TypesFilter> = Observable.combineLatest(
+  private typesFilter: Observable<TypesFilter> = observableCombineLatest(
     this.store.pipe(select(fromRoot.getTypes)),
     this.store.pipe(select(fromRoot.getTypesFilter)),
     (types, selected) => {
@@ -84,7 +85,7 @@ export class SubscriptionService {
   );
 
   private subjectsFilter: Observable<SubjectFilter> =
-    Observable.combineLatest(
+    observableCombineLatest(
       this.store.pipe(select(fromRoot.getSubject)),
       this.store.pipe(select(fromRoot.getSubjectsFilter)),
       (subjects, selected) => {
@@ -96,7 +97,7 @@ export class SubscriptionService {
     );
 
   private groupsFilter: Observable<CollectionGroupFilter> =
-    Observable.combineLatest(
+    observableCombineLatest(
       this.store.pipe(select(fromRoot.getCollectionGroups)),
       this.store.pipe(select(fromRoot.getCollectionsGroupFilter)),
       (groups, selected) => {

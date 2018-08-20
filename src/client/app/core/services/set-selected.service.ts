@@ -25,9 +25,8 @@
 import { Injectable } from '@angular/core';
 import * as filterActions from '../ngrx/actions/filter.actions';
 import * as fromRoot from '../ngrx/reducers';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {select, Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
 import {FieldFilterType} from '../data-types/field-filter.type';
 
 /**

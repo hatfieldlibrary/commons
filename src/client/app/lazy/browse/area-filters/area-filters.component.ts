@@ -34,7 +34,7 @@ import {
 } from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import * as fromFilter from '../../../core/ngrx/reducers/filter.reducers';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {NormalizedFilter} from '../../../core/data-types/normalized-filter';
 import {SubjectFilter} from '../../../core/data-types/subject-filter';
 import {CollectionGroupFilter} from '../../../core/data-types/collection-group-filter';

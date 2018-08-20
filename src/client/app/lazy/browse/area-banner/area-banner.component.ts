@@ -32,7 +32,7 @@ import {
 } from '@angular/core';
 
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import * as fromFilter from '../../../core/ngrx/reducers/filter.reducers';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
 import {AreasFilter} from '../../../core/data-types/areas-filter';

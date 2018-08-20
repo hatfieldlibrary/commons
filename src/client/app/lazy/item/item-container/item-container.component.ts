@@ -28,7 +28,7 @@ import {
 import {ActivatedRoute} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {ItemType} from '../../../core/data-types/item.type';
 import * as fromItem from '../../../core/ngrx/actions/item.actions';
 import * as areaActions from '../../../core/ngrx/actions/area.actions';
@@ -36,7 +36,6 @@ import * as fromRelated from '../../../core/ngrx/actions/related.actions';
 import {RelatedType} from '../../../core/data-types/related-collection';
 import {fadeIn} from '../../../core/animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';

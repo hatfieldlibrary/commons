@@ -27,11 +27,11 @@ import {
 } from '@angular/core';
 import {AreaType} from '../../core/data-types/area.type';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import {MenuInteractionService} from '../../core/services/menu/menu-interaction.service';
-import 'rxjs/add/operator/filter';
+
 import {NavigationServiceB} from '../../core/services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../core/data-types/field-filter.type';
 import * as fromRoot from '../../core/ngrx/reducers/index';

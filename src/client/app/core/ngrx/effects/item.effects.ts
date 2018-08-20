@@ -22,27 +22,30 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable} from 'rxjs';
+
+import {catchError, switchMap, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {ItemService} from '../../services/item.service';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as item from '../actions/item.actions';
 import {Action} from '../actions/action.interface';
 import {ItemActions} from '../actions/item.actions';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch';
+
+
+
 
 @Injectable()
 export class ItemEffects {
 
   @Effect()
-  itemEffect$: Observable<Action> = this.actions$
-    .ofType(item.ItemActionTypes.ITEM_REQUEST)
-    .map((action: ItemActions) => action.payload)
-    .switchMap((id: string) => this.svc.getItem(id))
-    .map(res => new item.ItemSuccess(res))
-    .catch((err) => Observable.of(new item.ItemRequestFailed(err)));
+  itemEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(item.ItemActionTypes.ITEM_REQUEST),
+    map((action: ItemActions) => action.payload),
+    switchMap((id: string) => this.svc.getItem(id).pipe(
+    map(res => new item.ItemSuccess(res)),
+    catchError((err) => observableOf(new item.ItemRequestFailed(err))))));
 
   constructor(private svc: ItemService, private actions$: Actions) {
   }

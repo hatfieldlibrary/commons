@@ -31,7 +31,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 import {imageFadeIn} from '../../../core/animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-item-header-image',
@@ -113,6 +113,5 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
       this.watcher.unsubscribe();
     }
   }
-
 
 }

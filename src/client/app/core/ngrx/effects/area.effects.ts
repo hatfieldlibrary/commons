@@ -22,58 +22,60 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable} from 'rxjs';
+
+import {catchError, map, switchMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as areas from '../actions/area.actions';
-import {Observable} from 'rxjs/Observable';
 import {AreaService} from '../../services/area.service';
 import {Action} from '../actions/action.interface';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch';
+import {AreaFilterType} from '../../data-types/area-filter.type';
+import {AreaType} from '../../data-types/area.type';
 
 @Injectable()
 export class AreaEffects {
 
   @Effect()
-  areaListEffect$: Observable<Action> = this.actions$
-    .ofType(areas.AreaActionTypes.AREA_LIST)
-    .switchMap(() => this.svc.getAreaList())
-    .map(res => new areas.AreaListSuccess(res))
-    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+  areaListEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(areas.AreaActionTypes.AREA_LIST),
+    switchMap(() => this.svc.getAreaList().pipe(
+      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
+      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
 
   @Effect()
-  areaListSubjectEffect$: Observable<Action> = this.actions$
-    .ofType(areas.AreaActionTypes.AREA_LIST_SUBJECT)
-    .map((action: areas.AreaListByType) => action.payload)
-    .switchMap((id) => this.svc.getAreaListBySubject(id))
-    .map(res =>   new areas.AreaListSuccess(res))
-    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+  areaListSubjectEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(areas.AreaActionTypes.AREA_LIST_SUBJECT),
+    map((action: areas.AreaListByType) => action.payload),
+    switchMap((id) => this.svc.getAreaListBySubject(id).pipe(
+      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
+      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
 
   @Effect()
-  areaListTypeEffect$: Observable<Action> = this.actions$
-    .ofType(areas.AreaActionTypes.AREA_LIST_TYPE)
-    .map((action: areas.AreaListBySubject) => action.payload)
-    .switchMap((id) => this.svc.getAreaListByType(id))
-    .map(res =>   new areas.AreaListSuccess(res))
-    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+  areaListTypeEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(areas.AreaActionTypes.AREA_LIST_TYPE),
+    map((action: areas.AreaListBySubject) => action.payload),
+    switchMap((id) => this.svc.getAreaListByType(id).pipe(
+      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
+      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
 
   @Effect()
-  areaListTypeSubjectEffect$: Observable<Action> = this.actions$
-    .ofType(areas.AreaActionTypes.AREA_LIST_TYPE_SUBJECT)
-    .map((action: areas.AreaListByTypeSubject) => action.payload)
-    .switchMap((payload) => this.svc.getAreaListByTypeSubject(payload.typeId, payload.subjectId))
-    .map(res =>  new areas.AreaListSuccess(res))
-    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+  areaListTypeSubjectEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(areas.AreaActionTypes.AREA_LIST_TYPE_SUBJECT),
+    map((action: areas.AreaListByTypeSubject) => action.payload),
+    switchMap((payload) => this.svc.getAreaListByTypeSubject(payload.typeId, payload.subjectId).pipe(
+      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
+      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
 
   // TODO: Tagger is built to return an array of areas.  This version of the Commons assumes one. Should Tagger change?
   @Effect()
-  areaInfoEffect$: Observable<Action> = this.actions$
-    .ofType(areas.AreaActionTypes.AREA_INFORMATION)
-    .map((action: areas.AreaInformation) => action.payload)
-    .switchMap(id => this.svc.getAreaInfo(id))
-    .map(res => new areas.AreaInformationSuccess(res[0]) )
-    .catch((err) => Observable.of(new areas.AreaListActionFailed(err)));
+  areaInfoEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(areas.AreaActionTypes.AREA_INFORMATION),
+    map((action: areas.AreaInformation) => action.payload),
+    switchMap(id => this.svc.getAreaInfo(id).pipe(
+      map(res => new areas.AreaInformationSuccess(<AreaType> res[0])),
+      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
 
   constructor(private svc: AreaService, private actions$: Actions) {
   }

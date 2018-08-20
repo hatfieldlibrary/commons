@@ -28,7 +28,7 @@ import {NavigationServiceB} from './navigation.service';
 import { Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Action, Store} from '@ngrx/store';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {mockStore} from '../../test/mock-store';
 import {FieldValues} from '../../enum/field-names';
 

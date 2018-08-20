@@ -23,8 +23,7 @@
  */
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../../core/ngrx/reducers/index';
 import {NavigationServiceB} from '../../core/services/navigation-2/navigation.service';

@@ -26,7 +26,8 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {ExternalItems, ExternalLinks} from '../data-types/external-links';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -66,8 +67,12 @@ export class SearchService {
   }
 
   getOptionsList(collection: string): Observable<ExternalItems[]> {
-    return this.http.get<ExternalLinks>(environment.apiHost + environment.apiRoot + '/options/external/' + collection)
-      .map(res => res.result);
+    return this.http.get<ExternalLinks>(
+      environment.apiHost +
+      environment.apiRoot +
+      '/options/external/' +
+      collection).pipe(
+        map(res => res.result));
 
   }
 

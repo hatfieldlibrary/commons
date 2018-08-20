@@ -32,7 +32,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NavigationEnd, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {of as observableOf, Observable} from 'rxjs';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MenuInteractionService} from '../../core/services/menu/menu-interaction.service';
@@ -105,7 +105,7 @@ describe('AppMenusComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = () => {
-              return Observable.of('');
+              return observableOf('');
             };
           }
         },

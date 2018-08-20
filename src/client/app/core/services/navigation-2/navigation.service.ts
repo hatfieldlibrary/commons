@@ -27,7 +27,7 @@ import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
 import {select, Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {
   RemoveSelectedGroups,
   RemoveSelectedSubjects,

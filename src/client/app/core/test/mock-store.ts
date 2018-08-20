@@ -23,7 +23,7 @@
  */
 
 import {Action, Store} from '@ngrx/store';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 export function mockStore<T>(
   {

@@ -27,16 +27,16 @@ import {
 } from '@angular/core';
 import {SearchService} from '../../../core/services/search.service';
 import {SearchTerms} from '../../../core/data-types/simple-search.type';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 import {AuthCheckService} from '../../../core/services/auth-check.service';
 import {AuthType} from '../../../core/data-types/auth.type';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {select, Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {SetAuthStatus} from '../../../core/ngrx/actions/auth.action';
+import {map} from 'rxjs/operators';
 
 /**
  * This component is for the content access options presented to the user.
@@ -82,7 +82,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    const url: Observable<string> = this.route.parent.url.map(segments => segments.join('/'));
+    const url: Observable<string> = this.route.parent.url.pipe(map(segments => segments.join('/')));
     const urlWatcher = url.subscribe((path) => {
       this.authenticationPath = environment.authPath + '/' + path;
     });

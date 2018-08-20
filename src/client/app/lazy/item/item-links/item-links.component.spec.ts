@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable, Subscription} from 'rxjs';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { ItemLinksComponent } from './item-links.component';
@@ -40,11 +42,9 @@ import {SearchService} from '../../../core/services/search.service';
 import {ActivatedRoute} from '@angular/router';
 import {AuthCheckService} from '../../../core/services/auth-check.service';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
 import {ItemSelectComponent} from '../item-select-options/item-select.component';
 import {DatePickerSvgComponent} from '../../../shared/svg/date-picker-svg/date-picker-svg.component';
 import {HttpClientModule} from '@angular/common/http';
-import {Subscription} from 'rxjs/Subscription';
 
 describe('ItemLinksComponent', () => {
   let component: ItemLinksComponent;
@@ -76,7 +76,7 @@ describe('ItemLinksComponent', () => {
         {
           provide: AuthCheckService,
           useValue: {
-            getAuthStatus: () => Observable.of({})
+            getAuthStatus: () => observableOf({})
           }
         },
         {
@@ -85,7 +85,7 @@ describe('ItemLinksComponent', () => {
             params: new Observable<any>(),
             parent: {
               url: {
-                map: () =>  Observable.of('')
+                map: () =>  observableOf('')
               }
             }
           }
@@ -95,7 +95,7 @@ describe('ItemLinksComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             pipe = () => {
-              return Observable.of({});
+              return observableOf({});
             };
           }
         },

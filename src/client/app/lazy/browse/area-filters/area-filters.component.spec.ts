@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf} from 'rxjs';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {AreaFiltersComponent} from './area-filters.component';
@@ -78,7 +80,7 @@ describe('AreaFiltersComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = () => {
-              return Observable.of(areaListMock);
+              return observableOf(areaListMock);
             };
           }
         },

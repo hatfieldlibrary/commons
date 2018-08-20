@@ -23,11 +23,11 @@
  */
 
 
+import {of as observableOf, Observable, throwError} from 'rxjs';
+
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
-import {Observable} from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import {CollectionService} from '../../services/collection.service';
 import {CollectionEffects} from './collection.effects';
 import {
@@ -79,37 +79,37 @@ describe('Collections Effect', () => {
           provide: CollectionService,
           useClass: class {
             getCollectionsByAreaId = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByAreaSubject = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsBySubject = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getAllCollections = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByCategoryArea = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByCategoryType = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByCategoryAreaType = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByCategorySubject = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByCategoryTypeSubject = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByCategoryAreaSubject = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             };
             getCollectionsByCategoryAreaTypeSubject = () => {
-              return Observable.of(mockCollections);
+              return observableOf(mockCollections);
             }
           }
         },
@@ -135,7 +135,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for collections by areas', () => {
 
-    spyOn(collectionService, 'getCollectionsByAreaId').and.callFake(() => { return ErrorObservable.create('test')});
+    spyOn(collectionService, 'getCollectionsByAreaId').and.callFake(() => { return throwError('test')});
     const startAction = new CollectionsAreaAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -159,7 +159,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for collections by subject and areas', () => {
 
-    spyOn(collectionService, 'getCollectionsByAreaSubject').and.callFake(() => { return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByAreaSubject').and.callFake(() => { return throwError('test') });
     const startAction = new CollectionsAreaSubjectAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -183,7 +183,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for all collections for a given subject', () => {
 
-    spyOn(collectionService, 'getCollectionsBySubject').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsBySubject').and.callFake(() => {  return throwError('test') });
     const startAction = new CollectionsSubjectAction('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -207,7 +207,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for all collections request', () => {
 
-    spyOn(collectionService, 'getAllCollections').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getAllCollections').and.callFake(() => {  return throwError('test') });
     const startAction =  new AllCollectionsAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -230,7 +230,7 @@ describe('Collections Effect', () => {
 
   it('should fail collections by category, area', () => {
 
-    spyOn(collectionService, 'getCollectionsByCategoryArea').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByCategoryArea').and.callFake(() => {  return throwError('test') });
     const startAction =  new CollectionsCategoryAreaAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -253,7 +253,7 @@ describe('Collections Effect', () => {
 
   it('should fail collections by category, type', () => {
 
-    spyOn(collectionService, 'getCollectionsByCategoryType').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByCategoryType').and.callFake(() => {  return throwError('test') });
     const startAction =  new CollectionsCategoryTypeAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -276,7 +276,7 @@ describe('Collections Effect', () => {
 
   it('should fail collections by category, subject', () => {
 
-    spyOn(collectionService, 'getCollectionsByCategorySubject').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByCategorySubject').and.callFake(() => {  return throwError('test') });
     const startAction =  new CollectionsCategorySubjectAction('1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -299,7 +299,7 @@ describe('Collections Effect', () => {
 
   it('should fail collections by category, area, type', () => {
 
-    spyOn(collectionService, 'getCollectionsByCategoryAreaType').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByCategoryAreaType').and.callFake(() => {  return throwError('test') });
     const startAction =  new CollectionsCategoryAreaTypeAction('1', '1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -322,7 +322,7 @@ describe('Collections Effect', () => {
 
   it('should fail collections by category, area, subject', () => {
 
-    spyOn(collectionService, 'getCollectionsByCategoryAreaSubject').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByCategoryAreaSubject').and.callFake(() => {  return throwError('test') });
     const startAction =  new CollectionsCategoryAreaSubjectAction('1', '1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -346,7 +346,7 @@ describe('Collections Effect', () => {
 
   it('should fail collections by category, type, subject', () => {
 
-    spyOn(collectionService, 'getCollectionsByCategoryTypeSubject').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByCategoryTypeSubject').and.callFake(() => {  return throwError('test') });
     const startAction =  new CollectionsCategoryTypeSubjectAction('1', '1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -370,7 +370,7 @@ describe('Collections Effect', () => {
 
   it('should return error action for collections by all fields request', () => {
 
-    spyOn(collectionService, 'getCollectionsByCategoryAreaTypeSubject').and.callFake(() => {  return ErrorObservable.create('test') });
+    spyOn(collectionService, 'getCollectionsByCategoryAreaTypeSubject').and.callFake(() => {  return throwError('test') });
     const startAction =  new CollectionsCategoryAreaTypeSubjectAction('1', '1', '1', '1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);

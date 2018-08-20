@@ -23,10 +23,11 @@
  */
 
 
+import {of as observableOf, Observable, throwError} from 'rxjs';
+
 import {AreaEffects} from './area.effects';
 import {AreaService} from '../../services/area.service';
 import {TestBed} from '@angular/core/testing';
-import {Observable, } from 'rxjs/Observable';
 import {
   AreaListAction, AreaListActionFailed, AreaInformation,
   AreaInformationSuccess, AreaListSuccess
@@ -35,7 +36,6 @@ import {AreaType} from '../../data-types/area.type';
 import {AreaFilterType} from '../../data-types/area-filter.type';
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 describe('Area Effect', () => {
 
@@ -74,10 +74,10 @@ describe('Area Effect', () => {
           provide: AreaService,
           useClass: class {
             getAreaList = () => {
-              return Observable.of(mockAreasList);
+              return observableOf(mockAreasList);
             };
             getAreaInfo = () => {
-              return Observable.of([mockAreaInfo]);
+              return observableOf([mockAreaInfo]);
             };
           }
         },
@@ -102,7 +102,7 @@ describe('Area Effect', () => {
 
   it('should return error response action for all collections request', () => {
 
-    spyOn(areaService, 'getAreaList').and.callFake(() => { return ErrorObservable.create('test')});
+    spyOn(areaService, 'getAreaList').and.callFake(() => { return throwError('test')});
     const startAction =  new AreaListAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
@@ -126,7 +126,7 @@ describe('Area Effect', () => {
 
   it('should return error response for area information request', () => {
 
-    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return ErrorObservable.create('test') });
+    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return throwError('test') });
     const startAction =  new AreaInformation('1');
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
