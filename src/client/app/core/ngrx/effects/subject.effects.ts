@@ -31,6 +31,7 @@ import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as subjects from '../actions/subject-actions';
 import {Action} from '../actions/action.interface';
 import {SubjectService} from '../../services/subject.service';
+import {IdentifersPayload} from '../actions/payload-parameters.interface';
 
 @Injectable()
 export class SubjectEffects {
@@ -38,51 +39,103 @@ export class SubjectEffects {
   @Effect()
   subjectEffect$: Observable<Action> = this.actions$.pipe(
     ofType(subjects.SubjectActionTypes.SUBJECT_LIST),
-    map((action: subjects.SubjectAction) => action.payload),
-    switchMap(id => this.svc.getSubjectsForArea(id).pipe(
-      map(res => new subjects.SubjectActionSuccess(res)),
-      catchError((err) => observableOf(new subjects.SubjectActionFailed(err))))));
+    map(
+      (action: subjects.SubjectAction) => action.payload),
+    switchMap(
+      id => this.svc.getSubjectsForArea(id).pipe(
+        map(
+          res => new subjects.SubjectActionSuccess(res)
+        ),
+        catchError(
+          err => observableOf(new subjects.SubjectActionFailed(err))
+        )
+      )
+    )
+  );
 
   @Effect()
   allSubjectEffect$: Observable<Action> = this.actions$.pipe(
     ofType(subjects.SubjectActionTypes.ALL_SUBJECT_LIST),
-    // .map((action: subjects.SubjectAction) => action.payload)
-    switchMap(() => this.svc.getAllSubjects().pipe(
-      map(res => new subjects.SubjectActionSuccess(res)),
-      catchError((err) => observableOf(new subjects.SubjectActionFailed(err))))));
+    switchMap(
+      () => this.svc.getAllSubjects().pipe(
+        map(
+          res => new subjects.SubjectActionSuccess(res)
+        ),
+        catchError(
+          err => observableOf(new subjects.SubjectActionFailed(err))
+        )
+      )
+    )
+  );
 
   @Effect()
   subjectsForTypeEffect$: Observable<Action> = this.actions$.pipe(
     ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_TYPE),
-    map((action: subjects.SubjectsForTypes) => action.payload),
-    switchMap(id => this.svc.getSubjectsForType(id).pipe(
-      map(res => new subjects.SubjectActionSuccess(res)),
-      catchError(err => observableOf(new subjects.SubjectActionFailed(err))))));
+    map(
+      (action: subjects.SubjectsForTypes) => action.payload),
+    switchMap(
+      id => this.svc.getSubjectsForType(id).pipe(
+        map(
+          res => new subjects.SubjectActionSuccess(res)
+        ),
+        catchError(
+          err => observableOf(new subjects.SubjectActionFailed(err))
+        )
+      )
+    )
+  );
 
   @Effect()
   subjectsForAreaTypeEffect$: Observable<Action> = this.actions$.pipe(
     ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_AREA_TYPE),
-    map((action: subjects.SubjectsForAreaTypes) => action.payload),
-    switchMap(payload => this.svc.getSubjectsForAreaAndType(payload.areaId, payload.typeId).pipe(
-      map(res => new subjects.SubjectActionSuccess(res)),
-      catchError(err => observableOf(new subjects.SubjectActionFailed(err))))));
+    map(
+      (action: subjects.SubjectsForAreaTypes) => action.payload),
+    switchMap(
+      (payload: IdentifersPayload) => this.svc.getSubjectsForAreaAndType(payload.areaId, payload.typeId).pipe(
+        map(
+          res => new subjects.SubjectActionSuccess(res)
+        ),
+        catchError(
+          err => observableOf(new subjects.SubjectActionFailed(err))
+        )
+      )
+    )
+  );
 
   @Effect()
   subjectsForAreaGroupEffect$: Observable<Action> = this.actions$.pipe(
     ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA),
     map((action: subjects.SubjectsForAreaGroup) => action.payload),
-    switchMap(payload => this.svc.getSubjectsForAreaAndGroup(payload.areaId, payload.categoryId).pipe(
-      map(res => new subjects.SubjectActionSuccess(res)),
-      catchError(err => observableOf(new subjects.SubjectActionFailed(err))))));
+    switchMap(
+      (payload: IdentifersPayload) =>
+        this.svc.getSubjectsForAreaAndGroup(payload.areaId, payload.categoryId).pipe(
+          map(
+            res => new subjects.SubjectActionSuccess(res)
+          ),
+          catchError(
+            err => observableOf(new subjects.SubjectActionFailed(err))
+          )
+        )
+    )
+  );
 
   @Effect()
   subjectsForAreaTypeGroupEffect$: Observable<Action> = this.actions$.pipe(
     ofType(subjects.SubjectActionTypes.SUBJECT_LIST_FOR_GROUP_AREA_TYPE),
-    map((action: subjects.SubjectsForAreaGroupType) => action.payload),
-    switchMap(payload =>
-      this.svc.getSubjectsForAreaGroupAndType(payload.areaId, payload.categoryId, payload.typeId).pipe(
-        map(res => new subjects.SubjectActionSuccess(res)),
-        catchError(err => observableOf(new subjects.SubjectActionFailed(err))))));
+    map(
+      (action: subjects.SubjectsForAreaGroupType) => action.payload),
+    switchMap(
+      (payload: IdentifersPayload) =>
+        this.svc.getSubjectsForAreaGroupAndType(payload.areaId, payload.categoryId, payload.typeId).pipe(
+          map(
+            res => new subjects.SubjectActionSuccess(res)
+          ),
+          catchError(
+            err => observableOf(new subjects.SubjectActionFailed(err))
+          )
+        )
+    )
+  );
 
   constructor(private svc: SubjectService, private actions$: Actions) {
   }

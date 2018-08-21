@@ -32,7 +32,7 @@ import {Action} from '../actions/action.interface';
 import * as related from '../actions/related.actions';
 import {RelatedService} from '../../services/related.service';
 import {RelatedType} from '../../data-types/related-collection';
-
+import {RelatedItemsParams} from '../actions/related.actions';
 
 
 /**
@@ -46,10 +46,19 @@ export class RelatedEffects {
   @Effect()
   relatedEffect$: Observable<Action> = this.actions$.pipe(
     ofType(related.RelatedItemActionTypes.RELATED_COLLECTIONS),
-    map((action: related.ItemActionRelated) => action.payload),
-    switchMap((payload) => this.svc.getRelatedCollections(payload.id, payload.subjectIds).pipe(
-    map(res => new related.ItemActionRelatedSuccess(<RelatedType[]> res)),
-    catchError((err) => observableOf(new related.RelatedItemRequestFailed(err))))));
+    map(
+      (action: related.ItemActionRelated) => action.payload),
+    switchMap(
+      (payload: RelatedItemsParams) => this.svc.getRelatedCollections(payload.itemId, payload.subjectIds).pipe(
+        map(
+          res => new related.ItemActionRelatedSuccess(<RelatedType[]> res)
+        ),
+        catchError(
+          err => observableOf(new related.RelatedItemRequestFailed(err))
+        )
+      )
+    )
+  );
 
   constructor(private svc: RelatedService, private actions$: Actions) {
   }
