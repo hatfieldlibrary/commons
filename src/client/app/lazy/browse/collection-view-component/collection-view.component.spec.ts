@@ -501,7 +501,7 @@ describe('CollectionViewComponent', () => {
     spyOn(store, 'dispatch');
     component.areaId = '1';
     component.collectionNavigation('1');
-    expect(navigationService.navigateItemRoute).toHaveBeenCalledWith('1', '1');
+    expect(navigationService.navigateItemRoute).toHaveBeenCalledWith('1');
    // expect(store.dispatch).toHaveBeenCalledWith(new CollectionReset());
   });
 });

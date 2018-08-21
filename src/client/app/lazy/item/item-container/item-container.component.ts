@@ -198,7 +198,9 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
       this.watchers.add(itemWatcher);
     }
     const areaWatcher = selectedArea$.subscribe((area) => {
-      this.selectedArea = area[0].id.toString();
+      if (area.length > 0) {
+        this.selectedArea = area[0].id.toString();
+      }
     });
     this.watchers.add(areaWatcher);
     // Request item using the route params.
