@@ -90,7 +90,6 @@ describe('NavigationService', () => {
       service.urlRootPath,
       'item',
       'id',
-      '1',
       '1'
     ])
   });

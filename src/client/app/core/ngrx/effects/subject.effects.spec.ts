@@ -102,10 +102,10 @@ describe('Subject Effect', () => {
     spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return throwError('test') });
     const startAction = new SubjectAction('1');
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new SubjectActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(subjectEffects.subjectEffect$).toBeObservable(expectedResults);
 
   });
@@ -127,10 +127,10 @@ describe('Subject Effect', () => {
     spyOn(subjectService, 'getAllSubjects').and.callFake(() => { return throwError('test') });
     const startAction = new AllSubjectAction();
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new SubjectActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(subjectEffects.allSubjectEffect$).toBeObservable(expectedResults);
 
   });

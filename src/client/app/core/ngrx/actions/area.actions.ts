@@ -112,7 +112,6 @@ export class AreaListActionFailed implements Action {
   type = AreaActionTypes.REQUEST_FAILED;
   payload: void;
   constructor(err: string) {
-    console.log(err)
     if (err !== 'test') {
       console.log(err);
     }

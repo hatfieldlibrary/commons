@@ -74,6 +74,7 @@ import {AreaOptionsComponent} from '../../browse/area-options/area-options.compo
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {SetSelectedService} from '../../../core/services/set-selected.service';
 import {LoggerService} from '../../../core/logger/logger.service';
+import {SharedModule} from '../../../shared/shared.module';
 
 const mockItem = {
   collection: {
@@ -135,50 +136,22 @@ describe('ItemContainerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,
         ItemContainerComponent,
         ItemHeaderComponent,
         ItemHeaderImageComponent,
         RelatedItemsComponent,
         ItemComponent,
         ItemLinksComponent,
-        LockSvgComponent,
-        SearchSvgComponent,
-        MenuSvgComponent,
-        CloseSvgComponent,
-        BackSvgComponent,
-        FooterComponent,
-        AppMenusComponent,
-        HomeSvgComponent,
-        HomeBlackSvgComponent,
-        BackBlackSvgComponent,
-        DatePickerSvgComponent,
         ItemSelectComponent,
-        InfoSvgComponent,
-        RunSvgComponent,
-        CollectionsSvgComponent,
         AreaOptionsComponent
       ],
       imports: [
-        FlexLayoutModule,
-        MatButtonModule,
-        MatCardModule,
-        MatListModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatInputModule,
-        MatIconModule,
-        MatSelectModule,
-        MatGridListModule,
-        MatCheckboxModule,
-        MatChipsModule,
+        SharedModule,
         BrowserModule,
         BrowserAnimationsModule,
         MatInputModule,
+        MatSelectModule,
         FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatTooltipModule,
         StoreModule.forRoot({}),
         RouterTestingModule
       ],
@@ -223,7 +196,6 @@ describe('ItemContainerComponent', () => {
 
   beforeEach(async(() => {
 
-    TestBed.createComponent(AppComponent);
     fixture = TestBed.createComponent(ItemContainerComponent);
     component = fixture.debugElement.componentInstance;
     store = fixture.debugElement.injector.get(Store);
