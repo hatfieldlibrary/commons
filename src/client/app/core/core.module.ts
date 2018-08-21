@@ -42,25 +42,7 @@ import {TypeEffects} from './ngrx/effects/types.effects';
 import {reducers} from './ngrx/reducers';
 import {LoggerService} from './logger/logger.service';
 import {ConsoleLoggerService} from './logger/console-logger.service';
-import {CollectionService} from './services/collection.service';
-import {SetSelectedService} from './services/set-selected.service';
-import {AreaService} from './services/area.service';
-import {SubjectService} from './services/subject.service';
-import {TypesService} from './services/types.service';
-import {ItemService} from './services/item.service';
-import {MenuInteractionService} from './services/menu/menu-interaction.service';
-import {NavigationServiceB} from './services/navigation-2/navigation.service';
-import {FilterUpdateServiceB} from './services/filters-2/filter-update.service';
-import {SetTimeoutService} from './services/timers/timeout.service';
-import {ScrollReadyService} from './services/observable/scroll-ready.service';
-import {SearchService} from './services/search.service';
-import {DispatchService} from './services/dispatch.service';
-import {AuthCheckService} from './services/auth-check.service';
-import {RelatedService} from './services/related.service';
-import {SetIntervalService} from './services/timers/interval.service';
-import {CollectionGroupServices} from './services/collection-group.services';
 import {FooterComponent} from './components/footer/footer.component';
-import {CollectionsFilterPipe} from '../shared/collections-filter.pipe';
 import {CommonModule} from '@angular/common';
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
@@ -113,26 +95,7 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
     ])
   ],
   providers: [
-    {provide: LoggerService, useClass: ConsoleLoggerService},
-    CollectionService,
-    CollectionGroupServices,
-    AreaService,
-    DispatchService,
-    SetSelectedService,
-    SubjectService,
-    TypesService,
-    ItemService,
-    SearchService,
-    RelatedService,
-    AuthCheckService,
-    MenuInteractionService,
-    NavigationServiceB,
-    SetIntervalService,
-    SetTimeoutService,
-    MenuInteractionService,
-    FilterUpdateServiceB,
-    ScrollReadyService,
-    CollectionsFilterPipe
+    {provide: LoggerService, useClass: ConsoleLoggerService}
   ],
   exports: [FooterComponent, PageNotFoundComponent]
 })

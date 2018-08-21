@@ -31,7 +31,9 @@ import { environment } from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {FieldFilterType} from '../data-types/field-filter.type';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SubjectService {
 
   constructor(private http: HttpClient) {}

@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable, Subscription} from 'rxjs';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {ItemContainerComponent} from './item-container.component';
 import {ItemComponent} from '../item/item.component';
@@ -32,10 +34,9 @@ import {
   MatSidenavModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
-import {Store, StoreModule} from '@ngrx/store';
+import {Store, StoreModule, select} from '@ngrx/store';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ActivatedRoute, NavigationEnd, Router, RouterModule} from '@angular/router';
-import {Observable} from 'rxjs';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {AppComponent} from '../../../app.component';
 import {RelatedItemsComponent} from '../related-items/related-items.component';
@@ -66,7 +67,6 @@ import {RunSvgComponent} from '../../../shared/svg/run-svg/run-svg.component';
 import {ItemSelectComponent} from '../item-select-options/item-select.component';
 import {HomeBlackSvgComponent} from '../../../shared/svg/home-black-svg/home-black-svg.component';
 import {DatePickerSvgComponent} from '../../../shared/svg/date-picker-svg/date-picker-svg.component';
-import {Subscription} from 'rxjs/Subscription';
 import {MenuInteractionService} from '../../../core/services/menu/menu-interaction.service';
 import {SetTimeoutService} from '../../../core/services/timers/timeout.service';
 import {HttpClientModule} from '@angular/common/http';
@@ -114,12 +114,12 @@ const mqAlias = 'xs';
 
 
 const setMockAreaRoute = (route: any, mock: string) => {
-  route.params = Observable.of({id: mock, areaId: 1});
+  route.params = observableOf({id: mock, areaId: 1});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setMockRoute = (route: any) => {
-  route.params = Observable.of({});
+  route.params = observableOf({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -192,15 +192,15 @@ describe('ItemContainerComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = () => {
-              return Observable.of(mockItem);
+            pipe = () => {
+              return observableOf(mockItem);
             };
           }
         },
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.of({id: '0'})
+            params: observableOf({id: '0'})
           }
         },
         {
@@ -235,7 +235,7 @@ describe('ItemContainerComponent', () => {
   beforeEach(() => {
 
     spyOn(route.params, 'subscribe').and.callThrough();
-    spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'pipe').and.callThrough();
     //  spyOn(store, 'dispatch');
 
   });
@@ -269,7 +269,7 @@ describe('ItemContainerComponent', () => {
     spyOn(component, 'getRelatedItems').and.callThrough();
     component.ngOnInit();
     tick();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getItem);
+    expect(store.pipe).toHaveBeenCalled();
     expect(component.getRelatedItems).toHaveBeenCalledWith(mockItem);
     expect(store.dispatch).toHaveBeenCalledWith(new fromRelated.ItemActionRelated('1', '1,2'));
 
@@ -299,6 +299,5 @@ describe('ItemContainerComponent', () => {
     tick();
     expect(watcher.unsubscribe).toHaveBeenCalled();
   }));
-
 
 });

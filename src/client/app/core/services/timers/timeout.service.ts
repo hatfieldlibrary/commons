@@ -27,7 +27,9 @@ import {Injectable} from '@angular/core';
 /**
  * Injectable wrapper around the global setTimeout function.  Use this to allow for test mocks.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SetTimeoutService {
 
   timeout;

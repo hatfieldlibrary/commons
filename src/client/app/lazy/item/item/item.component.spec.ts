@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {from as observableFrom, of as observableOf, Observable} from 'rxjs';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {ItemComponent} from './item.component';
@@ -42,7 +44,6 @@ import {ActivatedRoute} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SearchService} from '../../../core/services/search.service';
 import {AuthCheckService} from '../../../core/services/auth-check.service';
-import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {BackBlackSvgComponent} from '../../../shared/svg/back-black-svg/back-black-svg.component';
 import {InfoSvgComponent} from '../../../shared/svg/info-svg/info-svg.component';
@@ -50,8 +51,8 @@ import {RunSvgComponent} from '../../../shared/svg/run-svg/run-svg.component';
 import {ItemSelectComponent} from '../item-select-options/item-select.component';
 import {DatePickerSvgComponent} from '../../../shared/svg/date-picker-svg/date-picker-svg.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/from';
+
+
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 
 const mockItem = {
@@ -129,7 +130,7 @@ describe('ItemComponent', () => {
           provide: SearchService,
           useClass: class {
             getOptionsList = () => {
-              return Observable.of([]);
+              return observableOf([]);
             };
           }
         },
@@ -148,9 +149,9 @@ describe('ItemComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.from([{'id': 1}]),
+            params: observableFrom([{'id': 1}]),
             url: {
-              map: () => Observable.of('')
+              map: () => observableOf('')
             }
           }
         },
@@ -159,7 +160,7 @@ describe('ItemComponent', () => {
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
             select = () => {
-              return Observable.of('');
+              return observableOf('');
             };
           }
         },

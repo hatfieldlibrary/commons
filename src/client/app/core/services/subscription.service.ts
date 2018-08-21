@@ -22,10 +22,11 @@
  * Author: Michael Spalti
  */
 
+
+import {combineLatest as observableCombineLatest, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../ngrx/reducers';
-import {Observable} from 'rxjs/Observable';
 import {FieldFilterType} from '../data-types/field-filter.type';
 import * as fromFilter from '../ngrx/reducers/filter.reducers';
 import {AreaType} from '../data-types/area.type';
@@ -44,26 +45,26 @@ import {AreasFilter} from '../data-types/areas-filter';
 })
 export class SubscriptionService {
 
-  private areas: Observable<FieldFilterType[]> = this.store.select(fromRoot.getAreas);
+  private areas: Observable<FieldFilterType[]> = this.store.pipe(select(fromRoot.getAreas));
 
-  private areaInfo: Observable<AreaType> = this.store.select(fromRoot.getAreaInfo);
+  private areaInfo: Observable<AreaType> = this.store.pipe(select(fromRoot.getAreaInfo));
 
-  private filters: Observable<fromFilter.State> = this.store.select(fromRoot.getFilters);
+  private filters: Observable<fromFilter.State> = this.store.pipe(select(fromRoot.getFilters));
 
-  private viewType: Observable<string> = this.store.select(fromRoot.getViewState);
+  private viewType: Observable<string> = this.store.pipe(select(fromRoot.getViewState));
 
   private collections: Observable<CollectionType[]> =
-    Observable.combineLatest(
-      this.store.select(fromRoot.getFilteredCollections),
+    observableCombineLatest(
+      this.store.pipe(select(fromRoot.getFilteredCollections)),
       (collections) => {
         return collections;
       }
     );
 
   private areasFilter: Observable<AreasFilter> =
-    Observable.combineLatest(
-      this.store.select(fromRoot.getAreas),
-      this.store.select(fromRoot.getAreasFilter),
+    observableCombineLatest(
+      this.store.pipe(select(fromRoot.getAreas)),
+      this.store.pipe(select(fromRoot.getAreasFilter)),
       (areas, selected) => {
         return {
           areas: areas,
@@ -72,9 +73,9 @@ export class SubscriptionService {
       }
     );
 
-  private typesFilter: Observable<TypesFilter> = Observable.combineLatest(
-    this.store.select(fromRoot.getTypes),
-    this.store.select(fromRoot.getTypesFilter),
+  private typesFilter: Observable<TypesFilter> = observableCombineLatest(
+    this.store.pipe(select(fromRoot.getTypes)),
+    this.store.pipe(select(fromRoot.getTypesFilter)),
     (types, selected) => {
       return {
         types: types,
@@ -84,9 +85,9 @@ export class SubscriptionService {
   );
 
   private subjectsFilter: Observable<SubjectFilter> =
-    Observable.combineLatest(
-      this.store.select(fromRoot.getSubject),
-      this.store.select(fromRoot.getSubjectsFilter),
+    observableCombineLatest(
+      this.store.pipe(select(fromRoot.getSubject)),
+      this.store.pipe(select(fromRoot.getSubjectsFilter)),
       (subjects, selected) => {
         return {
           subjects: subjects,
@@ -96,9 +97,9 @@ export class SubscriptionService {
     );
 
   private groupsFilter: Observable<CollectionGroupFilter> =
-    Observable.combineLatest(
-      this.store.select(fromRoot.getCollectionGroups),
-      this.store.select(fromRoot.getCollectionsGroupFilter),
+    observableCombineLatest(
+      this.store.pipe(select(fromRoot.getCollectionGroups)),
+      this.store.pipe(select(fromRoot.getCollectionsGroupFilter)),
       (groups, selected) => {
         return {
           groups: groups,

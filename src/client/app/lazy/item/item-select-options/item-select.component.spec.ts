@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable} from 'rxjs';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {ItemSelectComponent} from './item-select.component';
@@ -30,8 +32,7 @@ import {MatIconModule, MatSelectModule} from '@angular/material';
 import {SearchService} from '../../../core/services/search.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
  import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+
 
 describe('ItemSelectComponent', () => {
   let component: ItemSelectComponent;
@@ -58,7 +59,7 @@ describe('ItemSelectComponent', () => {
               return term;
             },
             getOptionsList: (url) => {
-              return Observable.of([{
+              return observableOf([{
                   item: {
                     title: 'test'
                   }

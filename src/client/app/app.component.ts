@@ -36,7 +36,7 @@ import {MenuInteractionService} from './core/services/menu/menu-interaction.serv
 import {Store} from '@ngrx/store';
 import * as fromRoot from './core/ngrx/reducers/index';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {SetTimeoutService} from './core/services/timers/timeout.service';
 import {SetSelectedService} from './core/services/set-selected.service';
 import {NavigationServiceB} from './core/services/navigation-2/navigation.service';

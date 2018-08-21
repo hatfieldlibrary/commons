@@ -22,15 +22,19 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable} from 'rxjs';
+
+import {catchError, switchMap, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Action} from '../actions/action.interface';
 import * as related from '../actions/related.actions';
 import {RelatedService} from '../../services/related.service';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch';
+import {RelatedType} from '../../data-types/related-collection';
+
+
+
 /**
  * Created by mspalti on 4/10/17.
  */
@@ -40,12 +44,12 @@ import 'rxjs/add/operator/catch';
 export class RelatedEffects {
 
   @Effect()
-  relatedEffect$: Observable<Action> = this.actions$
-    .ofType(related.RelatedItemActionTypes.RELATED_COLLECTIONS)
-    .map((action: related.ItemActionRelated) => action.payload)
-    .switchMap((payload) => this.svc.getRelatedCollections(payload.id, payload.subjectIds))
-    .map(res => new related.ItemActionRelatedSuccess(res))
-    .catch((err) => Observable.of(new related.RelatedItemRequestFailed(err)));
+  relatedEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(related.RelatedItemActionTypes.RELATED_COLLECTIONS),
+    map((action: related.ItemActionRelated) => action.payload),
+    switchMap((payload) => this.svc.getRelatedCollections(payload.id, payload.subjectIds).pipe(
+    map(res => new related.ItemActionRelatedSuccess(<RelatedType[]> res)),
+    catchError((err) => observableOf(new related.RelatedItemRequestFailed(err))))));
 
   constructor(private svc: RelatedService, private actions$: Actions) {
   }

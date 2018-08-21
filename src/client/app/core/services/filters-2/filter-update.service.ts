@@ -40,7 +40,9 @@ export enum FieldTypeKey {
  * After updating the store, the public functions return an updated selected filters list
  * to the calling component.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class FilterUpdateServiceB {
 
   private selectedTypes: FieldFilterType[];
