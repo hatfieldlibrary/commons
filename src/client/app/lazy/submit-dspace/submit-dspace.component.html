@@ -56,12 +56,14 @@
           </div>
           <div class="mat-card-content">
             <mat-card-content>
-              <mat-list>
+              <mat-nav-list>
                 <mat-list-item class="collection-list-item result-item"
                                [ngClass]="{'mobile-list-item-padding': isMobile}"
                                matTooltip="Submit to {{collection.title}}"
                                [matTooltipPosition]="position"
-                               (click)="navigateToItem(collection.url)"
+                               (click)="navigateToItem(collection.url);$event.stopPropagation();"
+                               (keyup.enter)="navigateToItem(collection.url);$event.stopPropagation();"
+                               [routerLink]=""
                                *ngFor="let collection of collections$ | async">
                   <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
                     <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
@@ -72,7 +74,7 @@
                     <!--</div>-->
                   </div>
                 </mat-list-item>
-              </mat-list>
+              </mat-nav-list>
             </mat-card-content>
           </div>
         </div>

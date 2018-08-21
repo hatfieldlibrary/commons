@@ -28,10 +28,20 @@ import { DispatchService } from './dispatch.service';
 import {Action, Store} from '@ngrx/store';
 import {NavigationServiceB} from './navigation-2/navigation.service';
 import {Subject} from 'rxjs';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {mockStore} from '../test/mock-store';
+import {Observable} from 'rxjs/internal/Observable';
 
 describe('DispatchService', () => {
+
+  class MockRouterItem {
+    public event = new NavigationEnd(0, '/commons/item', '/commons/item');
+    public events = new Observable(observer => {
+      observer.next(this.event);
+      observer.complete();
+    });
+    public navigate = jasmine.createSpy('navigate');
+  }
 
   let router: Router;
   let store;
@@ -44,10 +54,11 @@ describe('DispatchService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        DispatchService, NavigationServiceB,
+        DispatchService,
+        NavigationServiceB,
         {
           provide: Router,
-          useClass: class { navigate = jasmine.createSpy('navigate'); }
+          useValue: new MockRouterItem()
         },
         {
           provide: Store,

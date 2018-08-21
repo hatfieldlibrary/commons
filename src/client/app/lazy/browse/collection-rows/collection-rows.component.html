@@ -32,9 +32,11 @@
 
 <div class="list-container">
   <mat-nav-list>
-    <mat-list-item class="collection-list-item result-item"
+    <a mat-list-item class="collection-list-item result-item"
                    *ngFor="let collection of collectionList; let isFirstRow=first"
-                   (click)="navigateToItem(collection.id)"
+                   (click)="navigateToItem(collection.id);$event.stopPropagation();"
+                    [routerLink]=""
+                   (keyup.enter)="navigateToItem(collection.id);$event.stopPropagation();"
                    [ngClass]="{'first-row': isFirstRow, 'mobile-list-item-padding': isMobile}">
       <div fxLayout="row" fxLayoutAlign="start start">
         <img class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
@@ -57,6 +59,6 @@
           </div>
         </div>
       </div>
-    </mat-list-item>
+    </a>
   </mat-nav-list>
 </div>
