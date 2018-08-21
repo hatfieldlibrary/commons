@@ -27,7 +27,7 @@
  * Created by mspalti on 2/24/17.
  */
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AreaType} from '../data-types/area.type';
 import { environment } from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
@@ -39,7 +39,9 @@ export interface AreasResponse {
   response: AreaFilterType[]
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AreaService {
 
   constructor(private http: HttpClient) {}

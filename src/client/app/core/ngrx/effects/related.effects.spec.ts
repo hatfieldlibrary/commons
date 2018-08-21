@@ -22,15 +22,15 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable, throwError} from 'rxjs';
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
-import {Observable, } from 'rxjs/Observable';
 
 import {RelatedService} from '../../services/related.service';
 import {ItemActionRelated, ItemActionRelatedSuccess, RelatedItemRequestFailed} from 'app/core/ngrx/actions/related.actions';
 import {RelatedEffects} from './related.effects';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 
 describe('Related Items Effect', () => {
@@ -55,7 +55,7 @@ describe('Related Items Effect', () => {
           provide: RelatedService,
           useClass: class {
             getRelatedCollections = () => {
-              return Observable.of(relatedMock);
+              return observableOf(relatedMock);
             };
           }
         },
@@ -82,13 +82,13 @@ describe('Related Items Effect', () => {
 
   it('should return error action action for related request', () => {
 
-    spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return ErrorObservable.create('test') });
+    spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return throwError('test') });
     const startAction = new ItemActionRelated('1', '1,2');
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new RelatedItemRequestFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(relatedEffects.relatedEffect$).toBeObservable(expectedResults);
 
   });

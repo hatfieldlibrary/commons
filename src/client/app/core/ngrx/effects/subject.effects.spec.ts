@@ -24,16 +24,16 @@
  */
 
 
+import {of as observableOf, Observable, throwError} from 'rxjs';
+
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
-import {Observable, } from 'rxjs/Observable';
 import {SubjectService} from '../../services/subject.service';
 import {SubjectEffects} from './subject.effects';
 import {
   AllSubjectAction, SubjectAction, SubjectActionSuccess, SubjectActionFailed, SubjectsForAreaTypes
 } from '../actions/subject-actions';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 describe('Subject Effect', () => {
   let subjectEffects: SubjectEffects;
@@ -62,16 +62,16 @@ describe('Subject Effect', () => {
           provide: SubjectService,
           useClass: class {
             getSubjects = () => {
-              return Observable.of(subjectsMock);
+              return observableOf(subjectsMock);
             };
             getSubjectsForArea = () => {
-              return Observable.of(subjectsMock);
+              return observableOf(subjectsMock);
             };
             getSubjectsForAreaAndType = () => {
-              return Observable.of(subjectsMock);
+              return observableOf(subjectsMock);
             };
             getAllSubjects = () => {
-              return Observable.of(subjectsMock);
+              return observableOf(subjectsMock);
             };
           }
         },
@@ -99,13 +99,13 @@ describe('Subject Effect', () => {
 
   it('should return error for subjects', () => {
 
-    spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return ErrorObservable.create('test') });
+    spyOn(subjectService, 'getSubjectsForArea').and.callFake(() => { return throwError('test') });
     const startAction = new SubjectAction('1');
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new SubjectActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(subjectEffects.subjectEffect$).toBeObservable(expectedResults);
 
   });
@@ -124,13 +124,13 @@ describe('Subject Effect', () => {
 
   it('should return error for all subjects', () => {
 
-    spyOn(subjectService, 'getAllSubjects').and.callFake(() => { return ErrorObservable.create('test') });
+    spyOn(subjectService, 'getAllSubjects').and.callFake(() => { return throwError('test') });
     const startAction = new AllSubjectAction();
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new SubjectActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(subjectEffects.allSubjectEffect$).toBeObservable(expectedResults);
 
   });

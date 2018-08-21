@@ -29,7 +29,7 @@ import {
 
 import {ItemType} from '../../../core/data-types/item.type';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-item-header',

@@ -47,7 +47,7 @@ import {Observable} from 'rxjs/index';
 import {ObservableMedia} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
 import {mockStore} from '../../core/test/mock-store';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 
 describe('SubmitDspaceComponent', () => {
   let component: SubmitDspaceComponent;

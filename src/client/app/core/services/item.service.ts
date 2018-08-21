@@ -32,7 +32,9 @@ import {ItemType} from '../data-types/item.type';
 import { environment } from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ItemService {
 
   constructor(private http: HttpClient) {}

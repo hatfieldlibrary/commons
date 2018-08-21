@@ -23,19 +23,19 @@
  */
 
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewEncapsulation
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit
 } from '@angular/core';
 import {AreaType} from '../../core/data-types/area.type';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import {MenuInteractionService} from '../../core/services/menu/menu-interaction.service';
-import 'rxjs/add/operator/filter';
+
 import {NavigationServiceB} from '../../core/services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../core/data-types/field-filter.type';
 import * as fromRoot from '../../core/ngrx/reducers/index';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-menus-component',
@@ -97,10 +97,10 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Set up subscriptions for information needed by the back link.
     this.watcher = new Subscription();
-    const selectedSubjects$ = this.store.select(fromRoot.getSubjectsFilter);
-    const selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
-    const selectedGroups$ = this.store.select(fromRoot.getCollectionsGroupFilter);
-    const selectedArea$ = this.store.select(fromRoot.getAreasFilter);
+    const selectedSubjects$ = this.store.pipe(select(fromRoot.getSubjectsFilter));
+    const selectedTypes$ = this.store.pipe(select(fromRoot.getTypesFilter));
+    const selectedGroups$ = this.store.pipe(select(fromRoot.getCollectionsGroupFilter));
+    const selectedArea$ = this.store.pipe(select(fromRoot.getAreasFilter));
     const subjectsWatcher = selectedSubjects$.subscribe((data) => {
       this.selectedSubjects = data;
     });
@@ -113,7 +113,6 @@ export class AppMenusComponent implements OnInit, OnDestroy {
       this.selectedGroups = data;
     });
     this.watcher.add(groupsWatcher);
-
     const areaWatcher = selectedArea$.subscribe((area) => {
       this.selectedArea = area[0].id.toString();
     });

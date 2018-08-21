@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable, Subscription, Subject} from 'rxjs';
 /**
  * Created by mspalti on 3/8/17.
  */
@@ -43,7 +45,6 @@ import {
   MatSidenavModule,
   MatToolbarModule, MatTooltipModule
 } from '@angular/material';
-import {Observable} from 'rxjs';
 import {ActivatedRoute, ActivatedRouteSnapshot, Data, Params, Route, Router, UrlSegment} from '@angular/router';
 
 import {CollectionViewComponent} from './collection-view.component';
@@ -69,7 +70,6 @@ import {KeyboardArrowForwardSvgComponent} from '../../../shared/svg/keyboard-arr
 import {KeyboardArrowBackSvgComponent} from '../../../shared/svg/keyboard-arrow-back-svg/keyboard-arrow-back-svg.component';
 import {HomeBlackSvgComponent} from '../../../shared/svg/home-black-svg/home-black-svg.component';
 import {SetIntervalService} from '../../../core/services/timers/interval.service';
-import {Subscription} from 'rxjs/Subscription';
 import {MenuInteractionService} from '../../../core/services/menu/menu-interaction.service';
 import {SetTimeoutService} from '../../../core/services/timers/timeout.service';
 import {TypesComponent} from '../types/types.component';
@@ -96,7 +96,6 @@ import {AreaType} from '../../../core/data-types/area.type';
 import * as fromFilter from '../../../core/ngrx/reducers/filter.reducers';
 import {SubjectFilter} from '../../../core/data-types/subject-filter';
 import {TypesFilter} from '../../../core/data-types/types-filter';
-import {Subject} from 'rxjs/Subject';
 import {CollectionReset} from '../../../core/ngrx/actions/collection.actions';
 import {mockStore} from '../../../core/test/mock-store';
 import {SearchSvgComponent} from '../../../shared/svg/search-svg/search-svg.component';
@@ -139,33 +138,33 @@ const mulitpleAreaListMock = [
 ];
 
 const setAllRoute = (route: any) => {
-  route.params = Observable.of({});
+  route.params = observableOf({});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setAreaRoute = (route: any, mock: string) => {
-  route.params = Observable.of({areaId: mock});
+  route.params = observableOf({areaId: mock});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setAreaRouteWithQueryParam = (route: any, path: string, query: string) => {
-  route.params = Observable.of({areaId: path});
-  route.queryParams = Observable.of({view: query});
+  route.params = observableOf({areaId: path});
+  route.queryParams = observableOf({view: query});
   spyOn(route.queryParams, 'subscribe').and.callThrough();
 };
 
 const setSubjectAreaRoute = (route: any, area: string, subject: string) => {
-  route.params = Observable.of({areaId: area, subjectId: subject});
+  route.params = observableOf({areaId: area, subjectId: subject});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setAllRoutes = (route: any, area: string, subject: string, group: string, type: string) => {
-  route.params = Observable.of({areaId: area, subjectId: subject, categoryId: group, typeId: type});
+  route.params = observableOf({areaId: area, subjectId: subject, categoryId: group, typeId: type});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
 const setSubjectRoute = (route: any, subject: string) => {
-  route.params = Observable.of({subjectId: subject});
+  route.params = observableOf({subjectId: subject});
   spyOn(route.params, 'subscribe').and.callThrough();
 };
 
@@ -204,7 +203,7 @@ class MockAreaOptionsComponent {
 
 const fakeObservableMedia = {
   asObservable: () => {
-    return Observable.of({})
+    return observableOf({})
   }
 } as ObservableMedia;
 
@@ -350,7 +349,7 @@ describe('CollectionViewComponent', () => {
     setSelectedService = fixture.debugElement.injector.get(SetSelectedService);
     selectedSubscriptionSpy = spyOn(setSelectedService, 'unsubscribe');
     // fixture.detectChanges();
-    spyOn(store, 'select').and.callThrough();
+    spyOn(store, 'pipe').and.callThrough();
 
   });
 
@@ -502,7 +501,7 @@ describe('CollectionViewComponent', () => {
     spyOn(store, 'dispatch');
     component.areaId = '1';
     component.collectionNavigation('1');
-    expect(navigationService.navigateItemRoute).toHaveBeenCalledWith('1', '1');
+    expect(navigationService.navigateItemRoute).toHaveBeenCalledWith('1');
    // expect(store.dispatch).toHaveBeenCalledWith(new CollectionReset());
   });
 });

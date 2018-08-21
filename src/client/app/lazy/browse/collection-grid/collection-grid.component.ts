@@ -25,7 +25,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {CollectionType} from '../../../core/data-types/collection.type';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {animate, style, transition, trigger} from '@angular/animations';
 

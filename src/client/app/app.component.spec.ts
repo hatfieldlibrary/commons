@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable, Subject} from 'rxjs';
 /* tslint:disable:no-unused-variable */
 
 import {TestBed, async, ComponentFixture, fakeAsync, tick} from '@angular/core/testing';
@@ -31,7 +33,6 @@ import {} from 'jasmine';
 import {SetTimeoutService} from './core/services/timers/timeout.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MenuInteractionService} from './core/services/menu/menu-interaction.service';
-import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {CollectionsSvgComponent} from 'app/shared/svg/collections-svg/collections-svg.component';
 import {HomeSvgComponent} from './shared/svg/home-svg/home-svg.component';
@@ -51,7 +52,6 @@ import {
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {Subject} from 'rxjs/Subject';
 import {Router} from '@angular/router';
 import {Component} from '@angular/core';
 import {AreaFilterType} from './core/data-types/area-filter.type';
@@ -163,8 +163,8 @@ describe('AppComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select(): Observable<FieldFilterType[]> {
-              return Observable.of(mockAreaList);
+            pipe(): Observable<FieldFilterType[]> {
+              return observableOf(mockAreaList);
             };
           }
         },

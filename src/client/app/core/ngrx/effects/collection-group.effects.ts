@@ -22,78 +22,83 @@
  * Author: Michael Spalti
  */
 
-import {Actions, Effect} from '@ngrx/effects';
+
+import {of as observableOf, Observable} from 'rxjs';
+
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as groups from '../actions/collection-group.actions';
-import {Observable} from 'rxjs/Observable';
 import {Action} from '../actions/action.interface';
 import {Injectable} from '@angular/core';
 import {CollectionGroupServices} from '../../services/collection-group.services';
+import {FieldFilterType} from '../../data-types/field-filter.type';
 
 @Injectable()
 export class CollectionGroupEffects {
 
   @Effect()
-  allGroupEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.ALL_GROUP_REQUEST)
-    .switchMap(() => this.svc.getAllGroups())
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  allGroupEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.ALL_GROUP_REQUEST),
+    switchMap(() => this.svc.getAllGroups().pipe(
+      map((res ) => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+      catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   @Effect()
-  groupsByAreaEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.GROUPS_BY_AREA)
-    .map((action: groups.GroupsByArea) => action.payload)
-    .switchMap((id) => this.svc.getGroupsByArea(id))
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  groupsByAreaEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.GROUPS_BY_AREA),
+    map((action: groups.GroupsByArea) => action.payload),
+    switchMap((id) => this.svc.getGroupsByArea(id).pipe(
+      map(res => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+      catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   @Effect()
-  groupsByTypeEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.GROUPS_BY_TYPE)
-    .map((action: groups.GroupsByType) => action.payload)
-    .switchMap((id) => this.svc.getGroupsByType(id))
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  groupsByTypeEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.GROUPS_BY_TYPE),
+    map((action: groups.GroupsByType) => action.payload),
+    switchMap((id) => this.svc.getGroupsByType(id).pipe(
+      map(res => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+      catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   @Effect()
-  groupsBySubjectEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.GROUPS_BY_SUBJECT)
-    .map((action: groups.GroupsBySubject) => action.payload)
-    .switchMap((id) => this.svc.getGroupsBySubject(id))
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  groupsBySubjectEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.GROUPS_BY_SUBJECT),
+    map((action: groups.GroupsBySubject) => action.payload),
+    switchMap((id) => this.svc.getGroupsBySubject(id).pipe(
+      map(res => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+      catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   @Effect()
-  groupsBySubjectTypeEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.GROUPS_BY_SUBJECT_TYPE)
-    .map((action: groups.GroupsBySubjectType) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsBySubjectType(payload.typeId, payload.subjectId))
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  groupsBySubjectTypeEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.GROUPS_BY_SUBJECT_TYPE),
+    map((action: groups.GroupsBySubjectType) => action.payload),
+    switchMap((payload) => this.svc.getGroupsBySubjectType(payload.typeId, payload.subjectId).pipe(
+      map(res => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+      catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   @Effect()
-  groupsByAreaTypeEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.GROUPS_BY_AREA_TYPE)
-    .map((action: groups.GroupsByAreaType) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsByAreaType(payload.areaId, payload.typeId))
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  groupsByAreaTypeEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.GROUPS_BY_AREA_TYPE),
+    map((action: groups.GroupsByAreaType) => action.payload),
+    switchMap((payload) => this.svc.getGroupsByAreaType(payload.areaId, payload.typeId).pipe(
+      map(res => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+      catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   @Effect()
-  groupsByAreaSubjectEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.GROUPS_BY_AREA_SUBJECT)
-    .map((action: groups.GroupsByAreaSubject) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsByAreaSubject(payload.areaId, payload.subjectId))
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  groupsByAreaSubjectEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.GROUPS_BY_AREA_SUBJECT),
+    map((action: groups.GroupsByAreaSubject) => action.payload),
+    switchMap((payload) => this.svc.getGroupsByAreaSubject(payload.areaId, payload.subjectId).pipe(
+      map(res => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+      catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   @Effect()
-  groupsByAreaSubjectTypeEffect$: Observable<Action> = this.actions$
-    .ofType(groups.GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE)
-    .map((action: groups.GroupsByAreaSubjectType) => action.payload)
-    .switchMap((payload) => this.svc.getGroupsByAreaSubjectType(payload.areaId, payload.subjectId, payload.typeId))
-    .map(res => new groups.GroupActionSuccess(res))
-    .catch((err) => Observable.of(new groups.GroupActionFailed(err)));
+  groupsByAreaSubjectTypeEffect$: Observable<Action> = this.actions$.pipe(
+    ofType(groups.GroupActionTypes.GROUPS_BY_AREA_SUBJECT_TYPE),
+    map((action: groups.GroupsByAreaSubjectType) => action.payload),
+    switchMap((payload) =>
+      this.svc.getGroupsByAreaSubjectType(payload.areaId, payload.subjectId, payload.typeId).pipe(
+        map(res => new groups.GroupActionSuccess(<FieldFilterType[]> res)),
+        catchError((err) => observableOf(new groups.GroupActionFailed(err))))));
 
   constructor(private svc: CollectionGroupServices, private actions$: Actions) {
   }

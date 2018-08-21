@@ -25,7 +25,7 @@
 import {FieldTypeKey, FilterUpdateServiceB} from './filter-update.service';
 import {mockStore} from '../../test/mock-store';
 import {Action, Store} from '@ngrx/store';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {TestBed} from '@angular/core/testing';
 
 describe('FilterUpdateServiceB', () => {

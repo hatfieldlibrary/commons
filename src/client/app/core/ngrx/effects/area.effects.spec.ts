@@ -23,19 +23,19 @@
  */
 
 
+import {of as observableOf, Observable, throwError} from 'rxjs';
+
 import {AreaEffects} from './area.effects';
 import {AreaService} from '../../services/area.service';
-import {TestBed} from '@angular/core/testing';
-import {Observable, } from 'rxjs/Observable';
+import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {
   AreaListAction, AreaListActionFailed, AreaInformation,
-  AreaInformationSuccess, AreaListSuccess
+  AreaInformationSuccess, AreaListSuccess, AreaListByTypeSubject
 } from '../actions/area.actions';
 import {AreaType} from '../../data-types/area.type';
 import {AreaFilterType} from '../../data-types/area-filter.type';
 import {provideMockActions} from '@ngrx/effects/testing';
 import {hot, cold} from 'jasmine-marbles';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 describe('Area Effect', () => {
 
@@ -74,10 +74,13 @@ describe('Area Effect', () => {
           provide: AreaService,
           useClass: class {
             getAreaList = () => {
-              return Observable.of(mockAreasList);
+              return observableOf(mockAreasList);
+            };
+            getAreaListByTypeSubject = () => {
+              return observableOf(mockAreasList);
             };
             getAreaInfo = () => {
-              return Observable.of([mockAreaInfo]);
+              return observableOf([mockAreaInfo]);
             };
           }
         },
@@ -93,7 +96,7 @@ describe('Area Effect', () => {
 
     const startAction = new AreaListAction();
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const successAction = new AreaListSuccess(mockAreasList);
     const expectedResults = cold('--b', {b: successAction});
     expect(areaEffects.areaListEffect$).toBeObservable(expectedResults);
@@ -102,14 +105,29 @@ describe('Area Effect', () => {
 
   it('should return error response action for all collections request', () => {
 
-    spyOn(areaService, 'getAreaList').and.callFake(() => { return ErrorObservable.create('test')});
+    spyOn(areaService, 'getAreaList').and.callFake(() => { return throwError('test')});
+
     const startAction =  new AreaListAction();
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new AreaListActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(areaEffects.areaListEffect$).toBeObservable(expectedResults);
+
+  });
+
+  it('should return error response action for areas by subject and type request', () => {
+
+    spyOn(areaService, 'getAreaListByTypeSubject').and.callFake(() => { return throwError('test')});
+
+    const startAction =  new AreaListByTypeSubject({subjectId: '1', typeId: '1'});
+    const hotMarble = {a: startAction};
+    actions = hot('-^-a-', hotMarble);
+    const failAction = new AreaListActionFailed('test');
+    // create error response and complete observable
+    const expectedResults = cold('--b',  {b: failAction});
+    expect(areaEffects.areaListTypeSubjectEffect$).toBeObservable(expectedResults);
 
   });
 
@@ -117,7 +135,7 @@ describe('Area Effect', () => {
 
     const startAction = new AreaInformation('1');
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const successAction = new AreaInformationSuccess(mockAreaInfo);
     const expectedResults = cold('--b', {b: successAction});
     expect(areaEffects.areaInfoEffect$).toBeObservable(expectedResults);
@@ -126,16 +144,15 @@ describe('Area Effect', () => {
 
   it('should return error response for area information request', () => {
 
-    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return ErrorObservable.create('test') });
+    spyOn(areaService, 'getAreaInfo').and.callFake(() => { return throwError('test') });
     const startAction =  new AreaInformation('1');
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new AreaListActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(areaEffects.areaInfoEffect$).toBeObservable(expectedResults);
 
   });
-
 
 });

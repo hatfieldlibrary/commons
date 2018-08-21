@@ -43,5 +43,6 @@ export const environment = {
   // Authentication paths.
   authPath: '/auth',
   authCheck: '/',
+  defaultRoute: '/collection/area/5',
   isDebugMode: true
 };
