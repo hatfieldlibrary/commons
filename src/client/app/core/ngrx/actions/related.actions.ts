@@ -35,13 +35,18 @@ export const RelatedItemActionTypes = {
   REQUEST_FAILED: type('[Related] Request Failed'),
 };
 
+export interface RelatedItemsParams {
+  itemId: string;
+  subjectIds: string
+}
+
 export class ItemActionRelated implements Action {
   type = RelatedItemActionTypes.RELATED_COLLECTIONS;
-  payload;
+  payload: RelatedItemsParams;
 
-  constructor(id: string, subjectIds: string) {
+  constructor(itemId: string, subjectIds: string) {
     this.payload = {
-      id: id,
+      itemId: itemId,
       subjectIds: subjectIds
     };
   }
