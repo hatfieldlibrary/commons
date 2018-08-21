@@ -37,6 +37,7 @@
   <mat-grid-tile class="collection-list-item result-item"
                  [ngClass]="{'mobile-list-item-padding': isMobile}"
                  (click)="navigateToItem(collection.id)"
+                 (keyup.enter)="navigateToItem(collection.id);"
                  [@fadeIn]
                  *ngFor="let collection of collectionList">
     <mat-card>

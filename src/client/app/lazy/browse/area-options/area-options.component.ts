@@ -22,11 +22,13 @@
  * Author: Michael Spalti
  */
 
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
 import {AreasFilter} from '../../../core/data-types/areas-filter';
 import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-update.service';
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
+import {ListKeyManager, ListKeyManagerOption} from '@angular/cdk/a11y';
+import {MatListItem, MatListOption} from '@angular/material';
 
 export interface SelectedAreaEvent {
   selected: FieldFilterType[];
