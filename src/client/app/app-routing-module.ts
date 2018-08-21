@@ -38,7 +38,7 @@ const appRoutes: Routes = [
     // The areaId is not part of the resource identifier and varies
     // with navigation history. Remove from path and create alternate
     // technique for back navigation (see new app menu navigation).
-    path: environment.appRoot + '/item/id/:id/:areaId',
+    path: environment.appRoot + '/item/id/:id',
     loadChildren: './lazy/item/item.module#ItemModule'
   },
   {

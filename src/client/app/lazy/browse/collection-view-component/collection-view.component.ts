@@ -227,7 +227,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
    */
   collectionNavigation(id: string): void {
   //  this.store.dispatch(new CollectionReset());
-    this.navigation.navigateItemRoute(id, this.areaId);
+    this.navigation.navigateItemRoute(id);
   }
 
   /**

@@ -176,11 +176,11 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.selectedSubjects$ = this.store.pipe(select(fromRoot.getSubjectsFilter));
     this.selectedTypes$ = this.store.pipe(select(fromRoot.getTypesFilter));
     this.selectedGroups$ = this.store.pipe(select(fromRoot.getCollectionsGroupFilter));
+    const selectedArea$ = this.store.pipe(select(fromRoot.getAreasFilter));
     this.setAreasAvailable();
     const subjectsWatcher = this.selectedSubjects$.subscribe((data) => {
       this.selectedSubjects = data;
     });
-
     this.watchers.add(subjectsWatcher);
     const typesWatcher = this.selectedTypes$.subscribe((data) => {
       this.selectedTypes = data;
@@ -197,14 +197,18 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     if (itemWatcher) {
       this.watchers.add(itemWatcher);
     }
+    const areaWatcher = selectedArea$.subscribe((area) => {
+      this.selectedArea = area[0].id.toString();
+    });
+    this.watchers.add(areaWatcher);
     // Request item using the route params.
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.store.dispatch(new fromItem.ItemReset());
         this.store.dispatch(new fromRelated.ClearRelatedItems());
-        if (params['areaId']) {
-          this.selectedArea = params['areaId'];
-        }
+      //  if (params['areaId']) {
+      //    this.selectedArea = params['areaId'];
+      //  }
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));

@@ -126,15 +126,11 @@ export class NavigationServiceB {
     return ids.slice(0, -1);
   }
 
-  public navigateItemRoute(itemId: string, areaId: string): void {
-    if (!areaId) {
-      areaId = '0';
-    }
+  public navigateItemRoute(itemId: string): void {
     this.router.navigate([ '/',
       this.urlRootPath,
       'item',
-      'id', itemId,
-      areaId
+      'id', itemId
     ]);
   }
 

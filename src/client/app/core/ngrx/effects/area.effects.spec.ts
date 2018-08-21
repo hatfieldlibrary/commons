@@ -27,10 +27,10 @@ import {of as observableOf, Observable, throwError} from 'rxjs';
 
 import {AreaEffects} from './area.effects';
 import {AreaService} from '../../services/area.service';
-import {TestBed} from '@angular/core/testing';
+import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {
   AreaListAction, AreaListActionFailed, AreaInformation,
-  AreaInformationSuccess, AreaListSuccess
+  AreaInformationSuccess, AreaListSuccess, AreaListByTypeSubject
 } from '../actions/area.actions';
 import {AreaType} from '../../data-types/area.type';
 import {AreaFilterType} from '../../data-types/area-filter.type';
@@ -76,6 +76,9 @@ describe('Area Effect', () => {
             getAreaList = () => {
               return observableOf(mockAreasList);
             };
+            getAreaListByTypeSubject = () => {
+              return observableOf(mockAreasList);
+            };
             getAreaInfo = () => {
               return observableOf([mockAreaInfo]);
             };
@@ -89,7 +92,7 @@ describe('Area Effect', () => {
     areaService = TestBed.get(AreaService);
   });
 
-  it('should call Area Success action after areaList loaded.', () => {
+  fit('should call Area Success action after areaList loaded.', () => {
 
     const startAction = new AreaListAction();
     const hotMarble = {a: startAction};
@@ -100,16 +103,33 @@ describe('Area Effect', () => {
 
   });
 
-  it('should return error response action for all collections request', () => {
+  fit('should return error response action for all collections request', () => {
 
     spyOn(areaService, 'getAreaList').and.callFake(() => { return throwError('test')});
+
     const startAction =  new AreaListAction();
     const hotMarble = {a: startAction};
     actions = hot('--a-', hotMarble);
     const failAction = new AreaListActionFailed('test');
     // create error response and complete observable
     const expectedResults = cold('--(b|)',  {b: failAction});
+    // expect(areaEffects.areaListEffect$).toBeObservable()
     expect(areaEffects.areaListEffect$).toBeObservable(expectedResults);
+
+  });
+
+  fit('should return error response action for areas by subject and type request', () => {
+
+    spyOn(areaService, 'getAreaListByTypeSubject').and.callFake(() => { return throwError('test')});
+
+    const startAction =  new AreaListByTypeSubject({subjectId: '1', typeId: '1'});
+    const hotMarble = {a: startAction};
+    actions = hot('--a-', hotMarble);
+    const failAction = new AreaListActionFailed('test');
+    // create error response and complete observable
+    const expectedResults = cold('--(c|)',  {c: failAction});
+    // expect(areaEffects.areaListEffect$).toBeObservable()
+    expect(areaEffects.areaListSubjectEffect$).toBeObservable(expectedResults);
 
   });
 
@@ -132,7 +152,7 @@ describe('Area Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new AreaListActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--(c|)',  {c: failAction});
     expect(areaEffects.areaInfoEffect$).toBeObservable(expectedResults);
 
   });

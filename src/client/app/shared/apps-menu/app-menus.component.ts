@@ -113,7 +113,6 @@ export class AppMenusComponent implements OnInit, OnDestroy {
       this.selectedGroups = data;
     });
     this.watcher.add(groupsWatcher);
-
     const areaWatcher = selectedArea$.subscribe((area) => {
       this.selectedArea = area[0].id.toString();
     });

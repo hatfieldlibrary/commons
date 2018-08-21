@@ -40,42 +40,84 @@ export class AreaEffects {
   @Effect()
   areaListEffect$: Observable<Action> = this.actions$.pipe(
     ofType(areas.AreaActionTypes.AREA_LIST),
-    switchMap(() => this.svc.getAreaList().pipe(
-      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
-      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
+    switchMap(
+      () => this.svc.getAreaList().pipe(
+        map(res =>
+          new areas.AreaListSuccess(<AreaFilterType[]> res)
+        ),
+        catchError((err) =>
+          observableOf(new areas.AreaListActionFailed(err))
+        )
+      )
+    )
+  );
 
   @Effect()
   areaListSubjectEffect$: Observable<Action> = this.actions$.pipe(
     ofType(areas.AreaActionTypes.AREA_LIST_SUBJECT),
     map((action: areas.AreaListByType) => action.payload),
-    switchMap((id) => this.svc.getAreaListBySubject(id).pipe(
-      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
-      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
+    switchMap(
+      (id) => this.svc.getAreaListBySubject(id).pipe(
+        map(
+          res => new areas.AreaListSuccess(<AreaFilterType[]> res)
+        ),
+        catchError(
+          (err) => observableOf(new areas.AreaListActionFailed(err)
+          )
+        )
+      )
+    )
+  );
 
   @Effect()
   areaListTypeEffect$: Observable<Action> = this.actions$.pipe(
     ofType(areas.AreaActionTypes.AREA_LIST_TYPE),
     map((action: areas.AreaListBySubject) => action.payload),
-    switchMap((id) => this.svc.getAreaListByType(id).pipe(
-      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
-      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
+    switchMap(
+      (id) => this.svc.getAreaListByType(id).pipe(
+        map(
+          res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
+        catchError(
+          (err) => observableOf(new areas.AreaListActionFailed(err)
+          )
+        )
+      )
+    )
+  );
 
   @Effect()
   areaListTypeSubjectEffect$: Observable<Action> = this.actions$.pipe(
     ofType(areas.AreaActionTypes.AREA_LIST_TYPE_SUBJECT),
     map((action: areas.AreaListByTypeSubject) => action.payload),
-    switchMap((payload) => this.svc.getAreaListByTypeSubject(payload.typeId, payload.subjectId).pipe(
-      map(res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
-      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
+    switchMap(
+      (payload) =>
+        this.svc.getAreaListByTypeSubject(payload.typeId, payload.subjectId).pipe(
+          map(
+            res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
+          catchError(
+            (err) => observableOf(new areas.AreaListActionFailed(err)
+            )
+          )
+        )
+    )
+  );
 
   // TODO: Tagger is built to return an array of areas.  This version of the Commons assumes one. Should Tagger change?
   @Effect()
   areaInfoEffect$: Observable<Action> = this.actions$.pipe(
     ofType(areas.AreaActionTypes.AREA_INFORMATION),
     map((action: areas.AreaInformation) => action.payload),
-    switchMap(id => this.svc.getAreaInfo(id).pipe(
-      map(res => new areas.AreaInformationSuccess(<AreaType> res[0])),
-      catchError((err) => observableOf(new areas.AreaListActionFailed(err))))));
+    switchMap(
+      id => this.svc.getAreaInfo(id).pipe(
+        map(
+          res => new areas.AreaInformationSuccess(<AreaType> res[0])),
+        catchError(
+          (err) => observableOf(new areas.AreaListActionFailed(err)
+          )
+        )
+      )
+    )
+  );
 
   constructor(private svc: AreaService, private actions$: Actions) {
   }
