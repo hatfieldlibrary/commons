@@ -35,7 +35,9 @@ import {NavigationServiceB} from './navigation-2/navigation.service';
 /**
  * This class handles all store dispatch requests for the application.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DispatchService {
 
   constructor(private store: Store<fromRoot.State>,

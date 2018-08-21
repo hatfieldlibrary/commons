@@ -27,7 +27,7 @@ import { TestBed } from '@angular/core/testing';
 import { DispatchService } from './dispatch.service';
 import {Action, Store} from '@ngrx/store';
 import {NavigationServiceB} from './navigation-2/navigation.service';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {mockStore} from '../test/mock-store';
 

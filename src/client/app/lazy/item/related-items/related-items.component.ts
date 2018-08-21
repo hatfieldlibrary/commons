@@ -26,7 +26,7 @@ import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/cor
 import {RelatedType} from '../../../core/data-types/related-collection';
 import {environment} from '../../../environments/environment';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-related-items',

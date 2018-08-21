@@ -27,9 +27,6 @@ import {RouterModule, Routes} from '@angular/router';
 import {environment} from './environments/environment';
 import {PageNotFoundComponent} from './core/components/page-not-found/page-not-found.component';
 
-// Define a default route to use in redirects.
-const defaultRoutePath = '/collection/area/5';
-
 const appRoutes: Routes = [
 
   {
@@ -41,7 +38,7 @@ const appRoutes: Routes = [
     // The areaId is not part of the resource identifier and varies
     // with navigation history. Remove from path and create alternate
     // technique for back navigation (see new app menu navigation).
-    path: environment.appRoot + '/item/id/:id/:areaId',
+    path: environment.appRoot + '/item/id/:id',
     loadChildren: './lazy/item/item.module#ItemModule'
   },
   {
@@ -50,12 +47,12 @@ const appRoutes: Routes = [
   },
   {
     path: environment.appRoot, // Go to default collection area (partial path)
-    redirectTo: environment.appRoot + defaultRoutePath,
+    redirectTo: environment.appRoot + environment.defaultRoute,
     pathMatch: 'full'
   },
   {
     path: '',  // Go to default collection area (empty path)
-    redirectTo: environment.appRoot + defaultRoutePath,
+    redirectTo: environment.appRoot + environment.defaultRoute,
     pathMatch: 'full'
   },
   {

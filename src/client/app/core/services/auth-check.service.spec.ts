@@ -27,7 +27,7 @@ import {TestBed, inject, fakeAsync, tick} from '@angular/core/testing';
 import {AuthCheckService} from './auth-check.service';
 
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 // auth status server response.
 // const mockAuthStatus = {auth: true};

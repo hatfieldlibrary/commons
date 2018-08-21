@@ -26,7 +26,7 @@
  * The main container for components used in browsing with filters.
  */
 import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {
   Component,
@@ -38,7 +38,6 @@ import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {AreaType} from '../../../core/data-types/area.type';
 import {CollectionType} from '../../../core/data-types/collection.type';
 import {fadeIn} from '../../../core/animation/animations';
-import {Subscription} from 'rxjs/Subscription';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {DeselectedFilter} from 'app/lazy/browse/area-filters/area-filters.component';
@@ -48,8 +47,8 @@ import {DispatchService} from '../../../core/services/dispatch.service';
 import {SetSelectedService} from '../../../core/services/set-selected.service';
 import {TypesFilter} from '../../../core/data-types/types-filter';
 import * as fromFilter from '../../../core/ngrx/reducers/filter.reducers';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/observable/combineLatest';
+
+
 import {AreasFilter} from '../../../core/data-types/areas-filter';
 import {SubjectFilter} from '../../../core/data-types/subject-filter';
 import {SelectedGroupEvent} from '../group-options/group-options.component';
@@ -228,7 +227,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
    */
   collectionNavigation(id: string): void {
   //  this.store.dispatch(new CollectionReset());
-    this.navigation.navigateItemRoute(id, this.areaId);
+    this.navigation.navigateItemRoute(id);
   }
 
   /**

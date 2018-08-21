@@ -32,7 +32,9 @@ import {CollectionType} from '../data-types/collection.type';
 import { environment } from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CollectionService {
 
   constructor(private http: HttpClient) {}

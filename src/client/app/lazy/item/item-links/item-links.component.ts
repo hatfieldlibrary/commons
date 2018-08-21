@@ -27,16 +27,16 @@ import {
 } from '@angular/core';
 import {SearchService} from '../../../core/services/search.service';
 import {SearchTerms} from '../../../core/data-types/simple-search.type';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 import {AuthCheckService} from '../../../core/services/auth-check.service';
 import {AuthType} from '../../../core/data-types/auth.type';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
-import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
+import {select, Store} from '@ngrx/store';
 import {DOCUMENT} from '@angular/common';
 import {SetAuthStatus} from '../../../core/ngrx/actions/auth.action';
+import {map} from 'rxjs/operators';
 
 /**
  * This component is for the content access options presented to the user.
@@ -49,9 +49,6 @@ import {SetAuthStatus} from '../../../core/ngrx/actions/auth.action';
 })
 export class ItemLinksComponent implements OnInit, OnDestroy {
 
-
-  auth$: Observable<AuthType>;
-  authenticationPath: string;
   @Input() restricted: boolean;
   @Input() linkOptions: string;
   @Input() assetType: string;
@@ -60,6 +57,8 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
   @Input() searchUrl: string;
   @Input() title: string;
   @Input() count: string;
+  auth$: Observable<AuthType>;
+  authenticationPath: string;
   model: SearchTerms;
   COLLECTION_BUTTON_LABEL = 'Go to the Collection';
   ITEM_BUTTON_LABEL = 'Go to the Item';
@@ -83,7 +82,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    const url: Observable<string> = this.route.url.map(segments => segments.join('/'));
+    const url: Observable<string> = this.route.parent.url.pipe(map(segments => segments.join('/')));
     const urlWatcher = url.subscribe((path) => {
       this.authenticationPath = environment.authPath + '/' + path;
     });
@@ -91,7 +90,7 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
 
     this.model = new SearchTerms();
     // Using the store to track authentication.
-    this.auth$ = this.store.select(fromRoot.getAuthStatus);
+    this.auth$ = this.store.pipe(select(fromRoot.getAuthStatus));
     const authWatcher = this.auth$.subscribe((auth) => {
       this.isAuthenticated = auth.auth;
       // Make sure to pick up the change next cycle.

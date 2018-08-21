@@ -27,16 +27,13 @@ import {RouterModule} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {CollectionViewComponent} from './collection-view-component/collection-view.component';
 
-// Define a default route to use in redirects.
-const defaultRoutePath = '/collection/area/5';
-
 const listRoutes = [
   {
     path: '',
     children: [
       {
         path: '', // Go to the default collection area (partial path).  Needs to be absolute from within a child route.
-        redirectTo: '/' + environment.appRoot + defaultRoutePath,
+        redirectTo: '/' + environment.appRoot + environment.defaultRoute,
         pathMatch: 'full'
       },
       {

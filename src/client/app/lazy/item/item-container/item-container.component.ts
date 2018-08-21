@@ -25,10 +25,10 @@
 import {
   Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Store} from '@ngrx/store';
+import {ActivatedRoute} from '@angular/router';
+import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {ItemType} from '../../../core/data-types/item.type';
 import * as fromItem from '../../../core/ngrx/actions/item.actions';
 import * as areaActions from '../../../core/ngrx/actions/area.actions';
@@ -36,7 +36,6 @@ import * as fromRelated from '../../../core/ngrx/actions/related.actions';
 import {RelatedType} from '../../../core/data-types/related-collection';
 import {fadeIn} from '../../../core/animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
 import {DOCUMENT} from '@angular/common';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
@@ -70,24 +69,10 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromRoot.State>,
               private media: ObservableMedia,
               private route: ActivatedRoute,
-              private router: Router,
               private navigationService: NavigationServiceB,
               @Inject(DOCUMENT) private document) {
 
     this.watchers = new Subscription();
-
-    /** Assures that the page scrolls to top if user chooses related item. */
-      // const routeEventWatcher = this.router.events.filter(event => event instanceof NavigationEnd).subscribe(() => {
-      // Chrome canary supports the new standard usage with documentElement, but
-      // Chrome and presumably other browsers still expect body.
-      // this.renderer.setProperty(this.document.body, 'scrollTop', 0);
-      // this.renderer.setProperty(this.document.documentElement, 'scrollTop', 0);
-
-      // });
-      // if (routeEventWatcher) {
-      //   this.watchers.add(routeEventWatcher);
-      // }
-
       // Set the media observable subscription for assigning the related items column count.
     const mediaWatcher = this.media.subscribe((change: MediaChange) => {
         this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
@@ -112,7 +97,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    * is not empty.
    */
   setAreasAvailable(): void {
-    const areaWatcher = this.store.select(fromRoot.getAreas).subscribe((areas) => {
+    const areaWatcher = this.store.pipe(select(fromRoot.getAreas)).subscribe((areas) => {
       this.areas = areas;
       // id is 0 in initial state.
       if (areas.length > 0) {
@@ -186,16 +171,16 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.item$ = this.store.select(fromRoot.getItem);
-    this.related$ = this.store.select(fromRoot.getRelated);
-    this.selectedSubjects$ = this.store.select(fromRoot.getSubjectsFilter);
-    this.selectedTypes$ = this.store.select(fromRoot.getTypesFilter);
-    this.selectedGroups$ = this.store.select(fromRoot.getCollectionsGroupFilter);
+    this.item$ = this.store.pipe(select(fromRoot.getItem));
+    this.related$ = this.store.pipe(select(fromRoot.getRelated));
+    this.selectedSubjects$ = this.store.pipe(select(fromRoot.getSubjectsFilter));
+    this.selectedTypes$ = this.store.pipe(select(fromRoot.getTypesFilter));
+    this.selectedGroups$ = this.store.pipe(select(fromRoot.getCollectionsGroupFilter));
+    const selectedArea$ = this.store.pipe(select(fromRoot.getAreasFilter));
     this.setAreasAvailable();
     const subjectsWatcher = this.selectedSubjects$.subscribe((data) => {
       this.selectedSubjects = data;
     });
-
     this.watchers.add(subjectsWatcher);
     const typesWatcher = this.selectedTypes$.subscribe((data) => {
       this.selectedTypes = data;
@@ -206,20 +191,24 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     });
     this.watchers.add(groupsWatcher);
     // Once we have item information, request related items.
-    const itemWatcher = this.store.select(fromRoot.getItem).subscribe((data) => {
+    const itemWatcher = this.store.pipe(select(fromRoot.getItem)).subscribe((data) => {
       this.getRelatedItems(data);
     });
     if (itemWatcher) {
       this.watchers.add(itemWatcher);
     }
-    // Request item based on route parameter.
+    const areaWatcher = selectedArea$.subscribe((area) => {
+      this.selectedArea = area[0].id.toString();
+    });
+    this.watchers.add(areaWatcher);
+    // Request item using the route params.
     const routeWatcher = this.route.params
       .subscribe((params) => {
         this.store.dispatch(new fromItem.ItemReset());
         this.store.dispatch(new fromRelated.ClearRelatedItems());
-        if (params['areaId']) {
-          this.selectedArea = params['areaId'];
-        }
+      //  if (params['areaId']) {
+      //    this.selectedArea = params['areaId'];
+      //  }
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));

@@ -26,7 +26,7 @@ import {TestBed, getTestBed, fakeAsync, tick} from '@angular/core/testing';
 
 import {SubscriptionService} from './subscription.service';
 import {Action, Store} from '@ngrx/store';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {mockStore} from '../test/mock-store';
 
 describe('SubscriptionService', () => {

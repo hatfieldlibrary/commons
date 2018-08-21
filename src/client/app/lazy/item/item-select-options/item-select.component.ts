@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 import {SearchService} from '../../../core/services/search.service';
 import {DOCUMENT} from '@angular/common';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 /**
  * This component creates an options list from date
