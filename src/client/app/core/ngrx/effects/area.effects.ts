@@ -62,8 +62,7 @@ export class AreaEffects {
           res => new areas.AreaListSuccess(<AreaFilterType[]> res)
         ),
         catchError(
-          err => observableOf(new areas.AreaListActionFailed(err)
-          )
+          err => observableOf(new areas.AreaListActionFailed(err))
         )
       )
     )
@@ -78,8 +77,7 @@ export class AreaEffects {
         map(
           res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
         catchError(
-          err => observableOf(new areas.AreaListActionFailed(err)
-          )
+          err => observableOf(new areas.AreaListActionFailed(err))
         )
       )
     )
@@ -95,8 +93,7 @@ export class AreaEffects {
           map(
             res => new areas.AreaListSuccess(<AreaFilterType[]> res)),
           catchError(
-            err => observableOf(new areas.AreaListActionFailed(err)
-            )
+            err => observableOf(new areas.AreaListActionFailed(err))
           )
         )
     )
@@ -112,8 +109,7 @@ export class AreaEffects {
         map(
           res => new areas.AreaInformationSuccess(<AreaType> res[0])),
         catchError(
-          err => observableOf(new areas.AreaListActionFailed(err)
-          )
+          err => observableOf(new areas.AreaListActionFailed(err))
         )
       )
     )

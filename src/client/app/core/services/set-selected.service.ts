@@ -30,7 +30,7 @@ import {select, Store} from '@ngrx/store';
 import {FieldFilterType} from '../data-types/field-filter.type';
 
 /**
- * This service initializes the selected fields on route navigation.
+ * This service handles updates to tha applications's filter states.
  */
 @Injectable({
   providedIn: 'root'

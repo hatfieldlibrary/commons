@@ -34,18 +34,24 @@ import {Action} from '../actions/action.interface';
 import {ItemActions} from '../actions/item.actions';
 
 
-
-
 @Injectable()
 export class ItemEffects {
 
   @Effect()
   itemEffect$: Observable<Action> = this.actions$.pipe(
     ofType(item.ItemActionTypes.ITEM_REQUEST),
-    map((action: ItemActions) => action.payload),
-    switchMap((id: string) => this.svc.getItem(id).pipe(
-    map(res => new item.ItemSuccess(res)),
-    catchError((err) => observableOf(new item.ItemRequestFailed(err))))));
+    map(
+      (action: ItemActions) => action.payload),
+    switchMap(
+      (id: string) => this.svc.getItem(id).pipe(
+        map(
+          res => new item.ItemSuccess(res)),
+        catchError(
+          err => observableOf(new item.ItemRequestFailed(err))
+        )
+      )
+    )
+  );
 
   constructor(private svc: ItemService, private actions$: Actions) {
   }

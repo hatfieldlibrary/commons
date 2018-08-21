@@ -24,7 +24,7 @@
 
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
 import {select, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
@@ -54,12 +54,14 @@ export class NavigationServiceB {
   removedSubs: FieldFilterType[];
   removedGroups: FieldFilterType[];
   removedTypes: FieldFilterType[];
+  previousUrl = '';
+  currentUrl = '';
+  initialNavigation = true;
 
   constructor(private router: Router, private store: Store<fromRoot.State>) {
-    // Keep track of removed fields in application state (as added by AreaFiltersComponent).
-    // Before navigation takes place, the requested field ids are checked to verify that
-    // they have not been removed. (Field removal is not not initiated directly by the user;
-    // it happens when fields are automatically removed in the AreaFiltersComponent component.)
+    // Keep track of removed fields in application state (added by AreaFiltersComponent).
+    // Before navigation takes place, the selected field ids are checked to verify that
+    // they have not been removed. (Field removal is initiated in the AreaFiltersComponent component.)
     // No need to unsubscribe. We're in a singleton.
     this.removedSubjects$ = store.pipe(select(fromRoot.getRemovedSubject)).subscribe(rem => {
       this.removedSubs = rem;
@@ -70,6 +72,35 @@ export class NavigationServiceB {
     this.removedGroups$ = store.pipe(select(fromRoot.getRemovedGroup)).subscribe(rem => {
       this.removedGroups = rem;
     });
+
+    // This tracks the previous url. Can be used by to determine whether
+    // to dispatch a request for new collection data.
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        this.previousUrl = this.currentUrl;
+        this.currentUrl = event.url;
+      }
+    });
+  }
+
+  /**
+   * Determines whether the context requires a new request for data. If an this is not the
+   * initial collection navigation event and the previous url was an item route, there is no need
+   * to update the collection state.
+   * @returns {boolean}
+   */
+  shouldFetchCollectionData(): boolean {
+    // When this method is called for the first time, should fetch collection data.
+    if (this.initialNavigation) {
+      this.initialNavigation = false;
+      return true;
+    }
+    // Should not fetch collection data if navigating from an item view.
+    const regex = /\/commons\/item/;
+    if (this.previousUrl.match(regex)) {
+      return false;
+    }
+    return true;
   }
 
   /**
