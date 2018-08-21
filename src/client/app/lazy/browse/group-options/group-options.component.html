@@ -28,8 +28,8 @@
     <mat-list-option *ngFor="let group of filter.groups"
                      class="local-navigation"
                      [selected]="isSelected(group.id)"
-
                      [checkboxPosition]="position"
+                     (keyup.enter)="onGroupListControlChanged(groupSelectionList, group.id)"
                      (click)="onGroupListControlChanged(groupSelectionList, group.id)"
                      [value]="group.id">
       {{group.name}}
