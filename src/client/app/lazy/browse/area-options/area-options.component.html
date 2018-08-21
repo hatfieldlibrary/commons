@@ -24,11 +24,15 @@
 
 <div class="overflow-x-scroll-no-scrollbar area-selector-container" fxLayoutAlign="center center">
 
-  <mat-nav-list #areaSelectionList class="area-selection">
-    <mat-list-item *ngFor="let area of filter.areas;" [ngClass]="{'highlight': isSelected(area.id)}" class="nav-link local-navigation"
-         (click)="onAreaListControlChanged(area.id)">
-        {{area.name}}
-    </mat-list-item>
+  <mat-nav-list #areaSelectionList class="area-selection" role="menu">
+    <a mat-list-item *ngFor="let area of filter.areas;" [ngClass]="{'highlight': isSelected(area.id)}"
+       class="nav-link local-navigation"
+       (click)="onAreaListControlChanged(area.id);$event.stopPropagation();"
+       role="menuitem"
+       [routerLink]=""
+       (keyup.enter)="onAreaListControlChanged(area.id);$event.stopPropagation();">
+      {{area.name}}
+    </a>
   </mat-nav-list>
 
 </div>

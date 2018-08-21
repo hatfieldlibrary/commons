@@ -30,6 +30,7 @@
                      [selected]="isSelected(subject.id)"
                      [@fadeIn]
                      [checkboxPosition]="position"
+                     (keyup.enter)="onSubjectListControlChanged(subject.id)"
                      (click)="onSubjectListControlChanged(subject.id)"
                      [value]="subject.id">
       {{subject.name}}
