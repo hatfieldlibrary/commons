@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+
+import {of as observableOf, Observable, Subscription} from 'rxjs';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { ItemLinksComponent } from './item-links.component';
@@ -40,12 +42,9 @@ import {SearchService} from '../../../core/services/search.service';
 import {ActivatedRoute} from '@angular/router';
 import {AuthCheckService} from '../../../core/services/auth-check.service';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
 import {ItemSelectComponent} from '../item-select-options/item-select.component';
 import {DatePickerSvgComponent} from '../../../shared/svg/date-picker-svg/date-picker-svg.component';
 import {HttpClientModule} from '@angular/common/http';
-import {Subscription} from 'rxjs/Subscription';
-import * as fromRoot from '../../../core/ngrx/reducers/index';
 
 describe('ItemLinksComponent', () => {
   let component: ItemLinksComponent;
@@ -77,15 +76,17 @@ describe('ItemLinksComponent', () => {
         {
           provide: AuthCheckService,
           useValue: {
-            getAuthStatus: () => Observable.of({})
+            getAuthStatus: () => observableOf({})
           }
         },
         {
           provide: ActivatedRoute,
           useValue: {
             params: new Observable<any>(),
-            url: {
-              map: () =>  Observable.of('')
+            parent: {
+              url: {
+                pipe: () =>  observableOf('')
+              }
             }
           }
         },
@@ -93,8 +94,8 @@ describe('ItemLinksComponent', () => {
           provide: Store,
           useClass: class {
             dispatch = jasmine.createSpy('dispatch');
-            select = () => {
-              return Observable.of({});
+            pipe = () => {
+              return observableOf({});
             };
           }
         },
@@ -111,8 +112,8 @@ describe('ItemLinksComponent', () => {
     store = fixture.debugElement.injector.get(Store);
     auth = fixture.debugElement.injector.get(AuthCheckService);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    spyOn(route.url, 'map').and.callThrough();
-    spyOn(store, 'select').and.callThrough();
+    spyOn(route.parent.url, 'pipe').and.callThrough();
+    spyOn(store, 'pipe').and.callThrough();
     spyOn(auth, 'getAuthStatus').and.callThrough();
     component = fixture.componentInstance;
     watcher = component.watchers;
@@ -122,9 +123,9 @@ describe('ItemLinksComponent', () => {
   it('should initialize the component', fakeAsync(() => {
     component.ngOnInit();
     tick();
-    expect(route.url.map).toHaveBeenCalled();
+    expect(route.parent.url.pipe).toHaveBeenCalled();
     expect(component.watchers.add).toHaveBeenCalled();
-    expect(store.select).toHaveBeenCalledWith(fromRoot.getAuthStatus);
+    expect(store.pipe).toHaveBeenCalled();
     expect(auth.getAuthStatus).toHaveBeenCalled();
   }));
 

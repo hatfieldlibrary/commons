@@ -26,8 +26,8 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
-import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
+import {select, Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
 import {
   RemoveSelectedGroups,
   RemoveSelectedSubjects,
@@ -42,7 +42,9 @@ interface RouterIds {
   groupId: string;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NavigationServiceB {
 
   urlRootPath = environment.appRoot;
@@ -59,13 +61,13 @@ export class NavigationServiceB {
     // they have not been removed. (Field removal is not not initiated directly by the user;
     // it happens when fields are automatically removed in the AreaFiltersComponent component.)
     // No need to unsubscribe. We're in a singleton.
-    this.removedSubjects$ = store.select(fromRoot.getRemovedSubject).subscribe(rem => {
+    this.removedSubjects$ = store.pipe(select(fromRoot.getRemovedSubject)).subscribe(rem => {
       this.removedSubs = rem;
     });
-    this.removedTypes$ = store.select(fromRoot.getRemovedType).subscribe(rem => {
+    this.removedTypes$ = store.pipe(select(fromRoot.getRemovedType)).subscribe(rem => {
       this.removedTypes = rem;
     });
-    this.removedGroups$ = store.select(fromRoot.getRemovedGroup).subscribe(rem => {
+    this.removedGroups$ = store.pipe(select(fromRoot.getRemovedGroup)).subscribe(rem => {
       this.removedGroups = rem;
     });
   }
@@ -124,15 +126,11 @@ export class NavigationServiceB {
     return ids.slice(0, -1);
   }
 
-  public navigateItemRoute(itemId: string, areaId: string): void {
-    if (!areaId) {
-      areaId = '0';
-    }
+  public navigateItemRoute(itemId: string): void {
     this.router.navigate([ '/',
       this.urlRootPath,
       'item',
-      'id', itemId,
-      areaId
+      'id', itemId
     ]);
   }
 

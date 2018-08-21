@@ -25,15 +25,16 @@
 import { Injectable } from '@angular/core';
 import * as filterActions from '../ngrx/actions/filter.actions';
 import * as fromRoot from '../ngrx/reducers';
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
+import {Observable, Subscription} from 'rxjs';
+import {select, Store} from '@ngrx/store';
 import {FieldFilterType} from '../data-types/field-filter.type';
 
 /**
  * This service initializes the selected fields on route navigation.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SetSelectedService {
 
   subjects$: Observable<FieldFilterType[]>;
@@ -43,10 +44,10 @@ export class SetSelectedService {
   watchers: Subscription;
 
   constructor(private store: Store<fromRoot.State>) {
-    this.subjects$ = this.store.select(fromRoot.getSubject);
-    this.areas$ = this.store.select(fromRoot.getAreas);
-    this.types$ = this.store.select(fromRoot.getTypes);
-    this.groups$ = this.store.select(fromRoot.getCollectionGroups);
+    this.subjects$ = this.store.pipe(select(fromRoot.getSubject));
+    this.areas$ = this.store.pipe(select(fromRoot.getAreas));
+    this.types$ = this.store.pipe(select(fromRoot.getTypes));
+    this.groups$ = this.store.pipe(select(fromRoot.getCollectionGroups));
     this.watchers = new Subscription();
   }
 
