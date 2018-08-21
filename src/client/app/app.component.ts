@@ -27,7 +27,7 @@ import {
   ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
   ViewChild
 } from '@angular/core';
-import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
+import { NavigationStart, Router} from '@angular/router';
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
 } from '@angular/common';
@@ -38,8 +38,6 @@ import * as fromRoot from './core/ngrx/reducers/index';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
 import {SetTimeoutService} from './core/services/timers/timeout.service';
-import {SetSelectedService} from './core/services/set-selected.service';
-import {NavigationServiceB} from './core/services/navigation-2/navigation.service';
 import {LoggerService} from './core/logger/logger.service';
 import {ScrollReadyService} from './core/services/observable/scroll-ready.service';
 
@@ -71,17 +69,13 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   scrollable: Element;
   state = '';
-  showBack: boolean;
 
   constructor(private store: Store<fromRoot.State>,
               private menuService: MenuInteractionService,
               public media: ObservableMedia,
               private router: Router,
-              private route: ActivatedRoute,
               @Inject(DOCUMENT) private document,
               private timeoutService: SetTimeoutService,
-              private setSelected: SetSelectedService,
-              private navigation: NavigationServiceB,
               private logger: LoggerService,
               private scrollReady: ScrollReadyService) {
 
@@ -155,11 +149,5 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.timeoutService) {
       this.timeoutService.clearTimeout();
     }
-    // Unsubscribe all watchers in the service. Each component
-    // instance will resubscribe. The prevents the multiple
-    // subscriptions within service.
-    this.setSelected.unsubscribe();
   }
-
-
 }

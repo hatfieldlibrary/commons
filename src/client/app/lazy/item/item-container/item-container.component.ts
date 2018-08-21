@@ -208,9 +208,6 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
       .subscribe((params) => {
         this.store.dispatch(new fromItem.ItemReset());
         this.store.dispatch(new fromRelated.ClearRelatedItems());
-      //  if (params['areaId']) {
-      //    this.selectedArea = params['areaId'];
-      //  }
         if (params['id']) {
           this.id = params['id'];
           this.store.dispatch(new fromItem.ItemRequest(params['id']));

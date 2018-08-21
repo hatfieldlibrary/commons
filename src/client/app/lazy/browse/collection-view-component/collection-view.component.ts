@@ -349,11 +349,17 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
         this.updateSelected(params);
         this.initializeAreas();
         this.areaScreen = this.navigation.isFieldSelected(params['areaId']);
-        this.dispatchService.dispatchActions(
-          params['areaId'],
-          params['typeId'],
-          params['subjectId'],
-          params['categoryId']);
+        // This guards against dispatching a new request for data that
+        // is already present in the store. This navigation function
+        // returns true if (a) called for the first time, or (b) the
+        // previous navigation event was not an item route.
+        if (this.navigation.shouldFetchCollectionData()) {
+          this.dispatchService.dispatchActions(
+            params['areaId'],
+            params['typeId'],
+            params['subjectId'],
+            params['categoryId']);
+        }
       });
     this.watchers.add(routeWatcher);
     const paramsWatcher = this.route.queryParams
