@@ -85,10 +85,10 @@ describe('Related Items Effect', () => {
     spyOn(relatedService, 'getRelatedCollections').and.callFake(() => { return throwError('test') });
     const startAction = new ItemActionRelated('1', '1,2');
     const hotMarble = {a: startAction};
-    actions = hot('--a-', hotMarble);
+    actions = hot('-^-a-', hotMarble);
     const failAction = new RelatedItemRequestFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(relatedEffects.relatedEffect$).toBeObservable(expectedResults);
 
   });

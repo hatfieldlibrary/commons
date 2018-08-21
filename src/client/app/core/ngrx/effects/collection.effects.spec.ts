@@ -141,7 +141,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByArea$).toBeObservable(expectedResults);
 
   });
@@ -165,7 +165,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsBySubjectArea$).toBeObservable(expectedResults);
 
   });
@@ -189,7 +189,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsBySubject$).toBeObservable(expectedResults);
 
   });
@@ -213,7 +213,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsAll$).toBeObservable(expectedResults);
 
   });
@@ -236,7 +236,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByCategoryArea$).toBeObservable(expectedResults);
 
   });
@@ -259,7 +259,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByCategoryType$).toBeObservable(expectedResults);
 
   });
@@ -282,7 +282,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByCategorySubject$).toBeObservable(expectedResults);
 
   });
@@ -305,7 +305,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByCategoryAreaType$).toBeObservable(expectedResults);
 
   });
@@ -328,7 +328,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByCategoryAreaSubject$).toBeObservable(expectedResults);
 
   });
@@ -352,7 +352,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByCategoryTypeSubject$).toBeObservable(expectedResults);
 
   });
@@ -376,7 +376,7 @@ describe('Collections Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new CollectionActionFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(collectionEffects.collectionsByCategoryAreaTypeSubject$).toBeObservable(expectedResults);
 
   });

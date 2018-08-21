@@ -118,7 +118,7 @@ describe('Item Effect', () => {
     actions = hot('--a-', hotMarble);
     const failAction = new ItemRequestFailed('test');
     // create error response and complete observable
-    const expectedResults = cold('--(b|)',  {b: failAction});
+    const expectedResults = cold('--b',  {b: failAction});
     expect(itemEffects.itemEffect$).toBeObservable(expectedResults);
 
   });
