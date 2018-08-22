@@ -30,7 +30,7 @@
   </div>
 
   <div class="content">
-    <img [ngClass]="{'hide-image': !imageLoaded}" (load)="setImageLoaded()" [src]="backgroundImage"
+    <img aria-label="image" [ngClass]="{'hide-image': !imageLoaded}" (load)="setImageLoaded()" [src]="backgroundImage"
          style="height: 100%; width: 100%;">
   </div>
 

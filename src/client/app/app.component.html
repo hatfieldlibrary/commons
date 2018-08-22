@@ -23,31 +23,36 @@
   -->
 <mat-sidenav-container fullscreen>
 
-  <mat-sidenav fxLayout="column" #sidenav position="end" opened="false" mode="over" style="z-index: 4001">
+  <mat-sidenav role="navigation" fxLayout="column" #sidenav position="end" opened="false" mode="over"
+               style="z-index: 4001">
     <mat-toolbar>
-      <app-icon-close (click)="sidenav.close()"></app-icon-close>
+      <app-icon-close tabindex="0" role="button" aria-label="exit menu" (click)="sidenav.close()"
+                      (keydown.enter)="sidenav.close()"></app-icon-close>
     </mat-toolbar>
-    <div>
-      <div id="#menu-items" fxLayout="row" fxLayoutAlign="start start">
-        <mat-list fxFlex>
-          <mat-list-item (click)="goToHome()" target="_top" style="cursor: default">
-            <h5>&nbsp;Commons Home</h5>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item (click)="goToSecondary()" target="_top" style="cursor: default">
-            <h5>Hatfield Library</h5>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item (click)="goToTertiary()" target="_top" style="cursor: default">
-            <h5>Willamette University</h5>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </mat-list>
-      </div>
+    <div id="#menu-items" fxLayout="row" fxLayoutAlign="start start">
+      <mat-nav-list fxFlex>
+        <mat-list-item (click)="goToHome()" (keydown.enter)="goToHome()" aria-label="Commons Home Page" tabindex="0"
+                       role="button" target="_top" style="cursor: default">
+          <h5>&nbsp;Commons Home</h5>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item (click)="goToSecondary()" (keydown.enter)="goToSecondary()"
+                       aria-label="Hatfield Library Home Page" tabindex="0" role="button" target="_top"
+                       style="cursor: default">
+          <h5>Hatfield Library</h5>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item (click)="goToTertiary()" (keydown.enter)="goToTertiary()"
+                       aria-label="Willamette University Home Page" tabindex="0" role="button" target="_top"
+                       style="cursor: default">
+          <h5>Willamette University</h5>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-nav-list>
     </div>
   </mat-sidenav>
 
-  <div id="app-content" #appcontent>
+  <div id="app-content" #appcontent style="min-height: 800px;">
     <app-menus-component></app-menus-component>
     <router-outlet></router-outlet>
   </div>
