@@ -29,7 +29,7 @@
        class="nav-link local-navigation"
        (click)="onAreaListControlChanged(area.id);$event.stopPropagation();"
        role="menuitem"
-       [routerLink]=""
+       [routerLink]="[]"
        (keyup.enter)="onAreaListControlChanged(area.id);$event.stopPropagation();">
       {{area.name}}
     </a>
