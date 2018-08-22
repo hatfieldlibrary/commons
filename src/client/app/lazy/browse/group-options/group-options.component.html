@@ -23,7 +23,7 @@
   -->
 
 <div class="side-nav-section">
-  <mat-selection-list dense #groupSelectionList [@fadeIn]>
+  <mat-selection-list dense #groupSelectionList [@fadeIn]  aria-label="home collections">
     <h4 class="mat-body-2 list-caption">HOME COLLECTION</h4>
     <mat-list-option *ngFor="let group of filter.groups"
                      class="local-navigation"
