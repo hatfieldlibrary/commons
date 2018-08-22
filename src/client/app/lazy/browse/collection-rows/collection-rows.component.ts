@@ -33,11 +33,23 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {CollectionType} from '../../../core/data-types/collection.type';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {imageFadeIn} from '../../../core/animation/animations';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-collection-rows',
   templateUrl: './collection-rows.component.html',
-  styleUrls: ['./collection-rows.component.css']
+  styleUrls: ['./collection-rows.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({opacity: '0.2'}),
+        animate('500ms ease-in', style({opacity: '1'})),
+      ]),
+      transition(':leave', [
+        animate(200, style({ opacity: 0 }))
+      ])
+    ])]
 })
 export class CollectionRowsComponent implements OnDestroy, OnInit {
 

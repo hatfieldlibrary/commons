@@ -64,4 +64,9 @@ describe('RelatedItemsComponent', () => {
 
     expect(component).toBeTruthy();
   });
+
+  it('should return related item link', () => {
+    const link = component.getRelatedLink(1);
+    expect(link).toEqual('/commons/item/id/1')
+  })
 });

@@ -23,7 +23,7 @@
  */
 
 
-import {of as observableOf, Observable} from 'rxjs';
+import {of as observableOf} from 'rxjs';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {ItemSelectComponent} from './item-select.component';
@@ -32,6 +32,7 @@ import {MatIconModule, MatSelectModule} from '@angular/material';
 import {SearchService} from '../../../core/services/search.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
  import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FormsModule} from '@angular/forms';
 
 
 describe('ItemSelectComponent', () => {
@@ -49,6 +50,7 @@ describe('ItemSelectComponent', () => {
         HttpClientTestingModule,
         MatSelectModule,
         MatIconModule,
+        FormsModule,
         BrowserAnimationsModule
       ],
       providers: [
@@ -68,8 +70,7 @@ describe('ItemSelectComponent', () => {
           }
         }
       ]
-    })
-      .compileComponents();
+    });
   }));
 
   beforeAll(() => {

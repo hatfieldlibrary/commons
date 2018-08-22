@@ -28,9 +28,14 @@
   </div>
   <div fxFlex>
 
-    <mat-select #selector placeholder="{{SEARCH_OPTIONS_LABEL}}" floatPlaceholder="never">
-      <mat-option *ngFor="let option of optionList | async" [disabled]="!isAuthenticated && restricted"
-                 (click)="optionSearch(option.item.title)" ng-value="option.title">
+    <mat-select #selector
+                [(ngModel)]="selectedOption" (ngModelChange)="optionSearch($event)"
+                placeholder="{{SEARCH_OPTIONS_LABEL}}"
+                floatPlaceholder="never"
+                area-label="browse collection options">
+      <mat-option *ngFor="let option of optionList | async"
+                  [disabled]="!isAuthenticated && restricted"
+                  [value]="option.item.title">
         {{option.item.title}}
       </mat-option>
     </mat-select>
