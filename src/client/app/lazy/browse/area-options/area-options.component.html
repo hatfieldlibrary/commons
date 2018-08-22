@@ -27,10 +27,10 @@
   <mat-nav-list #areaSelectionList class="area-selection" role="menu">
     <a mat-list-item *ngFor="let area of filter.areas;" [ngClass]="{'highlight': isSelected(area.id)}"
        class="nav-link local-navigation"
-       (click)="onAreaListControlChanged(area.id);$event.stopPropagation();"
+       (click)="onAreaListControlChanged(area.id);"
        role="menuitem"
-       [routerLink]="[]"
-       (keyup.enter)="onAreaListControlChanged(area.id);$event.stopPropagation();">
+       tabindex="0"
+       (keyup.enter)="onAreaListControlChanged(area.id);">
       {{area.name}}
     </a>
   </mat-nav-list>

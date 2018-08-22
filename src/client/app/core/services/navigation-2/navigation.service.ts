@@ -24,7 +24,7 @@
 
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
 import {select, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
@@ -73,10 +73,12 @@ export class NavigationServiceB {
       this.removedGroups = rem;
     });
 
-    // This tracks the previous url. Can be used by to determine whether
+    // This tracks the previous url. Used by to determine whether
     // to dispatch a request for new collection data.
     this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd) {
+      // Use NavigationStart (not NavigationEnd) to assure that all
+      // route changes are detected before the context is checked.
+      if (event instanceof NavigationStart) {
         this.previousUrl = this.currentUrl;
         this.currentUrl = event.url;
       }
