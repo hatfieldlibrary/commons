@@ -40,7 +40,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./item-select.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemSelectComponent implements OnInit  {
+export class ItemSelectComponent implements OnInit {
 
   @Input() url: string;
   @Input() restricted: boolean;
@@ -49,6 +49,7 @@ export class ItemSelectComponent implements OnInit  {
   SEARCH_OPTIONS_LABEL = 'Browse by Date';
   href: string;
   optionList: Observable<any[]>;
+  selectedOption: string;
 
   constructor(private svc: SearchService,
               @Inject(DOCUMENT) private document: any) {
@@ -61,7 +62,7 @@ export class ItemSelectComponent implements OnInit  {
    */
   optionSearch(term, redirect = true) {
     // This could be a local variable, but using a field makes
-    // this method testable.
+    // this method testable. hmmm...
     this.href = this.svc.getOptionsQuery(this.url, term);
     if (redirect) {
       this.document.location.href = this.href;

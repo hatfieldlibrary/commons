@@ -33,7 +33,7 @@
       <mat-toolbar fxFlex="100">
         <div fxLayout="row" fxLayoutAlign="center center">
           <div style="height: 24px;margin-left: -8px;" *ngIf="showBack">
-            <button id="back-button" mat-icon-button [routerLink]="getBackLink()">
+            <button id="back-button" aria-label="back to list" mat-icon-button [routerLink]="getBackLink()">
               <app-icon-back></app-icon-back>
             </button>
           </div>

@@ -34,7 +34,8 @@ mat-card-content.list-container {
 }
 
 .main-content-area {
-
+  padding:0;
+  min-height: 1000px;
 }
 
 .info-card .mat-card-header {
@@ -108,7 +109,6 @@ app-area-banner {
 .side-container {
   margin-top: 8px;
   background: rgba(255, 255, 255, 0.38);
-  padding-top: 16px;
 }
 .side-nav-header {
   margin: 0 6px 0 16px;

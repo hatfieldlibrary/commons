@@ -58,13 +58,13 @@ import {ScrollReadyService} from '../../../core/services/observable/scroll-ready
 import {SetViewAction} from '../../../core/ngrx/actions/view.actions';
 import {SelectedAreaEvent} from '../area-options/area-options.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-collection-view',
   templateUrl: 'collection-view.component.html',
   styleUrls: ['collection-view.component.css'],
-  changeDetection: ChangeDetectionStrategy.Default,
-  animations: [fadeIn]
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class CollectionViewComponent implements OnInit, OnDestroy {
 
