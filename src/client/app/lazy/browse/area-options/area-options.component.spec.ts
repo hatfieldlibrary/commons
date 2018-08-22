@@ -28,6 +28,7 @@ import {AreaOptionsComponent} from './area-options.component';
 import {MatListModule} from '@angular/material';
 import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-update.service';
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 
 describe('AreaOptionsComponent', () => {
@@ -40,7 +41,7 @@ describe('AreaOptionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AreaOptionsComponent],
-      imports: [MatListModule],
+      imports: [MatListModule, RouterTestingModule.withRoutes([])],
       providers: [{
         provide: FilterUpdateServiceB,
         useClass: class {
