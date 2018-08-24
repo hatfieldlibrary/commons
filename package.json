@@ -1,6 +1,6 @@
 {
   "name": "commons",
-  "version": "4.1.2",
+  "version": "5.0.0",
   "license": "MIT",
   "angular-cli": {},
   "author": {
@@ -22,6 +22,10 @@
     "npm": "3.10.10"
   },
   "scripts": {
+    "build:ssr": "NODE_ENV=develpment npm run build:client-and-server-bundles && npm run webpack:server",
+    "serve:ssr": "HOST_ENV=development node dist/server",
+    "build:client-and-server-bundles": "ng build --prod && ng run commons:server",
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
     "ng": "ng",
     "start:dev": "ng serve --host 0.0.0.0 --port 3006",
     "test": "ng test --code-coverage --watch --sourceMap=false",
@@ -39,20 +43,23 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^6.1.0",
+    "@angular/animations": "^6.1.4",
     "@angular/cdk": "^6.4.1",
-    "@angular/common": "^6.1.0",
-    "@angular/compiler": "^6.1.0",
+    "@angular/common": "^6.1.4",
+    "@angular/compiler": "^6.1.4",
     "@angular/core": "^6.1.0",
     "@angular/flex-layout": "^6.0.0-beta.17",
-    "@angular/forms": "^6.1.0",
+    "@angular/forms": "^6.1.4",
+    "@angular/http": "^6.1.4",
     "@angular/material": "^6.4.1",
-    "@angular/platform-browser": "^6.1.0",
-    "@angular/platform-browser-dynamic": "^6.1.0",
-    "@angular/platform-server": "^6.1.0",
+    "@angular/platform-browser": "^6.1.4",
+    "@angular/platform-browser-dynamic": "^6.1.4",
+    "@angular/platform-server": "^6.1.4",
     "@angular/router": "^6.1.0",
     "@ngrx/effects": "^6.0.1",
     "@ngrx/store": "^6.0.1",
+    "@nguniversal/express-engine": "^6.1.0",
+    "@nguniversal/module-map-ngfactory-loader": "^6.1.0",
     "body-parser": "^1.18.3",
     "classlist.js": "^1.1.20150312",
     "connect-redis": "^3.3.3",
@@ -71,6 +78,7 @@
     "reselect": "^3.0.0",
     "rxjs": "^6.2.2",
     "serve-favicon": "^2.5.0",
+    "ts-loader": "^4.5.0",
     "web-animations-js": "^2.3.1",
     "zone": "^0.3.4",
     "zone.js": "^0.8.26"
@@ -79,7 +87,7 @@
     "@angular-devkit/build-angular": "~0.7.1",
     "@angular/cli": "^6.1.4",
     "@angular/compiler-cli": "^6.1.3",
-    "@angular/language-service": "^6.1.0",
+    "@angular/language-service": "^6.1.4",
     "@compodoc/compodoc": "^1.1.3",
     "@ngrx/store-devtools": "^6.0.1",
     "@types/body-parser": "^1.16.8",
@@ -110,6 +118,7 @@
     "ts-helpers": "^1.1.2",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
-    "typescript": "2.9.2"
+    "typescript": "2.9.2",
+    "webpack-cli": "^3.1.0"
   }
 }

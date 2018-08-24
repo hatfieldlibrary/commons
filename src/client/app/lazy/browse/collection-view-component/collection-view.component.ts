@@ -37,10 +37,8 @@ import {
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {AreaType} from '../../../core/data-types/area.type';
 import {CollectionType} from '../../../core/data-types/collection.type';
-import {fadeIn} from '../../../core/animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
-import {DeselectedFilter} from 'app/lazy/browse/area-filters/area-filters.component';
 import {SelectedTypeEvent} from '../types/types.component';
 import {SelectedSubjectEvent} from '../subject-options/subject-options.component';
 import {DispatchService} from '../../../core/services/dispatch.service';
@@ -58,7 +56,7 @@ import {ScrollReadyService} from '../../../core/services/observable/scroll-ready
 import {SetViewAction} from '../../../core/ngrx/actions/view.actions';
 import {SelectedAreaEvent} from '../area-options/area-options.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {DeselectedFilter} from '../area-filters/area-filters.component';
 
 @Component({
   selector: 'app-collection-view',

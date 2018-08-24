@@ -22,40 +22,22 @@
  * Author: Michael Spalti
  */
 
-/**
- * Created by mspalti on 3/6/17.
- */
+import { NgModule } from '@angular/core';
+import {ServerModule} from '@angular/platform-server';
+import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 
+import { AppModule } from './app.module';
+import { AppComponent } from './app.component';
 
-  // User's home directory. Should be OS agnostic.
-  function getUserHome(): string {
-    return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
-  }
-  console.log('get user home')
-  // Home of the development/test credentials file.
-  const devDirectory = getUserHome() + '/etc/commons-4/';
-console.log(devDirectory)
-  // Home of the production credentials file.
-  const prodDirectory =  '/etc/commons-4.0/';
-
-  const path = {
-    development: devDirectory,
-    test: devDirectory,
-    production: prodDirectory
-  };
-
-  function _getPath(env) {
-    console.log('call for path ' + path[env])
-    if (typeof env !== 'undefined') {
-      return path[env];
-    }
-
-  }
-
-  const creds = {
-    path: _getPath
-  };
-
-  module.exports = creds;
-
-
+@NgModule({
+  imports: [
+    AppModule,
+    ServerModule,
+    ModuleMapLoaderModule
+  ],
+  providers: [
+    // Add universal-only providers here
+  ],
+  bootstrap: [ AppComponent ],
+})
+export class AppServerModule {}
