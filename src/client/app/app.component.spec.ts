@@ -34,7 +34,6 @@ import {SetTimeoutService} from './core/services/timers/timeout.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MenuInteractionService} from './core/services/menu/menu-interaction.service';
 import {Store} from '@ngrx/store';
-import {CollectionsSvgComponent} from 'app/shared/svg/collections-svg/collections-svg.component';
 import {HomeSvgComponent} from './shared/svg/home-svg/home-svg.component';
 import {CloseSvgComponent} from './shared/svg/close-svg/close-svg.component';
 import {BackSvgComponent} from './shared/svg/back-svg/back-svg.component';

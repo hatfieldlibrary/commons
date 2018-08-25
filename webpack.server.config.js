@@ -37,8 +37,7 @@ module.exports = env => {
       extensions: ['.js', '.ts'],
       alias: {
         'hiredis': path.join(__dirname, 'src/client/webpack.hacks/hiredis.js'),
-        'credentials': (env.development) ? getUserHome() + '/etc/commons-4/credentials.js' :  '/etc/commons-4/credentials.js',
-      //  'hammerjs': 'src/client/webpack.hacks/hammerjs.js'
+        'credentials': (env.development) ? getUserHome() + '/etc/commons-4/credentials.js' :  '/etc/commons-5/credentials.js'
       }
     },
     target: 'node',

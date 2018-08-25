@@ -105,7 +105,7 @@
               "src/client/styles.css",
               "src/client/themes/commons-app-theme.scss"
             ],
-            "tsConfig": "src/client/tsconfig.json",
+            "tsConfig": "src/tsconfig.json",
             "assets": [
               "src/client/assets",
               "src/client/favicon.ico"
@@ -116,7 +116,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/client/tsconfig.json"
+              "src/tsconfig.app.json"
             ],
             "exclude": []
           }
@@ -139,7 +139,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "e2e/client/tsconfig.json"
+              "e2e/tsconfig.json"
             ],
             "exclude": []
           }

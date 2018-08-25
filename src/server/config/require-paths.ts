@@ -31,10 +31,8 @@
   function getUserHome(): string {
     return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
   }
-  console.log('get user home')
   // Home of the development/test credentials file.
   const devDirectory = getUserHome() + '/etc/commons-4/';
-console.log(devDirectory)
   // Home of the production credentials file.
   const prodDirectory =  '/etc/commons-4.0/';
 
@@ -49,7 +47,6 @@ console.log(devDirectory)
     if (typeof env !== 'undefined') {
       return path[env];
     }
-
   }
 
   const creds = {

@@ -26,8 +26,6 @@
  * Created by mspalti on 3/6/17.
  */
 
-const credentialsPath = require('./require-paths');
-
 export class Configuration {
 
   private readonly hostEnvironment;
@@ -85,7 +83,6 @@ export class Configuration {
 
   constructor(hostEnvironment: string) {
     this.hostEnvironment = hostEnvironment;
-    console.log('host env is ' + hostEnvironment)
     try {
       // The path to credentials.
       this.credentials = require('credentials');
@@ -100,8 +97,6 @@ export class Configuration {
   }
 
   public getConfig(): any {
-    console.log('get config ' + this.hostEnvironment)
-    console.log(this.config[this.hostEnvironment])
     const configuration = this.config[this.hostEnvironment];
     configuration.domain = this.credentials.domain;
     configuration.apiHost = this.credentials.apiHost;

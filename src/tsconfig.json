@@ -30,13 +30,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "typeRoots": [
-      "../node_modules/@types"
-    ],
     "target": "es5",
+    "module": "es2015",
     "lib": [
       "es2017",
       "dom"
+    ],
+    "typeRoots": [
+      "../node_modules/@types"
     ]
   }
 }

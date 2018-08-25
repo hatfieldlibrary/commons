@@ -23,7 +23,7 @@
  */
 
 /**
- * Created by mspalti on 4/26/17.
+ * Created by mspalti on 8/24/18.
  */
 
 // import * as path from 'path';
@@ -39,7 +39,6 @@ export class AppRoutes {
 
     // * NOTE :: leave this as require() since this file is built Dynamically from webpack
     const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('../../dist/server/main');
-    console.log('h')
 
     // Passport authentication
     app.use(config.authPath, app.ensureAuthenticated);
@@ -58,27 +57,13 @@ export class AppRoutes {
     app.set('view engine', 'html');
     app.set('views', join(DIST_FOLDER, 'browser'));
 
-// Server static files from /browser
+    // Server static files from /browser
     app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
 
-// All regular routes use the Universal engine
+    // All regular routes use the Universal engine
     app.get('*', (req, res) => {
       res.render('index', {req});
     });
-
-    //  // Point static path to dist
-    //  app.use(express.static(path.join(__dirname, '../../../dist')));
-    //
-    //  // Passport authentication
-    //  app.use(config.authPath, app.ensureAuthenticated);
-    //  // Check for authenticated user.
-    //  app.use(config.authCheck, app.checkAuthentication);
-    //
-    // // Catch all other routes and return the index file
-    //  app.get('*', function (req, res) {
-    //    res.sendFile(path.join(__dirname, '../../../dist/index.html'));
-    //
-    //  });
 
   }
 

@@ -5,7 +5,11 @@
     "target": "es5",
     "baseUrl": "./",
     "module": "es2015",
-    "types": []
+    "types": [],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   },
   "exclude": [
     "test.ts",
