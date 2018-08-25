@@ -24,10 +24,10 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
+  ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID,
   ViewChild
 } from '@angular/core';
-import { NavigationStart, Router} from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
 } from '@angular/common';
@@ -77,7 +77,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               @Inject(DOCUMENT) private document,
               private timeoutService: SetTimeoutService,
               private logger: LoggerService,
-              private scrollReady: ScrollReadyService) {
+              private scrollReady: ScrollReadyService,
+              @Inject(PLATFORM_ID) private platform: Object) {
 
     this.watcher = new Subscription();
     const mediaWatcher = media.asObservable()
@@ -115,12 +116,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     this.scrollable = this.document.querySelector('.mat-drawer-content');
 
     // Anticipating angular universal.
-    if (isPlatformBrowser) {
+    if (isPlatformBrowser(this.platform)) {
       // The scrollReady service knows when ListContainer has received data.
       // We subscribe to it here, and use the position to set the scrollTop value.
       this.scrollReady.subscribe((pos) => {
         this.timeoutService.setTimeout(0, () => {
-          if (this.router.url.match(/\/commons\/collection/) ) {
+          if (this.router.url.match(/\/commons\/collection/)) {
             this.scrollable.scrollTop = pos;
           }
         });

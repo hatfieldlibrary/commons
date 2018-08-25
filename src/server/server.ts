@@ -25,16 +25,20 @@
 /**
  * Created by mspalti on 3/6/17.
  */
+// These are important and needed before anything else
+import 'zone.js/dist/zone-node';
+import 'reflect-metadata';
 
 import * as express from 'express'
 import * as passport from 'passport';
 import { json, urlencoded } from 'body-parser';
 import {Configuration} from './config/environment';
 import {Authentication} from './config/auth-config';
-import {AppRoutes} from './config/routes';
+import {AppRoutes} from './routes';
 import * as helmet from 'helmet';
 import {enableProdMode} from '@angular/core';
-import { join } from 'path';
+
+enableProdMode();
 
 const app = express();
 
@@ -57,46 +61,52 @@ console.log('d')
 console.log(config)
 auth.init(app, config, passport);
 console.log('e')
-const routes = new AppRoutes();
-routes.init(app, express, config);
+
+
+
+// const routes = new AppRoutes();
+AppRoutes.init(app, express, config);
 
 // Faster server renders w/ Prod mode (dev mode never needed)
-enableProdMode();
+
 console.log('f')
 /**
  * Get port from environment and store in Express.
  */
 const port = process.env.PORT || 3005;
 app.set('port', port);
-const DIST_FOLDER = join(process.cwd(), '../dist');
-console.log('g')
 
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('../../dist/server/main');
-console.log('h')
-// Express Engine
-import { ngExpressEngine } from '@nguniversal/express-engine';
-// Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 import * as http from 'http';
 
-app.engine('html', ngExpressEngine({
-  bootstrap: AppServerModuleNgFactory,
-  providers: [
-    provideModuleMap(LAZY_MODULE_MAP)
-  ]
-}));
-
-app.set('view engine', 'html');
-app.set('views', join(DIST_FOLDER, 'browser'));
-
-// Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
-
-// All regular routes use the Universal engine
-app.get('*', (req, res) => {
-  res.render('index', { req });
-});
+// const DIST_FOLDER = join(process.cwd(), '../dist');
+// console.log('g')
+//
+// // * NOTE :: leave this as require() since this file is built Dynamically from webpack
+// const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('../../dist/server/main');
+// console.log('h')
+// // Express Engine
+// import { ngExpressEngine } from '@nguniversal/express-engine';
+// // Import module map for lazy loading
+// import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+// import * as http from 'http';
+//
+// app.engine('html', ngExpressEngine({
+//   bootstrap: AppServerModuleNgFactory,
+//   providers: [
+//     provideModuleMap(LAZY_MODULE_MAP)
+//   ]
+// }));
+//
+// app.set('view engine', 'html');
+// app.set('views', join(DIST_FOLDER, 'browser'));
+//
+// // Server static files from /browser
+// app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+//
+// // All regular routes use the Universal engine
+// app.get('*', (req, res) => {
+//   res.render('index', { req });
+// });
 
 /**
  * Create HTTP server.

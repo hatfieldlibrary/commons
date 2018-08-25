@@ -22,10 +22,10 @@
     "npm": "3.10.10"
   },
   "scripts": {
-    "build:ssr": "NODE_ENV=develpment npm run build:client-and-server-bundles && npm run webpack:server",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "serve:ssr": "HOST_ENV=development node dist/server",
     "build:client-and-server-bundles": "ng build --prod && ng run commons:server",
-    "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
+    "webpack:server": "webpack --env.development --config webpack.server.config.js --progress --colors",
     "ng": "ng",
     "start:dev": "ng serve --host 0.0.0.0 --port 3006",
     "test": "ng test --code-coverage --watch --sourceMap=false",
@@ -55,7 +55,7 @@
     "@angular/platform-browser": "^6.1.4",
     "@angular/platform-browser-dynamic": "^6.1.4",
     "@angular/platform-server": "^6.1.4",
-    "@angular/router": "^6.1.0",
+    "@angular/router": "^6.1.4",
     "@ngrx/effects": "^6.0.1",
     "@ngrx/store": "^6.0.1",
     "@nguniversal/express-engine": "^6.1.0",

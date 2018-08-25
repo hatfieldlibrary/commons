@@ -58,7 +58,7 @@ import {HttpClientModule} from '@angular/common/http';
     MatButtonModule,
     MatGridListModule,
     FlexLayoutModule,
-    HttpClientModule,
+   // HttpClientModule,
     RouterModule
   ],
   exports: [

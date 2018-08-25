@@ -25,38 +25,47 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
-  entry: {server: './src/server/server.ts'},
-  resolve: {
-    extensions: ['.js', '.ts'],
-    alias: {
-      'hiredis': path.join(__dirname, 'aliases/hiredis.js'),
-      'credentials': ( process.env.NODE_ENV === 'development' ) ? '/Users/mspalti/etc/commons-4/credentials.js' : '/etc/commons-4/credentials.js'
-    }
-  },
-  target: 'node',
-  mode: 'none',
-  // this makes sure we include node_modules and other 3rd party libraries
-  externals: [/node_modules/],
-  output: {
-    path: path.join(__dirname, './dist'),
-    filename: '[name].js'
-  },
-  module: {
-    rules: [{test: /\.ts$/, loader: 'ts-loader'}]
-  },
-  plugins: [
-    // Temporary Fix for issue: https://github.com/angular/angular/issues/11580
-    // for 'WARNING Critical dependency: the request of a dependency is an expression'
-    new webpack.ContextReplacementPlugin(
-      /(.+)?angular(\\|\/)core(.+)?/,
-      path.join(__dirname, 'src'), // location of your src
-      {} // a map of your routes
-    ),
-    new webpack.ContextReplacementPlugin(
-      /(.+)?express(\\|\/)(.+)?/,
-      path.join(__dirname, 'src'),
-      {}
-    )
-  ]
+function getUserHome() {
+  return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
+}
+
+module.exports = env => {
+
+  return {
+    entry: {server: './src/server/server.ts'},
+    resolve: {
+      extensions: ['.js', '.ts'],
+      alias: {
+        'hiredis': path.join(__dirname, 'src/client/webpack.hacks/hiredis.js'),
+        'credentials': (env.development) ? getUserHome() + '/etc/commons-4/credentials.js' :  '/etc/commons-4/credentials.js',
+      //  'hammerjs': 'src/client/webpack.hacks/hammerjs.js'
+      }
+    },
+    target: 'node',
+    mode: 'none',
+    // this makes sure we include node_modules and other 3rd party libraries
+    externals: [/node_modules/],
+    output: {
+      path: path.join(__dirname, './dist'),
+      filename: '[name].js'
+    },
+    module: {
+      rules: [{test: /\.ts$/, loader: 'ts-loader'}]
+    },
+    plugins: [
+     // new webpack.NormalModuleReplacementPlugin(/hammerjs/, 'src/client/webpack.hacks/hammerjs.js'),
+      // Temporary Fix for issue: https://github.com/angular/angular/issues/11580
+      // for 'WARNING Critical dependency: the request of a dependency is an expression'
+      new webpack.ContextReplacementPlugin(
+        /(.+)?angular(\\|\/)core(.+)?/,
+        path.join(__dirname, 'src'), // location of your src
+        {} // a map of your routes
+      ),
+      new webpack.ContextReplacementPlugin(
+        /(.+)?express(\\|\/)(.+)?/,
+        path.join(__dirname, 'src'),
+        {}
+      )
+    ]
+  };
 };

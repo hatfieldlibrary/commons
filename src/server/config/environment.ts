@@ -31,7 +31,7 @@ const credentialsPath = require('./require-paths');
 export class Configuration {
 
   private readonly hostEnvironment;
-  private credentials = {
+  private readonly credentials = {
     domain: '',
     apiHost: '',
     serverBaseURL: '',
@@ -86,7 +86,6 @@ export class Configuration {
   constructor(hostEnvironment: string) {
     this.hostEnvironment = hostEnvironment;
     console.log('host env is ' + hostEnvironment)
-    console.log(credentialsPath)
     try {
       // The path to credentials.
       this.credentials = require('credentials');
@@ -102,7 +101,15 @@ export class Configuration {
 
   public getConfig(): any {
     console.log('get config ' + this.hostEnvironment)
-    return this.config[this.hostEnvironment];
+    console.log(this.config[this.hostEnvironment])
+    const configuration = this.config[this.hostEnvironment];
+    configuration.domain = this.credentials.domain;
+    configuration.apiHost = this.credentials.apiHost;
+    configuration.serverBaseURL = this.credentials.serverBaseURL;
+    configuration.ssoBaseURL = this.credentials.ssoBaseURL;
+    configuration.validateURL = this.credentials.validateURL;
+    configuration.redisPort = this.credentials.redisPort;
+    return configuration;
   }
 
 }

@@ -5,9 +5,7 @@
     "baseUrl": "./",
     "module": "commonjs",
     "target": "es6",
-    "types": [],
-    "noImplicitAny": false,
-    "sourceMap": true
+    "types": []
   },
   "exclude": [
     "test.ts",
