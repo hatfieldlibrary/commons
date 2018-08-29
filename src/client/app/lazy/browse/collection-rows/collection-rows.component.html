@@ -35,10 +35,10 @@
   <mat-nav-list>
     <mat-list-item class="collection-list-item result-item"
                    *ngFor="let collection of collectionList; let isFirstRow=first"
-                   (click)="navigateToItem(collection.id);"
+                   (click)="navigateToItem(collection.id);stopPropagation();"
                    tabindex="0"
                    role="link"
-                   (keydown.enter)="navigateToItem(collection.id);"
+                   (keydown.enter)="navigateToItem(collection.id);stopPropagation();"
                    [ngClass]="{'first-row': isFirstRow, 'mobile-list-item-padding': isMobile}">
       <div fxLayout="row" fxLayoutAlign="start start">
         <img *ngIf="!isMobile" class="thumb-image image-view" aria-label="" alt="collection image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
@@ -60,6 +60,7 @@
             <app-lock-svg *ngIf="collection.restricted" class="restricted-icon image-view"></app-lock-svg>
           </div>
         </div>
+        <div><a tabindex="-1" [routerLink]="getItemLink(collection.id)"></a></div>
       </div>
     </mat-list-item>
   </mat-nav-list>

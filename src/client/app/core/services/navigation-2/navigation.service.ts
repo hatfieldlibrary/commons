@@ -167,6 +167,14 @@ export class NavigationServiceB {
     ]);
   }
 
+  public getItemLink(itemId: number): string {
+    return '/' + this.urlRootPath + '/item/id/' + itemId;
+  }
+
+  public getAreaLink(areaId: number): string {
+    return '/' + this.urlRootPath + '/collection/area/' + areaId;
+  }
+
   /**
    * Sets the field ids used for routing. Checks the removed field
    * status and alters the route if fields have been removed by

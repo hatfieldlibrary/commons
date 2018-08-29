@@ -29,12 +29,12 @@ import {
   OnDestroy, OnInit,
   Output
 } from '@angular/core';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {ObservableMedia} from '@angular/flex-layout';
 import {CollectionType} from '../../../core/data-types/collection.type';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {imageFadeIn} from '../../../core/animation/animations';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 
 @Component({
   selector: 'app-collection-rows',
@@ -59,7 +59,7 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
   isMobile = false;
   watcher = new Subscription();
 
-  constructor(private media: ObservableMedia) {
+  constructor(private navigationService: NavigationServiceB, private media: ObservableMedia) {
   }
 
   getResultCount(): string {
@@ -71,6 +71,9 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
      return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
 
   }
+  getItemLink(id: number): string {
+    return this.navigationService.getItemLink(id);
+  }
 
   navigateToItem(id: number) {
     this.collectionNavigation.emit(id);
@@ -81,7 +84,9 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+
   }
+
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
   }

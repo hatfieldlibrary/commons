@@ -99,6 +99,7 @@
     "@types/jasmine": "^2.8.8",
     "@types/jasminewd2": "^2.0.3",
     "@types/node": "^10.5.3",
+    "@types/passport": "^0.4.6",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",

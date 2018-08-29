@@ -36,7 +36,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'commons' }),
+    BrowserModule.withServerTransition({ appId: 'commons-universal' }),
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,

@@ -33,6 +33,7 @@
        (keyup.enter)="onAreaListControlChanged(area.id);">
       {{area.name}}
     </a>
+    <a *ngFor="let area of filter.areas;" tabindex="-1" [routerLink]="getAreaLink(area.id)"></a>
   </mat-nav-list>
 
 </div>
