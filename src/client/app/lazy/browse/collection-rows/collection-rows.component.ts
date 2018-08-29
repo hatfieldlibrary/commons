@@ -57,7 +57,6 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
   isMobile = false;
-  cols = 3;
   watcher = new Subscription();
 
   constructor(private media: ObservableMedia) {
@@ -82,19 +81,6 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    const media = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs') {
-        this.isMobile = true;
-        this.cols = 1;
-      } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
-        this.cols = 2;
-        this.isMobile = false;
-      } else {
-        this.cols = 3;
-        this.isMobile = false;
-      }
-    });
-    this.watcher.add(media);
   }
   ngOnDestroy(): void {
     this.watcher.unsubscribe();

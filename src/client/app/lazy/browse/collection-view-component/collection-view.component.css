@@ -107,8 +107,15 @@ app-area-banner {
   text-decoration: none;
 }
 .side-container {
-  margin-top: 8px;
+  margin-top: 73px;
   background: rgba(255, 255, 255, 0.38);
+  display: none;
+}
+.side-container.left{
+  margin-right: 20px;
+}
+.side-container.right{
+  margin-left: 20px;
 }
 .side-nav-header {
   margin: 0 6px 0 16px;
@@ -126,6 +133,10 @@ mat-card-subtitle.large-device-info {
   margin-top: 16px;
 }
 .collection-results {
-  margin-top: -44px;
+  /*margin-top: -44px;*/
 }
-
+@media screen and (min-width: 787px) {
+  .side-container{
+   display: block;
+  }
+}

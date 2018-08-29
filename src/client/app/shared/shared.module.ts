@@ -40,10 +40,14 @@ import {
 import {RouterModule} from '@angular/router';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
+import {FooterComponent} from './footer/footer.component';
+import {JsonLdComponent} from './json-ld/json-ld.component';
 
 @NgModule({
   declarations: [
     AppMenusComponent,
+    FooterComponent,
+    JsonLdComponent,
     CollectionsFilterPipe
   ],
   imports: [
@@ -58,11 +62,12 @@ import {HttpClientModule} from '@angular/common/http';
     MatButtonModule,
     MatGridListModule,
     FlexLayoutModule,
-   // HttpClientModule,
     RouterModule
   ],
   exports: [
     AppMenusComponent,
+    FooterComponent,
+    JsonLdComponent,
     CollectionsFilterPipe,
     CommonModule,
     SvgModule,

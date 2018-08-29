@@ -26,8 +26,9 @@
   <mat-sidenav role="navigation" fxLayout="column" #sidenav position="end" opened="false" mode="over"
                style="z-index: 4001">
     <mat-toolbar>
-      <app-icon-close tabindex="0" role="button" aria-label="exit menu" (click)="sidenav.close()"
-                      (keydown.enter)="sidenav.close()"></app-icon-close>
+      <app-icon-close tabindex="0" role="button" aria-label="exit the menu" (click)="sidenav.close()"
+                      (keydown.enter)="sidenav.close()">
+      </app-icon-close>
     </mat-toolbar>
     <div id="#menu-items" fxLayout="row" fxLayoutAlign="start start">
       <mat-nav-list fxFlex>
@@ -56,8 +57,6 @@
     <app-menus-component></app-menus-component>
     <router-outlet></router-outlet>
   </div>
-
-  <app-footer></app-footer>
 
 </mat-sidenav-container>
 

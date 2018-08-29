@@ -37,7 +37,8 @@ module.exports = env => {
       extensions: ['.js', '.ts'],
       alias: {
         'hiredis': path.join(__dirname, 'src/client/webpack.hacks/hiredis.js'),
-        'credentials': (env.development) ? getUserHome() + '/etc/commons-4/credentials.js' :  '/etc/commons-5/credentials.js'
+        'credentials': (env.development) ? getUserHome() + '/etc/commons-dev/credentials.js' :
+          getUserHome() + '/etc/commons-prod/credentials.js'
       }
     },
     target: 'node',
@@ -52,7 +53,7 @@ module.exports = env => {
       rules: [{test: /\.ts$/, loader: 'ts-loader'}]
     },
     plugins: [
-     // new webpack.NormalModuleReplacementPlugin(/hammerjs/, 'src/client/webpack.hacks/hammerjs.js'),
+      // new webpack.NormalModuleReplacementPlugin(/hammerjs/, 'src/client/webpack.hacks/hammerjs.js'),
       // Temporary Fix for issue: https://github.com/angular/angular/issues/11580
       // for 'WARNING Critical dependency: the request of a dependency is an expression'
       new webpack.ContextReplacementPlugin(

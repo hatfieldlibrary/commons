@@ -25,7 +25,7 @@
 
 <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="20">
 
-  <div fxFlex="80"
+  <div fxFlex="100"
        *ngIf="!media.isActive('gt-sm')">
 
     <app-item-links
@@ -44,14 +44,6 @@
        fxFlex.md="60"
        fxFlex.lg="55"
        fxFlex.gt-lg="50">
-
-    <!--<div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" style="margin-bottom: 20px;">-->
-      <!--<a mat-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">-->
-        <!--<mat-icon>-->
-          <!--<app-back-black-svg></app-back-black-svg>-->
-        <!--</mat-icon>&nbsp;Back to List-->
-      <!--</a>-->
-    <!--</div>-->
 
     <mat-card-title fxHide="true" fxShow.gt-sm="true">
       {{item?.collection.title}}

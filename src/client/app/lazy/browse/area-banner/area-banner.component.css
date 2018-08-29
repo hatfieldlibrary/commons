@@ -23,17 +23,12 @@
  */
 
 .area-info {
-  padding-bottom: 16px;
-  padding-top: 54px;
+  padding: 54px 16px 16px;
   color: rgba(255, 255, 255, 0.88);
   opacity: 1;
 }
 .area-button {
   margin: 32px 0 0;
-}
-.mobile {
-  padding-left: 16px;
-  margin-top: -16px;
 }
 .down-pointer {
   width: 0;
@@ -58,4 +53,12 @@
 }
 .text-color {
   color: #ccc;
+}
+.additional-options {
+  display: none;
+}
+@media screen and (min-width: 787px) {
+  .additional-options{
+    display: block;
+  }
 }

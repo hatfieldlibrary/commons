@@ -61,7 +61,7 @@ import {LoggerService} from './core/logger/logger.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FieldFilterType} from './core/data-types/field-filter.type';
 import {AppMenusComponent} from './shared/apps-menu/app-menus.component';
-import {FooterComponent} from './core/components/footer/footer.component';
+import {FooterComponent} from './shared/footer/footer.component';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
 

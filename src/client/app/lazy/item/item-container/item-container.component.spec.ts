@@ -47,7 +47,7 @@ import {BackSvgComponent} from '../../../shared/svg/back-svg/back-svg.component'
 import {LockSvgComponent} from '../../../shared/svg/lock-svg/lock-svg.component';
 import {CloseSvgComponent} from '../../../shared/svg/close-svg/close-svg.component';
 import {ItemHeaderComponent} from '../item-header/item-header.component';
-import {FooterComponent} from '../../../core/components/footer/footer.component';
+import {FooterComponent} from '../../../shared/footer/footer.component';
 import {ItemLinksComponent} from '../item-links/item-links.component';
 import {SearchSvgComponent} from '../../../shared/svg/search-svg/search-svg.component';
 import {MenuSvgComponent} from '../../../shared/svg/menu-svg/menu-svg.component';

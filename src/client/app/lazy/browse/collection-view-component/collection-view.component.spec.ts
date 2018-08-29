@@ -50,7 +50,7 @@ import {ActivatedRoute, ActivatedRouteSnapshot, Data, Params, Route, Router, Url
 import {CollectionViewComponent} from './collection-view.component';
 
 import {AppComponent} from '../../../app.component';
-import {FooterComponent} from '../../../core/components/footer/footer.component';
+import {FooterComponent} from '../../../shared/footer/footer.component';
 
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {BrowserModule} from '@angular/platform-browser';

@@ -227,8 +227,7 @@ export class Authentication {
 
       // Get the auth path prefix from configuration.
       const find = config.authPath;
-
-      const path = req._parsedOriginalUrl.pathname;
+      const path = req.originalUrl;
       // Removes the auth path prefix from the current path.
       const redirect = path.replace(find, '');
 
