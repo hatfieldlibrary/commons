@@ -71,8 +71,7 @@ import {HttpClientModule} from '@angular/common/http';
     DatePickerSvgComponent
   ],
   imports: [
-    MatIconModule,
-    HttpClientModule
+    MatIconModule
   ],
   providers: [
     MatIconRegistry
@@ -98,8 +97,7 @@ import {HttpClientModule} from '@angular/common/http';
     LoadingSvgComponent,
     HomeBlackSvgComponent,
     FilterSvgComponent,
-    DatePickerSvgComponent,
-    HttpClientModule
+    DatePickerSvgComponent
   ]
 })
 export class SvgModule {

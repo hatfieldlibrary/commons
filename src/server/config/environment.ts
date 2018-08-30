@@ -103,7 +103,6 @@ export class Configuration {
     configuration.validateURL = this.credentials.validateURL;
     configuration.redisPort = this.credentials.redisPort;
     configuration.nodeEnv = this.hostEnvironment;
-    console.log(configuration)
     return configuration;
   }
 

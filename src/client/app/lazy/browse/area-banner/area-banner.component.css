@@ -30,6 +30,17 @@
 .area-button {
   margin: 32px 0 0;
 }
+.indicator-row {
+  display: none !important;
+}
+@media screen and (min-width: 720px) {
+  .indicator-row{
+    display: flex !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+}
 .down-pointer {
   width: 0;
   height: 0;

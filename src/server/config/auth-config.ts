@@ -101,7 +101,6 @@ export class Authentication {
      * store uid in the session.
      */
     passport.serializeUser(function (user, done) {
-      console.log(user)
       done(null, user.uid);
     });
     passport.deserializeUser(function (user, done) {
@@ -204,7 +203,6 @@ export class Authentication {
      * @param res
      */
     app.checkAuthentication = function (req, res) {
-      console.log(req)
       if (req.user) {
         res.end(JSON.stringify({auth: true}))
       } else {
