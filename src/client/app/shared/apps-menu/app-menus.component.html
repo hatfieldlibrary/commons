@@ -26,11 +26,12 @@
 
   <div fxLayout="column"
        fxFlex="100"
-  fxFlex.lg="88"
-  fxFlex.gt-lg="68">
+       fxFlex.lg="88"
+       fxFlex.gt-lg="68">
 
     <div fxLayout="row" fxLayoutAlign="start start">
       <mat-toolbar fxFlex="100">
+
         <div fxLayout="row" fxLayoutAlign="center center">
           <div style="height: 24px;margin-left: -8px;" *ngIf="showBack">
             <button id="back-button" aria-label="back to list" mat-icon-button [routerLink]="getBackLink()">
@@ -40,33 +41,29 @@
           <div>
             <span>&nbsp;Academic Commons</span>
           </div>
-
         </div>
+
         <!-- This fills the remaining space of the current row -->
         <span class="fill-remaining-space"></span>
 
-        <mat-divider style="border-color: #fff;"></mat-divider>
-
         <div fxShow="false" fxShow.gt-sm="true" fxFlex.gt-sm="15">
-          <a id="home"[href]="homeUrl" target="_top"
+          <a id="home" [href]="homeUrl" target="_top"
              mat-button
              matTooltip="More about the Commons"
              [matTooltipPosition]="position"
-             style="color:#ccc;font-size: 0.6em;font-weight: 500;">
+             class="app-button">
             <app-home-svg></app-home-svg>
             <span>&nbsp;Commons Home</span></a>
         </div>
 
-        <mat-divider></mat-divider>
-
-        <button id="menu-button" mat-button (click)="openMenu()"
-                style="color:#ccc;font-size: 0.6em;font-weight: 500;">
-          <app-menu-svg></app-menu-svg>
-          <span fxShow="false" fxShow.gt-sm="true">&nbsp;Menu</span>
-        </button>
+        <div>
+          <button id="menu-button" class="app-button" mat-button (click)="openMenu()">
+            <app-menu-svg></app-menu-svg>
+            <!--<span fxShow="false" fxShow.gt-sm="true">&nbsp;Menu</span>-->
+          </button>
+        </div>
 
       </mat-toolbar>
-      <div class="fill-remaining-space"></div>
 
     </div>
   </div>

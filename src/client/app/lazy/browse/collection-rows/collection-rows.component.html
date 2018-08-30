@@ -35,10 +35,10 @@
   <mat-nav-list>
     <mat-list-item class="collection-list-item result-item"
                    *ngFor="let collection of collectionList; let isFirstRow=first"
-                   (click)="navigateToItem(collection.id);stopPropagation();"
+                   (click)="navigateToItem(collection.id);$event.stopPropagation();"
                    tabindex="0"
                    role="link"
-                   (keydown.enter)="navigateToItem(collection.id);stopPropagation();"
+                   (keydown.enter)="navigateToItem(collection.id);$event.stopPropagation();"
                    [ngClass]="{'first-row': isFirstRow, 'mobile-list-item-padding': isMobile}">
       <div fxLayout="row" fxLayoutAlign="start start">
         <img *ngIf="!isMobile" class="thumb-image image-view" aria-label="" alt="collection image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">

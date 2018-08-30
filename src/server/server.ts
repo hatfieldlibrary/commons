@@ -50,6 +50,7 @@ app.use(urlencoded({ extended: false }));
 app.use(helmet());
 
 const env = process.env.HOST_ENV || 'development';
+app.set('env', env);
 const configs: Configuration = new Configuration(env);
 const config = configs.getConfig();
 const auth = new Authentication();

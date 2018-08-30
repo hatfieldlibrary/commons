@@ -76,7 +76,7 @@ export class Configuration {
       validateURL: this.credentials.validateURL,
       redisPort: this.credentials.redisPort,
       authPath: '/commons-auth',
-      authCheck: '/commons-check',
+      authCheck: this.credentials.apiHost + '/commons-check',
       nodeEnv: 'production'
     }
   };
@@ -102,6 +102,8 @@ export class Configuration {
     configuration.ssoBaseURL = this.credentials.ssoBaseURL;
     configuration.validateURL = this.credentials.validateURL;
     configuration.redisPort = this.credentials.redisPort;
+    configuration.nodeEnv = this.hostEnvironment;
+    console.log(configuration)
     return configuration;
   }
 

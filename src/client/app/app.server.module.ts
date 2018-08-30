@@ -29,6 +29,8 @@ import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader'
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import {FlexLayoutServerModule} from '@angular/flex-layout/server';
+import {APP_BASE_HREF} from '@angular/common';
+import {environment} from './environments/environment';
 
 @NgModule({
   imports: [
@@ -39,6 +41,7 @@ import {FlexLayoutServerModule} from '@angular/flex-layout/server';
   ],
   providers: [
     // Add universal-only providers here
+    {provide: APP_BASE_HREF, useValue: environment.origin}
   ],
   bootstrap: [ AppComponent ],
 })

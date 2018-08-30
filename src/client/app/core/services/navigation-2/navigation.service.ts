@@ -24,7 +24,7 @@
 
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
 import {select, Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';

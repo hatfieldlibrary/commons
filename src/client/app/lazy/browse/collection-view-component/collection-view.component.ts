@@ -57,6 +57,7 @@ import {SetViewAction} from '../../../core/ngrx/actions/view.actions';
 import {SelectedAreaEvent} from '../area-options/area-options.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-collection-view',
@@ -119,6 +120,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
               private setSelected: SetSelectedService,
               private dispatchService: DispatchService,
               private scrollReady: ScrollReadyService,
+              private titleService: Title,
               private subscriptionService: SubscriptionService ) {
 
   }
@@ -368,6 +370,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Academic Commons');
     // All local subscriptions are added to this Subscription
     // and removed in ngOnDestroy.
     this.watchers = new Subscription();

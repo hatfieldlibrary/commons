@@ -26,7 +26,8 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy, OnInit,
+  OnDestroy,
+  OnInit,
   Output
 } from '@angular/core';
 import {ObservableMedia} from '@angular/flex-layout';

@@ -22,23 +22,24 @@
  * Author: Michael Spalti
  */
 
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import {APP_BASE_HREF} from '@angular/common';
 
 
 @Component({
   selector: 'app-home-black-svg',
   templateUrl: './home-black-svg.component.html',
-  styleUrls: ['./home-black-svg.component.css'],
   viewProviders: [MatIconRegistry]
 })
 export class HomeBlackSvgComponent {
 
-  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'home-black',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_black_24px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_home_black_24px.svg'));
   }
 }

@@ -44,6 +44,7 @@ import {KeyboardArrowForwardSvgComponent} from './keyboard-arrow-forward-svg/key
 import {FilterSvgComponent} from './filter-svg/filter-svg.component';
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {DatePickerSvgComponent} from './date-picker-svg/date-picker-svg.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import {DatePickerSvgComponent} from './date-picker-svg/date-picker-svg.componen
     DatePickerSvgComponent
   ],
   imports: [
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [
     MatIconRegistry
@@ -96,7 +98,8 @@ import {DatePickerSvgComponent} from './date-picker-svg/date-picker-svg.componen
     LoadingSvgComponent,
     HomeBlackSvgComponent,
     FilterSvgComponent,
-    DatePickerSvgComponent
+    DatePickerSvgComponent,
+    HttpClientModule
   ]
 })
 export class SvgModule {

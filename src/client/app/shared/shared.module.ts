@@ -79,8 +79,7 @@ import {JsonLdComponent} from './json-ld/json-ld.component';
     MatIconModule,
     MatButtonModule,
     MatGridListModule,
-    FlexLayoutModule,
-    HttpClientModule
+    FlexLayoutModule
   ]
 })
 export class SharedModule {

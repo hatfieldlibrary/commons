@@ -22,9 +22,10 @@
  * Author: Michael Spalti
  */
 
-import { Component } from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   selector: 'app-lock-svg',
@@ -32,9 +33,10 @@ import {DomSanitizer} from '@angular/platform-browser';
   viewProviders: [MatIconRegistry]
 })
 export class LockSvgComponent {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'lock',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_https_black_24px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_https_black_24px.svg'));
   }
 }

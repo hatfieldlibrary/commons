@@ -23,9 +23,10 @@
  * Author: Michael Spalti
  */
 
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
+import {APP_BASE_HREF} from '@angular/common';
 @Component({
   selector: 'app-help-svg',
   templateUrl: './help-svg.component.html',
@@ -33,10 +34,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class HelpSvgComponent {
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'help-icon',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_help_outline_black_24px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_help_outline_black_24px.svg'));
   }
 
 }
