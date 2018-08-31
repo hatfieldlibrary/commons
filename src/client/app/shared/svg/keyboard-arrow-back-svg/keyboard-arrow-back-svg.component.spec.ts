@@ -28,6 +28,7 @@ import { KeyboardArrowBackSvgComponent } from './keyboard-arrow-back-svg.compone
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('KeyboardArrowBackSvgComponent', () => {
   let component: KeyboardArrowBackSvgComponent;
@@ -36,7 +37,8 @@ describe('KeyboardArrowBackSvgComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ KeyboardArrowBackSvgComponent ],
-      imports: [MatIconModule, HttpClientModule ]
+      imports: [MatIconModule, HttpClientModule ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

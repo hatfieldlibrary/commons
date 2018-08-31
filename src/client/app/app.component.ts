@@ -24,10 +24,10 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit,
+  ChangeDetectionStrategy, Component, ElementRef, Inject, OnDestroy, OnInit, PLATFORM_ID,
   ViewChild
 } from '@angular/core';
-import { NavigationStart, Router} from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import {
   DOCUMENT, isPlatformBrowser, Location, LocationStrategy, PathLocationStrategy
 } from '@angular/common';
@@ -66,8 +66,6 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   tertiaryUrl = 'http://www.willamette.edu';
   @ViewChild('sidenav') sideNavigate: MatSidenav;
   @ViewChild('appcontent') appContent: ElementRef;
-
-  scrollable: Element;
   state = '';
 
   constructor(private store: Store<fromRoot.State>,
@@ -77,7 +75,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               @Inject(DOCUMENT) private document,
               private timeoutService: SetTimeoutService,
               private logger: LoggerService,
-              private scrollReady: ScrollReadyService) {
+              private scrollReady: ScrollReadyService,
+              @Inject(PLATFORM_ID) private platform: Object) {
 
     this.watcher = new Subscription();
     const mediaWatcher = media.asObservable()
@@ -89,15 +88,15 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   goToHome(): void {
-    document.location.href = this.homeUrl;
+    this.document.location.href = this.homeUrl;
   }
 
   goToSecondary(): void {
-    document.location.href = this.secondaryUrl;
+    this.document.location.href = this.secondaryUrl;
   }
 
   goToTertiary(): void {
-    document.location.href = this.tertiaryUrl;
+    this.document.location.href = this.tertiaryUrl;
   }
 
   ngOnInit() {
@@ -112,16 +111,15 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
 
-    this.scrollable = this.document.querySelector('.mat-drawer-content');
-
     // Anticipating angular universal.
-    if (isPlatformBrowser) {
+    if (isPlatformBrowser(this.platform)) {
+      const scrollable = this.document.querySelector('.mat-drawer-content');
       // The scrollReady service knows when ListContainer has received data.
       // We subscribe to it here, and use the position to set the scrollTop value.
       this.scrollReady.subscribe((pos) => {
         this.timeoutService.setTimeout(0, () => {
-          if (this.router.url.match(/\/commons\/collection/) ) {
-            this.scrollable.scrollTop = pos;
+          if (this.router.url.match(/\/commons\/collection/)) {
+            scrollable.scrollTop = pos;
           }
         });
       });
@@ -135,7 +133,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
             const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
             // this.logger.info('Bounding rectangle: ' + top);
             this.scrollReady.setPosition(top);
-            this.scrollable.scrollTop = 0;
+            scrollable.scrollTop = 0;
           }
         }
       });

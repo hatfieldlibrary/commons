@@ -26,17 +26,16 @@
 
   <mat-card-title *ngIf="related.length > 0">Similar Items</mat-card-title>
 
-  <mat-grid-list cols="{{columns}}" rowHeight="270" gutterSize="6" >
-    <mat-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1"
-                   [routerLink]="getRelatedLink(collection.id)"
-                   role="link"
-                   tabindex="0"
-                   aria-labelledby="ctitle">
-      <mat-card>
-        <img mat-card-image class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}"
-             src="{{imagePath}}/resources/img/thumb/{{collection.image}}" aria-label="image">
-        <div><span class="collection-item mat-h3 ctitle">{{collection.title}}</span></div>
-      </mat-card>
+  <mat-grid-list cols="{{columns}}" rowHeight="270" gutterSize="6" aria-label="related items">
+    <mat-grid-tile *ngFor="let collection of related" [colspan]="1" [rowspan]="1">
+      <a [routerLink]="getRelatedLink(collection.id)"
+         attr.aria-label="{{collection.title}}">
+        <mat-card>
+          <img mat-card-image class="thumb-image" [ngClass]="{'mat-card-image-xs': isMobile}"
+               src="{{imagePath}}/resources/img/thumb/{{collection.image}}" aria-label="image">
+          <div><span class="collection-item mat-h3 ctitle">{{collection.title}}</span></div>
+        </mat-card>
+      </a>
     </mat-grid-tile>
   </mat-grid-list>
 

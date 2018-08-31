@@ -22,9 +22,10 @@
  * Author: Michael Spalti
  */
 
-import { Component } from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   selector: 'app-collections-svg',
@@ -33,10 +34,11 @@ import {MatIconRegistry} from '@angular/material';
 })
 export class CollectionsSvgComponent {
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'collections',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_collections_white_24px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_collections_white_24px.svg'));
   }
 
 

@@ -39,6 +39,7 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {DOCUMENT} from '@angular/common';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-item-container',
@@ -67,9 +68,11 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
   private selectedGroups: FieldFilterType[];
 
   constructor(private store: Store<fromRoot.State>,
+              private titleService: Title,
               private media: ObservableMedia,
               private route: ActivatedRoute,
               private navigationService: NavigationServiceB,
+              private metaService: Meta,
               @Inject(DOCUMENT) private document) {
 
     this.watchers = new Subscription();
@@ -192,6 +195,10 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     this.watchers.add(groupsWatcher);
     // Once we have item information, request related items.
     const itemWatcher = this.store.pipe(select(fromRoot.getItem)).subscribe((data) => {
+      this.titleService.setTitle(data.collection.title);
+      if (data.collection.description) {
+        this.metaService.addTag({name: 'Description', content: data.collection.description});
+      }
       this.getRelatedItems(data);
     });
     if (itemWatcher) {

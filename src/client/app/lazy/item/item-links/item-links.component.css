@@ -28,17 +28,21 @@ mat-card {
   color: #cccccc;
   min-height: 120px;
 }
+
 mat-form-field div.mat-input-underline {
   height: 2px !important;
   background-color: rgba(251, 251, 251, 0.68) !important;
 }
+
 .mat-input-underline {
   border-top-width: 2px !important;
   border-color: #0c8a94 !important;
 }
+
 form.app-links {
   margin-top: 14px !important;
 }
+
 form.app-links button {
 
   min-width: 40px !important;
@@ -50,12 +54,15 @@ form.app-links button {
 .item-links-container {
   min-height: 140px;
 }
+
 .scope-note {
   margin-bottom: 28px !important;
 }
+
 .mat-form-field-underline {
   background-color: rgba(226, 225, 225, 0.42);
 }
+
 .mat-form-field-label, .placeholder {
   color: #0fa4af;
 }
@@ -64,14 +71,17 @@ form.app-links button {
 md-input-container.md-input-focused label {
   color: #d2f0ff;
 }
+
 .mat-focused .placeholder {
   color: #0c8a94;
 }
+
 .search-note {
 
 }
+
 .options-divider {
-  position:relative;
+  position: relative;
   margin-top: 20px;
-  border-top-color: rgba(233,233,233,0.24);
+  border-top-color: rgba(233, 233, 233, 0.24);
 }

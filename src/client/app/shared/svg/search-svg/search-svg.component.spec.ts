@@ -27,6 +27,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SearchSvgComponent} from './search-svg.component';
 import {MatIconModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('SearchSvgComponent', () => {
   let component: SearchSvgComponent;
@@ -35,7 +36,8 @@ describe('SearchSvgComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SearchSvgComponent],
-      imports: [MatIconModule, HttpClientModule]
+      imports: [MatIconModule, HttpClientModule],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

@@ -1,0 +1,43 @@
+
+//{
+//  "compilerOptions": {
+//    "baseUrl": "",
+//    "declaration": false,
+//    "emitDecoratorMetadata": true,
+//    "experimentalDecorators": true,
+//    "noImplicitAny": false,
+//    "lib": [
+//      "es5", "es6", "dom"
+//    ],
+//    "mapRoot": "./",
+//    "module": "es2015",
+//    "moduleResolution": "node",
+//    "outDir": "../dist/out-tsc",
+//    "sourceMap": true,
+//    "target": "es5",
+//    "typeRoots": [
+//      "../node_modules/."
+//    ]
+//  }
+//}
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "../dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "target": "es5",
+    "module": "es2015",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "typeRoots": [
+      "../node_modules/@types"
+    ]
+  }
+}

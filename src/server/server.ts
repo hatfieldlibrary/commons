@@ -23,20 +23,25 @@
  */
 
 /**
- * Created by mspalti on 3/6/17.
+ * Created by mspalti on 8/24/18.
  */
+// These are important and needed before anything else
+import 'zone.js/dist/zone-node';
+import 'reflect-metadata';
 
 import * as express from 'express'
 import * as passport from 'passport';
-import * as http from 'http';
 import { json, urlencoded } from 'body-parser';
 import {Configuration} from './config/environment';
 import {Authentication} from './config/auth-config';
-import {AppRoutes} from './config/routes';
+import {AppRoutes} from './routes';
 import * as helmet from 'helmet';
+import {enableProdMode} from '@angular/core';
+
+// Faster server renders w/ Prod mode (dev mode never needed)
+enableProdMode();
 
 const app = express();
-
 // Parsers for POST data
 app.use(json());
 app.use(urlencoded({ extended: false }));
@@ -44,16 +49,13 @@ app.use(urlencoded({ extended: false }));
 // Using default settings. See https://github.com/helmetjs/helmet
 app.use(helmet());
 
-const env = process.env.NODE_ENV || 'development';
-
-const configs: any = new Configuration();
-const config = configs.getConfig(env);
-
+const env = process.env.HOST_ENV || 'development';
+app.set('env', env);
+const configs: Configuration = new Configuration(env);
+const config = configs.getConfig();
 const auth = new Authentication();
 auth.init(app, config, passport);
-
-const routes = new AppRoutes();
-routes.init(app, express, config);
+AppRoutes.init(app, express, config);
 
 /**
  * Get port from environment and store in Express.
@@ -61,12 +63,15 @@ routes.init(app, express, config);
 const port = process.env.PORT || 3005;
 app.set('port', port);
 
+import * as http from 'http';
+
 /**
  * Create HTTP server.
  */
-const server = http.createServer(app);
+ const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen( port, () => console.log(`Application running on localhost:${port}`));
+ server.listen( port, () => console.log(`Application running on localhost:${port}`));
+

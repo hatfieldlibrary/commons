@@ -26,15 +26,16 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy, OnInit,
+  OnDestroy,
+  OnInit,
   Output
 } from '@angular/core';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {ObservableMedia} from '@angular/flex-layout';
 import {CollectionType} from '../../../core/data-types/collection.type';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {imageFadeIn} from '../../../core/animation/animations';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 
 @Component({
   selector: 'app-collection-rows',
@@ -57,10 +58,10 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
   isMobile = false;
-  cols = 3;
   watcher = new Subscription();
 
-  constructor(private media: ObservableMedia) {
+  constructor(private navigationService: NavigationServiceB,
+              private media: ObservableMedia) {
   }
 
   getResultCount(): string {
@@ -73,6 +74,10 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
 
   }
 
+  getItemLink(id: number): string {
+    return this.navigationService.getItemLink(id);
+  }
+
   navigateToItem(id: number) {
     this.collectionNavigation.emit(id);
   }
@@ -82,20 +87,9 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    const media = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs') {
-        this.isMobile = true;
-        this.cols = 1;
-      } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
-        this.cols = 2;
-        this.isMobile = false;
-      } else {
-        this.cols = 3;
-        this.isMobile = false;
-      }
-    });
-    this.watcher.add(media);
+
   }
+
   ngOnDestroy(): void {
     this.watcher.unsubscribe();
   }

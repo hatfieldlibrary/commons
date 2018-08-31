@@ -27,6 +27,10 @@ import { enableProdMode } from '@angular/core';
 import { environment } from './app/environments/environment';
 import { AppModule } from './app/app.module';
 
+/** Hammerjs required by angular material. **/
+import 'hammerjs/hammer';
+
+
 if (environment.production) {
   enableProdMode();
 }

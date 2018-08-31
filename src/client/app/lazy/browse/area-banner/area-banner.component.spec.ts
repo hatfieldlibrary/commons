@@ -33,6 +33,7 @@ import {CloseWhiteSvgComponent} from '../../../shared/svg/close-white-svg/close-
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {Store, StoreModule} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs/index';
+import {JsonLdComponent} from '../../../shared/json-ld/json-ld.component';
 
 describe('AreaBannerComponent', () => {
   let component: AreaBannerComponent;
@@ -41,6 +42,7 @@ describe('AreaBannerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        JsonLdComponent,
         AreaBannerComponent,
         AreaFiltersComponent,
         CloseSvgDisabledComponent,

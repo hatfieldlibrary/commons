@@ -33,7 +33,7 @@
       <div *ngIf="assetType === 'dig'" class="mat-title">Access Collection</div>
       <div *ngIf="assetType === 'itm'" class="mat-title">Access Options</div>
       <div class="scope-note">You can access <em>{{title}}</em> after you login with your Willamette University account.</div>
-      <a mat-raised-button color="primary" href="{{authenticationPath}}">Login for Access</a>
+      <a mat-raised-button color="primary" href="{{authenticationPath}}" aria-label="login for access to restricted item">Login for Access</a>
 
     </div>
 
@@ -52,11 +52,11 @@
 
       <div
         *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig' && linkOptions !== 'opts'">
-        <a mat-raised-button color="primary" role="button" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
+        <a attr.aria-label="link to {{title}}" mat-raised-button color="primary" role="button" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
       </div>
 
       <div *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'itm'">
-        <a mat-raised-button color="primary" role="button" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
+        <a attr.aria-label="link to {{title}}" mat-raised-button color="primary" role="button" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
       </div>
 
       <div *ngIf="linkOptions === 'opts'" style="width:100%;">
@@ -75,7 +75,7 @@
               <mat-form-field
                 fxFlex="100"
                 fxFlex.gt-xs="70">
-                <input aria-label="search form" matInput id="terms" [(ngModel)]="model.terms" name="search">
+                <input aria-label="search the collection" matInput id="terms" [(ngModel)]="model.terms" name="search">
                 <mat-placeholder class="placeholder">{{SEARCH_LABEL}}</mat-placeholder>
               </mat-form-field>
               <div style="width: 33px;padding-top: 6px;">

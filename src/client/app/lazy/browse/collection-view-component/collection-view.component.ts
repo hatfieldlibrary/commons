@@ -37,10 +37,8 @@ import {
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {AreaType} from '../../../core/data-types/area.type';
 import {CollectionType} from '../../../core/data-types/collection.type';
-import {fadeIn} from '../../../core/animation/animations';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
-import {DeselectedFilter} from 'app/lazy/browse/area-filters/area-filters.component';
 import {SelectedTypeEvent} from '../types/types.component';
 import {SelectedSubjectEvent} from '../subject-options/subject-options.component';
 import {DispatchService} from '../../../core/services/dispatch.service';
@@ -58,7 +56,8 @@ import {ScrollReadyService} from '../../../core/services/observable/scroll-ready
 import {SetViewAction} from '../../../core/ngrx/actions/view.actions';
 import {SelectedAreaEvent} from '../area-options/area-options.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {DeselectedFilter} from '../area-filters/area-filters.component';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-collection-view',
@@ -121,6 +120,8 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
               private setSelected: SetSelectedService,
               private dispatchService: DispatchService,
               private scrollReady: ScrollReadyService,
+              private titleService: Title,
+              private metaService: Meta,
               private subscriptionService: SubscriptionService ) {
 
   }
@@ -214,9 +215,9 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
         this.notMobile = change.mqAlias !== 'xs';
         // Toggle to grid view if mobile.
-        if (change.mqAlias === 'xs') {
-          this.store.dispatch(new SetViewAction('grid'));
-        }
+        // if (change.mqAlias === 'xs') {
+        //   this.store.dispatch(new SetViewAction('grid'));
+        // }
       });
     this.watchers.add(mediaWatcher);
   }
@@ -314,6 +315,13 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
     });
     this.watchers.add(readySubscription);
     this.areaInfo$ = this.subscriptionService.getAreaInfoState();
+    const areaInfoSub = this.areaInfo$.subscribe(area => {
+      this.titleService.setTitle(area.title);
+      if (area.description) {
+        this.metaService.addTag({name: 'Description', content: area.description});
+      }
+    });
+    this.watchers.add(areaInfoSub);
     this.filters$ = this.subscriptionService.getFilterState();
     this.viewType$ = this.subscriptionService.getViewTypeState();
     this.areasFilter$ = this.subscriptionService.getAreasFilterState();

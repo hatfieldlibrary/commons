@@ -28,6 +28,7 @@ import { HomeSvgComponent } from './home-svg.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('HomeSvgComponent', () => {
   let component: HomeSvgComponent;
@@ -38,7 +39,8 @@ describe('HomeSvgComponent', () => {
       declarations: [ HomeSvgComponent ],
       imports: [
         MatIconModule, HttpClientModule
-      ]
+      ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

@@ -28,6 +28,7 @@ import { KeyboardArrowForwardSvgComponent } from './keyboard-arrow-forward-svg.c
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('KeyboardArrowForwardSvgComponent', () => {
   let component: KeyboardArrowForwardSvgComponent;
@@ -36,7 +37,8 @@ describe('KeyboardArrowForwardSvgComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ KeyboardArrowForwardSvgComponent ],
-      imports: [MatIconModule, HttpClientModule ]
+      imports: [MatIconModule, HttpClientModule ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     })
     .compileComponents();
   }));
