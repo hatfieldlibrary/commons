@@ -28,6 +28,7 @@ import { LockSvgComponent } from './lock-svg.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('LockSvgComponent', () => {
   let component: LockSvgComponent;
@@ -38,7 +39,8 @@ describe('LockSvgComponent', () => {
       declarations: [ LockSvgComponent ],
       imports: [
         MatIconModule, HttpClientModule
-      ]
+      ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

@@ -62,13 +62,9 @@ describe('SubmitDspaceComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        SubmitDspaceComponent,
-        AppMenusComponent,
-        BackSvgComponent,
-        BackBlackSvgComponent,
-        HomeSvgComponent,
-        MenuSvgComponent],
+        SubmitDspaceComponent],
       imports: [
+        SharedModule,
         HttpClientModule,
         MatListModule,
         MatTooltipModule,

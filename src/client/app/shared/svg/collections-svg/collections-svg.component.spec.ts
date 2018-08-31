@@ -28,6 +28,7 @@ import { CollectionsSvgComponent } from './collections-svg.component';
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('CollectionsSvgComponent', () => {
   let component: CollectionsSvgComponent;
@@ -38,7 +39,8 @@ describe('CollectionsSvgComponent', () => {
       declarations: [ CollectionsSvgComponent ],
       imports: [
         MatIconModule, HttpClientModule
-      ]
+      ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

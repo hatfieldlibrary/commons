@@ -28,6 +28,7 @@ import {RunSvgComponent} from './run-svg.component';
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('RunSvgComponent', () => {
   let component: RunSvgComponent;
@@ -37,7 +38,7 @@ describe('RunSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RunSvgComponent],
       imports: [MatIconModule, HttpClientModule],
-      providers: []
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 
