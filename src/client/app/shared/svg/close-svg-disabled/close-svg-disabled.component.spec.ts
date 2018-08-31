@@ -28,6 +28,7 @@ import { CloseSvgDisabledComponent } from './close-svg-disabled.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('CloseSvgDisabledComponent', () => {
   let component: CloseSvgDisabledComponent;
@@ -38,7 +39,8 @@ describe('CloseSvgDisabledComponent', () => {
       declarations: [ CloseSvgDisabledComponent ],
       imports: [
         MatIconModule, HttpClientModule
-      ]
+      ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

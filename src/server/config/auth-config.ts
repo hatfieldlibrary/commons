@@ -62,7 +62,7 @@ export class Authentication {
     /**
      * For development purposes, we use express-session in lieu of Redisstore.
      */
-    if (app.get('env') === 'development' || app.get('env') === 'runlocal') {
+    if (config.nodeEnv === 'development') {
       app.use(session({
           secret: 'keyboard cat',
           saveUninitialized: true,
@@ -73,8 +73,7 @@ export class Authentication {
        * Use redis as the production session store.
        *  http://redis.io/
        */
-    } else if (app.get('env') === 'production') {
-
+    } else if (config.nodeEnv === 'production') {
       const redisPort = config.redisPort || 6379;
       const client = redis.createClient(
         redisPort, '127.0.0.1',
@@ -194,9 +193,9 @@ export class Authentication {
      *
      * 1. Passport is configured to use sessions and store uid in the current session.
      * 2. The CAS auth strategy completes successful authentication and redirects to the requested page.
-     * 3. An angular2 service uses this endpoint to check whether the user has been authenticated.
-     * 4. If the function returns true for an existing user, the angular2 component will not call this endpoint again.
-     * 5. If the function returns false, the angular2 component will check again at onInit.
+     * 3. An angular app uses this endpoint to check whether the user has been authenticated.
+     * 4. If the function returns true for an existing user, the angular component will not call this endpoint again.
+     * 5. If the function returns false, the angular component will check again at onInit.
      *
      * This is how we know whether to enable links and search forms in the Academic Commons ItemLinksComponent.
      *
@@ -227,8 +226,7 @@ export class Authentication {
 
       // Get the auth path prefix from configuration.
       const find = config.authPath;
-
-      const path = req._parsedOriginalUrl.pathname;
+      const path = req.originalUrl;
       // Removes the auth path prefix from the current path.
       const redirect = path.replace(find, '');
 

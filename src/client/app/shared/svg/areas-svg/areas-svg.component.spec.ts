@@ -28,6 +28,7 @@ import { AreasSvgComponent } from './areas-svg.component';
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('AreasSvgComponent', () => {
   let component: AreasSvgComponent;
@@ -40,8 +41,7 @@ describe('AreasSvgComponent', () => {
         MatIconModule,
         HttpClientModule
       ],
-      providers: [
-      ]
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

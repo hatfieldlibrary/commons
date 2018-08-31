@@ -28,6 +28,7 @@ import { MenuSvgComponent } from './menu-svg.component';
 import { MatIconModule, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('MenuSvgComponent', () => {
   let component: MenuSvgComponent;
@@ -36,9 +37,8 @@ describe('MenuSvgComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MenuSvgComponent ],
-      imports: [
-        MatIconModule, HttpClientModule
-    ]
+      imports: [MatIconModule, HttpClientModule],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

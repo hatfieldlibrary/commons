@@ -32,7 +32,7 @@ div.mobile-padding {
   padding: 18px 14px 8px;
 }
 .filter-chip {
-  background: #25796f;
+  background: #0A5F67;
   color: #fff;
   font-size: 13px;
 }
@@ -59,5 +59,6 @@ mat-chip  .mat-icon {
   background: #ccc;
 }
 .chip-layout {
+  font: 500 14px/16px Roboto,"Helvetica Neue",sans-serif;
   display: inline-block;
 }

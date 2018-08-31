@@ -25,13 +25,12 @@
 
 <div class='header-image'>
 
-  <div *ngIf="!imageLoaded" style="position: absolute; top:0;bottom:0;left:0;right:0;padding-left:50%;padding-top: 25%;">
+  <div *ngIf="!imageLoaded" class="loading">
     <h4 style="color:#fff;">Loading...</h4>
   </div>
 
   <div class="content">
-    <img aria-label="image" [ngClass]="{'hide-image': !imageLoaded}" (load)="setImageLoaded()" [src]="backgroundImage"
-         style="height: 100%; width: 100%;">
+    <img aria-label="image" class="area-image" [ngClass]="{'hide-image': !imageLoaded}" (load)="setImageLoaded()" [src]="backgroundImage">
   </div>
 
 </div>

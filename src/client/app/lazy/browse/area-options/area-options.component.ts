@@ -29,6 +29,7 @@ import {ScrollReadyService} from '../../../core/services/observable/scroll-ready
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
 import {ListKeyManager, ListKeyManagerOption} from '@angular/cdk/a11y';
 import {MatListItem, MatListOption} from '@angular/material';
+import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 
 export interface SelectedAreaEvent {
   selected: FieldFilterType[];
@@ -42,10 +43,12 @@ export interface SelectedAreaEvent {
 export class AreaOptionsComponent {
 
   @Input() filter: AreasFilter;
-  @Output() areaNavigation: EventEmitter <any> = new EventEmitter<any>();
+  @Output() areaNavigation: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private filterService: FilterUpdateServiceB,
-              private scrollReadyService: ScrollReadyService) {}
+              private scrollReadyService: ScrollReadyService,
+              private navigationService: NavigationServiceB
+  ) {}
 
   /**
    * Used by the area form options.
@@ -59,6 +62,9 @@ export class AreaOptionsComponent {
     return false;
   }
 
+  getAreaLink(areaId: number): string {
+    return this.navigationService.getAreaLink(areaId)
+  }
   /**
    * Gets the position index in selectedAreas for the area that
    * matches the provided id.

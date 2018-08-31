@@ -27,6 +27,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewGridComponent } from './view-grid.component';
 import {MatIconModule} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('ViewGridComponent', () => {
   let component: ViewGridComponent;
@@ -35,7 +36,8 @@ describe('ViewGridComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ViewGridComponent ],
-      imports: [MatIconModule, HttpClientModule]
+      imports: [MatIconModule, HttpClientModule],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 

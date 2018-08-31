@@ -22,12 +22,6 @@
   ~ Author: Michael Spalti
   -->
 
-<!--<app-menus-component-->
-  <!--[selectedArea]="areaId"-->
-  <!--[areaList]="areas$ | async"-->
-  <!--[showBack]="true">-->
-<!--</app-menus-component>-->
-
 <mat-card class="main-content-area" style="padding:0;">
 
   <mat-card-content class="list-container">
@@ -48,10 +42,6 @@
             <div class="area-description">
               <h1 class="mat-headline"><span style="color: yellow">Next Step:</span> Choose Your Major from the List
                 Below</h1>
-              <!--<div class="text-padding">-->
-              <!--<p><a mat-raised-button class="accent-button area-button" href="https://libguides.willamette.edu/thesis_submission"-->
-              <!--target="_blank" color="accent">Additional Submission Instructions</a></p>-->
-              <!--</div>-->
             </div>
           </div>
           <div class="mat-card-content">
@@ -67,11 +57,6 @@
                                *ngFor="let collection of collections$ | async">
                   <div fxLayout="column" [ngClass]="{'mobile-list-container': isMobile}">
                     <div><span class="collection-item mat-h3">{{collection.title}}</span></div>
-                    <!--<div>-->
-                    <!--<span class="mat-caption bold-caption ">Content:</span>-->
-                    <!--<span class="mat-caption" *ngFor="let type of collection.types ; let i = index">-->
-                    <!--{{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>-->
-                    <!--</div>-->
                   </div>
                 </mat-list-item>
               </mat-nav-list>
@@ -82,3 +67,4 @@
     </div>
   </mat-card-content>
 </mat-card>
+<app-footer></app-footer>

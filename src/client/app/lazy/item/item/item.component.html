@@ -23,9 +23,9 @@
   -->
 
 
-<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="20">
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="20" role="main" aria-label="item information">
 
-  <div fxFlex="80"
+  <div fxFlex="100" class="mobile-options"
        *ngIf="!media.isActive('gt-sm')">
 
     <app-item-links
@@ -35,7 +35,8 @@
       [searchOptions]="item?.collection.searchOptions"
       [url]="item?.collection.url"
       [searchUrl]="item?.collection.searchUrl"
-      [title]="item?.collection.title">
+      [title]="item?.collection.title"
+      [count]="item?.collection.items">
     </app-item-links>
 
   </div>
@@ -43,25 +44,18 @@
   <div fxFlex="100"
        fxFlex.md="60"
        fxFlex.lg="55"
-       fxFlex.gt-lg="50">
-
-    <!--<div fxLayout="row" *ngIf="media.isActive('gt-sm')" fxLayoutAlign="left center" style="margin-bottom: 20px;">-->
-      <!--<a mat-button [routerLink]="getBackLink()" style="border: 1px solid #ccc;">-->
-        <!--<mat-icon>-->
-          <!--<app-back-black-svg></app-back-black-svg>-->
-        <!--</mat-icon>&nbsp;Back to List-->
-      <!--</a>-->
-    <!--</div>-->
+       fxFlex.gt-lg="50"
+       id="item-info">
 
     <mat-card-title fxHide="true" fxShow.gt-sm="true">
       {{item?.collection.title}}
     </mat-card-title>
 
-    <p [innerHTML]="item?.collection.description" style="font-size: 1.2em"></p>
+    <p class="item-description" [innerHTML]="item?.collection.description" style="font-size: 1.2em"></p>
 
     <mat-card-subtitle class="section-spacer">More information about this {{getItemType()}}.</mat-card-subtitle>
 
-    <div fxLayout="column" fxLayoutGap="20" role="list" class="meta-container">
+    <div fxLayout="column" fxLayoutGap="20" class="meta-container">
       <div fxLayout="row" fxLayoutGap="20" class="meta-row" fxFill>
         <div class="meta-label mat-body-2">Collection Areas</div>
         <div class="meta-text">
@@ -127,41 +121,12 @@
 
     <p [innerHTML]="item?.category?.description" style="font-size: 1.2em"></p>
 
-    <a mat-raised-button color="primary" class="accent-button" href="{{item?.category?.url}}"
+    <a *ngIf="item?.category?.linkLabel" rel="noopener" attr.aria-label="{{item?.category?.linkLabel}}" mat-raised-button color="primary" class="accent-button"
+       href="{{item?.category?.url}}"
        target="_blank">{{item?.category?.linkLabel}}</a>
 
   </div>
   <div class="fill-remaining-space"></div>
-
-  <div fxFlex
-       fxFlex.sm="35"
-       fxFlex.md="35"
-       fxFlex.gt-md="30"
-       fxShow="false"
-       fxShow.gt-sm="true"
-       *ngIf="item?.category?.id === 1 || item?.category?.id === 7">
-
-    <mat-list>
-      <mat-list-item>
-        <a mat-button style="width:100%" href="http://libmedia.willamette.edu/academiccommons/student/index.php"
-           target="_blank">
-          <div fxLayout="row" fxLayoutAlign="start center">
-            <app-info-svg></app-info-svg>
-            Submission Instructions
-          </div>
-        </a>
-      </mat-list-item>
-      <mat-list-item>
-        <a mat-button style="width:100%"
-           href="https://libguides.willamette.edu/thesis_submission" target="_blank">
-          <div fxLayout="row" fxLayoutAlign="start center">
-            <app-run-svg></app-run-svg>
-            Tutorial
-          </div>
-        </a>
-      </mat-list-item>
-    </mat-list>
-  </div>
 
 </div>
 

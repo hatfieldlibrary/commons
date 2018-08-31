@@ -29,7 +29,8 @@
 
 export const environment = {
   production: false,
-  // REST API host. Can be localhost or production host
+  origin: 'http://localhost:3005/',
+  // REST API host (e.g. Tagger-2). Can be localhost or production host
    // apiHost: 'https://libmedia.willamette.edu',
   apiHost: 'http://libapps.willamette.edu:3007',
   // Base path, do not include beginning forward slash.
@@ -42,7 +43,7 @@ export const environment = {
   imagePath: '',
   // Authentication paths.
   authPath: '/auth',
-  authCheck: '/check',
+  authCheck: 'http://localhost:3005/check',
   defaultRoute: '/collection/area/5',
   isDebugMode: true
 };

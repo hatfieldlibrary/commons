@@ -29,8 +29,9 @@ import {hot, cold} from 'jasmine-marbles';
 import {TestBed} from '@angular/core/testing';
 
 import {RelatedService} from '../../services/related.service';
-import {ItemActionRelated, ItemActionRelatedSuccess, RelatedItemRequestFailed} from 'app/core/ngrx/actions/related.actions';
+
 import {RelatedEffects} from './related.effects';
+import {ItemActionRelated, ItemActionRelatedSuccess, RelatedItemRequestFailed} from '../actions/related.actions';
 
 
 describe('Related Items Effect', () => {

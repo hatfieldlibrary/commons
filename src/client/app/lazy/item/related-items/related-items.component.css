@@ -36,6 +36,7 @@ mat-card:hover {
   background-color: rgba(240, 240, 240, 0.57);
 }
 .mat-card-image {
+  object-fit: cover;
   width: calc(100% + 42px);
 }
 .mat-card-image-xs {

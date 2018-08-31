@@ -29,6 +29,7 @@ import {MatListModule} from '@angular/material';
 import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-update.service';
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 
 
 describe('AreaOptionsComponent', () => {
@@ -52,6 +53,12 @@ describe('AreaOptionsComponent', () => {
           provide: ScrollReadyService,
           useClass: class {
             setPosition = jasmine.createSpy('setPosition');
+          }
+        },
+        {
+          provide: NavigationServiceB,
+          useClass: class {
+            getAreaLink = jasmine.createSpy('getAreaLink');
           }
         }]
     });

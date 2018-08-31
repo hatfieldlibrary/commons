@@ -27,14 +27,14 @@
   margin: 0;
 }
 a {
-  color: rgb(15, 149, 159);
+  color: #0D7F87;
   transition-property: color;
   transition-duration: 0.5s;
   text-decoration: none;
+  font-weight: 800;
 }
 a:visited {
-  /*color: rgb(15, 76, 159);*/
-  color: rgb(15, 149, 159);
+  color: #0D7F87;
 }
 a.mat-button, a.mat-button:visited {
   color: #2f2f2f;

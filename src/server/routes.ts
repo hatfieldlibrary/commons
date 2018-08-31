@@ -23,29 +23,46 @@
  */
 
 /**
- * Created by mspalti on 4/26/17.
+ * Created by mspalti on 8/24/18.
  */
 
-import * as path from 'path';
+// import * as path from 'path';
+import {join} from 'path';
+// Express Engine
+import {ngExpressEngine} from '@nguniversal/express-engine';
+// Import module map for lazy loading
+import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
 
 export class AppRoutes {
 
-  public constructor() {}
+  public static init(app, express, config) {
 
-  public init(app, express, config) {
-
-    // Point static path to dist
-    app.use(express.static(path.join(__dirname, '../../../dist')));
+    // * NOTE :: leave this as require() since this file is built Dynamically from webpack
+    const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('../../dist/server/main');
 
     // Passport authentication
     app.use(config.authPath, app.ensureAuthenticated);
     // Check for authenticated user.
     app.use(config.authCheck, app.checkAuthentication);
 
-   // Catch all other routes and return the index file
-    app.get('*', function (req, res) {
-      res.sendFile(path.join(__dirname, '../../../dist/index.html'));
+    const DIST_FOLDER = join(process.cwd(), './dist');
 
+    app.engine('html', ngExpressEngine({
+      bootstrap: AppServerModuleNgFactory,
+      providers: [
+        provideModuleMap(LAZY_MODULE_MAP)
+      ]
+    }));
+
+    app.set('view engine', 'html');
+    app.set('views', join(DIST_FOLDER, 'browser'));
+
+    // Server static files from /browser
+    app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+
+    // All regular routes use the Universal engine
+    app.get('*', (req, res) => {
+      res.render('index', {req});
     });
 
   }

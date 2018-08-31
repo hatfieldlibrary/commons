@@ -35,9 +35,10 @@
   </app-area-options>
 
   <div fxLayout="row"
-       fxLayoutGap="20px"
+       fxLayoutGap="45px"
        fxLayoutAlign="center start"
        class="app-area-info">
+
     <div fxFlex fxFlex="70" fxFlex.lg="90" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" style="height: 340px;">
       <div style="position:relative; height: 100%; width:100%;background-color: #090905;">
         <div class="area-background" *ngIf="notMobile && areaInfo$ | async; let areaInfo$;"
@@ -56,22 +57,19 @@
 
   <mat-card class="main-content-area">
     <mat-card-content class="list-container">
-      <div fxLayout="column" fxLayoutGap.xs="0" fxLayoutGap="74px" fxLayoutAlign="center center">
-        <div fxLayout="row"
-             fxLayoutAlign="center start"
-             fxFlexFill>
 
-        </div>
+      <div fxLayout="column" fxLayoutAlign="center center">
+
         <div fxLayout="row"
-             fxLayoutWrap
              fxFlexFill
-             fxLayoutGap="20px"
-             fxLayoutAlign="center start" style="margin-top: 40px;">
+             fxLayoutAlign="center start">
+
           <div fxLayout="column"
+               fxFlex="1 1 15"
                fxFlex.md="1 1 20"
                fxFlex.lg="1 1 15"
                fxFlex.gt-lg="1 1 12"
-               class="side-container"
+               class="side-container left"
                *ngIf="media.isActive('gt-sm')">
 
             <app-types (typeNavigation)="typeNavigation($event)"
@@ -97,10 +95,11 @@
             </div>
           </div>
           <div fxLayout="column"
+               fxFlex="1 1 15"
                fxFlex.md="1 1 20"
                fxFlex.lg="1 1 15"
                fxFlex.gt-lg="1 1 12"
-               class="side-container"
+               class="side-container right"
                *ngIf="media.isActive('gt-sm')">
 
             <app-subject-options (subjectNavigation)="subjectNavigation($event)"
@@ -115,5 +114,5 @@
       </div>
     </mat-card-content>
   </mat-card>
-
 </div>
+<app-footer></app-footer>

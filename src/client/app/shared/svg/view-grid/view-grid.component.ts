@@ -22,9 +22,10 @@
  * Author: Michael Spalti
  */
 
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   selector: 'app-view-grid',
@@ -33,10 +34,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class ViewGridComponent {
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'grid',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/baseline-view_module-24px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/baseline-view_module-24px.svg'));
   }
 
 

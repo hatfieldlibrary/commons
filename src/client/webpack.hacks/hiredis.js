@@ -22,3 +22,4 @@
  * Author: Michael Spalti
  */
 
+export default null

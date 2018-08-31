@@ -22,12 +22,4 @@
  * Author: Michael Spalti
  */
 
-a.foot, a.foot:visited {
-  color: #999999;
-}
-.footer {
-  background: #eee;
-  height: 200px;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: #999;
-}
+export { AppServerModule } from './app/app.server.module';

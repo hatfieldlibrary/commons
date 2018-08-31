@@ -22,10 +22,11 @@
  * Author: Michael Spalti
  */
 
-import { Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import {APP_BASE_HREF} from '@angular/common';
 
 
 @Component({
@@ -34,9 +35,10 @@ import {MatIconRegistry} from '@angular/material';
   viewProviders: [MatIconRegistry]
 })
 export class CloseWhiteSvgComponent {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'close-white',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_close_white_16px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_close_white_16px.svg'));
   }
 }

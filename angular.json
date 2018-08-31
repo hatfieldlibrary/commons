@@ -11,10 +11,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/browser",
             "index": "src/client/index.html",
             "main": "src/client/main.ts",
-            "tsConfig": "src/client/tsconfig.json",
+            "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/client/polyfills.ts",
             "assets": [
               "src/client/assets",
@@ -23,8 +23,7 @@
             "styles": [
               "src/client/styles.css",
               "src/client/themes/commons-app-theme.scss"
-            ],
-            "scripts": []
+            ]
           },
           "configurations": {
             "production": {
@@ -49,6 +48,24 @@
                 {
                   "replace": "src/client/app/environments/environment.ts",
                   "with": "src/client/app/environments/environment.test.ts"
+                }
+              ]
+            }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "src/client/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/client/app/environments/environment.ts",
+                  "with": "src/client/app/environments/environment.prod.ts"
                 }
               ]
             }
@@ -88,7 +105,7 @@
               "src/client/styles.css",
               "src/client/themes/commons-app-theme.scss"
             ],
-            "tsConfig": "src/client/tsconfig.json",
+            "tsConfig": "src/tsconfig.json",
             "assets": [
               "src/client/assets",
               "src/client/favicon.ico"
@@ -99,7 +116,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/client/tsconfig.json"
+              "src/tsconfig.app.json"
             ],
             "exclude": []
           }
@@ -122,7 +139,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "e2e/client/tsconfig.json"
+              "e2e/tsconfig.json"
             ],
             "exclude": []
           }
