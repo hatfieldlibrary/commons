@@ -22,8 +22,8 @@
   ~ Author: Michael Spalti
   -->
 
-<div class="grid-result-info mat-caption" >
-  <div tabindex="0" aria-labelledby="item-count item-label"></div>
+<div class="row-result-info mat-caption count-view">
+  <div aria-labelledby="item-count item-label"></div>
   <span id="item-count" class="bold-caption">{{getResultCount()}}</span><span id="item-label">&nbsp;item<span id="item-suffix" *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
   <div style="position: absolute; top: 18px; right: 12px;">
     <app-view-grid (click)="setViewType('grid')" class="icon-color"></app-view-grid>
@@ -31,17 +31,17 @@
   </div>
 </div>
 
-<div class="list-container" [@fadeIn]>
-  <mat-nav-list>
+<div class="list-container" [@fadeIn] role="complementary" aria-label="result list">
+  <mat-nav-list attr.aria-label="list of {{getResultCount()}} item links" tabindex="0">
     <mat-list-item class="collection-list-item result-item"
                    *ngFor="let collection of collectionList; let isFirstRow=first"
-                   (click)="navigateToItem(collection.id);"
+                   (click)="navigateToItem(collection.id);$event.stopPropagation();"
                    tabindex="0"
                    role="link"
-                   (keydown.enter)="navigateToItem(collection.id);"
+                   (keydown.enter)="navigateToItem(collection.id);$event.stopPropagation();"
                    [ngClass]="{'first-row': isFirstRow, 'mobile-list-item-padding': isMobile}">
       <div fxLayout="row" fxLayoutAlign="start start">
-        <img class="thumb-image" aria-label="" alt="collection image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
+        <img *ngIf="!isMobile" class="thumb-image image-view" aria-label="" alt="collection image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
         <div fxLayout="column" fxFlex [ngClass]="{'mobile-list-container': isMobile}">
           <div>
             <span class="collection-item mat-h3">{{collection.title}}</span>
@@ -57,9 +57,10 @@
             {{type.name}}<span *ngIf="collection.types.length !== i + 1">,</span></span>
           </div>
           <div>
-            <app-lock-svg *ngIf="collection.restricted" class="restricted-icon"></app-lock-svg>
+            <app-lock-svg *ngIf="collection.restricted" class="restricted-icon image-view"></app-lock-svg>
           </div>
         </div>
+        <div><a tabindex="-1" [routerLink]="getItemLink(collection.id)" aria-label=""></a></div>
       </div>
     </mat-list-item>
   </mat-nav-list>

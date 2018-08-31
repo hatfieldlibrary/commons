@@ -23,9 +23,10 @@
  * Author: Michael Spalti
  */
 
-import { Component } from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   selector: 'app-loading-svg',
@@ -34,9 +35,10 @@ import {DomSanitizer} from '@angular/platform-browser';
   viewProviders: [MatIconRegistry]
 })
 export class LoadingSvgComponent {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'loading',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/loading-image.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/loading-image.svg'));
   }
 }

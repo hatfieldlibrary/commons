@@ -22,8 +22,8 @@
   ~ Author: Michael Spalti
   -->
 
-<div class="side-nav-section">
-  <mat-selection-list dense #groupSelectionList [@fadeIn]  aria-label="home collections">
+<div class="side-nav-section" role="complementary" aria-label="home collection filters">
+  <mat-selection-list dense #groupSelectionList [@fadeIn]  aria-label="select from list to filter results by home collections">
     <h4 class="mat-body-2 list-caption">HOME COLLECTION</h4>
     <mat-list-option *ngFor="let group of filter.groups"
                      class="local-navigation"

@@ -42,14 +42,13 @@ import {TypeEffects} from './ngrx/effects/types.effects';
 import {reducers} from './ngrx/reducers';
 import {LoggerService} from './logger/logger.service';
 import {ConsoleLoggerService} from './logger/console-logger.service';
-import {FooterComponent} from './components/footer/footer.component';
 import {CommonModule} from '@angular/common';
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
-    FooterComponent,
     PageNotFoundComponent
   ],
   imports: [
@@ -76,14 +75,13 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
      *
      * See: https://github.com/zalmoxisus/redux-devtools-extension
      */
-    StoreDevtoolsModule.instrument(),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     /**
      * EffectsModule.run() sets up the effects class to be typeInitialized
      * immediately when the application starts.
      *
      * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
      */
-
     EffectsModule.forRoot([
         CollectionEffects,
         CollectionGroupEffects,
@@ -97,7 +95,7 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
   providers: [
     {provide: LoggerService, useClass: ConsoleLoggerService}
   ],
-  exports: [FooterComponent, PageNotFoundComponent]
+  exports: [ PageNotFoundComponent ]
 })
 export class CoreModule {
   // Guards against reimporting the core module.

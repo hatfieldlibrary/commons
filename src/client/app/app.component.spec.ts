@@ -34,7 +34,6 @@ import {SetTimeoutService} from './core/services/timers/timeout.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MenuInteractionService} from './core/services/menu/menu-interaction.service';
 import {Store} from '@ngrx/store';
-import {CollectionsSvgComponent} from 'app/shared/svg/collections-svg/collections-svg.component';
 import {HomeSvgComponent} from './shared/svg/home-svg/home-svg.component';
 import {CloseSvgComponent} from './shared/svg/close-svg/close-svg.component';
 import {BackSvgComponent} from './shared/svg/back-svg/back-svg.component';
@@ -62,7 +61,7 @@ import {LoggerService} from './core/logger/logger.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FieldFilterType} from './core/data-types/field-filter.type';
 import {AppMenusComponent} from './shared/apps-menu/app-menus.component';
-import {FooterComponent} from './core/components/footer/footer.component';
+import {FooterComponent} from './shared/footer/footer.component';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
 

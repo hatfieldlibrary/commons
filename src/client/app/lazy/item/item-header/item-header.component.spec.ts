@@ -44,6 +44,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HomeBlackSvgComponent} from '../../../shared/svg/home-black-svg/home-black-svg.component';
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {JsonLdComponent} from '../../../shared/json-ld/json-ld.component';
 
 describe('ItemHeaderComponent', () => {
   let component: ItemHeaderComponent;
@@ -54,6 +55,7 @@ describe('ItemHeaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ItemHeaderComponent,
+        JsonLdComponent,
         ItemHeaderImageComponent,
         MenuSvgComponent,
         HomeSvgComponent,

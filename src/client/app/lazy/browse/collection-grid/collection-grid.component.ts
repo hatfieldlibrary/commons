@@ -50,7 +50,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
   isMobile = false;
-  cols = 3;
+  cols = 1;
   watcher = new Subscription();
 
   constructor(private media: ObservableMedia) {}

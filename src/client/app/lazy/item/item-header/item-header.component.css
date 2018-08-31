@@ -22,11 +22,11 @@
  * Author: Michael Spalti
  */
 
-.header-image-container .header-title.mobile-margins {
+ .header-title.mobile-margins {
   margin-left: 16px;
   margin-top: 66px;
 }
-.header-image-container .header-title.mobile-margins h1 {
+.header-title.mobile-margins h1 {
   font-size: 1.5em;
 }
 .hide-image {
@@ -43,7 +43,7 @@
   margin-top: 94px;
 }
 
-.header-image-container .header-title {
+.header-title {
   margin-left: 42px;
   margin-top: 70px;
   position: absolute;
@@ -98,4 +98,23 @@
   position: absolute;
   z-index: 0;
   top: 0;
+}
+.image-view {
+  display: none;
+}
+
+@media screen and (max-width: 787px) {
+  .header-overlay {
+    background-color: #000;
+  }
+  .header-image-container {
+    margin-top: 94px;
+  }
+  .header-title{
+    margin-left: 16px;
+    margin-top: 66px;
+  }
+  .header-title h1 {
+    font-size: 1.5em;
+  }
 }

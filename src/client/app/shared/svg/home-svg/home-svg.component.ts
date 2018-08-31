@@ -22,9 +22,10 @@
  * Author: Michael Spalti
  */
 
-import {Component} from '@angular/core';
+import {Component, Inject, Optional} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   selector: 'app-home-svg',
@@ -33,10 +34,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class HomeSvgComponent {
 
-  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,
+              @Optional() @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'home',
-      sanitizer.bypassSecurityTrustResourceUrl('../../assets/img/svg/ic_home_white_24px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_home_white_24px.svg'));
   }
 
 }

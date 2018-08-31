@@ -50,7 +50,7 @@ import {ActivatedRoute, ActivatedRouteSnapshot, Data, Params, Route, Router, Url
 import {CollectionViewComponent} from './collection-view.component';
 
 import {AppComponent} from '../../../app.component';
-import {FooterComponent} from '../../../core/components/footer/footer.component';
+import {FooterComponent} from '../../../shared/footer/footer.component';
 
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {BrowserModule} from '@angular/platform-browser';
@@ -101,6 +101,7 @@ import {mockStore} from '../../../core/test/mock-store';
 import {SearchSvgComponent} from '../../../shared/svg/search-svg/search-svg.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {CollectionsFilterPipe} from '../../../shared/collections-filter.pipe';
+import {SharedModule} from '../../../shared/shared.module';
 
 
 const areaSubscriptionMock = {
@@ -230,32 +231,18 @@ describe('CollectionViewComponent', () => {
       declarations: [
         MockAreaBannerComponent,
         MockAreaOptionsComponent,
-        BackSvgComponent,
-        LockSvgComponent,
-        MenuSvgComponent,
-        CloseSvgComponent,
         AppComponent,
         CollectionRowsComponent,
         CollectionGridComponent,
         CollectionViewComponent,
         SubjectOptionsComponent,
         GroupOptionsComponent,
-        FooterComponent,
-        SearchSvgComponent,
-        AppMenusComponent,
-        HomeSvgComponent,
-        HomeBlackSvgComponent,
-        CollectionsSvgComponent,
-        KeyboardArrowForwardSvgComponent,
-        KeyboardArrowBackSvgComponent,
-        CollectionsFilterPipe,
         TypesComponent,
-        CloseSvgDisabledComponent,
-        CloseWhiteSvgComponent,
         ViewGridComponent,
         ViewListComponent
       ],
       imports: [
+        SharedModule,
         FlexLayoutModule,
         MatButtonModule,
         MatCardModule,

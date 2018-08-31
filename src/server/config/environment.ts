@@ -26,78 +26,84 @@
  * Created by mspalti on 3/6/17.
  */
 
-'use strict';
+export class Configuration {
 
-const env = process.env.NODE_ENV || 'development';
-
-let credentials;
-
-const credentialsPath = require('./require-paths');
-
-try {
-
-  // The path to credentials.
-  credentials = require(credentialsPath.path(env) + 'credentials');
-
-} catch (ex) {
-  // No credentials ... try travis-ci credentials.
-  console.log('Using travis credentials');
-  credentials = require('../credentials/travis-credentials')
-
-}
-
-export interface AppConfig {
-  getConfig(s: string): any;
-}
-
-export class Configuration implements AppConfig {
+  private readonly hostEnvironment;
+  private readonly credentials = {
+    domain: '',
+    apiHost: '',
+    serverBaseURL: '',
+    ssoBaseURL: '',
+    validateURL: '',
+    redisPort: ''
+  };
 
   private config = {
 
     development: {
       logLevel: 'debug',
       useAuth: true,
-      domain: credentials.domain,
-      apiHost: credentials.apiHost,
-      serverBaseURL: credentials.serverBaseURL,
-      ssoBaseURL: credentials.ssoBaseURL,
-      validateURL: credentials.validateURL,
+      domain: this.credentials.domain,
+      apiHost: this.credentials.apiHost,
+      serverBaseURL: this.credentials.serverBaseURL,
+      ssoBaseURL: this.credentials.ssoBaseURL,
+      validateURL: this.credentials.validateURL,
       authPath: '/auth',
       authCheck: '/check',
-      nodeEnv: env
+      nodeEnv: 'development'
     },
 
     test: {
       logLevel: 'debug',
       useAuth: true,
-      domain: credentials.domain,
-      apiHost: credentials.apiHost,
-      serverBaseURL: credentials.serverBaseURL,
-      ssoBaseURL: credentials.ssoBaseURL,
-      validateURL: credentials.validateURL,
+      domain: this.credentials.domain,
+      apiHost: this.credentials.apiHost,
+      serverBaseURL: this.credentials.serverBaseURL,
+      ssoBaseURL: this.credentials.ssoBaseURL,
+      validateURL: this.credentials.validateURL,
       authPath: '/auth',
       authCheck: '/',
-      nodeEnv: env
+      nodeEnv: 'test'
     },
 
     production: {
       logLevel: 'debug',
       useAuth: true,
-      domain: credentials.domain,
-      apiHost: credentials.apiHost,
-      serverBaseURL: credentials.serverBaseURL,
-      ssoBaseURL: credentials.ssoBaseURL,
-      validateURL: credentials.validateURL,
-      redisPort: credentials.redisPort,
+      domain: this.credentials.domain,
+      apiHost: this.credentials.apiHost,
+      serverBaseURL: this.credentials.serverBaseURL,
+      ssoBaseURL: this.credentials.ssoBaseURL,
+      validateURL: this.credentials.validateURL,
+      redisPort: this.credentials.redisPort,
       authPath: '/commons-auth',
-      authCheck: '/commons-check',
-      nodeEnv: env
+      authCheck: this.credentials.apiHost + '/commons-check',
+      nodeEnv: 'production'
     }
   };
 
+  constructor(hostEnvironment: string) {
+    this.hostEnvironment = hostEnvironment;
+    try {
+      // The path to credentials.
+      this.credentials = require('credentials');
+    } catch (ex) {
+      // No credentials ... try travis-ci credentials.
+      console.log('Using travis credentials, really');
+      this.credentials = require('../credentials/travis-credentials')
 
-   public getConfig(s: string): any {
-    return this.config[s];
+    }
+  }
+
+  public getConfig(): any {
+    const configuration = this.config[this.hostEnvironment];
+    configuration.domain = this.credentials.domain;
+    configuration.apiHost = this.credentials.apiHost;
+    configuration.serverBaseURL = this.credentials.serverBaseURL;
+    configuration.ssoBaseURL = this.credentials.ssoBaseURL;
+    configuration.validateURL = this.credentials.validateURL;
+    configuration.redisPort = this.credentials.redisPort;
+    configuration.nodeEnv = this.hostEnvironment;
+    return configuration;
   }
 
 }

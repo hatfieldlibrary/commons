@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import * as fromRoot from '../../core/ngrx/reducers/index';
@@ -31,6 +31,7 @@ import {ActivatedRoute} from '@angular/router';
 import {CollectionType} from '../../core/data-types/collection.type';
 import {DispatchService} from '../../core/services/dispatch.service';
 import {FieldFilterType} from '../../core/data-types/field-filter.type';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-submit-dspace',
@@ -54,6 +55,7 @@ export class SubmitDspaceComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromRoot.State>,
               private navigation: NavigationServiceB,
               private route: ActivatedRoute,
+              @Inject(DOCUMENT) private document,
               private dispatchService: DispatchService
               ) { }
 
@@ -62,7 +64,7 @@ export class SubmitDspaceComponent implements OnInit, OnDestroy {
 
     url = url.replace('ds', 'xmlui');
     url += '/submit';
-    document.location.href = url;
+    this.document.location.href = url;
   }
 
   ngOnInit() {

@@ -29,18 +29,21 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {CollectionType} from '../data-types/collection.type';
-import { environment } from '../../environments/environment';
+import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getCollectionsByAreaId(id: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/area/' + id);
+    return this.http.get<CollectionType[]>(environment.apiHost +
+      environment.apiRoot + '/collection/area/' + id);
   }
 
   getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
@@ -50,28 +53,31 @@ export class CollectionService {
   }
 
   getCollectionsBySubject(id: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/subject/' + id);
+    return this.http.get<CollectionType[]>(environment.apiHost
+      + environment.apiRoot + '/collection/subject/' + id);
   }
 
   getCollectionsByType(id: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/type/' + id);
+    return this.http.get<CollectionType[]>(environment.apiHost
+      + environment.apiRoot + '/collection/type/' + id);
   }
 
   getCollectionsByTypeArea(areaId: string, typeId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection/area/' + areaId + '/type/' + typeId);
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+      + '/collection/area/' + areaId + '/type/' + typeId);
   }
 
   getCollectionsByTypeSubject(typeId: string, subjectId: string): Observable<CollectionType[]> {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/type/' + typeId
-      + '/subject/' + subjectId );
+      + '/subject/' + subjectId);
   }
 
   getCollectionsByTypeAreaSubject(typeId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/area/' + areaId
       + '/type/' + typeId
-      + '/subject/' + subjectId );
+      + '/subject/' + subjectId);
   }
 
   getCollectionsByCategory(categoryId: string): Observable<CollectionType[]> {
@@ -82,53 +88,57 @@ export class CollectionService {
   getCollectionsByCategoryArea(categoryId: string, areaId: string): Observable<CollectionType[]> {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
-      + '/area/' + areaId );
+      + '/area/' + areaId);
   }
 
   getCollectionsByCategoryType(categoryId: string, typeId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
-      + '/type/' + typeId );
+      + '/type/' + typeId);
   }
+
   getCollectionsByCategorySubject(categoryId: string, subjectId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>( environment.apiRoot
       + '/collection/category/' + categoryId
-      + '/subject/' + subjectId );
+      + '/subject/' + subjectId);
   }
+
   getCollectionsByCategoryAreaType(categoryId: string, areaId: string, typeId: string): Observable<CollectionType[]> {
 
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
-      + '/type/' + typeId );
+      + '/type/' + typeId);
   }
+
   getCollectionsByCategoryAreaSubject(categoryId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
 
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
-      + '/subject/' + subjectId );
+      + '/subject/' + subjectId);
   }
 
   getCollectionsByCategoryTypeSubject(categoryId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
 
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/type/' + typeId
-      + '/subject/' + subjectId );
+      + '/subject/' + subjectId);
   }
+
   getCollectionsByCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string):
     Observable<CollectionType[]> {
 
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
       + '/type/' + typeId
-      + '/subject/' + subjectId );
+      + '/subject/' + subjectId);
   }
 
   getAllCollections(): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection');
+    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot + '/collection');
   }
 
 }

@@ -68,8 +68,8 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   linkLabel: string;
   title: string;
   areaId: any; // initialize with out of range value.
-  private watcher: Subscription;
   isMobile = false;
+  private watcher: Subscription;
 
   constructor(public media: ObservableMedia) {
   }

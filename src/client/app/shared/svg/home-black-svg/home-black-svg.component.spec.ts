@@ -28,6 +28,7 @@ import { HomeBlackSvgComponent } from './home-black-svg.component';
 import {MatIconModule, MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('HomeBlackSvgComponent', () => {
   let component: HomeBlackSvgComponent;
@@ -37,7 +38,8 @@ describe('HomeBlackSvgComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ HomeBlackSvgComponent ],
       imports: [MatIconModule, HttpClientModule
-      ]
+      ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     });
   }));
 
