@@ -47,11 +47,11 @@ import {JsonLdComponent} from './json-ld/json-ld.component';
   declarations: [
     AppMenusComponent,
     JsonLdComponent,
+    FooterComponent,
     CollectionsFilterPipe
   ],
   imports: [
     CommonModule,
-    SharedModule,
     SvgModule,
     MatListModule,
     MatTooltipModule,
