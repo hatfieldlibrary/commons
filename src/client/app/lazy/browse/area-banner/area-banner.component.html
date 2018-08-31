@@ -21,6 +21,10 @@
   ~
   ~ Author: Michael Spalti
   -->
+<app-json-ld
+  [name]="title"
+  [description]="description"
+  [publisher]="'Willamette University'"></app-json-ld>
 
 <div class="indicator-row" *ngIf="!isMobile">
   <div fxLayout="row" fxFlex fxLayoutAlign="center start">
@@ -30,19 +34,22 @@
     </div>
   </div>
 </div>
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="45px" fxFlex
+<div fxLayout="row"
+     fxLayoutAlign="center start"
+     fxLayoutGap="45px"
+     fxFlex
      class="area-info">
 
   <div class="mat-body-2"
        fxLayout="column"
-       fxFlex.xs="1 1 90"
+       fxFlex.xs="1 1 95"
        fxFlex.sm="1 1 90"
        fxFlex.md="1 1 50"
        fxFlex.lg="1 1 45"
-       fxFlex.gt-lg="1 1 40">
+       fxFlex.gt-lg="1 1 40"
+       class="info-flex-width">
 
-    <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center start" fxFlex="55" fxFlex.xs="90">
-      <div style="height: 100%; opacity:1">
+      <div class="area-inner-container">
         <div>
           <h2 class="mat-h1">{{title}}</h2>
           <div class="text-padding">
@@ -50,9 +57,8 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div *ngIf="!isMobile" class="additional-options" style="position: absolute; bottom: 40px;">
+    <div *ngIf="!isMobile" class="filter-options" style="position: absolute; bottom: 40px;">
       <app-area-filters
         [filters]="filters"
         [subjects]="subjects"
@@ -64,7 +70,6 @@
 
   <div fxLayout="column"
        fxFlexAlign="start start"
-       fxFlex="1 1 15"
        fxFlex.md="1 1 25"
        fxFlex.lg="1 1 15"
        fxFlex.gt-lg="1 1 12"

@@ -76,6 +76,7 @@ app-lock-svg {
   bottom: 8px;
   background: rgba(49, 49, 49, 0.77);
 }
+/* Added to support universal rendered layouts. These may override angular material directives! */
 .count-view {
   display: none;
 }

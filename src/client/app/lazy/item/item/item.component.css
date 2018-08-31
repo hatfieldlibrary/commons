@@ -21,7 +21,9 @@
  *
  * Author: Michael Spalti
  */
-
+#item-info a, #item-info a:visited {
+  font-weight: 800;
+}
 .meta-container {
   border-top: 1px solid #e2dfd9;
   border-right: 1px solid #e2dfd9;
@@ -50,6 +52,12 @@
 .section-spacer {
   margin-top: 30px;
 }
+p.item-description > a, p.item-description > a:visited {
+   text-decoration: underline;
+   color: rgb(9, 101, 113);
+  font-weight: 800;
+}
+/* Added to support universal rendered layouts. These may override angular material directives! */
 .mobile-options {
   display: none;
 }

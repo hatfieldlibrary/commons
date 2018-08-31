@@ -48,6 +48,8 @@ import {ObservableMedia} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
 import {mockStore} from '../../core/test/mock-store';
 import {Subject} from 'rxjs';
+import {FooterComponent} from '../../shared/footer/footer.component';
+import {SharedModule} from '../../shared/shared.module';
 
 describe('SubmitDspaceComponent', () => {
   let component: SubmitDspaceComponent;

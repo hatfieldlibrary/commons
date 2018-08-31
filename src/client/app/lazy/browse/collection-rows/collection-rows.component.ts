@@ -60,7 +60,8 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
   isMobile = false;
   watcher = new Subscription();
 
-  constructor(private navigationService: NavigationServiceB, private media: ObservableMedia) {
+  constructor(private navigationService: NavigationServiceB,
+              private media: ObservableMedia) {
   }
 
   getResultCount(): string {
@@ -72,6 +73,7 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
      return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
 
   }
+
   getItemLink(id: number): string {
     return this.navigationService.getItemLink(id);
   }

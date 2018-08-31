@@ -46,12 +46,12 @@ import {JsonLdComponent} from './json-ld/json-ld.component';
 @NgModule({
   declarations: [
     AppMenusComponent,
-    FooterComponent,
     JsonLdComponent,
     CollectionsFilterPipe
   ],
   imports: [
     CommonModule,
+    SharedModule,
     SvgModule,
     MatListModule,
     MatTooltipModule,

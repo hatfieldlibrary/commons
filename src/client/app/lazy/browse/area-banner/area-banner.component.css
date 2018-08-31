@@ -27,19 +27,14 @@
   color: rgba(255, 255, 255, 0.88);
   opacity: 1;
 }
+@media screen and (max-width: 599px) {
+  .area-info{
+    padding: 54px 0 16px;
+
+  }
+}
 .area-button {
   margin: 32px 0 0;
-}
-.indicator-row {
-  display: none !important;
-}
-@media screen and (min-width: 720px) {
-  .indicator-row{
-    display: flex !important;
-    position: absolute;
-    left: 0;
-    right: 0;
-  }
 }
 .down-pointer {
   width: 0;
@@ -65,11 +60,80 @@
 .text-color {
   color: #ccc;
 }
+/* Added to support universal rendered layouts. These may override angular material directives! */
+.area-inner-container {
+  height: 100%;
+  opacity:1;
+}
+@media screen and (min-width: 960px) {
+  .area-inner-container{
+    /*margin-right: 40px;*/
+  }
+}
 .additional-options {
   display: none;
 }
-@media screen and (min-width: 787px) {
+@media screen and (min-width: 960px) {
   .additional-options{
+    max-width: 25%;
+    flex: 1 1 100%;
+    display: flex;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .additional-options{
+    max-width: 15%;
+  }
+}
+@media screen and (min-width: 1920px) {
+  .additional-options{
+    max-width: 12%;
+  }
+}
+.filter-options {
+  display: none;
+}
+@media screen and (min-width: 960px) {
+  .filter-options{
     display: block;
   }
 }
+@media screen and (max-width: 599px) {
+  .info-flex-width {
+    max-width: 95%;
+  }
+}
+@media screen and (min-width: 600px) {
+  .info-flex-width {
+    max-width: 90%;
+  }
+}
+@media screen and (min-width: 960px) {
+  .info-flex-width {
+    max-width: 50%;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .info-flex-width {
+    max-width: 45%;
+    margin-right: 40px;
+  }
+}
+@media screen and (min-width: 1920px) {
+  .info-flex-width {
+    max-width: 40%;
+    margin-right: 40px;
+  }
+}
+.indicator-row {
+  display: none !important;
+}
+@media screen and (min-width: 720px) {
+  .indicator-row{
+    display: flex !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+}
+

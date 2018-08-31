@@ -22,8 +22,8 @@
   ~ Author: Michael Spalti
   -->
 
-<div class="side-nav-section" *ngIf="hasSubjects()">
-  <mat-selection-list dense #subjectSelectionList aria-label="subjects">
+<div class="side-nav-section" *ngIf="hasSubjects()" role="complementary" aria-label="subject filters">
+  <mat-selection-list dense #subjectSelectionList aria-label="select from list to filter results by subject">
     <h4 class="mat-body-2 list-caption">SUBJECTS</h4>
     <mat-list-option *ngFor="let subject of filter.subjects"
                      class="local-navigation"

@@ -29,6 +29,7 @@
 
 export const environment = {
   production: false,
+  origin: 'http://localhost:3005/',
   // REST API host. Can be localhost or production host
   // apiHost: 'https://libmedia.willamette.edu',
   apiHost: '',

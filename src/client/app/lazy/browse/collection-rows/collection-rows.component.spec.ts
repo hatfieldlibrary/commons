@@ -35,6 +35,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../../../environments/environment';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 
 describe('CollectionRowsComponent', () => {
   let component: CollectionRowsComponent;
@@ -84,6 +85,12 @@ describe('CollectionRowsComponent', () => {
             subscribe: () => {
               return new Subscription();
             }
+          }
+        },
+        {
+          provide: NavigationServiceB,
+          useClass: class {
+            getItemLink = jasmine.createSpy('getItemLink');
           }
         }
       ]

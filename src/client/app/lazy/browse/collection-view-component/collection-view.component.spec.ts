@@ -101,6 +101,7 @@ import {mockStore} from '../../../core/test/mock-store';
 import {SearchSvgComponent} from '../../../shared/svg/search-svg/search-svg.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {CollectionsFilterPipe} from '../../../shared/collections-filter.pipe';
+import {SharedModule} from '../../../shared/shared.module';
 
 
 const areaSubscriptionMock = {

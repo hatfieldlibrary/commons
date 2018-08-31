@@ -48,22 +48,6 @@ mat-card-content.list-container {
 app-area-banner {
   z-index: 2;
 }
-.area-background {
-  display: none;
-}
-@media screen and (min-width: 600px) {
-  .area-background {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    opacity: 0.12;
-    z-index: 2;
-  }
-}
 app-area-banner {
   position: absolute;
   top: 0;
@@ -112,11 +96,6 @@ app-area-banner {
 .collection-list-item a {
   text-decoration: none;
 }
-.side-container {
-  margin-top: 73px;
-  background: rgba(255, 255, 255, 0.38);
-  display: none;
-}
 .side-container.left{
   margin-right: 20px;
 }
@@ -140,6 +119,28 @@ mat-card-subtitle.large-device-info {
 }
 .collection-results {
   /*margin-top: -44px;*/
+}
+/* Added to support universal rendered layouts. These may override angular material directives! */
+.area-background {
+  display: none;
+}
+@media screen and (min-width: 600px) {
+  .area-background {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    opacity: 0.12;
+    z-index: 2;
+  }
+}
+.side-container {
+  margin-top: 73px;
+  background: rgba(255, 255, 255, 0.38);
+  display: none;
 }
 @media screen and (min-width: 787px) {
   .side-container{

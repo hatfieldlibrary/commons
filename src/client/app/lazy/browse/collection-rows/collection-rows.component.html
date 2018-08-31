@@ -22,8 +22,8 @@
   ~ Author: Michael Spalti
   -->
 
-<div class="row-result-info mat-caption count-view" >
-  <div tabindex="0" aria-labelledby="item-count item-label"></div>
+<div class="row-result-info mat-caption count-view">
+  <div aria-labelledby="item-count item-label"></div>
   <span id="item-count" class="bold-caption">{{getResultCount()}}</span><span id="item-label">&nbsp;item<span id="item-suffix" *ngIf="collectionList.length > 1">s</span> to choose from&hellip;</span>
   <div style="position: absolute; top: 18px; right: 12px;">
     <app-view-grid (click)="setViewType('grid')" class="icon-color"></app-view-grid>
@@ -31,8 +31,8 @@
   </div>
 </div>
 
-<div class="list-container" [@fadeIn]>
-  <mat-nav-list>
+<div class="list-container" [@fadeIn] role="complementary" aria-label="result list">
+  <mat-nav-list attr.aria-label="list of {{getResultCount()}} item links" tabindex="0">
     <mat-list-item class="collection-list-item result-item"
                    *ngFor="let collection of collectionList; let isFirstRow=first"
                    (click)="navigateToItem(collection.id);$event.stopPropagation();"
@@ -60,7 +60,7 @@
             <app-lock-svg *ngIf="collection.restricted" class="restricted-icon image-view"></app-lock-svg>
           </div>
         </div>
-        <div><a tabindex="-1" [routerLink]="getItemLink(collection.id)"></a></div>
+        <div><a tabindex="-1" [routerLink]="getItemLink(collection.id)" aria-label=""></a></div>
       </div>
     </mat-list-item>
   </mat-nav-list>
