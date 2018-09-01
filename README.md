@@ -67,10 +67,13 @@ To build for production, use `npm run build:development:ssr` and copy the result
 
 ## Production Requirements
 
-Session management requires you to provide redis as the session store. The redis port is configurable in credentials.js. (In development, we rely on Passport
-sessions. No session store is required.)
+Session management requires you to provide redis as the session store. The redis port is configurable in credentials.js. 
+
+(In development, we rely on Passport sessions and no session store is required.)
 
 ### Docker
+
+(Needs update)
 
 At the moment, the docker image is experimental and not used in our production setting. But here are a few things to know. 
 
