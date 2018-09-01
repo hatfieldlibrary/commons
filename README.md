@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/hatfieldlibrary/commons/badge.svg?branch=master)](https://coveralls.io/github/hatfieldlibrary/commons?branch=master)
 
 The Commons is designed to publish information about digital projects and collections that are maintained within institutional repositories like DSpace, Contentdm, and Hydra or
- that exist independently as unique, standalone projects like Omeka exhibits and public websites. Commons project provides integration with 
+ that exist independently as unique, standalone projects like Omeka exhibits and public websites. The Commons provides integration with 
  repository services through shared authentication and authorization and targeted search capability.  
 
 The project uses [Angular](https://angular.io/), [ngrx](https://github.com/ngrx), and [Angular Material](https://material.angular.io/).
@@ -51,7 +51,19 @@ module.exports = credentials;
 
 In the client, the [Angular CLI is configured to recognize development, test and production environments](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/application-environments.md) and replace configuration files as needed. Use these files to configure the client application.
 
+### Development
 
+To work on the Commons client without Universal server-side rendering, use `npm run start:dev`.  
+
+To work with server-side rendering in development mode, use `npm run build:development:ssr` and `npm run serve:ssr`.
+
+### Production
+
+To build for production, use `npm run build:development:ssr` and copy the resulting `./dist` directory to the production host.
+
+### Tests
+
+For unit tests, use `npm run test`.
 
 ### Docker
 
