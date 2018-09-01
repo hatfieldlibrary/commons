@@ -72,7 +72,7 @@ Session management requires Redis for use as the session store. The redis port i
 (In development we rely on Passport sessions and therefore no session store is needed. But you might not be able to test
  authentication logic in Universal mode.)
 
-### Docker
+## Docker
 
 (Needs update)
 
