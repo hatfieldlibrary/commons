@@ -30,7 +30,7 @@ The Commons is designed to use with the Tagger-2 REST API. You will need that pr
 server before starting.  
 
 For server deployment you need to create two configuration files in your home directory (Mac or Windows): 
-`~/etc/commons-dev/credentials.js` and `~/etc/commons-prod/credentials.js`. Edit the files to provide the following information as appropriate for your development and production environments: 
+`~/etc/commons-dev/credentials.js` and `~/etc/commons-prod/credentials.js`. Edit the files, providing the following information as appropriate for your development and production environments: 
 
 ```javascript
 'use strict';
