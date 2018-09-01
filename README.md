@@ -51,21 +51,21 @@ module.exports = credentials;
 
 In the client, the [Angular CLI is configured to recognize development, test and production environments](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/application-environments.md) and replace configuration files as needed. Use these files to configure the client application.
 
-### Development
+## Development
 
 To work on the Commons client without Universal server-side rendering, use `npm run start:dev`.  
 
 To work with server-side rendering in development mode, use `npm run build:development:ssr` and `npm run serve:ssr`.
 
-### Tests
+## Tests
 
 For unit tests, use `npm run test`.
 
-### Production
+## Production
 
 To build for production, use `npm run build:development:ssr` and copy the resulting `./dist` directory to the production host.
 
-## Production Requirements
+### Production Requirements
 
 Session management requires Redis for use as the session store. The redis port is configurable in credentials.js. 
 
