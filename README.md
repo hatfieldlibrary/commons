@@ -57,13 +57,18 @@ To work on the Commons client without Universal server-side rendering, use `npm 
 
 To work with server-side rendering in development mode, use `npm run build:development:ssr` and `npm run serve:ssr`.
 
+### Tests
+
+For unit tests, use `npm run test`.
+
 ### Production
 
 To build for production, use `npm run build:development:ssr` and copy the resulting `./dist` directory to the production host.
 
-### Tests
+## Production Requirements
 
-For unit tests, use `npm run test`.
+Session management requires you to provide redis as the session store. The redis port is configurable in credentials.js. (In development, we rely on Passport
+sessions. No session store is required.)
 
 ### Docker
 
@@ -88,21 +93,7 @@ It should be possible to preview the container on your development machine if yo
   2. Modify the `src/client/app/environments/environment.prod` file accordingly.
   3. Build the project with `npm run build:prod`
   4. Build the docker image with `docker build -t <name>/<tag>:latest .`
-  5. Start the docker image with `docker run -v <home>/etc/commons:/etc/commons-2.0 -p 3000:3000` where `<home>` is your local home directory
-
-
-## Production Requirements
-
-Session management requires you to provide redis as the session store. The redis port is configurable in credentials.js. (In development, we rely on Passport
-sessions. No session store is required.)
-
-## Running Unit Tests
-
-Run `npm run test` to execute unit tests via [Karma](https://karma-runner.github.io) with code coverage.
-
-## Running end-to-end Tests
-
-Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  5. Start the docker image with `docker run -v <home>/etc/commons:/etc/commons-2.0 -p 3000:3000` where `<home>` is your local home directory.
 
 
 ## Further Help
