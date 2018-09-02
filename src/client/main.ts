@@ -35,4 +35,10 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('bootstrap')
+  platformBrowserDynamic()
+    .bootstrapModule(AppModule)
+});
+
+// platformBrowserDynamic().bootstrapModule(AppModule);

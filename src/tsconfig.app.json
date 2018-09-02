@@ -4,7 +4,7 @@
     "outDir": "../out-tsc/app",
     "target": "es5",
     "baseUrl": "./",
-    "module": "es2015",
+    "module": "es6",
     "types": [],
     "lib": [
       "es2017",

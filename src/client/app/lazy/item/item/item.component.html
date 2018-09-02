@@ -25,8 +25,7 @@
 
 <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap.gt-md="20" role="main" aria-label="item information">
 
-  <div fxFlex="100" class="mobile-options"
-       *ngIf="!media.isActive('gt-sm')">
+  <div fxFlex="100" class="mobile-options">
 
     <app-item-links
       [restricted]="item?.collection.restricted"
@@ -94,7 +93,6 @@
     fxFlex.sm="35"
     fxFlex.md="35"
     fxFlex.gt-md="40"
-    *ngIf="media.isActive('gt-sm')"
     class="item-links-container">
     <app-item-links style="height: 100%"
                     [restricted]="item?.collection.restricted"

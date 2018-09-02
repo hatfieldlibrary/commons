@@ -32,7 +32,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy, Inject, PLATFORM_ID
 } from '@angular/core';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {AreaType} from '../../../core/data-types/area.type';
@@ -57,7 +57,9 @@ import {SetViewAction} from '../../../core/ngrx/actions/view.actions';
 import {SelectedAreaEvent} from '../area-options/area-options.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
-import {Meta, Title} from '@angular/platform-browser';
+import {Meta, Title, TransferState} from '@angular/platform-browser';
+import {isPlatformServer} from '@angular/common';
+import {COLLECTION_KEY} from '../../../core/services/collection.service';
 
 @Component({
   selector: 'app-collection-view',
@@ -71,7 +73,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
   view: string;
 
   /**
-   * State fields
+   * State observables.
    */
   collections$: Observable<CollectionType[]>;
   areas$: Observable<FieldFilterType[]>;
@@ -83,18 +85,15 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
   groupsFilter$: Observable<CollectionGroupFilter>;
   viewType$: Observable<string>;
   /**
-   * These are used in navigation. The values are
-   * set by subscriptions to Store updates (since it is
-   * necessary to save this information as part of the
-   * application state). But in fact, for present purposes
-   * they could also be obtained from route params.
+   * Used in navigation. The values are
+   * set by subscription to Store observables.
    */
   selectedAreas: FieldFilterType[];
   selectedTypes: FieldFilterType[];
   selectedSubjects: FieldFilterType[];
   selectedGroups: FieldFilterType[];
   /**
-   * These member variables contain route parameters.
+   * These member variables contain the route parameters.
    */
   areaId = '';
   typeId = '';
@@ -107,7 +106,8 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
   /**
    * Boolean value determines whether to show the area information
    * component or the default home information. (Currently not relevant,
-   * since we do not have a global view).
+   * since we do not have a global "home" view. Retaining in case
+   * that changes.) Value will be true in call current navigation cases.
    */
   areaScreen: boolean;
 
@@ -122,7 +122,9 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
               private scrollReady: ScrollReadyService,
               private titleService: Title,
               private metaService: Meta,
-              private subscriptionService: SubscriptionService ) {
+              private subscriptionService: SubscriptionService,
+              private transferState: TransferState,
+              @Inject(PLATFORM_ID) private platform: Object) {
 
   }
 
@@ -227,7 +229,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
    * @param {string} id
    */
   collectionNavigation(id: string): void {
-  //  this.store.dispatch(new CollectionReset());
+    //  this.store.dispatch(new CollectionReset());
     this.navigation.navigateItemRoute(id);
   }
 
@@ -347,8 +349,10 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Subscribe to route changes. Updates the component and calls the
-   * DispatchService to request new API data.
+   * Due to how filter routes are applied, some filter updates will use the same route.
+   * In that situation, the existing component instance is used and detecting
+   * filter updates requires a subscription to the route params observable.
+   * Because of that, the route params subscription is used to trigger all updates.
    */
   private setRouteWatchers(): void {
     const routeWatcher = this.route.params
@@ -378,8 +382,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // All local subscriptions are added to this Subscription
-    // and removed in ngOnDestroy.
+    // All subscriptions are added to this Subscription and removed in ngOnDestroy.
     this.watchers = new Subscription();
     this.setMediaWatcher();
     this.getStoreSelectors();

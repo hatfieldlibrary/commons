@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 import {APP_ID, Inject, NgModule, PLATFORM_ID} from '@angular/core';
 import {APP_BASE_HREF, isPlatformBrowser} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -37,6 +37,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'commons-universal' }),
+    BrowserTransferStateModule,
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,

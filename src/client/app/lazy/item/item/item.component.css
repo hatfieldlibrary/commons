@@ -45,10 +45,6 @@
 .meta-row {
   border-bottom: 1px solid #e2dfd9;
 }
-.item-links-container {
-  margin-top: 0px;
-  margin-left: 20px;
-}
 .section-spacer {
   margin-top: 30px;
 }
@@ -61,8 +57,18 @@ p.item-description > a, p.item-description > a:visited {
 .mobile-options {
   display: none;
 }
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 959px) {
   .mobile-options {
+    display: block;
+  }
+}
+.item-links-container {
+  margin-top: 0px;
+  margin-left: 20px;
+  display: none;
+}
+@media screen and (min-width: 960px) {
+  .item-links-container {
     display: block;
   }
 }

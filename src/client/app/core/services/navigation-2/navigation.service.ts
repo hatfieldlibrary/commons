@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {NavigationStart, Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
@@ -35,6 +35,7 @@ import {
 } from '../../ngrx/actions/filter.actions';
 import {FieldFilterType} from '../../data-types/field-filter.type';
 import {FieldValues} from '../../enum/field-names';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 
 interface RouterIds {
   subjectId: string;
@@ -58,7 +59,15 @@ export class NavigationServiceB {
   currentUrl = '';
   initialNavigation = true;
 
-  constructor(private router: Router, private store: Store<fromRoot.State>) {
+  /**
+   * The constructor initializes subscriptions that are needed to
+   * track application filters store and the router state.
+   * @param router
+   * @param store
+   */
+  constructor(private router: Router,
+              private store: Store<fromRoot.State>,
+              @Inject(PLATFORM_ID) private platform: Object) {
     // Keep track of removed fields in application state (added by AreaFiltersComponent).
     // Before navigation takes place, the selected field ids are checked to verify that
     // they have not been removed. (Field removal is initiated in the AreaFiltersComponent component.)
@@ -72,7 +81,6 @@ export class NavigationServiceB {
     this.removedGroups$ = store.pipe(select(fromRoot.getRemovedGroup)).subscribe(rem => {
       this.removedGroups = rem;
     });
-
     // This tracks the previous url. Used by to determine whether
     // to dispatch a request for new collection data.
     this.router.events.subscribe((event: any) => {
@@ -92,11 +100,11 @@ export class NavigationServiceB {
    * @returns {boolean}
    */
   shouldFetchCollectionData(): boolean {
-    // When this method is called for the first time, should fetch collection data.
-    if (this.initialNavigation) {
-      this.initialNavigation = false;
-      return true;
-    }
+      // When this method is called for the first time, should fetch collection data.
+      if (this.initialNavigation) {
+        this.initialNavigation = false;
+        return true;
+      }
     // Should not fetch collection data if navigating from an item view.
     const regex = /\/commons\/item/;
     if (this.previousUrl.match(regex)) {

@@ -27,29 +27,65 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of as observableOf} from 'rxjs';
 import {CollectionType} from '../data-types/collection.type';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {tap} from 'rxjs/operators';
 
+export const COLLECTION_KEY = makeStateKey('collections');
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionService {
 
-  constructor(private http: HttpClient) {
+
+  constructor(private http: HttpClient, private state: TransferState) {
   }
 
   getCollectionsByAreaId(id: string): Observable<CollectionType[]> {
+    const found = this.state.hasKey(COLLECTION_KEY);
+    console.log(this.state)
+    console.log(COLLECTION_KEY)
+    console.log(this.state.hasKey)
+    console.log(found)
+    console.log(this.state.get)
+    const col = this.state.get(COLLECTION_KEY, <any>[]);
+    console.log(col)
+    if (found) {
+      const collections = this.state.get(COLLECTION_KEY, <any>[]);
+      this.state.remove(COLLECTION_KEY);
+      return observableOf(collections);
+    }
     return this.http.get<CollectionType[]>(environment.apiHost +
-      environment.apiRoot + '/collection/area/' + id);
+      environment.apiRoot + '/collection/area/' + id)
+      .pipe(
+        tap((res) => this.state.set(COLLECTION_KEY, res as any))
+      );
   }
 
   getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
+    const found = this.state.hasKey(COLLECTION_KEY);
+    console.log(this.state)
+    console.log(COLLECTION_KEY)
+    console.log(this.state.hasKey)
+    console.log(found)
+    console.log(this.state.get)
+    const col = this.state.get(COLLECTION_KEY, <any>[]);
+    console.log(col)
+    if (found) {
+      console.log('service got collections')
+      const collections = this.state.get(COLLECTION_KEY, <any>[]);
+      this.state.remove(COLLECTION_KEY);
+      return observableOf(collections);
+    }
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot +
-      '/collection/area/' +
-      areaId + '/subject/' + subjectId);
+      '/collection/area/' + areaId + '/subject/' + subjectId)
+      .pipe(
+        tap((res) => this.state.set(COLLECTION_KEY, res as any))
+      );
   }
 
   getCollectionsBySubject(id: string): Observable<CollectionType[]> {
@@ -92,13 +128,13 @@ export class CollectionService {
   }
 
   getCollectionsByCategoryType(categoryId: string, typeId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/type/' + typeId);
   }
 
   getCollectionsByCategorySubject(categoryId: string, subjectId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>( environment.apiRoot
+    return this.http.get<CollectionType[]>(environment.apiRoot
       + '/collection/category/' + categoryId
       + '/subject/' + subjectId);
   }
@@ -113,7 +149,7 @@ export class CollectionService {
 
   getCollectionsByCategoryAreaSubject(categoryId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
 
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
       + '/subject/' + subjectId);
@@ -121,7 +157,7 @@ export class CollectionService {
 
   getCollectionsByCategoryTypeSubject(categoryId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
 
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/type/' + typeId
       + '/subject/' + subjectId);
@@ -130,7 +166,7 @@ export class CollectionService {
   getCollectionsByCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string):
     Observable<CollectionType[]> {
 
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
       + '/type/' + typeId
@@ -138,7 +174,7 @@ export class CollectionService {
   }
 
   getAllCollections(): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot + '/collection');
+    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot + '/collection');
   }
 
 }

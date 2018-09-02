@@ -46,6 +46,7 @@ import {CommonModule} from '@angular/common';
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {environment} from '../environments/environment';
+import {TransferState} from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {environment} from '../environments/environment';
     ])
   ],
   providers: [
-    {provide: LoggerService, useClass: ConsoleLoggerService}
+    {provide: LoggerService, useClass: ConsoleLoggerService},
+    TransferState
   ],
   exports: [ PageNotFoundComponent ]
 })

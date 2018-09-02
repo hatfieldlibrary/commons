@@ -62,7 +62,10 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, {enableTracing: false, initialNavigation: 'enabled' })],
+  imports: [RouterModule.forRoot(appRoutes, {
+    enableTracing: false,
+    scrollPositionRestoration: 'enabled',
+    initialNavigation: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

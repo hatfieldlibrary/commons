@@ -26,15 +26,13 @@
 import {of as observableOf, Observable} from 'rxjs';
 
 import {catchError, switchMap, map} from 'rxjs/operators';
-/**
- * Created by mspalti on 2/21/17.
- */
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {CollectionService} from '../../services/collection.service';
 import * as collection from '../actions/collection.actions';
 import {Action} from '../actions/action.interface';
 import {IdentifersPayload} from '../actions/payload-parameters.interface';
+import {TransferState} from '@angular/platform-browser';
 
 @Injectable()
 export class CollectionEffects {
@@ -46,7 +44,9 @@ export class CollectionEffects {
     switchMap(
       id => this.svc.getCollectionsByAreaId(id).pipe(
         map(
-          res => new collection.CollectionsActionSuccess(res)),
+          (res) => {
+            return new collection.CollectionsActionSuccess(res);
+            }),
         catchError(
           (err) => observableOf(new collection.CollectionActionFailed(err))
         )
@@ -62,7 +62,9 @@ export class CollectionEffects {
       (payload: IdentifersPayload) =>
         this.svc.getCollectionsByAreaSubject(payload.areaId, payload.subjectId).pipe(
           map(
-            (res) => new collection.CollectionsActionSuccess(res)),
+            (res) => {
+              return new collection.CollectionsActionSuccess(res);
+            }),
           catchError(
             (err) => observableOf(new collection.CollectionActionFailed(err))
           )
@@ -279,6 +281,9 @@ export class CollectionEffects {
     )
   );
 
-  constructor(private svc: CollectionService, private actions$: Actions) {
+  constructor(private svc: CollectionService,
+              private actions$: Actions,
+              private transferState: TransferState,
+              @Inject(PLATFORM_ID) private platform: Object) {
   }
 }
