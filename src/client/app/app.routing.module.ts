@@ -51,7 +51,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: '',  // Go to default collection area (empty path)
+    path: environment.appRoot,  // Go to default collection area (empty path)
     redirectTo: environment.appRoot + environment.defaultRoute,
     pathMatch: 'full'
   },

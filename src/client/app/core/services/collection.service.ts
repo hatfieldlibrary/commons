@@ -26,13 +26,14 @@
  * Created by mspalti on 2/21/17.
  */
 
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {Observable, of as observableOf} from 'rxjs';
 import {CollectionType} from '../data-types/collection.type';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {tap} from 'rxjs/operators';
+import {isPlatformServer} from '@angular/common';
 
 export const COLLECTION_KEY = makeStateKey('collections');
 
@@ -42,18 +43,21 @@ export const COLLECTION_KEY = makeStateKey('collections');
 export class CollectionService {
 
 
-  constructor(private http: HttpClient, private state: TransferState) {
+  constructor(private http: HttpClient, private state: TransferState, @Inject(PLATFORM_ID) private platform: Object) {
   }
 
   getCollectionsByAreaId(id: string): Observable<CollectionType[]> {
+    console.log('collection by area called')
     const found = this.state.hasKey(COLLECTION_KEY);
-    console.log(this.state)
-    console.log(COLLECTION_KEY)
-    console.log(this.state.hasKey)
-    console.log(found)
-    console.log(this.state.get)
-    const col = this.state.get(COLLECTION_KEY, <any>[]);
-    console.log(col)
+    if (!isPlatformServer(this.platform)) {
+      console.log(this.state)
+      console.log(COLLECTION_KEY)
+      console.log(this.state.hasKey)
+      console.log(found)
+      console.log(this.state.get)
+      const col = this.state.get(COLLECTION_KEY, <any>[]);
+      console.log(col)
+    }
     if (found) {
       const collections = this.state.get(COLLECTION_KEY, <any>[]);
       this.state.remove(COLLECTION_KEY);
@@ -62,19 +66,32 @@ export class CollectionService {
     return this.http.get<CollectionType[]>(environment.apiHost +
       environment.apiRoot + '/collection/area/' + id)
       .pipe(
-        tap((res) => this.state.set(COLLECTION_KEY, res as any))
+        tap((res) => {
+          if (isPlatformServer(this.platform)) {
+            console.log('in the server')
+            console.log(COLLECTION_KEY)
+           // console.log(res)
+            this.state.set(COLLECTION_KEY, res as any);
+          //  console.log(this.state)
+          } else {
+            console.log('in the browser')
+          }
+        })
       );
   }
 
   getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
+    console.log('collection by area and subject called')
     const found = this.state.hasKey(COLLECTION_KEY);
-    console.log(this.state)
-    console.log(COLLECTION_KEY)
-    console.log(this.state.hasKey)
-    console.log(found)
-    console.log(this.state.get)
-    const col = this.state.get(COLLECTION_KEY, <any>[]);
-    console.log(col)
+    if (!isPlatformServer(this.platform)) {
+      console.log(this.state)
+      console.log(COLLECTION_KEY)
+      console.log(this.state.hasKey)
+      console.log(found)
+      console.log(this.state.get)
+      const col = this.state.get(COLLECTION_KEY, <any>[]);
+      console.log(col)
+    }
     if (found) {
       console.log('service got collections')
       const collections = this.state.get(COLLECTION_KEY, <any>[]);
@@ -84,7 +101,17 @@ export class CollectionService {
     return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot +
       '/collection/area/' + areaId + '/subject/' + subjectId)
       .pipe(
-        tap((res) => this.state.set(COLLECTION_KEY, res as any))
+        tap((res) => {
+          if (isPlatformServer(this.platform)) {
+            console.log('in the server')
+            console.log(COLLECTION_KEY)
+            console.log(res)
+            this.state.set(COLLECTION_KEY, res as any);
+            console.log(this.state)
+          } else {
+            console.log('in the browser')
+          }
+        })
       );
   }
 
