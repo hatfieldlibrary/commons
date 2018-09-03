@@ -35,7 +35,6 @@ import {
 } from '../../ngrx/actions/filter.actions';
 import {FieldFilterType} from '../../data-types/field-filter.type';
 import {FieldValues} from '../../enum/field-names';
-import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 
 interface RouterIds {
   subjectId: string;
@@ -486,7 +485,7 @@ export class NavigationServiceB {
   }
 
   private _globalLink(): string {
-    return '/' + this.urlRootPath + '/collection'
+    return '/' + this.urlRootPath + environment.defaultRoute;
   }
 
   private _globalTypeLink(selectedTypes: string): string {

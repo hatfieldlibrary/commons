@@ -22,8 +22,6 @@
  * Author: Michael Spalti
  */
 
-
-import {map} from 'rxjs/operators';
 /**
  * Created by mspalti on 4/10/17.
  */
@@ -34,17 +32,32 @@ import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {RelatedType} from '../data-types/related-collection';
 import {RelatedItems} from '../data-types/related-items';
+import {ApiDataService} from './api-data.service';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RelatedService {
 
-  constructor(private http: HttpClient) {}
+  RELATED_KEY = makeStateKey('related-items');
+
+  constructor(private apiService: ApiDataService,
+              private state: TransferState) {}
 
   getRelatedCollections(id: string, subjectIds: string): Observable<RelatedType[]> {
-    return this.http.get<RelatedItems>(environment.apiHost + environment.apiRoot + '/collection/' + id + '/related/' + subjectIds).pipe(
-      map(res => res.related));
+    const found = this.state.hasKey(this.RELATED_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.RELATED_KEY).pipe(map(res => res.related));
+    }
+    // Note that the getApiRequest() function is passed the optional map parameter
+    // with the map function to append.
+    return this.apiService.getApiRequest(
+      this.RELATED_KEY,
+      environment.apiHost + environment.apiRoot + '/collection/' + id + '/related/' + subjectIds
+    ).pipe(map(res => res.related));
+
   }
 
 }

@@ -1,6 +1,6 @@
 {
   "name": "commons",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "license": "MIT",
   "angular-cli": {},
   "author": {
@@ -25,7 +25,7 @@
     "build:development:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "build:production:ssr": "npm run build:client-and-server-bundles:prod && npm run webpack:server:prod",
     "serve:ssr": "HOST_ENV=development node dist/server",
-    "build:client-and-server-bundles": "ng build && ng run commons:server",
+    "build:client-and-server-bundles": "ng build --prod && ng run commons:server",
     "build:client-and-server-bundles:prod": "ng build --prod --deploy-url=/commons-resource/ --base-href /commons/ && ng run commons:server:production",
     "webpack:server": "webpack --env.development --config webpack.server.config.js --progress --colors",
     "webpack:server:prod": "webpack --env.production --config webpack.server.config.js --progress --colors",

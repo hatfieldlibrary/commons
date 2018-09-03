@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
+import {BrowserModule, BrowserTransferStateModule, TransferState} from '@angular/platform-browser';
 import {APP_ID, Inject, NgModule, PLATFORM_ID} from '@angular/core';
 import {APP_BASE_HREF, isPlatformBrowser} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -36,15 +36,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'commons-universal' }),
     BrowserTransferStateModule,
+    BrowserModule.withServerTransition({ appId: 'commons-universal' }),
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
     AppRoutingModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: APP_BASE_HREF, useValue: '/'}
   ],
   bootstrap: [AppComponent]
 })

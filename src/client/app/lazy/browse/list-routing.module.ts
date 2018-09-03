@@ -32,7 +32,8 @@ const listRoutes = [
     path: '',
     children: [
       {
-        path:  environment.appRoot, // Go to the default collection area (partial path).  Needs to be absolute from within a child route.
+        // Go to the default collection area (partial path).  Needs to be absolute from within a child route.
+        path:  environment.appRoot + '/collection',
         redirectTo: '/' + environment.appRoot + environment.defaultRoute,
         pathMatch: 'full'
       },

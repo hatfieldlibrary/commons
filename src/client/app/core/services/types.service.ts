@@ -23,52 +23,78 @@
  * Author: Michael Spalti
  */
 
-import {Injectable} from '@angular/core';
+import { Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
 import {FieldFilterType} from '../data-types/field-filter.type';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {ApiDataService} from './api-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TypesService {
 
-  constructor(private http: HttpClient) {}
+  TYPE_KEY = makeStateKey('type-options');
+
+  constructor(private apiService: ApiDataService,
+              private state: TransferState) {}
 
   getTypesAll(): Observable<FieldFilterType[]> {
-    return this.http.get<FieldFilterType[]>(environment.apiHost + environment.apiRoot + '/type');
+    const found = this.state.hasKey(this.TYPE_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.TYPE_KEY);
+    }
+    return this.apiService.getApiRequest(this.TYPE_KEY, environment.apiHost + environment.apiRoot + '/type');
   }
 
   getTypesSubject(subjectId: string): Observable<FieldFilterType[]> {
-    return this.http.get<FieldFilterType[]>(environment.apiHost + environment.apiRoot + '/type/subject/' + subjectId);
+    const found = this.state.hasKey(this.TYPE_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.TYPE_KEY);
+    }
+    return this.apiService.getApiRequest(this.TYPE_KEY, environment.apiHost + environment.apiRoot + '/type/subject/' + subjectId);
   }
 
   getTypesArea(areaIds: string): Observable<FieldFilterType[]> {
-    return this.http.get<FieldFilterType[]>(environment.apiHost + environment.apiRoot + '/type/area/' + areaIds);
+    const found = this.state.hasKey(this.TYPE_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.TYPE_KEY);
+    }
+    return this.apiService.getApiRequest(this.TYPE_KEY, environment.apiHost + environment.apiRoot + '/type/area/' + areaIds);
+
   }
 
   getTypesAreaSubject(areaId: string, subjectId: string): Observable<FieldFilterType[]> {
-    return this.http.get<FieldFilterType[]>(environment.apiHost
+    const found = this.state.hasKey(this.TYPE_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.TYPE_KEY);
+    }
+    return this.apiService.getApiRequest(this.TYPE_KEY, environment.apiHost
       + environment.apiRoot + '/type/area/'
       + areaId + '/subject/'
       + subjectId);
-
   }
 
   getTypesAreaGroup(areaId: string, groupId: string): Observable<FieldFilterType[]> {
-    return this.http.get<FieldFilterType[]>(environment.apiHost
+    const found = this.state.hasKey(this.TYPE_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.TYPE_KEY);
+    }
+    return this.apiService.getApiRequest(this.TYPE_KEY, environment.apiHost
       + environment.apiRoot + '/type/area/'
       + areaId + '/category/'
       + groupId);
-
   }
 
   getTypesAreaGroupSubject(areaId, groupId, subjectId): Observable<FieldFilterType[]> {
-    return this.http.get<FieldFilterType[]>(environment.apiHost
+    const found = this.state.hasKey(this.TYPE_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.TYPE_KEY);
+    }
+    return this.apiService.getApiRequest(this.TYPE_KEY, environment.apiHost
       + environment.apiRoot + '/type/area/'
       + areaId + '/category/'
       + groupId + '/subject/' + subjectId);
-
   }
 }

@@ -58,8 +58,6 @@ import {SelectedAreaEvent} from '../area-options/area-options.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
 import {Meta, Title, TransferState} from '@angular/platform-browser';
-import {isPlatformServer} from '@angular/common';
-import {COLLECTION_KEY} from '../../../core/services/collection.service';
 
 @Component({
   selector: 'app-collection-view',

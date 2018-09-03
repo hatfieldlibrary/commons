@@ -30,15 +30,13 @@ import { AppModule } from './app/app.module';
 /** Hammerjs required by angular material. **/
 import 'hammerjs/hammer';
 
-
 if (environment.production) {
   enableProdMode();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('bootstrap')
+  console.log('bootstrapped!')
   platformBrowserDynamic()
     .bootstrapModule(AppModule)
 });
 
-// platformBrowserDynamic().bootstrapModule(AppModule);
