@@ -31,7 +31,6 @@ mat-toolbar {
 }
 mat-toolbar button {
   border-width: 0;
-  min-width: 30px;
 }
 .menu {
   background-color: rgb(0,0,0);

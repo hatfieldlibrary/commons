@@ -64,6 +64,7 @@ import {AppMenusComponent} from './shared/apps-menu/app-menus.component';
 import {FooterComponent} from './shared/footer/footer.component';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
+import {BrowserTransferStateModule} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dummy-component',
@@ -137,6 +138,7 @@ describe('AppComponent', () => {
         MatIconModule,
         MatDividerModule,
         HttpClientModule,
+        BrowserTransferStateModule,
         RouterTestingModule.withRoutes([
           {path: 'commons/item', component: MockComponent},
           {path: 'commons/collection', component: MockComponent}

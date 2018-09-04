@@ -5,7 +5,8 @@
     "baseUrl": "./",
     "module": "commonjs",
     "target": "es6",
-    "lib": ["es2015"],
+    "lib": ["es2017",
+    "dom"],
     "types": []
   },
   "exclude": [

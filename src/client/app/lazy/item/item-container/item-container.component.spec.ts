@@ -75,6 +75,7 @@ import {NavigationServiceB} from '../../../core/services/navigation-2/navigation
 import {SetSelectedService} from '../../../core/services/set-selected.service';
 import {LoggerService} from '../../../core/logger/logger.service';
 import {SharedModule} from '../../../shared/shared.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 const mockItem = {
   collection: {
@@ -149,6 +150,7 @@ describe('ItemContainerComponent', () => {
         SharedModule,
         BrowserModule,
         BrowserAnimationsModule,
+        HttpClientTestingModule,
         MatInputModule,
         MatSelectModule,
         FormsModule,
@@ -161,6 +163,7 @@ describe('ItemContainerComponent', () => {
         MenuInteractionService,
         SetSelectedService,
         NavigationServiceB,
+        AuthCheckService,
         {
           provide: Store,
           useClass: class {

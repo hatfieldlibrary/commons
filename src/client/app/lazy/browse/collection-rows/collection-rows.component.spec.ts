@@ -105,23 +105,6 @@ describe('CollectionRowsComponent', () => {
     // fixture.detectChanges();
   });
 
-  it('should subscribe to media observer', fakeAsync(() => {
-    // spyOn(media, 'subscribe');
-    // component.ngOnInit();
-    // tick();
-    // expect(media.subscribe).toHaveBeenCalled();
-  }));
-
-  it('should unsubscribe at destroy', fakeAsync( () => {
-    component.ngOnInit();
-    tick();
-    const watcher = component.watcher;
-    spyOn(watcher, 'unsubscribe');
-    component.ngOnDestroy();
-    tick();
-    expect(watcher.unsubscribe).toHaveBeenCalled();
-  }));
-
 
   it('should return results on item', () => {
     component.collectionList = mockCollectionList;

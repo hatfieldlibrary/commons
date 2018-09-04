@@ -23,9 +23,11 @@
  */
 import {getTestBed, inject, TestBed} from '@angular/core/testing';
 import {RelatedService} from './related.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-
 import {environment} from '../../environments/environment';
+import {ApiDataService} from './api-data.service';
+import {TransferState} from '@angular/platform-browser';
+import {Observable} from 'rxjs/internal/Observable';
+import {of} from 'rxjs/internal/observable/of';
 /**
  * Created by mspalti on 4/19/17.
  */
@@ -33,60 +35,58 @@ import {environment} from '../../environments/environment';
 
 describe('RelatedService', () => {
 
-  const relatedMock = [
-      {
-        id: 1,
-        name: 'test collection',
-        image: ''
-      }
-      ];
 
-  const resultMock = {
-    related: relatedMock
-  };
-
-  let httpMock;
   let relatedService;
+  let apiService;
+  let transferState;
+  let transferStateHasKey: boolean;
+  const RELATED_KEY = 'related-items';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+
       ],
       providers: [
-        RelatedService
+        RelatedService,
+        {
+          provide: ApiDataService,
+          useValue: {
+            getTransferState: jasmine.createSpy('getTransferState').and.returnValue(of('test')),
+            getApiRequest: jasmine.createSpy('getApiRequest').and.returnValue(of('test'))
+          }
+        },
+        {
+          provide: TransferState,
+          useValue: {
+            hasKey: () => transferStateHasKey
+          }
+        }
       ]
     });
-    httpMock = TestBed.get(HttpTestingController);
     relatedService = getTestBed().get(RelatedService);
+    apiService = getTestBed().get(ApiDataService);
+    transferState = getTestBed().get(TransferState);
+    spyOn(transferState, 'hasKey').and.callThrough();
   });
 
-  it('should get related items', () => {
-    const result = relatedService.getRelatedCollections('1', '1');
-    result.subscribe(res => {
-      expect(res).toEqual(relatedMock);
-    });
-    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/collection/' + '1' + '/related/' + '1');
-    expect(req.request.method).toEqual('GET');
-    req.flush(resultMock);
-    httpMock.verify();
+  it('should get related collections by area from store', () => {
+    transferStateHasKey = true;
+    relatedService.getRelatedCollections('1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(RELATED_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(RELATED_KEY);
+  });
+
+  it('should get related collections by area and subject from api', () => {
+    transferStateHasKey = false;
+    relatedService.getRelatedCollections('1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(RELATED_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(RELATED_KEY,
+      environment.apiHost + environment.apiRoot + '/collection/' + '1' + '/related/' + '1');
   });
 
 });
 
-
-
-
-// it('should get related collections', inject([RelatedService, MockBackend], (relatedService, mockBackend) => {
-//   mockBackend.connections.subscribe((conn) => {
-//     conn.mockRespond(new Response(new ResponseOptions({body: relatedMock})));
-//   });
-//   const result = relatedService.getRelatedCollections('1','1,2');
-//   result.subscribe((res) => {
-//     expect(res.response).toEqual({
-//       relatedMock
-//     });
-//
-//   });
 
 

@@ -54,6 +54,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 const mockItem = {
   collection: {
@@ -121,6 +122,7 @@ describe('ItemComponent', () => {
         MatGridListModule,
         FormsModule,
         RouterTestingModule,
+        HttpClientTestingModule,
         MatIconModule,
         // needed to test ObservableMedia
         FlexLayoutModule
