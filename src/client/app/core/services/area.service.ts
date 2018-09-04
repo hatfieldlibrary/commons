@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) [2018] [Willamette University]
  *
@@ -29,9 +28,10 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AreaType} from '../data-types/area.type';
-import { environment } from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 import {AreaFilterType} from '../data-types/area-filter.type';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {ApiDataService} from './api-data.service';
 
 
 export interface AreasResponse {
@@ -39,34 +39,81 @@ export interface AreasResponse {
   response: AreaFilterType[]
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AreaService {
 
-  constructor(private http: HttpClient) {}
+  AREA_INFO_KEY = makeStateKey('area-info');
+  AREA_LIST_KEY = makeStateKey('area-list');
 
+  constructor(private apiService: ApiDataService,
+              private state: TransferState) {
+  }
+
+  /**
+   * Gets the list of all areas for navigation menu or option list.
+   */
   getAreaList(): Observable<AreaFilterType[]> {
-    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot + '/area/collection');
+    const found = this.state.hasKey(this.AREA_LIST_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.AREA_LIST_KEY);
+    }
+    return this.apiService.getApiRequest(this.AREA_LIST_KEY, environment.apiHost + environment.apiRoot + '/area/collection');
   }
 
+  /**
+   * Gets the filtered list of areas for use with option lists. (Not used by current application since
+   * areas are listed in a global navigation menu and not used as filter options.)
+   * @param id
+   */
   getAreaListBySubject(id: string): Observable<AreaFilterType[]> {
-    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot + '/area/subject/' + id);
+    const found = this.state.hasKey(this.AREA_LIST_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.AREA_LIST_KEY);
+    }
+    return this.apiService.getApiRequest(this.AREA_LIST_KEY, environment.apiHost + environment.apiRoot + '/area/subject/' + id);
   }
 
+  /**
+   * Not used.  See above.
+   * @param id
+   */
   getAreaListByType(id: string): Observable<AreaFilterType[]> {
-    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot + '/area/type/' + id);
+    const found = this.state.hasKey(this.AREA_LIST_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.AREA_LIST_KEY);
+    }
+    return this.apiService.getApiRequest(this.AREA_LIST_KEY, environment.apiHost + environment.apiRoot + '/area/type/' + id);
   }
 
+  /**
+   * Not used.  See above.
+   * @param typeId
+   * @param subjectId
+   */
   getAreaListByTypeSubject(typeId: string, subjectId: string): Observable<AreaFilterType[]> {
-    return this.http.get<AreaFilterType[]>(environment.apiHost + environment.apiRoot +
+    const found = this.state.hasKey(this.AREA_LIST_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.AREA_LIST_KEY);
+    }
+    return this.apiService.getApiRequest(this.AREA_LIST_KEY, environment.apiHost + environment.apiRoot +
       '/area/type/' +
       typeId + '/subject/' +
       subjectId);
   }
 
+  /**
+   * Gets the complete information for the currently selected area.
+   * @param id
+   */
   getAreaInfo(id: string): Observable<AreaType[]> {
-    return this.http.get<AreaType[]>(environment.apiHost + environment.apiRoot + '/area/id/' + id);
+    const found = this.state.hasKey(this.AREA_INFO_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.AREA_INFO_KEY);
+    }
+    return this.apiService.getApiRequest(this.AREA_INFO_KEY, environment.apiHost + environment.apiRoot + '/area/id/' + id);
   }
 
 }

@@ -53,7 +53,7 @@ import {AppComponent} from '../../../app.component';
 import {FooterComponent} from '../../../shared/footer/footer.component';
 
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -263,7 +263,8 @@ describe('CollectionViewComponent', () => {
         FormsModule,
         RouterTestingModule,
         HttpClientModule,
-        MatTooltipModule
+        MatTooltipModule,
+        BrowserTransferStateModule
       ],
       providers: [
         LoggerService,

@@ -30,17 +30,25 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ItemType} from '../data-types/item.type';
 import { environment } from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {ApiDataService} from './api-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
-  constructor(private http: HttpClient) {}
+  ITEM_KEY = makeStateKey('item-page-data');
+
+  constructor(private apiService: ApiDataService,
+              private state: TransferState) {}
 
     getItem(itemId: string): Observable<ItemType> {
-      return this.http.get<ItemType>(environment.apiHost + environment.apiRoot + '/collection/id/' + itemId);
+      const found = this.state.hasKey(this.ITEM_KEY);
+      if (found) {
+        return this.apiService.getTransferState(this.ITEM_KEY);
+      }
+      return this.apiService.getApiRequest(this.ITEM_KEY, environment.apiHost + environment.apiRoot + '/collection/id/' + itemId);
     }
 
 

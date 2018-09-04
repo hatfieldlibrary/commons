@@ -46,6 +46,7 @@ import {FieldFilterType} from '../../../core/data-types/field-filter.type';
 import {FieldValues} from '../../../core/enum/field-names';
 import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes}
   from '../../../core/ngrx/actions/filter.actions';
+import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 
 
 export interface DeselectedFilter {
@@ -96,13 +97,11 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   resetCount = 0;
 
   constructor(private store: Store<fromRoot.State>,
-              private media: ObservableMedia) {
+              private media: ObservableMedia,
+              private scrollReady: ScrollReadyService) {
+
     this.watcher = this.media.subscribe((change: MediaChange) => {
-      if (change.mqAlias === 'xs') {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
+      this.isMobile = change.mqAlias === 'xs';
     });
   }
 
@@ -178,6 +177,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    */
   deselect(type, id, active): void {
     if (active) {
+      this.scrollReady.setPosition(0);
       const deselected: DeselectedFilter = {type: type, id: id};
       this.removeFilter.emit(deselected);
     }
