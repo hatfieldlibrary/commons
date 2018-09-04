@@ -27,6 +27,8 @@ import {TestBed} from '@angular/core/testing';
 import {AreaFilterType} from '../data-types/area-filter.type';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {AreaType} from '../data-types/area.type';
+import {ApiDataService} from './api-data.service';
+import {TransferState} from '@angular/platform-browser';
 
 
 describe('Area Service', () => {
@@ -57,10 +59,19 @@ describe('Area Service', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+
       ],
       providers: [
-        AreaService
+        AreaService,
+        {
+          provide: ApiDataService,
+          useClass: {}
+        }, {
+          provide: TransferState,
+          useClass: {
+
+          }
+        }
         // MockBackend,
         // {provide: XHRBackend, useClass: MockBackend}
       ]

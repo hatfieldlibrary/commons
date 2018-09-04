@@ -282,8 +282,6 @@ export class CollectionEffects {
   );
 
   constructor(private svc: CollectionService,
-              private actions$: Actions,
-              private transferState: TransferState,
-              @Inject(PLATFORM_ID) private platform: Object) {
+              private actions$: Actions) {
   }
 }

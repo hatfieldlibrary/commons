@@ -26,6 +26,8 @@ import {getTestBed, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {CollectionService} from './collection.service';
 import {environment} from '../../environments/environment';
+import {ApiDataService} from './api-data.service';
+import {TransferState} from '@angular/platform-browser';
 
 
 describe('Collection Service', () => {
@@ -79,10 +81,19 @@ describe('Collection Service', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+
       ],
       providers: [
-        CollectionService
+        CollectionService,
+        {
+          provide: ApiDataService,
+          useClass: {}
+        }, {
+          provide: TransferState,
+          useClass: {
+
+          }
+        }
       ]
     });
     httpMock = TestBed.get(HttpTestingController);

@@ -26,6 +26,8 @@ import {RelatedService} from './related.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 import {environment} from '../../environments/environment';
+import {ApiDataService} from './api-data.service';
+import {TransferState} from '@angular/platform-browser';
 /**
  * Created by mspalti on 4/19/17.
  */
@@ -54,7 +56,17 @@ describe('RelatedService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        RelatedService
+        RelatedService,
+        {
+          provide: ApiDataService,
+          useClass: {}
+        },
+        {
+          provide: TransferState,
+          useClass: {
+
+          }
+        }
       ]
     });
     httpMock = TestBed.get(HttpTestingController);

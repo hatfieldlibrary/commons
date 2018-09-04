@@ -116,13 +116,11 @@
 @media screen and (min-width: 1280px) {
   .info-flex-width {
     max-width: 45%;
-    margin-right: 40px;
   }
 }
 @media screen and (min-width: 1920px) {
   .info-flex-width {
     max-width: 40%;
-    margin-right: 40px;
   }
 }
 .indicator-row {

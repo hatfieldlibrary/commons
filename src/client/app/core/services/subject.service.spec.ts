@@ -26,6 +26,8 @@ import {getTestBed, TestBed} from '@angular/core/testing';
 import {SubjectService} from './subject.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {environment} from '../../environments/environment';
+import {ApiDataService} from './api-data.service';
+import {TransferState} from '@angular/platform-browser';
 
 describe('Subject Service', () => {
 
@@ -42,10 +44,18 @@ describe('Subject Service', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
       ],
       providers: [
-        SubjectService
+        SubjectService,
+        {
+          provide: ApiDataService,
+          useClass: {}
+        }, {
+          provide: TransferState,
+           useClass: {
+
+           }
+        }
       ]
     });
     httpMock = TestBed.get(HttpTestingController);
