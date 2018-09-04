@@ -23,38 +23,22 @@
  */
 
 import {AreaService, AreasResponse} from './area.service';
-import {TestBed} from '@angular/core/testing';
+import {getTestBed, TestBed} from '@angular/core/testing';
 import {AreaFilterType} from '../data-types/area-filter.type';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {AreaType} from '../data-types/area.type';
 import {ApiDataService} from './api-data.service';
 import {TransferState} from '@angular/platform-browser';
+import {environment} from '../../environments/environment';
 
 
 describe('Area Service', () => {
 
-  const mockAreasList: AreaFilterType[] = [
-    {
-      id: 1,
-      title: 'test areas one',
-      count: 1
-    }, {
-      id: 2,
-      title: 'test areas two',
-      count: 1
-    }
-  ];
-
-  const mockAreaInfo: AreaType = {
-    id: 1,
-    title: 'test areas',
-    linkLabel: '',
-    url: '',
-    searchUrl: '',
-    image: '',
-    description: '',
-    position: 2
-  };
+  let areaService;
+  let apiService;
+  let transferState;
+  let transferStateHasKey: boolean;
+  const AREA_KEY = 'area-list';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -65,44 +49,39 @@ describe('Area Service', () => {
         AreaService,
         {
           provide: ApiDataService,
-          useClass: {}
-        }, {
+          useValue: {
+            getTransferState: jasmine.createSpy('getTransferState'),
+            getApiRequest: jasmine.createSpy('getApiRequest')
+          }
+        },
+        {
           provide: TransferState,
-          useClass: {
-
+          useValue: {
+            hasKey: () => transferStateHasKey
           }
         }
-        // MockBackend,
-        // {provide: XHRBackend, useClass: MockBackend}
       ]
     });
+    areaService = TestBed.get(AreaService);
+    apiService = getTestBed().get(ApiDataService);
+    transferState = getTestBed().get(TransferState);
+    spyOn(transferState, 'hasKey').and.callThrough();
   });
 
-
-  it('should get areaList', () => {
-    const areaService = TestBed.get(AreaService);
-    const http = TestBed.get(HttpTestingController);
-    const result = areaService.getAreaList('1');
-    result.subscribe((res: AreasResponse) => {
-      expect(res.response).toEqual(
-        mockAreasList
-      );
-      expect(res.area).toEqual('1');
-    });
-
+  it('should get area list from store', () => {
+    transferStateHasKey = true;
+    areaService.getAreaList('1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(AREA_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(AREA_KEY);
   });
 
-  // it('should get areas info', inject([AreaService, MockBackend], (areaService, mockBackend) => {
-  //   mockBackend.connections.subscribe((conn) => {
-  //     conn.mockRespond(new Response(new ResponseOptions({body: mockAreaInfo})));
-  //   });
-  //   const result = areaService.getAreaInfo('1');
-  //   result.subscribe((res) => {
-  //     expect(res.response).toEqual(
-  //       mockAreaInfo
-  //     );
-  //
-  //   });
+  it('should get area list from api', () => {
+    transferStateHasKey = false;
+    areaService.getAreaList('1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(AREA_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(AREA_KEY,
+      environment.apiHost + environment.apiRoot + '/area/collection');
+  });
 
- // }));
 });

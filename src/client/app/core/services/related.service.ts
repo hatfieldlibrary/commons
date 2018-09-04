@@ -26,12 +26,10 @@
  * Created by mspalti on 4/10/17.
  */
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 import {environment} from '../../environments/environment';
 import {RelatedType} from '../data-types/related-collection';
-import {RelatedItems} from '../data-types/related-items';
 import {ApiDataService} from './api-data.service';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {map} from 'rxjs/operators';

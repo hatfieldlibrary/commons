@@ -38,7 +38,7 @@ export class ApiDataService {
   getApiRequest(key: StateKey<any>, url: string) {
     return this.http.get<any>(url)
       .pipe(
-        tap((res) => {
+        tap((res) => { console.log('resp')
           if (isPlatformServer(this.platform)) {
             this.state.set(key, res as any);
           }

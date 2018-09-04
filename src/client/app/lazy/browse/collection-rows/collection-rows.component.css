@@ -89,3 +89,9 @@ app-lock-svg {
     display: block;
   }
 }
+.list-container a:active,.list-container a:focus {
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  width: 100%;
+}

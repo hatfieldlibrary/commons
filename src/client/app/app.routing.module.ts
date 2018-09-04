@@ -30,30 +30,26 @@ import {PageNotFoundComponent} from './core/components/page-not-found/page-not-f
 const appRoutes: Routes = [
 
   {
+    path: environment.appRoot, // Go to default collection area (partial path)
+    redirectTo: environment.appRoot + environment.defaultRoute,
+    pathMatch: 'full'
+  },
+  {
+    path: environment.appRoot + '/collection',  // Go to default collection area (empty path)
+    redirectTo: environment.appRoot + environment.defaultRoute,
+    pathMatch: 'full'
+  },
+  {
     path: environment.appRoot + '/item/submit/:typeId',
     loadChildren: './lazy/submit-dspace/submit-dspace.module#SubmitDspaceModule'
   },
   {
-    // TODO: this route currently requires areaId for back navigation.
-    // The areaId is not part of the resource identifier and varies
-    // with navigation history. Remove from path and create alternate
-    // technique for back navigation (see new app menu navigation).
     path: environment.appRoot + '/item/id/:id',
     loadChildren: './lazy/item/item.module#ItemModule'
   },
   {
     path: environment.appRoot + '/collection',
     loadChildren: './lazy/browse/list.module#ListModule'
-  },
-  {
-    path: environment.appRoot, // Go to default collection area (partial path)
-    redirectTo: environment.appRoot + environment.defaultRoute,
-    pathMatch: 'full'
-  },
-  {
-    path: environment.appRoot,  // Go to default collection area (empty path)
-    redirectTo: environment.appRoot + environment.defaultRoute,
-    pathMatch: 'full'
   },
   {
     path: '**',
@@ -64,7 +60,6 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes, {
     enableTracing: false,
-    scrollPositionRestoration: 'enabled',
     initialNavigation: 'enabled'})],
   exports: [RouterModule]
 })

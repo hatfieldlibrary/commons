@@ -73,29 +73,29 @@ describe('DispatchService', () => {
 
   });
 
-  it('should dispatch request for type data.', () => {
-    spyOn(service, 'getCollectionsForType');
-    spyOn(service, 'getSubjectsForType');
-    spyOn(service, 'getCollectionGroupsByType');
-    spyOn(service, 'getAllTypes');
-    service.dispatchActions(undefined, '1', undefined, undefined);
-    expect(service.getCollectionsForType).toHaveBeenCalled();
-    expect(service.getSubjectsForType).toHaveBeenCalled();
-    expect(service.getCollectionGroupsByType).toHaveBeenCalled();
-    expect(service.getAllTypes).toHaveBeenCalled();
-  });
-
-  it('should dispatch request for subject data.', () => {
-    spyOn(service, 'getCollectionsForSubject');
-    spyOn(service, 'getTypesForSubject');
-    spyOn(service, 'getCollectionGroupsBySubject');
-    spyOn(service, 'getAllSubjects');
-    service.dispatchActions(undefined, undefined, '1', undefined);
-    expect(service.getCollectionsForSubject).toHaveBeenCalled();
-    expect(service.getTypesForSubject).toHaveBeenCalled();
-    expect(service.getCollectionGroupsBySubject).toHaveBeenCalled();
-    expect(service.getAllSubjects).toHaveBeenCalled();
-  });
+  // it('should dispatch request for type data.', () => {
+  //   spyOn(service, 'getCollectionsForType');
+  //   spyOn(service, 'getSubjectsForType');
+  //   spyOn(service, 'getCollectionGroupsByType');
+  //   spyOn(service, 'getAllTypes');
+  //   service.dispatchActions(undefined, '1', undefined, undefined);
+  //   expect(service.getCollectionsForType).toHaveBeenCalled();
+  //   expect(service.getSubjectsForType).toHaveBeenCalled();
+  //   expect(service.getCollectionGroupsByType).toHaveBeenCalled();
+  //   expect(service.getAllTypes).toHaveBeenCalled();
+  // });
+  //
+  // it('should dispatch request for subject data.', () => {
+  //   spyOn(service, 'getCollectionsForSubject');
+  //   spyOn(service, 'getTypesForSubject');
+  //   spyOn(service, 'getCollectionGroupsBySubject');
+  //   spyOn(service, 'getAllSubjects');
+  //   service.dispatchActions(undefined, undefined, '1', undefined);
+  //   expect(service.getCollectionsForSubject).toHaveBeenCalled();
+  //   expect(service.getTypesForSubject).toHaveBeenCalled();
+  //   expect(service.getCollectionGroupsBySubject).toHaveBeenCalled();
+  //   expect(service.getAllSubjects).toHaveBeenCalled();
+  // });
 
   it('should dispatch request for area data.', () => {
     spyOn(service, 'getCollectionsForArea');
@@ -193,28 +193,28 @@ describe('DispatchService', () => {
     expect(service.getCollectionGroupsByAreaSubjectType).toHaveBeenCalled();
   });
 
-  it('should dispatch request for subject.', () => {
-    spyOn(service, 'getCollectionsForSubject');
-    spyOn(service, 'getAllSubjects');
-    spyOn(service, 'getCollectionGroupsBySubject');
-    spyOn(service, 'getTypesForSubject');
-    service.dispatchActions('', '', '1', '');
-    expect(service.getCollectionsForSubject).toHaveBeenCalled();
-    expect(service.getAllSubjects).toHaveBeenCalled();
-    expect(service.getCollectionGroupsBySubject).toHaveBeenCalled();
-    expect(service.getTypesForSubject).toHaveBeenCalled();
-  });
-
-  it('should dispatch request for type.', () => {
-    spyOn(service, 'getCollectionsForType');
-    spyOn(service, 'getSubjectsForType');
-    spyOn(service, 'getCollectionGroupsByType');
-    spyOn(service, 'getAllTypes');
-    service.dispatchActions('', '1', '', '');
-    expect(service.getCollectionsForType).toHaveBeenCalled();
-    expect(service.getSubjectsForType).toHaveBeenCalled();
-    expect(service.getCollectionGroupsByType).toHaveBeenCalled();
-    expect(service.getAllTypes).toHaveBeenCalled();
-  });
+  // it('should dispatch request for subject.', () => {
+  //   spyOn(service, 'getCollectionsForSubject');
+  //   spyOn(service, 'getAllSubjects');
+  //   spyOn(service, 'getCollectionGroupsBySubject');
+  //   spyOn(service, 'getTypesForSubject');
+  //   service.dispatchActions('', '', '1', '');
+  //   expect(service.getCollectionsForSubject).toHaveBeenCalled();
+  //   expect(service.getAllSubjects).toHaveBeenCalled();
+  //   expect(service.getCollectionGroupsBySubject).toHaveBeenCalled();
+  //   expect(service.getTypesForSubject).toHaveBeenCalled();
+  // });
+  //
+  // it('should dispatch request for type.', () => {
+  //   spyOn(service, 'getCollectionsForType');
+  //   spyOn(service, 'getSubjectsForType');
+  //   spyOn(service, 'getCollectionGroupsByType');
+  //   spyOn(service, 'getAllTypes');
+  //   service.dispatchActions('', '1', '', '');
+  //   expect(service.getCollectionsForType).toHaveBeenCalled();
+  //   expect(service.getSubjectsForType).toHaveBeenCalled();
+  //   expect(service.getCollectionGroupsByType).toHaveBeenCalled();
+  //   expect(service.getAllTypes).toHaveBeenCalled();
+  // });
 
 });
