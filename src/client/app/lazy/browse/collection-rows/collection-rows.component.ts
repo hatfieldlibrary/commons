@@ -26,13 +26,10 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output
 } from '@angular/core';
-import {ObservableMedia} from '@angular/flex-layout';
 import {CollectionType} from '../../../core/data-types/collection.type';
-import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
@@ -44,24 +41,21 @@ import {NavigationServiceB} from '../../../core/services/navigation-2/navigation
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
-        style({opacity: '0.2'}),
-        animate('500ms ease-in', style({opacity: '1'})),
+        style({opacity: '0.4'}),
+        animate('400ms ease-in', style({opacity: '1'})),
       ]),
       transition(':leave', [
         animate(200, style({ opacity: 0 }))
       ])
     ])]
 })
-export class CollectionRowsComponent implements OnDestroy, OnInit {
+export class CollectionRowsComponent implements OnInit {
 
   @Input() collectionList: CollectionType[];
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
-  isMobile = false;
-  watcher = new Subscription();
 
-  constructor(private navigationService: NavigationServiceB,
-              private media: ObservableMedia) {
+  constructor(private navigationService: NavigationServiceB) {
   }
 
   getResultCount(): string {
@@ -88,10 +82,6 @@ export class CollectionRowsComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
 
-  }
-
-  ngOnDestroy(): void {
-    this.watcher.unsubscribe();
   }
 
 }

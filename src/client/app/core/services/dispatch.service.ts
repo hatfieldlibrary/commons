@@ -118,24 +118,24 @@ export class DispatchService {
     //     this.getSubjectsForType(typeId);
     //     this.getAllTypes();
     //   }
-    } else if (subjectId) {
-      if (typeId) {
-        // subject , type
-        this.getCollectionsForTypeSubject(typeId, subjectId);
-        this.getSubjectsForType(typeId);
-        this.getCollectionGroupsBySubjectType(subjectId, typeId);
-      } else {
-        this.getCollectionsForSubject(subjectId);
-        this.getAllSubjects();
-        this.getCollectionGroupsBySubject(subjectId);
-      }
-      this.getTypesForSubject(subjectId);
-    } else if (typeId) {
-      // type
-      this.getCollectionsForType(typeId);
-      this.getSubjectsForType(typeId);
-      this.getCollectionGroupsByType(typeId);
-      this.getAllTypes();
+    // } else if (subjectId) {
+    //   if (typeId) {
+    //     // subject , type
+    //     this.getCollectionsForTypeSubject(typeId, subjectId);
+    //     this.getSubjectsForType(typeId);
+    //     this.getCollectionGroupsBySubjectType(subjectId, typeId);
+    //   } else {
+    //     this.getCollectionsForSubject(subjectId);
+    //     this.getAllSubjects();
+    //     this.getCollectionGroupsBySubject(subjectId);
+    //   }
+    //   this.getTypesForSubject(subjectId);
+    // } else if (typeId) {
+    //   // type
+    //   this.getCollectionsForType(typeId);
+    //   this.getSubjectsForType(typeId);
+    //   this.getCollectionGroupsByType(typeId);
+    //   this.getAllTypes();
     } else {
       // all
       this.getAllCollections();

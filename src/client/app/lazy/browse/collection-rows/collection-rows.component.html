@@ -31,18 +31,18 @@
   </div>
 </div>
 
-<div class="list-container" [@fadeIn] role="complementary" aria-label="result list">
-  <mat-nav-list attr.aria-label="list of {{getResultCount()}} item links" tabindex="0">
+<div class="list-container" role="complementary" aria-label="result list">
+  <mat-nav-list attr.aria-label="list of {{getResultCount()}} item links" tabindex="0" [@fadeIn]>
     <mat-list-item class="collection-list-item result-item"
-                   *ngFor="let collection of collectionList; let isFirstRow=first"
+                   *ngFor="let collection of collectionList"
                    (click)="navigateToItem(collection.id);$event.stopPropagation();"
                    tabindex="0"
                    role="link"
-                   (keydown.enter)="navigateToItem(collection.id);$event.stopPropagation();"
-                   [ngClass]="{'first-row': isFirstRow, 'mobile-list-item-padding': isMobile}">
-      <div fxLayout="row" fxLayoutAlign="start start">
-        <img *ngIf="!isMobile" class="thumb-image image-view" aria-label="" alt="collection image" [ngClass]="{'mat-card-image-xs': isMobile}" src="{{getImage(collection.image)}}">
-        <div fxLayout="column" fxFlex [ngClass]="{'mobile-list-container': isMobile}">
+                   (keydown.enter)="navigateToItem(collection.id);$event.stopPropagation();">
+      <a tabindex="-1" [routerLink]="getItemLink(collection.id)" attr.aria-label="{{collection.title}}">
+      <div fxLayout="row" fxFlex fxLayoutAlign="start start">
+        <img class="thumb-image image-view" aria-label="" alt="collection image" src="{{getImage(collection.image)}}">
+        <div fxLayout="column" fxLayoutAlign="start start" fxFlex >
           <div>
             <span class="collection-item mat-h3">{{collection.title}}</span>
           </div>
@@ -60,8 +60,8 @@
             <app-lock-svg *ngIf="collection.restricted" class="restricted-icon image-view"></app-lock-svg>
           </div>
         </div>
-        <div><a tabindex="-1" [routerLink]="getItemLink(collection.id)" aria-label=""></a></div>
       </div>
+      </a>
     </mat-list-item>
   </mat-nav-list>
 </div>

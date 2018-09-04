@@ -26,89 +26,147 @@ import {getTestBed, TestBed} from '@angular/core/testing';
 import {SubjectService} from './subject.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {environment} from '../../environments/environment';
+import {ApiDataService} from './api-data.service';
+import {TransferState} from '@angular/platform-browser';
+import {AreaService} from './area.service';
 
 describe('Subject Service', () => {
 
-  let httpMock;
-  let subjectService;
 
-  const mockSubjectList = [
-    {
-      id: 1,
-      name: 'test subject'
-    }
-  ];
+  let subjectService;
+  let apiService;
+  let transferState;
+  let transferStateHasKey: boolean;
+  const SUBJECT_KEY = 'subject-options';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
       ],
       providers: [
-        SubjectService
+        SubjectService,
+        {
+          provide: ApiDataService,
+          useValue: {
+            getTransferState: jasmine.createSpy('getTransferState'),
+            getApiRequest: jasmine.createSpy('getApiRequest')
+          }
+        },
+        {
+          provide: TransferState,
+          useValue: {
+            hasKey: () => transferStateHasKey
+          }
+        }
       ]
     });
-    httpMock = TestBed.get(HttpTestingController);
+    subjectService = TestBed.get(SubjectService);
+    apiService = getTestBed().get(ApiDataService);
+    transferState = getTestBed().get(TransferState);
     subjectService = getTestBed().get(SubjectService);
+    spyOn(transferState, 'hasKey').and.callThrough();
   });
 
-  it('should get subject by area', () => {
-    const result = subjectService.getSubjectsForArea('1');
-    result.subscribe(res => {
-      expect(res).toEqual(mockSubjectList);
-    });
-    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/subject/area/' + '1');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockSubjectList);
-    httpMock.verify();
+  it('should get subjects for area from store', () => {
+    transferStateHasKey = true;
+    subjectService.getSubjectsForArea('1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(SUBJECT_KEY);
   });
 
-  it('should get subject by type', () => {
-    const result = subjectService.getSubjectsForType('1');
-    result.subscribe(res => {
-      expect(res).toEqual(mockSubjectList);
-    });
-    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot + '/subject/type/' + '1');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockSubjectList);
-    httpMock.verify();
+  it('should get subjects for area from api', () => {
+    transferStateHasKey = false;
+    subjectService.getSubjectsForArea('1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(SUBJECT_KEY,
+      environment.apiHost + environment.apiRoot + '/subject/area/' + '1');
   });
 
-  it('should get subject by area and type', () => {
-    const result = subjectService.getSubjectsForAreaAndType('1', '1');
-    result.subscribe(res => {
-      expect(res).toEqual(mockSubjectList);
-    });
-    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot
+  it('should get subjects for type from store', () => {
+    transferStateHasKey = true;
+    subjectService.getSubjectsForType('1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(SUBJECT_KEY);
+  });
+
+  it('should get subjects for type from api', () => {
+    transferStateHasKey = false;
+    subjectService.getSubjectsForType('1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(SUBJECT_KEY,
+      environment.apiHost + environment.apiRoot + '/subject/type/' + '1');
+  });
+
+  it('should get subjects for area and type from store', () => {
+    transferStateHasKey = true;
+    subjectService.getSubjectsForAreaAndType('1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(SUBJECT_KEY);
+  });
+
+  it('should get subjects for area and type from api', () => {
+    transferStateHasKey = false;
+    subjectService.getSubjectsForAreaAndType('1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(SUBJECT_KEY,
+      environment.apiHost + environment.apiRoot
       + '/subject/area/' + '1' + '/type/' + '1');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockSubjectList);
-    httpMock.verify();
   });
 
-  it('should get subject by area, group and type', () => {
-    const result = subjectService.getSubjectsForAreaGroupAndType('1', '1', '1');
-    result.subscribe(res => {
-      expect(res).toEqual(mockSubjectList);
-    });
-    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot
+  it('should get subjects for area group and type from store', () => {
+    transferStateHasKey = true;
+    subjectService.getSubjectsForAreaGroupAndType('1', '1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(SUBJECT_KEY);
+  });
+
+  it('should get subjects for area group and type from api', () => {
+    transferStateHasKey = false;
+    subjectService.getSubjectsForAreaGroupAndType('1', '1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(SUBJECT_KEY,
+      environment.apiHost + environment.apiRoot
       + '/subject/area/' + '1' + '/category/' + '1' + '/type/' + '1');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockSubjectList);
-    httpMock.verify();
   });
 
-  it('should get subject by area, group and type', () => {
-    const result = subjectService.getSubjectsForAreaAndGroup('1', '1');
-    result.subscribe(res => {
-      expect(res).toEqual(mockSubjectList);
-    });
-    const req = httpMock.expectOne(environment.apiHost + environment.apiRoot
-      + '/subject/area/' + '1' + '/category/' + '1');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockSubjectList);
-    httpMock.verify();
+  it('should get subjects for area group from store', () => {
+    transferStateHasKey = true;
+    subjectService.getSubjectsForAreaGroupAndType('1', '1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(SUBJECT_KEY);
   });
+
+  it('should get subjects for area group and type from api', () => {
+    transferStateHasKey = false;
+    subjectService.getSubjectsForAreaGroupAndType('1', '1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(SUBJECT_KEY,
+      environment.apiHost + environment.apiRoot
+      + '/subject/area/' + '1' + '/category/' + '1' + '/type/' + '1');
+  });
+
+  it('should get subjects for area group and type from store', () => {
+    transferStateHasKey = true;
+    subjectService.getSubjectsForAreaAndGroup('1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).toHaveBeenCalledWith(SUBJECT_KEY);
+  });
+
+  it('should get subjects for area group from api', () => {
+    transferStateHasKey = false;
+    subjectService.getSubjectsForAreaAndGroup('1', '1');
+    expect(transferState.hasKey).toHaveBeenCalledWith(SUBJECT_KEY);
+    expect(apiService.getTransferState).not.toHaveBeenCalled();
+    expect(apiService.getApiRequest).toHaveBeenCalledWith(SUBJECT_KEY,
+      environment.apiHost + environment.apiRoot
+      + '/subject/area/' + '1' + '/category/' + '1');
+  });
+
 
 });
 

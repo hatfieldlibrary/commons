@@ -50,7 +50,10 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
   isMobile = false;
-  cols = 1;
+  /**
+   * Set the default column count to desktop view.
+   */
+  cols = 3;
   watcher = new Subscription();
 
   constructor(private media: ObservableMedia) {}
@@ -75,8 +78,8 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     const media = this.media.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
-        this.isMobile = true;
         this.cols = 1;
+        this.isMobile = true;
       } else if (change.mqAlias === 'sm' || change.mqAlias === 'md') {
         this.cols = 2;
         this.isMobile = false;

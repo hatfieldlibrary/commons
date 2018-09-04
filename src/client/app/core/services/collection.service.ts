@@ -30,107 +30,166 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {CollectionType} from '../data-types/collection.type';
 import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-
+import {makeStateKey, TransferState} from '@angular/platform-browser';
+import {ApiDataService} from './api-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionService {
 
-  constructor(private http: HttpClient) {
+  COLLECTION_KEY = makeStateKey('collections');
+
+  constructor(private apiService: ApiDataService,
+              private state: TransferState) {
   }
 
   getCollectionsByAreaId(id: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost +
-      environment.apiRoot + '/collection/area/' + id);
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot + '/collection/area/' + id);
   }
 
   getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot +
-      '/collection/area/' +
-      areaId + '/subject/' + subjectId);
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot +
+      '/collection/area/' + areaId + '/subject/' + subjectId);
   }
 
   getCollectionsBySubject(id: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost
       + environment.apiRoot + '/collection/subject/' + id);
   }
 
   getCollectionsByType(id: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost
       + environment.apiRoot + '/collection/type/' + id);
   }
 
   getCollectionsByTypeArea(areaId: string, typeId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/area/' + areaId + '/type/' + typeId);
   }
 
   getCollectionsByTypeSubject(typeId: string, subjectId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/type/' + typeId
       + '/subject/' + subjectId);
   }
 
   getCollectionsByTypeAreaSubject(typeId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/area/' + areaId
       + '/type/' + typeId
       + '/subject/' + subjectId);
   }
 
   getCollectionsByCategory(categoryId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId);
   }
 
   getCollectionsByCategoryArea(categoryId: string, areaId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId);
   }
 
   getCollectionsByCategoryType(categoryId: string, typeId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/type/' + typeId);
   }
 
   getCollectionsByCategorySubject(categoryId: string, subjectId: string): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>( environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiRoot
       + '/collection/category/' + categoryId
       + '/subject/' + subjectId);
   }
 
   getCollectionsByCategoryAreaType(categoryId: string, areaId: string, typeId: string): Observable<CollectionType[]> {
-
-    return this.http.get<CollectionType[]>(environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
       + '/type/' + typeId);
   }
 
   getCollectionsByCategoryAreaSubject(categoryId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
-
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
       + '/subject/' + subjectId);
   }
 
   getCollectionsByCategoryTypeSubject(categoryId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
-
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/type/' + typeId
       + '/subject/' + subjectId);
   }
 
-  getCollectionsByCategoryAreaTypeSubject(categoryId: string, areaId: string, typeId: string, subjectId: string):
-    Observable<CollectionType[]> {
-
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot
+  getCollectionsByCategoryAreaTypeSubject(categoryId: string,
+                                          areaId: string,
+                                          typeId: string,
+                                          subjectId: string): Observable<CollectionType[]> {
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot
       + '/collection/category/' + categoryId
       + '/area/' + areaId
       + '/type/' + typeId
@@ -138,7 +197,11 @@ export class CollectionService {
   }
 
   getAllCollections(): Observable<CollectionType[]> {
-    return this.http.get<CollectionType[]>( environment.apiHost + environment.apiRoot + '/collection');
+    const found = this.state.hasKey(this.COLLECTION_KEY);
+    if (found) {
+      return this.apiService.getTransferState(this.COLLECTION_KEY);
+    }
+    return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot + '/collection');
   }
 
 }
