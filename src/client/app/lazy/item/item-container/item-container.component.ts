@@ -197,6 +197,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
     const itemWatcher = this.store.pipe(select(fromRoot.getItem)).subscribe((data) => {
       this.titleService.setTitle(data.collection.title);
       if (data.collection.description) {
+        this.metaService.removeTag('name="Description"');
         this.metaService.addTag({name: 'Description', content: data.collection.description});
       }
       this.getRelatedItems(data);
