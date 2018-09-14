@@ -318,6 +318,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
     const areaInfoSub = this.areaInfo$.subscribe(area => {
       this.titleService.setTitle(area.title);
       if (area.description) {
+        this.metaService.removeTag('name="Description"');
         this.metaService.addTag({name: 'Description', content: area.description});
       }
     });
