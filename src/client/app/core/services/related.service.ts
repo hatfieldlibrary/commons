@@ -34,17 +34,29 @@ import {ApiDataService} from './api-data.service';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {map} from 'rxjs/operators';
 
+/**
+ * Handles API requests for related collections data.  Methods return observables of
+ * an `HttpClient` request or of data contained in an `TransferState` object.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class RelatedService {
 
+  /**
+   * `TransferState` key for related collection items information.
+   */
   RELATED_KEY = makeStateKey('related-items');
 
+  /**
+   * Constructor
+   * @param apiService the service that manages `HttpClient` requests and `TransferState`
+   * @param state the existing `TransferState` object
+   */
   constructor(private apiService: ApiDataService,
               private state: TransferState) {}
 
-  getRelatedCollections(id: string, subjectIds: string): Observable<RelatedType[]> {
+  public getRelatedCollections(id: string, subjectIds: string): Observable<RelatedType[]> {
     const found = this.state.hasKey(this.RELATED_KEY);
     if (found) {
       return this.apiService.getTransferState(this.RELATED_KEY).pipe(map(res => res.related));

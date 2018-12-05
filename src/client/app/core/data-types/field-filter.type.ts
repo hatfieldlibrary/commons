@@ -23,7 +23,7 @@
  */
 
 /**
- * Data type for filters (subject, content type, collection group).
+ * Model for single filter item.
  */
 export class FieldFilterType {
   id: number;

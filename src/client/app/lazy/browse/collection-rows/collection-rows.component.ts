@@ -51,31 +51,64 @@ import {NavigationServiceB} from '../../../core/services/navigation-2/navigation
 })
 export class CollectionRowsComponent implements OnInit {
 
+  /**
+   * The collection list to show.
+   */
   @Input() collectionList: CollectionType[];
+  /**
+   * Event emitter for selecting a collection item to view.
+   */
   @Output() collectionNavigation: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Event emitter for toggling between list and grid view.
+   */
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
 
+  /**
+   * Constructor
+   * @param navigationService the singleton selection service.
+   */
   constructor(private navigationService: NavigationServiceB) {
   }
 
+  /**
+   * Returns the length of the collection list.
+   */
   getResultCount(): string {
     if (this.collectionList) {
       return this.collectionList.length.toString();
     }
   }
+
+  /**
+   * Returns the full url for the collection thumbnail image.
+   * @param image
+   */
   getImage(image: string) {
      return environment.apiHost + environment.imagePath + '/resources/img/thumb/' + image;
 
   }
 
+  /**
+   * Returns the relative url for a collection item.
+   * @param id
+   */
   getItemLink(id: number): string {
     return this.navigationService.getItemLink(id);
   }
 
+  /**
+   * Emits event for navigating to a collection item view.
+   * @param id the collection id.
+   */
   navigateToItem(id: number) {
     this.collectionNavigation.emit(id);
   }
 
+  /**
+   * Emits the event for toggling the view (list or grid)
+   * @param type
+   */
   setViewType(type: string): void {
     this.setView.emit(type);
   }

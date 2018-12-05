@@ -43,7 +43,7 @@ import {TypesFilter} from '../../../core/data-types/types-filter';
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {Store} from '@ngrx/store';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
-import {FieldValues} from '../../../core/enum/field-names';
+import {FieldNames} from '../../../core/enum/field-names';
 import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes}
   from '../../../core/ngrx/actions/filter.actions';
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
@@ -119,7 +119,7 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
    * If the selected filter is not in the list of available filters, sets
    * status to inactive.
    */
-  private updateFilter(fieldList: FieldFilterType[], selectedFields: FieldFilterType[], type: FieldValues): void {
+  private updateFilter(fieldList: FieldFilterType[], selectedFields: FieldFilterType[], type: FieldNames): void {
     const updatedFields = [];
     if (fieldList && fieldList.length > 0) {
       selectedFields.forEach(sub => {
@@ -150,15 +150,15 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
     // chosen, the navigation service will use the revised store to modify the route.
     if (data && data.length > 0) {
       switch (fieldType) {
-        case FieldValues.SUBJECT: {
+        case FieldNames.SUBJECT: {
           this.store.dispatch(new RemoveSelectedSubjects(data));
           break;
         }
-        case FieldValues.TYPE: {
+        case FieldNames.TYPE: {
           this.store.dispatch(new RemoveSelectedTypes(data));
           break;
         }
-        case FieldValues.GROUP: {
+        case FieldNames.GROUP: {
           this.store.dispatch(new RemoveSelectedGroups(data));
           break;
         }
@@ -215,19 +215,19 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
     if (changes.types) {
       this.resetCounter();
       if (changes.types.previousValue !== changes.types.currentValue) {
-        this.updateFilter(this.types.types, this.filters.selectedTypes, FieldValues.TYPE);
+        this.updateFilter(this.types.types, this.filters.selectedTypes, FieldNames.TYPE);
       }
     }
     if (changes.subjects) {
       this.resetCounter();
       if (changes.subjects.previousValue !== changes.subjects.currentValue) {
-        this.updateFilter(this.subjects.subjects, this.filters.selectedSubjects, FieldValues.SUBJECT)
+        this.updateFilter(this.subjects.subjects, this.filters.selectedSubjects, FieldNames.SUBJECT)
       }
     }
     if (changes.groups) {
       this.resetCounter();
       if (changes.groups.previousValue !== changes.groups.currentValue) {
-        this.updateFilter(this.groups.groups, this.filters.selectedGroups, FieldValues.GROUP)
+        this.updateFilter(this.groups.groups, this.filters.selectedGroups, FieldNames.GROUP)
       }
     }
 

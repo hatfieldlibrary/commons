@@ -25,7 +25,16 @@
 
 import {FieldFilterType} from './field-filter.type';
 
+/**
+ * Model for the area filter list.
+ */
 export interface AreasFilter {
+  /**
+   * List of area filters.
+   */
   areas: FieldFilterType[];
+  /**
+   * List of selected areas (currently unused).
+   */
   selectedAreas: FieldFilterType[]
 }

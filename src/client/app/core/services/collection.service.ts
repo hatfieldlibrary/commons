@@ -33,18 +33,30 @@ import {environment} from '../../environments/environment';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {ApiDataService} from './api-data.service';
 
+/**
+ * Handles API requests for collection data.  Methods return observables of
+ * an `HttpClient` request or of data contained in an `TransferState` object.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionService {
 
+  /**
+   * `TransferState` key for collection information.
+   */
   COLLECTION_KEY = makeStateKey('collections');
 
+  /**
+   * Constructor
+   * @param apiService the service that manages `HttpClient` requests and `TransferState`
+   * @param state the existing `TransferState` object
+   */
   constructor(private apiService: ApiDataService,
               private state: TransferState) {
   }
 
-  getCollectionsByAreaId(id: string): Observable<CollectionType[]> {
+  public getCollectionsByAreaId(id: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -52,7 +64,7 @@ export class CollectionService {
     return this.apiService.getApiRequest(this.COLLECTION_KEY, environment.apiHost + environment.apiRoot + '/collection/area/' + id);
   }
 
-  getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
+  public getCollectionsByAreaSubject(subjectId: string, areaId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -61,7 +73,7 @@ export class CollectionService {
       '/collection/area/' + areaId + '/subject/' + subjectId);
   }
 
-  getCollectionsBySubject(id: string): Observable<CollectionType[]> {
+  public getCollectionsBySubject(id: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -70,7 +82,7 @@ export class CollectionService {
       + environment.apiRoot + '/collection/subject/' + id);
   }
 
-  getCollectionsByType(id: string): Observable<CollectionType[]> {
+  public getCollectionsByType(id: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -79,7 +91,7 @@ export class CollectionService {
       + environment.apiRoot + '/collection/type/' + id);
   }
 
-  getCollectionsByTypeArea(areaId: string, typeId: string): Observable<CollectionType[]> {
+  public getCollectionsByTypeArea(areaId: string, typeId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -88,7 +100,7 @@ export class CollectionService {
       + '/collection/area/' + areaId + '/type/' + typeId);
   }
 
-  getCollectionsByTypeSubject(typeId: string, subjectId: string): Observable<CollectionType[]> {
+  public getCollectionsByTypeSubject(typeId: string, subjectId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -98,7 +110,7 @@ export class CollectionService {
       + '/subject/' + subjectId);
   }
 
-  getCollectionsByTypeAreaSubject(typeId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
+  public getCollectionsByTypeAreaSubject(typeId: string, areaId: string, subjectId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -109,7 +121,7 @@ export class CollectionService {
       + '/subject/' + subjectId);
   }
 
-  getCollectionsByCategory(categoryId: string): Observable<CollectionType[]> {
+  public etCollectionsByCategory(categoryId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -118,7 +130,7 @@ export class CollectionService {
       + '/collection/category/' + categoryId);
   }
 
-  getCollectionsByCategoryArea(categoryId: string, areaId: string): Observable<CollectionType[]> {
+  public getCollectionsByCategoryArea(categoryId: string, areaId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -128,7 +140,7 @@ export class CollectionService {
       + '/area/' + areaId);
   }
 
-  getCollectionsByCategoryType(categoryId: string, typeId: string): Observable<CollectionType[]> {
+  public getCollectionsByCategoryType(categoryId: string, typeId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -138,7 +150,7 @@ export class CollectionService {
       + '/type/' + typeId);
   }
 
-  getCollectionsByCategorySubject(categoryId: string, subjectId: string): Observable<CollectionType[]> {
+  public getCollectionsByCategorySubject(categoryId: string, subjectId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -148,7 +160,7 @@ export class CollectionService {
       + '/subject/' + subjectId);
   }
 
-  getCollectionsByCategoryAreaType(categoryId: string, areaId: string, typeId: string): Observable<CollectionType[]> {
+  public getCollectionsByCategoryAreaType(categoryId: string, areaId: string, typeId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -170,7 +182,7 @@ export class CollectionService {
       + '/subject/' + subjectId);
   }
 
-  getCollectionsByCategoryTypeSubject(categoryId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
+  public getCollectionsByCategoryTypeSubject(categoryId: string, typeId: string, subjectId: string): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);
@@ -181,7 +193,7 @@ export class CollectionService {
       + '/subject/' + subjectId);
   }
 
-  getCollectionsByCategoryAreaTypeSubject(categoryId: string,
+  public getCollectionsByCategoryAreaTypeSubject(categoryId: string,
                                           areaId: string,
                                           typeId: string,
                                           subjectId: string): Observable<CollectionType[]> {
@@ -196,7 +208,7 @@ export class CollectionService {
       + '/subject/' + subjectId);
   }
 
-  getAllCollections(): Observable<CollectionType[]> {
+  public getAllCollections(): Observable<CollectionType[]> {
     const found = this.state.hasKey(this.COLLECTION_KEY);
     if (found) {
       return this.apiService.getTransferState(this.COLLECTION_KEY);

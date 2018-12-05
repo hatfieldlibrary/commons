@@ -51,9 +51,14 @@ export class AppMenusComponent implements OnInit, OnDestroy {
   selectedGroups: FieldFilterType[];
   selectedArea: string;
   showBack: boolean;
-  // @Input() title: string;
   public previousUrl = '';
+  /**
+   * The home url (used in top navigation)
+   */
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
+  /**
+   * The secondary url (used in top navigation)
+   */
   secondaryUrl = 'http://library.willamette.edu';
   private watcher: Subscription;
   state = '';

@@ -29,6 +29,9 @@ import {FieldFilterType} from './field-filter.type';
  * Created by mspalti on 2/21/17.
  */
 
+/**
+ * Model for collection.
+ */
 export class CollectionType {
 
   id: number;

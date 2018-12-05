@@ -32,17 +32,29 @@ import {FieldFilterType} from '../data-types/field-filter.type';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {ApiDataService} from './api-data.service';
 
+/**
+ * Handles API requests for related collections data.  Methods return observables of
+ * an `HttpClient` request or of data contained in an `TransferState` object.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class SubjectService {
 
+  /**
+   * `TransferState` key for related subject information.
+   */
   SUBJECT_KEY = makeStateKey('subject-options');
 
+  /**
+   * Constructor
+   * @param apiService the service that manages `HttpClient` requests and `TransferState`
+   * @param state the existing `TransferState` object
+   */
   constructor(private apiService: ApiDataService,
               private state: TransferState) {}
 
-  getAllSubjects(): Observable<FieldFilterType[]> {
+  public getAllSubjects(): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.SUBJECT_KEY);
     if (found) {
       return this.apiService.getTransferState(this.SUBJECT_KEY);
@@ -50,7 +62,7 @@ export class SubjectService {
     return this.apiService.getApiRequest(this.SUBJECT_KEY, environment.apiHost + environment.apiRoot + '/subject');
   }
 
-  getSubjectsForArea(areaIds: string): Observable<FieldFilterType[]> {
+  public getSubjectsForArea(areaIds: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.SUBJECT_KEY);
     if (found) {
       return this.apiService.getTransferState(this.SUBJECT_KEY);
@@ -58,7 +70,7 @@ export class SubjectService {
     return this.apiService.getApiRequest(this.SUBJECT_KEY, environment.apiHost + environment.apiRoot + '/subject/area/' + areaIds);
   }
 
-  getSubjectsForType(typeId: string): Observable<FieldFilterType[]> {
+  public getSubjectsForType(typeId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.SUBJECT_KEY);
     if (found) {
       return this.apiService.getTransferState(this.SUBJECT_KEY);
@@ -66,7 +78,7 @@ export class SubjectService {
     return this.apiService.getApiRequest(this.SUBJECT_KEY, environment.apiHost + environment.apiRoot + '/subject/type/' + typeId);
   }
 
-  getSubjectsForAreaAndType(areaId: string, typeId: string): Observable<FieldFilterType[]> {
+  public getSubjectsForAreaAndType(areaId: string, typeId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.SUBJECT_KEY);
     if (found) {
       return this.apiService.getTransferState(this.SUBJECT_KEY);
@@ -75,7 +87,7 @@ export class SubjectService {
       + '/subject/area/' + areaId + '/type/' + typeId);
   }
 
-  getSubjectsForAreaGroupAndType(areaId: string, groupId: string, typeId: string): Observable<FieldFilterType[]> {
+  public getSubjectsForAreaGroupAndType(areaId: string, groupId: string, typeId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.SUBJECT_KEY);
     if (found) {
       return this.apiService.getTransferState(this.SUBJECT_KEY);
@@ -84,7 +96,7 @@ export class SubjectService {
       + '/subject/area/' + areaId + '/category/' + groupId + '/type/' + typeId);
   }
 
-  getSubjectsForAreaAndGroup(areaId: string, groupId: string): Observable<FieldFilterType[]> {
+  public getSubjectsForAreaAndGroup(areaId: string, groupId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.SUBJECT_KEY);
     if (found) {
       return this.apiService.getTransferState(this.SUBJECT_KEY);
