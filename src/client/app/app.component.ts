@@ -99,21 +99,21 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   /**
    * Redirects to the configured home url.
    */
-  protected goToHome(): void {
+  goToHome(): void {
     this.document.location.href = this.homeUrl;
   }
 
   /**
    * Redirects to the configured secondary url.
    */
-  protected goToSecondary(): void {
+  goToSecondary(): void {
     this.document.location.href = this.secondaryUrl;
   }
 
   /**
    * Redirects to the configured tertiary url.
    */
-  protected goToTertiary(): void {
+  goToTertiary(): void {
     this.document.location.href = this.tertiaryUrl;
   }
 

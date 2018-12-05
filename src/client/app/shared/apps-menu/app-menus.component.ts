@@ -87,11 +87,11 @@ export class AppMenusComponent implements OnInit, OnDestroy {
     this.watcher.add(mediaWatcher);
   }
 
-  protected openMenu() {
+  openMenu() {
     this.menuService.openMenu();
   }
 
-  protected getBackLink(): string {
+  getBackLink(): string {
     const typeIds = this.navigationService.getIds(this.selectedTypes);
     const subjectIds = this.navigationService.getIds(this.selectedSubjects);
     const groupIds = this.navigationService.getIds(this.selectedGroups);
