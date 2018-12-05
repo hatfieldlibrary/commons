@@ -1,4 +1,4 @@
-# Commons
+npm# Commons
 [![Build Status](https://travis-ci.org/hatfieldlibrary/commons.svg?branch=master)](https://travis-ci.org/hatfieldlibrary/commons)
 [![Coverage Status](https://coveralls.io/repos/github/hatfieldlibrary/commons/badge.svg?branch=master)](https://coveralls.io/github/hatfieldlibrary/commons?branch=master)
 
@@ -23,7 +23,7 @@ The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2
  | Angular CLI 	| 6.1.4 		
  | ngrx        	| 6.0.1 	
  | rxjs        	| 6.2.2 	
- | nodejs       | 8.11.1
+ | nodejs       | 8.13.0
 
 ## Configuration 
 
@@ -64,7 +64,7 @@ For unit tests, use `npm run test`.
 
 ## Production
 
-To build for production, use `npm run build:development:ssr` and copy the resulting `./dist` directory to the production host.
+To build for production, use `npm run build:production:ssr` and copy the resulting `./dist` directory to the production host.
 
 ### Production Requirements
 

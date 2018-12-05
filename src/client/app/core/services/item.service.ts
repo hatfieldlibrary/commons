@@ -33,22 +33,35 @@ import { environment } from '../../environments/environment';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {ApiDataService} from './api-data.service';
 
+/**
+ * Handles API requests for collection item data.  Methods return observables of
+ * an `HttpClient` request or of data contained in an `TransferState` object.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
+  /**
+   * `TransferState` key for item information.
+   */
   ITEM_KEY = makeStateKey('item-page-data');
 
+  /**
+   * Constructor
+   * @param apiService the service that manages `HttpClient` requests and `TransferState`
+   * @param state the existing `TransferState` object
+   */
   constructor(private apiService: ApiDataService,
               private state: TransferState) {}
 
-    getItem(itemId: string): Observable<ItemType> {
+    public getItem(itemId: string): Observable<ItemType> {
       const found = this.state.hasKey(this.ITEM_KEY);
       if (found) {
         return this.apiService.getTransferState(this.ITEM_KEY);
       }
-      return this.apiService.getApiRequest(this.ITEM_KEY, environment.apiHost + environment.apiRoot + '/collection/id/' + itemId);
+      return this.apiService.getApiRequest(this.ITEM_KEY,
+        environment.apiHost + environment.apiRoot + '/collection/id/' + itemId);
     }
 
 

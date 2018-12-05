@@ -26,13 +26,12 @@
 import {of as observableOf, Observable} from 'rxjs';
 
 import {catchError, switchMap, map} from 'rxjs/operators';
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {CollectionService} from '../../services/collection.service';
 import * as collection from '../actions/collection.actions';
 import {Action} from '../actions/action.interface';
 import {IdentifersPayload} from '../actions/payload-parameters.interface';
-import {TransferState} from '@angular/platform-browser';
 
 @Injectable()
 export class CollectionEffects {

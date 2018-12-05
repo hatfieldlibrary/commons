@@ -65,7 +65,7 @@ describe('SearchService', () => {
 
 
   it('should get search href', () => {
-    const result = searchService.executeSimpleSearchQuery(testQuery, terms);
+    const result = searchService.getSimpleSearchQuery(testQuery, terms);
     expect(result).toEqual('http://domain/testing')
 
   });

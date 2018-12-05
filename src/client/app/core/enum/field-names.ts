@@ -22,7 +22,10 @@
  * Author: Michael Spalti
  */
 
-export enum FieldValues {
+/**
+ * Enumeration of field names used in setting and managing filters.
+ */
+export enum FieldNames {
   SUBJECT = 'subject',
   TYPE = 'type',
   GROUP = 'group',

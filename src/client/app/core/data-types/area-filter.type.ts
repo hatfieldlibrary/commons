@@ -22,6 +22,9 @@
  * Author: Michael Spalti
  */
 
+/**
+ * Area filter model.
+ */
 export class AreaFilterType {
   id: number;
   title: string;

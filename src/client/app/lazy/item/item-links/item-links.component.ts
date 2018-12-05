@@ -26,7 +26,7 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit
 } from '@angular/core';
 import {SearchService} from '../../../core/services/search.service';
-import {SearchTerms} from '../../../core/data-types/simple-search.type';
+import {SearchTerms} from '../../../core/data-types/search-terms.type';
 import {Observable, Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
@@ -39,7 +39,8 @@ import {SetAuthStatus} from '../../../core/ngrx/actions/auth.action';
 import {map} from 'rxjs/operators';
 
 /**
- * This component is for the content access options presented to the user.
+ * Content access options presented to the user. These include direct
+ * links to item, searchs, and pulldown lists.
  */
 @Component({
   selector: 'app-item-links',
@@ -75,12 +76,17 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
     this.watchers = new Subscription();
   }
 
+  // Executes search no external source via document locatoin.
   simpleSearch() {
-    const href = this.svc.executeSimpleSearchQuery(this.searchUrl, this.model.terms);
+    const href = this.svc.getSimpleSearchQuery(this.searchUrl, this.model.terms);
     this.document.location.href = href;
   }
 
   ngOnInit(): void {
+
+    this.model = {
+      terms: ''
+    };
 
     const url: Observable<string> = this.route.parent.url.pipe(map(segments => segments.join('/')));
     const urlWatcher = url.subscribe((path) => {
@@ -88,7 +94,6 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
     });
     this.watchers.add(urlWatcher);
 
-    this.model = new SearchTerms();
     // Using the store to track authentication.
     this.auth$ = this.store.pipe(select(fromRoot.getAuthStatus));
     const authWatcher = this.auth$.subscribe((auth) => {

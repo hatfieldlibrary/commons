@@ -26,21 +26,33 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {FieldFilterType} from '../data-types/field-filter.type';
-import {makeStateKey, TransferState} from '@angular/platform-browser';;
+import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {ApiDataService} from './api-data.service';
 
 
+/**
+ * Handles API requests for collection group data.  Methods return observables of
+ * an `HttpClient` request or of data contained in an `TransferState` object.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionGroupServices {
 
+  /**
+   * `TransferState` key for collection group information.
+   */
   GROUP_KEY = makeStateKey('group-options');
 
+  /**
+   * Constructor
+   * @param apiService the service that manages `HttpClient` requests and `TransferState`
+   * @param state the existing `TransferState` object
+   */
   constructor(private apiService: ApiDataService,
               private state: TransferState) {}
 
-  getAllGroups(): Observable<FieldFilterType[]> {
+  public getAllGroups(): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);
@@ -48,7 +60,7 @@ export class CollectionGroupServices {
     return this.apiService.getApiRequest(this.GROUP_KEY, environment.apiHost + environment.apiRoot + '/category');
   }
 
-  getGroupsByArea(areaId: string): Observable<FieldFilterType[]> {
+  public getGroupsByArea(areaId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);
@@ -57,7 +69,7 @@ export class CollectionGroupServices {
       '/category/area/' + areaId);
   }
 
-  getGroupsByType(typeId: string): Observable<FieldFilterType[]> {
+  public getGroupsByType(typeId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);
@@ -66,7 +78,7 @@ export class CollectionGroupServices {
       '/category/type/' + typeId);
   }
 
-  getGroupsBySubject(subjectId: string): Observable<FieldFilterType[]> {
+  public getGroupsBySubject(subjectId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);
@@ -75,7 +87,7 @@ export class CollectionGroupServices {
       '/category/subject/' + subjectId);
   }
 
-  getGroupsByAreaType(areaId: string, typeId: string): Observable<FieldFilterType[]> {
+  public getGroupsByAreaType(areaId: string, typeId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);
@@ -84,7 +96,7 @@ export class CollectionGroupServices {
       '/category/area/' + areaId + '/type/' + typeId);
   }
 
-  getGroupsByAreaSubject(areaId: string, subjectId: string): Observable<FieldFilterType[]> {
+  public getGroupsByAreaSubject(areaId: string, subjectId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);
@@ -93,7 +105,7 @@ export class CollectionGroupServices {
       '/category/area/' + areaId + '/subject/' + subjectId);
   }
 
-  getGroupsBySubjectType(subjectId: string, typeId: string): Observable<FieldFilterType[]> {
+  public getGroupsBySubjectType(subjectId: string, typeId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);
@@ -102,7 +114,7 @@ export class CollectionGroupServices {
       '/category/subject/' + subjectId + '/type/' + typeId);
   }
 
-  getGroupsByAreaSubjectType(areaId: string, subjectId: string, typeId: string): Observable<FieldFilterType[]> {
+  public getGroupsByAreaSubjectType(areaId: string, subjectId: string, typeId: string): Observable<FieldFilterType[]> {
     const found = this.state.hasKey(this.GROUP_KEY);
     if (found) {
       return this.apiService.getTransferState(this.GROUP_KEY);

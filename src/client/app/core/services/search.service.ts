@@ -29,52 +29,58 @@ import {ExternalItems, ExternalLinks} from '../data-types/external-links';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
+/**
+ * Provides collection utilities for search and select options.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
+
   constructor(private http: HttpClient) {
   }
-
-  /*
-    TODO This method is hard-coded to current cview queries. Needs to be somehow generalized!
-   */
 
   /**
    * Used by component to obtain the href for a browse-by-date option. The base url is provided here because Tagger currently accepts
    * only the collection name as parameter. This is a known issue in Tagger.
+   * TODO generalize to remove hard-coded url
    * @param collection the collection name
    * @param terms user provided search terms
    */
-  getOptionsQuery(collection: string, terms: string): string {
+  public getOptionsQuery(collection: string, terms: string): string {
     const query = encodeURIComponent(terms);
-    const href = `https://libmedia.willamette.edu/cview/${collection}.html#!browse:search:${collection}/date^${query}^all^and!`;
-    return href;
+    return `https://libmedia.willamette.edu/cview/${collection}.html#!browse:search:${collection}/date^${query}^all^and!`;
   }
+
 
   /**
-   * Returns query string/
-   * @param baseURL base url for the query, including query token {$query}
-   * @param terms user provided search terms
+   * Requests the options list from an external
+   * @param collection
    */
-  executeSimpleSearchQuery(baseURL: string, terms: string): string {
-
-    const query = encodeURIComponent(terms);
-    const splitString = baseURL.split('{$query}');
-    const href = splitString[0] + query + splitString[1];
-    return href;
-  }
-
-  getOptionsList(collection: string): Observable<ExternalItems[]> {
+  public getOptionsList(collection: string): Observable<ExternalItems[]> {
     return this.http.get<ExternalLinks>(
       environment.apiHost +
       environment.apiRoot +
       '/options/external/' +
       collection).pipe(
-        map(res => res.result));
+      map(res => res.result));
 
   }
+
+  /**
+   * Returns query string
+   * @param baseURL base url for the query, including query token {$query}
+   * @param terms user provided search terms
+   */
+  public getSimpleSearchQuery(baseURL: string, terms: string): string {
+
+    const queryTerms = encodeURIComponent(terms);
+    const splitString = baseURL.split('{$query}');
+    return splitString[0] + queryTerms + splitString[1];
+
+  }
+
 
 
 }

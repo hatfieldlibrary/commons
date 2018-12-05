@@ -26,6 +26,9 @@
  * Created by mspalti on 2/24/17.
  */
 
+/**
+ * Area information model.
+ */
 export class AreaType {
   id: number;
   title: string;

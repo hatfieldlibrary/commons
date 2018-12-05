@@ -25,6 +25,9 @@
 /**
  * Created by mspalti on 4/10/17.
  */
+/**
+ * Model for related collection information.
+ */
 export class RelatedType {
 
   id: number;
