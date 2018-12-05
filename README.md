@@ -96,7 +96,7 @@ It should be possible to preview the container on your development machine if yo
 
   1. Install and run Tagger-2 on your local machine.
   2. Modify the `src/client/app/environments/environment.prod` file accordingly.
-  3. Build the project with `npm run build:prod`
+  3. Build the project with `npm run build:production:ssr`
   4. Build the docker image with `docker build -t <name>/<tag>:latest .`
   5. Start the docker image with `docker run -v <home>/etc/commons:/etc/commons-2.0 -p 3000:3000` where `<home>` is your local home directory.
 
