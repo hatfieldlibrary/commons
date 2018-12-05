@@ -1,4 +1,4 @@
-# Commons
+npm# Commons
 [![Build Status](https://travis-ci.org/hatfieldlibrary/commons.svg?branch=master)](https://travis-ci.org/hatfieldlibrary/commons)
 [![Coverage Status](https://coveralls.io/repos/github/hatfieldlibrary/commons/badge.svg?branch=master)](https://coveralls.io/github/hatfieldlibrary/commons?branch=master)
 
@@ -64,7 +64,7 @@ For unit tests, use `npm run test`.
 
 ## Production
 
-To build for production, use `npm run build:development:ssr` and copy the resulting `./dist` directory to the production host.
+To build for production, use `npm run build:production:ssr` and copy the resulting `./dist` directory to the production host.
 
 ### Production Requirements
 
