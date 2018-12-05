@@ -73,16 +73,17 @@ export class SubscriptionService {
       }
     );
 
-  private typesFilter: Observable<TypesFilter> = observableCombineLatest(
-    this.store.pipe(select(fromRoot.getTypes)),
-    this.store.pipe(select(fromRoot.getTypesFilter)),
-    (types, selected) => {
-      return {
-        types: types,
-        selectedTypes: selected
+  private typesFilter: Observable<TypesFilter> =
+    observableCombineLatest(
+      this.store.pipe(select(fromRoot.getTypes)),
+      this.store.pipe(select(fromRoot.getTypesFilter)),
+      (types, selected) => {
+        return {
+          types: types,
+          selectedTypes: selected
+        }
       }
-    }
-  );
+    );
 
   private subjectsFilter: Observable<SubjectFilter> =
     observableCombineLatest(
@@ -112,39 +113,39 @@ export class SubscriptionService {
   constructor(private store: Store<fromRoot.State>) {
   }
 
-  getCollectionState(): Observable<CollectionType[]> {
+  public getCollectionState(): Observable<CollectionType[]> {
     return this.collections;
   }
 
-  getAreasState(): Observable<FieldFilterType[]> {
+  public getAreasState(): Observable<FieldFilterType[]> {
     return this.areas;
   }
 
-  getFilterState(): Observable<fromFilter.State> {
+  public getFilterState(): Observable<fromFilter.State> {
     return this.filters;
   }
 
-  getTypesFilterState(): Observable<TypesFilter> {
+  public getTypesFilterState(): Observable<TypesFilter> {
     return this.typesFilter;
   }
 
-  getSubjectsFilterState(): Observable<SubjectFilter> {
+  public getSubjectsFilterState(): Observable<SubjectFilter> {
     return this.subjectsFilter;
   }
 
-  getGroupsFilterState(): Observable<CollectionGroupFilter> {
+  public getGroupsFilterState(): Observable<CollectionGroupFilter> {
     return this.groupsFilter;
   }
 
-  getAreasFilterState(): Observable<AreasFilter> {
+  public getAreasFilterState(): Observable<AreasFilter> {
     return this.areasFilter;
   }
 
-  getAreaInfoState(): Observable<AreaType> {
-   return this.areaInfo;
+  public getAreaInfoState(): Observable<AreaType> {
+    return this.areaInfo;
   }
 
-  getViewTypeState(): Observable<string> {
+  public getViewTypeState(): Observable<string> {
     return this.viewType;
   }
 

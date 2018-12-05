@@ -23,6 +23,9 @@
  */
 
 import {Action as NgRXAction} from '@ngrx/store';
+/**
+ * Extends `NgRXAction` by adding payload field.
+ */
 export interface Action extends NgRXAction {
   payload?: any;
 }

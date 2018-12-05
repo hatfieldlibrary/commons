@@ -35,7 +35,7 @@ import {Observable, Subscription} from 'rxjs/index';
 import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
 import {SimpleChange} from '@angular/core';
 import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../../core/ngrx/actions/filter.actions';
-import {FieldValues} from '../../../core/enum/field-names';
+import {FieldNames} from '../../../core/enum/field-names';
 
 describe('AreaFiltersComponent', () => {
   let component: AreaFiltersComponent;
@@ -154,7 +154,7 @@ describe('AreaFiltersComponent', () => {
     component.groups.groups = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
     component.ngOnChanges({groups: new SimpleChange({}, {test: 'test'}, true)});
     expect(store.dispatch).toHaveBeenCalledWith(new RemoveSelectedGroups([{id: 3, name: 'g3'}]));
-    expect(component.normalizedFilter).toEqual([{type: FieldValues.GROUP, id: 3, name: 'g3', active: false}])
+    expect(component.normalizedFilter).toEqual([{type: FieldNames.GROUP, id: 3, name: 'g3', active: false}])
   }));
 
   it('should update the store with removed types.', fakeAsync(() => {
@@ -162,7 +162,7 @@ describe('AreaFiltersComponent', () => {
     component.types.types = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
     component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
     expect(store.dispatch).toHaveBeenCalledWith(new RemoveSelectedTypes([{id: 3, name: 't3'}]));
-    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 3, name: 't3', active: false}])
+    expect(component.normalizedFilter).toEqual([{type: FieldNames.TYPE, id: 3, name: 't3', active: false}])
   }));
 
   it('should update the store with removed subjects.', fakeAsync(() => {
@@ -170,7 +170,7 @@ describe('AreaFiltersComponent', () => {
     component.subjects.subjects = [{id: 1, name: 's1'}, {id: 2, name: 's2'}];
     component.ngOnChanges({subjects: new SimpleChange({}, {test: 'test'}, true)});
     expect(store.dispatch).toHaveBeenCalledWith(new RemoveSelectedSubjects([{id: 3, name: 's3'}]));
-    expect(component.normalizedFilter).toEqual([{type: FieldValues.SUBJECT, id: 3, name: 's3', active: false}])
+    expect(component.normalizedFilter).toEqual([{type: FieldNames.SUBJECT, id: 3, name: 's3', active: false}])
   }));
 
   it('should add group to filter list', () => {
@@ -178,7 +178,7 @@ describe('AreaFiltersComponent', () => {
     component.types.types = [{id: 1, name: 'g1'}, {id: 2, name: 'g2'}];
     component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
     expect(store.dispatch).not.toHaveBeenCalled();
-    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 1, name: 'g1', active: true}])
+    expect(component.normalizedFilter).toEqual([{type: FieldNames.TYPE, id: 1, name: 'g1', active: true}])
   });
 
   it('should add type to filter list', () => {
@@ -186,7 +186,7 @@ describe('AreaFiltersComponent', () => {
     component.types.types = [{id: 1, name: 't1'}, {id: 2, name: 't2'}];
     component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
     expect(store.dispatch).not.toHaveBeenCalled();
-    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 1, name: 't1', active: true}])
+    expect(component.normalizedFilter).toEqual([{type: FieldNames.TYPE, id: 1, name: 't1', active: true}])
   });
 
   it('should add subject to filter list', () => {
@@ -194,7 +194,7 @@ describe('AreaFiltersComponent', () => {
     component.types.types = [{id: 1, name: 's1'}, {id: 2, name: 's2'}];
     component.ngOnChanges({types: new SimpleChange({}, {test: 'test'}, true)});
     expect(store.dispatch).not.toHaveBeenCalled();
-    expect(component.normalizedFilter).toEqual([{type: FieldValues.TYPE, id: 1, name: 's1', active: true}])
+    expect(component.normalizedFilter).toEqual([{type: FieldNames.TYPE, id: 1, name: 's1', active: true}])
   });
 
   it('should unsubscribe watcher', () => {

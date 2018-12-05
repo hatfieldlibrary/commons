@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {NavigationStart, Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
@@ -34,7 +34,7 @@ import {
   RemoveSelectedTypes
 } from '../../ngrx/actions/filter.actions';
 import {FieldFilterType} from '../../data-types/field-filter.type';
-import {FieldValues} from '../../enum/field-names';
+import {FieldNames} from '../../enum/field-names';
 
 interface RouterIds {
   subjectId: string;
@@ -65,8 +65,7 @@ export class NavigationServiceB {
    * @param store
    */
   constructor(private router: Router,
-              private store: Store<fromRoot.State>,
-              @Inject(PLATFORM_ID) private platform: Object) {
+              private store: Store<fromRoot.State>) {
     // Keep track of removed fields in application state (added by AreaFiltersComponent).
     // Before navigation takes place, the selected field ids are checked to verify that
     // they have not been removed. (Field removal is initiated in the AreaFiltersComponent component.)
@@ -98,7 +97,7 @@ export class NavigationServiceB {
    * to update the collection state.
    * @returns {boolean}
    */
-  shouldFetchCollectionData(): boolean {
+  public shouldFetchCollectionData(): boolean {
       // When this method is called for the first time, should fetch collection data.
       if (this.initialNavigation) {
         this.initialNavigation = false;
@@ -117,7 +116,7 @@ export class NavigationServiceB {
    * selectedArea value is for global browsing.  Since we currently do not use global browsing,
    * the implementation is incomplete for now.
    */
-  getBackLink(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
+  public getBackLink(selectedArea: string, selectedGroup: string, selectedSubject: string, selectedTypes: string): string {
     if (selectedArea && selectedArea !== '0') {
       return this._handleAreaBackLinks(selectedArea, selectedGroup, selectedSubject, selectedTypes);
     } else if (selectedArea === '0') {
@@ -134,7 +133,7 @@ export class NavigationServiceB {
    * @param list the array of objects
    * @returns {boolean}
    */
-  private isIllegalType(list: any[]) {
+  private isIllegalType(list: any[]): boolean {
     if (typeof list === 'undefined') {
       return false;
     }
@@ -152,7 +151,7 @@ export class NavigationServiceB {
    * @param {any[]} list list of filters
    * @returns {string}
    */
-  getIds(list: FieldFilterType[]): string {
+  public getIds(list: FieldFilterType[]): string {
     // do runtime check of the list shape.
     if (this.isIllegalType(list)) {
       throw new Error('Illegal type: The Array must contain objects that have an id field.');
@@ -198,17 +197,17 @@ export class NavigationServiceB {
       groupId: groupId
     };
     if (this.removedSubs[0].id !== 0) {
-      ids.subjectId = this.removeIds(subjectId, this.removedSubs, FieldValues.SUBJECT);
+      ids.subjectId = this.removeIds(subjectId, this.removedSubs, FieldNames.SUBJECT);
       // Finished removing fields...update store to the default state.
-      this.updateStoreWithRemovedFilter(FieldValues.SUBJECT);
+      this.updateStoreWithRemovedFilter(FieldNames.SUBJECT);
     }
     if (this.removedTypes[0].id !== 0) {
-      ids.typeId = this.removeIds(typeId, this.removedTypes, FieldValues.TYPE);
-      this.updateStoreWithRemovedFilter(FieldValues.TYPE);
+      ids.typeId = this.removeIds(typeId, this.removedTypes, FieldNames.TYPE);
+      this.updateStoreWithRemovedFilter(FieldNames.TYPE);
     }
     if (this.removedGroups[0].id !== 0) {
-      ids.groupId = this.removeIds(groupId, this.removedGroups, FieldValues.GROUP);
-      this.updateStoreWithRemovedFilter(FieldValues.GROUP);
+      ids.groupId = this.removeIds(groupId, this.removedGroups, FieldNames.GROUP);
+      this.updateStoreWithRemovedFilter(FieldNames.GROUP);
     }
     return ids;
   }
@@ -246,15 +245,15 @@ export class NavigationServiceB {
   private updateStoreWithRemovedFilter(type: string): void {
 
     switch (type) {
-      case FieldValues.SUBJECT: {
+      case FieldNames.SUBJECT: {
         this.store.dispatch(new RemoveSelectedSubjects([{id: 0, name: ''}]));
         break;
       }
-      case FieldValues.TYPE: {
+      case FieldNames.TYPE: {
         this.store.dispatch(new RemoveSelectedTypes([{id: 0, name: ''}]));
         break;
       }
-      case FieldValues.GROUP: {
+      case FieldNames.GROUP: {
         this.store.dispatch(new RemoveSelectedGroups([{id: 0, name: ''}]));
         break;
       }
@@ -287,7 +286,7 @@ export class NavigationServiceB {
    * TODO: Incomplete global search routing (area is always using in current application routing).
    * TODO: Ignoring the promise returned by router.navigate (needs review, it may be ok).
    */
-  navigateRoute(areaId: string, typeId: string, subjectId: string, groupId: string, view?: string): void {
+  public navigateRoute(areaId: string, typeId: string, subjectId: string, groupId: string, view?: string): void {
 
     const queryParams = {queryParams: {}};
     if (view) {

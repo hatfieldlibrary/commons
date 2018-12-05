@@ -24,7 +24,13 @@
 
 import {RelatedType} from './related-collection';
 
+/**
+ * Model for list of related collections.
+ */
 export interface RelatedItems {
+  /**
+   * List of related collection objects.
+   */
   related: RelatedType[]
 }
 

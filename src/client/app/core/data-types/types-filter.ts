@@ -25,8 +25,20 @@
 
 import {FieldFilterType} from './field-filter.type';
 
+/**
+ * Model for list of type filters with selected types and previous types.
+ */
 export interface TypesFilter {
+  /**
+   *  List of type filters.
+   */
   types: FieldFilterType[];
+  /**
+   *  List of selected type filters.
+   */
   selectedTypes: FieldFilterType[];
+  /**
+   * The previous list of type filters. The available filter set changes based on the current state.
+   */
   previousTypes?: FieldFilterType[];
 }
