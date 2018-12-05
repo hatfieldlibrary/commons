@@ -46,7 +46,7 @@ export class AuthCheckService {
   /**
    * Gets the current authentication status via server request.
    */
-  getAuthStatus():  Observable<boolean> {
+  public getAuthStatus():  Observable<boolean> {
         return this.http.get<AuthType>(environment.authCheck).pipe(
           map(res => res.auth));
       }

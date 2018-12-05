@@ -31,8 +31,8 @@ import {DOCUMENT} from '@angular/common';
 import {Observable} from 'rxjs';
 
 /**
- * This component creates an options list from date
- * retrieved via the SearchService.
+ * This component creates an options list from data
+ * retrieved in parent via the SearchService.
  */
 @Component({
   selector: 'app-item-select-component',
@@ -56,14 +56,14 @@ export class ItemSelectComponent implements OnInit {
   }
 
   /**
-   * Uses the injected document token to change location.
-   * The redirect parameter is used by tests. Defaults to
-   * true in normal use.
+   * Handles item selection event. Uses the injected document
+   * token to change location.
    */
   optionSearch(term, redirect = true) {
     // This could be a local variable, but using a field makes
     // this method testable. hmmm...
     this.href = this.svc.getOptionsQuery(this.url, term);
+    // The redirect parameter is used by tests and defaults to true in normal use.
     if (redirect) {
       this.document.location.href = this.href;
     }

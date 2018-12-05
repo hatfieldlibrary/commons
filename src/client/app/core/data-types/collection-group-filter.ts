@@ -24,9 +24,20 @@
 
 import {FieldFilterType} from './field-filter.type';
 
-
+/**
+ * Model for the collection group filter list with selected groups and previous groups.
+ */
 export interface CollectionGroupFilter {
+  /**
+   * List of collection filters.
+   */
   groups: FieldFilterType[];
+  /**
+   * List of selected collection filters.
+   */
   selectedGroups: FieldFilterType[];
+  /**
+   * The previous list of collection filters. The available filter set changes based on the current state.
+   */
   previousGroups?: FieldFilterType[];
 }

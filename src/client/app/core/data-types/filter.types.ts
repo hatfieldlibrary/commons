@@ -22,11 +22,14 @@
  *
  * Author: Michael Spalti
  */
-
-import {FieldFilterType} from './field-filter.type';
-
-export class FilterTypes {
-  areas: FieldFilterType[];
-  types: FieldFilterType[];
-  subject: FieldFilterType[];
-}
+//
+// import {FieldFilterType} from './field-filter.type';
+//
+// /**
+//  * Model for composite filters object.
+//  */
+// export class FilterTypes {
+//   areas: FieldFilterType[];
+//   types: FieldFilterType[];
+//   subject: FieldFilterType[];
+// }

@@ -22,6 +22,9 @@
  * Author: Michael Spalti
  */
 
+/**
+ * Model for a collection's parent area information.
+ */
 export class ParentAreaType {
   id: number;
   title: string;

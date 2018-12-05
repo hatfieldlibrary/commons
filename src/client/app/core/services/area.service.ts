@@ -39,15 +39,29 @@ export interface AreasResponse {
   response: AreaFilterType[]
 }
 
-
+/**
+ * Handles API requests for areas data.  Methods return observables of
+ * an `HttpClient` request or of data contained in an `TransferState` object.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class AreaService {
 
+  /**
+   * `TransferState` key for area information.
+   */
   AREA_INFO_KEY = makeStateKey('area-info');
+  /**
+   * `TransferState` key for an area list.
+   */
   AREA_LIST_KEY = makeStateKey('area-list');
 
+  /**
+   * Constructor
+   * @param apiService the service that manages `HttpClient` requests and `TransferState`
+   * @param state the existing `TransferState` object
+   */
   constructor(private apiService: ApiDataService,
               private state: TransferState) {
   }
@@ -55,7 +69,7 @@ export class AreaService {
   /**
    * Gets the list of all areas for navigation menu or option list.
    */
-  getAreaList(): Observable<AreaFilterType[]> {
+  public getAreaList(): Observable<AreaFilterType[]> {
     const found = this.state.hasKey(this.AREA_LIST_KEY);
     if (found) {
       return this.apiService.getTransferState(this.AREA_LIST_KEY);
@@ -68,7 +82,7 @@ export class AreaService {
    * areas are listed in a global navigation menu and not used as filter options.)
    * @param id
    */
-  getAreaListBySubject(id: string): Observable<AreaFilterType[]> {
+  public getAreaListBySubject(id: string): Observable<AreaFilterType[]> {
     const found = this.state.hasKey(this.AREA_LIST_KEY);
     if (found) {
       return this.apiService.getTransferState(this.AREA_LIST_KEY);
@@ -80,7 +94,7 @@ export class AreaService {
    * Not used.  See above.
    * @param id
    */
-  getAreaListByType(id: string): Observable<AreaFilterType[]> {
+  public getAreaListByType(id: string): Observable<AreaFilterType[]> {
     const found = this.state.hasKey(this.AREA_LIST_KEY);
     if (found) {
       return this.apiService.getTransferState(this.AREA_LIST_KEY);
@@ -93,7 +107,7 @@ export class AreaService {
    * @param typeId
    * @param subjectId
    */
-  getAreaListByTypeSubject(typeId: string, subjectId: string): Observable<AreaFilterType[]> {
+  public getAreaListByTypeSubject(typeId: string, subjectId: string): Observable<AreaFilterType[]> {
     const found = this.state.hasKey(this.AREA_LIST_KEY);
     if (found) {
       return this.apiService.getTransferState(this.AREA_LIST_KEY);
@@ -108,7 +122,7 @@ export class AreaService {
    * Gets the complete information for the currently selected area.
    * @param id
    */
-  getAreaInfo(id: string): Observable<AreaType[]> {
+  public getAreaInfo(id: string): Observable<AreaType[]> {
     const found = this.state.hasKey(this.AREA_INFO_KEY);
     if (found) {
       return this.apiService.getTransferState(this.AREA_INFO_KEY);

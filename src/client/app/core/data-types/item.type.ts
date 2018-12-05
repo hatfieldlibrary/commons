@@ -35,6 +35,9 @@ export interface ItemTypesInterface {
   icon: string
 }
 
+/**
+ * Model for the collection/item data type.
+ */
 export class ItemType {
 
   collection: {

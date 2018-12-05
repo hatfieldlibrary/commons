@@ -22,6 +22,9 @@
  * Author: Michael Spalti
  */
 
+/**
+ * Model for list of external items and links.
+ */
 export interface ExternalLinks {
   result: ExternalItems[]
 }

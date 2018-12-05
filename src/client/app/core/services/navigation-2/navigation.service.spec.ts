@@ -30,7 +30,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {Action, Store} from '@ngrx/store';
 import {Subject} from 'rxjs';
 import {mockStore} from '../../test/mock-store';
-import {FieldValues} from '../../enum/field-names';
+import {FieldNames} from '../../enum/field-names';
 import {Observable} from 'rxjs/internal/Observable';
 import {of} from 'rxjs/internal/observable/of';
 
@@ -163,7 +163,7 @@ describe('NavigationService', () => {
       spyOn(service, 'updateStoreWithRemovedFilter');
       service.removedSubs = [{id: 1, name: 's1'}];
       const id = service.setIdFields('1,2', '', '');
-      expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.SUBJECT);
+      expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldNames.SUBJECT);
       expect(id).toEqual({subjectId: '2', typeId: '', groupId: ''});
     });
 
@@ -171,7 +171,7 @@ describe('NavigationService', () => {
       spyOn(service, 'updateStoreWithRemovedFilter');
       service.removedTypes = [{id: 1, name: 't1'}];
       const id = service.setIdFields('', '1,2', '');
-      expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.TYPE);
+      expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldNames.TYPE);
       expect(id).toEqual({subjectId: '', typeId: '2', groupId: ''});
     });
 
@@ -179,7 +179,7 @@ describe('NavigationService', () => {
       spyOn(service, 'updateStoreWithRemovedFilter');
       service.removedGroups = [{id: 1, name: 'g1'}];
       const id = service.setIdFields('', '', '1,2');
-      expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldValues.GROUP);
+      expect(service.updateStoreWithRemovedFilter).toHaveBeenCalledWith(FieldNames.GROUP);
       expect(id).toEqual({subjectId: '', typeId: '', groupId: '2'});
     });
 

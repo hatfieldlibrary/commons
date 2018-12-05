@@ -120,9 +120,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
               private scrollReady: ScrollReadyService,
               private titleService: Title,
               private metaService: Meta,
-              private subscriptionService: SubscriptionService,
-              private transferState: TransferState,
-              @Inject(PLATFORM_ID) private platform: Object) {
+              private subscriptionService: SubscriptionService) {
 
   }
 

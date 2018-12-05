@@ -25,8 +25,20 @@
 
 import {FieldFilterType} from './field-filter.type';
 
+/**
+ * Model for list of subject filters with selected subject and previous subjects.
+ */
 export interface SubjectFilter {
+  /**
+   * List of subject filters.
+   */
   subjects: FieldFilterType[];
+  /**
+   *  List of selected subject filters.
+   */
   selectedSubjects: FieldFilterType[];
+  /**
+   * The previous list of subject filters. The available filter set changes based on the current state.
+   */
   previousSubjects?: FieldFilterType[];
 }

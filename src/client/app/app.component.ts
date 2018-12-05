@@ -61,8 +61,17 @@ import {ScrollReadyService} from './core/services/observable/scroll-ready.servic
 export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   watcher: Subscription;
+  /**
+   * The home url (used in side navigation)
+   */
   homeUrl = 'http://libmedia.willamette.edu/academiccommons';
+  /**
+   * The secondary url (used in side navigation)
+   */
   secondaryUrl = 'http://library.willamette.edu';
+  /**
+   * The tertiary url (used in side navigation)
+   */
   tertiaryUrl = 'http://www.willamette.edu';
   @ViewChild('sidenav') sideNavigate: MatSidenav;
   @ViewChild('appcontent') appContent: ElementRef;
@@ -87,15 +96,24 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   }
 
-  goToHome(): void {
+  /**
+   * Redirects to the configured home url.
+   */
+  protected goToHome(): void {
     this.document.location.href = this.homeUrl;
   }
 
-  goToSecondary(): void {
+  /**
+   * Redirects to the configured secondary url.
+   */
+  protected goToSecondary(): void {
     this.document.location.href = this.secondaryUrl;
   }
 
-  goToTertiary(): void {
+  /**
+   * Redirects to the configured tertiary url.
+   */
+  protected goToTertiary(): void {
     this.document.location.href = this.tertiaryUrl;
   }
 

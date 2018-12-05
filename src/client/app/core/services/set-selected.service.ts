@@ -43,6 +43,10 @@ export class SetSelectedService {
   groups$: Observable<FieldFilterType[]>;
   watchers: Subscription;
 
+  /**
+   * Constructor
+   * @param store the application state store (ngrx)
+   */
   constructor(private store: Store<fromRoot.State>) {
     this.subjects$ = this.store.pipe(select(fromRoot.getSubject));
     this.areas$ = this.store.pipe(select(fromRoot.getAreas));
@@ -58,7 +62,7 @@ export class SetSelectedService {
    * @param {string} subjectId comma separated string of subject ids.
    * @private
    */
-  setSelectedSubject(subjectId: string): void {
+  public setSelectedSubject(subjectId: string): void {
 
     if (subjectId) {
       const subsWatcher = this.subjects$.subscribe((subs) => {
@@ -86,7 +90,7 @@ export class SetSelectedService {
    *
    * @param {string} areaId comma separated string of area ids.
    */
-  setSelectedArea(areaId: string): void {
+  public setSelectedArea(areaId: string): void {
     if (areaId) {
       const areasWatcher = this.areas$.subscribe((areas) => {
         const areaArr = areaId.split(',');
@@ -115,7 +119,7 @@ export class SetSelectedService {
    *
    * @param {string} typeId comma separated string of type ids.
    */
-  setSelectedTypes(typeId: string): void {
+  public setSelectedTypes(typeId: string): void {
 
     if (typeId) {
       const typesWatcher = this.types$.subscribe((types) => {
@@ -143,7 +147,7 @@ export class SetSelectedService {
    *
    * @param {string} groupId comma separated string of group ids.
    */
-  setSelectedGroups(groupId: string): void {
+  public setSelectedGroups(groupId: string): void {
     if (groupId) {
       const groupsWatcher = this.groups$.subscribe((groups) => {
         const groupArr = groupId.split(',');
@@ -166,7 +170,10 @@ export class SetSelectedService {
     }
   }
 
-  unsubscribe(): void {
+  /**
+   * Allows clients the service to unsubscribe observable subscriptions.
+   */
+  public unsubscribe(): void {
     this.watchers.unsubscribe();
   }
 }
