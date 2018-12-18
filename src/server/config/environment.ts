@@ -88,7 +88,7 @@ export class Configuration {
       this.credentials = require('credentials');
     } catch (ex) {
       // No credentials ... try travis-ci credentials.
-      console.log('Using travis credentials, really');
+      console.log('Using travis credentials, really.');
       this.credentials = require('../credentials/travis-credentials')
 
     }
