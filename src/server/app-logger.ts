@@ -30,20 +30,20 @@ import * as morgan from 'morgan';
  * the application to consolidate winston logging with
  * http logging.
  */
-export class WinstonLogger {
-
-  logger: Logger;
+export class ApplicationLogger {
 
   options = {
 
-    file: {
+    access: {
       level: 'info',
-      filename: '/var/log/commons/app.log',
+      filename: '/var/log/commons/access.log',
       handleExceptions: true,
-      json: true,
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
+      json: false,
       colorize: false,
+    },
+    error: {
+      level: 'error',
+      filename: '/var/log/commons/error.log',
     },
     console: {
       level: 'debug',
@@ -54,20 +54,42 @@ export class WinstonLogger {
 
   };
 
+  serverLogger: Logger = createLogger({
+    transports: [
+      new transports.File(this.options.error),
+    ],
+    exitOnError: false, // do not exit on handled exceptions)
+  });
+
+  logger: Logger;
+
   constructor() {
   }
 
+  /**
+   * Initializes the Winston logger and adds Morgan logging
+   * for all http requests.
+   * @param app the express application
+   */
   public init(app: any): void {
+
     // noinspection TypeScriptValidateTypes
     this.logger = createLogger({
       transports: [
-        new transports.File(this.options.file),
-        new transports.Console(this.options.console)
+        new transports.File(this.options.access),
       ],
       exitOnError: false, // do not exit on handled exceptions
     });
 
-    app.use(morgan('combined', {
+    this.logger.on('error', (err) => {
+      console.log(err) // The logger itself can emit errors. Handle these here with simple console log.
+    });
+
+    /**
+     * Configure the Express app to use Morgan and log requests using the
+     * Winston logger.
+     */
+    app.use(morgan('common', {
         'stream': {
           write: (message: string) =>
             this.logger.info(message.trim())
@@ -75,6 +97,16 @@ export class WinstonLogger {
       })
     );
   }
+
+  /**
+   * Returns the Winston error logger. This can
+   * be used for Express error messages. See usage in
+   * routes.js.
+   */
+  public getServerLogger(): Logger {
+    return this.serverLogger;
+  }
+
 
 }
 

@@ -25,7 +25,7 @@
 /**
  * Created by mspalti on 8/24/18.
  */
-// These are important for universal rendering and needed before anything else.
+// These are required for universal rendering and imported before anything else.
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
@@ -34,61 +34,54 @@ import * as passport from 'passport';
 import { json, urlencoded } from 'body-parser';
 import {Configuration} from './config/environment';
 import {Authentication} from './config/auth-config';
-import {WinstonLogger} from './route-logger';
+import {ApplicationLogger} from './app-logger';
 import {AppRoutes} from './routes';
 import * as helmet from 'helmet';
 import {enableProdMode} from '@angular/core';
 import * as http from 'http';
 
-// Faster server renders w/ Prod mode (dev mode never needed)
+const app = express();
+
+// Faster server-side renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
-const app = express();
 // Parsers for POST data
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
-// Using default settings. See https://github.com/helmetjs/helmet
+// Using helmet default settings. See https://github.com/helmetjs/helmet
 app.use(helmet());
 
-const env = process.env.HOST_ENV || 'development';
 /**
  * Get the configuration for the environment.
  */
+const env = process.env.HOST_ENV || 'development';
 app.set('env', env);
 const configs: Configuration = new Configuration(env);
 const config = configs.getConfig();
-
 /**
  * Set up authentication.
  */
 const auth = new Authentication();
 auth.init(app, config, passport);
-
 /**
  * Set up logging.
  */
-const winstonLogger = new WinstonLogger();
-winstonLogger.init(app);
-
+const appLogger = new ApplicationLogger();
+appLogger.init(app);
 /**
  * Initialize the routes.
  */
-AppRoutes.init(app, express, config);
-
-
+AppRoutes.init(app, config, appLogger);
 /**
  * Get port from environment and store in Express.
  */
 const port = process.env.PORT || 3005;
 app.set('port', port);
-
-
 /**
  * Create HTTP server.
  */
  const server = http.createServer(app);
-
 /**
  * Listen on provided port, on all network interfaces.
  */
