@@ -1,0 +1,46 @@
+{
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/*.css",
+          "/*.js"
+        ],
+        "urls": [
+          "https://libmedia.willamette.edu/commons/index.html",
+          "https://libmedia.willamette.edu/commons-resource/**/*"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-data",
+      "urls": [
+        "https://libmedia.willamette.edu/tagger-3-api/**/*"
+      ],
+      "cacheConfig": {
+        "maxSize": 250,
+        "maxAge": "1d",
+        "version": 0,
+        "timeout": "2s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}

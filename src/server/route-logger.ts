@@ -22,37 +22,59 @@
  * Author: Michael Spalti
  */
 
+import {createLogger, Logger, transports} from 'winston';
+import * as morgan from 'morgan';
+
 /**
- * Created by mspalti on 3/6/17.
+ * This module configures winston logging and configures
+ * the application to consolidate winston logging with
+ * http logging.
  */
+export class WinstonLogger {
 
+  logger: Logger;
 
-  // User's home directory. Should be OS agnostic.
-  function getUserHome(): string {
-    return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
-  }
-  // Home of the development/test credentials file.
-  const devDirectory = getUserHome() + '/etc/commons-4/';
-  // Home of the production credentials file.
-  const prodDirectory =  '/etc/commons-4.0/';
+  options = {
 
-  const path = {
-    development: devDirectory,
-    test: devDirectory,
-    production: prodDirectory
-  };
-
-  function _getPath(env) {
-    console.log('call for path ' + path[env])
-    if (typeof env !== 'undefined') {
-      return path[env];
+    file: {
+      level: 'info',
+      filename: '/var/log/commons/app.log',
+      handleExceptions: true,
+      json: true,
+      maxsize: 5242880, // 5MB
+      maxFiles: 5,
+      colorize: false,
+    },
+    console: {
+      level: 'debug',
+      handleExceptions: true,
+      json: false,
+      colorize: true,
     }
-  }
 
-  const creds = {
-    path: _getPath
   };
 
-  module.exports = creds;
+  constructor() {
+  }
 
+  public init(app: any): void {
+    // noinspection TypeScriptValidateTypes
+    this.logger = createLogger({
+      transports: [
+        new transports.File(this.options.file),
+        new transports.Console(this.options.console)
+      ],
+      exitOnError: false, // do not exit on handled exceptions
+    });
+
+    app.use(morgan('combined', {
+        'stream': {
+          write: (message: string) =>
+            this.logger.info(message.trim())
+        }
+      })
+    );
+  }
+
+}
 
