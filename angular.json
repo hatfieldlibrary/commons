@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "commons": {
-      "root": "",
+      "root": "src",
       "sourceRoot": "src/client",
       "projectType": "application",
       "architect": {
@@ -18,7 +18,8 @@
             "polyfills": "src/client/polyfills.ts",
             "assets": [
               "src/client/assets",
-              "src/client/favicon.ico"
+              "src/client/favicon.ico",
+              "src/client/manifest.json"
             ],
             "styles": [
               "src/client/styles.css",
@@ -41,7 +42,8 @@
                   "replace": "src/client/app/environments/environment.ts",
                   "with": "src/client/app/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             },
             "test": {
               "fileReplacements": [
@@ -108,7 +110,8 @@
             "tsConfig": "src/tsconfig.json",
             "assets": [
               "src/client/assets",
-              "src/client/favicon.ico"
+              "src/client/favicon.ico",
+              "src/client/manifest.json"
             ]
           }
         },
@@ -124,7 +127,7 @@
       }
     },
     "commons-e2e": {
-      "root": "",
+      "root": "e2e",
       "sourceRoot": "",
       "projectType": "application",
       "architect": {
