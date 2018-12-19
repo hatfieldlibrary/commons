@@ -22,15 +22,15 @@
 <text text-anchor="start" x="429.7258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_CoreModule</title>
-<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="110,-70 110,-268 386,-268 386,-70 110,-70"/>
+<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="91,-70 91,-268 405,-268 405,-70 91,-70"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_CoreModule_declarations</title>
-<polygon fill="none" stroke="#000000" points="196,-78 196,-130 378,-130 378,-78 196,-78"/>
+<polygon fill="none" stroke="#000000" points="215,-78 215,-130 397,-130 397,-78 215,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_CoreModule_imports</title>
-<polygon fill="none" stroke="#000000" points="118,-78 118,-130 188,-130 188,-78 118,-78"/>
+<polygon fill="none" stroke="#000000" points="99,-78 99,-130 207,-130 207,-78 99,-78"/>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_CoreModule_exports</title>
@@ -39,8 +39,8 @@
 <!-- PageNotFoundComponent -->
 <g id="node1" class="node">
 <title>PageNotFoundComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="369.8243,-122 204.1757,-122 204.1757,-86 369.8243,-86 369.8243,-122"/>
-<text text-anchor="middle" x="287" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PageNotFoundComponent</text>
+<polygon fill="#ffffb3" stroke="#000000" points="388.8243,-122 223.1757,-122 223.1757,-86 388.8243,-86 388.8243,-122"/>
+<text text-anchor="middle" x="306" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">PageNotFoundComponent</text>
 </g>
 <!-- CoreModule -->
 <g id="node2" class="node">
@@ -51,8 +51,8 @@
 <!-- PageNotFoundComponent&#45;&gt;CoreModule -->
 <g id="edge1" class="edge">
 <title>PageNotFoundComponent&#45;&gt;CoreModule</title>
-<path fill="none" stroke="#000000" d="M248,-122.1061C248,-122.1061 248,-140.991 248,-140.991"/>
-<polygon fill="#000000" stroke="#000000" points="244.5001,-140.9909 248,-150.991 251.5001,-140.991 244.5001,-140.9909"/>
+<path fill="none" stroke="#000000" d="M257.3594,-122.1061C257.3594,-122.1061 257.3594,-140.991 257.3594,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="253.8595,-140.9909 257.3594,-150.991 260.8595,-140.991 253.8595,-140.9909"/>
 </g>
 <!-- PageNotFoundComponent  -->
 <g id="node4" class="node">
@@ -66,17 +66,17 @@
 <path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M248,-187.1061C248,-187.1061 248,-205.991 248,-205.991"/>
 <polygon fill="#000000" stroke="#000000" points="244.5001,-205.9909 248,-215.991 251.5001,-205.991 244.5001,-205.9909"/>
 </g>
-<!-- ! -->
+<!-- !environment -->
 <g id="node3" class="node">
-<title>!</title>
-<polygon fill="#8dd3c7" stroke="#000000" points="180,-122 177,-126 156,-126 153,-122 126,-122 126,-86 180,-86 180,-122"/>
-<text text-anchor="middle" x="153" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">!</text>
+<title>!environment</title>
+<polygon fill="#8dd3c7" stroke="#000000" points="198.9232,-122 195.9232,-126 174.9232,-126 171.9232,-122 107.0768,-122 107.0768,-86 198.9232,-86 198.9232,-122"/>
+<text text-anchor="middle" x="153" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">!environment</text>
 </g>
-<!-- !&#45;&gt;CoreModule -->
+<!-- !environment&#45;&gt;CoreModule -->
 <g id="edge2" class="edge">
-<title>!&#45;&gt;CoreModule</title>
-<path fill="none" stroke="#000000" d="M171.794,-122.1061C171.794,-141.3391 171.794,-169 171.794,-169 171.794,-169 194.5545,-169 194.5545,-169"/>
-<polygon fill="#000000" stroke="#000000" points="194.5545,-172.5001 204.5545,-169 194.5544,-165.5001 194.5545,-172.5001"/>
+<title>!environment&#45;&gt;CoreModule</title>
+<path fill="none" stroke="#000000" d="M198.9052,-104C207.5687,-104 213.9786,-104 213.9786,-104 213.9786,-104 213.9786,-140.8939 213.9786,-140.8939"/>
+<polygon fill="#000000" stroke="#000000" points="210.4787,-140.8938 213.9786,-150.8939 217.4787,-140.8939 210.4787,-140.8938"/>
 </g>
 </g>
 </svg>
