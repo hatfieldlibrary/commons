@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {BrowserModule, BrowserTransferStateModule, TransferState} from '@angular/platform-browser';
+import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 import {APP_ID, Inject, NgModule, PLATFORM_ID} from '@angular/core';
 import {APP_BASE_HREF, isPlatformBrowser} from '@angular/common';
 import {AppComponent} from './app.component';
@@ -30,6 +30,8 @@ import {AppRoutingModule} from './app.routing.module';
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from './environments/environment';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'}
