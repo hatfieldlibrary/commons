@@ -26,18 +26,18 @@
  * Created by mspalti on 8/24/18.
  */
 
-// import * as path from 'path';
 import {join} from 'path';
-// Express Engine
+// Angular Express Engine
 import {ngExpressEngine} from '@nguniversal/express-engine';
-// Import module map for lazy loading
+// Import the map for lazy loading modules.
 import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
+import * as express from 'express'
 
 export class AppRoutes {
 
-  public static init(app, express, config) {
+  public static init(app, config, appLogger) {
 
-    // * NOTE :: leave this as require() since this file is built Dynamically from webpack
+    // NOTE: must use require() since this file is built Dynamically from webpack
     const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('../../dist/server/main');
 
     // Passport authentication
@@ -47,6 +47,7 @@ export class AppRoutes {
 
     const DIST_FOLDER = join(process.cwd(), './dist');
 
+    // Using Angular Universal.
     app.engine('html', ngExpressEngine({
       bootstrap: AppServerModuleNgFactory,
       providers: [
@@ -57,12 +58,37 @@ export class AppRoutes {
     app.set('view engine', 'html');
     app.set('views', join(DIST_FOLDER, 'browser'));
 
-    // Server static files from /browser
+    // Serve static files from browser root directory.
     app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
 
-    // All regular routes use the Universal engine
+    /**
+     * All other routes use the Universal engine. Since this is
+     * a single page application, the only route needed is to the
+     * index file.
+     */
     app.get('*', (req, res) => {
       res.render('index', {req});
+    });
+
+    /**
+     * This provides basic handling of server errors. Such
+     * errors should be rare. Most common errors (e.g. 404) will be
+     * handled by the Commons Angular application itself. But in the
+     * event, we need to log the error message and return simple error page
+     * to the user.
+     */
+    app.use(function(err, req, res, next) {
+      // set locals, only providing error in development
+      res.locals.message = err.message;
+      res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+      // Add this line to include winston logging to server error.log
+      appLogger.getServerLogger()
+        .error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
+      // Render the error page
+      res.status(err.status || 500);
+      res.sendFile('/browser/serverError.html', {root: DIST_FOLDER});
     });
 
   }

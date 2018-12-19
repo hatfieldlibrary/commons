@@ -19,7 +19,8 @@
             "assets": [
               "src/client/assets",
               "src/client/favicon.ico",
-              "src/client/manifest.json"
+              "src/client/manifest.json",
+              "src/client/serverError.html"
             ],
             "styles": [
               "src/client/styles.css",
