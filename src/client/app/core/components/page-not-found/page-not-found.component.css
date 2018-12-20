@@ -23,7 +23,5 @@
  */
 
 .content-area {
-  background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
-  background-repeat: no-repeat,repeat-x;
-  background-position: top center,top center;
+  background: url(../../../../assets/img/masthead-bottom-img.jpg), url(../../../../assets/img/background-grain.jpg) no-repeat, repeat-x top center, top center;
 }
