@@ -27,7 +27,7 @@
     "build:dev:worker:ssr": "npm run build:dev:worker:prod && npm run webpack:server:prod",
     "serve:ssr": "HOST_ENV=development node dist/server",
     "build:client-and-server-bundles": "ng build --prod && ng run commons:server",
-    "build:client-and-server-bundles:prod": "ng build --prod --deploy-url=/commons-resource/ --base-href /commons/ && ng run commons:server:production",
+    "build:client-and-server-bundles:prod": "ng build --prod --deploy-url=/commons-resource/ --base-href /commons/",
     "build:dev:worker:prod": "ng build --prod --base-href / && ng run commons:server:production",
     "webpack:server": "webpack --env.development --config webpack.server.config.js --progress --colors",
     "webpack:server:prod": "webpack --env.production --config webpack.server.config.js --progress --colors",
