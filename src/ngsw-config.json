@@ -1,5 +1,6 @@
 {
-  "index": "/index.html",
+  "version": 2,
+  "index": "index.html",
   "assetGroups": [
     {
       "name": "app",
@@ -12,8 +13,8 @@
           "/*.js"
         ],
         "urls": [
-          "https://libmedia.willamette.edu/commons/index.html",
-          "https://libmedia.willamette.edu/commons-resource/**/*"
+          "https://libmedia-test.willamette.edu/commons/**",
+          "https://libmedia-test.willamette.edu/commons-resource/**"
         ]
       }
     },

@@ -23,9 +23,8 @@
  */
 
 mat-card-content.list-container {
-  background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
-  background-repeat: no-repeat,repeat-x;
-  background-position: top center,top center;
+
+  background: url(../../../../assets/img/masthead-bottom-img.jpg), url(../../../../assets/img/background-grain.jpg) no-repeat, repeat-x top center, top center;
 }
 .info-card {
   /*background: rgba(222, 220, 205, 0.06);*/
