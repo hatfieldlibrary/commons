@@ -38,7 +38,9 @@ module.exports = env => {
       alias: {
         'hiredis': path.join(__dirname, 'src/client/webpack.hacks/hiredis.js'),
         'credentials': (env.development) ? getUserHome() + '/etc/commons-dev/credentials.js' :
-          getUserHome() + '/etc/commons-prod/credentials.js'
+          getUserHome() + '/etc/commons-prod/credentials.js',
+        'environment': (env.development) ? 'src/client/app/environments/environment.ts' :
+            'src/client/app/environments/environment.prod.ts'
       }
     },
     target: 'node',

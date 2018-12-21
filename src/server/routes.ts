@@ -58,11 +58,23 @@ export class AppRoutes {
     app.set('view engine', 'html');
     app.set('views', join(DIST_FOLDER, 'browser'));
 
+    const options = {
+      dotfiles: 'ignore',
+      etag: false,
+      extensions: ['js', 'json', 'ico', 'css', 'svg', 'jpg', 'png'],
+      index: false,
+      maxAge: '1d',
+      redirect: false,
+      setHeaders: function (res, path, stat) {
+        res.set('x-timestamp', Date.now())
+      }
+    };
+
     // Serve static files from browser root directory.
-    app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+    app.use(express.static(join(DIST_FOLDER, 'browser'), options));
 
     /**
-     * All other routes use the Universal engine. Since this is
+     * All other routes use the view engine. Since this is
      * a single page application, the only route needed is to the
      * index file.
      */

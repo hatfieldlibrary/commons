@@ -46,9 +46,9 @@ import { environment } from './environments/environment';
     AppRoutingModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production })
   ],
-  // providers: [
-  //   {provide: APP_BASE_HREF, useValue: '/'}
-  // ],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: '/commons/'}
+  ],
   bootstrap: [AppComponent]
 })
 
