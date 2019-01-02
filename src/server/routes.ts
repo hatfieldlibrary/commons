@@ -58,20 +58,16 @@ export class AppRoutes {
     app.set('view engine', 'html');
     app.set('views', join(DIST_FOLDER, 'browser'));
 
-    const options = {
-      dotfiles: 'ignore',
-      etag: false,
-      extensions: ['js', 'json', 'ico', 'css', 'svg', 'jpg', 'png'],
-      index: false,
-      maxAge: '1d',
-      redirect: false,
-      setHeaders: function (res, path, stat) {
-        res.set('x-timestamp', Date.now())
-      }
-    };
+    // const options = {
+    //   dotfiles: 'ignore',
+    //   etag: false,
+    //   extensions: ['js', 'json', 'ico', 'css', 'svg', 'jpg', 'png'],
+    //   index: false,
+    //   redirect: false
+    // };
 
     // Serve static files from browser root directory.
-    app.use(express.static(join(DIST_FOLDER, 'browser'), options));
+    app.use('*.*', express.static(join(DIST_FOLDER, 'browser')));
 
     /**
      * All other routes use the view engine. Since this is
