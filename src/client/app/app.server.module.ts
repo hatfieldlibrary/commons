@@ -41,8 +41,8 @@ import {environment} from './environments/environment';
     FlexLayoutServerModule
   ],
   providers: [
-    // Add universal-only providers here
-    {provide: APP_BASE_HREF, useValue: environment.origin}
+    // The base must be an absolute path for server-side rendering of icons, etc.
+    { provide: APP_BASE_HREF, useValue: environment.origin  }
   ],
   bootstrap: [ AppComponent ],
 })

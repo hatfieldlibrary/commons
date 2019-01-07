@@ -45,7 +45,7 @@ export class AppRoutes {
     // Check for authenticated user.
     app.use(config.authCheck, app.checkAuthentication);
 
-    const DIST_FOLDER = join(process.cwd(), './dist');
+    const DIST_FOLDER = join(process.cwd(), './dist', 'browser');
 
     // Using Angular Universal.
     app.engine('html', ngExpressEngine({
@@ -56,18 +56,26 @@ export class AppRoutes {
     }));
 
     app.set('view engine', 'html');
-    app.set('views', join(DIST_FOLDER, 'browser'));
+    app.set('views', join(DIST_FOLDER));
+
+    const options = {
+      dotfiles: 'ignore',
+      etag: false,
+      extensions: ['js', 'json', 'ico', 'css', 'svg', 'jpg', 'png'],
+      index: false,
+      redirect: false
+    };
 
     // Serve static files from browser root directory.
-    app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
+    app.use('/commons', express.static(join(DIST_FOLDER), options));
 
     /**
-     * All other routes use the Universal engine. Since this is
+     * All routes without a file extension return index.html. Since this is
      * a single page application, the only route needed is to the
      * index file.
      */
-    app.get('*', (req, res) => {
-      res.render('index', {req});
+    app.get('^[^.]+$', (req, res) => {
+      res.render(join(DIST_FOLDER, 'index.html'), {req});
     });
 
     /**
@@ -88,7 +96,7 @@ export class AppRoutes {
 
       // Render the error page
       res.status(err.status || 500);
-      res.sendFile('/browser/serverError.html', {root: DIST_FOLDER});
+      res.sendFile('/serverError.html', {root: DIST_FOLDER});
     });
 
   }
