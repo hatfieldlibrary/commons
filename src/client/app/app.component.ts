@@ -132,6 +132,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     // Angular 6.1 introduced a new scrollPositionRestoration router option.
     // This is still under discussion. https://github.com/angular/angular/issues/24547
     // Appears to be an alternative to the approach below. Not sure it's better...
+
     // Anticipating angular universal.
     if (isPlatformBrowser(this.platform)) {
       // Actually, this probably should become a directive!

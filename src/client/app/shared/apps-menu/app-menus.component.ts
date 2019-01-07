@@ -127,7 +127,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
       this.router.events.subscribe((event: any) => {
         if (event instanceof NavigationEnd) {
           // If item route, show back arrow.
-          if (event.url.match(/\/commons\/item/)) {
+          if (event.url.match(/\/item/)) {
             this.showBack = true;
           } else {
             this.showBack = false;

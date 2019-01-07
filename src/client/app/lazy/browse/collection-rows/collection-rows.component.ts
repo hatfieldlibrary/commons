@@ -25,7 +25,7 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output
 } from '@angular/core';
@@ -33,6 +33,9 @@ import {CollectionType} from '../../../core/data-types/collection.type';
 import {environment} from '../../../environments/environment';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {Subscription} from 'rxjs';
+import {createForJitStub} from '@angular/compiler/src/aot/summary_serializer';
 
 @Component({
   selector: 'app-collection-rows',
@@ -49,7 +52,7 @@ import {NavigationServiceB} from '../../../core/services/navigation-2/navigation
       ])
     ])]
 })
-export class CollectionRowsComponent implements OnInit {
+export class CollectionRowsComponent implements OnInit, OnDestroy {
 
   /**
    * The collection list to show.
@@ -65,10 +68,19 @@ export class CollectionRowsComponent implements OnInit {
   @Output() setView: EventEmitter<any> = new EventEmitter<any>();
 
   /**
+   * Used to clean up subscriptions in OnDestroy.
+   */
+  watchers: Subscription;
+
+  isMobile = true;
+
+  /**
    * Constructor
    * @param navigationService the singleton selection service.
+   * @param media used to remove thumbnails from mobile biew
    */
-  constructor(private navigationService: NavigationServiceB) {
+  constructor(private navigationService: NavigationServiceB,
+              public media: ObservableMedia) {
   }
 
   /**
@@ -114,7 +126,20 @@ export class CollectionRowsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.watchers = new Subscription();
+    this.setMediaWatcher();
+  }
 
+  ngOnDestroy(): void {
+    this.watchers.unsubscribe();
+  }
+
+  private setMediaWatcher(): void {
+    const mediaWatcher = this.media.asObservable()
+      .subscribe((change: MediaChange) => {
+        this.isMobile = change.mqAlias === 'xs';
+      });
+    this.watchers.add(mediaWatcher);
   }
 
 }

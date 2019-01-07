@@ -28,9 +28,6 @@
             ]
           },
           "configurations": {
-            "development": {
-              "baseHref" : "/"
-            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -41,7 +38,6 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "baseHref" : "/commons/",
               "fileReplacements": [
                 {
                   "replace": "src/client/app/environments/environment.ts",

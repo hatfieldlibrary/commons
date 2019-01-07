@@ -32,6 +32,9 @@
 .mat-list-item {
   /*float: left ;*/
 }
+.mat-list-base {
+  padding-top: 0;
+}
 .overflow-x-scroll-no-scrollbar {
   overflow: hidden;
   position: relative;
