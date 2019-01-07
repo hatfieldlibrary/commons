@@ -21,7 +21,9 @@
  *
  * Author: Michael Spalti
  */
-
+a, a:visited {
+  color: #1199a4;
+}
 .area-info {
   padding: 54px 16px 16px;
   color: rgba(255, 255, 255, 0.88);
@@ -33,8 +35,11 @@
 
   }
 }
+button.mat-accent, .mat-raised-button.mat-accent {
+  background-color: #11838e;
+}
 .area-button {
-  margin: 32px 0 0;
+  margin: 8px 0 0;
 }
 .down-pointer {
   width: 0;

@@ -47,7 +47,6 @@ interface RouterIds {
 })
 export class NavigationServiceB {
 
-  urlRootPath = environment.appRoot;
   removedSubjects$: Subscription;
   removedGroups$: Subscription;
   removedTypes$: Subscription;
@@ -104,7 +103,7 @@ export class NavigationServiceB {
         return true;
       }
     // Should not fetch collection data if navigating from an item view.
-    const regex = /\/commons\/item/;
+    const regex = /commons\/item/;
     if (this.previousUrl.match(regex)) {
       return false;
     }
@@ -166,19 +165,18 @@ export class NavigationServiceB {
   }
 
   public navigateItemRoute(itemId: string): void {
-    this.router.navigate([ '/',
-      this.urlRootPath,
+    this.router.navigate([
       'item',
       'id', itemId
     ]);
   }
 
   public getItemLink(itemId: number): string {
-    return '/' + this.urlRootPath + '/item/id/' + itemId;
+    return  '/' + 'item/id/' + itemId;
   }
 
   public getAreaLink(areaId: number): string {
-    return '/' + this.urlRootPath + '/collection/area/' + areaId;
+    return 'collection/area/' + areaId;
   }
 
   /**
@@ -301,8 +299,8 @@ export class NavigationServiceB {
       && this.isFieldSelected(areaId)
       && this.isFieldSelected(fields.groupId)) {
 
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'category', groupId,
         'area', areaId,
@@ -312,8 +310,8 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'category', groupId,
         'type', typeId,
@@ -322,8 +320,8 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(areaId)
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(fields.groupId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'category', groupId,
         'area', areaId,
@@ -332,8 +330,8 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(areaId)
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'category', groupId,
         'area', areaId,
@@ -342,49 +340,49 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(areaId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'area', areaId,
         'type', typeId,
         'subject', subjectId
       ], queryParams);
     } else if (this.isFieldSelected(fields.groupId) && this.isFieldSelected(areaId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'category', groupId,
         'area', areaId
       ], queryParams);
     } else if (this.isFieldSelected(fields.subjectId) && this.isFieldSelected(areaId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'area', areaId,
         'subject', subjectId
       ], queryParams);
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(areaId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'area', areaId,
         'type', typeId
       ], queryParams);
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(fields.subjectId)) {
-      this.router.navigate(['/',
-        this.urlRootPath,
+      this.router.navigate([
+
         'collection',
         'type', typeId,
         'subject', subjectId
       ], queryParams);
     } else if (this.isFieldSelected(fields.typeId)) {
-      this.router.navigate(['/', this.urlRootPath, 'collection', 'type', typeId], queryParams);
+      this.router.navigate([ 'collection', 'type', typeId], queryParams);
     } else if (this.isFieldSelected(areaId)) {
-      this.router.navigate(['/', this.urlRootPath, 'collection', 'area', areaId], queryParams);
+      this.router.navigate([ 'collection', 'area', areaId], queryParams);
     } else if (this.isFieldSelected(fields.subjectId)) {
-      this.router.navigate(['/', this.urlRootPath, 'collection', 'subject', subjectId], queryParams);
+      this.router.navigate([ 'collection', 'subject', subjectId], queryParams);
     } else {
-      this.router.navigate(['/', this.urlRootPath, 'collection'], queryParams);
+      this.router.navigate([ 'collection'], queryParams);
     }
   }
 
@@ -433,23 +431,23 @@ export class NavigationServiceB {
                                     selectedGroup: string,
                                     selectedSubject: string,
                                     selectedTypes: string): string {
-    return '/' + this.urlRootPath +
-      `/collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
+    return  '/' +
+      `collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
   }
 
   private _areaGroupSubjectLink(selectedArea: string, selectedGroup: string, selectedSubject: string): string {
-    return '/' + this.urlRootPath +
-      `/collection/category/${selectedGroup}/area/${selectedArea}/subject/${selectedSubject}`;
+    return  '/' +
+      `collection/category/${selectedGroup}/area/${selectedArea}/subject/${selectedSubject}`;
   }
 
   private _areaGroupTypeLink(selectedArea: string, selectedGroup: string, selectedTypes: string): string {
-    return '/' + this.urlRootPath +
-      `/collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}`;
+    return  '/' +
+      `collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}`;
   }
 
   private _areaGroupLink(selectedArea: string, selectedGroup: string): string {
-    return '/' + this.urlRootPath +
-      `/collection/category/${selectedGroup}/area/${selectedArea}`;
+    return  '/'  +
+      `collection/category/${selectedGroup}/area/${selectedArea}`;
   }
 
   // private _groupTypeLink(selectedGroup: string, selectedTypes: string): string {
@@ -468,35 +466,35 @@ export class NavigationServiceB {
   // }
 
   private _areaSubjectTypeLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
-    return '/' + this.urlRootPath + `/collection/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
+    return  '/' + `collection/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
   }
 
   private _areaSubjectLink(selectedArea: string, selectedSubject: string): string {
-    return '/' + this.urlRootPath + `/collection/area/${selectedArea}/subject/${selectedSubject}`;
+    return  '/' + `collection/area/${selectedArea}/subject/${selectedSubject}`;
   }
 
   private _areaTypeLink(selectedArea: string, selectedTypes: string): string {
-    return '/' + this.urlRootPath + `/collection/area/${selectedArea}/type/${selectedTypes}`;
+    return  '/' + `collection/area/${selectedArea}/type/${selectedTypes}`;
   }
 
   private _areaLink(selectedArea: string): string {
-    return '/' + this.urlRootPath + `/collection/area/${selectedArea}`;
+    return  '/' + `collection/area/${selectedArea}`;
   }
 
   private _globalLink(): string {
-    return '/' + this.urlRootPath + environment.defaultRoute;
+    return  '/' + environment.defaultRoute;
   }
 
   private _globalTypeLink(selectedTypes: string): string {
-    return '/' + this.urlRootPath + `/collection/type/${selectedTypes}`;
+    return  '/' + `collection/type/${selectedTypes}`;
   }
 
   private _globalSubjectLink(selectedSubject: string): string {
-    return '/' + this.urlRootPath + `/collection/subject/${selectedSubject}`;
+    return  '/' + `collection/subject/${selectedSubject}`;
   }
 
   private _globalSubjectTypeLink(selectedSubject: string, selectedTypes: string): string {
-    return '/' + this.urlRootPath + `/collection}/subject/${selectedSubject}/type/${selectedTypes}`;
+    return  '/' + `collection}/subject/${selectedSubject}/type/${selectedTypes}`;
   }
 
 

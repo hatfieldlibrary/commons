@@ -33,7 +33,7 @@
       <div *ngIf="assetType === 'dig'" class="mat-title">Access Collection</div>
       <div *ngIf="assetType === 'itm'" class="mat-title">Access Options</div>
       <div class="scope-note">You can access <em>{{title}}</em> after you login with your Willamette University account.</div>
-      <a mat-raised-button color="primary" href="{{authenticationPath}}" aria-label="login for access to restricted item">Login for Access</a>
+      <a mat-raised-button rel="noopener" color="primary" href="{{authenticationPath}}" aria-label="login for access to restricted item">Login for Access</a>
 
     </div>
 
@@ -52,11 +52,11 @@
 
       <div
         *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'dig' && linkOptions !== 'opts'">
-        <a attr.aria-label="link to {{title}}" mat-raised-button color="primary" role="button" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
+        <a attr.aria-label="link to {{title}}" mat-raised-button color="primary" role="button" rel="noopener" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{COLLECTION_BUTTON_LABEL}}</a>
       </div>
 
       <div *ngIf="(searchOptions === 'DEFAULT' || searchOptions === 'BROWSE') &&  assetType === 'itm'">
-        <a attr.aria-label="link to {{title}}" mat-raised-button color="primary" role="button" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
+        <a attr.aria-label="link to {{title}}" mat-raised-button color="primary" role="button" rel="noopener" [disabled]="!isAuthenticated && restricted" href="{{url}}" target="_blank">{{ITEM_BUTTON_LABEL}}</a>
       </div>
 
       <div *ngIf="linkOptions === 'opts'" style="width:100%;">

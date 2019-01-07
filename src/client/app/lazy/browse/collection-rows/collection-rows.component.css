@@ -56,6 +56,9 @@ mat-nav-list .mat-list-item .mat-list-item-content {
   font-weight: 800;
   cursor: default;
 }
+a, a:visited {
+  color: #666;
+}
 .mat-list-item:hover {
   background-color: rgba(240, 240, 240, 0.57);
   cursor: pointer;
@@ -76,19 +79,24 @@ app-lock-svg {
 .count-view {
   display: none;
 }
+.card-label {
+  padding-right: 6px;
+  color: #333;
+  font-weight: 800;
+}
 @media screen and (min-width: 787px) {
   .count-view{
     display: block;
   }
 }
-.image-view {
-  display: none;
-}
-@media screen and (min-width: 610px) {
-  .image-view{
-    display: block;
-  }
-}
+/*.image-view {*/
+  /*display: none;*/
+/*}*/
+/*@media screen and (min-width: 610px) {*/
+  /*.image-view{*/
+    /*display: block;*/
+  /*}*/
+/*}*/
 .list-container a:active,.list-container a:focus {
   outline: 0;
   border: none;

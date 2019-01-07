@@ -1,5 +1,6 @@
 {
-  "index": "/index.html",
+  "version": 2,
+  "index": "/collection/area/5",
   "assetGroups": [
     {
       "name": "app",
@@ -7,13 +8,12 @@
       "resources": {
         "files": [
           "/favicon.ico",
-          "/index.html",
           "/*.css",
           "/*.js"
         ],
         "urls": [
-          "https://libmedia.willamette.edu/commons/index.html",
-          "https://libmedia.willamette.edu/commons-resource/**/*"
+          "https://libmedia-test.willamette.edu/commons/**/*",
+          "http://localhost:3005/**/*"
         ]
       }
     },
@@ -24,6 +24,10 @@
       "resources": {
         "files": [
           "/assets/**"
+        ],
+        "urls": [
+          "https://libmedia-test.willamette.edu/commons/assets/**/*",
+          "http://localhost:3005/assets/**/*"
         ]
       }
     }

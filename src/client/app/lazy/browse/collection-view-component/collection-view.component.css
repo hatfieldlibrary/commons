@@ -23,7 +23,8 @@
  */
 
 mat-card-content.list-container {
-  background-image: url(/assets/img/masthead-bottom-img.jpg),url(/assets/img/background-grain.jpg);
+
+  background-image: url(../../../../assets/img/masthead-bottom-img.jpg),url(../../../../assets/img/background-grain.jpg);
   background-repeat: no-repeat,repeat-x;
   background-position: top center,top center;
 }
