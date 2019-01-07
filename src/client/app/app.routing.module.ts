@@ -31,24 +31,36 @@ const appRoutes: Routes = [
 
   {
     path: environment.appRoot, // Go to default collection area (partial path)
-    redirectTo: environment.appRoot + environment.defaultRoute,
+    redirectTo:  environment.defaultRoute,
     pathMatch: 'full'
   },
   {
-    path: environment.appRoot + '/collection',  // Go to default collection area (empty path)
-    redirectTo: environment.appRoot + environment.defaultRoute,
+    path: 'collection',  // Go to default collection area (empty path)
+    redirectTo: environment.defaultRoute,
     pathMatch: 'full'
   },
   {
-    path: environment.appRoot + '/item/submit/:typeId',
+    path:  'commons/item/submit/:typeId',
     loadChildren: './lazy/submit-dspace/submit-dspace.module#SubmitDspaceModule'
   },
   {
-    path: environment.appRoot + '/item/id/:id',
+    path:  'item/submit/:typeId',
+    loadChildren: './lazy/submit-dspace/submit-dspace.module#SubmitDspaceModule'
+  },
+  {
+    path:  'item/id/:id',
     loadChildren: './lazy/item/item.module#ItemModule'
   },
   {
-    path: environment.appRoot + '/collection',
+    path:  'commons/item/id/:id',
+    loadChildren: './lazy/item/item.module#ItemModule'
+  },
+  {
+    path:  'collection',
+    loadChildren: './lazy/browse/list.module#ListModule'
+  },
+  {
+    path:  'commons/collection',
     loadChildren: './lazy/browse/list.module#ListModule'
   },
   {

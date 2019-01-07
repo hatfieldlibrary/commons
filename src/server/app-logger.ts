@@ -22,7 +22,8 @@
  * Author: Michael Spalti
  */
 
-import {createLogger, Logger, transports} from 'winston';
+import {createLogger, Logger, transports, format} from 'winston';
+const { combine, timestamp, label } = format;
 import * as morgan from 'morgan';
 
 /**
@@ -75,6 +76,7 @@ export class ApplicationLogger {
 
     // noinspection TypeScriptValidateTypes
     this.logger = createLogger({
+
       transports: [
         new transports.File(this.options.access),
       ],

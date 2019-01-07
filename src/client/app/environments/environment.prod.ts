@@ -39,18 +39,17 @@ export const environment = {
   // // authCheck: '/commons-check'
 
   production: true,
-  origin: 'https://libmedia-test.willamette.edu/',
+  // The client host (needed by universal).
+  origin: 'https://libmedia.willamette.edu/',
   // REST API host. Can be localhost or production host
   // apiHost: 'https://libmedia.willamette.edu',
-  apiHost: 'https://libmedia-test.willamette.edu',
+  apiHost: 'https://libmedia.willamette.edu',
   // Base path, do not include beginning forward slash.
-  appRoot: 'commons',
-  // Path to the REST API.
-  // apiRoot: '/commons-rest',
+  appRoot: 'commons/',
+  // Path to the REST API (proxy).
   apiRoot: '/tagger-3-api',
-  // Path to images.
-   imagePath: '/commons-images',
- // imagePath: '',
+  // Path to images on tagger (proxy).
+  imagePath: '/commons-images',
   // Authentication paths.
   authPath: '/commons-auth',
   authCheck: 'https://libmedia-test.willamette.edu/commons-check',

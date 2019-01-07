@@ -29,12 +29,13 @@
 
 export const environment = {
   production: false,
+  // The client host (needed by universal).
   origin: 'http://localhost:3005/',
   // REST API host (e.g. Tagger-2). Can be localhost or production host
    // apiHost: 'https://libmedia.willamette.edu',
   apiHost: 'http://libapps.willamette.edu:3007',
   // Base path, do not include beginning forward slash.
-  appRoot: 'commons',
+  appRoot: '',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',
