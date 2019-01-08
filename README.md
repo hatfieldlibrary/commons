@@ -17,13 +17,6 @@ The Commons relies on the [Tagger-2](https://github.com/hatfieldlibrary/tagger-2
  
  [Redis](https://redis.io/) is used as the session store and is required by the production environment.
  
- |              | Version
- |-------------	|:-------:
- | Angular     	| 6.1.4 	
- | Angular CLI 	| 6.1.4 		
- | ngrx        	| 6.0.1 	
- | rxjs        	| 6.2.2 	
- | nodejs       | 8.13.0
 
 ## Configuration 
 

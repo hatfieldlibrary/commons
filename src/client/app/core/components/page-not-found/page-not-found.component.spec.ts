@@ -29,6 +29,7 @@ import { DebugElement } from '@angular/core';
 
 import { PageNotFoundComponent } from './page-not-found.component';
 import {MatCardModule} from '@angular/material';
+import {Router} from '@angular/router';
 
 describe('PageNotFoundComponent', () => {
   let component: PageNotFoundComponent;
@@ -37,6 +38,12 @@ describe('PageNotFoundComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PageNotFoundComponent ],
+      providers: [
+        {
+          provide: Router,
+          useValue: jasmine.createSpy()
+        },
+      ],
       imports: [
         MatCardModule
       ],

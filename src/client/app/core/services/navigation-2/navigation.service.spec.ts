@@ -151,8 +151,7 @@ describe('NavigationService', () => {
 
     it('should navigate to item', () => {
       service.navigateItemRoute('1', '1');
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'item',
         'id',
         '1'
@@ -187,8 +186,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '1', '1', '1');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'category', '1',
         'area', '1',
@@ -202,8 +200,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '1', '1', '');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'area', '1',
         'type', '1',
@@ -216,8 +213,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '1', '', '1');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'category', '1',
         'area', '1',
@@ -230,8 +226,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '', '1', '1');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'category', '1',
         'area', '1',
@@ -243,8 +238,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '', '1', '');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'area', '1',
         'subject', '1'
@@ -255,8 +249,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '1', '', '');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'area', '1',
         'type', '1'
@@ -267,8 +260,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '', '', '1');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'category', '1',
         'area', '1'
@@ -279,8 +271,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '', '', '');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'area', '1'
       ], {queryParams: {}})
@@ -290,8 +281,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '', '', '', 'list');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'area', '1'
       ], {queryParams: {view: 'list'}})
@@ -301,8 +291,7 @@ describe('NavigationService', () => {
       spyOn(service, 'setIdFields').and.callThrough();
       service.navigateRoute('1', '1', '', '', 'list');
       expect(service.setIdFields).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/',
-        service.urlRootPath,
+      expect(router.navigate).toHaveBeenCalledWith([
         'collection',
         'area', '1',
         'type', '1'
@@ -311,37 +300,37 @@ describe('NavigationService', () => {
 
     it('should return back link area, group, type, subject', () => {
       const link = service.getBackLink('1', '1', '1', '1');
-      expect(link).toEqual('/commons/collection/category/1/area/1/type/1/subject/1')
+      expect(link).toEqual('/collection/category/1/area/1/type/1/subject/1')
     });
 
     it('should return back link area, group', () => {
       const link = service.getBackLink('1', '1', '', '');
-      expect(link).toEqual('/commons/collection/category/1/area/1')
+      expect(link).toEqual('/collection/category/1/area/1')
     });
 
     it('should return back link area, group, subject', () => {
       const link = service.getBackLink('1', '1', '1', '');
-      expect(link).toEqual('/commons/collection/category/1/area/1/subject/1')
+      expect(link).toEqual('/collection/category/1/area/1/subject/1')
     });
 
     it('should return back link area, group, type', () => {
       const link = service.getBackLink('1', '1', '', '1');
-      expect(link).toEqual('/commons/collection/category/1/area/1/type/1')
+      expect(link).toEqual('/collection/category/1/area/1/type/1')
     });
 
     it('should return back link area, subject, type', () => {
       const link = service.getBackLink('1', '', '1', '1');
-      expect(link).toEqual('/commons/collection/area/1/type/1/subject/1')
+      expect(link).toEqual('/collection/area/1/type/1/subject/1')
     });
 
     it('should return back link area, type', () => {
       const link = service.getBackLink('1', '', '', '1');
-      expect(link).toEqual('/commons/collection/area/1/type/1')
+      expect(link).toEqual('/collection/area/1/type/1')
     });
 
     it('should return back link area, subject', () => {
       const link = service.getBackLink('1', '', '1', '');
-      expect(link).toEqual('/commons/collection/area/1/subject/1')
+      expect(link).toEqual('/collection/area/1/subject/1')
     });
 
 

@@ -41,7 +41,7 @@ export class RelatedItemsComponent implements OnDestroy {
   @Input() columns: number;
   isMobile = false;
   watcher: Subscription;
-  appRoot = environment.appRoot;
+ // appRoot = environment.appRoot;
   imagePath = environment.apiHost +  environment.imagePath;
 
   constructor(private media: ObservableMedia) {
@@ -55,7 +55,7 @@ export class RelatedItemsComponent implements OnDestroy {
   }
 
   getRelatedLink(collectionId: number): string {
-    return '/' + this.appRoot + '/item/id/' + collectionId;
+    return '/item/id/' + collectionId;
   }
 
   ngOnDestroy(): void {
