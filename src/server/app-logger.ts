@@ -23,28 +23,46 @@
  */
 
 import {createLogger, Logger, transports, format} from 'winston';
-const { combine, timestamp, label } = format;
+import * as DailyRotateFile from 'winston-daily-rotate-file';
+const { combine } = format;
 import * as morgan from 'morgan';
+import * as fs from 'fs';
 
 /**
- * This module configures winston logging and configures
- * the application to consolidate winston logging with
- * http logging.
+ * This module configures Winston logging for
+ * an access log (using Morgan) and an error log.
  */
 export class ApplicationLogger {
+
+  logDir = '/var/log/commons';
 
   options = {
 
     access: {
       level: 'info',
-      filename: '/var/log/commons/access.log',
+      filename: `${this.logDir}/access-%DATE%.log`,
+      datePattern: 'YYYY-MM-DD',
+      maxFiles: '14d',
+      zippedArchive: true,
       handleExceptions: true,
       json: false,
-      colorize: false,
+      format: combine(format.timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss'
+        }),
+        format.printf(info => `${info.level}: ${info.message}`))
     },
     error: {
       level: 'error',
-      filename: '/var/log/commons/error.log',
+      filename: `${this.logDir}/error-%DATE%.log`,
+      datePattern: 'YYYY-MM',
+      maxFiles: '10',
+      zippedArchive: true,
+      handleExceptions: true,
+      json: false,
+      format: combine(format.timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss'
+        }),
+        format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`))
     },
     console: {
       level: 'debug',
@@ -55,12 +73,7 @@ export class ApplicationLogger {
 
   };
 
-  serverLogger: Logger = createLogger({
-    transports: [
-      new transports.File(this.options.error),
-    ],
-    exitOnError: false, // do not exit on handled exceptions)
-  });
+  errorLogger: Logger;
 
   logger: Logger;
 
@@ -74,11 +87,32 @@ export class ApplicationLogger {
    */
   public init(app: any): void {
 
-    // noinspection TypeScriptValidateTypes
-    this.logger = createLogger({
+    // Create the log directory if it does not exist
+    if (!fs.existsSync(this.logDir)) {
+      fs.mkdirSync(this.logDir);
+    }
 
+    /**
+     * Defines the logger used for errors (e.g. 500).
+     */
+    this.errorLogger = createLogger({
       transports: [
-        new transports.File(this.options.access),
+        new DailyRotateFile(this.options.error),
+        new transports.Console(this.options.console)
+      ],
+      exitOnError: false, // do not exit on handled exceptions)
+    });
+
+    this.errorLogger.on('error', (err) => {
+      console.log(err) // The logger itself can emit errors. Handle these here with simple console log.
+    });
+
+    /**
+     * Defines the access log used by Morgan.
+     */
+    this.logger = createLogger({
+      transports: [
+        new DailyRotateFile(this.options.access)
       ],
       exitOnError: false, // do not exit on handled exceptions
     });
@@ -88,8 +122,7 @@ export class ApplicationLogger {
     });
 
     /**
-     * Configure the Express app to use Morgan and log requests using the
-     * Winston logger.
+     * Configure the Express app to use Morgan and the Winston logger for the access log.
      */
     app.use(morgan('common', {
         'stream': {
@@ -103,10 +136,10 @@ export class ApplicationLogger {
   /**
    * Returns the Winston error logger. This can
    * be used for Express error messages. See usage in
-   * routes.js.
+   * routes.ts.
    */
   public getServerLogger(): Logger {
-    return this.serverLogger;
+    return this.errorLogger;
   }
 
 

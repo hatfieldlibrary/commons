@@ -82,8 +82,8 @@ export class AppRoutes {
      * This provides basic handling of server errors. Such
      * errors should be rare. Most common errors (e.g. 404) will be
      * handled by the Commons Angular application itself. But in the
-     * event, we need to log the error message and return simple error page
-     * to the user.
+     * event, we need to log an error message and return simple error
+     * page to the user.
      */
     app.use(function(err, req, res, next) {
       // set locals, only providing error in development
@@ -92,7 +92,7 @@ export class AppRoutes {
 
       // Add this line to include winston logging to server error.log
       appLogger.getServerLogger()
-        .error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+        .error(`${err.status || 500} - ${err.message} - ${req.method} - ${req.originalUrl} - ${req.ip}`);
 
       // Render the error page
       res.status(err.status || 500);
