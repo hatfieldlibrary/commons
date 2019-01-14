@@ -51,8 +51,8 @@ export const environment = {
   // Path to images on tagger (proxy).
   imagePath: '/commons-images',
   // Authentication paths.
-  authPath: '/commons-auth',
-  authCheck: 'https://libmedia-test.willamette.edu/commons-check',
+  authPath: '/com-auth',
+  authCheck: 'https://libmedia.willamette.edu/com-check',
   defaultRoute: '/collection/area/5',
   isDebugMode: false
 };

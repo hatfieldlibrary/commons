@@ -12,8 +12,7 @@
           "/*.js"
         ],
         "urls": [
-          "https://libmedia-test.willamette.edu/commons/**/*",
-          "http://localhost:3005/**/*"
+          "https://libmedia.willamette.edu/commons/**/*"
         ]
       }
     },
@@ -26,8 +25,7 @@
           "/assets/**"
         ],
         "urls": [
-          "https://libmedia-test.willamette.edu/commons/assets/**/*",
-          "http://localhost:3005/assets/**/*"
+          "https://libmedia.willamette.edu/commons/assets/**/*"
         ]
       }
     }
@@ -46,5 +44,15 @@
         "strategy": "freshness"
       }
     }
+  ],
+  "navigationUrls": [
+    "/**",
+    "!/**/*.*",
+    "!/**/*__*",
+    "!/**/*__*/**",
+    "!/**/com-check",
+    "!/**/com-auth",
+    "!/com-check",
+    "!/com-auth"
   ]
 }

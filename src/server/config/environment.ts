@@ -48,8 +48,8 @@ export class Configuration {
       serverBaseURL: this.credentials.serverBaseURL,
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
-      authPath: '/auth',
-      authCheck: '/check',
+      authPath: '/com-auth',
+      authCheck: '/com-check',
       nodeEnv: 'development'
     },
 
@@ -75,8 +75,8 @@ export class Configuration {
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
       redisPort: this.credentials.redisPort,
-      authPath: '/commons-auth',
-      authCheck: this.credentials.apiHost + '/commons-check',
+      authPath: '/com-auth',
+      authCheck: this.credentials.apiHost + '/com-check',
       nodeEnv: 'production'
     }
   };
