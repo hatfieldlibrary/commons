@@ -31,11 +31,13 @@ import {Subject} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 import {mockStore} from '../test/mock-store';
 import {Observable} from 'rxjs/internal/Observable';
+import {environment} from '../../environments/environment';
 
 describe('DispatchService', () => {
 
   class MockRouterItem {
-    public event = new NavigationEnd(0, '/commons/item', '/commons/item');
+    public event = new NavigationEnd(0, '/' + environment.appRoot + 'item', '/'
+      + environment.appRoot + 'item');
     public events = new Observable(observer => {
       observer.next(this.event);
       observer.complete();

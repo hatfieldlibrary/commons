@@ -28,13 +28,15 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
+
   production: false,
   origin: 'http://localhost:3005/',
   // REST API host. Can be localhost or production host
   // apiHost: 'https://libmedia.willamette.edu',
   apiHost: '',
+  appRoot: '/commons/',
   // Base path, do not include beginning forward slash.
-  appRoot: 'commons',
+  appRoute: 'commons/',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',
@@ -46,4 +48,5 @@ export const environment = {
   authCheck: '/',
   defaultRoute: '/collection/area/5',
   isDebugMode: true
+
 };

@@ -103,7 +103,8 @@ export class NavigationServiceB {
         return true;
       }
     // Should not fetch collection data if navigating from an item view.
-    const regex = /commons\/item/;
+    const path = environment.appRoot + 'item/';
+    const regex = new RegExp( path, 'g' );
     if (this.previousUrl.match(regex)) {
       return false;
     }
@@ -166,17 +167,18 @@ export class NavigationServiceB {
 
   public navigateItemRoute(itemId: string): void {
     this.router.navigate([
+      environment.appRoot +
       'item',
       'id', itemId
     ]);
   }
 
   public getItemLink(itemId: number): string {
-    return  '/' + 'item/id/' + itemId;
+    return  environment.appRoot + 'item/id/' + itemId;
   }
 
   public getAreaLink(areaId: number): string {
-    return 'collection/area/' + areaId;
+    return environment.appRoot + 'collection/area/' + areaId;
   }
 
   /**
@@ -300,7 +302,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.groupId)) {
 
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'category', groupId,
         'area', areaId,
@@ -311,7 +313,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'category', groupId,
         'type', typeId,
@@ -321,7 +323,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(fields.groupId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'category', groupId,
         'area', areaId,
@@ -331,7 +333,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'category', groupId,
         'area', areaId,
@@ -341,7 +343,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(areaId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'area', areaId,
         'type', typeId,
@@ -349,40 +351,40 @@ export class NavigationServiceB {
       ], queryParams);
     } else if (this.isFieldSelected(fields.groupId) && this.isFieldSelected(areaId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'category', groupId,
         'area', areaId
       ], queryParams);
     } else if (this.isFieldSelected(fields.subjectId) && this.isFieldSelected(areaId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'area', areaId,
         'subject', subjectId
       ], queryParams);
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(areaId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'area', areaId,
         'type', typeId
       ], queryParams);
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(fields.subjectId)) {
       this.router.navigate([
-
+        environment.appRoot +
         'collection',
         'type', typeId,
         'subject', subjectId
       ], queryParams);
     } else if (this.isFieldSelected(fields.typeId)) {
-      this.router.navigate([ 'collection', 'type', typeId], queryParams);
+      this.router.navigate([ environment.appRoot + 'collection', 'type', typeId], queryParams);
     } else if (this.isFieldSelected(areaId)) {
-      this.router.navigate([ 'collection', 'area', areaId], queryParams);
+      this.router.navigate([ environment.appRoot + 'collection', 'area', areaId], queryParams);
     } else if (this.isFieldSelected(fields.subjectId)) {
-      this.router.navigate([ 'collection', 'subject', subjectId], queryParams);
+      this.router.navigate([ environment.appRoot + 'collection', 'subject', subjectId], queryParams);
     } else {
-      this.router.navigate([ 'collection'], queryParams);
+      this.router.navigate([ environment.appRoot + 'collection'], queryParams);
     }
   }
 
@@ -431,22 +433,22 @@ export class NavigationServiceB {
                                     selectedGroup: string,
                                     selectedSubject: string,
                                     selectedTypes: string): string {
-    return  '/' +
+    return  environment.appRoot +
       `collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
   }
 
   private _areaGroupSubjectLink(selectedArea: string, selectedGroup: string, selectedSubject: string): string {
-    return  '/' +
+    return  environment.appRoot +
       `collection/category/${selectedGroup}/area/${selectedArea}/subject/${selectedSubject}`;
   }
 
   private _areaGroupTypeLink(selectedArea: string, selectedGroup: string, selectedTypes: string): string {
-    return  '/' +
+    return  environment.appRoot +
       `collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}`;
   }
 
   private _areaGroupLink(selectedArea: string, selectedGroup: string): string {
-    return  '/'  +
+    return  environment.appRoot +
       `collection/category/${selectedGroup}/area/${selectedArea}`;
   }
 
@@ -466,35 +468,35 @@ export class NavigationServiceB {
   // }
 
   private _areaSubjectTypeLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
-    return  '/' + `collection/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
+    return  environment.appRoot + `collection/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
   }
 
   private _areaSubjectLink(selectedArea: string, selectedSubject: string): string {
-    return  '/' + `collection/area/${selectedArea}/subject/${selectedSubject}`;
+    return  environment.appRoot + `collection/area/${selectedArea}/subject/${selectedSubject}`;
   }
 
   private _areaTypeLink(selectedArea: string, selectedTypes: string): string {
-    return  '/' + `collection/area/${selectedArea}/type/${selectedTypes}`;
+    return  environment.appRoot + `collection/area/${selectedArea}/type/${selectedTypes}`;
   }
 
   private _areaLink(selectedArea: string): string {
-    return  '/' + `collection/area/${selectedArea}`;
+    return  environment.appRoot + `collection/area/${selectedArea}`;
   }
 
   private _globalLink(): string {
-    return  '/' + environment.defaultRoute;
+    return  environment.appRoot + environment.defaultRoute;
   }
 
   private _globalTypeLink(selectedTypes: string): string {
-    return  '/' + `collection/type/${selectedTypes}`;
+    return  environment.appRoot + `collection/type/${selectedTypes}`;
   }
 
   private _globalSubjectLink(selectedSubject: string): string {
-    return  '/' + `collection/subject/${selectedSubject}`;
+    return  environment.appRoot + `collection/subject/${selectedSubject}`;
   }
 
   private _globalSubjectTypeLink(selectedSubject: string, selectedTypes: string): string {
-    return  '/' + `collection}/subject/${selectedSubject}/type/${selectedTypes}`;
+    return  environment.appRoot +`collection}/subject/${selectedSubject}/type/${selectedTypes}`;
   }
 
 

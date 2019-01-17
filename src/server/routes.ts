@@ -40,13 +40,6 @@ export class AppRoutes {
     // NOTE: must use require() since this file is built Dynamically from webpack
     const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('../../dist/server/main');
 
-    // Passport authentication
-    app.use(config.authPath, app.ensureAuthenticated);
-    // Check for authenticated user.
-    app.use(config.authCheck, app.checkAuthentication);
-
-    const DIST_FOLDER = join(process.cwd(), './dist', 'browser');
-
     // Using Angular Universal.
     app.engine('html', ngExpressEngine({
       bootstrap: AppServerModuleNgFactory,
@@ -54,6 +47,14 @@ export class AppRoutes {
         provideModuleMap(LAZY_MODULE_MAP)
       ]
     }));
+
+    // The location of the Angular application.
+    const DIST_FOLDER = join(process.cwd(), './dist', 'browser');
+
+    // Passport authentication. The authentication route is defined in environment configuration.
+    app.use(config.authPath, app.ensureAuthenticated);
+    // Check for authenticated user. The check route is defined in environment configuration.
+    app.use(config.authCheck, app.checkAuthentication);
 
     app.set('view engine', 'html');
     app.set('views', join(DIST_FOLDER));
@@ -66,8 +67,8 @@ export class AppRoutes {
       redirect: false
     };
 
-    // Serve static files from browser root directory.
-    app.use('/commons', express.static(join(DIST_FOLDER), options));
+    // Serve static files.
+    app.use(config.rootPath, express.static(join(DIST_FOLDER), options));
 
     /**
      * All routes without a file extension return index.html. Since this is
