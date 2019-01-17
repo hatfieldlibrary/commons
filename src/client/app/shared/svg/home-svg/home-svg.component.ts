@@ -22,10 +22,10 @@
  * Author: Michael Spalti
  */
 
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, PLATFORM_ID} from '@angular/core';
 import {MatIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
-import {APP_BASE_HREF} from '@angular/common';
+import {APP_BASE_HREF, isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'app-home-svg',
@@ -34,11 +34,25 @@ import {APP_BASE_HREF} from '@angular/common';
 })
 export class HomeSvgComponent {
 
-  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,
+  constructor(private iconRegistry: MatIconRegistry,
+              private sanitizer: DomSanitizer,
+              @Inject(PLATFORM_ID) private platformId: Object,
               @Optional() @Inject(APP_BASE_HREF) origin: string) {
-    iconRegistry.addSvgIcon(
-      'home',
-      sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_home_white_24px.svg'));
+    // iconRegistry.addSvgIcon(
+    //   'home',
+    //   sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_home_white_24px.svg'));
+
+
+    if (isPlatformBrowser(this.platformId)) {
+      iconRegistry.addSvgIcon(
+        'home',
+        sanitizer.bypassSecurityTrustResourceUrl( 'assets/img/svg/ic_home_white_24px.svg'));
+    } else {
+      iconRegistry.addSvgIcon(
+        'home',
+        sanitizer.bypassSecurityTrustResourceUrl( origin + 'assets/img/svg/ic_home_white_24px.svg'));
+    }
+
   }
 
 }

@@ -30,12 +30,13 @@
 export const environment = {
   production: false,
   // The client host (needed by universal).
-  origin: 'http://localhost:3005/',
+  origin: 'http://localhost:3005',
   // REST API host (e.g. Tagger-2). Can be localhost or production host
    // apiHost: 'https://libmedia.willamette.edu',
-  apiHost: 'http://libapps.willamette.edu:3007',
+  apiHost: 'http://lib-apis.willamette.edu:3000',
+  appRoot: '/',
   // Base path, do not include beginning forward slash.
-  appRoot: '',
+  appRoute: '',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',
@@ -43,8 +44,8 @@ export const environment = {
   // imagePath: '/commons-images',
   imagePath: '',
   // Authentication paths.
-  authPath: '/auth',
-  authCheck: 'http://localhost:3005/check',
+  authPath: '/com-auth',
+  authCheck: '/com-check',
   defaultRoute: '/collection/area/5',
   isDebugMode: true
 };

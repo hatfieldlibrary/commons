@@ -40,6 +40,7 @@ import {Subscription} from 'rxjs';
 import {SetTimeoutService} from './core/services/timers/timeout.service';
 import {LoggerService} from './core/logger/logger.service';
 import {ScrollReadyService} from './core/services/observable/scroll-ready.service';
+import {environment} from './environments/environment';
 
 /**
  * This component includes the md-sidenav-container, md-sidenav
@@ -141,7 +142,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       // We subscribe to it here, and use the position to set the scrollTop value.
       this.scrollReady.subscribe((pos) => {
         this.timeoutService.setTimeout(0, () => {
-          if (this.router.url.match(/\/commons\/collection/)) {
+          if (this.router.url.match(environment.appRoot + 'collection/')) {
             scrollable.scrollTop = pos;
           }
         });
@@ -151,7 +152,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       // and sets the value in the scrollReady service. (see above)
       this.router.events.subscribe((event: any) => {
         if (event instanceof NavigationStart) {
-          if (!event.url.match(/\/commons\/collection/)) {
+          if (!event.url.match(environment.appRoot + 'collection/')) {
             // Get absolute value fo the bounding rectangle for #app-content.
             const top = Math.abs(this.appContent.nativeElement.getBoundingClientRect().top);
             // this.logger.info('Bounding rectangle: ' + top);

@@ -31,7 +31,7 @@ export class Configuration {
   private readonly hostEnvironment;
   private readonly credentials = {
     domain: '',
-    apiHost: '',
+    rootPath: '',
     serverBaseURL: '',
     ssoBaseURL: '',
     validateURL: '',
@@ -44,12 +44,12 @@ export class Configuration {
       logLevel: 'debug',
       useAuth: true,
       domain: this.credentials.domain,
-      apiHost: this.credentials.apiHost,
+      rootPath: this.credentials.rootPath,
       serverBaseURL: this.credentials.serverBaseURL,
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
-      authPath: '/auth',
-      authCheck: '/check',
+      authPath: '/com-auth/',
+      authCheck: '/com-check',
       nodeEnv: 'development'
     },
 
@@ -57,7 +57,7 @@ export class Configuration {
       logLevel: 'debug',
       useAuth: true,
       domain: this.credentials.domain,
-      apiHost: this.credentials.apiHost,
+      rootPath: this.credentials.rootPath,
       serverBaseURL: this.credentials.serverBaseURL,
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
@@ -70,13 +70,13 @@ export class Configuration {
       logLevel: 'debug',
       useAuth: true,
       domain: this.credentials.domain,
-      apiHost: this.credentials.apiHost,
+      rootPath: this.credentials.rootPath,
       serverBaseURL: this.credentials.serverBaseURL,
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
       redisPort: this.credentials.redisPort,
-      authPath: '/commons-auth',
-      authCheck: this.credentials.apiHost + '/commons-check',
+      authPath: '/com-auth/',
+      authCheck: '/com-check',
       nodeEnv: 'production'
     }
   };
@@ -97,7 +97,7 @@ export class Configuration {
   public getConfig(): any {
     const configuration = this.config[this.hostEnvironment];
     configuration.domain = this.credentials.domain;
-    configuration.apiHost = this.credentials.apiHost;
+    configuration.rootPath = this.credentials.rootPath;
     configuration.serverBaseURL = this.credentials.serverBaseURL;
     configuration.ssoBaseURL = this.credentials.ssoBaseURL;
     configuration.validateURL = this.credentials.validateURL;
