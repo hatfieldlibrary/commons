@@ -227,11 +227,14 @@ export class Authentication {
       // Get the auth path prefix from configuration.
       const find = config.authPath;
       const path = req.originalUrl;
+
+      console.log(config.authPath);
       // Removes the auth path prefix from the current path.
-      const redirect = path.replace(find, '');
+      const redirect = '/commons/' + path.replace(find, '');
 
       passport.authenticate('cas', (err, user, info) => {
 
+        console.log('user ' + user);
         if (err) {
           return next(err);
         }
