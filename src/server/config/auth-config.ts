@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+import {environment} from '../../client/app/environments/environment';
+
 /**
  * Created by mspalti on 4/26/17.
  */
@@ -125,12 +127,11 @@ export class Authentication {
      * The CAS authentication strategy.  The callback method just checks to be sure that
      * a user was returned.  The user object contains email and uid.
      *
-     * CAS configuration is defined in the credentials file.
+     * CAS configuration parameters are defined in the credentials file.
      *
+     * The insecure library.
      *
-     * The insecure library is used for saml requests.
-     *
-     * Although there is probably no risk even when using saml, it's a still good idea to manually update the
+     * Although there is probably no risk, it's a still good idea to manually update the
      * package.json for this module. The issue has been reported via a pull request and the module author has not
      * responded.
      *
@@ -218,19 +219,22 @@ export class Authentication {
      * the request will proceed.  Otherwise, the user will be redirected to the
      * login page.
      *
-     * Request paths must begin with the 'auth/' root. The remainder of the path
-     * must be the resource being requested.  For example, 'auth/file/one' will be
-     * redirected to 'file/one' in the CAS passport authenticate callback method.
+     * Request paths must begin with the config.authPath root. The remainder of the path
+     * must be the resource being requested.  For example, 'com-auth/file/one' will be
+     * redirected to '/commons/file/one' in the CAS passport authenticate callback method.
      * */
     app.ensureAuthenticated = function (req, res, next) {
 
       // Get the auth path prefix from configuration.
       const find = config.authPath;
+      // The URL path is prepended with the config.authPath
       const path = req.originalUrl;
 
-      console.log(config.authPath);
-      // Removes the auth path prefix from the current path.
-      const redirect = '/commons/' + path.replace(find, '');
+      // Removes the auth path prefix from the current path. The
+      // prepended /commons/ string is used by all normal routes.
+      // This path segment supports routing via a proxy server. It
+      // Should be a configuration parameter, not hard-coded here.
+      const redirect = environment.appRoot + path.replace(find, '');
 
       passport.authenticate('cas', (err, user, info) => {
 

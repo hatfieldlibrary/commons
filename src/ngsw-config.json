@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "index": "/collection/area/5",
   "assetGroups": [
     {
@@ -12,7 +12,8 @@
           "/*.js"
         ],
         "urls": [
-          "https://libmedia.willamette.edu/commons/**/*"
+          "https://libmedia.willamette.edu/commons/**/*",
+          "http://localhost:3005/**/*"
         ]
       }
     },
@@ -25,7 +26,8 @@
           "/assets/**"
         ],
         "urls": [
-          "https://libmedia.willamette.edu/commons/assets/**/*"
+          "https://libmedia.willamette.edu/commons/assets/**/*",
+          "http://localhost:3005/**/*"
         ]
       }
     }
@@ -36,6 +38,7 @@
       "urls": [
         "https://libmedia.willamette.edu/tagger-3-api/**/*"
       ],
+      "version": 2,
       "cacheConfig": {
         "maxSize": 250,
         "maxAge": "1d",

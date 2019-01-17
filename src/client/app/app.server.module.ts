@@ -42,7 +42,7 @@ import {environment} from './environments/environment';
   ],
   providers: [
     // The base must be an absolute path for server-side rendering of icons, etc.
-    { provide: APP_BASE_HREF, useValue: environment.origin  }
+    { provide: APP_BASE_HREF, useValue: environment.origin + environment.appRoot }
   ],
   bootstrap: [ AppComponent ],
 })

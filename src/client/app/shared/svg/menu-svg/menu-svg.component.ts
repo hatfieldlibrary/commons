@@ -22,12 +22,11 @@
  * Author: Michael Spalti
  */
 
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, Optional, PLATFORM_ID} from '@angular/core';
 
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
-import {environment} from '../../../environments/environment';
-import {APP_BASE_HREF} from '@angular/common';
+import {APP_BASE_HREF, isPlatformBrowser} from '@angular/common';
 
 
 @Component({
@@ -38,9 +37,18 @@ import {APP_BASE_HREF} from '@angular/common';
 export class MenuSvgComponent {
   constructor(iconRegistry: MatIconRegistry,
               sanitizer: DomSanitizer,
+              @Inject(PLATFORM_ID) private platformId: Object,
               @Optional() @Inject(APP_BASE_HREF) origin: string) {
-    iconRegistry.addSvgIcon(
-      'menu',
-      sanitizer.bypassSecurityTrustResourceUrl( origin + 'assets/img/svg/ic_menu_white_24px.svg'));
+
+    if (isPlatformBrowser(this.platformId)) {
+      iconRegistry.addSvgIcon(
+        'menu',
+        sanitizer.bypassSecurityTrustResourceUrl( 'assets/img/svg/ic_menu_white_24px.svg'));
+    } else {
+      iconRegistry.addSvgIcon(
+        'menu',
+        sanitizer.bypassSecurityTrustResourceUrl( origin + 'assets/img/svg/ic_menu_white_24px.svg'));
+    }
+
   }
 }
