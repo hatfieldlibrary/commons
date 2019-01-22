@@ -44,12 +44,12 @@ import {NavigationServiceB} from '../../core/services/navigation-2/navigation.se
 import {DispatchService} from '../../core/services/dispatch.service';
 import {MenuInteractionService} from '../../core/services/menu/menu-interaction.service';
 import {Observable} from 'rxjs/index';
-import {ObservableMedia} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
 import {mockStore} from '../../core/test/mock-store';
 import {Subject} from 'rxjs';
 import {FooterComponent} from '../../shared/footer/footer.component';
 import {SharedModule} from '../../shared/shared.module';
+import {MediaObserver} from '@angular/flex-layout';
 
 describe('SubmitDspaceComponent', () => {
   let component: SubmitDspaceComponent;
@@ -82,7 +82,7 @@ describe('SubmitDspaceComponent', () => {
           useValue: appStore
         },
         {
-          provide: ObservableMedia,
+          provide: MediaObserver,
           useValue: {
             asObservable: () => {
               return new Observable<any>();

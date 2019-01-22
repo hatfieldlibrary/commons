@@ -22,9 +22,9 @@
   ~ Author: Michael Spalti
   -->
 
-<div class="overflow-x-scroll-no-scrollbar area-selector-container" fxLayoutAlign="center center">
+<div #areaSelectionList class="overflow-x-scroll-no-scrollbar area-selector-container" fxLayoutAlign="center center">
 
-  <mat-nav-list #areaSelectionList class="area-selection">
+  <mat-nav-list class="area-selection">
     <a mat-list-item *ngFor="let area of filter.areas;" [ngClass]="{'highlight': isSelected(area.id)}"
        class="nav-link local-navigation"
        (click)="onAreaListControlChanged(area.id);"
@@ -35,4 +35,31 @@
     <a *ngFor="let area of filter.areas;" tabindex="-1" attr.aria-label="{{area.name}}" [routerLink]="getAreaLink(area.id)"></a>
   </mat-nav-list>
 
+    <a *ngFor="let area of filter.areas;" tabindex="-1" attr.aria-label="{{area.name}}" [routerLink]="getAreaLink(area.id)"></a>
+
+    <!--<a mat-tab-link-->
+       <!--*ngFor="let link of navLinks"-->
+       <!--[routerLink]="link.path"-->
+       <!--routerLinkActive #rla="routerLinkActive"-->
+       <!--[active]="rla.isActive">-->
+      <!--{{link.label}}-->
+    <!--</a>-->
+  <!--<nav mat-tab-nav-bar class="area-selection">-->
+    <!--<a mat-tab-link *ngFor="let area of filter.areas;" [ngClass]="{'highlight': isSelected(area.id)}"-->
+       <!--class="nav-link local-navigation"-->
+       <!--[routerLink]="getAreaLink(area.id)"-->
+       <!--tabindex="0"-->
+       <!--routerLinkActive #rla="routerLinkActive">-->
+      <!--{{area.name}}-->
+    <!--</a>-->
+  <!--</nav>-->
+  <!--<nav mat-tab-nav-bar class="tabs-container" >-->
+    <!--<a mat-tab-link *ngFor="let area of filter.areas;"-->
+
+       <!--[routerLink]="getAreaLink(area.id)"-->
+       <!--tabindex="0"-->
+       <!--routerLinkActive #rla="routerLinkActive">-->
+      <!--{{area.name}}-->
+    <!--</a>-->
+  <!--</nav>-->
 </div>

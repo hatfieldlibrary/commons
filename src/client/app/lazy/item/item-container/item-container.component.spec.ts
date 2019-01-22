@@ -51,7 +51,7 @@ import {FooterComponent} from '../../../shared/footer/footer.component';
 import {ItemLinksComponent} from '../item-links/item-links.component';
 import {SearchSvgComponent} from '../../../shared/svg/search-svg/search-svg.component';
 import {MenuSvgComponent} from '../../../shared/svg/menu-svg/menu-svg.component';
-import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
+import {FlexLayoutModule, MediaObserver} from '@angular/flex-layout';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -203,7 +203,7 @@ describe('ItemContainerComponent', () => {
     component = fixture.debugElement.componentInstance;
     store = fixture.debugElement.injector.get(Store);
     route = fixture.debugElement.injector.get(ActivatedRoute);
-    media = fixture.debugElement.injector.get(ObservableMedia);
+    media = fixture.debugElement.injector.get(MediaObserver);
 
   }));
 

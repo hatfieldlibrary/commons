@@ -31,7 +31,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
 import * as fromFilter from '../../../core/ngrx/reducers/filter.reducers';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
@@ -71,7 +71,7 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   isMobile = false;
   private watcher: Subscription;
 
-  constructor(public media: ObservableMedia) {
+  constructor(public mediaObserver: MediaObserver) {
   }
 
   /**
@@ -105,7 +105,7 @@ export class AreaBannerComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.watcher = this.media.asObservable().subscribe((change: MediaChange) => {
+    this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
         this.isMobile = true;
       } else {

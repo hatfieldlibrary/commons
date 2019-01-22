@@ -22,14 +22,25 @@
  * Author: Michael Spalti
  */
 
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterViewChecked,
+  AfterViewInit,
+  asNativeElements,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output, Renderer2,
+  ViewChild
+} from '@angular/core';
 import {AreasFilter} from '../../../core/data-types/areas-filter';
 import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-update.service';
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
-import {ListKeyManager, ListKeyManagerOption} from '@angular/cdk/a11y';
-import {MatListItem, MatListOption} from '@angular/material';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
+import {MatNavList} from '@angular/material';
 
 export interface SelectedAreaEvent {
   selected: FieldFilterType[];
@@ -40,14 +51,19 @@ export interface SelectedAreaEvent {
   templateUrl: './area-options.component.html',
   styleUrls: ['./area-options.component.css']
 })
-export class AreaOptionsComponent {
+export class AreaOptionsComponent implements AfterViewChecked {
 
   @Input() filter: AreasFilter;
   @Output() areaNavigation: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('areaSelectionList', { read: ElementRef })
+  public scrollableList: ElementRef;
+
+  selectedAreaPosition = -1;
 
   constructor(private filterService: FilterUpdateServiceB,
               private scrollReadyService: ScrollReadyService,
-              private navigationService: NavigationServiceB
+              private navigationService: NavigationServiceB,
+              private renderer: Renderer2
   ) {}
 
   /**
@@ -56,10 +72,7 @@ export class AreaOptionsComponent {
    * @returns {boolean}
    */
   isSelected(id: number): boolean {
-    if (this.filter.selectedAreas) {
       return this.getPositionInSelectedList(id) > -1;
-    }
-    return false;
   }
 
   getAreaLink(areaId: number): string {
@@ -72,9 +85,11 @@ export class AreaOptionsComponent {
    * @returns {number}
    */
   private getPositionInSelectedList(areaId: number): number {
-    return this.filter.selectedAreas.findIndex((current) => current.id === areaId);
+    if (this.filter.selectedAreas) {
+      return this.filter.selectedAreas.findIndex((current) => current.id === areaId);
+    }
+    return -1;
   }
-
   /**
    * Handles area selection event.
    * @param {number} areaId
@@ -86,4 +101,37 @@ export class AreaOptionsComponent {
     this.scrollReadyService.setPosition(0);
     this.areaNavigation.emit(selectedEmitted);
   }
+
+
+  ngAfterViewChecked(): void {
+      this.filter.areas.forEach((area, index) => {
+        if (this.selectedAreaPosition === -1) {
+          if (area.name !== '') {
+            if (area.id === this.filter.selectedAreas[0].id) {
+              this.selectedAreaPosition = index;
+              console.log(this.selectedAreaPosition);
+              console.log(this.scrollableList)
+              console.log(this.selectedAreaPosition * -200)
+              const offset = this.selectedAreaPosition * -200;
+              console.log(this.scrollableList)
+              // this.container.nativeElement.scrollLeft = offset;
+             this.renderer.setProperty(this.scrollableList.nativeElement, 'scrollLeft', offset);
+             this.scrollableList.nativeElement.scrollTo({ left: offset, behavior: 'smooth' });
+             const el = this.scrollableList.nativeElement;
+             setTimeout(function() {
+                el.scrollLeft = -100;
+               console.log(el.scrollLeft)
+
+              }, 1000);
+
+              console.log(this.scrollableList.nativeElement.scrollLeft)
+             // console.log(this.areaSelectorDirective.nativeElement)
+            //  this.areaSelectorDirective.focus(3index)
+            }
+          }
+        }
+      });
+
+  }
+
 }

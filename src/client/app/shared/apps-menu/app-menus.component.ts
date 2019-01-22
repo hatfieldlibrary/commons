@@ -28,7 +28,7 @@ import {
 import {AreaType} from '../../core/data-types/area.type';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import {MenuInteractionService} from '../../core/services/menu/menu-interaction.service';
 
@@ -70,7 +70,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private changeDetector: ChangeDetectorRef,
-              public media: ObservableMedia,
+              public mediaObserver: MediaObserver,
               @Inject(DOCUMENT) private document) {
 
     this.watcher = router.events
@@ -80,7 +80,7 @@ export class AppMenusComponent implements OnInit, OnDestroy {
         }
       });
 
-    const mediaWatcher = media.asObservable()
+    const mediaWatcher = mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
       });

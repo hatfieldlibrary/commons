@@ -23,7 +23,7 @@
  */
 
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {CollectionType} from '../../../core/data-types/collection.type';
 import {Subscription} from 'rxjs';
 import {environment} from '../../../environments/environment';
@@ -56,7 +56,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   cols = 3;
   watcher = new Subscription();
 
-  constructor(private media: ObservableMedia) {}
+  constructor(private mediaObserver: MediaObserver) {}
 
   getResultCount(): string {
     return this.collectionList.length.toString();
@@ -76,7 +76,7 @@ export class CollectionGridComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    const media = this.media.subscribe((change: MediaChange) => {
+    const media = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.cols = 1;
         this.isMobile = true;

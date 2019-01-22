@@ -35,7 +35,7 @@ import * as areaActions from '../../../core/ngrx/actions/area.actions';
 import * as fromRelated from '../../../core/ngrx/actions/related.actions';
 import {RelatedType} from '../../../core/data-types/related-collection';
 import {fadeIn} from '../../../core/animation/animations';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {DOCUMENT} from '@angular/common';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
@@ -69,7 +69,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromRoot.State>,
               private titleService: Title,
-              private media: ObservableMedia,
+              private mediaObserver: MediaObserver,
               private route: ActivatedRoute,
               private navigationService: NavigationServiceB,
               private metaService: Meta,
@@ -77,7 +77,7 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
 
     this.watchers = new Subscription();
       // Set the media observable subscription for assigning the related items column count.
-    const mediaWatcher = this.media.subscribe((change: MediaChange) => {
+    const mediaWatcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
         this.activeMediaQuery = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
         if (change.mqAlias === 'xs') {
           this.columns = 1;
@@ -151,11 +151,11 @@ export class ItemContainerComponent implements OnInit, OnDestroy {
    */
   initializeColumnCount() {
 
-    if (this.media.isActive('xs')) {
+    if (this.mediaObserver.isActive('xs')) {
       this.columns = 1;
-    } else if (this.media.isActive('sm') || this.media.isActive('md')) {
+    } else if (this.mediaObserver.isActive('sm') || this.mediaObserver.isActive('md')) {
       this.columns = 2;
-    } else if (this.media.isActive('lg')) {
+    } else if (this.mediaObserver.isActive('lg')) {
       this.columns = 3;
     } else {
       this.columns = 4;

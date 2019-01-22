@@ -33,9 +33,8 @@ import {CollectionType} from '../../../core/data-types/collection.type';
 import {environment} from '../../../environments/environment';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
-import {createForJitStub} from '@angular/compiler/src/aot/summary_serializer';
 
 @Component({
   selector: 'app-collection-rows',
@@ -80,7 +79,7 @@ export class CollectionRowsComponent implements OnInit, OnDestroy {
    * @param media used to remove thumbnails from mobile biew
    */
   constructor(private navigationService: NavigationServiceB,
-              public media: ObservableMedia) {
+              public mediaObserver: MediaObserver) {
   }
 
   /**
@@ -135,7 +134,7 @@ export class CollectionRowsComponent implements OnInit, OnDestroy {
   }
 
   private setMediaWatcher(): void {
-    const mediaWatcher = this.media.asObservable()
+    const mediaWatcher = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.isMobile = change.mqAlias === 'xs';
       });

@@ -21,6 +21,8 @@
   ~
   ~ Author: Michael Spalti
   -->
+<app-menus-component></app-menus-component>
+
 <mat-sidenav-container fullscreen>
 
   <mat-sidenav role="navigation" fxLayout="column" #sidenav position="end" opened="false" mode="over"
@@ -54,7 +56,6 @@
   </mat-sidenav>
 
   <div id="app-content" #appcontent style="min-height: 800px;">
-    <app-menus-component></app-menus-component>
     <router-outlet></router-outlet>
   </div>
 
