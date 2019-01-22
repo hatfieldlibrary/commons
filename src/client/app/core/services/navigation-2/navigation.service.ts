@@ -484,7 +484,7 @@ export class NavigationServiceB {
   }
 
   private _globalLink(): string {
-    return  environment.appRoot + environment.defaultRoute;
+    return  environment.defaultRoute;
   }
 
   private _globalTypeLink(selectedTypes: string): string {
@@ -496,7 +496,7 @@ export class NavigationServiceB {
   }
 
   private _globalSubjectTypeLink(selectedSubject: string, selectedTypes: string): string {
-    return  environment.appRoot +`collection}/subject/${selectedSubject}/type/${selectedTypes}`;
+    return  environment.appRoot + `collection}/subject/${selectedSubject}/type/${selectedTypes}`;
   }
 
 
