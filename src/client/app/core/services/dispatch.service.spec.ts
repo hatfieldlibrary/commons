@@ -36,7 +36,7 @@ import {environment} from '../../environments/environment';
 describe('DispatchService', () => {
 
   class MockRouterItem {
-    public event = new NavigationEnd(0, '/' + environment.appRoot + 'item', '/'
+    public event = new NavigationEnd(0, environment.appRoot + 'item', '/'
       + environment.appRoot + 'item');
     public events = new Observable(observer => {
       observer.next(this.event);

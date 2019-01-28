@@ -25,7 +25,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
 import {RelatedType} from '../../../core/data-types/related-collection';
 import {environment} from '../../../environments/environment';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -41,11 +41,11 @@ export class RelatedItemsComponent implements OnDestroy {
   @Input() columns: number;
   isMobile = false;
   watcher: Subscription;
- // appRoot = environment.appRoot;
+  appRoot = environment.appRoot;
   imagePath = environment.apiHost +  environment.imagePath;
 
-  constructor(private media: ObservableMedia) {
-    this.watcher = this.media.subscribe((change: MediaChange) => {
+  constructor(private mediaObserver: MediaObserver) {
+    this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
       } else {
@@ -55,7 +55,7 @@ export class RelatedItemsComponent implements OnDestroy {
   }
 
   getRelatedLink(collectionId: number): string {
-    return '/item/id/' + collectionId;
+    return this.appRoot + '/item/id/' + collectionId;
   }
 
   ngOnDestroy(): void {

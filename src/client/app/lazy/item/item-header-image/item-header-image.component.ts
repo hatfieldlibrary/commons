@@ -30,7 +30,7 @@ import {
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
 import {imageFadeIn} from '../../../core/animation/animations';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -56,9 +56,9 @@ export class ItemHeaderImageComponent implements OnInit, OnDestroy, DoCheck {
   @HostBinding('style.position') width = '100%';
 
   constructor(private sanitizer: DomSanitizer,
-              public media: ObservableMedia) {
+              public mediaObserver: MediaObserver) {
     this.image = '';
-    this.watcher = this.media.subscribe((change: MediaChange) => {
+    this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
       } else {

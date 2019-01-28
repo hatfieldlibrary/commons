@@ -32,7 +32,7 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import * as fromFilter from '../../../core/ngrx/reducers/filter.reducers';
 import {Subscription} from 'rxjs';
 import {NormalizedFilter} from '../../../core/data-types/normalized-filter';
@@ -44,8 +44,7 @@ import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {Store} from '@ngrx/store';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
 import {FieldNames} from '../../../core/enum/field-names';
-import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes}
-  from '../../../core/ngrx/actions/filter.actions';
+import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../../core/ngrx/actions/filter.actions';
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 
 
@@ -97,10 +96,10 @@ export class AreaFiltersComponent implements OnChanges, OnDestroy {
   resetCount = 0;
 
   constructor(private store: Store<fromRoot.State>,
-              private media: ObservableMedia,
+              private mediaObserver: MediaObserver,
               private scrollReady: ScrollReadyService) {
 
-    this.watcher = this.media.subscribe((change: MediaChange) => {
+    this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       this.isMobile = change.mqAlias === 'xs';
     });
   }

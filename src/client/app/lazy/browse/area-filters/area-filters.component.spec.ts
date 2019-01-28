@@ -32,7 +32,7 @@ import {CloseWhiteSvgComponent} from '../../../shared/svg/close-white-svg/close-
 import {MatChipsModule, MatIconModule} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs/index';
-import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
+import {FlexLayoutModule, MediaObserver} from '@angular/flex-layout';
 import {SimpleChange} from '@angular/core';
 import {RemoveSelectedGroups, RemoveSelectedSubjects, RemoveSelectedTypes} from '../../../core/ngrx/actions/filter.actions';
 import {FieldNames} from '../../../core/enum/field-names';
@@ -62,7 +62,7 @@ describe('AreaFiltersComponent', () => {
       ],
       providers: [
         {
-          provide: ObservableMedia,
+          provide: MediaObserver,
           useValue: {
             asObservable: () => {
               return new Observable<any>();

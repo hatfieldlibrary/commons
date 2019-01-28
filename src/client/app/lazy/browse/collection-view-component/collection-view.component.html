@@ -29,7 +29,7 @@
     <!--[showBack]="false">-->
   <!--</app-menus-component>-->
 
-  <app-area-options
+  <app-area-options class="area-nav-container"
     (areaNavigation)="areaNavigation($event)"
     [filter]="areasFilter$ | async">
   </app-area-options>
@@ -38,7 +38,7 @@
        fxLayoutAlign="center start"
        class="app-area-info">
 
-    <div fxFlex fxFlex="70" fxFlex.lg="90" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" style="height: 340px;">
+    <div fxFlex fxFlex="70" fxFlex.lg="90" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" style="height: 485px;">
       <div style="position:relative; height: 100%; width:100%;background-color: #090905;">
         <div class="area-background" *ngIf="notMobile && areaInfo$ | async; let areaInfo$;"
              [ngStyle]="{'background-image': 'url(' + (areaInfo$.image) + ')', 'background-repeat': 'no-repeat', 'background-size': 'cover'}"></div>
@@ -69,7 +69,7 @@
                fxFlex.lg="1 1 15"
                fxFlex.gt-lg="1 1 12"
                class="side-container left"
-               *ngIf="media.isActive('gt-sm')">
+               *ngIf="mediaObserver.isActive('gt-sm')">
 
             <app-types (typeNavigation)="typeNavigation($event)"
                        [filter]="typesFilter$ | async"></app-types>
@@ -99,7 +99,7 @@
                fxFlex.lg="1 1 15"
                fxFlex.gt-lg="1 1 12"
                class="side-container right"
-               *ngIf="media.isActive('gt-sm')">
+               *ngIf="mediaObserver.isActive('gt-sm')">
 
             <app-subject-options (subjectNavigation)="subjectNavigation($event)"
                                  [filter]="subjectsFilter$ | async"></app-subject-options>
