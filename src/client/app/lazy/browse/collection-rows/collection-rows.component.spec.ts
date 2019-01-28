@@ -36,6 +36,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../../../environments/environment';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('CollectionRowsComponent', () => {
   let component: CollectionRowsComponent;
@@ -82,11 +83,14 @@ describe('CollectionRowsComponent', () => {
             },
             isActive: () => {
             },
-            subscribe: () => {
-              return new Subscription();
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
             }
           }
         },
+        {provide: APP_BASE_HREF, useValue : '' },
         {
           provide: NavigationServiceB,
           useClass: class {
@@ -102,7 +106,7 @@ describe('CollectionRowsComponent', () => {
     component = fixture.componentInstance;
     component.collectionList = mockCollectionList;
     media = fixture.debugElement.injector.get(MediaObserver)
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
 

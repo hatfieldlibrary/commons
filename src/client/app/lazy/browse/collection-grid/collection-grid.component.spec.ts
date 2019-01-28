@@ -34,6 +34,7 @@ import {Observable, Subscription} from 'rxjs/index';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../../../environments/environment';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('CollectionGridComponent', () => {
   let component: CollectionGridComponent;
@@ -84,9 +85,14 @@ describe('CollectionGridComponent', () => {
             },
             isActive: () => {
             },
-            subscribe: () => { return new Subscription(); }
-          }
-        }
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
+            }
+          },
+        },
+       { provide: APP_BASE_HREF, useValue : '' }
       ]
     });
   }));

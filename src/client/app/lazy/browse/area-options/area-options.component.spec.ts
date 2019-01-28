@@ -30,6 +30,7 @@ import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-upda
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
+import {APP_BASE_HREF} from '@angular/common';
 
 
 describe('AreaOptionsComponent', () => {
@@ -60,7 +61,8 @@ describe('AreaOptionsComponent', () => {
           useClass: class {
             getAreaLink = jasmine.createSpy('getAreaLink');
           }
-        }]
+        }
+        ]
     });
   }));
 

@@ -102,6 +102,7 @@ import {SearchSvgComponent} from '../../../shared/svg/search-svg/search-svg.comp
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {CollectionsFilterPipe} from '../../../shared/collections-filter.pipe';
 import {SharedModule} from '../../../shared/shared.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 
 const areaSubscriptionMock = {
@@ -303,8 +304,14 @@ describe('CollectionViewComponent', () => {
               return new Observable<any>();
             },
             isActive: () => {
+            },
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
             }
-          }
+          },
+          providers: [{provide: APP_BASE_HREF, useValue : '' }]
         }
       ]
     }).overrideComponent(AreaOptionsComponent, {
