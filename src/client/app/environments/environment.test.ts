@@ -30,13 +30,13 @@
 export const environment = {
 
   production: false,
-  origin: 'http://localhost:3005/',
+  origin: 'http://localhost:3005',
   // REST API host. Can be localhost or production host
   // apiHost: 'https://libmedia.willamette.edu',
   apiHost: '',
-  appRoot: '/commons/',
+  appRoot: '/',
   // Base path, do not include beginning forward slash.
-  appRoute: 'commons/',
+  appRoute: '',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',

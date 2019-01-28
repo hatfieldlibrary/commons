@@ -67,9 +67,10 @@ describe('AreaFiltersComponent', () => {
             asObservable: () => {
               return new Observable<any>();
             },
-            subscribe: () => {
-              // jasmine.createSpy('subscribe').and.returnValue(new Subscription());
-              return new Subscription();
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
             },
             isActive: () => {
             }

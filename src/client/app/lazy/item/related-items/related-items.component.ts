@@ -55,7 +55,7 @@ export class RelatedItemsComponent implements OnDestroy {
   }
 
   getRelatedLink(collectionId: number): string {
-    return this.appRoot + '/item/id/' + collectionId;
+    return this.appRoot + 'item/id/' + collectionId;
   }
 
   ngOnDestroy(): void {

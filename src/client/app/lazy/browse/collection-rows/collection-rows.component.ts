@@ -76,7 +76,7 @@ export class CollectionRowsComponent implements OnInit, OnDestroy {
   /**
    * Constructor
    * @param navigationService the singleton selection service.
-   * @param media used to remove thumbnails from mobile biew
+   * @param mediaObserver used to remove thumbnails from mobile biew
    */
   constructor(private navigationService: NavigationServiceB,
               public mediaObserver: MediaObserver) {
