@@ -35,6 +35,7 @@ import {
 } from '../../ngrx/actions/filter.actions';
 import {FieldFilterType} from '../../data-types/field-filter.type';
 import {FieldNames} from '../../enum/field-names';
+import {NavigationRoutes} from './navigation-routes';
 
 interface RouterIds {
   subjectId: string;
@@ -42,6 +43,11 @@ interface RouterIds {
   groupId: string;
 }
 
+/**
+ * This service handles all navigation requests in the appliction
+ * by issuing angular router events and providing logic to creates state-aware
+ * relative urls for navigation.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -309,9 +315,11 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ], queryParams);
+
     } else if (this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
@@ -319,9 +327,11 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ], queryParams);
+
     } else if (this.isFieldSelected(areaId)
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(fields.groupId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
@@ -329,9 +339,11 @@ export class NavigationServiceB {
         'area', areaId,
         'type', typeId
       ], queryParams);
+
     } else if (this.isFieldSelected(areaId)
       && this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.groupId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
@@ -339,9 +351,11 @@ export class NavigationServiceB {
         'area', areaId,
         'subject', subjectId
       ], queryParams);
+
     } else if (this.isFieldSelected(fields.subjectId)
       && this.isFieldSelected(fields.typeId)
       && this.isFieldSelected(areaId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
@@ -349,34 +363,43 @@ export class NavigationServiceB {
         'type', typeId,
         'subject', subjectId
       ], queryParams);
+
     } else if (this.isFieldSelected(fields.groupId) && this.isFieldSelected(areaId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
         'category', groupId,
         'area', areaId
       ], queryParams);
+
     } else if (this.isFieldSelected(fields.subjectId) && this.isFieldSelected(areaId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
         'area', areaId,
         'subject', subjectId
       ], queryParams);
+
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(areaId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
         'area', areaId,
         'type', typeId
       ], queryParams);
+
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(fields.subjectId)) {
+
       this.router.navigate([
         environment.appRoot +
         'collection',
         'type', typeId,
         'subject', subjectId
       ], queryParams);
+
     } else if (this.isFieldSelected(fields.typeId)) {
       this.router.navigate([ environment.appRoot + 'collection', 'type', typeId], queryParams);
     } else if (this.isFieldSelected(areaId)) {
@@ -392,112 +415,58 @@ export class NavigationServiceB {
     return (typeof id !== 'undefined') && (id !== null) && (id.length) !== 0 && (id !== '0');
   }
 
+  /**
+   * This method returns url strings for all requests all states that include
+   * a selected area. Given the current application (in which one area is always
+   * selected) this function is the most critical.
+   * @param selectedArea
+   * @param selectedGroup
+   * @param selectedSubject
+   * @param selectedTypes
+   * @private
+   */
   private _handleAreaBackLinks(selectedArea: string,
                                selectedGroup: string,
                                selectedSubject: string,
                                selectedTypes: string): string {
     if (this.isFieldSelected(selectedSubject) && selectedTypes && selectedGroup) {
-
-      return this._areaGroupSubjectTypeLink(selectedArea, selectedGroup, selectedSubject, selectedTypes);
+      return NavigationRoutes.areaGroupSubjectTypeLink(selectedArea, selectedGroup, selectedSubject, selectedTypes);
     } else if (selectedGroup && selectedTypes) {
-      return this._areaGroupTypeLink(selectedArea, selectedGroup, selectedTypes);
+      return NavigationRoutes.areaGroupTypeLink(selectedArea, selectedGroup, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject) && selectedGroup) {
-      return this._areaGroupSubjectLink(selectedArea, selectedGroup, selectedSubject);
+      return NavigationRoutes.areaGroupSubjectLink(selectedArea, selectedGroup, selectedSubject);
     } else if (this.isFieldSelected(selectedSubject) && this.isFieldSelected(selectedTypes)) {
-      return this._areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
+      return NavigationRoutes.areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
     } else if (this.isFieldSelected(selectedTypes)) {
-      return this._areaTypeLink(selectedArea, selectedTypes);
+      return NavigationRoutes.areaTypeLink(selectedArea, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject)) {
-      return this._areaSubjectLink(selectedArea, selectedSubject)
+      return NavigationRoutes.areaSubjectLink(selectedArea, selectedSubject)
     } else if (selectedGroup) {
-      return this._areaGroupLink(selectedArea, selectedGroup)
+      return NavigationRoutes.areaGroupLink(selectedArea, selectedGroup)
     } else {
-      return this._areaLink(selectedArea);
+      return NavigationRoutes.areaLink(selectedArea);
     }
   }
 
-  // currently unused and incomplete.
+  /**
+   * Although the application state will always have a single selected area, this is not the case for
+   * deep links (or search engine crawlers) that access item records directly. Therefore the
+   * globalLink() route is still used.
+   * @param selectedSubject
+   * @param selectedGroup
+   * @param selectedTypes
+   * @private
+   */
   private _handleGlobalBackLinks(selectedSubject: string, selectedGroup: string, selectedTypes: string): string {
     if (this.isFieldSelected(selectedSubject) && selectedTypes) {
-      return this._globalSubjectTypeLink(selectedSubject, selectedTypes);
+      return NavigationRoutes.globalSubjectTypeLink(selectedSubject, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject)) {
-      return this._globalSubjectLink(selectedSubject);
+      return NavigationRoutes.globalSubjectLink(selectedSubject);
     } else if (this.isFieldSelected(selectedTypes)) {
-      return this._globalTypeLink(selectedTypes);
+      return NavigationRoutes.globalTypeLink(selectedTypes);
     } else {
-      return this._globalLink();
+      return NavigationRoutes.globalLink();
     }
   }
-
-  private _areaGroupSubjectTypeLink(selectedArea: string,
-                                    selectedGroup: string,
-                                    selectedSubject: string,
-                                    selectedTypes: string): string {
-    return  environment.appRoot +
-      `collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
-  }
-
-  private _areaGroupSubjectLink(selectedArea: string, selectedGroup: string, selectedSubject: string): string {
-    return  environment.appRoot +
-      `collection/category/${selectedGroup}/area/${selectedArea}/subject/${selectedSubject}`;
-  }
-
-  private _areaGroupTypeLink(selectedArea: string, selectedGroup: string, selectedTypes: string): string {
-    return  environment.appRoot +
-      `collection/category/${selectedGroup}/area/${selectedArea}/type/${selectedTypes}`;
-  }
-
-  private _areaGroupLink(selectedArea: string, selectedGroup: string): string {
-    return  environment.appRoot +
-      `collection/category/${selectedGroup}/area/${selectedArea}`;
-  }
-
-  // private _groupTypeLink(selectedGroup: string, selectedTypes: string): string {
-  //   return '/' + this.urlRootPath +
-  //     `/collection/category/${selectedGroup}/type/${selectedTypes}`;
-  // }
-  //
-  // private _groupSubjectLink(selectedGroup: string, selectedSubject: string): string {
-  //   return '/' + this.urlRootPath +
-  //     `/collection/category/${selectedGroup}/subject/${selectedSubject}`;
-  // }
-  //
-  // private _groupLink(selectedGroup: string): string {
-  //   return '/' + this.urlRootPath +
-  //     `/collection/category/${selectedGroup}`;
-  // }
-
-  private _areaSubjectTypeLink(selectedArea: string, selectedSubject: string, selectedTypes: string): string {
-    return  environment.appRoot + `collection/area/${selectedArea}/type/${selectedTypes}/subject/${selectedSubject}`;
-  }
-
-  private _areaSubjectLink(selectedArea: string, selectedSubject: string): string {
-    return  environment.appRoot + `collection/area/${selectedArea}/subject/${selectedSubject}`;
-  }
-
-  private _areaTypeLink(selectedArea: string, selectedTypes: string): string {
-    return  environment.appRoot + `collection/area/${selectedArea}/type/${selectedTypes}`;
-  }
-
-  private _areaLink(selectedArea: string): string {
-    return  environment.appRoot + `collection/area/${selectedArea}`;
-  }
-
-  private _globalLink(): string {
-    return  environment.defaultRoute;
-  }
-
-  private _globalTypeLink(selectedTypes: string): string {
-    return  environment.appRoot + `collection/type/${selectedTypes}`;
-  }
-
-  private _globalSubjectLink(selectedSubject: string): string {
-    return  environment.appRoot + `collection/subject/${selectedSubject}`;
-  }
-
-  private _globalSubjectTypeLink(selectedSubject: string, selectedTypes: string): string {
-    return  environment.appRoot + `collection}/subject/${selectedSubject}/type/${selectedTypes}`;
-  }
-
 
 }
