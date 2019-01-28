@@ -37,7 +37,7 @@ import {
 import * as fromRoot from '../../../core/ngrx/reducers/index';
 import {AreaType} from '../../../core/data-types/area.type';
 import {CollectionType} from '../../../core/data-types/collection.type';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {SelectedTypeEvent} from '../types/types.component';
 import {SelectedSubjectEvent} from '../subject-options/subject-options.component';
@@ -113,7 +113,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromRoot.State>,
               private route: ActivatedRoute,
-              public media: ObservableMedia,
+              public mediaObserver: MediaObserver,
               private navigation: NavigationServiceB,
               private setSelected: SetSelectedService,
               private dispatchService: DispatchService,
@@ -208,7 +208,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
   }
 
   private setMediaWatcher(): void {
-    const mediaWatcher = this.media.asObservable()
+    const mediaWatcher = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
         this.notMobile = change.mqAlias !== 'xs';

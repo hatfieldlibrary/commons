@@ -52,7 +52,7 @@ import {CollectionViewComponent} from './collection-view.component';
 import {AppComponent} from '../../../app.component';
 import {FooterComponent} from '../../../shared/footer/footer.component';
 
-import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
+import {FlexLayoutModule, MediaObserver} from '@angular/flex-layout';
 import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -102,6 +102,7 @@ import {SearchSvgComponent} from '../../../shared/svg/search-svg/search-svg.comp
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {CollectionsFilterPipe} from '../../../shared/collections-filter.pipe';
 import {SharedModule} from '../../../shared/shared.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 
 const areaSubscriptionMock = {
@@ -202,11 +203,11 @@ class MockAreaOptionsComponent {
 
 }
 
-const fakeObservableMedia = {
-  asObservable: () => {
-    return observableOf({})
-  }
-} as ObservableMedia;
+// const fakeObservableMedia = {
+//   asObservable: () => {
+//     return observableOf({})
+//   }
+// } as MediaObserver.media$;
 
 
 
@@ -297,14 +298,20 @@ describe('CollectionViewComponent', () => {
           }
         },
         {
-          provide: ObservableMedia,
+          provide: MediaObserver,
           useValue: {
             asObservable: () => {
               return new Observable<any>();
             },
             isActive: () => {
+            },
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
             }
-          }
+          },
+          providers: [{provide: APP_BASE_HREF, useValue : '' }]
         }
       ]
     }).overrideComponent(AreaOptionsComponent, {

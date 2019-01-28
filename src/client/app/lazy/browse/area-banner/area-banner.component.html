@@ -26,14 +26,15 @@
   [description]="description"
   [publisher]="'Willamette University'"></app-json-ld>
 
-<div class="indicator-row" *ngIf="!isMobile">
-  <div fxLayout="row" fxFlex fxLayoutAlign="center start">
-    <div *ngFor="let area of areas.areas" style="color:#fff;" class="pointer-container">
-      <div *ngIf="isSelected(area.id)" class="down-pointer"></div>
-      <span>{{area.name}}</span>
-    </div>
-  </div>
-</div>
+<!--<div class="indicator-row" *ngIf="!isMobile">-->
+  <!--<div fxLayout="row" fxFlex fxLayoutAlign="center start">-->
+    <!--<div *ngFor="let area of areas.areas" style="color:#fff;" class="pointer-container">-->
+      <!--<div *ngIf="isSelected(area.id)" class="down-pointer"></div>-->
+      <!--<span>{{area.name}}</span>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
 <div fxLayout="row"
      fxLayoutAlign="center start"
      fxFlex
@@ -73,7 +74,7 @@
        fxFlex.lg="1 1 15"
        fxFlex.gt-lg="1 1 12"
        class="additional-options low-contrast-text"
-       *ngIf="media.isActive('gt-sm')">
+       *ngIf="mediaObserver.isActive('gt-sm')">
     <div *ngIf="url" style="padding-left: 60px;">
       <span class="mat-caption">More information</span>
       <div class="mat-body-1 area-button">

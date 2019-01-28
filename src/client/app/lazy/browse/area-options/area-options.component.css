@@ -22,10 +22,14 @@
  * Author: Michael Spalti
  */
 
+.tabs-container {
+  background:#791716;
+}
 .area-selector-container {
+  margin-top: 0;
   height: 60px;
   background:#791716;
-  overflow: hidden;
+  /*overflow: hidden;*/
   padding-left: 0px;
   padding-right: 10px;
 }
@@ -36,18 +40,18 @@
   padding-top: 0;
 }
 .overflow-x-scroll-no-scrollbar {
-  overflow: hidden;
+  overflow:scroll;
   position: relative;
   width: auto;
 }
 .overflow-x-scroll-no-scrollbar > mat-nav-list {
-  overflow-x: auto;
+  /*overflow-x: auto;*/
   overflow-y: hidden;
   display: inline-flex !important;
   margin-bottom: 0px;
 }
 .overflow-x-scroll-no-scrollbar > mat-nav-ist > mat-list-item * {
-  overflow-x: auto;
+  /*overflow-x: auto;*/
   width: 100%;
   padding-bottom: 17px;
   white-space: nowrap;

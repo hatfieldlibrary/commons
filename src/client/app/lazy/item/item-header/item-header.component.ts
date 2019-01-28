@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 
 import {ItemType} from '../../../core/data-types/item.type';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -43,11 +43,11 @@ export class ItemHeaderComponent implements OnInit, OnDestroy {
   watcher: Subscription;
   isMobile = false;
 
-  constructor(private media: ObservableMedia) {
+  constructor(private mediaObserver: MediaObserver) {
   }
 
   ngOnInit(): void {
-    this.watcher = this.media.subscribe((change: MediaChange) => {
+    this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
       } else {

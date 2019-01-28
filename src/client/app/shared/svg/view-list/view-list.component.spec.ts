@@ -37,7 +37,7 @@ describe('ViewListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ViewListComponent ],
       imports: [MatIconModule, HttpClientModule],
-      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
+      providers: [{provide: APP_BASE_HREF, useValue : '' }]
     });
   }));
 

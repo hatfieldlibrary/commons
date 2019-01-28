@@ -29,13 +29,14 @@ import {ViewGridComponent} from '../../../shared/svg/view-grid/view-grid.compone
 import {ViewListComponent} from '../../../shared/svg/view-list/view-list.component';
 import {LockSvgComponent} from '../../../shared/svg/lock-svg/lock-svg.component';
 import {MatIconModule, MatList, MatListModule} from '@angular/material';
-import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
+import {FlexLayoutModule, MediaObserver} from '@angular/flex-layout';
 import {Observable, Subscription} from 'rxjs/index';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../../../environments/environment';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('CollectionRowsComponent', () => {
   let component: CollectionRowsComponent;
@@ -75,18 +76,21 @@ describe('CollectionRowsComponent', () => {
       ],
       providers: [
         {
-          provide: ObservableMedia,
+          provide: MediaObserver,
           useValue: {
             asObservable: () => {
               return new Observable<any>();
             },
             isActive: () => {
             },
-            subscribe: () => {
-              return new Subscription();
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
             }
           }
         },
+        {provide: APP_BASE_HREF, useValue : '' },
         {
           provide: NavigationServiceB,
           useClass: class {
@@ -101,8 +105,8 @@ describe('CollectionRowsComponent', () => {
     fixture = TestBed.createComponent(CollectionRowsComponent);
     component = fixture.componentInstance;
     component.collectionList = mockCollectionList;
-    media = fixture.debugElement.injector.get(ObservableMedia)
-    // fixture.detectChanges();
+    media = fixture.debugElement.injector.get(MediaObserver)
+    fixture.detectChanges();
   });
 
 

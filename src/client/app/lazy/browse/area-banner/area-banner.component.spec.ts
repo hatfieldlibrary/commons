@@ -30,7 +30,7 @@ import {CloseSvgDisabledComponent} from '../../../shared/svg/close-svg-disabled/
 import {CloseSvgComponent} from '../../../shared/svg/close-svg/close-svg.component';
 import {MatChipsModule, MatIconModule} from '@angular/material';
 import {CloseWhiteSvgComponent} from '../../../shared/svg/close-white-svg/close-white-svg.component';
-import {FlexLayoutModule, ObservableMedia} from '@angular/flex-layout';
+import {FlexLayoutModule, MediaObserver} from '@angular/flex-layout';
 import {Store, StoreModule} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs/index';
 import {JsonLdComponent} from '../../../shared/json-ld/json-ld.component';
@@ -57,14 +57,18 @@ describe('AreaBannerComponent', () => {
       ],
       providers: [
         {
-          provide: ObservableMedia,
+          provide: MediaObserver,
           useValue: {
             asObservable: () => {
               return new Observable<any>();
             },
             isActive: () => {
             },
-            subscribe: () =>  { return new Subscription(); }
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
+            }
           }
         }
       ]

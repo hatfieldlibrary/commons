@@ -35,6 +35,7 @@ import {AreaBannerComponent} from './area-banner/area-banner.component';
 import {CollectionViewComponent} from './collection-view-component/collection-view.component';
 import {TypesComponent} from './types/types.component';
 import {CommonModule} from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
 import {
   MatChipsModule
 } from '@angular/material';
@@ -60,7 +61,8 @@ import {HttpClientModule} from '@angular/common/http';
     CommonModule,
     SharedModule,
     ListRoutingModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule
   ]
 })
 export class ListModule {

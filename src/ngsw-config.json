@@ -41,7 +41,7 @@
       "version": 2,
       "cacheConfig": {
         "maxSize": 250,
-        "maxAge": "1d",
+        "maxAge": "2d",
         "version": 0,
         "timeout": "2s",
         "strategy": "freshness"

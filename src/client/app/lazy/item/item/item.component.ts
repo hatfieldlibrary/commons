@@ -26,7 +26,7 @@ import {
   Component, Input, ChangeDetectionStrategy
 } from '@angular/core';
 import {ItemType} from '../../../core/data-types/item.type';
-import {ObservableMedia} from '@angular/flex-layout';
+import {MediaObserver} from '@angular/flex-layout';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
 
@@ -48,7 +48,7 @@ export class ItemComponent {
   @Input() selectedTypes: FieldFilterType[];
 
   constructor(private navigationService: NavigationServiceB,
-              public media: ObservableMedia) {
+              public mediaObserver: MediaObserver) {
   }
 
   getBackLink(): string {

@@ -35,7 +35,7 @@ import {MatSidenav} from '@angular/material';
 import {MenuInteractionService} from './core/services/menu/menu-interaction.service';
 import {Store} from '@ngrx/store';
 import * as fromRoot from './core/ngrx/reducers/index';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
 import {SetTimeoutService} from './core/services/timers/timeout.service';
 import {LoggerService} from './core/logger/logger.service';
@@ -80,7 +80,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   constructor(private store: Store<fromRoot.State>,
               private menuService: MenuInteractionService,
-              public media: ObservableMedia,
+           //   public mediaObserver: MediaObserver,
               private router: Router,
               @Inject(DOCUMENT) private document,
               private timeoutService: SetTimeoutService,
@@ -89,11 +89,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
               @Inject(PLATFORM_ID) private platform: Object) {
 
     this.watcher = new Subscription();
-    const mediaWatcher = media.asObservable()
-      .subscribe((change: MediaChange) => {
-        this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
-      });
-    this.watcher.add(mediaWatcher);
+   // const mediaWatcher = mediaObserver.media$;
+  //  this.watcher.add(mediaWatcher);
 
   }
 
