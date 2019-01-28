@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
 import {NavigationServiceB} from './navigation.service';
 import {NavigationEnd, Router} from '@angular/router';
@@ -32,7 +32,6 @@ import {Subject} from 'rxjs';
 import {mockStore} from '../../test/mock-store';
 import {FieldNames} from '../../enum/field-names';
 import {Observable} from 'rxjs/internal/Observable';
-import {of} from 'rxjs/internal/observable/of';
 
 describe('NavigationService', () => {
   let router: Router;
@@ -152,7 +151,7 @@ describe('NavigationService', () => {
     it('should navigate to item', () => {
       service.navigateItemRoute('1', '1');
       expect(router.navigate).toHaveBeenCalledWith([
-        'item',
+        '/item',
         'id',
         '1'
       ])
@@ -187,7 +186,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '1', '1', '1');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'category', '1',
         'area', '1',
         'type', '1',
@@ -201,7 +200,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '1', '1', '');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'area', '1',
         'type', '1',
         'subject', '1'
@@ -214,7 +213,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '1', '', '1');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'category', '1',
         'area', '1',
         'type', '1',
@@ -227,7 +226,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '', '1', '1');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'category', '1',
         'area', '1',
         'subject', '1'
@@ -239,7 +238,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '', '1', '');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'area', '1',
         'subject', '1'
       ], {queryParams: {}})
@@ -250,7 +249,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '1', '', '');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'area', '1',
         'type', '1'
       ], {queryParams: {}})
@@ -261,7 +260,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '', '', '1');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'category', '1',
         'area', '1'
       ], {queryParams: {}})
@@ -272,7 +271,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '', '', '');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'area', '1'
       ], {queryParams: {}})
     });
@@ -282,7 +281,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '', '', '', 'list');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'area', '1'
       ], {queryParams: {view: 'list'}})
     });
@@ -292,7 +291,7 @@ describe('NavigationService', () => {
       service.navigateRoute('1', '1', '', '', 'list');
       expect(service.setIdFields).toHaveBeenCalled();
       expect(router.navigate).toHaveBeenCalledWith([
-        'collection',
+        '/collection',
         'area', '1',
         'type', '1'
       ], {queryParams: {view: 'list'}})

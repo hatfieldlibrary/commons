@@ -65,6 +65,7 @@ import {FooterComponent} from './shared/footer/footer.component';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
 import {BrowserTransferStateModule} from '@angular/platform-browser';
+import {APP_BASE_HREF} from '@angular/common';
 
 @Component({
   selector: 'app-dummy-component',
@@ -175,8 +176,10 @@ describe('AppComponent', () => {
             subscribe = jasmine.createSpy('subscribe');
             setPosition = jasmine.createSpy('setPosition');
           }
-        }
-      ]
+        },
+       {provide: APP_BASE_HREF, useValue : '' }
+      ],
+
     });
 
     fixture = TestBed.createComponent(AppComponent);

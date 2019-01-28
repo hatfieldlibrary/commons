@@ -64,7 +64,11 @@ describe('AreaBannerComponent', () => {
             },
             isActive: () => {
             },
-            subscribe: () =>  { return new Subscription(); }
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
+            }
           }
         }
       ]
