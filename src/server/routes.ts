@@ -54,7 +54,7 @@ export class AppRoutes {
     // Passport authentication. The authentication route is defined in environment configuration.
     app.use(config.authPath, app.ensureAuthenticated);
     // Check for authenticated user. The check route is defined in environment configuration.
-    app.use(config.authCheck, app.checkAuthentication);
+    app.get(config.authCheck, app.checkAuthentication);
 
     app.set('view engine', 'html');
     app.set('views', join(DIST_FOLDER));
@@ -71,9 +71,10 @@ export class AppRoutes {
     app.use(config.rootPath, express.static(join(DIST_FOLDER), options));
 
     /**
-     * All routes without a file extension return index.html. Since this is
-     * a single page application, the only route needed is to the
-     * index file.
+     * This application uses the same root path for static files and Angular application
+     * paths. We don't want to return the index file when static files have been requested.
+     * We can avoid this by excluding paths that have an extension. Since this is
+     * a single page application, the only route needed is to the index file.
      */
     app.get('^[^.]+$', (req, res) => {
       res.render(join(DIST_FOLDER, 'index.html'), {req});

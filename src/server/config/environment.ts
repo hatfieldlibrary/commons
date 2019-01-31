@@ -22,6 +22,8 @@
  * Author: Michael Spalti
  */
 
+import {environment} from '../../client/app/environments/environment';
+
 /**
  * Created by mspalti on 3/6/17.
  */
@@ -43,40 +45,40 @@ export class Configuration {
     development: {
       logLevel: 'debug',
       useAuth: true,
+      rootPath: environment.appRoot,
+      serverBaseURL: environment.origin,
       domain: this.credentials.domain,
-      rootPath: this.credentials.rootPath,
-      serverBaseURL: this.credentials.serverBaseURL,
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
-      authPath: '/com-auth/',
-      authCheck: '/com-check',
+      authPath: environment.authPath,
+      authCheck: environment.authCheck,
       nodeEnv: 'development'
     },
 
     test: {
       logLevel: 'debug',
       useAuth: true,
+      rootPath: environment.appRoot,
+      serverBaseURL: environment.origin,
       domain: this.credentials.domain,
-      rootPath: this.credentials.rootPath,
-      serverBaseURL: this.credentials.serverBaseURL,
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
-      authPath: '/auth',
-      authCheck: '/',
+      authPath: environment.authPath,
+      authCheck: environment.authCheck,
       nodeEnv: 'test'
     },
 
     production: {
       logLevel: 'debug',
       useAuth: true,
+      rootPath: environment.appRoot,
+      serverBaseURL: environment.origin,
       domain: this.credentials.domain,
-      rootPath: this.credentials.rootPath,
-      serverBaseURL: this.credentials.serverBaseURL,
       ssoBaseURL: this.credentials.ssoBaseURL,
       validateURL: this.credentials.validateURL,
       redisPort: this.credentials.redisPort,
-      authPath: '/com-auth/',
-      authCheck: '/com-check',
+      authPath: environment.authPath,
+      authCheck: environment.authCheck,
       nodeEnv: 'production'
     }
   };
@@ -97,7 +99,6 @@ export class Configuration {
   public getConfig(): any {
     const configuration = this.config[this.hostEnvironment];
     configuration.domain = this.credentials.domain;
-    configuration.rootPath = this.credentials.rootPath;
     configuration.serverBaseURL = this.credentials.serverBaseURL;
     configuration.ssoBaseURL = this.credentials.ssoBaseURL;
     configuration.validateURL = this.credentials.validateURL;
