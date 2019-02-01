@@ -30,9 +30,10 @@ export const environment = {
   // REST API host. Can be localhost or production host
   // apiHost: 'https://libmedia.willamette.edu',
   apiHost: 'https://libmedia.willamette.edu',
+  // Base path used to generate URLs throughout the application
   appRoot: '/commons/',
-  // Base path, do not include beginning forward slash.
-  appRoute: 'commons/',
+  // Base for angular routes; do not include forward slashes
+  appRoute: 'commons',
   // Path to the REST API (proxy).
   apiRoot: '/tagger-3-api',
   // Path to images on tagger (proxy).
