@@ -34,9 +34,10 @@ export const environment = {
   // REST API host (e.g. Tagger-2). Can be localhost or production host
    // apiHost: 'https://libmedia.willamette.edu',
   apiHost: 'http://lib-apis.willamette.edu:3000',
+  // Base path used to generate URLs throughout the application
   appRoot: '/commons/',
-  // Base path, do not include beginning forward slash.
-  appRoute: 'commons/',
+  // Base for angular routes; do not include forward slashes
+  appRoute: 'commons',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',

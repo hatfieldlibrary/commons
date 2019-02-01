@@ -34,9 +34,9 @@ export const environment = {
   // REST API host. Can be localhost or production host
   // apiHost: 'https://libmedia.willamette.edu',
   apiHost: '',
-  appRoot: '/',
+  appRoot: '/commons/',
   // Base path, do not include beginning forward slash.
-  appRoute: '',
+  appRoute: 'commons',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',
