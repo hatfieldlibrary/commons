@@ -29,10 +29,10 @@ import {
   asNativeElements,
   Component,
   ElementRef,
-  EventEmitter,
+  EventEmitter, Inject,
   Input,
   OnInit,
-  Output, Renderer2,
+  Output, PLATFORM_ID, Renderer2,
   ViewChild
 } from '@angular/core';
 import {AreasFilter} from '../../../core/data-types/areas-filter';
@@ -40,7 +40,7 @@ import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-upda
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
-import {MatNavList} from '@angular/material';
+import {isPlatformBrowser} from '@angular/common';
 
 export interface SelectedAreaEvent {
   selected: FieldFilterType[];
@@ -63,7 +63,8 @@ export class AreaOptionsComponent implements AfterViewChecked {
   constructor(private filterService: FilterUpdateServiceB,
               private scrollReadyService: ScrollReadyService,
               private navigationService: NavigationServiceB,
-              private renderer: Renderer2
+              private renderer: Renderer2,
+              @Inject(PLATFORM_ID) private platform: Object
   ) {}
 
   /**
@@ -104,34 +105,35 @@ export class AreaOptionsComponent implements AfterViewChecked {
 
 
   ngAfterViewChecked(): void {
-      this.filter.areas.forEach((area, index) => {
-        if (this.selectedAreaPosition === -1) {
-          if (area.name !== '') {
-            if (area.id === this.filter.selectedAreas[0].id) {
-              this.selectedAreaPosition = index;
-              console.log(this.selectedAreaPosition);
-              console.log(this.scrollableList)
-              console.log(this.selectedAreaPosition * -200)
-              const offset = this.selectedAreaPosition * -200;
-              console.log(this.scrollableList)
-              // this.container.nativeElement.scrollLeft = offset;
-             this.renderer.setProperty(this.scrollableList.nativeElement, 'scrollLeft', offset);
-             this.scrollableList.nativeElement.scrollTo({ left: offset, behavior: 'smooth' });
-             const el = this.scrollableList.nativeElement;
-             setTimeout(function() {
-                el.scrollLeft = -100;
-               console.log(el.scrollLeft)
-
-              }, 1000);
-
-              console.log(this.scrollableList.nativeElement.scrollLeft)
-             // console.log(this.areaSelectorDirective.nativeElement)
-            //  this.areaSelectorDirective.focus(3index)
-            }
-          }
-        }
-      });
-
+    // if (isPlatformBrowser(this.platform)) {
+    //   this.filter.areas.forEach((area, index) => {
+    //     if (this.selectedAreaPosition === -1) {
+    //       if (area.name !== '') {
+    //         if (area.id === this.filter.selectedAreas[0].id) {
+    //           this.selectedAreaPosition = index;
+    //           console.log(this.selectedAreaPosition);
+    //           console.log(this.scrollableList)
+    //           console.log(this.selectedAreaPosition * -200)
+    //           const offset = this.selectedAreaPosition * -200;
+    //           console.log(this.scrollableList)
+    //           // this.container.nativeElement.scrollLeft = offset;
+    //           this.renderer.setProperty(this.scrollableList.nativeElement, 'scrollLeft', offset);
+    //           this.scrollableList.nativeElement.scrollTo({left: offset, behavior: 'smooth'});
+    //           const el = this.scrollableList.nativeElement;
+    //           setTimeout(function () {
+    //             el.scrollLeft = -100;
+    //             console.log(el.scrollLeft)
+    //
+    //           }, 1000);
+    //
+    //           console.log(this.scrollableList.nativeElement.scrollLeft)
+    //           // console.log(this.areaSelectorDirective.nativeElement)
+    //           //  this.areaSelectorDirective.focus(3index)
+    //         }
+    //       }
+    //     }
+    //   });
+    // }
   }
 
 }

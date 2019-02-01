@@ -90,7 +90,8 @@ export class ItemLinksComponent implements OnInit, OnDestroy {
 
     const url: Observable<string> = this.route.parent.url.pipe(map(segments => segments.join('/')));
     const urlWatcher = url.subscribe((path) => {
-      this.authenticationPath = environment.authPath + '/' + path;
+      // Adding origin to the path so that check succeeds in server compiled code.
+      this.authenticationPath = environment.origin + environment.appRoot + environment.authPath + '/' + path;
     });
     this.watchers.add(urlWatcher);
 
