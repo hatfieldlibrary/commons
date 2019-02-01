@@ -27,7 +27,7 @@
         ],
         "urls": [
           "https://libmedia.willamette.edu/commons/assets/**/*",
-          "http://localhost:3005/**/*"
+          "http://localhost:3005/assets/**/*"
         ]
       }
     }

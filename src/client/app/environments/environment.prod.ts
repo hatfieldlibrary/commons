@@ -39,7 +39,7 @@ export const environment = {
   imagePath: '/commons-images',
   // Authentication paths.
   authPath: '/com-auth',
-  authCheck: 'https://libmedia.willamette.edu/com-check',
+  authCheck: '/com-check',
   defaultRoute: '/commons/collection/area/5',
   isDebugMode: false
 

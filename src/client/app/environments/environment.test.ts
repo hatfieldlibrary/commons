@@ -44,8 +44,8 @@ export const environment = {
   // imagePath: '/commons-images',
   imagePath: '',
   // Authentication paths.
-  authPath: '/auth',
-  authCheck: '/',
+  authPath: '/com-auth',
+  authCheck: '/com-check',
   defaultRoute: '/collection/area/5',
   isDebugMode: true
 
