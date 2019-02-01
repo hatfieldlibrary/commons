@@ -34,9 +34,9 @@ export const environment = {
   // REST API host (e.g. Tagger-2). Can be localhost or production host
    // apiHost: 'https://libmedia.willamette.edu',
   apiHost: 'http://lib-apis.willamette.edu:3000',
-  appRoot: '/',
+  appRoot: '/commons/',
   // Base path, do not include beginning forward slash.
-  appRoute: '',
+  appRoute: 'commons/',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',
@@ -46,6 +46,6 @@ export const environment = {
   // Authentication paths.
   authPath: '/com-auth',
   authCheck: '/com-check',
-  defaultRoute: '/collection/area/5',
+  defaultRoute: '/commons/collection/area/5',
   isDebugMode: true
 };
