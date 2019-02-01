@@ -232,7 +232,7 @@ export class Authentication {
 
       // Removes the auth path prefix from the current path. The
       // prepended appRoot string is used by all routes.
-      const redirect = environment.appRoot + path.replace(find, '');
+      const redirect = path.replace(find, '');
 
       passport.authenticate('cas', (err, user, info) => {
 
