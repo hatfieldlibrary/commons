@@ -231,14 +231,11 @@ export class Authentication {
       const path = req.originalUrl;
 
       // Removes the auth path prefix from the current path. The
-      // prepended /commons/ string is used by all normal routes.
-      // This path segment supports routing via a proxy server. It
-      // Should be a configuration parameter, not hard-coded here.
+      // prepended appRoot string is used by all routes.
       const redirect = environment.appRoot + path.replace(find, '');
 
       passport.authenticate('cas', (err, user, info) => {
 
-        console.log('user ' + user);
         if (err) {
           return next(err);
         }

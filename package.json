@@ -1,6 +1,6 @@
 {
   "name": "commons",
-  "version": "5.2.1",
+  "version": "5.2.2",
   "license": "MIT",
   "angular-cli": {},
   "author": {
@@ -8,8 +8,9 @@
     "email": "mspalti@gmail.com"
   },
   "keywords": [
-    "angular6",
+    "angular7",
     "angular-cli",
+    "pwa",
     "ngrx",
     "typescript"
   ],
@@ -26,7 +27,7 @@
     "build:production:ssr": "npm run build:client-and-server-bundles:prod && npm run webpack:server:prod",
     "build:dev:worker:ssr": "npm run build:dev:worker:prod && npm run webpack:server:prod",
     "serve:ssr": "HOST_ENV=development node dist/server",
-    "build:client-and-server-bundles": "ng build --prod --base-href / && ng run commons:server",
+    "build:client-and-server-bundles": "ng build --prod --base-href /commons/ && ng run commons:server",
     "build:client-and-server-bundles:prod": "ng build --prod --base-href /commons/ && ng run commons:server --configuration=production",
     "build:dev:worker:prod": "ng build --prod --base-href / && ng run commons:server:production",
     "webpack:server": "webpack --env.development --config webpack.server.config.js --progress --colors",
@@ -48,13 +49,14 @@
     "ci-test": "ng test --code-coverage --watch=false --sourceMap=false && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "scriptsComments": {
-    "build:development:ssr": "Builds full application and server with development configs, deploys to dist.",
-    "build:production:ssr": "Builds full application and server with production configs, deploys to dist.",
+    "build:development:ssr": "Builds full application and server with development configs and deploys to dist.",
+    "build:production:ssr": "Builds full application and server with production configs and deploys to dist.",
     "build:client-and-server-bundles": "Builds development client and server using Angular CLI",
     "build:client-and-server-bundles:prod": "Builds production client and server using Angular CLI",
     "serve:ssr": "Runs the development server in the local dist directory (includes ssr)",
     "build:dev:worker": "Builds a develpment client with server worker, an Express server, and starts server on port 3005.",
-    "start:dev": "Uses Angular CLI to build and run development enviroment on port 3005 (no ssr, aot, or service workder)"
+    "start:dev": "Uses Angular CLI to build and run development enviroment on port 3005 (no ssr, aot, or service workder)",
+    "test": "Runs tests and watches for code updates."
   },
   "private": true,
   "dependencies": {
