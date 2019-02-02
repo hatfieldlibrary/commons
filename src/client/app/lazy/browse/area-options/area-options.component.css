@@ -25,9 +25,14 @@
 .tabs-container {
   background:#791716;
 }
+.tabs-container a,
+.tabs-container a:visited {
+  color: #fbe6a2;
+  opacity: 1;
+}
 .area-selector-container {
   margin-top: 0;
-  height: 60px;
+  /*height: 60px;*/
   background:#791716;
   /*overflow: hidden;*/
   padding-left: 0px;
@@ -66,4 +71,16 @@
 .highlight  {
   color: #e6b726;
   font-weight: 800;
+}
+.mat-tab-link {
+  font-size: 18px;
+  font-weight: 800;
+  color: #e6b726;
+}
+.mobile-options a.mat-tab-link {
+  font-size: 14px !important;
+  font-weight: 500;
+}
+.mat-tab-nav-bar {
+  border-bottom: none;
 }

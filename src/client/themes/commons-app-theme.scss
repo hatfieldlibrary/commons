@@ -26,7 +26,7 @@
 @import '../../../node_modules/@angular/material/_theming.scss';
 // Plus imports for other components in your app.
 
-$md-primarypalette: (
+$mat-primarypalette: (
   50 : #e3f1f2,
   100 : #b9dcdf,
   200 : #8bc5ca,
@@ -58,8 +58,41 @@ $md-primarypalette: (
     A700 : #000000,
   )
 );
+$mat-actionbarpalette: (
+  50 : #fcf6e5,
+  100 : #f8e9be,
+  200 : #f3db93,
+  300 : #eecd67,
+  400 : #eac247,
+  500 : #e6b726,
+  600 : #e3b022,
+  700 : #dfa71c,
+  800 : #db9f17,
+  900 : #d5900d,
+  A100 : #ffffff,
+  A200 : #ffecce,
+  A400 : #ffd99b,
+  A700 : #ffd081,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
 
-$md-accentpalette: (
+
+$mat-accentpalette: (
   50 : #e3f1f2,
   100 : #b9dcdf,
   200 : #8bc5ca,
@@ -135,14 +168,18 @@ $md-accentpalette: (
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$commons-app-primary: mat-palette($md-primarypalette);
-$commons-app-accent:  mat-palette($md-accentpalette, 500, 600, 700);
+$commons-app-primary: mat-palette($mat-primarypalette);
+$commons-app-accent:  mat-palette($mat-accentpalette, 500, 600, 700);
+$commons-action-bar-accent: mat-palette($mat-actionbarpalette);
 
 // The warn palette is optional (defaults to red).
-$commons-app-warn:    mat-palette($mat-red);
+$commons-app-warn:    mat-palette($mat-actionbarpalette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$commons-app-theme: mat-light-theme($commons-app-primary, $commons-app-accent, $commons-app-warn);
+$commons-app-theme: mat-light-theme(
+    $commons-app-primary,
+    $commons-app-accent,
+    $commons-app-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
