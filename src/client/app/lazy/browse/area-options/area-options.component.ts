@@ -30,7 +30,7 @@ import {
   Component,
   ElementRef,
   EventEmitter, Inject,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output, PLATFORM_ID, Renderer2,
   ViewChild
@@ -41,6 +41,8 @@ import {ScrollReadyService} from '../../../core/services/observable/scroll-ready
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {isPlatformBrowser} from '@angular/common';
+import {MediaChange, MediaObserver} from '@angular/flex-layout';
+import {Subscription} from 'rxjs';
 
 export interface SelectedAreaEvent {
   selected: FieldFilterType[];
@@ -51,19 +53,21 @@ export interface SelectedAreaEvent {
   templateUrl: './area-options.component.html',
   styleUrls: ['./area-options.component.css']
 })
-export class AreaOptionsComponent implements AfterViewChecked {
+export class AreaOptionsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @Input() filter: AreasFilter;
   @Output() areaNavigation: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('areaSelectionList', { read: ElementRef })
   public scrollableList: ElementRef;
-
-  selectedAreaPosition = -1;
+  public color = 'warn';
+  isMobile = false;
+  private watcher = new Subscription();
 
   constructor(private filterService: FilterUpdateServiceB,
               private scrollReadyService: ScrollReadyService,
               private navigationService: NavigationServiceB,
               private renderer: Renderer2,
+              private mediaObserver: MediaObserver,
               @Inject(PLATFORM_ID) private platform: Object
   ) {}
 
@@ -98,7 +102,7 @@ export class AreaOptionsComponent implements AfterViewChecked {
   onAreaListControlChanged(areaId: number) {
     const updatedArea = this.filterService.updateSelectSingleAreaStore(this.filter.areas, areaId);
     const selectedEmitted: SelectedAreaEvent = {selected: updatedArea};
-    // Reset the scroll position.
+    // Reset the vertical scroll position.
     this.scrollReadyService.setPosition(0);
     this.areaNavigation.emit(selectedEmitted);
   }
@@ -134,6 +138,21 @@ export class AreaOptionsComponent implements AfterViewChecked {
     //     }
     //   });
     // }
+  }
+
+  ngOnInit(): void {
+    const mediaSubscription = this.mediaObserver.media$.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    });
+    this.watcher.add(mediaSubscription);
+  }
+
+  ngOnDestroy(): void {
+    this.watcher.unsubscribe();
   }
 
 }
