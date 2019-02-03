@@ -143,8 +143,7 @@ describe('ItemContainerComponent', () => {
         RelatedItemsComponent,
         ItemComponent,
         ItemLinksComponent,
-        ItemSelectComponent,
-        AreaOptionsComponent
+        ItemSelectComponent
       ],
       imports: [
         SharedModule,

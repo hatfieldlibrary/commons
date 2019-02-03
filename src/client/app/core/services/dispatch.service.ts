@@ -130,12 +130,16 @@ export class DispatchService {
     //     this.getCollectionGroupsBySubject(subjectId);
     //   }
     //   this.getTypesForSubject(subjectId);
-    // } else if (typeId) {
-    //   // type
-    //   this.getCollectionsForType(typeId);
-    //   this.getSubjectsForType(typeId);
-    //   this.getCollectionGroupsByType(typeId);
-    //   this.getAllTypes();
+    } else if (typeId) {
+      // In our current implementation, all possible
+      // dispatch requests include an area. The exception
+      // is our thesis submission component, which is
+      // parameterized with type only. That component
+      // requires only the list of collections.
+      this.getCollectionsForType(typeId);
+     // this.getSubjectsForType(typeId);
+     // this.getCollectionGroupsByType(typeId);
+     // this.getAllTypes();
     } else {
       // all
       this.getAllCollections();
