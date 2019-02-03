@@ -25,12 +25,14 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AreaOptionsComponent} from './area-options.component';
-import {MatListModule} from '@angular/material';
+import {MatListModule, MatTabsModule} from '@angular/material';
 import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-update.service';
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {APP_BASE_HREF} from '@angular/common';
+import {MediaObserver} from '@angular/flex-layout';
+import {Observable, Subscription} from 'rxjs';
 
 
 describe('AreaOptionsComponent', () => {
@@ -43,7 +45,7 @@ describe('AreaOptionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AreaOptionsComponent],
-      imports: [MatListModule, RouterTestingModule.withRoutes([])],
+      imports: [MatListModule, MatTabsModule, RouterTestingModule.withRoutes([])],
       providers: [{
         provide: FilterUpdateServiceB,
         useClass: class {
@@ -60,6 +62,21 @@ describe('AreaOptionsComponent', () => {
           provide: NavigationServiceB,
           useClass: class {
             getAreaLink = jasmine.createSpy('getAreaLink');
+          }
+        },
+        {
+          provide: MediaObserver,
+          useValue: {
+            asObservable: () => {
+              return new Observable<any>();
+            },
+            media$: {
+              subscribe: () => {
+                return new Subscription();
+              }
+            },
+            isActive: () => {
+            }
           }
         }
         ]

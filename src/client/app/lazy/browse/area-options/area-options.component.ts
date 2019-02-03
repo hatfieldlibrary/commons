@@ -61,9 +61,7 @@ export class AreaOptionsComponent implements OnInit, OnDestroy, AfterViewChecked
   public scrollableList: ElementRef;
   public color = 'warn';
   isMobile = false;
-  private watcher: Subscription;
-
-  selectedAreaPosition = -1;
+  private watcher = new Subscription();
 
   constructor(private filterService: FilterUpdateServiceB,
               private scrollReadyService: ScrollReadyService,
@@ -143,13 +141,14 @@ export class AreaOptionsComponent implements OnInit, OnDestroy, AfterViewChecked
   }
 
   ngOnInit(): void {
-    this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
+    const mediaSubscription = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
         this.isMobile = true;
       } else {
         this.isMobile = false;
       }
     });
+    this.watcher.add(mediaSubscription);
   }
 
   ngOnDestroy(): void {
