@@ -35,9 +35,9 @@ export const environment = {
    // apiHost: 'https://libmedia.willamette.edu',
   apiHost: 'http://lib-apis.willamette.edu:3000',
   // Base path used to generate URLs throughout the application
-  appRoot: '/commons/',
+  appRoot: '/',
   // Base for angular routes; do not include forward slashes
-  appRoute: 'commons',
+  appRoute: '',
   // Path to the REST API.
   // apiRoot: '/commons-rest',
   apiRoot: '/rest',
@@ -47,6 +47,6 @@ export const environment = {
   // Authentication paths.
   authPath: '/com-auth',
   authCheck: '/com-check',
-  defaultRoute: '/commons/collection/area/5',
+  defaultRoute: 'collection/area/5',
   isDebugMode: true
 };

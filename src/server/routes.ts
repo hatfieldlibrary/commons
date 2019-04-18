@@ -67,6 +67,7 @@ export class AppRoutes {
       redirect: false
     };
 
+    console.log(config);
     // Serve static files.
     app.use(config.rootPath, express.static(join(DIST_FOLDER), options));
 
