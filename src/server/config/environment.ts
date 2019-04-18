@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {environment} from '../../client/app/environments/environment';
+
 
 /**
  * Created by mspalti on 3/6/17.
@@ -30,65 +30,19 @@ import {environment} from '../../client/app/environments/environment';
 
 export class Configuration {
 
-  private readonly hostEnvironment;
-  private readonly credentials = {
-    domain: '',
-    rootPath: '',
-    serverBaseURL: '',
-    ssoBaseURL: '',
-    validateURL: '',
-    redisPort: ''
-  };
+   private readonly credentials;
 
-  private config = {
-
-    development: {
-      logLevel: 'debug',
-      useAuth: true,
-      rootPath: environment.appRoot,
-      serverBaseURL: environment.origin,
-      domain: this.credentials.domain,
-      ssoBaseURL: this.credentials.ssoBaseURL,
-      validateURL: this.credentials.validateURL,
-      authPath: environment.authPath,
-      authCheck: environment.authCheck,
-      nodeEnv: 'development'
-    },
-
-    test: {
-      logLevel: 'debug',
-      useAuth: true,
-      rootPath: environment.appRoot,
-      serverBaseURL: environment.origin,
-      domain: this.credentials.domain,
-      ssoBaseURL: this.credentials.ssoBaseURL,
-      validateURL: this.credentials.validateURL,
-      authPath: environment.authPath,
-      authCheck: environment.authCheck,
-      nodeEnv: 'test'
-    },
-
-    production: {
-      logLevel: 'debug',
-      useAuth: true,
-      rootPath: environment.appRoot,
-      serverBaseURL: environment.origin,
-      domain: this.credentials.domain,
-      ssoBaseURL: this.credentials.ssoBaseURL,
-      validateURL: this.credentials.validateURL,
-      redisPort: this.credentials.redisPort,
-      authPath: environment.authPath,
-      authCheck: environment.authCheck,
-      nodeEnv: 'production'
-    }
-  };
-
-  constructor(hostEnvironment: string) {
-    this.hostEnvironment = hostEnvironment;
+  /**
+   * The constructor retrieves the credentials module that
+   * was compiled by webpack for the current environment
+   * (production or development). These credentials will
+   * not be available when built on TravisCi.
+   */
+  constructor() {
     try {
       // The path to credentials.
       this.credentials = require('credentials');
-    } catch (ex) {
+    } catch (exception) {
       // No credentials ... try travis-ci credentials.
       console.log('Using travis credentials, really.');
       this.credentials = require('../credentials/travis-credentials')
@@ -97,14 +51,7 @@ export class Configuration {
   }
 
   public getConfig(): any {
-    const configuration = this.config[this.hostEnvironment];
-    configuration.domain = this.credentials.domain;
-    configuration.serverBaseURL = this.credentials.serverBaseURL;
-    configuration.ssoBaseURL = this.credentials.ssoBaseURL;
-    configuration.validateURL = this.credentials.validateURL;
-    configuration.redisPort = this.credentials.redisPort;
-    configuration.nodeEnv = this.hostEnvironment;
-    return configuration;
+    return this.credentials;
   }
 
 }

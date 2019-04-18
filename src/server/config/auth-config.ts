@@ -61,6 +61,8 @@ export class Authentication {
 
   public init(app, config, passport) {
 
+    console.log(config);
+
     /**
      * For development purposes, we use express-session in lieu of Redisstore.
      */

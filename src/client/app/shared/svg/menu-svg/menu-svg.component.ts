@@ -40,15 +40,10 @@ export class MenuSvgComponent {
               @Inject(PLATFORM_ID) private platformId: Object,
               @Optional() @Inject(APP_BASE_HREF) origin: string) {
 
-    if (isPlatformBrowser(this.platformId)) {
-      iconRegistry.addSvgIcon(
-        'menu',
-        sanitizer.bypassSecurityTrustResourceUrl( 'assets/img/svg/ic_menu_white_24px.svg'));
-    } else {
-      iconRegistry.addSvgIcon(
-        'menu',
-        sanitizer.bypassSecurityTrustResourceUrl( origin + 'assets/img/svg/ic_menu_white_24px.svg'));
-    }
+    iconRegistry.addSvgIcon(
+      'menu',
+      sanitizer.bypassSecurityTrustResourceUrl( origin + 'assets/img/svg/ic_menu_white_24px.svg'));
+
 
   }
 }
