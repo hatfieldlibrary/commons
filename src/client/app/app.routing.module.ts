@@ -35,20 +35,20 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: environment.appRoute + '/collection',
+    path: environment.appRoute + 'collection',
     redirectTo: environment.defaultRoute,
     pathMatch: 'full'
   },
   {
-    path:  environment.appRoute + '/item/submit/:typeId',
+    path:  environment.appRoute + 'item/submit/:typeId',
     loadChildren: './lazy/submit-dspace/submit-dspace.module#SubmitDspaceModule'
   },
   {
-    path:  environment.appRoute + '/item/id/:id',
+    path:  environment.appRoute + 'item/id/:id',
     loadChildren: './lazy/item/item.module#ItemModule'
   },
   {
-    path:  environment.appRoute + '/collection',
+    path:  environment.appRoute + 'collection',
     loadChildren: './lazy/browse/list.module#ListModule'
   },
   {
