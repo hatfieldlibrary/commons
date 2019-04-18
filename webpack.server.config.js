@@ -38,12 +38,13 @@ module.exports = env => {
       alias: {
         'hiredis': path.join(__dirname, 'src/client/webpack.hacks/hiredis.js'),
         'credentials': (env.development) ? getUserHome() + '/etc/commons-dev/credentials.js' :
-          getUserHome() + '/etc/commons-prod/credentials.js',
-        'environment': (env.development) ? 'src/client/app/environments/environment.ts' :
-            'src/client/app/environments/environment.prod.ts'
+          getUserHome() + '/etc/commons-prod/credentials.js'
+        // 'environment': (env.development) ? 'src/client/app/environments/environment.ts' :
+        //     'src/client/app/environments/environment.prod.ts'
       }
     },
     target: 'node',
+    // https://webpack.js.org/configuration/mode
     mode: 'none',
     // this makes sure we include node_modules and other 3rd party libraries
     externals: [/node_modules/],
@@ -53,6 +54,12 @@ module.exports = env => {
     },
     module: {
       rules: [{test: /\.ts$/, loader: 'ts-loader'}]
+    },
+    optimization: {
+      // https://webpack.js.org/configuration/optimization/#optimization-nodeenv
+      // Without this, webpack sets environment to "none". See mode, above.
+      // This problem appeared unexpectedly after many successful builds.
+      nodeEnv: false
     },
     plugins: [
       // new webpack.NormalModuleReplacementPlugin(/hammerjs/, 'src/client/webpack.hacks/hammerjs.js'),

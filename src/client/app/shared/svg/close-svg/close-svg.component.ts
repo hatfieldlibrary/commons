@@ -36,7 +36,7 @@ import {APP_BASE_HREF} from '@angular/common';
 export class CloseSvgComponent {
 
   constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,
-              @Optional() @Inject(APP_BASE_HREF) origin: string) {
+               @Inject(APP_BASE_HREF) origin: string) {
     iconRegistry.addSvgIcon(
       'close',
       sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_clear_black_24px.svg'));

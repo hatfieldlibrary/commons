@@ -55,9 +55,9 @@ app.use(helmet());
 /**
  * Get the configuration for the environment.
  */
-const env = process.env.HOST_ENV || 'development';
+const env = process.env.NODE_ENV || 'development';
 app.set('env', env);
-const configs: Configuration = new Configuration(env);
+const configs: Configuration = new Configuration();
 const config = configs.getConfig();
 /**
  * Set up authentication.

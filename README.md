@@ -1,3 +1,4 @@
+ls
 # Commons
 [![Build Status](https://travis-ci.org/hatfieldlibrary/commons.svg?branch=master)](https://travis-ci.org/hatfieldlibrary/commons)
 [![Coverage Status](https://coveralls.io/repos/github/hatfieldlibrary/commons/badge.svg?branch=master)](https://coveralls.io/github/hatfieldlibrary/commons?branch=master)
@@ -31,12 +32,17 @@ For server deployment you need to create two configuration files in your home di
 
 var credentials = {
 
-  apiHost: 'your sever base url and port (if necessary).  e.g. http://localhost:3005',
-  serverBaseURL: 'the url expected by your CAS server, including port (this is not provided by the current CAS strategy implementation',
-  ssoBaseURL:' url of your CAS server',
-  validateURL: 'path to validation service',
-  domain: 'your domain, e.g. mycampus.edu',
-  redisPort: 6370 // unused in development, production only
+  logLevel: 'info',
+  apiHost: 'https://host.domain.edu',
+  serverBaseURL: 'https://host.domain.edu',
+  ssoBaseURL: 'https://host.domain.edu/idp/profile/cas',
+  validateURL: '/serviceValidate',
+  rootPath: '/',
+  domain: 'domain.edu',
+  authPath: '/com-auth',
+  authCheck: '/com-check',
+  nodeEnv: 'production',
+  redisPort: 6379 // used only in production
 
 };
 
