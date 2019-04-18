@@ -22,7 +22,7 @@
  * Author: Michael Spalti
  */
 
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {NavigationStart, Router} from '@angular/router';
 import * as fromRoot from '../../ngrx/reducers';
@@ -36,6 +36,7 @@ import {
 import {FieldFilterType} from '../../data-types/field-filter.type';
 import {FieldNames} from '../../enum/field-names';
 import {NavigationRoutes} from './navigation-routes';
+import {isPlatformBrowser} from '@angular/common';
 
 interface RouterIds {
   subjectId: string;
@@ -62,6 +63,7 @@ export class NavigationServiceB {
   previousUrl = '';
   currentUrl = '';
   initialNavigation = true;
+  rootPath = '/';
 
   /**
    * The constructor initializes subscriptions that are needed to
@@ -70,7 +72,15 @@ export class NavigationServiceB {
    * @param store
    */
   constructor(private router: Router,
-              private store: Store<fromRoot.State>) {
+              private store: Store<fromRoot.State>,
+              @Inject(PLATFORM_ID) platformId: Object) {
+
+    // The root path will vary between Angular events (routerLink directives) and
+    // browser events (e.g. href + base).
+    if (isPlatformBrowser(platformId)) {
+      this.rootPath = environment.appRoot;
+    }
+
     // Keep track of removed fields in application state (added by AreaFiltersComponent).
     // Before navigation takes place, the selected field ids are checked to verify that
     // they have not been removed. (Field removal is initiated in the AreaFiltersComponent component.)
@@ -109,7 +119,7 @@ export class NavigationServiceB {
         return true;
       }
     // Should not fetch collection data if navigating from an item view.
-    const path = environment.appRoot + 'item/';
+    const path = this.rootPath + 'item/';
     const regex = new RegExp( path, 'g' );
     if (this.previousUrl.match(regex)) {
       return false;
@@ -173,18 +183,26 @@ export class NavigationServiceB {
 
   public navigateItemRoute(itemId: string): void {
     this.router.navigate([
-      environment.appRoot +
+      this.rootPath +
       'item',
       'id', itemId
     ]);
   }
 
+  /**
+   * Provides absolute static link to item.
+   * @param itemId
+   */
   public getItemLink(itemId: number): string {
-    return  environment.appRoot + 'item/id/' + itemId;
+      return this.rootPath + 'item/id/' + itemId;
   }
 
+  /**
+   * Provides absolute static link to area.
+   * @param areaId
+   */
   public getAreaLink(areaId: number): string {
-    return environment.appRoot + 'collection/area/' + areaId;
+      return this.rootPath + '/collection/area/' + areaId;
   }
 
   /**
@@ -308,7 +326,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.groupId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'category', groupId,
         'area', areaId,
@@ -321,7 +339,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.groupId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'category', groupId,
         'type', typeId,
@@ -333,7 +351,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.groupId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'category', groupId,
         'area', areaId,
@@ -345,7 +363,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(fields.groupId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'category', groupId,
         'area', areaId,
@@ -357,7 +375,7 @@ export class NavigationServiceB {
       && this.isFieldSelected(areaId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'area', areaId,
         'type', typeId,
@@ -367,7 +385,7 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(fields.groupId) && this.isFieldSelected(areaId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'category', groupId,
         'area', areaId
@@ -376,7 +394,7 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(fields.subjectId) && this.isFieldSelected(areaId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'area', areaId,
         'subject', subjectId
@@ -385,7 +403,7 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(areaId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'area', areaId,
         'type', typeId
@@ -394,20 +412,20 @@ export class NavigationServiceB {
     } else if (this.isFieldSelected(fields.typeId) && this.isFieldSelected(fields.subjectId)) {
 
       this.router.navigate([
-        environment.appRoot +
+        this.rootPath +
         'collection',
         'type', typeId,
         'subject', subjectId
       ], queryParams);
 
     } else if (this.isFieldSelected(fields.typeId)) {
-      this.router.navigate([ environment.appRoot + 'collection', 'type', typeId], queryParams);
+      this.router.navigate([ this.rootPath + 'collection', 'type', typeId], queryParams);
     } else if (this.isFieldSelected(areaId)) {
-      this.router.navigate([ environment.appRoot + 'collection', 'area', areaId], queryParams);
+      this.router.navigate([ this.rootPath + 'collection', 'area', areaId], queryParams);
     } else if (this.isFieldSelected(fields.subjectId)) {
-      this.router.navigate([ environment.appRoot + 'collection', 'subject', subjectId], queryParams);
+      this.router.navigate([ this.rootPath + 'collection', 'subject', subjectId], queryParams);
     } else {
-      this.router.navigate([ environment.appRoot + 'collection'], queryParams);
+      this.router.navigate([ this.rootPath + 'collection'], queryParams);
     }
   }
 
@@ -430,21 +448,21 @@ export class NavigationServiceB {
                                selectedSubject: string,
                                selectedTypes: string): string {
     if (this.isFieldSelected(selectedSubject) && selectedTypes && selectedGroup) {
-      return NavigationRoutes.areaGroupSubjectTypeLink(selectedArea, selectedGroup, selectedSubject, selectedTypes);
+      return NavigationRoutes.areaGroupSubjectTypeLink(this.rootPath, selectedArea, selectedGroup, selectedSubject, selectedTypes);
     } else if (selectedGroup && selectedTypes) {
-      return NavigationRoutes.areaGroupTypeLink(selectedArea, selectedGroup, selectedTypes);
+      return NavigationRoutes.areaGroupTypeLink(this.rootPath, selectedArea, selectedGroup, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject) && selectedGroup) {
-      return NavigationRoutes.areaGroupSubjectLink(selectedArea, selectedGroup, selectedSubject);
+      return NavigationRoutes.areaGroupSubjectLink(this.rootPath, selectedArea, selectedGroup, selectedSubject);
     } else if (this.isFieldSelected(selectedSubject) && this.isFieldSelected(selectedTypes)) {
-      return NavigationRoutes.areaSubjectTypeLink(selectedArea, selectedSubject, selectedTypes);
+      return NavigationRoutes.areaSubjectTypeLink(this.rootPath, selectedArea, selectedSubject, selectedTypes);
     } else if (this.isFieldSelected(selectedTypes)) {
-      return NavigationRoutes.areaTypeLink(selectedArea, selectedTypes);
+      return NavigationRoutes.areaTypeLink(this.rootPath, selectedArea, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject)) {
-      return NavigationRoutes.areaSubjectLink(selectedArea, selectedSubject)
+      return NavigationRoutes.areaSubjectLink(this.rootPath, selectedArea, selectedSubject)
     } else if (selectedGroup) {
-      return NavigationRoutes.areaGroupLink(selectedArea, selectedGroup)
+      return NavigationRoutes.areaGroupLink(this.rootPath, selectedArea, selectedGroup)
     } else {
-      return NavigationRoutes.areaLink(selectedArea);
+      return NavigationRoutes.areaLink(this.rootPath, selectedArea);
     }
   }
 
@@ -459,13 +477,13 @@ export class NavigationServiceB {
    */
   private _handleGlobalBackLinks(selectedSubject: string, selectedGroup: string, selectedTypes: string): string {
     if (this.isFieldSelected(selectedSubject) && selectedTypes) {
-      return NavigationRoutes.globalSubjectTypeLink(selectedSubject, selectedTypes);
+      return NavigationRoutes.globalSubjectTypeLink(this.rootPath, selectedSubject, selectedTypes);
     } else if (this.isFieldSelected(selectedSubject)) {
-      return NavigationRoutes.globalSubjectLink(selectedSubject);
+      return NavigationRoutes.globalSubjectLink(this.rootPath, selectedSubject);
     } else if (this.isFieldSelected(selectedTypes)) {
-      return NavigationRoutes.globalTypeLink(selectedTypes);
+      return NavigationRoutes.globalTypeLink(this.rootPath, selectedTypes);
     } else {
-      return NavigationRoutes.globalLink();
+      return NavigationRoutes.globalLink(this.rootPath);
     }
   }
 

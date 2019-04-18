@@ -38,20 +38,11 @@ export class HomeSvgComponent {
               private sanitizer: DomSanitizer,
               @Inject(PLATFORM_ID) private platformId: Object,
               @Optional() @Inject(APP_BASE_HREF) origin: string) {
-    // iconRegistry.addSvgIcon(
-    //   'home',
-    //   sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_home_white_24px.svg'));
 
+    iconRegistry.addSvgIcon(
+      'home',
+      sanitizer.bypassSecurityTrustResourceUrl( origin + 'assets/img/svg/ic_home_white_24px.svg'));
 
-    if (isPlatformBrowser(this.platformId)) {
-      iconRegistry.addSvgIcon(
-        'home',
-        sanitizer.bypassSecurityTrustResourceUrl( 'assets/img/svg/ic_home_white_24px.svg'));
-    } else {
-      iconRegistry.addSvgIcon(
-        'home',
-        sanitizer.bypassSecurityTrustResourceUrl( origin + 'assets/img/svg/ic_home_white_24px.svg'));
-    }
 
   }
 
