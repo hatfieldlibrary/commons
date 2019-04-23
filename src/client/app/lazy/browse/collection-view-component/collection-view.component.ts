@@ -211,7 +211,7 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
     const mediaWatcher = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
-        this.notMobile = change.mqAlias !== 'xs';
+        // this.notMobile = change.mqAlias !== 'xs';
         // Toggle to grid view if mobile.
         // if (change.mqAlias === 'xs') {
         //   this.store.dispatch(new SetViewAction('grid'));
