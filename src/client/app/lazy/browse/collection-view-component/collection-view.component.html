@@ -69,7 +69,7 @@
                fxFlex.lg="1 1 15"
                fxFlex.gt-lg="1 1 12"
                class="side-container left"
-               *ngIf="mediaObserver.isActive('gt-sm')">
+               *ngIf="notMobile">
 
             <app-types (typeNavigation)="typeNavigation($event)"
                        [filter]="typesFilter$ | async"></app-types>
@@ -99,7 +99,7 @@
                fxFlex.lg="1 1 15"
                fxFlex.gt-lg="1 1 12"
                class="side-container right"
-               *ngIf="mediaObserver.isActive('gt-sm')">
+               *ngIf="notMobile">
 
             <app-subject-options (subjectNavigation)="subjectNavigation($event)"
                                  [filter]="subjectsFilter$ | async"></app-subject-options>
