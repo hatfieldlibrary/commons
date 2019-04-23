@@ -24,10 +24,10 @@
 
 import {
   Component,
-  EventEmitter,
+  EventEmitter, Inject,
   Input, OnDestroy,
   OnInit,
-  Output
+  Output, PLATFORM_ID
 } from '@angular/core';
 import {CollectionType} from '../../../core/data-types/collection.type';
 import {environment} from '../../../environments/environment';
@@ -35,6 +35,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 
 @Component({
   selector: 'app-collection-rows',
@@ -71,7 +72,7 @@ export class CollectionRowsComponent implements OnInit, OnDestroy {
    */
   watchers: Subscription;
 
-  isMobile = true;
+  isMobile = false;
 
   /**
    * Constructor
@@ -79,7 +80,8 @@ export class CollectionRowsComponent implements OnInit, OnDestroy {
    * @param mediaObserver used to remove thumbnails from mobile biew
    */
   constructor(private navigationService: NavigationServiceB,
-              public mediaObserver: MediaObserver) {
+              public mediaObserver: MediaObserver,
+              @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   /**
@@ -133,10 +135,25 @@ export class CollectionRowsComponent implements OnInit, OnDestroy {
     this.watchers.unsubscribe();
   }
 
+  /**
+   * This handles viewport size when the
+   * application runs in the browser. In
+   * the server, visibility is handled by
+   * css media queries.  There is a performance
+   * penalty in that case, since images will be downloaded
+   * in the background even when hidden by css.
+   * But, the alternative of using *ngIf to eliminate
+   * rendering of the image tag means that
+   * thumbnails will never appear in server-side
+   * rendering -- and crawlers (like Archive-It)
+   * will always see content for the mobile view.
+   */
   private setMediaWatcher(): void {
     const mediaWatcher = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
-        this.isMobile = change.mqAlias === 'xs';
+        if (isPlatformBrowser(this.platformId)) {
+          this.isMobile = change.mqAlias === 'xs';
+        }
       });
     this.watchers.add(mediaWatcher);
   }

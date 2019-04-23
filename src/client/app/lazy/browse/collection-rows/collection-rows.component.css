@@ -75,7 +75,7 @@ app-lock-svg {
   bottom: 8px;
   background: rgba(49, 49, 49, 0.77);
 }
-/* Added to support universal rendered layouts. These may override angular material directives! */
+/* Added to support universal rendered layouts. These might override angular material directives! */
 .count-view {
   display: none;
 }
@@ -86,6 +86,22 @@ app-lock-svg {
 }
 @media screen and (min-width: 787px) {
   .count-view{
+    display: block;
+  }
+}
+.thumb-image {
+    display: none;
+}
+@media screen and (min-width: 787px) {
+  .thumb-image {
+    display: block;
+  }
+}
+.restricted-icon {
+  display: none;
+}
+@media screen and (min-width: 787px) {
+  .restricted-icon {
     display: block;
   }
 }

@@ -145,7 +145,7 @@ mat-card-subtitle.large-device-info {
 }
 @media screen and (min-width: 787px) {
   .side-container{
-   display: block;
+    display: block;
   }
 }
 .area-nav-container {
