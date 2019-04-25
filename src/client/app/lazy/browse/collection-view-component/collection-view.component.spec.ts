@@ -365,7 +365,6 @@ describe('CollectionViewComponent', () => {
     setAreaRoute(route, '1');
     component.ngOnInit();
     tick();
-    fixture.detectChanges();
     expect(dispatchService.dispatchActions).toHaveBeenCalledWith('1', undefined, undefined, undefined);
   }));
 
