@@ -37,9 +37,6 @@ export class BackBlackSvgComponent {
 
   constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer,
               @Optional() @Inject(APP_BASE_HREF) origin: string) {
-    if (origin === undefined) {
-      origin = '/';
-    }
     iconRegistry.addSvgIcon(
       'back-black',
       sanitizer.bypassSecurityTrustResourceUrl(origin + 'assets/img/svg/ic_arrow_back_black_24px.svg'));
