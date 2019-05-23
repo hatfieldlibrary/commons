@@ -41,7 +41,7 @@ export const environment = {
   // Authentication paths.
   authPath: '/com-auth',
   authCheck: '/com-check',
-  defaultRoute: 'collection/area/5',
+  defaultRoute: '/commons/collection/area/5',
   isDebugMode: false
 
 };

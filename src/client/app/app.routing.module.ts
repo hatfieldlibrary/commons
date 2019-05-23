@@ -30,6 +30,11 @@ import {PageNotFoundComponent} from './core/components/page-not-found/page-not-f
 const appRoutes: Routes = [
 
   {
+    path: 'commons',
+    redirectTo:  environment.defaultRoute,
+    pathMatch: 'full'
+  },
+  {
     path: environment.appRoute,
     redirectTo:  environment.defaultRoute,
     pathMatch: 'full'

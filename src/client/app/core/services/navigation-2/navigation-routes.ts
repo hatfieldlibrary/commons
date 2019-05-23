@@ -72,7 +72,8 @@ export class NavigationRoutes {
   }
 
   public static globalLink(rootPath: string): string {
-    return  rootPath + environment.defaultRoute;
+   // return  environment.defaultRoute;
+      return rootPath;
   }
 
   public static globalTypeLink(rootPath: string, selectedTypes: string): string {

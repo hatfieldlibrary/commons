@@ -63,6 +63,7 @@ export class NavigationServiceB {
   previousUrl = '';
   currentUrl = '';
   initialNavigation = true;
+  defaultRoute = '';
   rootPath = '/';
 
   /**
@@ -79,6 +80,7 @@ export class NavigationServiceB {
     // browser events (e.g. href + base).
     if (isPlatformBrowser(platformId)) {
       this.rootPath = environment.appRoot;
+      this.defaultRoute = environment.defaultRoute;
     }
 
     // Keep track of removed fields in application state (added by AreaFiltersComponent).
