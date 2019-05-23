@@ -58,6 +58,7 @@ import {SelectedAreaEvent} from '../area-options/area-options.component';
 import {SubscriptionService} from '../../../core/services/subscription.service';
 import {DeselectedFilter} from '../area-filters/area-filters.component';
 import {Meta, Title, TransferState} from '@angular/platform-browser';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'app-collection-view',
@@ -120,7 +121,8 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
               private scrollReady: ScrollReadyService,
               private titleService: Title,
               private metaService: Meta,
-              private subscriptionService: SubscriptionService) {
+              private subscriptionService: SubscriptionService,
+              @Inject(PLATFORM_ID) private platformId: Object) {
 
   }
 
@@ -211,7 +213,9 @@ export class CollectionViewComponent implements OnInit, OnDestroy {
     const mediaWatcher = this.mediaObserver.media$
       .subscribe((change: MediaChange) => {
         this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
-        this.notMobile = change.mqAlias !== 'xs' && change.mqAlias !== 'sm';
+        if (isPlatformBrowser(this.platformId)) {
+          this.notMobile = change.mqAlias !== 'xs' && change.mqAlias !== 'sm';
+        }
       });
     this.watchers.add(mediaWatcher);
   }

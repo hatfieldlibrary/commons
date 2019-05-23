@@ -22,11 +22,12 @@
  * Author: Michael Spalti
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, PLATFORM_ID} from '@angular/core';
 import {RelatedType} from '../../../core/data-types/related-collection';
 import {environment} from '../../../environments/environment';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   selector: 'app-related-items',
@@ -41,10 +42,16 @@ export class RelatedItemsComponent implements OnDestroy {
   @Input() columns: number;
   isMobile = false;
   watcher: Subscription;
-  appRoot = environment.appRoot;
+  appRoot = '/';
   imagePath = environment.apiHost +  environment.imagePath;
 
-  constructor(private mediaObserver: MediaObserver) {
+  constructor(private mediaObserver: MediaObserver,
+              @Inject(PLATFORM_ID) private platformId: Object) {
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.appRoot = environment.appRoot;
+    }
+
     this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.isMobile = true;
@@ -55,7 +62,7 @@ export class RelatedItemsComponent implements OnDestroy {
   }
 
   getRelatedLink(collectionId: number): string {
-    return this.appRoot + 'item/id/' + collectionId;
+    return  this.appRoot + '/item/id/' + collectionId;
   }
 
   ngOnDestroy(): void {
