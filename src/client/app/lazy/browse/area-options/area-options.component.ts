@@ -23,10 +23,7 @@
  */
 
 import {
-  AfterContentChecked,
   AfterViewChecked,
-  AfterViewInit,
-  asNativeElements,
   Component,
   ElementRef,
   EventEmitter, Inject,
@@ -40,7 +37,6 @@ import {FilterUpdateServiceB} from '../../../core/services/filters-2/filter-upda
 import {ScrollReadyService} from '../../../core/services/observable/scroll-ready.service';
 import {FieldFilterType} from '../../../core/data-types/field-filter.type';
 import {NavigationServiceB} from '../../../core/services/navigation-2/navigation.service';
-import {isPlatformBrowser} from '@angular/common';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
 
