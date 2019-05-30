@@ -49,7 +49,7 @@ var credentials = {
 module.exports = credentials;
 ```
 
-In the client, the [Angular CLI is configured to recognize development, test and production environments](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/application-environments.md) and replace configuration files as needed. Use these files to configure the client application.
+In the client, the [Angular CLI is configured to recognize development, test and production environments](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/application-environments.md) and replace configuration files as needed. 
 
 ## Development
 
