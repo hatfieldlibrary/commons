@@ -53,7 +53,7 @@ In the client, the [Angular CLI is configured to recognize development, test and
 
 ## Development
 
-To work on the Commons client without Universal server-side rendering, use `npm run start:dev`.  
+To run the Commons client without Universal server-side rendering, use `npm run start:dev`.  
 
 To work with server-side rendering in development mode, use `npm run build:development:ssr` and `npm run serve:ssr`.
 
